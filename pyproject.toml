@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "local"
+version = "0.1.0"
+description = "Local code to support running the notebooks"
+authors = [
+    "Zebedee Nicholls <zebedee.nicholls@climate-resource.com>",
+    "Jared Lewis <jared.lewis@climate-resource.com>",
+]
+readme = "README.md"
+packages = [{ include = "local", from = "src" }]
+license = "BSD-3-Clause"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+notebook = "^7.0.6"
+doit = "^0.36.0"
+attrs = "^23.1.0"
+cattrs = "^23.1.2"
+jupytext = "^1.15.2"
+papermill = "^2.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.5.0"
