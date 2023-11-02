@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  mypy:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+        with:
+          python-version: "3.11"
+          venv-id: "docs"
+          poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
+      - name: mypy
+        run: MYPYPATH=stubs poetry run mypy src
