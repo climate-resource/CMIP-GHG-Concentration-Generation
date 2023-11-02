@@ -1,5 +1,4 @@
 """
-pyproject.toml
 Local code to support running the notebooks
 """
 import importlib.metadata
@@ -8,6 +7,13 @@ __version__ = importlib.metadata.version("local")
 
 
 def get_key_info() -> str:
+    """
+    Get key information about the project
+
+    Returns
+    -------
+        Key information
+    """
     return "\n".join(
         [
             "CMIP greenhouse gas concentration generation",

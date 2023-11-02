@@ -9,7 +9,6 @@ from typing import Any
 
 from local import get_key_info
 
-
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
 

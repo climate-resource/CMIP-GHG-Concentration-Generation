@@ -75,14 +75,13 @@ known-first-party = ["src"]
 [tool.ruff.pydocstyle]
 convention = "numpy"
 
-# TODO: Use stricter mypy rules
-#[tool.mypy]
-#strict = true
-## show error codes on failure with context
-#show_error_codes = true
-#show_error_context = true
-## warn if code can't be reached
-#warn_unreachable = true
-## importing following uses default settings
-#follow_imports = "normal"
-
+# TODO Use stricter mypy rules
+[tool.mypy]
+strict = true
+# show error codes on failure with context
+show_error_codes = true
+show_error_context = true
+# warn if code can't be reached
+warn_unreachable = true
+# importing following uses default settings
+follow_imports = "normal"
