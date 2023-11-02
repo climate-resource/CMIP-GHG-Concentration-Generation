@@ -21,3 +21,7 @@ papermill = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
+mypy = "^1.6.1"
+
+[tool.jupytext]
+formats = "ipynb,py:percent"

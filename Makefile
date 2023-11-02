@@ -16,6 +16,17 @@ export PRINT_HELP_PYSCRIPT
 help:  ## print short description of each target
 	@python3 -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+
+all:  ## compile all outputs
+	poetry run doit run
+
+.PHONY: checks
+checks:  ## run all the linting checks of the codebase
+	@echo "=== pre-commit ==="; poetry run pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \
+		echo "=== mypy ==="; MYPYPATH=stubs poetry run mypy src notebooks || echo "--- mypy failed ---" >&2; \
+		echo "======"
+
+
 virtual-environment: pyproject.toml  ## update virtual environment, create a new one if it doesn't already exist
 	# Put virtual environments in the project
 	poetry config virtualenvs.in-project true
