@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import logging
 import time
+from collections.abc import Iterable
 from typing import Any
 
 from local import get_key_info
+from local.pydoit_nb.typing import DoitTaskSpec
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -48,3 +50,59 @@ def task_display_info() -> dict[str, Any]:
     return {
         "actions": [print_key_info],
     }
+
+
+def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
+    """
+    Generate workflow tasks
+
+    Further description etc. here
+
+    Parameters
+    ----------
+    run_id
+        The ID for this run
+
+    root_dir_output
+        Root directory for outputs
+
+    raw_notebooks_dir
+        Directory in which the raw (i.e. not yet run or input) notebooks live
+
+    Returns
+    -------
+        Tasks which can be handled by :mod:`pydoit`
+    """
+    # You can add whatever logic and craziness you want above here
+    # We recommend at least having the output_root_dir, run_id and
+    # raw_notebooks_dir
+    # options as these make it easy to do different runs, put output where you
+    # want and move the notebooks if you want too. You will always want a line
+    # like this that generates your config bundles
+    config_bundles = []
+
+    if not config_bundles:
+        logger.warning("No configuration bundles")
+        return
+
+    # [write_hydrated_config_in_output_dir(cb) for cb in config_bundles]
+
+    # yield from gen_show_config_tasks(config_bundles)
+
+    # tasks, final_task_targets = get_tasks(config_bundles)
+    # yield from process_tasks(tasks)
+
+    # yield from gen_copy_source_into_output_bundle_tasks(
+    #     file_dependencies=final_task_targets,
+    # )
+
+    # Generate various tasks based on your hydrated configuration
+    # There is a pattern here related to making it clear when tasks
+    # have:
+    # - one dependency and one dependent
+    # - multiple dependencies and one dependent
+    # - one dependency and multiplie dependents
+    # - multiple dependencies and multiple dependents
+    # - zero dependencies and zero dependents (and all combos with the above)
+    #
+    # However I don't know what it is yet

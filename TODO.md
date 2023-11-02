@@ -28,3 +28,6 @@ Notes:
 
 – put notebook number at start of saved data file, makes it easier to find where it came from later
 – make clean data and plots in same notebook first (fast iteration), but make sure you go back and split in follow up step (fast iteration for plots)
+- config gets hydrated so put sensitive information in environment variables
+- config class plus cattrs is way of getting around awkwardness of passing things in memory (pass everything via serialising to disk which makes things a bit slower and more IO intense, but also way simpler, put note that if your setup does heaps of IO for the config, this solution may not work for you/you may need to work out how to pull things out of the config into somewhere else)
+- `get_config_bundle` is where you spend most of your config time headaches. It defines how things interact, what is coupled to what, what can override what, how to fill in placeholders etc. This is the part where we have the least rules/guidance, it is really the wild west and we don't know patterns will work best (note for me/Jared: I think the CSIRO pattern was more complicated than it needed to be in the end, particularly the use of multiple yaml files for the pre-hydration stage)
