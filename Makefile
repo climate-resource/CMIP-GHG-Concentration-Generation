@@ -18,7 +18,8 @@ help:  ## print short description of each target
 
 
 all:  ## compile all outputs
-	poetry run doit run
+	# High verbosity for now, may split out `all` and `all-verbose` targets if verbosity is too annoying
+	poetry run doit run --verbosity=2
 
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase
