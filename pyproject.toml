@@ -18,6 +18,7 @@ attrs = "^23.1.0"
 cattrs = "^23.1.2"
 jupytext = "^1.15.2"
 papermill = "^2.4.0"
+numpy = "^1.26.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"

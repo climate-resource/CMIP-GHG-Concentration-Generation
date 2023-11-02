@@ -8,8 +8,12 @@ import time
 from collections.abc import Iterable
 from typing import Any
 
+from doit import task_params
+
 from local import get_key_info
+from local.config import get_config_bundles
 from local.pydoit_nb.typing import DoitTaskSpec
+from local.task_parameters import run_config_task_params
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -52,7 +56,11 @@ def task_display_info() -> dict[str, Any]:
     }
 
 
-def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
+@task_params([*run_config_task_params])
+def task_generate_workflow_tasks(
+    run_id,
+    root_dir_output,
+) -> Iterable[DoitTaskSpec]:
     """
     Generate workflow tasks
 
@@ -74,12 +82,15 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
         Tasks which can be handled by :mod:`pydoit`
     """
     # You can add whatever logic and craziness you want above here
-    # We recommend at least having the output_root_dir, run_id and
+    # We recommend at least having the root_dir_output, run_id and
     # raw_notebooks_dir
     # options as these make it easy to do different runs, put output where you
     # want and move the notebooks if you want too. You will always want a line
     # like this that generates your config bundles
-    config_bundles = []
+    config_bundles = get_config_bundles(
+        root_dir_output=root_dir_output,
+        run_id=run_id,
+    )
 
     if not config_bundles:
         logger.warning("No configuration bundles")
