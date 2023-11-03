@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from attrs import frozen
 
 if TYPE_CHECKING:
-    import numpy as np
+    import numpy.typing as npt
 
 
 @frozen
@@ -24,7 +24,7 @@ class Config:
     name: str
     """Name of the configuration"""
 
-    covariance: np.ndarray
+    covariance: npt.ArrayLike
     """Covariance to use when making draws"""
 
 

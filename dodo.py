@@ -11,9 +11,10 @@ from typing import Any
 from doit import task_params
 
 from local import get_key_info
-from local.config import get_config_bundles
+from local.config import converter_yaml, get_config_bundles
+from local.pydoit_nb.serialization import write_config_bundle_to_disk
+from local.pydoit_nb.task_parameters import run_config_task_params
 from local.pydoit_nb.typing import DoitTaskSpec
-from local.task_parameters import run_config_task_params
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -96,7 +97,10 @@ def task_generate_workflow_tasks(
         logger.warning("No configuration bundles")
         return
 
-    # [write_hydrated_config_in_output_dir(cb) for cb in config_bundles]
+    [
+        write_config_bundle_to_disk(config_bundle=cb, converter=converter_yaml)
+        for cb in config_bundles
+    ]
 
     # yield from gen_show_config_tasks(config_bundles)
 
