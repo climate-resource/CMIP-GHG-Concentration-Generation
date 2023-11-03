@@ -4,7 +4,7 @@ Configuration handling
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TypeAlias, Union
+from typing import TypeAlias, cast
 
 import cattrs.preconf.pyyaml
 import numpy as np
@@ -12,10 +12,10 @@ import numpy.typing as npt
 
 from .base import Config, ConfigBundle
 
-UnstructuredArray: TypeAlias = Union[list[float], "UnstructuredArray"]
+UnstructuredArray: TypeAlias = list[float] | list["UnstructuredArray"]
 
 
-def unstructure_np_array(arr: npt.ArrayLike) -> UnstructuredArray:
+def unstructure_np_array(arr: npt.NDArray[np.float64]) -> UnstructuredArray:
     """
     Unstructure :obj:`npt.ArrayLike`
 
@@ -32,12 +32,12 @@ def unstructure_np_array(arr: npt.ArrayLike) -> UnstructuredArray:
     -------
         Unstructured array
     """
-    return arr.tolist()
+    return cast(UnstructuredArray, arr.tolist())
 
 
 def structure_np_array(
-    inp: UnstructuredArray, target_type: type[npt.ArrayLike]
-) -> npt.ArrayLike:
+    inp: UnstructuredArray, target_type: type[npt.NDArray[np.float64]]
+) -> npt.NDArray[np.float64]:
     """
     Structure :obj:`npt.ArrayLke`
 
@@ -55,7 +55,7 @@ def structure_np_array(
     -------
         Structured array
     """
-    return target_type(inp)
+    return np.array(inp)
 
 
 converter_yaml = cattrs.preconf.pyyaml.make_converter()

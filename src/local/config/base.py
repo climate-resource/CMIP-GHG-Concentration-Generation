@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import numpy as np
 import numpy.typing as npt
 from attrs import frozen
 
@@ -21,7 +22,7 @@ class Config:
     name: str
     """Name of the configuration"""
 
-    covariance: npt.ArrayLike
+    covariance: npt.NDArray[np.float64]
     """Covariance to use when making draws"""
 
 
