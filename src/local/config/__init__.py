@@ -4,10 +4,64 @@ Configuration handling
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TypeAlias, Union
 
+import cattrs.preconf.pyyaml
 import numpy as np
+import numpy.typing as npt
 
 from .base import Config, ConfigBundle
+
+UnstructuredArray: TypeAlias = Union[list[float], "UnstructuredArray"]
+
+
+def unstructure_np_array(arr: npt.ArrayLike) -> UnstructuredArray:
+    """
+    Unstructure :obj:`npt.ArrayLike`
+
+    This simply converts it to a list so is probably not very fast. However,
+    this is just an example so could easily be optimised for production use if
+    needed.
+
+    Parameters
+    ----------
+    arr
+        Array to unstructure
+
+    Returns
+    -------
+        Unstructured array
+    """
+    return arr.tolist()
+
+
+def structure_np_array(
+    inp: UnstructuredArray, target_type: type[npt.ArrayLike]
+) -> npt.ArrayLike:
+    """
+    Structure :obj:`npt.ArrayLke`
+
+    The inverse of :func:`unstructure_np_array`
+
+    Parameters
+    ----------
+    inp
+        Data to structure
+
+    target_type
+        Type the data should be returned as
+
+    Returns
+    -------
+        Structured array
+    """
+    return target_type(inp)
+
+
+converter_yaml = cattrs.preconf.pyyaml.make_converter()
+
+converter_yaml.register_unstructure_hook(npt.ArrayLike, unstructure_np_array)
+converter_yaml.register_structure_hook(npt.ArrayLike, structure_np_array)
 
 
 def get_config_bundles(
@@ -42,7 +96,7 @@ def get_config_bundles(
             root_dir_output=root_dir_output,
             config_id=c.name,
             config_hydrated=c,
-            config_hydrated_path=root_dir_output / c.name,
+            config_hydrated_path=root_dir_output / run_id / c.name / f"{c.name}.yaml",
         )
         for c in configs
     ]

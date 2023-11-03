@@ -82,6 +82,9 @@ def task_generate_workflow_tasks(
     -------
         Tasks which can be handled by :mod:`pydoit`
     """
+    # TODO: somehow make this happen as part of task_params passing
+    root_dir_output = root_dir_output.absolute()
+
     # You can add whatever logic and craziness you want above here
     # We recommend at least having the root_dir_output, run_id and
     # raw_notebooks_dir
@@ -97,6 +100,12 @@ def task_generate_workflow_tasks(
         logger.warning("No configuration bundles")
         return
 
+    # Could move this to a function, but seems silly as probably best for users
+    # to control directory creation
+    [
+        cb.config_hydrated_path.parent.mkdir(exist_ok=True, parents=True)
+        for cb in config_bundles
+    ]
     [
         write_config_bundle_to_disk(config_bundle=cb, converter=converter_yaml)
         for cb in config_bundles

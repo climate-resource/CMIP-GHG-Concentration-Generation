@@ -4,12 +4,9 @@ Base configuration classes
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING
 
+import numpy.typing as npt
 from attrs import frozen
-
-if TYPE_CHECKING:
-    import numpy.typing as npt
 
 
 @frozen
