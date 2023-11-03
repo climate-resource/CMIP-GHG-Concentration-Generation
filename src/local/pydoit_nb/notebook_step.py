@@ -12,6 +12,7 @@ from typing import TypeAlias
 from attrs import frozen
 from doit.tools import config_changed  # type: ignore
 
+from .notebook_run import run_notebook
 from .notebooks import NotebookMetadata
 from .typing import Converter, DoitTaskSpec
 
@@ -81,6 +82,7 @@ class NotebookStep:
     def from_metadata(  # noqa: PLR0913
         cls,
         notebook_meta: NotebookMetadata,
+        root_dir_raw_notebooks: Path,
         notebook_output_dir: Path,
         config_id: str,
         configuration: tuple[HandleableConfiguration, ...] | None,
@@ -95,6 +97,11 @@ class NotebookStep:
         ----------
         notebook_meta
             Notebook metadata
+
+        root_dir_raw_notebooks
+            Directory in which raw notebooks are kept. The notebook path in the
+            elements of `notebook_branch_meta` are assumed to be relative to
+            this path.
 
         notebook_output_dir
             Output directory in which executed notebooks should be written
@@ -120,11 +127,13 @@ class NotebookStep:
         -------
             Initialised :obj:`NotebookStep`
         """
-        notebook_meta.notebook.with_suffix(notebook_meta.raw_notebook_ext)
+        raw_notebook = root_dir_raw_notebooks / notebook_meta.notebook.with_suffix(
+            notebook_meta.raw_notebook_ext
+        )
         notebook_name = notebook_meta.notebook.name
 
         return cls(
-            raw_notebook=f"{notebook_meta.notebook}{notebook_meta.raw_notebook_ext}",
+            raw_notebook=raw_notebook,
             unexecuted_notebook=(
                 notebook_output_dir / f"{notebook_name}_unexecuted.ipynb"
             ),
@@ -165,7 +174,7 @@ class NotebookStep:
             *self.dependencies,
             self.raw_notebook,
         )
-        notebook_parameters = dict(config_file=self.config_file)
+        notebook_parameters = dict(config_file=str(self.config_file))
         targets = self.targets
 
         task = dict(

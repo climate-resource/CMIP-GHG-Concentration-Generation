@@ -14,7 +14,7 @@ from local import get_key_info
 from local.config import converter_yaml, get_config_bundles
 from local.pydoit_nb.display import print_config_bundle
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
-from local.pydoit_nb.task_parameters import run_config_task_params
+from local.pydoit_nb.task_parameters import notebook_task_params, run_config_task_params
 from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
@@ -60,10 +60,11 @@ def task_display_info() -> dict[str, Any]:
     }
 
 
-@task_params([*run_config_task_params])
+@task_params([*run_config_task_params, *notebook_task_params])
 def task_generate_workflow_tasks(
     run_id,
     root_dir_output,
+    root_dir_raw_notebooks,
 ) -> Iterable[DoitTaskSpec]:
     """
     Generate workflow tasks
@@ -78,7 +79,7 @@ def task_generate_workflow_tasks(
     root_dir_output
         Root directory for outputs
 
-    raw_notebooks_dir
+    root_dir_raw_notebooks
         Directory in which the raw (i.e. not yet run or input) notebooks live
 
     Returns
@@ -87,6 +88,7 @@ def task_generate_workflow_tasks(
     """
     # TODO: somehow make this happen as part of task_params passing
     root_dir_output = root_dir_output.absolute()
+    root_dir_raw_notebooks = root_dir_raw_notebooks.absolute()
 
     # You can add whatever logic and craziness you want above here
     # We recommend at least having the root_dir_output, run_id and
@@ -116,4 +118,9 @@ def task_generate_workflow_tasks(
 
     yield from gen_show_config_tasks(config_bundles, print_config_bundle)
 
-    yield from gen_all_tasks(config_bundles)
+    yield from gen_all_tasks(
+        config_bundles, root_dir_raw_notebooks=root_dir_raw_notebooks
+    )
+
+    logger.info("Finished run")
+    print("Finished run")

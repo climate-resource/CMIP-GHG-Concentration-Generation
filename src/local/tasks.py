@@ -28,6 +28,7 @@ NBM_PREP_STEPS = NotebookBranchMetadata(
 
 def get_prep_notebook_steps(
     notebook_branch_meta: NotebookBranchMetadata,
+    root_dir_raw_notebooks: Path,
     config_bundles: Iterable[ConfigBundle],
 ) -> list[NotebookStep]:
     """
@@ -37,6 +38,11 @@ def get_prep_notebook_steps(
     ----------
     notebook_branch_meta
         Metadata of the notebooks in the preparation branch
+
+    root_dir_raw_notebooks
+        Directory in which raw notebooks are kept. The notebook path in the
+        elements of `notebook_branch_meta` are assumed to be relative to this
+        path.
 
     config_bundles
         Configuration bundles to run with
@@ -70,6 +76,7 @@ def get_prep_notebook_steps(
     steps = [
         NotebookStep.from_metadata(
             notebook_meta=notebook_meta,
+            root_dir_raw_notebooks=root_dir_raw_notebooks,
             # This is the kind of thing we would make clearer in a wrapper
             # function a layer higher than this. Basically, you get rid
             # of the notebook_output_dir and config_id because you should get
@@ -103,6 +110,7 @@ def get_prep_notebook_steps(
 
 def gen_all_tasks(
     config_bundles: Iterable[ConfigBundle],
+    root_dir_raw_notebooks: Path,
 ) -> Iterable[DoitTaskSpec]:
     """
     Generate all tasks in the workflow
@@ -111,6 +119,11 @@ def gen_all_tasks(
     ----------
     config_bundles
         Configuration bundles
+
+    root_dir_raw_notebooks
+        Directory in which raw notebooks are kept. The notebook path in the
+        elements of `notebook_branch_meta` are assumed to be relative to this
+        path.
 
     Yields
     ------
@@ -121,6 +134,7 @@ def gen_all_tasks(
     prep_tasks = get_notebook_tasks(
         notebook_branch_meta=NBM_PREP_STEPS,
         config_bundles=config_bundles,
+        root_dir_raw_notebooks=root_dir_raw_notebooks,
         get_steps=get_prep_notebook_steps,
         common_across_config_bundles=True,
         all_combos_across_config_bundles=False,

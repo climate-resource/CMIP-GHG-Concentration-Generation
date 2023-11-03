@@ -4,6 +4,7 @@ Task generation related to notebooks
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+from pathlib import Path
 
 from .notebook_step import NotebookStep
 from .notebooks import NotebookBranchMetadata
@@ -13,6 +14,7 @@ from .typing import ConfigBundleLike, Converter, DoitTaskSpec
 def get_notebook_tasks(  # noqa: PLR0913
     notebook_branch_meta: NotebookBranchMetadata,
     config_bundles: Iterable[ConfigBundleLike],
+    root_dir_raw_notebooks: Path,
     get_steps: Callable[
         [NotebookBranchMetadata, Iterable[ConfigBundleLike]], list[NotebookStep]
     ],
@@ -35,6 +37,11 @@ def get_notebook_tasks(  # noqa: PLR0913
 
     config_bundles
         Configuration bundles to combine with the notebooks in the branch
+
+    root_dir_raw_notebooks
+        Directory in which raw notebooks are kept. The notebook path in the
+        elements of `notebook_branch_meta` are assumed to be relative to this
+        path.
 
     get_steps
         Function which combines the notebook metadata and configuration to
@@ -71,7 +78,11 @@ def get_notebook_tasks(  # noqa: PLR0913
         # TODO: better error
         raise AssertionError
 
-    steps = get_steps(notebook_branch_meta, config_bundles)
+    steps = get_steps(
+        notebook_branch_meta=notebook_branch_meta,
+        root_dir_raw_notebooks=root_dir_raw_notebooks,
+        config_bundles=config_bundles,
+    )
 
     if common_across_config_bundles:
         if len(steps) != 1:
