@@ -4,6 +4,7 @@ Task definition and retrieval
 from __future__ import annotations
 
 from collections.abc import Iterable
+from functools import partial
 from pathlib import Path
 
 from .config import ConfigBundle, converter_yaml
@@ -60,11 +61,14 @@ def get_prep_notebook_steps(
     """
     notebook_meta_dict = notebook_branch_meta.to_notebook_meta_dict()
 
-    output_notebook_dir = get_value_across_config_bundles(
+    gv = partial(
+        get_value_across_config_bundles,
         config_bundles=config_bundles,
-        access_func=lambda c: c.root_dir_output,
         expect_all_same=True,
     )
+    root_dir_output = gv(access_func=lambda c: c.root_dir_output)
+    run_id = gv(access_func=lambda c: c.run_id)
+    output_notebook_dir = root_dir_output / run_id
 
     branch_id = "00x_preparation"
     branch_notebook_dir = output_notebook_dir / branch_id / "notebooks"
