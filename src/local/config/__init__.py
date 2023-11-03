@@ -14,6 +14,9 @@ from .base import Config, ConfigBundle
 
 UnstructuredArray: TypeAlias = list[float] | list["UnstructuredArray"]
 
+SEED: int = 28474038
+"""Seed to use in random draws"""
+
 
 def unstructure_np_array(arr: npt.NDArray[np.float64]) -> UnstructuredArray:
     """
@@ -90,20 +93,29 @@ def get_config_bundles(
     -------
         Hydrated configuration bundles
     """
-    configs = [
-        Config(name="no-cov", covariance=np.array([[0.25, 0], [0, 0.5]])),
-        Config(name="cov", covariance=np.array([[0.25, 0.5], [0.5, 0.5]])),
-    ]
+    common_config = dict(seed=SEED)
 
-    bundles = [
-        ConfigBundle(
+    bundles = []
+    for name, covariance in [
+        ("no-cov", np.array([[0.25, 0], [0, 0.5]])),
+        ("cov", np.array([[0.25, 0.5], [0.5, 0.5]])),
+    ]:
+        config_output_dir = root_dir_output / run_id / name
+        config = Config(
+            name=name,
+            covariance=covariance,
+            seed_file=root_dir_output / "seed.txt",
+            **common_config,
+        )
+        bundle = ConfigBundle(
             run_id=run_id,
             root_dir_output=root_dir_output,
-            config_id=c.name,
-            config_hydrated=c,
-            config_hydrated_path=root_dir_output / run_id / c.name / f"{c.name}.yaml",
+            output_notebook_dir=config_output_dir / "notebooks",
+            config_id=config.name,
+            config_hydrated=config,
+            config_hydrated_path=config_output_dir / f"{config.name}.yaml",
         )
-        for c in configs
-    ]
+
+        bundles.append(bundle)
 
     return bundles

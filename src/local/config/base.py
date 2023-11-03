@@ -22,6 +22,12 @@ class Config:
     name: str
     """Name of the configuration"""
 
+    seed: int
+    """Seed to use for random draws"""
+
+    seed_file: Path
+    """Path in which to save the seed"""
+
     covariance: npt.NDArray[np.float64]
     """Covariance to use when making draws"""
 
@@ -49,3 +55,8 @@ class ConfigBundle:
     root_dir_output: Path
     """Root output directory"""
     # TODO: add validation here that this is an absolute path and exists
+
+    output_notebook_dir: Path
+    """Directory in which to write out the notebooks"""
+    # TODO: decide whether to force this to be a sub-directory of
+    # root_dir_output or not

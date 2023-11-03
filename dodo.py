@@ -17,6 +17,7 @@ from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.task_parameters import run_config_task_params
 from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
+from local.tasks import gen_all_tasks
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -115,20 +116,4 @@ def task_generate_workflow_tasks(
 
     yield from gen_show_config_tasks(config_bundles, print_config_bundle)
 
-    # tasks, final_task_targets = get_tasks(config_bundles)
-    # yield from process_tasks(tasks)
-
-    # yield from gen_copy_source_into_output_bundle_tasks(
-    #     file_dependencies=final_task_targets,
-    # )
-
-    # Generate various tasks based on your hydrated configuration
-    # There is a pattern here related to making it clear when tasks
-    # have:
-    # - one dependency and one dependent
-    # - multiple dependencies and one dependent
-    # - one dependency and multiplie dependents
-    # - multiple dependencies and multiple dependents
-    # - zero dependencies and zero dependents (and all combos with the above)
-    #
-    # However I don't know what it is yet
+    yield from gen_all_tasks(config_bundles)

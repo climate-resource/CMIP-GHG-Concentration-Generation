@@ -1,5 +1,8 @@
 # TODO
 
+- fix up use of define vs. frozen
+- fix up use of Path vs. PathLike
+- unify naming :output_root_dir vs root_dir_output vs notebook_output_dir etc.
 - CI
     - run all notebooks
     - check output against some regression output

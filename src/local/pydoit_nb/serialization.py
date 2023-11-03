@@ -4,24 +4,11 @@ Serialization tools
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Protocol, TypeVar
+from typing import TypeVar
 
-from .typing import ConfigBundleLike
+from .typing import ConfigBundleLike, Converter
 
-T_contra = TypeVar("T_contra", contravariant=True)
 U = TypeVar("U")
-
-
-class Converter(Protocol[T_contra]):
-    """
-    Protocol for converters
-    """
-
-    def dumps(self, config: T_contra) -> str:
-        """
-        Dump config to a string
-        """
-        ...
 
 
 def write_config_bundle_to_disk(
