@@ -4,7 +4,7 @@ Configuration handling
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TypeAlias, cast
+from typing import Any, TypeAlias, cast
 
 import cattrs.preconf.pyyaml
 import numpy as np
@@ -60,8 +60,13 @@ def structure_np_array(
 
 converter_yaml = cattrs.preconf.pyyaml.make_converter()
 
-converter_yaml.register_unstructure_hook(npt.ArrayLike, unstructure_np_array)
-converter_yaml.register_structure_hook(npt.ArrayLike, structure_np_array)
+
+def _is_np_array(inp: Any) -> bool:
+    return getattr(inp, "__origin__", None) is np.ndarray
+
+
+converter_yaml.register_unstructure_hook_func(_is_np_array, unstructure_np_array)
+converter_yaml.register_structure_hook_func(_is_np_array, structure_np_array)
 
 
 def get_config_bundles(

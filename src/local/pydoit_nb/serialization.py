@@ -6,21 +6,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Protocol, TypeVar
 
-T = TypeVar("T")
+from .typing import ConfigBundleLike
+
 T_contra = TypeVar("T_contra", contravariant=True)
 U = TypeVar("U")
-
-
-class ConfigBundleLike(Protocol[T]):
-    """
-    Protocol for configuration bundles
-    """
-
-    config_hydrated_path: Path
-    """Path in which to write the hydrated config"""
-
-    config_hydrated: T
-    """Config to be hydrated"""
 
 
 class Converter(Protocol[T_contra]):
