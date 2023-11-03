@@ -12,8 +12,10 @@ from doit import task_params
 
 from local import get_key_info
 from local.config import converter_yaml, get_config_bundles
+from local.pydoit_nb.display import print_config_bundle
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.task_parameters import run_config_task_params
+from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
 
 root_logger = logging.getLogger()
@@ -111,7 +113,7 @@ def task_generate_workflow_tasks(
         for cb in config_bundles
     ]
 
-    # yield from gen_show_config_tasks(config_bundles)
+    yield from gen_show_config_tasks(config_bundles, print_config_bundle)
 
     # tasks, final_task_targets = get_tasks(config_bundles)
     # yield from process_tasks(tasks)
