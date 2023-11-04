@@ -5,9 +5,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import numpy as np
-import numpy.typing as npt
 from attrs import frozen
+
+from .covariance import CovarianceConfig
+from .preparation import PreparationConfig
 
 
 @frozen
@@ -22,14 +23,13 @@ class Config:
     name: str
     """Name of the configuration"""
 
-    seed: int
-    """Seed to use for random draws"""
+    preparation: list[PreparationConfig]
+    """Configurations to use with the preparation branch"""
+    # TODO: add validation that these all have unique branch_config_id
 
-    seed_file: Path
-    """Path in which to save the seed"""
-
-    covariance: npt.NDArray[np.float64]
-    """Covariance to use when making draws"""
+    covariance: list[CovarianceConfig]
+    """Configurations to use with the covariance branch"""
+    # TODO: add validation that these all have unique branch_config_id
 
 
 @frozen
