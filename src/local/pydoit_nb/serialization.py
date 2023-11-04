@@ -8,6 +8,7 @@ from typing import TypeVar
 
 from .typing import ConfigBundleLike, Converter
 
+T = TypeVar("T")
 U = TypeVar("U")
 
 
@@ -35,3 +36,10 @@ def write_config_bundle_to_disk(
         fh.write(converter.dumps(config_bundle.config_hydrated))
 
     return write_path
+
+
+def load_config_from_file(config_file: Path, target: T, converter: Converter[U]) -> T:
+    with open(config_file) as fh:
+        config = converter.loads(fh.read(), target)
+
+    return config

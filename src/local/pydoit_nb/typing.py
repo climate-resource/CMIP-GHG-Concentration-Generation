@@ -37,3 +37,6 @@ class Converter(Protocol[T_contra]):
         Dump config to a string
         """
         ...
+
+    def loads(self, inp: str, target: type[T]) -> T:
+        ...

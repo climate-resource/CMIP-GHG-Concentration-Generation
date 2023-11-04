@@ -3,12 +3,15 @@ Configuration handling
 """
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 from typing import Any, TypeAlias, cast
 
 import cattrs.preconf.pyyaml
 import numpy as np
 import numpy.typing as npt
+
+import local.pydoit_nb.serialization
 
 from .base import Config, ConfigBundle
 
@@ -119,3 +122,23 @@ def get_config_bundles(
         bundles.append(bundle)
 
     return bundles
+
+
+load_config_from_file = partial(
+    local.pydoit_nb.serialization.load_config_from_file,
+    target=Config,
+    converter=converter_yaml,
+)
+
+
+def get_config_for_branch_id(
+    config: Config,
+    branch: str,
+    branch_config_id: str,
+) -> Any:
+    possibilities = getattr(config, branch)
+    for poss in possibilities:
+        if poss.branch_config_id == branch_config_id:
+            return poss
+
+    raise AssertionError("Couldn't find config")
