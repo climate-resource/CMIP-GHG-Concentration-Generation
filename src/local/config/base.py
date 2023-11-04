@@ -7,7 +7,9 @@ from pathlib import Path
 
 from attrs import frozen
 
+from .constraint import ConstraintConfig
 from .covariance import CovarianceConfig
+from .figures import FiguresConfig
 from .preparation import PreparationConfig
 
 
@@ -29,6 +31,14 @@ class Config:
 
     covariance: list[CovarianceConfig]
     """Configurations to use with the covariance branch"""
+    # TODO: add validation that these all have unique branch_config_id
+
+    constraint: list[ConstraintConfig]
+    """Configurations to use with the constraint branch"""
+    # TODO: add validation that these all have unique branch_config_id
+
+    figures: list[FiguresConfig]
+    """Configurations to use with the figures branch"""
     # TODO: add validation that these all have unique branch_config_id
 
 
