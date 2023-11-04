@@ -78,6 +78,20 @@ def insert_path_prefix(config: T, prefix: Path) -> T:
     """
 
     def update_attr_value(value: U) -> U:
+        """
+        Update the attribute value if it is :obj:`Path` to include the prefix
+
+        The prefix is taken from the outer scope
+
+        Parameters
+        ----------
+        value
+            Value to update
+
+        Returns
+        -------
+            Updated value
+        """
         if isinstance(value, Path):
             return prefix / value
 
