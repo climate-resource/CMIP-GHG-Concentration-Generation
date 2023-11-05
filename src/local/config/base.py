@@ -9,6 +9,7 @@ from attrs import frozen
 
 from .constraint import ConstraintConfig
 from .covariance import CovarianceConfig
+from .covariance_plotting import CovariancePlottingConfig
 from .figures import FiguresConfig
 from .preparation import PreparationConfig
 
@@ -31,6 +32,10 @@ class Config:
 
     covariance: list[CovarianceConfig]
     """Configurations to use with the covariance branch"""
+    # TODO: add validation that these all have unique branch_config_id
+
+    covariance_plotting: list[CovariancePlottingConfig]
+    """Configuration to use for the quick plots of the covariance draws"""
     # TODO: add validation that these all have unique branch_config_id
 
     constraint: list[ConstraintConfig]
