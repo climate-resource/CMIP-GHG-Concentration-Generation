@@ -1,55 +1,50 @@
 """
 Notebook support
+
+TODO: move this to a better name, `notebooks` doesn't make sense given the contents
 """
 from __future__ import annotations
 
-from collections.abc import Iterable
 from pathlib import Path
 
-from attrs import define
+from attrs import frozen
 
 
-@define
-class NotebookMetadata:
-    """
-    Metadata describing a single notebook
-
-    Can later be combined with a configuration bundle to get a :obj:`NotebookStep`
-    """
-
-    notebook: Path
-    """Path to notebook, relative to the root directory in which the notebooks live"""
+@frozen
+class UnconfiguredNotebook:
+    notebook_path: Path
+    """Path to notebook, relative to the raw notebook directory"""
 
     raw_notebook_ext: str
-    """Extention that is used with the raw notebook"""
+    """Extension for the raw notebook"""
 
     summary: str
-    """
-    Short summary of this notebook's functionality
-    """
+    """One line summary of the notebook"""
+    # TODO: validation?
 
     doc: str
-    """Longer description of the notebook"""
+    """Documentation of the notebook (can be longer than one line)"""
 
-
-@define
-class NotebookBranchMetadata:
+    configuration: tuple[HandleableConfiguration, ...] | None
     """
-    Metadata for a collection of notebooks in a branch of the workflow
+    Configuration used by the notebook.
 
-    [TODO define concept of a branch somewhere, basically just a group of
-     related notebooks]
+    If any of the configuration changes then the notebook will be triggered.
+
+    If nothing is provided, then the notebook will be run whenever the
+    configuration file driving the notebook is modified (i.e. the notebook will
+    be re-run for any configuration change).
     """
+    # TODO: It looks like this solves a problem that even the original authors
+    # hadn't thought about because they just suggest using forget here
+    # https://pydoit.org/cmd-other.html#forget (although they also talk about
+    # non-file dependencies elsewhere so maybe these are just out of date docs)
 
-    notebooks: Iterable[NotebookMetadata]
+    dependencies: tuple[Path, ...]
+    """Paths on which the notebook depends"""
 
-    def to_notebook_meta_dict(self) -> dict[Path, NotebookMetadata]:
-        """
-        Convert to a dictionary
+    targets: tuple[Path, ...]
+    """Paths which the notebook creates/controls"""
 
-        Returns
-        -------
-            Dictionary where each key is the path to the notebook and the
-            values are :obj:`NotebookMetadata`
-        """
-        return {n.notebook: n for n in self.notebooks}
+    config_file: Path
+    """Path to the config file to use with the notebook"""

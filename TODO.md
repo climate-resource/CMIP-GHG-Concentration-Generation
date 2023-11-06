@@ -2,6 +2,8 @@
 
 - add example using `generate_directory_checklist`
 
+- think about whether using taipy would be a better way to do all this
+
 - all paths get root_dir_output / run_id pre-pended
 - things that aren't run by notebooks don't go in config (e.g. copy source stuff)
 

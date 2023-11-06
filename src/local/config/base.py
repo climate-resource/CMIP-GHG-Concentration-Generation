@@ -67,10 +67,10 @@ class ConfigBundle:
     config_hydrated_path: Path
     """Path in/from which to read/write ``config_hydrated``"""
 
+    root_dir_output: Path
+    """Root output directory"""
+    # TODO: add validation here that this is an absolute path and exists
 
-#    root_dir_output: Path
-#    """Root output directory"""
-# TODO: add validation here that this is an absolute path and exists
 
 #    output_notebook_dir: Path
 #    """Directory in which to write out the notebooks"""

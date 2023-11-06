@@ -13,7 +13,6 @@ from attrs import frozen
 from doit.tools import config_changed  # type: ignore
 
 from .notebook_run import run_notebook
-from .notebooks import NotebookMetadata
 from .typing import Converter, DoitTaskSpec
 
 HandleableConfiguration: TypeAlias = str | int | Path
@@ -51,11 +50,11 @@ class NotebookStep:
     doc_notebook: str
     """Longer description of the notebook"""
 
-    config_id: str
-    """Unique ID of the config"""
-
     config_file: Path
     """Path to the config file to use with the notebook"""
+
+    branch_config_id: str
+    """`branch_config_id` to use for this run of the notebook"""
 
     dependencies: tuple[Path, ...]
     """Paths on which the notebook depends"""
@@ -79,58 +78,17 @@ class NotebookStep:
     # non-file dependencies elsewhere so maybe these are just out of date docs)
 
     @classmethod
-    def from_metadata(  # noqa: PLR0913
+    def from_unconfigured_notebook(
         cls,
-        notebook_meta: NotebookMetadata,
+        unconfigured,
         root_dir_raw_notebooks: Path,
         notebook_output_dir: Path,
-        config_id: str,
-        configuration: tuple[HandleableConfiguration, ...] | None,
-        dependencies: tuple[Path],
-        targets: tuple[Path],
-        config_file: Path,
+        branch_config_id: str,
     ) -> NotebookStep:
-        """
-        Initialise class from :obj:`NotebookMetadata`
-
-        Parameters
-        ----------
-        notebook_meta
-            Notebook metadata
-
-        root_dir_raw_notebooks
-            Directory in which raw notebooks are kept. The notebook path in the
-            elements of `notebook_branch_meta` are assumed to be relative to
-            this path.
-
-        notebook_output_dir
-            Output directory in which executed notebooks should be written
-
-        config_id
-            Unique ID of the config
-
-        configuration
-            Configuration used by the notebook
-
-            For further details, see docstring of :class:`NotebookStep`
-
-        dependencies
-            Paths on which the notebook depends
-
-        targets
-            Paths which the notebook creates/controls
-
-        config_file
-            Path to the config file to use with the notebook
-
-        Returns
-        -------
-            Initialised :obj:`NotebookStep`
-        """
-        raw_notebook = root_dir_raw_notebooks / notebook_meta.notebook.with_suffix(
-            notebook_meta.raw_notebook_ext
+        raw_notebook = root_dir_raw_notebooks / unconfigured.notebook_path.with_suffix(
+            unconfigured.raw_notebook_ext
         )
-        notebook_name = notebook_meta.notebook.name
+        notebook_name = unconfigured.notebook_path.name
 
         return cls(
             raw_notebook=raw_notebook,
@@ -138,13 +96,13 @@ class NotebookStep:
                 notebook_output_dir / f"{notebook_name}_unexecuted.ipynb"
             ),
             executed_notebook=notebook_output_dir / f"{notebook_name}.ipynb",
-            summary_notebook=notebook_meta.summary,
-            doc_notebook=notebook_meta.doc,
-            config_id=config_id,
-            config_file=config_file,
-            dependencies=dependencies,
-            targets=targets,
-            configuration=configuration,
+            summary_notebook=unconfigured.summary,
+            doc_notebook=unconfigured.doc,
+            branch_config_id=branch_config_id,
+            config_file=unconfigured.config_file,
+            dependencies=unconfigured.dependencies,
+            targets=unconfigured.targets,
+            configuration=unconfigured.configuration,
         )
 
     def to_doit_task(
@@ -174,13 +132,16 @@ class NotebookStep:
             *self.dependencies,
             self.raw_notebook,
         )
-        notebook_parameters = dict(config_file=str(self.config_file))
+        notebook_parameters = dict(
+            config_file=str(self.config_file), branch_config_id=self.branch_config_id
+        )
+
         targets = self.targets
 
         task = dict(
             basename=self.summary_notebook,
-            name=self.config_id,
-            doc=f"{self.doc_notebook} for config {self.config_id}",
+            name=self.branch_config_id,
+            doc=f"{self.doc_notebook} for config {self.branch_config_id}",
             actions=[
                 (
                     run_notebook,

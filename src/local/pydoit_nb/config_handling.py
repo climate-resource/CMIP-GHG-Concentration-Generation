@@ -112,3 +112,7 @@ def insert_path_prefix(config: T, prefix: Path) -> T:
         evolutions[attr_name] = update_attr_value(attr_value)
 
     return evolve(config, **evolutions)
+
+
+def get_branch_config_ids(configs: ConfigLike) -> list[str]:
+    return [c.branch_config_id for c in configs]

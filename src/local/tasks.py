@@ -8,23 +8,11 @@ from functools import partial
 from pathlib import Path
 
 from .config import ConfigBundle, converter_yaml
+from .notebook_steps import get_preparation_notebook_steps
 from .pydoit_nb.config_handling import get_value_across_config_bundles
 from .pydoit_nb.notebook_step import NotebookStep
-from .pydoit_nb.notebooks import NotebookBranchMetadata, NotebookMetadata
-from .pydoit_nb.tasks_notebooks import get_notebook_tasks
+from .pydoit_nb.tasks_notebooks import get_notebook_branch_tasks
 from .pydoit_nb.typing import DoitTaskSpec
-
-# TODO: move this into separate file
-NBM_PREP_STEPS = NotebookBranchMetadata(
-    [
-        NotebookMetadata(
-            notebook=Path("0xx_preparation") / "000_write-seed",
-            raw_notebook_ext=".py",
-            summary="prepare - write seed",
-            doc="Write seed for random draws",
-        )
-    ]
-)
 
 
 def get_prep_notebook_steps(
@@ -113,7 +101,7 @@ def get_prep_notebook_steps(
 
 
 def gen_all_tasks(
-    config_bundles: Iterable[ConfigBundle],
+    config_bundle: ConfigBundle,
     root_dir_raw_notebooks: Path,
 ) -> Iterable[DoitTaskSpec]:
     """
@@ -135,15 +123,14 @@ def gen_all_tasks(
     """
     tasks = []
 
-    prep_tasks = get_notebook_tasks(
-        notebook_branch_meta=NBM_PREP_STEPS,
-        config_bundles=config_bundles,
+    prep_tasks = get_notebook_branch_tasks(
+        branch_name="preparation",
+        get_steps=get_preparation_notebook_steps,
+        config_bundle=config_bundle,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
-        get_steps=get_prep_notebook_steps,
-        common_across_config_bundles=True,
-        all_combos_across_config_bundles=False,
         converter=converter_yaml,
     )
+
     tasks.extend(prep_tasks)
 
     # final_task_targets = []

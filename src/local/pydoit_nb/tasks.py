@@ -30,14 +30,14 @@ def gen_show_config_tasks(
     ------
         Task which displays the configuration (plus a base task which comes first)
     """
+    # This is now a silly function, but perhaps a useful illustration of pydoit
+    # (likely to be removed or refactored in future though)
     base_task = {
         "name": None,
         "doc": "Show configurations to run",
     }
     yield {**base_task}
 
-    # This is now a silly function, but perhaps a useful illustration of pydoit
-    # (likely to be removed or refactored in future though)
     yield {
         **base_task,
         "name": config_bundle.run_id,

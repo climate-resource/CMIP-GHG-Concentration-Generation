@@ -19,6 +19,7 @@ from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.task_parameters import notebook_task_params, run_config_task_params
 from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
+from local.tasks import gen_all_tasks
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -112,7 +113,7 @@ def task_generate_workflow_tasks(
         run_id=run_id,
         config_hydrated=config,
         config_hydrated_path=output_prefix / configuration_file.name,
-        # root_dir_output=root_dir_output,
+        root_dir_output=root_dir_output,
         # output_notebook_dir=output_prefix / "notebooks",
     )
 
@@ -120,9 +121,9 @@ def task_generate_workflow_tasks(
 
     yield from gen_show_config_tasks(config_bundle, print_config_bundle)
 
-    #    yield from gen_all_tasks(
-    #        config_bundles, root_dir_raw_notebooks=root_dir_raw_notebooks
-    #    )
-    #
+    yield from gen_all_tasks(
+        config_bundle, root_dir_raw_notebooks=root_dir_raw_notebooks
+    )
+
     logger.info("Finished run")
     print("Finished run")
