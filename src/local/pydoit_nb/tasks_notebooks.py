@@ -31,5 +31,13 @@ def get_notebook_branch_tasks(  # noqa: PLR0913
             root_dir_raw_notebooks=root_dir_raw_notebooks,
         )
 
+        # TODO: refactor this
+        if isinstance(steps, tuple):
+            base_tasks = steps[0]
+            steps = steps[1]
+
+            for bt in base_tasks:
+                yield bt
+
         for step in steps:
             yield step.to_doit_task(converter=converter, clean=clean)

@@ -62,6 +62,16 @@ def get_figures_notebook_steps(
     )
     notebook_output_dir.mkdir(exist_ok=True, parents=True)
 
+    # TODO: refactor this
+    notebook_base_tasks = [
+        {
+            "basename": nb.summary,
+            "name": None,
+            "doc": nb.doc,
+        }
+        for nb in figures_notebooks
+    ]
+
     steps = [
         NotebookStep.from_unconfigured_notebook(
             unconfigured=nb,
@@ -72,4 +82,4 @@ def get_figures_notebook_steps(
         for nb in figures_notebooks
     ]
 
-    return steps
+    return notebook_base_tasks, steps

@@ -141,7 +141,7 @@ class NotebookStep:
         task = dict(
             basename=self.summary_notebook,
             name=self.branch_config_id,
-            doc=f"{self.doc_notebook} for config {self.branch_config_id}",
+            doc=f"{self.doc_notebook}. branch_config_id={self.branch_config_id!r}",
             actions=[
                 (
                     run_notebook,

@@ -33,7 +33,7 @@ all-debug:  ## compile all outputs, falling to debugger on failure
 	poetry run doit run --pdb
 
 doit-list:  ## list all the doit tasks
-	poetry run doit list
+	poetry run doit list --all
 
 $(DEV_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-config-absolute.py
 	poetry run python scripts/create-dev-config-absolute.py
