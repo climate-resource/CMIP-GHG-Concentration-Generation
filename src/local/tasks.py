@@ -12,6 +12,7 @@ from .notebook_steps import (
     get_constraint_notebook_steps,
     get_covariance_notebook_steps,
     get_covariance_plotting_notebook_steps,
+    get_figures_notebook_steps,
     get_preparation_notebook_steps,
 )
 from .pydoit_nb.tasks_notebooks import get_notebook_branch_tasks
@@ -70,6 +71,12 @@ def gen_all_tasks(
         get_steps=get_covariance_plotting_notebook_steps,
     )
     notebook_tasks.extend(covariance_plotting_tasks)
+
+    figures_tasks = gnb_tasks(
+        branch_name="figures",
+        get_steps=get_figures_notebook_steps,
+    )
+    notebook_tasks.extend(figures_tasks)
 
     yield from notebook_tasks
 

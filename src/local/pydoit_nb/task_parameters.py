@@ -3,6 +3,7 @@ Useful Doit [TODO link] task parameters
 """
 from __future__ import annotations
 
+import datetime as dt
 from pathlib import Path
 from typing import Any
 
@@ -23,8 +24,7 @@ run_config_task_params: list[dict[str, Any]] = [
     },
     {
         "name": "run_id",
-        #        "default": datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
-        "default": "zn-test",
+        "default": dt.datetime.now().strftime("%Y%m%d%H%M%S"),
         "type": str,
         "long": "run-id",
         "help": "id for the outputs",

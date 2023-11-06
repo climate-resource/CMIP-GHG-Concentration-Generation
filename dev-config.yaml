@@ -28,8 +28,8 @@ covariance_plotting:
 - branch_config_id: only
 figures:
 - branch_config_id: only
-  draw_comparison_figure: figures/510_draw-comparison.pdf
-  draw_comparison_table: data/processed/509_draw-table.csv
+  draw_comparison_figure: figures/920_draw-comparison.pdf
+  draw_comparison_table: data/processed/910_draw-table.csv
   misc_figures_dir: figures/misc
 name: dev
 preparation:

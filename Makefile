@@ -21,9 +21,14 @@ all:  ## compile all outputs
 	# High verbosity for now, may split out `all` and `all-verbose` targets if verbosity is too annoying
 	poetry run doit run --verbosity=2
 
+all-dev:  ## compile all outputs using the dev run-id
+	poetry run doit run --run-id "dev-test"
+
 all-debug:  ## compile all outputs, falling to debugger on failure
 	poetry run doit run --pdb
 
+doit-list:  ## list all the doit tasks
+	poetry run doit list
 
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase
