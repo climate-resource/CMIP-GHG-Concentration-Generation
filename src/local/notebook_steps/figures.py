@@ -32,7 +32,7 @@ def get_figures_notebook_steps(
             raw_notebook_ext=".py",
             summary="figures - Create clean table to plot from",
             doc="Create a clean data table from which to plot",
-            configuration=None,
+            configuration=(),
             dependencies=tuple(
                 [c.draw_file for c in config_covariance]
                 + [c.draw_file for c in config_constraint]
@@ -45,7 +45,7 @@ def get_figures_notebook_steps(
             raw_notebook_ext=".py",
             summary="figures - Plot draws against each other",
             doc="Create a figure showing the different samples",
-            configuration=None,
+            configuration=(),
             dependencies=(config_branch.draw_comparison_table,),
             targets=(config_branch.draw_comparison_figure,),
             config_file=config_bundle.config_hydrated_path,
