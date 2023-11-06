@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def gen_show_config_tasks(
-    config_bundles: Iterable[ConfigBundleLike[T]],
+    config_bundle: ConfigBundleLike[T],
     display_func: Callable[[ConfigBundleLike[T]], None],
 ) -> Iterable[DoitTaskSpec]:
     """
@@ -20,15 +20,15 @@ def gen_show_config_tasks(
 
     Parameters
     ----------
-    config_bundles
-        Configuration bundles from which to show the configuration
+    config_bundle
+        Configuration bundle to display
 
     display_func
-        Function to display (i.e. print) each configuration bundle
+        Function to display (i.e. print) the configuration bundle
 
     Yields
     ------
-        Task which displays a configuration (plus a base task which comes first)
+        Task which displays the configuration (plus a base task which comes first)
     """
     base_task = {
         "name": None,
@@ -36,9 +36,10 @@ def gen_show_config_tasks(
     }
     yield {**base_task}
 
-    for cb in config_bundles:
-        yield {
-            **base_task,
-            "name": cb.config_id,
-            "actions": [(display_func, (cb,), {})],
-        }
+    # This is now a silly function, but perhaps a useful illustration of pydoit
+    # (likely to be removed or refactored in future though)
+    yield {
+        **base_task,
+        "name": config_bundle.run_id,
+        "actions": [(display_func, (config_bundle,), {})],
+    }

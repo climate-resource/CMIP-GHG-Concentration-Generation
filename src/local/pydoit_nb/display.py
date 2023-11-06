@@ -18,6 +18,6 @@ def print_config_bundle(cb: ConfigBundleLike[Any]) -> None:
         Config bundle
     """
     print(
-        f"Will run {cb.config_id!r} with bundle serialised "
+        f"Will perform {cb.run_id=} with bundle serialised "
         f"in: {cb.config_hydrated_path!r}"
     )

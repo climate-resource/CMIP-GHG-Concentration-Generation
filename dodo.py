@@ -12,13 +12,13 @@ from typing import Any
 from doit import task_params
 
 from local import get_key_info
-from local.config import converter_yaml, get_config_bundles
+from local.config import ConfigBundle, converter_yaml, load_config_from_file
+from local.pydoit_nb.config_handling import insert_path_prefix
 from local.pydoit_nb.display import print_config_bundle
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.task_parameters import notebook_task_params, run_config_task_params
 from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
-from local.tasks import gen_all_tasks
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
@@ -92,40 +92,37 @@ def task_generate_workflow_tasks(
         Tasks which can be handled by :mod:`pydoit`
     """
     # TODO: somehow make this happen as part of task_params passing
+    configuration_file = configuration_file.absolute()
     root_dir_output = root_dir_output.absolute()
     root_dir_raw_notebooks = root_dir_raw_notebooks.absolute()
 
-    # You can add whatever logic and craziness you want above here
-    # We recommend at least having the root_dir_output, run_id and
-    # raw_notebooks_dir
-    # options as these make it easy to do different runs, put output where you
-    # want and move the notebooks if you want too. You will always want a line
-    # like this that generates your config bundles
-    config_bundles = get_config_bundles(
-        root_dir_output=root_dir_output,
+    # TODO: decide whether to give user more control over this or not
+    output_prefix = root_dir_output / run_id
+    output_prefix.mkdir(parents=True, exist_ok=True)
+
+    # Current logic: put everything in a single configuration file.
+    # The logic (however crazy) for generating that configuration file should
+    # be kept separate from actually running all the notebooks to simply
+    # maintenance.
+
+    # TODO: decide whether to put these steps together in a 'hydration' function
+    config = load_config_from_file(configuration_file)
+    config = insert_path_prefix(config, prefix=output_prefix)
+    config_bundle = ConfigBundle(
         run_id=run_id,
+        config_hydrated=config,
+        config_hydrated_path=output_prefix / configuration_file.name,
+        # root_dir_output=root_dir_output,
+        # output_notebook_dir=output_prefix / "notebooks",
     )
 
-    if not config_bundles:
-        logger.warning("No configuration bundles")
-        return
+    write_config_bundle_to_disk(config_bundle=config_bundle, converter=converter_yaml)
 
-    # Could move this to a function, but seems silly as probably best for users
-    # to control directory creation
-    [
-        cb.config_hydrated_path.parent.mkdir(exist_ok=True, parents=True)
-        for cb in config_bundles
-    ]
-    [
-        write_config_bundle_to_disk(config_bundle=cb, converter=converter_yaml)
-        for cb in config_bundles
-    ]
+    yield from gen_show_config_tasks(config_bundle, print_config_bundle)
 
-    yield from gen_show_config_tasks(config_bundles, print_config_bundle)
-
-    yield from gen_all_tasks(
-        config_bundles, root_dir_raw_notebooks=root_dir_raw_notebooks
-    )
-
+    #    yield from gen_all_tasks(
+    #        config_bundles, root_dir_raw_notebooks=root_dir_raw_notebooks
+    #    )
+    #
     logger.info("Finished run")
     print("Finished run")
