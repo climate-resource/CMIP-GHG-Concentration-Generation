@@ -128,10 +128,10 @@ class NotebookStep:
         TypeError
             ``self.configuration is not None`` but ``converter is None``
         """
-        dependencies = (
+        dependencies = [
             *self.dependencies,
             self.raw_notebook,
-        )
+        ]
         notebook_parameters = dict(
             config_file=str(self.config_file), branch_config_id=self.branch_config_id
         )
@@ -162,7 +162,7 @@ class NotebookStep:
 
         if self.configuration is None:
             # Run whenever config file changes
-            task["file_dep"].extend(self.config_file)
+            task["file_dep"].extend([self.config_file])
         else:
             if converter is None:
                 # TODO: better error

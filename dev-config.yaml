@@ -10,6 +10,13 @@ covariance:
   - - 0.3
     - 0.55
   draw_file: data/interim/110_cov_draws.csv
+- branch_config_id: cov-weak
+  covariance:
+  - - 0.25
+    - 0.1
+  - - 0.1
+    - 0.55
+  draw_file: data/interim/110_cov-weak_draws.csv
 - branch_config_id: no-cov
   covariance:
   - - 0.25

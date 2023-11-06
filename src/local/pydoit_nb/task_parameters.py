@@ -9,7 +9,7 @@ from typing import Any
 run_config_task_params: list[dict[str, Any]] = [
     {
         "name": "configuration_file",
-        "default": Path("dev-config-absolute.yaml"),
+        "default": Path("dev-config.yaml"),
         "type": Path,
         "long": "configuration-file",
         "help": "Path to configuration file",

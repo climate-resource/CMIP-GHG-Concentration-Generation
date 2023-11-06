@@ -21,6 +21,10 @@ all:  ## compile all outputs
 	# High verbosity for now, may split out `all` and `all-verbose` targets if verbosity is too annoying
 	poetry run doit run --verbosity=2
 
+all-debug:  ## compile all outputs, falling to debugger on failure
+	poetry run doit run --pdb
+
+
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase
 	@echo "=== pre-commit ==="; poetry run pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \

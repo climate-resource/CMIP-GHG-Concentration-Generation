@@ -22,16 +22,24 @@ from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
 root_logger = logging.getLogger()
-root_logger.setLevel(logging.INFO)
+root_logger.setLevel(logging.DEBUG)
 
 logFormatter = logging.Formatter(
     "%(levelname)s - %(asctime)s %(name)s %(processName)s (%(module)s:%(funcName)s:%(lineno)d):  %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+
 stdoutHandler = logging.StreamHandler()
 stdoutHandler.setFormatter(logFormatter)
+stdoutHandler.setLevel(logging.WARNING)
+
+fileHandler = logging.FileHandler("dodo.log")
+fileHandler.setFormatter(logFormatter)
+# TODO: Make this debug?
+fileHandler.setLevel(logging.INFO)
 
 root_logger.addHandler(stdoutHandler)
+root_logger.addHandler(fileHandler)
 
 logger = logging.getLogger("dodo")
 
@@ -125,5 +133,4 @@ def task_generate_workflow_tasks(
         config_bundle, root_dir_raw_notebooks=root_dir_raw_notebooks
     )
 
-    logger.info("Finished run")
-    print("Finished run")
+    logger.info("Finished generating doit tasks")

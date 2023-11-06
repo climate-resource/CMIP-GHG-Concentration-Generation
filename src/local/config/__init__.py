@@ -68,7 +68,7 @@ converter_yaml = cattrs.preconf.pyyaml.make_converter()
 
 
 def _is_np_array(inp: Any) -> bool:
-    return getattr(inp, "__origin__", None) is np.ndarray
+    return inp is np.ndarray or (getattr(inp, "__origin__", None) is np.ndarray)
 
 
 converter_yaml.register_unstructure_hook_func(_is_np_array, unstructure_np_array)
