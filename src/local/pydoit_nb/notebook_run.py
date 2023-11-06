@@ -25,13 +25,6 @@ class NotebookExecutionException(Exception):
         super().__init__(exc)
 
 
-#    def __str__(self):
-#        """
-#        Get string representation of self
-#        """
-#        return f"{self.filename} failed to execute: {self.exc}"
-
-
 def run_notebook(
     base_notebook: Path,
     unexecuted_notebook: Path,

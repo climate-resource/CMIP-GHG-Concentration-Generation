@@ -17,9 +17,6 @@ class ConfigBundleLike(Protocol[T]):
     Protocol for configuration bundles
     """
 
-    config_id: str
-    """ID for this set of config, unique among all configuration bundles"""
-
     config_hydrated_path: Path
     """Path in which to write the hydrated config"""
 
