@@ -6,6 +6,7 @@ from __future__ import annotations
 import logging
 import time
 from collections.abc import Iterable
+from pathlib import Path
 from typing import Any
 
 from doit import task_params
@@ -62,9 +63,10 @@ def task_display_info() -> dict[str, Any]:
 
 @task_params([*run_config_task_params, *notebook_task_params])
 def task_generate_workflow_tasks(
-    run_id,
-    root_dir_output,
-    root_dir_raw_notebooks,
+    configuration_file: Path,
+    run_id: str,
+    root_dir_output: Path,
+    root_dir_raw_notebooks: Path,
 ) -> Iterable[DoitTaskSpec]:
     """
     Generate workflow tasks
@@ -73,6 +75,9 @@ def task_generate_workflow_tasks(
 
     Parameters
     ----------
+    configuration_file
+        Configuration file to use with this run
+
     run_id
         The ID for this run
 

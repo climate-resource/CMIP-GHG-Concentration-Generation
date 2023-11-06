@@ -8,6 +8,13 @@ from typing import Any
 
 run_config_task_params: list[dict[str, Any]] = [
     {
+        "name": "configuration_file",
+        "default": Path("dev-config-absolute.yaml"),
+        "type": Path,
+        "long": "configuration-file",
+        "help": "Path to configuration file",
+    },
+    {
         "name": "root_dir_output",
         "default": Path("output-bundles"),
         "type": Path,
@@ -26,6 +33,7 @@ run_config_task_params: list[dict[str, Any]] = [
 """
 Task parameters to use to support generating config bundles
 """
+
 notebook_task_params: list[dict[str, Any]] = [
     {
         "name": "root_dir_raw_notebooks",
