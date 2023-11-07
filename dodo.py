@@ -109,6 +109,7 @@ def task_generate_workflow_tasks(
     root_dir_output_run = root_dir_output / run_id
     root_dir_output_run.mkdir(parents=True, exist_ok=True)
 
+    # TOOD: refactor out a re-useable gen_show_configuration_task function
     yield {
         "name": "Show configuration",
         "actions": [
@@ -152,6 +153,7 @@ def task_generate_workflow_tasks(
     yield from gen_all_tasks(
         config_bundle,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
+        repo_root_dir=Path(__file__).parent,
     )
 
     logger.info("Finished generating doit tasks")

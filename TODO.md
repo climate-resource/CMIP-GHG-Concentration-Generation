@@ -2,11 +2,11 @@
 
 Next steps:
 
-    - add in zenodo bundling step
     - get `make checks` to pass
     - fix up README
     - ask Jared for review
 
+- test that the entire workflow can be run from within the created bundle
 - add zenodo upload step (no point having it as separate script really)
 - add example using `generate_directory_checklist`
 

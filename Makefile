@@ -3,7 +3,7 @@
 DEV_CONFIG_YAML=dev-config.yaml
 DEV_CONFIG_ABSOLUTE_YAML=dev-config-absolute.yaml
 DEV_RUN_ID="dev-test-run"
-FINAL_DOIT_TASK="(9xx_figures/920_plot-draws) figures - Plot draws against each other"
+FINAL_DOIT_TASK="copy_source_into_output"
 SHOW_CONFIGURATION_TASK="generate_workflow_tasks:Show configuration"
 
 # A helper script to get short descriptions of each target in the Makefile

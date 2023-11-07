@@ -29,6 +29,7 @@ from .notebook_steps.preparation import (
     configure_notebooks_prep,
     get_unconfigured_notebooks_prep,
 )
+from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
 from .pydoit_nb.tasks_notebooks import get_notebook_branch_tasks
 from .pydoit_nb.typing import DoitTaskSpec
 
@@ -36,6 +37,7 @@ from .pydoit_nb.typing import DoitTaskSpec
 def gen_all_tasks(
     config_bundle: ConfigBundle,
     root_dir_raw_notebooks: Path,
+    repo_root_dir: Path,
 ) -> Iterable[DoitTaskSpec]:
     """
     Generate all tasks in the workflow
@@ -49,6 +51,10 @@ def gen_all_tasks(
         Directory in which raw notebooks are kept. The notebook path in the
         elements of `notebook_branch_meta` are assumed to be relative to this
         path.
+
+    repo_root_dir
+        Root directory of the repository, used for copying the source into the
+        output path so that a complete bundle can be uploaded easily to Zenodo
 
     Yields
     ------
@@ -99,7 +105,9 @@ def gen_all_tasks(
 
     yield from notebook_tasks
 
-    # final_task_targets = []
-    # yield from gen_copy_source_into_output_bundle_tasks(
-    #     file_dependencies=final_task_targets,
-    # )
+    yield from gen_copy_source_into_output_tasks(
+        all_tasks=notebook_tasks,
+        repo_root_dir=repo_root_dir,
+        root_dir_output_run=config_bundle.root_dir_output_run,
+        run_id=config_bundle.run_id,
+    )
