@@ -2,6 +2,7 @@
 
 Next steps:
 
+    - shift to using env variables rather than task parameters for passing in config
     - get `make checks` to pass
     - fix up README
     - ask Jared for review

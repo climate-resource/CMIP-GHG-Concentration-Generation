@@ -3,10 +3,11 @@ Useful Doit [TODO link] task parameters
 """
 from __future__ import annotations
 
-import datetime as dt
 from pathlib import Path
 from typing import Any
 
+# TODO: move all of these to environment variables so that the listing etc.
+# will actually work without so many headaches
 run_config_task_params: list[dict[str, Any]] = [
     {
         "name": "configuration_file",
@@ -24,7 +25,7 @@ run_config_task_params: list[dict[str, Any]] = [
     },
     {
         "name": "run_id",
-        "default": dt.datetime.now().strftime("%Y%m%d%H%M%S"),
+        "default": "run-id-not-set",
         "type": str,
         "long": "run-id",
         "help": "id for the outputs",
