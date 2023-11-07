@@ -4,7 +4,6 @@ Configuration handling
 from __future__ import annotations
 
 from functools import partial
-from pathlib import Path
 from typing import Any, TypeAlias, cast
 
 import cattrs.preconf.pyyaml
@@ -13,12 +12,9 @@ import numpy.typing as npt
 
 import local.pydoit_nb.serialization
 
-from .base import Config, ConfigBundle
+from .base import Config
 
 UnstructuredArray: TypeAlias = list[float] | list["UnstructuredArray"]
-
-SEED: int = 28474038
-"""Seed to use in random draws"""
 
 
 def unstructure_np_array(arr: npt.NDArray[np.float64]) -> UnstructuredArray:
@@ -73,55 +69,6 @@ def _is_np_array(inp: Any) -> bool:
 
 converter_yaml.register_unstructure_hook_func(_is_np_array, unstructure_np_array)
 converter_yaml.register_structure_hook_func(_is_np_array, structure_np_array)
-
-
-def get_config_bundles(
-    root_dir_output: Path,
-    run_id: str,
-) -> list[ConfigBundle]:
-    """
-    Get configuration bundles
-
-    All sorts of logic can be put in here. This is a very simple example.
-
-    Parameters
-    ----------
-    root_dir_output
-        Root directory in which output should be saved
-
-    run_id
-        ID for the run
-
-    Returns
-    -------
-        Hydrated configuration bundles
-    """
-    common_config = dict(seed=SEED)
-
-    bundles = []
-    for name, covariance in [
-        ("no-cov", np.array([[0.25, 0], [0, 0.5]])),
-        ("cov", np.array([[0.25, 0.5], [0.5, 0.5]])),
-    ]:
-        config_output_dir = root_dir_output / run_id / name
-        config = Config(
-            name=name,
-            covariance=covariance,
-            seed_file=root_dir_output / "seed.txt",
-            **common_config,
-        )
-        bundle = ConfigBundle(
-            run_id=run_id,
-            root_dir_output=root_dir_output,
-            output_notebook_dir=config_output_dir / "notebooks",
-            config_id=config.name,
-            config_hydrated=config,
-            config_hydrated_path=config_output_dir / f"{config.name}.yaml",
-        )
-
-        bundles.append(bundle)
-
-    return bundles
 
 
 load_config_from_file = partial(

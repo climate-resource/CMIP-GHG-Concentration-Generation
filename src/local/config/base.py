@@ -58,9 +58,6 @@ class ConfigBundle:
     run_id: str
     """ID for the run"""
 
-    #    config_id: str
-    #    """ID to identify this particular set of hydrated config, separate from all others"""
-
     config_hydrated: Config
     """Hydrated config"""
 
@@ -71,8 +68,7 @@ class ConfigBundle:
     """Root output directory"""
     # TODO: add validation here that this is an absolute path and exists
 
-
-#    output_notebook_dir: Path
-#    """Directory in which to write out the notebooks"""
-# TODO: decide whether to force this to be a sub-directory of
-# root_dir_output or not
+    root_dir_output_run: Path
+    """Root output directory for this run"""
+    # TODO: add validation here that this is an absolute path and exists
+    # TODO: add validation that this is a sub-directory of root_dir_output

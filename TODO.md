@@ -1,5 +1,13 @@
 # TODO
 
+Next steps:
+
+    - add in zenodo bundling step
+    - get `make checks` to pass
+    - fix up README
+    - ask Jared for review
+
+- add zenodo upload step (no point having it as separate script really)
 - add example using `generate_directory_checklist`
 
 - think about whether using taipy would be a better way to do all this

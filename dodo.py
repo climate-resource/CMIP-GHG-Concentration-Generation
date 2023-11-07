@@ -12,12 +12,12 @@ from typing import Any
 from doit import task_params
 
 from local import get_key_info
-from local.config import ConfigBundle, converter_yaml, load_config_from_file
+from local.config import converter_yaml, load_config_from_file
+from local.config.base import ConfigBundle
 from local.pydoit_nb.config_handling import insert_path_prefix
-from local.pydoit_nb.display import print_config_bundle
+from local.pydoit_nb.display import print_config
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.task_parameters import notebook_task_params, run_config_task_params
-from local.pydoit_nb.tasks import gen_show_config_tasks
 from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
@@ -59,7 +59,7 @@ def print_key_info() -> None:
 
 def task_display_info() -> dict[str, Any]:
     """
-    Generate task which displays key information
+    Display key information
 
     Returns
     -------
@@ -106,8 +106,24 @@ def task_generate_workflow_tasks(
     root_dir_raw_notebooks = root_dir_raw_notebooks.absolute()
 
     # TODO: decide whether to give user more control over this or not
-    output_prefix = root_dir_output / run_id
-    output_prefix.mkdir(parents=True, exist_ok=True)
+    root_dir_output_run = root_dir_output / run_id
+    root_dir_output_run.mkdir(parents=True, exist_ok=True)
+
+    yield {
+        "name": "Show configuration",
+        "actions": [
+            (
+                print_config,
+                [],
+                dict(
+                    configuration_file=configuration_file,
+                    run_id=run_id,
+                    root_dir_output=root_dir_output,
+                    root_dir_raw_notebooks=root_dir_raw_notebooks,
+                ),
+            )
+        ],
+    }
 
     # Current logic: put everything in a single configuration file.
     # The logic (however crazy) for generating that configuration file should
@@ -116,21 +132,26 @@ def task_generate_workflow_tasks(
 
     # TODO: decide whether to put these steps together in a 'hydration' function
     config = load_config_from_file(configuration_file)
-    config = insert_path_prefix(config, prefix=output_prefix)
+    config = insert_path_prefix(config, prefix=root_dir_output_run)
     config_bundle = ConfigBundle(
         run_id=run_id,
         config_hydrated=config,
-        config_hydrated_path=output_prefix / configuration_file.name,
+        config_hydrated_path=root_dir_output_run / configuration_file.name,
         root_dir_output=root_dir_output,
-        # output_notebook_dir=output_prefix / "notebooks",
+        root_dir_output_run=root_dir_output_run,
     )
 
     write_config_bundle_to_disk(config_bundle=config_bundle, converter=converter_yaml)
 
-    yield from gen_show_config_tasks(config_bundle, print_config_bundle)
+    yield {
+        "basename": "generate_workflow_tasks",
+        "name": None,
+        "doc": "Generate tasks for the workflow",
+    }
 
     yield from gen_all_tasks(
-        config_bundle, root_dir_raw_notebooks=root_dir_raw_notebooks
+        config_bundle,
+        root_dir_raw_notebooks=root_dir_raw_notebooks,
     )
 
     logger.info("Finished generating doit tasks")

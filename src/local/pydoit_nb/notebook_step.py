@@ -78,17 +78,17 @@ class NotebookStep:
     # non-file dependencies elsewhere so maybe these are just out of date docs)
 
     @classmethod
-    def from_unconfigured_notebook(
+    def from_configured_notebook(
         cls,
-        unconfigured,
+        configured: ConfiguredNotebook,
         root_dir_raw_notebooks: Path,
         notebook_output_dir: Path,
         branch_config_id: str,
     ) -> NotebookStep:
-        raw_notebook = root_dir_raw_notebooks / unconfigured.notebook_path.with_suffix(
-            unconfigured.raw_notebook_ext
+        raw_notebook = root_dir_raw_notebooks / configured.notebook_path.with_suffix(
+            configured.raw_notebook_ext
         )
-        notebook_name = unconfigured.notebook_path.name
+        notebook_name = configured.notebook_path.name
 
         return cls(
             raw_notebook=raw_notebook,
@@ -96,23 +96,29 @@ class NotebookStep:
                 notebook_output_dir / f"{notebook_name}_unexecuted.ipynb"
             ),
             executed_notebook=notebook_output_dir / f"{notebook_name}.ipynb",
-            summary_notebook=unconfigured.summary,
-            doc_notebook=unconfigured.doc,
+            summary_notebook=configured.summary,
+            doc_notebook=configured.doc,
             branch_config_id=branch_config_id,
-            config_file=unconfigured.config_file,
-            dependencies=unconfigured.dependencies,
-            targets=unconfigured.targets,
-            configuration=unconfigured.configuration,
+            config_file=configured.config_file,
+            dependencies=configured.dependencies,
+            targets=configured.targets,
+            configuration=configured.configuration,
         )
 
     def to_doit_task(
-        self, converter: Converter | None = None, clean: bool = True
+        self,
+        base_task: BaseTaskLike,
+        converter: Converter | None = None,
+        clean: bool = True,
     ) -> DoitTaskSpec:
         """
         Convert to a :mod:`doit` task
 
         Parameters
         ----------
+        base_task
+            Base task definition for this notebook step
+
         converter
             Converter to use to serialise configuration if needed.
 
@@ -139,9 +145,9 @@ class NotebookStep:
         targets = self.targets
 
         task = dict(
-            basename=self.summary_notebook,
+            basename=base_task["basename"],
             name=self.branch_config_id,
-            doc=f"{self.doc_notebook}. branch_config_id={self.branch_config_id!r}",
+            doc=f"{base_task['doc']}. branch_config_id={self.branch_config_id!r}",
             actions=[
                 (
                     run_notebook,

@@ -3,7 +3,8 @@
 DEV_CONFIG_YAML=dev-config.yaml
 DEV_CONFIG_ABSOLUTE_YAML=dev-config-absolute.yaml
 DEV_RUN_ID="dev-test-run"
-FINAL_DOIT_TASK="figures - Plot draws against each other"
+FINAL_DOIT_TASK="(9xx_figures/920_plot-draws) figures - Plot draws against each other"
+SHOW_CONFIGURATION_TASK="generate_workflow_tasks:Show configuration"
 
 # A helper script to get short descriptions of each target in the Makefile
 define PRINT_HELP_PYSCRIPT
@@ -27,7 +28,7 @@ all:  ## compile all outputs
 	poetry run doit run --verbosity=2
 
 all-dev:  ## compile all outputs using the dev run-id
-	poetry run doit generate_workflow_tasks --configuration-file $(DEV_CONFIG_YAML) --run-id $(DEV_RUN_ID) $(FINAL_DOIT_TASK)
+	poetry run doit --verbosity=2 generate_workflow_tasks --configuration-file $(DEV_CONFIG_YAML) --run-id $(DEV_RUN_ID) $(SHOW_CONFIGURATION_TASK) $(FINAL_DOIT_TASK)
 
 all-debug:  ## compile all outputs, falling to debugger on failure
 	poetry run doit run --pdb

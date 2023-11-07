@@ -5,19 +5,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from .typing import ConfigBundleLike
 
-
-def print_config_bundle(cb: ConfigBundleLike[Any]) -> None:
+def print_config(**kwargs: Any) -> None:
     """
-    Print configuration bundle info
+    Print configuration
 
     Parameters
     ----------
-    cb
-        Config bundle
+    **kwargs
+        Config to show
     """
-    print(
-        f"Will perform {cb.run_id=} with bundle serialised "
-        f"in: {cb.config_hydrated_path!r}"
-    )
+    config_str = "\n".join([f"\t{k}: {v}" for k, v in kwargs.items()])
+    print(f"Will run with the following config:\n{config_str}\n")
