@@ -8,7 +8,7 @@ from collections.abc import Callable
 from typing import Any
 
 
-def swallow_output(func: Callable[[...], Any]) -> Callable[[...], None]:
+def swallow_output(func: Callable[..., Any]) -> Callable[..., None]:
     """
     Decorate function so the output is swallowed
 

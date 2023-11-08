@@ -29,7 +29,7 @@ class Converter(Protocol[T_contra]):
     Protocol for converters
     """
 
-    def dumps(self, config: T_contra, sort_keys: bool) -> str:
+    def dumps(self, config: T_contra, sort_keys: bool = False) -> str:
         """
         Dump config to a string
         """
@@ -37,3 +37,7 @@ class Converter(Protocol[T_contra]):
 
     def loads(self, inp: str, target: type[T]) -> T:
         ...
+
+
+HandleableConfiguration: TypeAlias = str
+"""Config which we can handle and pass to a notebook via papermill"""

@@ -1,0 +1,6 @@
+import os
+
+import nbformat
+
+def read(fp: os.PathLike) -> nbformat.NotebookNode: ...
+def write(nb: nbformat.NotebookNode, fp: os.PathLike, fmt: str | None) -> None: ...

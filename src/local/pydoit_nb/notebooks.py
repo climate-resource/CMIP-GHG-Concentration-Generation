@@ -6,8 +6,12 @@ TODO: move this to a better name, `notebooks` doesn't make sense given the conte
 from __future__ import annotations
 
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from attrs import frozen
+
+if TYPE_CHECKING:
+    from .typing import HandleableConfiguration
 
 
 @frozen

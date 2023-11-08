@@ -38,7 +38,9 @@ def write_config_bundle_to_disk(
     return write_path
 
 
-def load_config_from_file(config_file: Path, target: T, converter: Converter[U]) -> T:
+def load_config_from_file(
+    config_file: Path, target: type[T], converter: Converter[U]
+) -> T:
     with open(config_file) as fh:
         config = converter.loads(fh.read(), target)
 
