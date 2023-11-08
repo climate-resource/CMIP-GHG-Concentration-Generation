@@ -16,7 +16,7 @@ from .notebook_run import run_notebook
 from .typing import Converter, DoitTaskSpec, HandleableConfiguration
 
 if TYPE_CHECKING:
-    from .notebooks import ConfiguredNotebook
+    from .notebook import ConfiguredNotebook
 
 
 @frozen

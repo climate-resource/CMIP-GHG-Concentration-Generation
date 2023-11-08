@@ -10,9 +10,7 @@ from typing import Any
 from attrs import asdict
 
 from ..config import get_config_for_branch_id
-
-# TODO: move into pydoit_nb so it is more general?
-from ..pydoit_nb.notebooks import ConfiguredNotebook, UnconfiguredNotebook
+from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.typing import ConfigBundleLike
 
 

@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import Protocol, TypeVar
 
 from .config_handling import get_branch_config_ids
+from .notebook import ConfiguredNotebook, UnconfiguredNotebook
 from .notebook_step import NotebookStep
-from .notebooks import ConfiguredNotebook, UnconfiguredNotebook
 from .typing import ConfigBundleLike, Converter, DoitTaskSpec, HandleableConfiguration
 
 T = TypeVar("T")

@@ -1,7 +1,5 @@
 """
-Notebook support
-
-TODO: move this to a better name, `notebooks` doesn't make sense given the contents
+Notebook defining classes
 """
 from __future__ import annotations
 
