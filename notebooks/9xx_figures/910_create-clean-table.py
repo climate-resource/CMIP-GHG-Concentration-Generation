@@ -54,7 +54,7 @@ config_branch = get_config_for_branch_id(
 # ### Make clean table
 
 # %% editable=true slideshow={"slide_type": ""}
-all_dat = []
+all_dat: list[pd.DataFrame] = []
 
 for covariance_variation in config.covariance:
     draws = pd.read_csv(covariance_variation.draw_file)
@@ -66,10 +66,10 @@ for constraint_variation in config.constraint:
     draws["label"] = f"constraint_{constraint_variation.branch_config_id}"
     all_dat.append(draws)
 
-all_dat = pd.concat(all_dat, axis="rows")
-all_dat
+all_dat_df = pd.concat(all_dat, axis="rows")  # type: ignore # pandas being silly
+all_dat_df
 
 # %% editable=true slideshow={"slide_type": ""}
 config_branch.draw_comparison_table.parent.mkdir(parents=True, exist_ok=True)
-all_dat.to_csv(config_branch.draw_comparison_table, index=False)
+all_dat_df.to_csv(config_branch.draw_comparison_table, index=False)
 config_branch.draw_comparison_table

@@ -3,23 +3,41 @@ Task generation related to notebooks
 """
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Protocol, TypeVar
 
 from .config_handling import get_branch_config_ids
 from .notebook_step import NotebookStep
-from .typing import ConfigBundleLike, Converter, DoitTaskSpec
+from .notebooks import ConfiguredNotebook, UnconfiguredNotebook
+from .typing import ConfigBundleLike, Converter, DoitTaskSpec, HandleableConfiguration
+
+T = TypeVar("T")
+
+
+class GetUnconfiguredNotebooksCallable(Protocol):
+    def __call__(self) -> list[UnconfiguredNotebook]:
+        ...
+
+
+class ConfigureNotebooksCallable(Protocol[T]):
+    def __call__(
+        self,
+        unconfigured_notebooks: Iterable[UnconfiguredNotebook],
+        config_bundle: ConfigBundleLike[T],
+        branch_name: str,
+        branch_config_id: str,
+    ) -> list[ConfiguredNotebook]:
+        ...
 
 
 def get_notebook_branch_tasks(  # noqa: PLR0913
     branch_name: str,
-    get_unconfigured_notebooks: Callable[[], list[UnconfiguredNotebook]],
-    configure_notebooks: Callable[
-        [Iterable[UnconfiguredNotebook]], list[ConfiguredNotebook]
-    ],
-    config_bundle: ConfigBundleLike,
+    get_unconfigured_notebooks: GetUnconfiguredNotebooksCallable,
+    configure_notebooks: ConfigureNotebooksCallable[T],
+    config_bundle: ConfigBundleLike[T],
     root_dir_raw_notebooks: Path,
-    converter: Converter | None = None,
+    converter: Converter[tuple[HandleableConfiguration, ...]] | None = None,
     clean: bool = True,
 ) -> Iterable[DoitTaskSpec]:
     unconfigured_notebooks = get_unconfigured_notebooks()
@@ -51,9 +69,9 @@ def get_notebook_branch_tasks(  # noqa: PLR0913
         notebook_output_dir_branch_id = notebook_output_dir_branch / branch_config_id
         notebook_output_dir_branch_id.mkdir(exist_ok=True, parents=True)
 
-        for nb in configured_notebooks:
+        for nb_configured in configured_notebooks:
             notebook_task = NotebookStep.from_configured_notebook(
-                configured=nb,
+                configured=nb_configured,
                 root_dir_raw_notebooks=root_dir_raw_notebooks,
                 notebook_output_dir=notebook_output_dir_branch_id,
                 branch_config_id=branch_config_id,

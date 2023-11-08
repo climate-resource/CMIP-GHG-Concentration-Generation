@@ -3,16 +3,19 @@ Constraint notebook steps
 """
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 from attrs import asdict
 
 # TODO: move into pydoit_nb so it is more general?
 from ..config import get_config_for_branch_id
 from ..pydoit_nb.notebooks import ConfiguredNotebook, UnconfiguredNotebook
+from ..pydoit_nb.typing import ConfigBundleLike
 
 
-def get_unconfigured_notebooks_constraint():
+def get_unconfigured_notebooks_constraint() -> Iterable[UnconfiguredNotebook]:
     return [
         UnconfiguredNotebook(
             notebook_path=Path("2xx_constraint") / "210_draw-samples",
@@ -24,11 +27,11 @@ def get_unconfigured_notebooks_constraint():
 
 
 def configure_notebooks_constraint(
-    unconfigured_notebooks,
-    config_bundle,
-    branch_name,
-    branch_config_id,
-):
+    unconfigured_notebooks: Iterable[UnconfiguredNotebook],
+    config_bundle: ConfigBundleLike[Any],
+    branch_name: str,
+    branch_config_id: str,
+) -> Iterable[ConfiguredNotebook]:
     uc_nbs_dict = {nb.notebook_path: nb for nb in unconfigured_notebooks}
 
     config = config_bundle.config_hydrated

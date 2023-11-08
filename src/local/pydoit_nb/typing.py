@@ -23,6 +23,9 @@ class ConfigBundleLike(Protocol[T]):
     config_hydrated: T
     """Config to be hydrated"""
 
+    root_dir_output_run: Path
+    """Root directory in which output is saved"""
+
 
 class Converter(Protocol[T_contra]):
     """

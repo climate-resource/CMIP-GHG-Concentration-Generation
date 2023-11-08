@@ -21,7 +21,7 @@
 # %%
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
+import seaborn as sns  # type: ignore
 
 from local.config import get_config_for_branch_id, load_config_from_file
 

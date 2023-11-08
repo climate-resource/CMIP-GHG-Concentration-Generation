@@ -7,15 +7,16 @@ to run it.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TypeAlias
+from typing import TYPE_CHECKING
 
 from attrs import frozen
 from doit.tools import config_changed  # type: ignore
 
 from .notebook_run import run_notebook
-from .typing import Converter, DoitTaskSpec
+from .typing import Converter, DoitTaskSpec, HandleableConfiguration
 
-HandleableConfiguration: TypeAlias = str | int | Path
+if TYPE_CHECKING:
+    from .notebooks import ConfiguredNotebook
 
 
 @frozen
@@ -107,8 +108,8 @@ class NotebookStep:
 
     def to_doit_task(
         self,
-        base_task: BaseTaskLike,
-        converter: Converter | None = None,
+        base_task: DoitTaskSpec,
+        converter: Converter[tuple[HandleableConfiguration, ...]] | None = None,
         clean: bool = True,
     ) -> DoitTaskSpec:
         """

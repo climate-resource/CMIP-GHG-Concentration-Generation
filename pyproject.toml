@@ -28,6 +28,7 @@ pre-commit = "^3.5.0"
 # Pin to commit until 1.7.0 is released,
 # see https://github.com/python/mypy/issues/16254
 mypy = { git = "https://github.com/python/mypy.git", rev = "bc591c7" }
+pandas-stubs = "^2.1.1.230928"
 
 [tool.jupytext]
 formats = "ipynb,py:percent"

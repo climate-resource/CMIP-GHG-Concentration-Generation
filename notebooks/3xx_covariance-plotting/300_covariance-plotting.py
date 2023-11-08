@@ -22,7 +22,7 @@
 
 # %%
 import pandas as pd
-import seaborn as sns
+import seaborn as sns  # type: ignore
 
 from local.config import get_config_for_branch_id, load_config_from_file
 
@@ -57,14 +57,14 @@ config_branch = get_config_for_branch_id(
 # Make quick plots to check difference between covariance draws.
 
 # %% editable=true slideshow={"slide_type": ""}
-all_dat = []
+all_dat: list[pd.DataFrame] = []
 for covariance_variation in config.covariance:
     draws = pd.read_csv(covariance_variation.draw_file)
     draws["branch_config_id"] = covariance_variation.branch_config_id
     all_dat.append(draws)
 
-all_dat = pd.concat(all_dat, axis="rows")
-all_dat
+all_dat_df = pd.concat(all_dat, axis="rows")  # type: ignore # pandas being silly
+all_dat_df
 
 # %%
-sns.scatterplot(data=all_dat, x="x", y="y", hue="branch_config_id", alpha=0.5)
+sns.scatterplot(data=all_dat_df, x="x", y="y", hue="branch_config_id", alpha=0.5)

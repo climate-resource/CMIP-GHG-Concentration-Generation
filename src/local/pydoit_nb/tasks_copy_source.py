@@ -5,13 +5,14 @@ from __future__ import annotations
 
 import json
 import shutil
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from pathlib import Path
 from typing import Any
 
 from attrs import frozen
 
 from .doit_tools import swallow_output
+from .typing import DoitTaskSpec
 
 
 @frozen
@@ -21,7 +22,7 @@ class ActionDef:
     name: str
     """Name of the action"""
 
-    action: tuple[Callable[[...], Any], list[Any], dict[str, Any]]
+    action: tuple[Callable[..., Any], list[Any], dict[str, Any]]
     """Action to execute with doit"""
 
     targets: tuple[Path, ...]
@@ -29,10 +30,10 @@ class ActionDef:
 
 
 def gen_copy_source_into_output_tasks(
-    all_tasks,
-    repo_root_dir,
-    root_dir_output_run,
-    run_id,
+    all_preceeding_tasks: Iterable[DoitTaskSpec],
+    repo_root_dir: Path,
+    root_dir_output_run: Path,
+    run_id: str,
     readme: str = "README.md",
     zenodo: str = "zenodo.json",
     other_files_to_copy: tuple[str, ...] = (
@@ -41,9 +42,9 @@ def gen_copy_source_into_output_tasks(
         "pyproject.toml",
     ),
     src_dir: str = "src",
-):
+) -> Iterable[DoitTaskSpec]:
     all_targets = []
-    for task in all_tasks:
+    for task in all_preceeding_tasks:
         if "targets" in task:
             all_targets.extend(task["targets"])
 

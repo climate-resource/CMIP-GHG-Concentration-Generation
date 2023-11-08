@@ -71,15 +71,15 @@ seed
 generator = np.random.Generator(np.random.PCG64(seed))
 
 # %%
-draws = []
-while len(draws) < N_DRAWS:
+draws_list: list[list[float]] = []
+while len(draws_list) < N_DRAWS:
     x = generator.uniform(high=2.0)
     y = generator.uniform()
 
     if y > x * config_branch.constraint_gradient:
-        draws.append([x, y])
+        draws_list.append([x, y])
 
-draws = pd.DataFrame(draws, columns=["x", "y"])
+draws = pd.DataFrame(draws_list, columns=["x", "y"])
 draws
 
 # %%

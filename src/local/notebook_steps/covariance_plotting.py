@@ -3,7 +3,9 @@ Covariance plotting notebook steps
 """
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 from attrs import asdict
 
@@ -11,9 +13,10 @@ from ..config import get_config_for_branch_id
 
 # TODO: move into pydoit_nb so it is more general?
 from ..pydoit_nb.notebooks import ConfiguredNotebook, UnconfiguredNotebook
+from ..pydoit_nb.typing import ConfigBundleLike
 
 
-def get_unconfigured_notebooks_covariance_plotting():
+def get_unconfigured_notebooks_covariance_plotting() -> Iterable[UnconfiguredNotebook]:
     return [
         UnconfiguredNotebook(
             notebook_path=Path("3xx_covariance-plotting") / "300_covariance-plotting",
@@ -25,11 +28,11 @@ def get_unconfigured_notebooks_covariance_plotting():
 
 
 def configure_notebooks_covariance_plotting(
-    unconfigured_notebooks,
-    config_bundle,
-    branch_name,
-    branch_config_id,
-):
+    unconfigured_notebooks: Iterable[UnconfiguredNotebook],
+    config_bundle: ConfigBundleLike[Any],
+    branch_name: str,
+    branch_config_id: str,
+) -> Iterable[ConfiguredNotebook]:
     uc_nbs_dict = {nb.notebook_path: nb for nb in unconfigured_notebooks}
 
     config = config_bundle.config_hydrated

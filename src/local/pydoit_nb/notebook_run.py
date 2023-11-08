@@ -17,9 +17,7 @@ class NotebookExecutionException(Exception):
     Raised when a notebook fails to execute for any reason
     """
 
-    def __init__(self, exc, filename):
-        # self.exc = exc
-        # self.filename = filename
+    def __init__(self, exc: Exception, filename: Path):
         note = f"{filename} failed to execute. Original exception: {exc}"
         self.add_note(note)
         super().__init__(exc)

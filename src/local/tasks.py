@@ -60,7 +60,7 @@ def gen_all_tasks(
     ------
         :mod:`doit` tasks to run
     """
-    notebook_tasks = []
+    notebook_tasks: list[DoitTaskSpec] = []
     gnb_tasks = partial(
         get_notebook_branch_tasks,
         config_bundle=config_bundle,
@@ -106,7 +106,7 @@ def gen_all_tasks(
     yield from notebook_tasks
 
     yield from gen_copy_source_into_output_tasks(
-        all_tasks=notebook_tasks,
+        all_preceeding_tasks=notebook_tasks,
         repo_root_dir=repo_root_dir,
         root_dir_output_run=config_bundle.root_dir_output_run,
         run_id=config_bundle.run_id,
