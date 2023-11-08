@@ -1,10 +1,10 @@
-import os
+from pathlib import Path
 from typing import Any
 
 import nbformat
 
 def execute_notebook(
-    input_notebook: os.PathLike,
-    output_notebook: os.PathLike,
+    input_notebook: Path,
+    output_notebook: Path,
     parameters: dict[str, Any],
 ) -> nbformat.NotebookNode: ...

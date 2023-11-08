@@ -5,13 +5,15 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, TypeVar
+from typing import Any, TypeVar, overload
 
 import attrs
 import numpy as np
 from attrs import AttrsInstance, evolve, fields
 
-U = TypeVar("U")
+from .typing import NotebookConfigLike
+
+T = TypeVar("T")
 
 
 def insert_path_prefix(config: AttrsInstance, prefix: Path) -> AttrsInstance:
@@ -40,12 +42,31 @@ def insert_path_prefix(config: AttrsInstance, prefix: Path) -> AttrsInstance:
         attr_name = attr.name
         attr_value = getattr(config, attr_name)
 
-        evolutions[attr_name] = update_attr_value(attr_value, prefix=prefix)
+        if attrs.has(type(attr_value)):
+            evolutions[attr_name] = insert_path_prefix(attr_value, prefix)
 
-    return evolve(config, **evolutions)
+        elif not isinstance(attr_value, str | np.ndarray) and isinstance(
+            attr_value, Iterable
+        ):
+            evolutions[attr_name] = [update_attr_value(v, prefix) for v in attr_value]
+
+        else:
+            evolutions[attr_name] = update_attr_value(attr_value, prefix)
+
+    return evolve(config, **evolutions)  # type: ignore # no idea why this fails
 
 
-def update_attr_value(value: U, prefix: Path) -> U:
+@overload
+def update_attr_value(value: Path, prefix: Path) -> Path:
+    ...
+
+
+@overload
+def update_attr_value(value: T, prefix: Path) -> T:
+    ...
+
+
+def update_attr_value(value: Path | T, prefix: Path) -> Path | T:
     """
     Update the attribute value if it is :obj:`Path` to include the prefix
 
@@ -66,14 +87,8 @@ def update_attr_value(value: U, prefix: Path) -> U:
     if isinstance(value, Path):
         return prefix / value
 
-    if attrs.has(value):
-        return insert_path_prefix(value, prefix)
-
-    if not isinstance(value, str | np.ndarray) and isinstance(value, Iterable):
-        return [update_attr_value(v, prefix=prefix) for v in value]
-
     return value
 
 
-def get_branch_config_ids(configs: NotebookConfigLike) -> list[str]:
+def get_branch_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
     return [c.branch_config_id for c in configs]

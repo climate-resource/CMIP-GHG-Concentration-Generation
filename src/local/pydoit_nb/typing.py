@@ -41,3 +41,12 @@ class Converter(Protocol[T_contra]):
 
 HandleableConfiguration: TypeAlias = str
 """Config which we can handle and pass to a notebook via papermill"""
+
+
+class NotebookConfigLike(Protocol):
+    """
+    A class which is like a notebook config
+    """
+
+    branch_config_id: str
+    """String which identifies the branch config to use with the notebook"""
