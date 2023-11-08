@@ -34,11 +34,38 @@ class Converter(Protocol[T_contra]):
 
     def dumps(self, config: T_contra, sort_keys: bool = False) -> str:
         """
-        Dump config to a string
+        Dump configuration to a string
+
+        Parameters
+        ----------
+        config
+            Configuration to dump
+
+        sort_keys
+            Should the keys be sorted in the output?
+
+        Returns
+        -------
+            String version of ``config``
         """
         ...
 
     def loads(self, inp: str, target: type[T]) -> T:
+        """
+        Load an instance of ``target`` from a string
+
+        Parameters
+        ----------
+        inp
+            String to load from
+
+        target
+            Object type to return
+
+        Returns
+        -------
+            Loaded instance of ``target``
+        """
         ...
 
 

@@ -41,6 +41,25 @@ def write_config_bundle_to_disk(
 def load_config_from_file(
     config_file: Path, target: type[T], converter: Converter[U]
 ) -> T:
+    """
+    Load configuration from file
+
+    Parameters
+    ----------
+    config_file
+        File from which to load configuration
+
+    target
+        Class to load
+
+    converter
+        Converter to use to convert from ``config_file``'s contents to an
+        instance of ``target``
+
+    Returns
+    -------
+        Loaded instance of ``target``
+    """
     with open(config_file) as fh:
         config = converter.loads(fh.read(), target)
 

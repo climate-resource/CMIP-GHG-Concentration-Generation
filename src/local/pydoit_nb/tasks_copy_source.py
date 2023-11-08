@@ -29,7 +29,7 @@ class ActionDef:
     """Files that this action creates"""
 
 
-def gen_copy_source_into_output_tasks(
+def gen_copy_source_into_output_tasks(  # noqa: PLR0913
     all_preceeding_tasks: Iterable[DoitTaskSpec],
     repo_root_dir: Path,
     root_dir_output_run: Path,
@@ -43,6 +43,42 @@ def gen_copy_source_into_output_tasks(
     ),
     src_dir: str = "src",
 ) -> Iterable[DoitTaskSpec]:
+    """
+    Generate tasks to copy the source into the output directory
+
+    Parameters
+    ----------
+    all_preceeding_tasks
+        All tasks preceeding this one. The targets of these tasks are set
+        as dependencies of this task to ensure that this task runs after them.
+
+    repo_root_dir
+        Root directory of the repository. This is used to know where to copy
+        files from.
+
+    root_dir_output_run
+        Root directory of the run's output.
+
+    run_id
+        ID of the run.
+
+    readme
+        Name of the README file to copy into the output
+
+    zenodo
+        Name of the zenodo JSON file to copy into the output
+
+    other_files_to_copy
+        Other files to copy into the output (paths are relative to the
+         project's root)
+
+    src_dir
+        Path to the Python source (this is also copied into the output bundle)
+
+    Returns
+    -------
+        Tasks for copying the source files into the output directory
+    """
     all_targets = []
     for task in all_preceeding_tasks:
         if "targets" in task:
@@ -52,7 +88,7 @@ def gen_copy_source_into_output_tasks(
         "basename": "copy_source_into_output",
         "doc": (
             "Copy required source files into the output directory, making it "
-            "easy to create a neat bundle for uploading to Zenodo",
+            "easy to create a neat bundle for uploading to Zenodo"
         ),
     }
 
@@ -114,6 +150,25 @@ def gen_copy_source_into_output_tasks(
 
 
 def copy_readme(in_path: Path, out_path: Path, run_id: str) -> None:
+    """
+    Copy the README into the output bundle
+
+    The footer is currently hard-coded, but this could obviously be opened up
+    (and perhaps should be sooner rather than later).
+
+    Parameters
+    ----------
+    in_path
+        Path to the raw README file (normally in the repository's root
+        directory)
+
+    out_path
+        Path in which to write the README file (normally in the output bundle)
+
+    run_id
+        ID of the run. This is injected into the written README as part of the
+        footer.
+    """
     with open(in_path) as fh:
         raw = fh.read()
 

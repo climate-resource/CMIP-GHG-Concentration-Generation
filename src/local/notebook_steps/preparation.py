@@ -16,6 +16,13 @@ from ..pydoit_nb.typing import ConfigBundleLike
 
 
 def get_unconfigured_notebooks_prep() -> Iterable[UnconfiguredNotebook]:
+    """
+    Get unconfigured notebooks for the preparation branch
+
+    Returns
+    -------
+        Unconfigured notebooks
+    """
     return [
         UnconfiguredNotebook(
             notebook_path=Path("0xx_preparation") / "000_write-seed",
@@ -32,6 +39,27 @@ def configure_notebooks_prep(
     branch_name: str,
     branch_config_id: str,
 ) -> Iterable[ConfiguredNotebook]:
+    """
+    Configure notebooks for the preparation branch
+
+    Parameters
+    ----------
+    unconfigured_notebooks
+        Unconfigured notebooks
+
+    config_bundle
+        Configuration bundle from which to take configuration values
+
+    branch_name
+        Name of the branch
+
+    branch_config_id
+        Branch config ID to use when configuring the notebook
+
+    Returns
+    -------
+        Configured notebooks
+    """
     uc_nbs_dict = {nb.notebook_path: nb for nb in unconfigured_notebooks}
 
     config = config_bundle.config_hydrated
@@ -47,6 +75,7 @@ def configure_notebooks_prep(
             dependencies=(),
             targets=(config_branch.seed_file,),
             config_file=config_bundle.config_hydrated_path,
+            branch_config_id=branch_config_id,
         )
     ]
 

@@ -34,6 +34,16 @@ class UnconfiguredNotebook:
 
 @frozen
 class ConfiguredNotebook:
+    """
+    A configured notebook
+
+    It might make sense to refactor this so has an UnconfiguredNotebook
+    as one of its attributes rather than duplicatinng things. That would
+    probably also make it clearer that a configured notebook is just the
+    combination of an unconfigured notebook and the config we want to use
+    with it.
+    """
+
     notebook_path: Path
     """Path to notebook, relative to the raw notebook directory"""
 
@@ -70,3 +80,6 @@ class ConfiguredNotebook:
 
     config_file: Path
     """Path to the config file to use with the notebook"""
+
+    branch_config_id: str
+    """`branch_config_id` to use for this run of the notebook"""

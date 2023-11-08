@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, TypeVar, overload
+from typing import Any, TypeVar, cast, overload
 
 import attrs
 import numpy as np
@@ -42,10 +42,7 @@ def insert_path_prefix(config: AttrsInstance, prefix: Path) -> AttrsInstance:
         attr_name = attr.name
         attr_value = getattr(config, attr_name)
 
-        if attrs.has(type(attr_value)):
-            evolutions[attr_name] = insert_path_prefix(attr_value, prefix)
-
-        elif not isinstance(attr_value, str | np.ndarray) and isinstance(
+        if not isinstance(attr_value, str | np.ndarray) and isinstance(
             attr_value, Iterable
         ):
             evolutions[attr_name] = [update_attr_value(v, prefix) for v in attr_value]
@@ -54,6 +51,11 @@ def insert_path_prefix(config: AttrsInstance, prefix: Path) -> AttrsInstance:
             evolutions[attr_name] = update_attr_value(attr_value, prefix)
 
     return evolve(config, **evolutions)  # type: ignore # no idea why this fails
+
+
+@overload
+def update_attr_value(value: AttrsInstance, prefix: Path) -> AttrsInstance:
+    ...
 
 
 @overload
@@ -66,7 +68,9 @@ def update_attr_value(value: T, prefix: Path) -> T:
     ...
 
 
-def update_attr_value(value: Path | T, prefix: Path) -> Path | T:
+def update_attr_value(
+    value: AttrsInstance | Path | T, prefix: Path
+) -> AttrsInstance | Path | T:
     """
     Update the attribute value if it is :obj:`Path` to include the prefix
 
@@ -84,6 +88,9 @@ def update_attr_value(value: Path | T, prefix: Path) -> Path | T:
     -------
         Updated value
     """
+    if attrs.has(type(value)):
+        return insert_path_prefix(cast(AttrsInstance, value), prefix)
+
     if isinstance(value, Path):
         return prefix / value
 
@@ -91,4 +98,16 @@ def update_attr_value(value: Path | T, prefix: Path) -> Path | T:
 
 
 def get_branch_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
+    """
+    Get available config IDs from an iterable of notebook configurations
+
+    Parameters
+    ----------
+    configs
+        Configurations from which to retrieve the branch config IDs
+
+    Returns
+    -------
+        Branch config ID from each config in ``configs``
+    """
     return [c.branch_config_id for c in configs]

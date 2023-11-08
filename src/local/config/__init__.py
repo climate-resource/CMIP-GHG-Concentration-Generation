@@ -83,9 +83,37 @@ def get_config_for_branch_id(
     branch: str,
     branch_config_id: str,
 ) -> Any:
+    """
+    Get configuration for a specific branch config ID for a specific branch
+
+    This will fail if ``branch`` isn't a part of ``config``
+
+    Parameters
+    ----------
+    config
+        Config from which to retrieve the branch config
+
+    branch
+        Branch to get configuration
+
+    branch_config_id
+        Branch config ID for which to get branch configuration
+
+    Returns
+    -------
+        Configuration for branch ``branch`` with branch config ID equal to
+        ``branch_config_id``
+
+    Raises
+    ------
+    ValueError
+        No configuration could be found with ID equal to ``branch_config_id``
+    """
     possibilities = getattr(config, branch)
     for poss in possibilities:
         if poss.branch_config_id == branch_config_id:
             return poss
 
-    raise AssertionError("Couldn't find config")
+    raise ValueError(  # noqa: TRY003
+        f"Couldn't find {branch_config_id=}, available branch config IDs: {possibilities}"
+    )

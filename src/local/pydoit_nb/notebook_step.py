@@ -84,8 +84,25 @@ class NotebookStep:
         configured: ConfiguredNotebook,
         root_dir_raw_notebooks: Path,
         notebook_output_dir: Path,
-        branch_config_id: str,
     ) -> NotebookStep:
+        """
+        Initialise from a configured notebook
+
+        Parameters
+        ----------
+        configured
+            Configured notebook from which to initialise
+
+        root_dir_raw_notebooks
+            Root directory in which the raw (not yet run) notebooks are kept
+
+        notebook_output_dir
+            Directory in which to write out the run notebook
+
+        Returns
+        -------
+            Initialised object
+        """
         raw_notebook = root_dir_raw_notebooks / configured.notebook_path.with_suffix(
             configured.raw_notebook_ext
         )
@@ -99,7 +116,7 @@ class NotebookStep:
             executed_notebook=notebook_output_dir / f"{notebook_name}.ipynb",
             summary_notebook=configured.summary,
             doc_notebook=configured.doc,
-            branch_config_id=branch_config_id,
+            branch_config_id=configured.branch_config_id,
             config_file=configured.config_file,
             dependencies=configured.dependencies,
             targets=configured.targets,
