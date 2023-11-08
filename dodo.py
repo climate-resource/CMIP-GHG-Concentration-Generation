@@ -3,13 +3,13 @@
 """
 from __future__ import annotations
 
+import datetime as dt
 import logging
+import os
 import time
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
-
-from doit import task_params
 
 from local import get_key_info
 from local.config import converter_yaml, load_config_from_file
@@ -17,7 +17,6 @@ from local.config.base import ConfigBundle
 from local.pydoit_nb.config_handling import insert_path_prefix
 from local.pydoit_nb.display import print_config
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
-from local.pydoit_nb.task_parameters import notebook_task_params, run_config_task_params
 from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
@@ -70,40 +69,40 @@ def task_display_info() -> dict[str, Any]:
     }
 
 
-@task_params([*run_config_task_params, *notebook_task_params])
-def task_generate_workflow_tasks(
-    configuration_file: Path,
-    run_id: str,
-    root_dir_output: Path,
-    root_dir_raw_notebooks: Path,
-) -> Iterable[DoitTaskSpec]:
+def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     """
     Generate workflow tasks
 
-    Further description etc. here
+    This task pulls in the following environment variables:
 
-    Parameters
-    ----------
-    configuration_file
-        Configuration file to use with this run
+    - ``DOIT_CONFIGURATION_FILE``
+        - The file to use to configure this run
 
-    run_id
-        The ID for this run
+    - ``DOIT_RUN_ID``
+        - The ID to use for this run
 
-    root_dir_output
-        Root directory for outputs
+    - ``DOIT_ROOT_DIR_OUTPUT``
+        - The root directory in which to write output
 
-    root_dir_raw_notebooks
-        Directory in which the raw (i.e. not yet run or input) notebooks live
+    - ``DOIT_ROOT_DIR_RAW_NOTEBOOKS``
+        - The root directory in which the raw (i.e. not yet run) notebooks live
 
     Returns
     -------
         Tasks which can be handled by :mod:`pydoit`
     """
-    # TODO: somehow make this happen as part of task_params passing
-    configuration_file = configuration_file.absolute()
-    root_dir_output = root_dir_output.absolute()
-    root_dir_raw_notebooks = root_dir_raw_notebooks.absolute()
+    # TODO: decide whether to split out this pattern to make it slightly more
+    # re-useable
+    configuration_file = Path(
+        os.environ.get("DOIT_CONFIGURATION_FILE", "dev-config.yaml")
+    ).absolute()
+    run_id = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
+    root_dir_output = Path(
+        os.environ.get("DOIT_ROOT_DIR_OUTPUT", "output-bundles")
+    ).absolute()
+    root_dir_raw_notebooks = Path(
+        os.environ.get("DOIT_ROOT_DIR_RAW_NOTEBOOKS", "notebooks")
+    ).absolute()
 
     # TODO: decide whether to give user more control over this or not
     root_dir_output_run = root_dir_output / run_id

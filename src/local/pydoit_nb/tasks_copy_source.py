@@ -101,9 +101,10 @@ def gen_copy_source_into_output_tasks(
     ]
 
     for action_def in action_defs:
+        created_files_short = tuple(f".../{t.name}" for t in action_def.targets)
         yield {
             "basename": base_task["basename"],
-            "doc": f"{base_task['doc']}. Creating {action_def.targets}.",
+            "doc": f"{base_task['doc']}. Copying in {created_files_short}",
             "name": action_def.name,
             "actions": [action_def.action],
             "targets": action_def.targets,

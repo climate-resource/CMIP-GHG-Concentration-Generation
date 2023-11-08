@@ -27,14 +27,17 @@ all:  ## compile all outputs
 	# High verbosity for now, may split out `all` and `all-verbose` targets if verbosity is too annoying
 	poetry run doit run --verbosity=2
 
-all-dev:  ## compile all outputs using the dev run-id
-	poetry run doit --verbosity=2 generate_workflow_tasks --configuration-file $(DEV_CONFIG_YAML) --run-id $(DEV_RUN_ID) $(SHOW_CONFIGURATION_TASK) $(FINAL_DOIT_TASK)
-
-all-debug:  ## compile all outputs, falling to debugger on failure
-	poetry run doit run --pdb
-
 doit-list:  ## list all the doit tasks
-	poetry run doit list --all --status --deps
+	poetry run doit list --all --status
+
+all-dev:  ## compile all outputs using the dev run-id
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit run --verbosity=2
+
+all-debug-dev:  ## compile all outputs using the dev run-id, falling to debugger on failure
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit run --pdb
+
+doit-list-dev:  ## list all the doit tasks using the dev run-id
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit list --all --status
 
 $(DEV_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-config-absolute.py
 	poetry run python scripts/create-dev-config-absolute.py
