@@ -2,7 +2,7 @@
 dev-config-absolute.yaml
 
 # Output
-output-bundles
+output-bundles*
 
 # Data (generally recommended as it will bloat your repository and is captured in
 # the output bundle anyway)

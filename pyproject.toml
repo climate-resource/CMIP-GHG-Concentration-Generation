@@ -30,6 +30,14 @@ pre-commit = "^3.5.0"
 mypy = { git = "https://github.com/python/mypy.git", rev = "bc591c7" }
 pandas-stubs = "^2.1.1.230928"
 
+[tool.poetry.group.tests.dependencies]
+pytest = "^7.4.3"
+pytest-regressions = {extras = ["dataframe"], version = "^2.5.0"}
+
+[tool.poetry.group.coverage.dependencies]
+coverage = "^7.3.2"
+pytest-cov = "^4.1.0"
+
 [tool.jupytext]
 formats = "ipynb,py:percent"
 
