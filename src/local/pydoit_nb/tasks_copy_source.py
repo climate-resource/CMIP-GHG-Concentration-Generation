@@ -34,6 +34,7 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
     repo_root_dir: Path,
     root_dir_output_run: Path,
     run_id: str,
+    root_dir_raw_notebooks: Path,
     readme: str = "README.md",
     zenodo: str = "zenodo.json",
     other_files_to_copy: tuple[str, ...] = (
@@ -61,6 +62,10 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
 
     run_id
         ID of the run.
+
+    root_dir_raw_notebooks
+        Root directory to the raw notebooks (these are copied into the output
+        bundle to ensure that the bundle can be run standalone)
 
     readme
         Name of the README file to copy into the output
@@ -91,6 +96,10 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
             "easy to create a neat bundle for uploading to Zenodo"
         ),
     }
+
+    output_dir_raw_notebooks = root_dir_output_run / root_dir_raw_notebooks.relative_to(
+        repo_root_dir
+    )
 
     action_defs = [
         ActionDef(
@@ -123,6 +132,18 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
             )
             for file_name in other_files_to_copy
         ],
+        ActionDef(
+            name="copy raw notebooks",
+            action=(
+                swallow_output(shutil.copytree),
+                [root_dir_raw_notebooks, output_dir_raw_notebooks],
+                dict(
+                    ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
+                    dirs_exist_ok=True,
+                ),
+            ),
+            targets=(output_dir_raw_notebooks,),
+        ),
         ActionDef(
             name="copy source",
             action=(

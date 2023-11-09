@@ -110,4 +110,5 @@ def gen_all_tasks(
         repo_root_dir=repo_root_dir,
         root_dir_output_run=config_bundle.root_dir_output_run,
         run_id=config_bundle.run_id,
+        root_dir_raw_notebooks=root_dir_raw_notebooks,
     )

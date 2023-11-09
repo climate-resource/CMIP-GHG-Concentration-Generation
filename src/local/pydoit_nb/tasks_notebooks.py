@@ -105,7 +105,7 @@ def get_notebook_branch_tasks(  # noqa: PLR0913
     )
 
     notebook_output_dir_branch = (
-        config_bundle.root_dir_output_run / "notebooks" / branch_name
+        config_bundle.root_dir_output_run / "notebooks-executed" / branch_name
     )
     for branch_config_id in branch_config_ids:
         configured_notebooks = configure_notebooks(
