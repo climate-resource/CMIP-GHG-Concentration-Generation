@@ -19,7 +19,7 @@ class GetUnconfiguredNotebooksCallable(Protocol):
     """Callable that can be used for getting unconfigured notebooks"""
 
     def __call__(self) -> list[UnconfiguredNotebook]:  # noqa: D102
-        ...
+        ...  # pragma: no cover
 
 
 class ConfigureNotebooksCallable(Protocol[T]):
@@ -32,7 +32,7 @@ class ConfigureNotebooksCallable(Protocol[T]):
         branch_name: str,
         branch_config_id: str,
     ) -> list[ConfiguredNotebook]:
-        ...
+        ...  # pragma: no cover
 
 
 def get_notebook_branch_tasks(  # noqa: PLR0913

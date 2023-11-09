@@ -38,6 +38,7 @@ def gen_all_tasks(
     config_bundle: ConfigBundle,
     root_dir_raw_notebooks: Path,
     repo_root_dir: Path,
+    config_file_raw: Path,
 ) -> Iterable[DoitTaskSpec]:
     """
     Generate all tasks in the workflow
@@ -55,6 +56,9 @@ def gen_all_tasks(
     repo_root_dir
         Root directory of the repository, used for copying the source into the
         output path so that a complete bundle can be uploaded easily to Zenodo
+
+    config_file_raw
+        Path to the raw configuration file
 
     Yields
     ------
@@ -111,4 +115,5 @@ def gen_all_tasks(
         root_dir_output_run=config_bundle.root_dir_output_run,
         run_id=config_bundle.run_id,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
+        config_file_raw=config_file_raw,
     )

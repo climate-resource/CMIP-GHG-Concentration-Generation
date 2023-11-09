@@ -41,6 +41,12 @@ pytest-cov = "^4.1.0"
 [tool.jupytext]
 formats = "ipynb,py:percent"
 
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+markers = [
+    "coverage_breaker: marks tests as a coverage breaker (normally because running the test installs things in other venvs which confuses pytest-cov as far as we can tell)"
+]
+
 [tool.ruff]
 src = ["src"]
 target-version = "py311"
@@ -83,6 +89,10 @@ line-length = 110
     "D100",  # Missing docstring in public module
     "D103",  # Missing docstring in public function
 ]
+"tests/*" = [
+    "D103",  # Missing docstring in public function
+    "S101",  # Use of assert detected
+]
 
 [tool.ruff.isort]
 known-first-party = ["src"]
@@ -100,3 +110,14 @@ show_error_context = true
 warn_unreachable = true
 # importing following uses default settings
 follow_imports = "normal"
+
+[tool.coverage.report]
+fail_under = 95
+skip_empty = true
+show_missing = true
+# Regexes for lines to exclude from consideration in addition to the defaults
+exclude_also = [
+    # Don't complain about missing type checking code:
+    "if TYPE_CHECKING",
+    "@overload",
+]

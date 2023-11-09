@@ -48,7 +48,7 @@ class Converter(Protocol[T_contra]):
         -------
             String version of ``config``
         """
-        ...
+        ...  # pragma: no cover
 
     def loads(self, inp: str, target: type[T]) -> T:
         """
@@ -66,7 +66,7 @@ class Converter(Protocol[T_contra]):
         -------
             Loaded instance of ``target``
         """
-        ...
+        ...  # pragma: no cover
 
 
 HandleableConfiguration: TypeAlias = str

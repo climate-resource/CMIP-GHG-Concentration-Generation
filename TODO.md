@@ -1,6 +1,5 @@
 # TODO
 
-- test that the entire workflow can be run from within the created bundle
 - actual docs
 - add zenodo upload step (no point having it as separate script really)
 - add example using `generate_directory_checklist`

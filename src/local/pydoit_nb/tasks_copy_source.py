@@ -35,6 +35,7 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
     root_dir_output_run: Path,
     run_id: str,
     root_dir_raw_notebooks: Path,
+    config_file_raw: Path,
     readme: str = "README.md",
     zenodo: str = "zenodo.json",
     other_files_to_copy: tuple[str, ...] = (
@@ -66,6 +67,13 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
     root_dir_raw_notebooks
         Root directory to the raw notebooks (these are copied into the output
         bundle to ensure that the bundle can be run standalone)
+
+    config_file_raw
+        Path to the raw configuration file
+
+    config_file_raw_output_name
+        Name to use when saving the raw configuration file to the output bundle
+        (must be different to the hydrated configuration file to avoid a clash)
 
     readme
         Name of the README file to copy into the output
@@ -101,12 +109,21 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
         repo_root_dir
     )
 
+    config_file_raw_output = (
+        root_dir_output_run / f"{config_file_raw.stem}-raw{config_file_raw.suffix}"
+    )
+
     action_defs = [
         ActionDef(
             name="copy README",
             action=(
                 copy_readme,
-                [repo_root_dir / readme, root_dir_output_run / readme, run_id],
+                [
+                    repo_root_dir / readme,
+                    root_dir_output_run / readme,
+                    run_id,
+                    config_file_raw_output.relative_to(root_dir_output_run),
+                ],
                 {},
             ),
             targets=(root_dir_output_run / readme,),
@@ -132,6 +149,15 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
             )
             for file_name in other_files_to_copy
         ],
+        ActionDef(
+            name="copy raw config",
+            action=(
+                swallow_output(shutil.copy2),
+                [config_file_raw, config_file_raw_output],
+                {},
+            ),
+            targets=(config_file_raw_output,),
+        ),
         ActionDef(
             name="copy raw notebooks",
             action=(
@@ -170,7 +196,9 @@ def gen_copy_source_into_output_tasks(  # noqa: PLR0913
         }
 
 
-def copy_readme(in_path: Path, out_path: Path, run_id: str) -> None:
+def copy_readme(
+    in_path: Path, out_path: Path, run_id: str, config_file_raw: Path
+) -> None:
     """
     Copy the README into the output bundle
 
@@ -189,9 +217,27 @@ def copy_readme(in_path: Path, out_path: Path, run_id: str) -> None:
     run_id
         ID of the run. This is injected into the written README as part of the
         footer.
+
+    config_file_raw
+        Path to the raw configuration file, relative to the root output
+        directory
+
+    Raises
+    ------
+    AssertionError
+        The run instructions in the README isn't as expected hence the code
+        injection likely won't work as expected.
     """
     with open(in_path) as fh:
         raw = fh.read()
+
+    raw_run_instruction = "poetry run doit run --verbosity=2"
+    if raw_run_instruction not in raw:
+        raise AssertionError(  # noqa: TRY003
+            "Could not find expected run instructions in README. "
+            "The injected run instructions probably won't be correct. "
+            f"Expected run instruction: {raw_run_instruction}"
+        )
 
     footer = f"""
 ## Pydoit info
@@ -201,7 +247,21 @@ This README was created from the raw {in_path.name} file as part of the {run_id!
 everything required to reproduce the outputs. The environment can be
 made with [poetry](https://python-poetry.org/) using the `poetry.lock` file
 and the `pyproject.toml` file. Please disregard messages about the `Makefile`
-in this file."""
+in this file.
+
+If you are looking to re-run the analysis, then you should run the below
+
+```sh
+DOIT_CONFIGURATION_FILE={config_file_raw} {raw_run_instruction}
+```
+
+The reason for this is that you want to use the configuration with relative
+paths. The configuration file that is included in this output bundle contains
+absolute paths for reproducibility and traceability reasons. However, such
+absolute paths are not portable so you need to use the configuration file
+above, which is the raw configuration file as it was was used in the original
+run.
+"""
     with open(out_path, "w") as fh:
         fh.write(raw)
         fh.write(footer)

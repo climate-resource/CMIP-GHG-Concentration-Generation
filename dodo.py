@@ -133,6 +133,7 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     # TODO: decide whether to put these steps together in a 'hydration' function
     config = load_config_from_file(configuration_file)
     config = insert_path_prefix(config, prefix=root_dir_output_run)
+
     config_bundle = ConfigBundle(
         run_id=run_id,
         config_hydrated=config,
@@ -153,6 +154,7 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
         config_bundle,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
         repo_root_dir=Path(__file__).parent,
+        config_file_raw=configuration_file,
     )
 
     logger.info("Finished generating doit tasks")
