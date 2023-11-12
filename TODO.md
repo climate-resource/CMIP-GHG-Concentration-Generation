@@ -11,6 +11,36 @@
 - write out in correct format
 - then iterate
 
+### URLs
+
+- basic hover setup: https://stackoverflow.com/questions/67904185/how-to-show-values-on-hover-for-multiple-line-graphs-bokeh
+- docs on hovering: https://docs.bokeh.org/en/2.4.1/docs/user_guide/tools.html#basic-tooltips
+- docs on toggling lines: https://docs.bokeh.org/en/2.4.1/docs/user_guide/interaction/legends.html#hiding-glyphs
+- tutorials on bokeh in notebooks: https://github.com/bokeh/bokeh-notebooks
+- live updating (if we want it): https://github.com/bokeh/bokeh/blob/3.3.1/examples/output/jupyter/push_notebook/Continuous%20Updating.ipynb
+- events (need to understand this for drilldown I think): https://docs.bokeh.org/en/latest/docs/reference/events.html
+    - also this: https://docs.bokeh.org/en/2.4.1/docs/user_guide/server.html#callbacks-and-events
+    - may also need this if we want it to be easy-ish: https://docs.bokeh.org/en/2.4.1/docs/user_guide/server.html#userguide-server-applications
+    - this suggests a route: https://stackoverflow.com/questions/72756899/how-to-add-onclick-event-in-bokeh#comment128641340_72756899
+    - may also be relevant: https://stackoverflow.com/questions/32418045/running-python-code-by-clicking-a-button-in-bokeh?rq=4
+    - probably also google 'bokeh update plot on click'
+
+### Data sources
+
+- N2O budget: https://auburn.app.box.com/s/7fxesyrfzpj2k8h9cnu3vxbb014xj3sq/
+    - BUT, paper basically says use CSIRO, AGAGE and NOAA: https://www.nature.com/articles/s41586-020-2780-0#Sec2
+- Global methane budget: https://www.icos-cp.eu/GCP-CH4/2019
+    - data file then points out to relevant observational networks
+    - paper here: https://essd.copernicus.org/articles/12/1561/2020/
+- Law dome ice core
+    - https://data.csiro.au/collection/csiro:37077
+- Scripps stations
+    - https://scrippsco2.ucsd.edu/data/atmospheric_co2/alt.html
+- Scripps merged (not sure whether to use raw or not)
+    - https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
+- Scipps other links
+    - https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+
 ## Repo
 
 - actual docs

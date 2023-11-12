@@ -77,43 +77,54 @@ file_name_dict
 config_branch.law_dome.files_md5_sum
 
 # %%
+
 # TODO: remove hard-coding of sheet name?
 raw = pd.read_excel(
     file_name_dict["Law_Dome_GHG_2000years.xlsx"], sheet_name="CO2byAge"
 )
 col_map = {
-    "CO2 Age (year AD)": "year",
+    "CO2 Age (year AD)": "time",
+    # "CO2 Age (year AD)": "x",
     "CO2 (ppm)": "value",
 }
 useable = raw[col_map.keys()].copy()
 useable.columns = useable.columns.map(col_map)
 useable["unit"] = "ppm"
 useable["variable"] = "Atmospheric Concentrations|CO2"
+# hack
+# useable["time"] = useable["time"].apply(lambda x: dt.datetime(int(x), 1, 1))
 useable
 
 # %%
+from bokeh.io import output_notebook, show
+from bokeh.models import ColumnDataSource, HoverTool
+from bokeh.plotting import figure
+
+output_notebook()
+
+# %%
+# Not sure what trickery is going to be needed to make the datetimes behave here
 law_dome = ColumnDataSource(useable)
 
 figure_bokeh = figure(
     title="CO2 by age",
     # x_axis_type='datetime',
+    # x_axis_type='numerical',
     # TODO: remove hard-coding
-    x_axis_label="year",
+    x_axis_label="time",
     y_axis_label="value",
 )
 
 renderer_line = figure_bokeh.line(
-    "year",
-    "value",
-    # color='#CE1141',
-    # legend='Law Dome',
-    source=law_dome
-    # [1,2,3,4,5], [3,4,5,6,7], legend_label="A", line_width=2, line_color="red"
+    "time", "value", legend_label="Law Dome", source=law_dome
 )
 
 figure_bokeh.add_tools(
     HoverTool(
-        tooltips="@year @value@unit",
+        tooltips="@time{%f} @value@unit",
+        formatters={"@time": "printf"},
+        # tooltips="@time @value@unit",
+        # formatters={"@time": "numeral"},
         renderers=[renderer_line],
         # mode="mouse"
         # mode="hline"
@@ -131,7 +142,7 @@ show(figure_bokeh)
 
 # %%
 import numpy as np
-from bokeh.io import output_notebook, push_notebook, show
+from bokeh.io import output_notebook, show
 from bokeh.models import HoverTool
 from bokeh.plotting import figure
 
@@ -142,13 +153,17 @@ x = np.linspace(0, 2 * np.pi, 2000)
 y = np.sin(x)
 
 # %%
-figure_bokeh = figure(title="Figure with HoverTool")
+figure_bokeh = figure(title="Figure with HoverTool", toolbar_location=None)
 
 renderer_line_1 = figure_bokeh.line(
-    [1, 2, 3, 4, 5], [3, 4, 5, 6, 7], legend_label="A", line_width=2, line_color="red"
+    [1.1, 2.3, 3.3, 4.4, 5.1],
+    [3.3, 4.5, 5.1, 6.6, 7.4],
+    legend_label="A",
+    line_width=2,
+    line_color="red",
 )
 renderer_line_2 = figure_bokeh.line(
-    [1, 2, 3, 4, 5], [1, 2, 3, 4, 5], legend_label="B", line_width=2
+    [1.1, 2.3, 3.3, 4.4, 5.1], [1.3, 2.5, 3.1, 4.6, 5.4], legend_label="B", line_width=2
 )
 
 figure_bokeh.add_tools(
@@ -167,28 +182,3 @@ figure_bokeh.legend.click_policy = "hide"
 show(figure_bokeh)
 
 # %%
-print(HoverTool.__doc__)
-
-# %%
-figure_bokeh = figure(
-    title="simple line example",
-    height=300,
-    width=600,
-    y_range=(-5, 5),
-    background_fill_color="#efefef",
-)
-renderer_bokeh = figure_bokeh.line(x, y, color="#8888cc", line_width=1.5, alpha=0.8)
-
-
-# %%
-def update(f, w=1, A=1, phi=0):
-    if f == "sin":
-        func = np.sin
-    elif f == "cos":
-        func = np.cos
-    renderer_bokeh.data_source.data["y"] = A * func(w * x + phi)
-    push_notebook()
-
-
-# %%
-show(figure_bokeh, notebook_handle=True)
