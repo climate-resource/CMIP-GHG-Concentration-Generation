@@ -1,3 +1,6 @@
+analysis:
+- branch_config_id: only
+  mean_dir: data/processed/710_means
 constraint:
 - branch_config_id: only
   constraint_gradient: 1.2

@@ -9,6 +9,10 @@ from pathlib import Path
 
 from .config import converter_yaml
 from .config.base import ConfigBundle
+from .notebook_steps.analysis import (
+    configure_notebooks_analysis,
+    get_unconfigured_notebooks_analysis,
+)
 from .notebook_steps.constraint import (
     configure_notebooks_constraint,
     get_unconfigured_notebooks_constraint,
@@ -99,6 +103,13 @@ def gen_all_tasks(
         configure_notebooks=configure_notebooks_covariance_plotting,
     )
     notebook_tasks.extend(covariance_plotting_tasks)
+
+    analysis_tasks = gnb_tasks(
+        branch_name="analysis",
+        get_unconfigured_notebooks=get_unconfigured_notebooks_analysis,
+        configure_notebooks=configure_notebooks_analysis,
+    )
+    notebook_tasks.extend(analysis_tasks)
 
     figures_tasks = gnb_tasks(
         branch_name="figures",
