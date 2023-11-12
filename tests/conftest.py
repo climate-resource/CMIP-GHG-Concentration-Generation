@@ -18,7 +18,7 @@ def basic_workflow_output_info() -> dict[str, str | Path]:
     Run the basic workflow and get the output info
     """
     config_file = "dev-config.yaml"
-    root_output_dir = "output-bundles-tests"
+    root_dir_output = "output-bundles-tests"
     run_id = "test-basic-workflow"
 
     subprocess.run(
@@ -30,13 +30,13 @@ def basic_workflow_output_info() -> dict[str, str | Path]:
         cwd=REPO_ROOT_DIR,
         env={
             "DOIT_CONFIGURATION_FILE": config_file,
-            "DOIT_ROOT_DIR_OUTPUT": root_output_dir,
+            "DOIT_ROOT_DIR_OUTPUT": root_dir_output,
             "DOIT_RUN_ID": run_id,
             **os.environ,
         },
     )
 
     return {
-        "root_output_dir": REPO_ROOT_DIR / root_output_dir,
+        "root_dir_output": REPO_ROOT_DIR / root_dir_output,
         "run_id": run_id,
     }

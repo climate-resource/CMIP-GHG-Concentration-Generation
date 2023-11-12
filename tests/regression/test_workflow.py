@@ -16,7 +16,7 @@ def test_basic_workflow(basic_workflow_output_info, dataframe_regression):
     aiming for.
     """
     for data_file in [
-        basic_workflow_output_info["root_output_dir"]
+        basic_workflow_output_info["root_dir_output"]
         / basic_workflow_output_info["run_id"]
         / "data"
         / "processed"

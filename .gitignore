@@ -13,7 +13,7 @@ data
 
 # Databases
 *.db
-doit-db-dev.json
+*db*.json
 
 # Jupyter cache
 .jupyter_cache

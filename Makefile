@@ -48,6 +48,10 @@ doit-list-dev:  ## list all the doit tasks using the dev run-id
 # doit info for info (i.e. metadata) of individual tasks
 # doit forget --all for resetting the database
 #
+
+test: $(DEV_CONFIG_ABSOLUTE_YAML)  ## run the tests
+	poetry run pytest -r a -v src tests --doctest-modules
+
 $(DEV_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-config-absolute.py
 	poetry run python scripts/create-dev-config-absolute.py
 

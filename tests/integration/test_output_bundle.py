@@ -17,7 +17,7 @@ import pytest
 @pytest.mark.coverage_breaker
 def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
     copied_output_dir = tmpdir / "copied-workflow-output"
-    shutil.copytree(basic_workflow_output_info["root_output_dir"], copied_output_dir)
+    shutil.copytree(basic_workflow_output_info["root_dir_output"], copied_output_dir)
 
     assumed_raw_config_file = "dev-config-raw.yaml"
     run_id = "bundle-run"
@@ -94,7 +94,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         )
 
         test_res = pd.read_csv(
-            basic_workflow_output_info["root_output_dir"]
+            basic_workflow_output_info["root_dir_output"]
             / basic_workflow_output_info["run_id"]
             / compare_file
         )

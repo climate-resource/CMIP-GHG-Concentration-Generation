@@ -13,7 +13,7 @@ from local.pydoit_nb.config_handling import insert_path_prefix
 
 DEV_FILE: Path = Path("dev-config.yaml")
 DEV_ABSOLUTE_FILE: Path = Path("dev-config-absolute.yaml")
-ROOT_OUTPUT_DIR: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
+ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 RUN_ID: str = "dev-test-run"
 
 with open(DEV_FILE) as fh:
@@ -21,7 +21,7 @@ with open(DEV_FILE) as fh:
 
 config = insert_path_prefix(
     config=config_relative,
-    prefix=ROOT_OUTPUT_DIR / RUN_ID,
+    prefix=ROOT_DIR_OUTPUT / RUN_ID,
 )
 
 with open(DEV_ABSOLUTE_FILE, "w") as fh:

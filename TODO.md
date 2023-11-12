@@ -5,10 +5,8 @@
 - add example using `generate_directory_checklist`
 
 - think about whether using taipy would be a better way to do all this
+- think about whether hydra would be a good tool to use/point to
 
-- fix up use of define vs. frozen
-- fix up use of Path vs. PathLike
-- unify naming output_root_dir vs root_dir_output vs notebook_output_dir etc.
 - split out pydoit-nb into separate package then use here
 - Makefile
     - licence check (but this should be optional in copier)
