@@ -22,6 +22,8 @@ numpy = "==1.26.1"
 black = "==23.10.1"
 matplotlib = "==3.8.1"
 seaborn = "==0.13.0"
+jupyter-bokeh = "3.0.7"
+openpyxl = "3.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
