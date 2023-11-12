@@ -13,6 +13,7 @@ from .covariance import CovarianceConfig
 from .covariance_plotting import CovariancePlottingConfig
 from .figures import FiguresConfig
 from .preparation import PreparationConfig
+from .retrieve import RetrieveConfig
 
 
 @frozen
@@ -50,6 +51,10 @@ class Config:
     figures: list[FiguresConfig]
     """Configurations to use with the figures step"""
     # TODO: add validation that these all have unique step_config_id
+
+    retrieve: list[RetrieveConfig]
+    """Configurations to use with the retrieve branch"""
+    # TODO: add validation that these all have unique branch_config_id
 
 
 @frozen

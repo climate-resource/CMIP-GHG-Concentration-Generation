@@ -18,6 +18,8 @@ from local.config.preparation import PreparationConfig
 
 DEV_FILE: Path = Path("dev-config.yaml")
 
+with open(DEV_FILE) as fh:
+    config_relative = converter_yaml.loads(fh.read(), Config)
 
 config = Config(
     name="dev",
