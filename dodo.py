@@ -1,5 +1,7 @@
 """
 [doit](TODO link) configuration file
+
+TODO: think about whether to move more of this out into pydoit-nb or local
 """
 from __future__ import annotations
 
@@ -59,7 +61,7 @@ def print_key_info() -> None:
 
     print("\n".join([top_line, *key_info, bottom_line]))
 
-    time.sleep(1.5)
+    time.sleep(0.2)
 
 
 def task_display_info() -> dict[str, Any]:
@@ -156,7 +158,6 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     # TODO: decide whether to put these steps together in a 'hydration' function
     config = load_config_from_file(configuration_file)
     config = insert_path_prefix(config, prefix=root_dir_output_run)
-
     config_bundle = ConfigBundle(
         run_id=run_id,
         config_hydrated=config,
@@ -164,7 +165,6 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
         root_dir_output=root_dir_output,
         root_dir_output_run=root_dir_output_run,
     )
-
     write_config_bundle_to_disk(config_bundle=config_bundle, converter=converter_yaml)
 
     yield {
