@@ -1,10 +1,21 @@
 # TODO
 
-- if you want to fix type hints, need a minimum example as doing it in live project is too hard
+## Concs
+
+- download data using e.g. pooch (make sure it goes into the bundle so we don't have to rely on data without DOIs)
+- plot raw data over the top of each other (eventually Malte style/interactive)
+- do join of data into single yearly timeseries
+    - actual algorithm is much smarter than this, but for now just take annual-mean then mean across data sets and interpolate linearly to fill any gaps
+- mean-preserving interpolation down to monthly values
+- add seasonal and latitudinal gradient (do just something for now, can make it more complicated in future)
+- write out in correct format
+- then iterate
+
+## Repo
 
 - actual docs
 - add zenodo upload step (no point having it as separate script really)
-- add example using `generate_directory_checklist`
+- if you want to fix type hints, need a minimum example as doing it in live project is too hard
 
 - think about whether using taipy would be a better way to do all this
 - think about whether hydra would be a good tool to use/point to
