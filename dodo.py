@@ -20,6 +20,12 @@ from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
+RUN_ID: str = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
+DOIT_CONFIG: dict[str, str] = {
+    "backend": os.environ.get("DOIT_DB_BACKEND", "dbm"),
+    "dep_file": os.environ.get("DOIT_DB_FILE", f".doit_{RUN_ID}.db"),
+}
+
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
 
@@ -93,10 +99,27 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     """
     # TODO: decide whether to split out this pattern to make it slightly more
     # re-useable
+    # TODO: put this note somewhere
+    # Using environment variables is great because it avoids the pain of
+    # doit's weird command-line passing rules and order when doing e.g.
+    # `doit list`. However, it does sort of break doit's database because
+    # doit's database is keyed based on the task name, not the dependencies
+    # (using a json database makes this much much easier to see which is why
+    # our dev runs use a json backend).
+    # To fix this, I think there's a few options:
+    # - do a little hack in here so the database file changes as the run id
+    #   changes, this would make the database file be separate for each run id
+    #   so avoid the current issue of runs with different run IDs using the
+    #   same database hence the up to date status of tasks not being calculated
+    #   quite correctly
+    #   - Note: this is currently implemented
+    # - put the the run ID in the task name so they get stored differently in
+    #   the database
+    # - something else
     configuration_file = Path(
         os.environ.get("DOIT_CONFIGURATION_FILE", "dev-config.yaml")
     ).absolute()
-    run_id = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
+    run_id = RUN_ID
     root_dir_output = Path(
         os.environ.get("DOIT_ROOT_DIR_OUTPUT", "output-bundles")
     ).absolute()

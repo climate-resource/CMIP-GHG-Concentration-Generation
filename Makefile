@@ -3,6 +3,8 @@
 DEV_CONFIG_YAML=dev-config.yaml
 DEV_CONFIG_ABSOLUTE_YAML=dev-config-absolute.yaml
 DEV_RUN_ID="dev-test-run"
+DEV_BACKEND="json"
+DEV_BACKEND_FILE="doit-db-dev.json"
 FINAL_DOIT_TASK="copy_source_into_output"
 SHOW_CONFIGURATION_TASK="generate_workflow_tasks:Show configuration"
 
@@ -31,14 +33,21 @@ doit-list:  ## list all the doit tasks
 	poetry run doit list --all --status
 
 all-dev:  ## compile all outputs using the dev run-id
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit run --verbosity=2
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --verbosity=2
 
 all-debug-dev:  ## compile all outputs using the dev run-id, falling to debugger on failure
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit run --pdb
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --pdb
+
+clean-dev:  ## clean all the dev outputs (add --dry-run for dry run)
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit clean
 
 doit-list-dev:  ## list all the doit tasks using the dev run-id
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) poetry run doit list --all --status
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit list --all --status
 
+# doit status for status of individual tasks
+# doit info for info (i.e. metadata) of individual tasks
+# doit forget --all for resetting the database
+#
 $(DEV_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-config-absolute.py
 	poetry run python scripts/create-dev-config-absolute.py
 
