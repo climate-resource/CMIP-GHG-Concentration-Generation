@@ -100,7 +100,6 @@ known-first-party = ["src"]
 [tool.ruff.pydocstyle]
 convention = "numpy"
 
-# TODO Use stricter mypy rules
 [tool.mypy]
 strict = true
 # show error codes on failure with context
