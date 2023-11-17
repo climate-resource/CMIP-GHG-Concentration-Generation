@@ -23,10 +23,17 @@ from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
 RUN_ID: str = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
+"""ID to use with this run"""
+
 DOIT_CONFIG: dict[str, str] = {
     "backend": os.environ.get("DOIT_DB_BACKEND", "dbm"),
     "dep_file": os.environ.get("DOIT_DB_FILE", f".doit_{RUN_ID}.db"),
 }
+"""
+pydoit configuration
+
+See https://pydoit.org/configuration.html#configuration-at-dodo-py
+"""
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.DEBUG)
