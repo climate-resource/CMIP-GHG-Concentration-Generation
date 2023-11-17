@@ -6,7 +6,6 @@ TODO: think about whether to move more of this out into pydoit-nb or local
 from __future__ import annotations
 
 import datetime as dt
-import logging
 import os
 import time
 from collections.abc import Iterable
@@ -18,6 +17,7 @@ from local.config import converter_yaml, load_config_from_file
 from local.config.base import ConfigBundle
 from local.pydoit_nb.config_handling import insert_path_prefix
 from local.pydoit_nb.display import print_config
+from local.pydoit_nb.doit_tools import setup_logging
 from local.pydoit_nb.serialization import write_config_bundle_to_disk
 from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
@@ -35,27 +35,7 @@ pydoit configuration
 See https://pydoit.org/configuration.html#configuration-at-dodo-py
 """
 
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.DEBUG)
-
-logFormatter = logging.Formatter(
-    "%(levelname)s - %(asctime)s %(name)s %(processName)s (%(module)s:%(funcName)s:%(lineno)d):  %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-
-stdoutHandler = logging.StreamHandler()
-stdoutHandler.setFormatter(logFormatter)
-stdoutHandler.setLevel(logging.WARNING)
-
-fileHandler = logging.FileHandler("dodo.log")
-fileHandler.setFormatter(logFormatter)
-# TODO: Make this debug?
-fileHandler.setLevel(logging.INFO)
-
-root_logger.addHandler(stdoutHandler)
-root_logger.addHandler(fileHandler)
-
-logger = logging.getLogger("dodo")
+logger = setup_logging()
 
 
 def print_key_info() -> None:
