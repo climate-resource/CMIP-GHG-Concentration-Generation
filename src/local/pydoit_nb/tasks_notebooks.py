@@ -45,7 +45,7 @@ def get_notebook_branch_tasks(  # noqa: PLR0913
     clean: bool = True,
 ) -> Iterable[DoitTaskSpec]:
     """
-    Get tasks for the notebooks within a given notebok branch
+    Get tasks for the notebooks within a given notebook branch
 
     A notebook branch is a group of notebooks within the wider workflow. These
     groups are normally formed because the notebooks depend on the same set of
