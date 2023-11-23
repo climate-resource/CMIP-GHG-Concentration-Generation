@@ -1,13 +1,11 @@
 # TODO
 
-- UnconfiguredNotebookStep becomes a notebook-based step in the workflow
+- Refactor all the steps to use UnconfiguredNotebookStep
     - Add somewhere in pydoit-nb docs a distinction between a task (single notebook) and a step (one or more notebooks that makes up some conceptual group/high-level step in the overall workflow)
-- Rename
-    - folder notebook_steps can stay as is
-    - `get_notebook_branch_tasks` can become a method of `UnconfiguredNotebookStep`
-        - then we can delete (probably) `tasks_notebooks`
+- Then delete NotebookStep and tasks_notebooks
 - TODOs in top of pydoit_nb.__init__
 - Fix up docs as I go along
+- remove all references to branch in src
 
 
 - actual docs

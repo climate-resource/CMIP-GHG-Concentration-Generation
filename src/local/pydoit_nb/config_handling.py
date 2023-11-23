@@ -111,3 +111,7 @@ def get_branch_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
         Branch config ID from each config in ``configs``
     """
     return [c.branch_config_id for c in configs]
+
+
+# TODO: fix this
+get_step_config_ids = get_branch_config_ids

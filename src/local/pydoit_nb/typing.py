@@ -6,7 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Protocol, TypeAlias, TypeVar
 
-T = TypeVar("T")
+T = TypeVar("T", covariant=True)
 T_contra = TypeVar("T_contra", contravariant=True)
 
 DoitTaskSpec: TypeAlias = dict[str, Any]
@@ -17,14 +17,20 @@ class ConfigBundleLike(Protocol[T]):
     Protocol for configuration bundles
     """
 
-    config_hydrated_path: Path
-    """Path in which to write the hydrated config"""
+    @property
+    def config_hydrated(self) -> T:
+        """Hydrated config"""
+        ...
 
-    config_hydrated: T
-    """Config to be hydrated"""
+    @property
+    def root_dir_output_run(self) -> Path:
+        """Root directory in which output is saved"""
+        ...
 
-    root_dir_output_run: Path
-    """Root directory in which output is saved"""
+    @property
+    def config_hydrated_path(self) -> Path:
+        """Path in which to write the hydrated config"""
+        ...
 
 
 class Converter(Protocol[T_contra]):

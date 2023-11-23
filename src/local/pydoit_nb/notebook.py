@@ -7,9 +7,12 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from attrs import frozen
+from doit.tools import config_changed  # type: ignore
+
+from .notebook_run import run_notebook
 
 if TYPE_CHECKING:
-    from .typing import HandleableConfiguration
+    from .typing import Converter, DoitTaskSpec, HandleableConfiguration
 
 
 @frozen
@@ -81,3 +84,96 @@ class ConfiguredNotebook:
 
     branch_config_id: str
     """`branch_config_id` to use for this run of the notebook"""
+
+    def to_doit_task(  # noqa: PLR0913
+        self,
+        root_dir_raw_notebooks: Path,
+        notebook_output_dir: Path,
+        base_task: DoitTaskSpec,
+        converter: Converter[tuple[HandleableConfiguration, ...]] | None = None,
+        clean: bool = True,
+    ) -> DoitTaskSpec:
+        """
+        Convert to a :mod:`doit` task
+
+        Parameters
+        ----------
+        root_dir_raw_notebooks
+            Root directory in which the raw (not yet run) notebooks are kept
+
+        notebook_output_dir
+            Directory in which to write out the run notebook
+
+        base_task
+            Base task definition for this notebook step
+
+        converter
+            Converter to use to serialise configuration if needed.
+
+        clean
+            If we run `doit clean`, should the targets also be removed?
+
+        Returns
+        -------
+            Task specification for use with :mod:`doit`
+
+        Raises
+        ------
+        TypeError
+            ``self.configuration is not None`` but ``converter is None``
+        """
+        raw_notebook = root_dir_raw_notebooks / self.notebook_path.with_suffix(
+            self.raw_notebook_ext
+        )
+
+        notebook_name = self.notebook_path.name
+        unexecuted_notebook = notebook_output_dir / f"{notebook_name}_unexecuted.ipynb"
+        executed_notebook = notebook_output_dir / f"{notebook_name}.ipynb"
+
+        dependencies = [
+            *self.dependencies,
+            raw_notebook,
+        ]
+        notebook_parameters = dict(
+            config_file=str(self.config_file), branch_config_id=self.branch_config_id
+        )
+
+        targets = self.targets
+
+        task = dict(
+            basename=base_task["basename"],
+            name=self.branch_config_id,
+            doc=f"{base_task['doc']}. branch_config_id={self.branch_config_id!r}",
+            actions=[
+                (
+                    run_notebook,
+                    # lambda *args, **kwargs: print(kwargs),
+                    [],
+                    {
+                        "base_notebook": raw_notebook,
+                        "unexecuted_notebook": unexecuted_notebook,
+                        "executed_notebook": executed_notebook,
+                        "notebook_parameters": notebook_parameters,
+                    },
+                )
+            ],
+            targets=targets,
+            file_dep=dependencies,
+            clean=clean,
+        )
+
+        if self.configuration is None:
+            # Run whenever config file changes
+            task["file_dep"].extend([self.config_file])
+        else:
+            if converter is None:
+                # TODO: better error
+                raise TypeError(converter)
+
+            has_config_changed = config_changed(
+                converter.dumps(self.configuration, sort_keys=True)
+            )
+
+            task["uptodate"] = (has_config_changed,)
+
+        return task

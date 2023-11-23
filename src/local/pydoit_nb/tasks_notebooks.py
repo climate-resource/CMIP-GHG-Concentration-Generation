@@ -12,7 +12,7 @@ from .notebook import ConfiguredNotebook, UnconfiguredNotebook
 from .notebook_step import NotebookStep
 from .typing import ConfigBundleLike, Converter, DoitTaskSpec, HandleableConfiguration
 
-T = TypeVar("T")
+T = TypeVar("T", contravariant=True)
 
 
 class GetUnconfiguredNotebooksCallable(Protocol):
