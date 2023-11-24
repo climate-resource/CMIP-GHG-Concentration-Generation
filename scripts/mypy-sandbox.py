@@ -1,15 +1,8 @@
 """
-An attempt to work out why we can't remove the type: ignore statements in
-our steps e.g. notebook_step.analysis
+A useful sandbox for figuring out type issues without stuff being everywhere
 
-Things to try:
-
-- does this work in basic example?
-    - if yes, then error is in src
-    - if no, then could be
-        - mypy problem
-        - attrs bug
-        - something else
+Not currently used, but may be a helpful example for others. If it is very
+confusing, can also be deleted.
 """
 # ruff: noqa
 from __future__ import annotations
