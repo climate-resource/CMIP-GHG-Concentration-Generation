@@ -64,7 +64,7 @@ def gen_all_tasks(
             # I can't make mypy behave with the below. I'm not really sure what the
             # issue is. Maybe that cattrs provides a much more generic, yet less
             # well-defined interface, than the one we expect.
-            converter=converter_yaml,  # type: ignore
+            converter=converter_yaml,
         )
         step_tasks = list(step_tasks)
         notebook_tasks.extend(step_tasks)

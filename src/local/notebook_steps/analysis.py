@@ -9,8 +9,8 @@ from typing import TYPE_CHECKING
 
 from attrs import asdict
 
-from ..config import get_config_for_step_id
 from ..pydoit_nb.checklist import get_checklist_file
+from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -57,8 +57,6 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            # TODO: refactor so configured notebook just takes an unconfigured
-            # notebook as an attribute, that coupling is corect
             **asdict(uc_nbs_dict[Path("7xx_analysis") / "710_stats-crunching"]),
             configuration=(),
             dependencies=tuple(c.draw_file for c in config_covariance),

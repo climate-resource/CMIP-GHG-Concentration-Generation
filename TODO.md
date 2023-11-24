@@ -1,6 +1,6 @@
 # TODO
 
-- check all TODOs
+- refactor ConfiguredNotebook so it is just UnconfiguredNotebook plus other stuff
 
 - if you want to fix type hints, need a minimum example as doing it in live project is too hard
 

@@ -23,7 +23,8 @@
 # %%
 import pandas as pd
 
-from local.config import get_config_for_step_id, load_config_from_file
+from local.config import load_config_from_file
+from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define step this notebook belongs to

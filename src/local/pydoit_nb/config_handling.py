@@ -113,5 +113,45 @@ def get_step_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
     return [c.step_config_id for c in configs]
 
 
-# TODO: fix this
-get_step_config_ids = get_step_config_ids
+def get_config_for_step_id(
+    config: Any,
+    step: str,
+    step_config_id: str,
+) -> Any:
+    """
+    Get configuration for a specific value of step config ID for a specific step
+
+    This will fail if ``step`` isn't a part of ``config``
+
+    Parameters
+    ----------
+    config
+        Config from which to retrieve the step config
+
+    step
+        Step from which to retrieve the configuration
+
+    step_config_id
+        The retrieved configuration's ``step_config_id`` will match this value
+
+    Returns
+    -------
+        Configuration for step ``step`` with step config ID equal to
+        ``step_config_id``
+
+    Raises
+    ------
+    ValueError
+        No configuration could be found with ID equal to ``step_config_id``
+    """
+    possibilities: Iterable[NotebookConfigLike] = getattr(config, step)
+    available_step_config_ids = []
+    for poss in possibilities:
+        if poss.step_config_id == step_config_id:
+            return poss
+        else:
+            available_step_config_ids.append(poss.step_config_id)
+
+    raise ValueError(  # noqa: TRY003
+        f"Couldn't find {step_config_id=}, available step config IDs: {available_step_config_ids}"
+    )

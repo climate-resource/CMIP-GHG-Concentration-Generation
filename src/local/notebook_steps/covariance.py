@@ -9,8 +9,7 @@ from typing import TYPE_CHECKING
 
 from attrs import asdict
 
-# TODO: move into pydoit_nb so it is more general?
-from ..config import get_config_for_step_id
+from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 

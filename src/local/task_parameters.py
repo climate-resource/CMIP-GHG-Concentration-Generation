@@ -1,3 +1,3 @@
 """
-Doit [TODO link] task parameters specific to this project
+[Doit](https://pydoit.org) task parameters specific to this project
 """
