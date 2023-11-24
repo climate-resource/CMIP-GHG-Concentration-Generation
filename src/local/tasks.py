@@ -4,7 +4,6 @@ Task definition and retrieval
 from __future__ import annotations
 
 from collections.abc import Iterable
-from functools import partial
 from pathlib import Path
 
 from .config import converter_yaml
@@ -15,13 +14,9 @@ from .notebook_steps import (
     covariance,
     covariance_plotting,
     figures,
-)
-from .notebook_steps.preparation import (
-    configure_notebooks_prep,
-    get_unconfigured_notebooks_prep,
+    preparation,
 )
 from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
-from .pydoit_nb.tasks_notebooks import get_notebook_branch_tasks
 from .pydoit_nb.typing import DoitTaskSpec
 
 
@@ -56,21 +51,14 @@ def gen_all_tasks(
         :mod:`doit` tasks to run
     """
     notebook_tasks: list[DoitTaskSpec] = []
-    gnb_tasks = partial(
-        get_notebook_branch_tasks,
-        config_bundle=config_bundle,
-        root_dir_raw_notebooks=root_dir_raw_notebooks,
-        converter=converter_yaml,
-    )
-
-    prep_tasks = gnb_tasks(
-        branch_name="preparation",
-        get_unconfigured_notebooks=get_unconfigured_notebooks_prep,
-        configure_notebooks=configure_notebooks_prep,
-    )
-    notebook_tasks.extend(prep_tasks)
-
-    for step_module in [covariance, constraint, covariance_plotting, analysis, figures]:
+    for step_module in [
+        preparation,
+        covariance,
+        constraint,
+        covariance_plotting,
+        analysis,
+        figures,
+    ]:
         step_tasks = step_module.step.gen_notebook_tasks(
             config_bundle=config_bundle,
             root_dir_raw_notebooks=root_dir_raw_notebooks,
@@ -79,9 +67,10 @@ def gen_all_tasks(
             # well-defined interface, than the one we expect.
             converter=converter_yaml,  # type: ignore
         )
+        step_tasks = list(step_tasks)
         notebook_tasks.extend(step_tasks)
 
-    yield from notebook_tasks
+        yield from step_tasks
 
     yield from gen_copy_source_into_output_tasks(
         all_preceeding_tasks=notebook_tasks,

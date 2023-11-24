@@ -5,42 +5,27 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING
 
 from attrs import asdict
 
 # TODO: move into pydoit_nb so it is more general?
 from ..config import get_config_for_branch_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
-from ..pydoit_nb.typing import ConfigBundleLike
+from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
+
+if TYPE_CHECKING:
+    from ..config.base import Config, ConfigBundle
 
 
-def get_unconfigured_notebooks_prep() -> Iterable[UnconfiguredNotebook]:
-    """
-    Get unconfigured notebooks for the preparation branch
-
-    Returns
-    -------
-        Unconfigured notebooks
-    """
-    return [
-        UnconfiguredNotebook(
-            notebook_path=Path("0xx_preparation") / "000_write-seed",
-            raw_notebook_ext=".py",
-            summary="prepare - write seed",
-            doc="Write seed for random draws",
-        )
-    ]
-
-
-def configure_notebooks_prep(
+def configure_notebooks(
     unconfigured_notebooks: Iterable[UnconfiguredNotebook],
-    config_bundle: ConfigBundleLike[Any],
-    branch_name: str,
-    branch_config_id: str,
+    config_bundle: ConfigBundle,
+    step_name: str,
+    step_config_id: str,
 ) -> Iterable[ConfiguredNotebook]:
     """
-    Configure notebooks for the preparation branch
+    Configure notebooks
 
     Parameters
     ----------
@@ -50,11 +35,11 @@ def configure_notebooks_prep(
     config_bundle
         Configuration bundle from which to take configuration values
 
-    branch_name
-        Name of the branch
+    step_name
+        Name of the step
 
-    branch_config_id
-        Branch config ID to use when configuring the notebook
+    step_config_id
+        Step config ID to use when configuring the notebook
 
     Returns
     -------
@@ -65,7 +50,7 @@ def configure_notebooks_prep(
     config = config_bundle.config_hydrated
 
     config_branch = get_config_for_branch_id(
-        config=config, branch=branch_name, branch_config_id=branch_config_id
+        config=config, branch=step_name, branch_config_id=step_config_id
     )
 
     configured_notebooks = [
@@ -75,8 +60,25 @@ def configure_notebooks_prep(
             dependencies=(),
             targets=(config_branch.seed_file,),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=branch_config_id,
+            branch_config_id=step_config_id,
         )
     ]
 
     return configured_notebooks
+
+
+step: UnconfiguredNotebookBasedStep[Config] = UnconfiguredNotebookBasedStep(
+    step_name="preparation",
+    unconfigured_notebooks=[
+        UnconfiguredNotebook(
+            notebook_path=Path("0xx_preparation") / "000_write-seed",
+            raw_notebook_ext=".py",
+            summary="prepare - write seed",
+            doc="Write seed for random draws",
+        )
+    ],
+    # I can't make mypy behave with the below. I think the type hints are
+    # correct, but removing leads to an error I just can't figure out (I think
+    # it's to do with how the generic is compared but I don't actually know).
+    configure_notebooks=configure_notebooks,  # type: ignore
+)

@@ -17,10 +17,4 @@ The notebooks are handled by the following two classes:
     - gets created on the fly as it's only at run-time that we can actually
       know all the configuration etc.
     - TODO: add to_doit_task to this class and delete class below
-- :class:`NotebookTask` - notebook-based doit task, configured notebook plus
-  the targets and dependencies so we can make sensible doit tasks
-    - gets created on the fly as it's only at run-time that we can actually
-      know all the configuration, output paths etc.
-
-
 """
