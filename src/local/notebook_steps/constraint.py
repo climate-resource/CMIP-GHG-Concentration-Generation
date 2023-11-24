@@ -24,7 +24,7 @@ def configure_notebooks(
     step_config_id: str,
 ) -> Iterable[ConfiguredNotebook]:
     """
-    Configure notebooks for the constraint branch
+    Configure notebooks
 
     Parameters
     ----------
