@@ -23,28 +23,28 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns  # type: ignore
 
-from local.config import get_config_for_branch_id, load_config_from_file
+from local.config import get_config_for_step_id, load_config_from_file
 
 # %% [markdown]
-# ## Define branch this notebook belongs to
+# ## Define step this notebook belongs to
 
 # %%
-branch: str = "figures"
+step: str = "figures"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-branch_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "only"  # config ID to select for this step
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
-config_branch = get_config_for_branch_id(
-    config=config, branch=branch, branch_config_id=branch_config_id
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
 )
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -54,7 +54,7 @@ config_branch = get_config_for_branch_id(
 # ### Load data
 
 # %% editable=true slideshow={"slide_type": ""}
-pdf = pd.read_csv(config_branch.draw_comparison_table)
+pdf = pd.read_csv(config_step.draw_comparison_table)
 pdf
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -79,5 +79,5 @@ ax = sns.jointplot(
     alpha=0.5,
 )
 
-config_branch.draw_comparison_figure.parent.mkdir(parents=True, exist_ok=True)
-plt.savefig(config_branch.draw_comparison_figure, transparent=True, bbox_inches="tight")
+config_step.draw_comparison_figure.parent.mkdir(parents=True, exist_ok=True)
+plt.savefig(config_step.draw_comparison_figure, transparent=True, bbox_inches="tight")

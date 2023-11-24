@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 from attrs import asdict
 
-from ..config import get_config_for_branch_id
+from ..config import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -35,7 +35,7 @@ def configure_notebooks(
         Configuration bundle from which to take configuration values
 
     step_name
-        Name of the branch
+        Name of the step
 
     step_config_id
         Step config ID to use when configuring the notebook
@@ -48,22 +48,22 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_branch = get_config_for_branch_id(
-        config=config, branch=step_name, branch_config_id=step_config_id
+    config_step = get_config_for_step_id(
+        config=config, step=step_name, step_config_id=step_config_id
     )
 
-    config_preparation = get_config_for_branch_id(
-        config=config, branch="preparation", branch_config_id="only"
+    config_preparation = get_config_for_step_id(
+        config=config, step="preparation", step_config_id="only"
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             **asdict(uc_nbs_dict[Path("2xx_constraint") / "210_draw-samples"]),
-            configuration=(config_branch.constraint_gradient,),
+            configuration=(config_step.constraint_gradient,),
             dependencies=(config_preparation.seed_file,),
-            targets=(config_branch.draw_file,),
+            targets=(config_step.draw_file,),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=step_config_id,
+            step_config_id=step_config_id,
         )
     ]
 

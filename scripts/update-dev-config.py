@@ -23,32 +23,32 @@ config = Config(
     name="dev",
     preparation=[
         PreparationConfig(
-            branch_config_id="only",
+            step_config_id="only",
             seed=2847539,
             seed_file=Path("data") / "interim" / "000_seed.txt",
         )
     ],
     covariance=[
         CovarianceConfig(
-            branch_config_id=branch_config_id,
+            step_config_id=step_config_id,
             covariance=cov,
-            draw_file=Path("data") / "interim" / f"110_{branch_config_id}_draws.csv",
+            draw_file=Path("data") / "interim" / f"110_{step_config_id}_draws.csv",
         )
-        for branch_config_id, cov in [
+        for step_config_id, cov in [
             ["cov", np.array([[0.25, 0.5], [0.5, 0.55]])],
             ["no-cov", np.array([[0.25, 0], [0, 0.55]])],
         ]
     ],
     constraint=[
         ConstraintConfig(
-            branch_config_id="only",
+            step_config_id="only",
             constraint_gradient=1.2,
             draw_file=Path("data") / "interim" / "210_constraint_draws.csv",
         )
     ],
     figures=[
         FiguresConfig(
-            branch_config_id="only",
+            step_config_id="only",
             misc_figures_dir=Path("figures") / "misc",
             draw_comparison_table=Path("data") / "processed" / "509_draw-table.csv",
             draw_comparison_figure=Path("figures") / "510_draw-comparison.pdf",

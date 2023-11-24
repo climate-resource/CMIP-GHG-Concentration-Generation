@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 from attrs import asdict
 
-from ..config import get_config_for_branch_id
+from ..config import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -35,7 +35,7 @@ def configure_notebooks(
         Configuration bundle from which to take configuration values
 
     step_name
-        Name of the branch
+        Name of the step
 
     step_config_id
         Step config ID to use when configuring the notebook
@@ -48,9 +48,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    get_config_for_branch_id(
-        config=config, branch=step_name, branch_config_id=step_config_id
-    )
+    get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     config_covariance = config.covariance
 
@@ -63,7 +61,7 @@ def configure_notebooks(
             dependencies=tuple([c.draw_file for c in config_covariance]),
             targets=(),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=step_config_id,
+            step_config_id=step_config_id,
         )
     ]
 

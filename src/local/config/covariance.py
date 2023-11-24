@@ -1,5 +1,5 @@
 """
-Config for the covariance branch
+Config for the covariance step
 """
 from __future__ import annotations
 
@@ -13,14 +13,14 @@ from attrs import frozen
 @frozen
 class CovarianceConfig:
     """
-    Configuration class for the covariance branch
+    Configuration class for the covariance step
     """
 
-    branch_config_id: str
+    step_config_id: str
     """
-    ID for this configuration of the branch
+    ID for this configuration of the step
 
-    Must be unique among all configurations for this branch
+    Must be unique among all configurations for this step
     """
 
     covariance: nptype.NDArray[np.float64]

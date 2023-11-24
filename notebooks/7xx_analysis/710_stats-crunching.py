@@ -23,29 +23,29 @@
 # %%
 import pandas as pd
 
-from local.config import get_config_for_branch_id, load_config_from_file
+from local.config import get_config_for_step_id, load_config_from_file
 from local.pydoit_nb.checklist import generate_directory_checklist
 
 # %% [markdown]
-# ## Define branch this notebook belongs to
+# ## Define step this notebook belongs to
 
 # %%
-branch: str = "analysis"
+step: str = "analysis"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-branch_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "only"  # config ID to select for this step
 
 # %% [markdown]
 # ## Load config
 
 # %%
 config = load_config_from_file(config_file)
-config_branch = get_config_for_branch_id(
-    config=config, branch=branch, branch_config_id=branch_config_id
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
 )
 
 # %% [markdown]
@@ -64,7 +64,7 @@ for covariance_variation in config.covariance:
     assert len(config.analysis) == 1
     out_filename = (
         config.analysis[0].mean_dir
-        / f"{covariance_variation.branch_config_id}_x-mean_{mean:0.2f}.txt"
+        / f"{covariance_variation.step_config_id}_x-mean_{mean:0.2f}.txt"
     )
 
     out_filename.parent.mkdir(parents=True, exist_ok=True)

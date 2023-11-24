@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 from attrs import asdict
 
 # TODO: move into pydoit_nb so it is more general?
-from ..config import get_config_for_branch_id
+from ..config import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -36,7 +36,7 @@ def configure_notebooks(
         Configuration bundle from which to take configuration values
 
     step_name
-        Name of the branch
+        Name of the step
 
     step_config_id
         Step config ID to use when configuring the notebook
@@ -49,8 +49,8 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_branch = get_config_for_branch_id(
-        config=config, branch=step_name, branch_config_id=step_config_id
+    config_step = get_config_for_step_id(
+        config=config, step=step_name, step_config_id=step_config_id
     )
 
     config_covariance = config.covariance
@@ -64,17 +64,17 @@ def configure_notebooks(
                 [c.draw_file for c in config_covariance]
                 + [c.draw_file for c in config_constraint]
             ),
-            targets=(config_branch.draw_comparison_table,),
+            targets=(config_step.draw_comparison_table,),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=step_config_id,
+            step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
             **asdict(uc_nbs_dict[Path("9xx_figures") / "920_plot-draws"]),
             configuration=(),
-            dependencies=(config_branch.draw_comparison_table,),
-            targets=(config_branch.draw_comparison_figure,),
+            dependencies=(config_step.draw_comparison_table,),
+            targets=(config_step.draw_comparison_figure,),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=step_config_id,
+            step_config_id=step_config_id,
         ),
     ]
 

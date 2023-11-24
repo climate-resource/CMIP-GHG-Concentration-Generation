@@ -28,28 +28,28 @@ class Config:
     """Name of the configuration"""
 
     preparation: list[PreparationConfig]
-    """Configurations to use with the preparation branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the preparation step"""
+    # TODO: add validation that these all have unique step_config_id
 
     covariance: list[CovarianceConfig]
-    """Configurations to use with the covariance branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the covariance step"""
+    # TODO: add validation that these all have unique step_config_id
 
     covariance_plotting: list[CovariancePlottingConfig]
     """Configuration to use for the quick plots of the covariance draws"""
-    # TODO: add validation that these all have unique branch_config_id
+    # TODO: add validation that these all have unique step_config_id
 
     constraint: list[ConstraintConfig]
-    """Configurations to use with the constraint branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the constraint step"""
+    # TODO: add validation that these all have unique step_config_id
 
     analysis: list[AnalysisConfig]
-    """Configurations to use with the analysis branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the analysis step"""
+    # TODO: add validation that these all have unique step_config_id
 
     figures: list[FiguresConfig]
-    """Configurations to use with the figures branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the figures step"""
+    # TODO: add validation that these all have unique step_config_id
 
 
 @frozen

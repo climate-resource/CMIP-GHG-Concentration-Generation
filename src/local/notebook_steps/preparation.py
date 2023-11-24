@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 from attrs import asdict
 
 # TODO: move into pydoit_nb so it is more general?
-from ..config import get_config_for_branch_id
+from ..config import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -49,18 +49,18 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_branch = get_config_for_branch_id(
-        config=config, branch=step_name, branch_config_id=step_config_id
+    config_step = get_config_for_step_id(
+        config=config, step=step_name, step_config_id=step_config_id
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             **asdict(uc_nbs_dict[Path("0xx_preparation") / "000_write-seed"]),
-            configuration=(config_branch.seed,),
+            configuration=(config_step.seed,),
             dependencies=(),
-            targets=(config_branch.seed_file,),
+            targets=(config_step.seed_file,),
             config_file=config_bundle.config_hydrated_path,
-            branch_config_id=step_config_id,
+            step_config_id=step_config_id,
         )
     ]
 

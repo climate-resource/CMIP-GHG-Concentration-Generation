@@ -24,28 +24,28 @@
 import pandas as pd
 import seaborn as sns  # type: ignore
 
-from local.config import get_config_for_branch_id, load_config_from_file
+from local.config import get_config_for_step_id, load_config_from_file
 
 # %% [markdown]
-# ## Define branch this notebook belongs to
+# ## Define step this notebook belongs to
 
 # %%
-branch: str = "covariance_plotting"
+step: str = "covariance_plotting"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-branch_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "only"  # config ID to select for this step
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
-config_branch = get_config_for_branch_id(
-    config=config, branch=branch, branch_config_id=branch_config_id
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
 )
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -60,11 +60,11 @@ config_branch = get_config_for_branch_id(
 all_dat: list[pd.DataFrame] = []
 for covariance_variation in config.covariance:
     draws = pd.read_csv(covariance_variation.draw_file)
-    draws["branch_config_id"] = covariance_variation.branch_config_id
+    draws["step_config_id"] = covariance_variation.step_config_id
     all_dat.append(draws)
 
 all_dat_df = pd.concat(all_dat, axis="rows")  # type: ignore # pandas being silly
 all_dat_df
 
 # %%
-sns.scatterplot(data=all_dat_df, x="x", y="y", hue="branch_config_id", alpha=0.5)
+sns.scatterplot(data=all_dat_df, x="x", y="y", hue="step_config_id", alpha=0.5)

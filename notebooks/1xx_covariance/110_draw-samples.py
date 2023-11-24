@@ -23,33 +23,33 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from local.config import get_config_for_branch_id, load_config_from_file
+from local.config import get_config_for_step_id, load_config_from_file
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# ## Define branch this notebook belongs to
+# ## Define step this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-branch: str = "covariance"
+step: str = "covariance"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-branch_config_id: str = "cov"  # config ID to select for this branch
+step_config_id: str = "cov"  # config ID to select for this step
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
-config_branch = get_config_for_branch_id(
-    config=config, branch=branch, branch_config_id=branch_config_id
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
 )
 
 # %% editable=true slideshow={"slide_type": ""}
-config_preparation = get_config_for_branch_id(
-    config=config, branch="preparation", branch_config_id="only"
+config_preparation = get_config_for_step_id(
+    config=config, step="preparation", step_config_id="only"
 )
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -73,8 +73,8 @@ generator = np.random.Generator(np.random.PCG64(seed))
 # %%
 draws = pd.DataFrame(
     generator.multivariate_normal(
-        mean=np.zeros_like(np.diag(config_branch.covariance)),
-        cov=config_branch.covariance,
+        mean=np.zeros_like(np.diag(config_step.covariance)),
+        cov=config_step.covariance,
         size=N_DRAWS,
     ),
     columns=["x", "y"],
@@ -84,5 +84,5 @@ draws = pd.DataFrame(
 plt.scatter(draws["x"], draws["y"])
 
 # %%
-draws.to_csv(config_branch.draw_file, index=False)
-config_branch.draw_file
+draws.to_csv(config_step.draw_file, index=False)
+config_step.draw_file

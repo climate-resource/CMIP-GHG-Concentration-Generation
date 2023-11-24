@@ -97,21 +97,21 @@ def update_attr_value(
     return value
 
 
-def get_branch_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
+def get_step_config_ids(configs: Iterable[NotebookConfigLike]) -> list[str]:
     """
     Get available config IDs from an iterable of notebook configurations
 
     Parameters
     ----------
     configs
-        Configurations from which to retrieve the branch config IDs
+        Configurations from which to retrieve the step config IDs
 
     Returns
     -------
-        Branch config ID from each config in ``configs``
+        Step config ID from each config in ``configs``
     """
-    return [c.branch_config_id for c in configs]
+    return [c.step_config_id for c in configs]
 
 
 # TODO: fix this
-get_step_config_ids = get_branch_config_ids
+get_step_config_ids = get_step_config_ids

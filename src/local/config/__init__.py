@@ -79,42 +79,42 @@ load_config_from_file = partial(
 
 
 # TODO: move into pydoit_nb?
-def get_config_for_branch_id(
+def get_config_for_step_id(
     config: Config,
-    branch: str,
-    branch_config_id: str,
+    step: str,
+    step_config_id: str,
 ) -> Any:
     """
-    Get configuration for a specific branch config ID for a specific branch
+    Get configuration for a specific value of step config ID for a specific step
 
-    This will fail if ``branch`` isn't a part of ``config``
+    This will fail if ``step`` isn't a part of ``config``
 
     Parameters
     ----------
     config
-        Config from which to retrieve the branch config
+        Config from which to retrieve the step config
 
-    branch
-        Branch to get configuration
+    step
+        Step from which to retrieve the configuration
 
-    branch_config_id
-        Branch config ID for which to get branch configuration
+    step_config_id
+        The retrieved configuration's ``step_config_id`` will match this value
 
     Returns
     -------
-        Configuration for branch ``branch`` with branch config ID equal to
-        ``branch_config_id``
+        Configuration for step ``step`` with step config ID equal to
+        ``step_config_id``
 
     Raises
     ------
     ValueError
-        No configuration could be found with ID equal to ``branch_config_id``
+        No configuration could be found with ID equal to ``step_config_id``
     """
-    possibilities = getattr(config, branch)
+    possibilities = getattr(config, step)
     for poss in possibilities:
-        if poss.branch_config_id == branch_config_id:
+        if poss.step_config_id == step_config_id:
             return poss
 
     raise ValueError(  # noqa: TRY003
-        f"Couldn't find {branch_config_id=}, available branch config IDs: {possibilities}"
+        f"Couldn't find {step_config_id=}, available step config IDs: {possibilities}"
     )

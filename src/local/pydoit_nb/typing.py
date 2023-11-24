@@ -84,5 +84,5 @@ class NotebookConfigLike(Protocol):
     A class which is like a notebook config
     """
 
-    branch_config_id: str
-    """String which identifies the branch config to use with the notebook"""
+    step_config_id: str
+    """String which identifies the step config to use with the notebook"""

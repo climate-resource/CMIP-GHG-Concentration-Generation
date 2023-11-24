@@ -82,8 +82,8 @@ class ConfiguredNotebook:
     config_file: Path
     """Path to the config file to use with the notebook"""
 
-    branch_config_id: str
-    """`branch_config_id` to use for this run of the notebook"""
+    step_config_id: str
+    """`step_config_id` to use for this run of the notebook"""
 
     def to_doit_task(  # noqa: PLR0913
         self,
@@ -135,15 +135,15 @@ class ConfiguredNotebook:
             raw_notebook,
         ]
         notebook_parameters = dict(
-            config_file=str(self.config_file), branch_config_id=self.branch_config_id
+            config_file=str(self.config_file), step_config_id=self.step_config_id
         )
 
         targets = self.targets
 
         task = dict(
             basename=base_task["basename"],
-            name=self.branch_config_id,
-            doc=f"{base_task['doc']}. branch_config_id={self.branch_config_id!r}",
+            name=self.step_config_id,
+            doc=f"{base_task['doc']}. step_config_id={self.step_config_id!r}",
             actions=[
                 (
                     run_notebook,

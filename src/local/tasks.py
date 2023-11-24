@@ -35,9 +35,8 @@ def gen_all_tasks(
         Configuration bundles
 
     root_dir_raw_notebooks
-        Directory in which raw notebooks are kept. The notebook path in the
-        elements of `notebook_branch_meta` are assumed to be relative to this
-        path.
+        Directory in which raw notebooks are kept. The notebook path in any
+        static notebook specifications are assumed to be relative to this path.
 
     repo_root_dir
         Root directory of the repository, used for copying the source into the
