@@ -9,11 +9,7 @@ from pathlib import Path
 
 from .config import converter_yaml
 from .config.base import ConfigBundle
-from .notebook_steps import analysis
-from .notebook_steps.constraint import (
-    configure_notebooks_constraint,
-    get_unconfigured_notebooks_constraint,
-)
+from .notebook_steps import analysis, constraint
 from .notebook_steps.covariance import (
     configure_notebooks_covariance,
     get_unconfigured_notebooks_covariance,
@@ -87,10 +83,13 @@ def gen_all_tasks(
     )
     notebook_tasks.extend(covariance_tasks)
 
-    constraint_tasks = gnb_tasks(
-        branch_name="constraint",
-        get_unconfigured_notebooks=get_unconfigured_notebooks_constraint,
-        configure_notebooks=configure_notebooks_constraint,
+    constraint_tasks = constraint.step.gen_notebook_tasks(
+        config_bundle=config_bundle,
+        root_dir_raw_notebooks=root_dir_raw_notebooks,
+        # I can't make mypy behave with the below. I'm not really sure what the
+        # issue is. Maybe that cattrs provides a much more generic, yet less
+        # well-defined interface, than the one we expect.
+        converter=converter_yaml,  # type: ignore
     )
     notebook_tasks.extend(constraint_tasks)
 

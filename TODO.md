@@ -7,6 +7,7 @@
 - Fix up docs as I go along
 - remove all references to branch in src
 
+- if you want to fix type hints, need a minimum example as doing it in live project is too hard
 
 - actual docs
 - add zenodo upload step (no point having it as separate script really)
