@@ -9,11 +9,7 @@ from pathlib import Path
 
 from .config import converter_yaml
 from .config.base import ConfigBundle
-from .notebook_steps import analysis, constraint, covariance
-from .notebook_steps.covariance_plotting import (
-    configure_notebooks_covariance_plotting,
-    get_unconfigured_notebooks_covariance_plotting,
-)
+from .notebook_steps import analysis, constraint, covariance, covariance_plotting
 from .notebook_steps.figures import (
     configure_notebooks_figures,
     get_unconfigured_notebooks_figures,
@@ -72,42 +68,16 @@ def gen_all_tasks(
     )
     notebook_tasks.extend(prep_tasks)
 
-    covariance_tasks = covariance.step.gen_notebook_tasks(
-        config_bundle=config_bundle,
-        root_dir_raw_notebooks=root_dir_raw_notebooks,
-        # I can't make mypy behave with the below. I'm not really sure what the
-        # issue is. Maybe that cattrs provides a much more generic, yet less
-        # well-defined interface, than the one we expect.
-        converter=converter_yaml,  # type: ignore
-    )
-    notebook_tasks.extend(covariance_tasks)
-
-    constraint_tasks = constraint.step.gen_notebook_tasks(
-        config_bundle=config_bundle,
-        root_dir_raw_notebooks=root_dir_raw_notebooks,
-        # I can't make mypy behave with the below. I'm not really sure what the
-        # issue is. Maybe that cattrs provides a much more generic, yet less
-        # well-defined interface, than the one we expect.
-        converter=converter_yaml,  # type: ignore
-    )
-    notebook_tasks.extend(constraint_tasks)
-
-    covariance_plotting_tasks = gnb_tasks(
-        branch_name="covariance_plotting",
-        get_unconfigured_notebooks=get_unconfigured_notebooks_covariance_plotting,
-        configure_notebooks=configure_notebooks_covariance_plotting,
-    )
-    notebook_tasks.extend(covariance_plotting_tasks)
-
-    analysis_tasks = analysis.step.gen_notebook_tasks(
-        config_bundle=config_bundle,
-        root_dir_raw_notebooks=root_dir_raw_notebooks,
-        # I can't make mypy behave with the below. I'm not really sure what the
-        # issue is. Maybe that cattrs provides a much more generic, yet less
-        # well-defined interface, than the one we expect.
-        converter=converter_yaml,  # type: ignore
-    )
-    notebook_tasks.extend(analysis_tasks)
+    for step_module in [covariance, constraint, covariance_plotting, analysis]:
+        step_tasks = step_module.step.gen_notebook_tasks(
+            config_bundle=config_bundle,
+            root_dir_raw_notebooks=root_dir_raw_notebooks,
+            # I can't make mypy behave with the below. I'm not really sure what the
+            # issue is. Maybe that cattrs provides a much more generic, yet less
+            # well-defined interface, than the one we expect.
+            converter=converter_yaml,  # type: ignore
+        )
+        notebook_tasks.extend(step_tasks)
 
     figures_tasks = gnb_tasks(
         branch_name="figures",
