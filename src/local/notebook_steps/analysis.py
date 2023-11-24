@@ -13,7 +13,7 @@ from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
 if TYPE_CHECKING:
-    from ..config.base import Config, ConfigBundle
+    from ..config.base import ConfigBundle
 
 
 def configure_notebooks(
@@ -69,7 +69,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[Config] = UnconfiguredNotebookBasedStep(
+step = UnconfiguredNotebookBasedStep(
     step_name="analysis",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
@@ -79,8 +79,5 @@ step: UnconfiguredNotebookBasedStep[Config] = UnconfiguredNotebookBasedStep(
             doc="Crunch basic statistics and write outputs to disk",
         )
     ],
-    # I can't make mypy behave with the below. I think the type hints are
-    # correct, but removing leads to an error I just can't figure out (I think
-    # it's to do with how the generic is compared but I don't actually know).
-    configure_notebooks=configure_notebooks,  # type: ignore
+    configure_notebooks=configure_notebooks,
 )

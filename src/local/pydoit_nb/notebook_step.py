@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from pathlib import Path
-from typing import TYPE_CHECKING, Generic, Protocol, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar
 
 from attrs import frozen
 
@@ -20,8 +20,7 @@ if TYPE_CHECKING:
     from .notebook import ConfiguredNotebook, UnconfiguredNotebook
 
 
-C = TypeVar("C")
-CB = TypeVar("CB", contravariant=True)
+CB = TypeVar("CB", contravariant=True, bound=ConfigBundleLike[Any])
 
 
 class ConfigureNotebooksCallable(Protocol[CB]):
@@ -38,7 +37,7 @@ class ConfigureNotebooksCallable(Protocol[CB]):
 
 
 @frozen
-class UnconfiguredNotebookBasedStep(Generic[C]):
+class UnconfiguredNotebookBasedStep(Generic[CB]):
     """
     An unconfigured notebook-based step
 
@@ -53,12 +52,12 @@ class UnconfiguredNotebookBasedStep(Generic[C]):
     unconfigured_notebooks: list[UnconfiguredNotebook]
     """Unconfigured notebooks that make up this step"""
 
-    configure_notebooks: ConfigureNotebooksCallable[ConfigBundleLike[C]]
+    configure_notebooks: ConfigureNotebooksCallable[CB]
     """Function which can configure the notebooks based on run-time information"""
 
     def gen_notebook_tasks(
         self,
-        config_bundle: ConfigBundleLike[C],
+        config_bundle: CB,
         root_dir_raw_notebooks: Path,
         converter: Converter[tuple[HandleableConfiguration, ...]] | None = None,
         clean: bool = True,
