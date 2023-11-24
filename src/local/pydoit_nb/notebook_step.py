@@ -121,7 +121,7 @@ class UnconfiguredNotebookBasedStep(Generic[C]):
                     root_dir_raw_notebooks=root_dir_raw_notebooks,
                     notebook_output_dir=notebook_output_dir_step_id,
                     base_task=unconfigured_notebooks_base_tasks[
-                        nb_configured.notebook_path
+                        nb_configured.unconfigured_notebook.notebook_path
                     ],
                     converter=converter,
                     clean=clean,

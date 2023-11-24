@@ -7,8 +7,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from attrs import asdict
-
 from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -58,7 +56,9 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            **asdict(uc_nbs_dict[Path("1xx_covariance") / "110_draw-samples"]),
+            unconfigured_notebook=uc_nbs_dict[
+                Path("1xx_covariance") / "110_draw-samples"
+            ],
             configuration=(config_step.covariance,),
             dependencies=(config_preparation.seed_file,),
             targets=(config_step.draw_file,),

@@ -45,18 +45,10 @@ class ConfiguredNotebook:
     with it.
     """
 
-    notebook_path: Path
-    """Path to notebook, relative to the raw notebook directory"""
-
-    raw_notebook_ext: str
-    """Extension for the raw notebook"""
-
-    summary: str
-    """One line summary of the notebook"""
-    # TODO: validation?
-
-    doc: str
-    """Documentation of the notebook (can be longer than one line)"""
+    unconfigured_notebook: UnconfiguredNotebook
+    """
+    The unconfigured notebook which should be combined with the configuration
+    """
 
     configuration: tuple[HandleableConfiguration, ...] | None
     """
@@ -122,11 +114,14 @@ class ConfiguredNotebook:
         TypeError
             ``self.configuration is not None`` but ``converter is None``
         """
-        raw_notebook = root_dir_raw_notebooks / self.notebook_path.with_suffix(
-            self.raw_notebook_ext
+        raw_notebook = (
+            root_dir_raw_notebooks
+            / self.unconfigured_notebook.notebook_path.with_suffix(
+                self.unconfigured_notebook.raw_notebook_ext
+            )
         )
 
-        notebook_name = self.notebook_path.name
+        notebook_name = self.unconfigured_notebook.notebook_path.name
         unexecuted_notebook = notebook_output_dir / f"{notebook_name}_unexecuted.ipynb"
         executed_notebook = notebook_output_dir / f"{notebook_name}.ipynb"
 

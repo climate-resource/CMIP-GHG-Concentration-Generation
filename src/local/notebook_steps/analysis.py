@@ -7,8 +7,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from attrs import asdict
-
 from ..pydoit_nb.checklist import get_checklist_file
 from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
@@ -57,7 +55,9 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            **asdict(uc_nbs_dict[Path("7xx_analysis") / "710_stats-crunching"]),
+            unconfigured_notebook=uc_nbs_dict[
+                Path("7xx_analysis") / "710_stats-crunching"
+            ],
             configuration=(),
             dependencies=tuple(c.draw_file for c in config_covariance),
             targets=(get_checklist_file(config_step.mean_dir),),
