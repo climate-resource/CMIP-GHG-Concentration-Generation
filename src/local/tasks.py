@@ -9,10 +9,12 @@ from pathlib import Path
 
 from .config import converter_yaml
 from .config.base import ConfigBundle
-from .notebook_steps import analysis, constraint, covariance, covariance_plotting
-from .notebook_steps.figures import (
-    configure_notebooks_figures,
-    get_unconfigured_notebooks_figures,
+from .notebook_steps import (
+    analysis,
+    constraint,
+    covariance,
+    covariance_plotting,
+    figures,
 )
 from .notebook_steps.preparation import (
     configure_notebooks_prep,
@@ -68,7 +70,7 @@ def gen_all_tasks(
     )
     notebook_tasks.extend(prep_tasks)
 
-    for step_module in [covariance, constraint, covariance_plotting, analysis]:
+    for step_module in [covariance, constraint, covariance_plotting, analysis, figures]:
         step_tasks = step_module.step.gen_notebook_tasks(
             config_bundle=config_bundle,
             root_dir_raw_notebooks=root_dir_raw_notebooks,
@@ -78,13 +80,6 @@ def gen_all_tasks(
             converter=converter_yaml,  # type: ignore
         )
         notebook_tasks.extend(step_tasks)
-
-    figures_tasks = gnb_tasks(
-        branch_name="figures",
-        get_unconfigured_notebooks=get_unconfigured_notebooks_figures,
-        configure_notebooks=configure_notebooks_figures,
-    )
-    notebook_tasks.extend(figures_tasks)
 
     yield from notebook_tasks
 
