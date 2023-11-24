@@ -6,6 +6,7 @@ to run it.
 """
 from __future__ import annotations
 
+import copy
 from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Generic, Protocol, TypeVar
@@ -93,7 +94,8 @@ class UnconfiguredNotebookBasedStep(Generic[CB]):
                 "name": None,
                 "doc": nb.doc,
             }
-            yield base_task
+            # yield copy of base task to avoid being mangled by doit
+            yield copy.deepcopy(base_task)
 
             unconfigured_notebooks_base_tasks[nb.notebook_path] = base_task
 

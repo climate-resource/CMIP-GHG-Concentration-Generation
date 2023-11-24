@@ -58,18 +58,13 @@ def gen_all_tasks(
         analysis,
         figures,
     ]:
-        step_tasks = step_module.step.gen_notebook_tasks(
+        for task in step_module.step.gen_notebook_tasks(
             config_bundle=config_bundle,
             root_dir_raw_notebooks=root_dir_raw_notebooks,
-            # I can't make mypy behave with the below. I'm not really sure what the
-            # issue is. Maybe that cattrs provides a much more generic, yet less
-            # well-defined interface, than the one we expect.
             converter=converter_yaml,
-        )
-        step_tasks = list(step_tasks)
-        notebook_tasks.extend(step_tasks)
-
-        yield from step_tasks
+        ):
+            yield task
+            notebook_tasks.append(task)
 
     yield from gen_copy_source_into_output_tasks(
         all_preceeding_tasks=notebook_tasks,
