@@ -52,6 +52,17 @@ config_branch = get_config_for_branch_id(
 print(f"DOI for dataset: {config_branch.law_dome.doi}")
 
 # %% [markdown]
+# ## Retrieve the data
+#
+# Found this, which is useable (although not sure if keys are rotated are not, if not then can download from DOI by hand)
+
+# %% [markdown]
+# ```sh
+# # TODO: translate into call below and define CSIRO_RAW_DIR appropriately
+# AWS_ACCESS_KEY_ID=Q6EU674V7FXBPCRHRL21 AWS_SECRET_ACCESS_KEY=HqgiwG1pgdojWw3kcT63Pwaaq6ebH+zIR50IsMq7 aws s3 cp --endpoint-url https://s3.data.csiro.au --recursive s3://dapprd/000037077v001/ {config_branch.law_dome.raw_files_root_dir}
+# ```
+
+# %% [markdown]
 # ### Check we're using the intended files
 
 # %%
