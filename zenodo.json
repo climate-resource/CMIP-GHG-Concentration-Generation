@@ -1,0 +1,26 @@
+{
+    "metadata": {
+        "title": "Example workflow",
+        "version": "to-be-replaced",
+        "upload_type": "dataset",
+        "description": "Demonstration of workflows using pydoit-nb",
+        "creators": [
+            {
+                "name": "Zebedee Nicholls",
+                "affiliation": "Climate Resource",
+                "orcid": "0000-0002-4767-2723"
+            },
+            {
+                "name": "Jared Lewis",
+                "affiliation": "Climate Resource",
+                "orcid": "0000-0002-4767-2723"
+            }
+        ],
+        "language": "eng",
+        "license": "TBD",
+        "keywords": ["pydoit-nb", "doit", "notebook", "reproducible-workflow"],
+        "references": [
+            "TBD"
+        ]
+    }
+}

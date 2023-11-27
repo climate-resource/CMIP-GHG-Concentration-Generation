@@ -1,0 +1,6 @@
+from pathlib import Path
+
+import nbformat
+
+def read(fp: Path) -> nbformat.NotebookNode: ...
+def write(nb: nbformat.NotebookNode, fp: Path, fmt: str | None) -> None: ...

@@ -1,0 +1,3 @@
+from pathlib import Path
+
+def get_file_md5(fp: Path) -> str: ...

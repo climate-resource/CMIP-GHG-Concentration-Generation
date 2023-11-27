@@ -1,0 +1,41 @@
+analysis:
+- step_config_id: only
+  mean_dir: data/processed/710_means
+constraint:
+- step_config_id: only
+  constraint_gradient: 1.2
+  draw_file: data/interim/210_constraint_draws.csv
+covariance:
+- step_config_id: cov
+  covariance:
+  - - 0.25
+    - 0.3
+  - - 0.3
+    - 0.55
+  draw_file: data/interim/110_cov_draws.csv
+- step_config_id: cov-weak
+  covariance:
+  - - 0.25
+    - 0.1
+  - - 0.1
+    - 0.55
+  draw_file: data/interim/110_cov-weak_draws.csv
+- step_config_id: no-cov
+  covariance:
+  - - 0.25
+    - 0.0
+  - - 0.0
+    - 0.55
+  draw_file: data/interim/110_no-cov_draws.csv
+covariance_plotting:
+- step_config_id: only
+figures:
+- step_config_id: only
+  draw_comparison_figure: figures/920_draw-comparison.pdf
+  draw_comparison_table: data/processed/910_draw-table.csv
+  misc_figures_dir: figures/misc
+name: dev
+preparation:
+- step_config_id: only
+  seed: 2847539
+  seed_file: data/interim/000_seed.txt

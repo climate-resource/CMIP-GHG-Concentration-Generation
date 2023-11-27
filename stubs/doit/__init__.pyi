@@ -1,0 +1,3 @@
+"""
+Stubs for doit
+"""

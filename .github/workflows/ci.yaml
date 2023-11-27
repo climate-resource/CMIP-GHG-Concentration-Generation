@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  mypy:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+        with:
+          python-version: "3.11"
+          venv-id: "docs"
+          poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
+      - name: mypy
+        run: MYPYPATH=stubs poetry run mypy src
+
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ "ubuntu-latest" ]
+        python-version: [ "3.11" ]
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+        with:
+          python-version: "${{ matrix.python-version }}"
+          venv-id: "tests-${{ runner.os }}"
+          poetry-dependency-install-flags: "--all-extras --only 'main,tests,coverage'"
+      - name: Run tests relevant for coverage
+        run: |
+          poetry run pytest -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
+          poetry run coverage report
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run tests that break coverage
+        run: |
+          poetry run pytest -r a -v tests -m coverage_breaker
