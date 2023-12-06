@@ -11,6 +11,7 @@
 - add seasonal and latitudinal gradient (do just something for now, can make it more complicated in future)
 - write out in correct format
 - then iterate
+    - consider whether we should use CSIRO's spline (in the Splines fits sheet of the Law Dome data) rather than inventing our own (data providers seem to often have their own spline, not sure if better to have consistency or use data providers' interpolated view)
 
 ### URLs
 
