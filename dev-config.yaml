@@ -1,3 +1,13 @@
+retrieve:
+- step_config_id: only
+  law_dome:
+    doi: https://doi.org/10.25919/5bfe29ff807fb
+    files_md5_sum:
+      data/raw/law_dome/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+process:
+- step_config_id: only
+  law_dome:
+    processed_file: data/processed/law_dome
 analysis:
 - step_config_id: only
   mean_dir: data/processed/710_means
@@ -39,9 +49,3 @@ preparation:
 - step_config_id: only
   seed: 2847539
   seed_file: data/interim/000_seed.txt
-retrieve:
-- step_config_id: only
-  law_dome:
-    doi: https://doi.org/10.25919/5bfe29ff807fb
-    files_md5_sum:
-      data/raw/law_dome/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e

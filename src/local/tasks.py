@@ -15,6 +15,7 @@ from .notebook_steps import (
     covariance_plotting,
     figures,
     preparation,
+    process,
     retrieve,
 )
 from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
@@ -53,6 +54,7 @@ def gen_all_tasks(
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
         retrieve,
+        process,
         preparation,
         covariance,
         constraint,

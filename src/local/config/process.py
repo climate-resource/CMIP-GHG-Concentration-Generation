@@ -1,5 +1,5 @@
 """
-Config for the retrieve step
+Config for the process step
 """
 from __future__ import annotations
 
@@ -9,9 +9,9 @@ from attrs import frozen
 
 
 @frozen
-class RetrieveConfig:
+class ProcessConfig:
     """
-    Configuration class for the retrieve step
+    Configuration class for the process step
     """
 
     step_config_id: str
@@ -22,7 +22,7 @@ class RetrieveConfig:
     """
 
     law_dome: LawDomeConfig
-    """Configuration for retrieving Law Dome data"""
+    """Configuration for processing Law Dome data"""
 
 
 @frozen
@@ -31,8 +31,5 @@ class LawDomeConfig:
     Configuration class for Law Dome data
     """
 
-    doi: str
-    """DOI of the dataset"""
-
-    files_md5_sum: dict[Path, str]
-    """MD5 hashes for the files in the dataset"""
+    processed_file: Path
+    """File in which to save the processed data"""

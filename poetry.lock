@@ -408,6 +408,40 @@ files = [
 ]
 
 [[package]]
+name = "cftime"
+version = "1.6.3"
+description = "Time-handling functionality from netcdf4-python"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "cftime-1.6.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:b62d42546fa5c914dfea5b15a9aaed2087ea1211cc36d08c374502ef95892038"},
+    {file = "cftime-1.6.3-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:eb6dd70b2ccabfe1a14b7fbb0bbdce0418e71697094373c0d573c880790fa291"},
+    {file = "cftime-1.6.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f9878bfd8c1c3f24184ecbd528f739ba46ebaceaf1c8a24d348d7befb117a285"},
+    {file = "cftime-1.6.3-cp310-cp310-win_amd64.whl", hash = "sha256:3cf6e216a4c06f9a628cdf8e9c9d5e8097fb3eb02dd087dd14ab3b18478a7271"},
+    {file = "cftime-1.6.3-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:8d2c01456d9d7b46aa710a41d1c711a50d5ea259aff4a987d0e973d1093bc922"},
+    {file = "cftime-1.6.3-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:80eb1170ce1639016f55760847f4aadd04b0312496c5bac2797e930914bba48d"},
+    {file = "cftime-1.6.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d87dadd0824262bdd7493babd2a44447da0a22175ded8ae9e060a3aebec7c5d7"},
+    {file = "cftime-1.6.3-cp311-cp311-win_amd64.whl", hash = "sha256:0a38eb9f5c733a23e1714bd3ef2762ed5acee34f127670f8fb4ad6464946f6b3"},
+    {file = "cftime-1.6.3-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:2d113a01ab924445e61d65c26bbd95bc08e4a22878d3b947064bba056c884c4a"},
+    {file = "cftime-1.6.3-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:5f11685663a6af97418908060492a07663c16d42519c139ca03c2ffb1377fd25"},
+    {file = "cftime-1.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a98abb1d46d118e52b0611ce668a0b714b407be26177ef0581ecf5e95f894725"},
+    {file = "cftime-1.6.3-cp312-cp312-win_amd64.whl", hash = "sha256:4d6fbd5f41b322cfa7b0ac3aaadeceb4450100a164b5bccbbb9e7c5048489a88"},
+    {file = "cftime-1.6.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:bedb577bc8b8f3f10f5336c0792e5dae88605781890f50f36b45bb46907968e8"},
+    {file = "cftime-1.6.3-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:022dabf1610cdd04a693e730fa8f71d307059717f29dba921e7486e553412bb4"},
+    {file = "cftime-1.6.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bbf782ab4ac0605bdec2b941952c897595613203942b7f8c2fccd17efa5147df"},
+    {file = "cftime-1.6.3-cp38-cp38-win_amd64.whl", hash = "sha256:9eb177a02db7cd84aa6962278e4bd2d3106a545de82e6aacd9404f1e153661db"},
+    {file = "cftime-1.6.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:3b86be8c2f254147be4ba88f12099466dde457a4a3a21de6c69d52a7224c13ae"},
+    {file = "cftime-1.6.3-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:523b9a6bf03f5e36407979e248381d0fcab2d225b915bbde77d00c6dde192b90"},
+    {file = "cftime-1.6.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8a14d2c7d22fd2a6dfa6ad563283b6d6679f1df95e0ed8d14b8f284dad402887"},
+    {file = "cftime-1.6.3-cp39-cp39-win_amd64.whl", hash = "sha256:d9b00c2844c7a1701d8ede5336b6321dfee256ceab81a34a1aff0483d56891a6"},
+    {file = "cftime-1.6.3.tar.gz", hash = "sha256:d0a6b29f72a13f08e008b9becff247cc75c84acb213332ede18879c5b6aa4dfd"},
+]
+
+[package.dependencies]
+numpy = {version = ">1.13.3", markers = "python_version < \"3.12.0.rc1\""}
+
+[[package]]
 name = "charset-normalizer"
 version = "3.3.2"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
@@ -941,6 +975,18 @@ python-versions = ">=2.7, !=3.0, !=3.1, !=3.2, !=3.3, !=3.4, <4"
 files = [
     {file = "fqdn-1.5.1-py3-none-any.whl", hash = "sha256:3a179af3761e4df6eb2e026ff9e1a3033d3587bf980a0b1b2e1e5d08d7358014"},
     {file = "fqdn-1.5.1.tar.gz", hash = "sha256:105ed3677e767fb5ca086a0c1f4bb66ebc3c100be518f0e0d755d9eae164d89f"},
+]
+
+[[package]]
+name = "globalwarmingpotentials"
+version = "0.9.3"
+description = "Global warming potentials of greenhouse gases from various IPCC reports"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "globalwarmingpotentials-0.9.3-py2.py3-none-any.whl", hash = "sha256:e06839334b34933a3f6fd365aef74f9c7d2c385af9f0908c121f4bfbd85ce246"},
+    {file = "globalwarmingpotentials-0.9.3.tar.gz", hash = "sha256:e81eb717ff81d894e43fcdbee1de7a6f2d83e3e6b63789fada8fb24861a2952a"},
 ]
 
 [[package]]
@@ -2036,6 +2082,26 @@ files = [
 et-xmlfile = "*"
 
 [[package]]
+name = "openscm-units"
+version = "0.5.3"
+description = "Handling of units related to simple climate modelling."
+category = "main"
+optional = false
+python-versions = ">=3.9,<4.0"
+files = [
+    {file = "openscm_units-0.5.3-py3-none-any.whl", hash = "sha256:c768bfea69565a4e2f1560abd7362c8a78e2dc859839a2a42a2e95d94164c7a3"},
+    {file = "openscm_units-0.5.3.tar.gz", hash = "sha256:a78d0b50fe0a6c1b711941ea1c575bfdd913288e31f4c03b0f9e3fbafbed3706"},
+]
+
+[package.dependencies]
+globalwarmingpotentials = "*"
+pandas = "*"
+pint = "*"
+
+[package.extras]
+notebooks = ["notebook (>=7.0.0,<8.0.0)", "seaborn (>=0.13.0,<0.14.0)"]
+
+[[package]]
 name = "overrides"
 version = "7.4.0"
 description = "A decorator to automatically detect mismatch when overriding a method."
@@ -2296,6 +2362,50 @@ files = [
 [package.extras]
 docs = ["furo", "olefile", "sphinx (>=2.4)", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-removed-in", "sphinxext-opengraph"]
 tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
+
+[[package]]
+name = "pint"
+version = "0.22"
+description = "Physical quantities module"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "Pint-0.22-py3-none-any.whl", hash = "sha256:6e2b3c5c2b4d9b516608bc860a417a39d66eb99c958f36540cf931d2c2e9f80f"},
+    {file = "Pint-0.22.tar.gz", hash = "sha256:2d139f6abbcf3016cad7d3cec05707fe908ac4f99cf59aedfd6ee667b7a64433"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[package.extras]
+babel = ["babel (<=2.8)"]
+dask = ["dask"]
+mip = ["mip (>=1.13)"]
+numpy = ["numpy (>=1.19.5)"]
+pandas = ["pint-pandas (>=0.3)"]
+test = ["pytest", "pytest-cov", "pytest-mpl", "pytest-subtests"]
+uncertainties = ["uncertainties (>=3.1.6)"]
+xarray = ["xarray"]
+
+[[package]]
+name = "pint-pandas"
+version = "0.5"
+description = "Extend Pandas Dataframe with Physical quantities module"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "Pint-Pandas-0.5.tar.gz", hash = "sha256:48ec96d457f802a347763dee1d3e1a273f11f90e4e595df17fd44613dd14a61c"},
+    {file = "Pint_Pandas-0.5-py3-none-any.whl", hash = "sha256:a33e8b43052a867b7b00a8c2c1fa3a7cc9af0eb0c0c17734a62a66eae5bbb1dd"},
+]
+
+[package.dependencies]
+pandas = ">=1.5"
+pint = ">=0.21"
+
+[package.extras]
+test = ["codecov", "coveralls", "nbval", "pyarrow", "pytest", "pytest-cov", "pytest-mpl", "pytest-subtests"]
 
 [[package]]
 name = "platformdirs"
@@ -2966,6 +3076,37 @@ files = [
 ]
 
 [[package]]
+name = "scmdata"
+version = "0.16.1"
+description = "scmdata provides some useful data handling routines for dealing with data related to simple climate models (SCMs aka reduced complexity climate models, RCMs)"
+category = "main"
+optional = false
+python-versions = ">=3.9,<4.0"
+files = [
+    {file = "scmdata-0.16.1-py3-none-any.whl", hash = "sha256:e5b56cff8b7efaf0cfec2945fc3431bbf30712bc9b5a1b44092983da80e56ca1"},
+    {file = "scmdata-0.16.1.tar.gz", hash = "sha256:02038d4b1ce68abfecfe729eacde1444f78de58ec8a71bd2b721454a7bee9ec3"},
+]
+
+[package.dependencies]
+cftime = ">=1.5"
+numpy = "*"
+openscm-units = "*"
+packaging = "*"
+pandas = ">=1.1"
+pint = "*"
+pint-pandas = "*"
+python-dateutil = "*"
+six = "*"
+tqdm = "*"
+typing-extensions = "*"
+xarray = "*"
+
+[package.extras]
+notebooks = ["notebook (>=7)"]
+optional = ["joblib", "netCDF4", "openpyxl", "pyam-iamc", "scipy", "xlrd"]
+plots = ["matplotlib (>=3.7.1,<4.0.0)", "nc-time-axis (>=1.2.0)", "seaborn"]
+
+[[package]]
 name = "seaborn"
 version = "0.13.0"
 description = "Statistical data visualization"
@@ -3242,7 +3383,7 @@ files = [
 name = "typing-extensions"
 version = "4.8.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -3386,6 +3527,30 @@ files = [
 ]
 
 [[package]]
+name = "xarray"
+version = "2023.11.0"
+description = "N-D labeled arrays and datasets in Python"
+category = "main"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "xarray-2023.11.0-py3-none-any.whl", hash = "sha256:933b5101e965120ed58e29525667ab34aafcea1886c236ade72a34d7bb465d9c"},
+    {file = "xarray-2023.11.0.tar.gz", hash = "sha256:9a45e10741844b5f948d8e1e768b460df7e90696d18e2eff2c1d47f5d9d50252"},
+]
+
+[package.dependencies]
+numpy = ">=1.22"
+packaging = ">=21.3"
+pandas = ">=1.4"
+
+[package.extras]
+accel = ["bottleneck", "flox", "numbagg", "opt-einsum", "scipy"]
+complete = ["xarray[accel,io,parallel,viz]"]
+io = ["cftime", "fsspec", "h5netcdf", "netCDF4", "pooch", "pydap", "scipy", "zarr"]
+parallel = ["dask[complete]"]
+viz = ["matplotlib", "nc-time-axis", "seaborn"]
+
+[[package]]
 name = "xyzservices"
 version = "2023.10.1"
 description = "Source of XYZ tiles providers"
@@ -3416,4 +3581,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "7e20fb0e96027a9337394666cde12810b7d6f601b3ca1d478b4df8860b03f27c"
+content-hash = "e8729cbdfab3ba03de463468e6e77b0eef4e5f8fbb46c8d8fadc4f790b417c62"
