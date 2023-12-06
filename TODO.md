@@ -3,6 +3,7 @@
 ## Concs
 
 - download data using e.g. pooch (make sure it goes into the bundle so we don't have to rely on data without DOIs)
+    - next, see to-do in top of GGGRN retrieval notebook
 - plot raw data over the top of each other (eventually Malte style/interactive)
 - do join of data into single yearly timeseries
     - actual algorithm is much smarter than this, but for now just take annual-mean then mean across data sets and interpolate linearly to fill any gaps
