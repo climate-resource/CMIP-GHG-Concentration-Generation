@@ -40,7 +40,7 @@ preparation:
   seed: 2847539
   seed_file: data/interim/000_seed.txt
 retrieve:
-- branch_config_id: only
+- step_config_id: only
   law_dome:
     doi: https://doi.org/10.25919/5bfe29ff807fb
     files_md5_sum:

@@ -1,5 +1,5 @@
 """
-Config for the retrieve branch
+Config for the retrieve step
 """
 from __future__ import annotations
 
@@ -11,14 +11,14 @@ from attrs import frozen
 @frozen
 class RetrieveConfig:
     """
-    Configuration class for the retrieve branch
+    Configuration class for the retrieve step
     """
 
-    branch_config_id: str
+    step_config_id: str
     """
-    ID for this configuration of the branch
+    ID for this configuration of the step
 
-    Must be unique among all configurations for this branch
+    Must be unique among all configurations for this step
     """
 
     law_dome: LawDomeConfig

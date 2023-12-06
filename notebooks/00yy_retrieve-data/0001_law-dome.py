@@ -18,7 +18,7 @@
 # %% [markdown]
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 from doit.dependency import get_file_md5
 
 from local.config import load_config_from_file
@@ -30,10 +30,10 @@ from local.pydoit_nb.config_handling import get_config_for_step_id
 # %%
 step: str = "retrieve"
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
