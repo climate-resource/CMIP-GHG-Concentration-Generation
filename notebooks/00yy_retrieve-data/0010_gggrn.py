@@ -35,7 +35,49 @@
 # - use full station data from GGGRN (and whatever other independent estimates we have) properly a la Meinshausen et al. 2017
 
 # %% [markdown]
-# NOAA network URL (maybe personal to me, need to check):
+# ## Imports
+
+# %%
+import pooch
+
+from local.config import load_config_from_file
+from local.pydoit_nb.config_handling import get_config_for_step_id
+
+# %% [markdown]
+# ## Define branch this notebook belongs to
+
+# %%
+step: str = "retrieve"
+
+# %% [markdown]
+# ## Parameters
+
+# %%
+config_file: str = "../../dev-config-absolute.yaml"  # config file
+step_config_id: str = "only"  # config ID to select for this branch
+
+# %% [markdown]
+# ## Load config
+
+# %%
+config = load_config_from_file(config_file)
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
+
+# %% [markdown]
+# ## Action
+
+# %%
+for url_source in config_step.gggrn.urls_global_mean:
+    pooch.retrieve(
+        url=url_source.url,
+        known_hash=url_source.known_hash,
+        path=config_step.gggrn.raw_dir,
+    )
+
+# %% [markdown]
+# NOAA network URL, the obspack (maybe personal to me, need to check):
 #
 # http://gml.noaa.gov/ccgg/obspack/tmp/obspack_af7m24/obspack_co2_1_GLOBALVIEWplus_v8.0_2022-08-27.nc.tar.gz
 #
@@ -53,5 +95,3 @@
 # E-mail List of Data Providers:
 #
 # A.Colomb@opgc.univ-bpclermont.fr, Ari.Leskinen@fmi.fi, Arjan.Hensen@tno.nl, Arnoud.frumau@tno.nl, Brian.Viner@srnl.doe.gov, Casper.Labuschagne@weathersa.co.za, Cedric.Couret@uba.de, Chad.Hanson@oregonstate.edu, Christian.Plass-Duelmer@dwd.de, Danielle.vanDinther@tno.nl, David.Bowling@utah.edu, Dickon.Young@bristol.ac.uk, Eric.J.Hintsa@noaa.gov, Giovanni.MANCA@ec.europa.eu, Gordon.Brailsford@niwa.co.nz, J.M.Pichon@opgc.fr, Jennifer.Mueller-Williams@dwd.de, Logan.Mitchell@utah.edu, MLFischer@lbl.gov, MSTorn@lbl.gov, Martina.schmidt@iup.uni-Heidelberg.de, Michal.Heliasz@cec.lu.se, Michel.Ramonet@lsce.ipsl.fr, P.Cristofanelli@isac.cnr.it, Paul.Krummel@csiro.au, Pim.vandenbulk@tno.nl, Ray.Langenfelds@csiro.au, SCBiraud@lbl.gov, Sylvia.Nichol@niwa.co.nz, Tobias.Kneuer@dwd.de, Tuomas.Laurila@fmi.fi, Xin.Lan@noaa.gov, Zoe.Loh@csiro.au, accox@ucsd.edu, ajordan@bgc-jena.mpg.de, alcide.disarra@enea.it, alex.vermeulen@nateko.lu.se, am12721@bristol.ac.uk, andreas.beyersdorf@csusb.edu, andreas.zahn@kit.edu, a.manning@uea.ac.uk, anna.karion@nist.gov, antje.hoheisel@iup.uni-heidelberg.de, aoki@m.tohoku.ac.jp, arlyn.andrews@noaa.gov, bev.law@oregonstate.edu, bianca.baier@noaa.gov, cgerbig@bgc-jena.mpg.de, christian.plass-duelmer@dwd.de, clm@nilu.no, colm.sweeney@noaa.gov, crl@nilu.no, dagmar.kubistin@dwd.de, daniela.heltai@rse-web.it, david.munro@noaa.gov, dewekker@virginia.edu, djaffe@uw.edu, dlam@hko.gov.hk, doug.worthy@canada.ca, e.gloor@leeds.ac.uk, e.kozlova@exeter.ac.uk, eakort@umich.edu, ecuevasa@aemet.es, ereyess@aemet.es, florian.obersteiner@kit.edu, francesco.apadula@rse-web.it, frank.meinhardt@uba.de, fred.moore@noaa.gov, g.forster@uea.ac.uk, gao.chen@nasa.gov, ghg_obs@met.kishou.go.jp, giordanemartins@gmail.com, h.a.j.meijer@rug.nl, h.a.scheeren@rug.nl, harald.boenisch@kit.edu, haris.riris-1@nasa.gov, haszpra.l@met.hu, heiko.moossen@bgc-jena.mpg.de, hmatsued@mri-jma.go.jp, ingeborg.levin@iup.uni-heidelberg.de, ingrid.luijkx@wur.nl, irene.lehner@cec.lu.se, ivakhooo@mail.ru, ivan.mammarella@helsinki.fi, jocelyn.turnbull@noaa.gov, janne.levula@helsinki.fi, jdella@iup.uni-heidelberg.de, jeff.peischl@noaa.gov, jjkim@ucsd.edu, john.b.miller@noaa.gov, john.mund@noaa.gov, josepanton.morgui@uab.cat, joseph.pitt@bristol.ac.uk, joshua.p.digangi@nasa.gov, jtlee@maine.edu, juha.hatakka@fmi.fi, jutta.holst@nateko.lu.se, jwmunger@seas.harvard.edu, kari.lehtinen@fmi.fi, kathryn.mckain@noaa.gov, kenneth.c.aikin@noaa.gov, kenneth.schuldt@noaa.gov, kirk.w.thoning@noaa.gov, kjd10@psu.edu, kominkova.k@czechglobe.cz, kt@nilu.no, leuenberger@climate.unibe.ch, lls@bios.au.dk, lmerchant@ucsd.edu, lukas.emmenegger@empa.ch, lukasz.chmura@fis.agh.edu.pl, lvgatti@gmail.com, mahesh.sha@aeronomie.be, marc.delmotte@lsce.ipsl.fr, marek.mv@czechglobe.cz, martin.heimann@bgc-jena.mpg.de, martin.steinbacher@empa.ch, martine.demaziere@aeronomie.be, matthias.lindauer@dwd.de, meelis.molder@nateko.lu.se, michael.shook@nasa.gov, michal.galkowski@agh.edu.pl, mon@m.tohoku.ac.jp, morgan.lopez@lsce.ipsl.fr, mracine@seas.harvard.edu, necki@agh.edu.pl, niwa.yosuke@nies.go.jp, nmiles@psu.edu, oh@nilu.no, olee@hko.gov.hk, olivier.laurent@lsce.ipsl.fr, p.trisolino@isac.cnr.it, pasi.kolari@helsinki.fi, petri.keronen@helsinki.fi, pieter.tans@noaa.gov, privass@aemet.es, pshepson@purdue.edu, rafsouza@uea.edu.br, rfweiss@ucsd.edu, rkeeling@ucsd.edu, roger.curcoll@uab.cat, s.odoherty@bristol.ac.uk, s5clark@ucsd.edu, salvatore.piacentino@enea.it, samuel.hammer@iup.uni-heidelberg.de, sasakawa.motoki@nies.go.jp, scpiper@ucsd.edu, sebastien.conil@andra.fr, sitesinnetwork@climadat.es, sjwalker@ucsd.edu, snewman@baaqmd.gov, sp@nilu.no, sprinzivalli@earthnetworks.com, srichardson@psu.edu, stephan.r.kawa@nasa.gov, stephen.a.montzka@noaa.gov, stephens@ucar.edu, swofsy@seas.harvard.edu, szaehle@bgc-jena.mpg.de, tgriffis@umn.edu, tmachida@nies.go.jp, tobias.biermann@cec.lu.se, torsten.gehrlein@kit.edu, tul5@psu.edu, tuula.aalto@fmi.fi, victor.kazan@lsce.ipsl.fr, vitkova.g@czechglobe.cz, wbrand@bgc-jena.mpg.de, wpaplawsky@ucsd.edu, zimnoch@agh.edu.pl
-
-# %%

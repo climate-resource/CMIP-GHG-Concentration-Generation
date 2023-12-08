@@ -4,6 +4,15 @@ retrieve:
     doi: https://doi.org/10.25919/5bfe29ff807fb
     files_md5_sum:
       data/raw/law_dome/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+  gggrn:
+    raw_dir: data/raw/gggrn
+    urls_global_mean:
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
+      known_hash: 4d29a1e83b38039f0130d1bed34fd6b59b6a2c0b074cd69c39d88737b4346b27
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt
+      known_hash: 9d28596968b777f7a5ce0e4e8737ed496aa70d9bff5fd14eb84f4d8ab2bd94ba
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
+      known_hash: b960224afc091028633e4f330f85a5b943018c11f470a00f1b50ae782f8cb874
 process:
 - step_config_id: only
   law_dome:
