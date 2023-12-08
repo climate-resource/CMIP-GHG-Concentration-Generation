@@ -73,6 +73,7 @@ for url_source in config_step.gggrn.urls_global_mean:
     pooch.retrieve(
         url=url_source.url,
         known_hash=url_source.known_hash,
+        fname=url_source.url.split("/")[-1],
         path=config_step.gggrn.raw_dir,
     )
 

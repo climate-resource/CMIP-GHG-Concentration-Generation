@@ -24,6 +24,9 @@ class ProcessConfig:
     law_dome: LawDomeConfig
     """Configuration for processing Law Dome data"""
 
+    gggrn: GGGRNConfig
+    """Configuration for the global greenhouse gas reference network"""
+
 
 @frozen
 class LawDomeConfig:
@@ -33,3 +36,13 @@ class LawDomeConfig:
 
     processed_file: Path
     """File in which to save the processed data"""
+
+
+@frozen
+class GGGRNConfig:
+    """
+    Configuration class for the Global Greenhouse Gas Reference Network (GGGRN)
+    """
+
+    processed_file_global_mean: Path
+    """File in which to save the processed global-mean data"""

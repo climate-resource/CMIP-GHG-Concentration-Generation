@@ -89,6 +89,7 @@ for sheet, gas, unit in [
     useable["variable"] = f"Atmospheric Concentrations|{gas}"
     useable["region"] = "World"
     useable["scenario"] = "historical"
+    useable["source"] = "CSIRO-law-dome"
 
     # TODO: be more careful with time conversions
     processed_runs.append(BaseScmRun(useable))
