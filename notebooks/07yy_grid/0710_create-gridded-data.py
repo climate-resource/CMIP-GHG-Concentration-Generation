@@ -29,7 +29,6 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
-
 import cf_xarray  # noqa: F401 # required to add cf accessors
 import matplotlib.pyplot as plt
 import numpy as np
