@@ -34,7 +34,7 @@ from local.pydoit_nb.config_handling import get_config_for_step_id
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "quick-crunch"
+step: str = "quick_crunch"
 
 # %% [markdown]
 # ## Parameters
@@ -69,6 +69,7 @@ csiro_law_dome = BaseScmRun(config_process.law_dome.processed_file)
 csiro_law_dome
 
 # %%
+out_list = []
 for vdf in run_append(
     [
         csiro_law_dome,
@@ -77,15 +78,16 @@ for vdf in run_append(
 ).groupby("variable"):
     sources = []
     for source, sdf in vdf.timeseries().groupby("source"):
-        sdf = sdf.copy().dropna(how="all", axis="columns")
+        sdf_clean = sdf.copy().dropna(how="all", axis="columns")
         yearly_in_interp = (
-            BaseScmRun(sdf.copy())
+            BaseScmRun(sdf_clean.copy())
             .interpolate(
                 [
-                    dt.datetime(year, 1, 1)
+                    dt.datetime(year, m, 1)
                     for year in range(
-                        sdf.columns.min().year, sdf.columns.max().year + 1
+                        sdf_clean.columns.min().year, sdf_clean.columns.max().year + 1
                     )
+                    for m in range(1, 12 + 1)
                 ]
             )
             .timeseries()
@@ -95,13 +97,38 @@ for vdf in run_append(
     sources = pd.concat(sources)
     avg = sources.groupby(["region", "scenario", "unit", "variable"]).mean()
     avg["source"] = "average"
-    avg = BaseScmRun(avg)
-
-    vdf.append(avg).filter(year=range(1, 2030)).lineplot(hue="source", style="variable")
-    plt.show()
-
-    vdf.append(avg).filter(year=range(1900, 2030)).lineplot(
-        hue="source", style="variable"
+    avg = BaseScmRun(avg).interpolate(
+        [dt.datetime(year, m, 1) for year in range(1, 2023) for m in range(1, 12 + 1)]
+        + [
+            dt.datetime(year, m, 1)
+            for year in range(2023, 2023 + 1)
+            for m in range(1, 8 + 1)
+        ],
+        extrapolation_type="constant",
     )
+
+    fig, axes = plt.subplots(ncols=2, sharey=False, figsize=(10, 4))
+
+    vdf.append(avg).lineplot(
+        hue="source", style="variable", ax=axes[0], time_axis="seconds since 1970-01-01"
+    )
+
+    vdf.append(avg).filter(year=range(1980, 2030)).lineplot(
+        hue="source", style="variable", ax=axes[1]
+    )
+    axes[1].legend().remove()
     plt.show()
+
+    out_list.append(avg)
     # break
+
+out = run_append(out_list)
+
+# %%
+assert not out.timeseries().isna().any().any()
+out
+
+# %%
+config_step.processed_data_file_global_means.parent.mkdir(exist_ok=True, parents=True)
+out.to_csv(config_step.processed_data_file_global_means)
+config_step.processed_data_file_global_means

@@ -14,6 +14,7 @@ from .covariance_plotting import CovariancePlottingConfig
 from .figures import FiguresConfig
 from .preparation import PreparationConfig
 from .process import ProcessConfig
+from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
 
 
@@ -35,6 +36,10 @@ class Config:
 
     process: list[ProcessConfig]
     """Configurations to use with the process branch"""
+    # TODO: add validation that these all have unique branch_config_id
+
+    quick_crunch: list[QuickCrunchConfig]
+    """Configurations to use with the quick crunch branch"""
     # TODO: add validation that these all have unique branch_config_id
 
     preparation: list[PreparationConfig]
