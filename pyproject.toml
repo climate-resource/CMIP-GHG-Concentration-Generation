@@ -27,6 +27,9 @@ openpyxl = "3.1.2"
 scmdata = "0.16.1"
 pooch = "1.8.0"
 scipy = "1.11.4"
+carpet-concentrations = "^0.4.2"
+cf-xarray = "^0.8.6"
+nc-time-axis = "^1.4.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"

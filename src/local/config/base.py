@@ -12,6 +12,7 @@ from .constraint import ConstraintConfig
 from .covariance import CovarianceConfig
 from .covariance_plotting import CovariancePlottingConfig
 from .figures import FiguresConfig
+from .grid import GridConfig
 from .preparation import PreparationConfig
 from .process import ProcessConfig
 from .quick_crunch import QuickCrunchConfig
@@ -31,16 +32,20 @@ class Config:
     """Name of the configuration"""
 
     retrieve: list[RetrieveConfig]
-    """Configurations to use with the retrieve branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the retrieve step"""
+    # TODO: add validation that these all have unique step_config_id
 
     process: list[ProcessConfig]
-    """Configurations to use with the process branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the process step"""
+    # TODO: add validation that these all have unique step_config_id
+
+    grid: list[GridConfig]
+    """Configurations to use with the grid step"""
+    # TODO: add validation that these all have unique step_config_id
 
     quick_crunch: list[QuickCrunchConfig]
-    """Configurations to use with the quick crunch branch"""
-    # TODO: add validation that these all have unique branch_config_id
+    """Configurations to use with the quick crunch step"""
+    # TODO: add validation that these all have unique step_config_id
 
     preparation: list[PreparationConfig]
     """Configurations to use with the preparation step"""

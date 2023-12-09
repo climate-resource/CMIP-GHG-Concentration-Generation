@@ -295,6 +295,33 @@ tornado = ">=5.1"
 xyzservices = ">=2021.09.1"
 
 [[package]]
+name = "carpet-concentrations"
+version = "0.4.2"
+description = "Core tools for the development of greenhouse gas concentration input files (i.e. flying carpets)."
+category = "main"
+optional = false
+python-versions = ">=3.9,<4.0"
+files = [
+    {file = "carpet_concentrations-0.4.2-py3-none-any.whl", hash = "sha256:d79efa28044ce0478d630f5732d857d19a0792c7370a5d26bdea721c1f1b1ca3"},
+    {file = "carpet_concentrations-0.4.2.tar.gz", hash = "sha256:bcfa396735e8fbcbfe46574e8b31206d6a8bb15c9e429a38d534be5e22de4991"},
+]
+
+[package.dependencies]
+attrs = ">=23.1.0,<24.0.0"
+cftime = ">=1.6.2,<2.0.0"
+matplotlib = ">=3.7.1,<4.0.0"
+openscm-units = ">=0.5.2,<0.6.0"
+pint = ">=0.19"
+pint-xarray = ">=0.3,<0.4"
+xarray = ">=2023.4.2,<2024.0.0"
+
+[package.extras]
+cfxarray = ["cf-xarray (>=0.8.1,<0.9.0)", "pooch (>=1.7.0,<2.0.0)"]
+netcdf = ["netcdf4 (>=1.6.3,<2.0.0)"]
+notebooks = ["ipywidgets (>=8.0.6,<9.0.0)", "notebook (>=6.5.3,<7.0.0)"]
+plots = ["seaborn (>=0.12.2,<0.13.0)"]
+
+[[package]]
 name = "cattrs"
 version = "23.1.2"
 description = "Composable complex class support for attrs and dataclasses."
@@ -329,6 +356,24 @@ files = [
     {file = "certifi-2023.7.22-py3-none-any.whl", hash = "sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9"},
     {file = "certifi-2023.7.22.tar.gz", hash = "sha256:539cc1d13202e33ca466e88b2807e29f4c13049d6d87031a3c110744495cb082"},
 ]
+
+[[package]]
+name = "cf-xarray"
+version = "0.8.6"
+description = "A convenience wrapper for using CF attributes on xarray objects"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "cf_xarray-0.8.6-py3-none-any.whl", hash = "sha256:17c311d0b52531e0067bb2dae1853b240b28b5abb1045214255a62dcbc7e1a02"},
+    {file = "cf_xarray-0.8.6.tar.gz", hash = "sha256:507ed50e21c844a7aea4fedcbc98505c3de7868b163f0a81dca941a04dbe61b2"},
+]
+
+[package.dependencies]
+xarray = "*"
+
+[package.extras]
+all = ["matplotlib", "pint", "pooch", "regex", "rich", "shapely"]
 
 [[package]]
 name = "cffi"
@@ -1956,6 +2001,28 @@ docs = ["myst-parser", "pydata-sphinx-theme", "sphinx", "sphinxcontrib-github-al
 test = ["pep440", "pre-commit", "pytest", "testpath"]
 
 [[package]]
+name = "nc-time-axis"
+version = "1.4.1"
+description = "Provides support for a cftime axis in matplotlib"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "nc-time-axis-1.4.1.tar.gz", hash = "sha256:72d80f492f34bbf59490838d8cb3d92f14e88900b0ee35498b2b33c82795eb81"},
+    {file = "nc_time_axis-1.4.1-py3-none-any.whl", hash = "sha256:96a6fb28cede0d07998fcd666599f76e51a086e1929fbcbfb758c1d0f3e7b0d1"},
+]
+
+[package.dependencies]
+cftime = ">=1.5"
+matplotlib = "*"
+numpy = "*"
+
+[package.extras]
+all = ["codecov", "ipython", "numpydoc", "pre-commit", "pytest (>=6.0)", "pytest-cov", "sphinx", "sphinx-rtd-theme"]
+docs = ["ipython", "numpydoc", "sphinx", "sphinx-rtd-theme"]
+test = ["codecov", "pytest (>=6.0)", "pytest-cov"]
+
+[[package]]
 name = "nest-asyncio"
 version = "1.5.8"
 description = "Patch asyncio to allow nested event loops"
@@ -2406,6 +2473,23 @@ pint = ">=0.21"
 
 [package.extras]
 test = ["codecov", "coveralls", "nbval", "pyarrow", "pytest", "pytest-cov", "pytest-mpl", "pytest-subtests"]
+
+[[package]]
+name = "pint-xarray"
+version = "0.3"
+description = "Physical units interface to xarray using Pint"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pint-xarray-0.3.tar.gz", hash = "sha256:3545dfa78bee3f98eba29b8bd17500e3b5cb7c7b03a2c2781c4d4d59b6a82841"},
+    {file = "pint_xarray-0.3-py3-none-any.whl", hash = "sha256:a7d87c792a2e981cbff464bd1c875e872ef7a0c882a9395cfbc34512b3dcb1ab"},
+]
+
+[package.dependencies]
+numpy = ">=1.17"
+pint = ">=0.16"
+xarray = ">=0.16.1"
 
 [[package]]
 name = "platformdirs"
@@ -3646,4 +3730,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "1a4bbc9022b85ae25ff6bc87864cf0f7fb8371f03e2c5fe2972bb8cb1987cece"
+content-hash = "855bf1534b4dd9e3b0d2cc2cbbde1ba8edf1aad4b219bddf1bda0ac37ab41b02"

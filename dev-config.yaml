@@ -19,6 +19,9 @@ process:
     processed_file: data/processed/law_dome/0101_processed-law-dome.csv
   gggrn:
     processed_file_global_mean: data/processed/gggrn/0111_processed-gggrn-global-mean.csv
+grid:
+- step_config_id: only
+  processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
 quick_crunch:
 - step_config_id: only
   processed_data_file_global_means: data/processed/quick_crunch/yyyy_processed-global-means.csv
