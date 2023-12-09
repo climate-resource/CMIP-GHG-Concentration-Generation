@@ -68,3 +68,7 @@ Notes about development like this in general to put in e.g. tips and tricks:
 – make clean data and plots in same notebook first (fast iteration), but make sure you go back and split in follow up step (fast iteration for plots)
 - config gets hydrated and written to disk so put sensitive information in environment variables
 - config class plus cattrs is way of getting around awkwardness of passing things in memory (pass everything via serialising to disk which makes things a bit slower and more IO intense, but also way simpler, put note that if your setup does heaps of IO for the config, this solution may not work for you/you may need to work out how to pull things out of the config into somewhere else)
+
+## Doit
+
+- check out doit's shell integration https://pydoit.org/cmd-other.html#zsh
