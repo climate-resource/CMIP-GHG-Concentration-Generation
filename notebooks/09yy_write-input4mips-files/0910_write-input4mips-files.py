@@ -35,7 +35,6 @@ import pint_xarray
 import xarray as xr
 from carpet_concentrations.input4MIPs.dataset import (
     Input4MIPsDataset,
-    Input4MIPsMetadata,
 )
 from openscm_units import unit_registry
 
@@ -93,44 +92,135 @@ assert (
 ), "Introduce infer_metadata or other function to help auto-fill, see also notes at top of notebook"
 
 # %%
-Input4MIPsMetadata
+# raw_gridded.loc[dict(region="World", scenario="historical")][
+#     ["Atmospheric Concentrations|CO2"]
+# ]
 
 # %%
-# Input4MIPsDataset?
-
-# %%
-raw_gridded.loc[dict(region="World", scenario="historical")][
-    ["Atmospheric Concentrations|CO2"]
-]
-
-# %%
+# TODO: pull this from config
 source_version = "0.1.0"
-metadata_junk = Input4MIPsMetadata(
-    contact="zebedee.nicholls@climate-resource.com",
-    dataset_category="GHGConcentrations",
-    frequency="mon",
-    further_info_url="TBD",  # TODO: point to website or paper or something
-    grid_label="{grid_label}",  # TODO: check this against controlled vocabulary
-    institution="Climate Resource, Northcote, Victoria [TODO postcode], Australia [TODO check if this should be CSIRO instead]",
+
+# %%
+metadata_universal = dict(
+    contact="zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com",
+    # dataset_category="GHGConcentrations",
+    # frequency="mon",
+    further_info_url="TBD TODO",
+    # grid_label="{grid_label}",  # TODO: check this against controlled vocabulary
+    # nominal_resolution="{nominal_resolution}",
+    institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
     institution_id="CR",
-    nominal_resolution="{nominal_resolution}",
-    realm="atmos",
-    source_id="{scenario}",
+    # realm="atmos",
+    # source_id="{scenario}",
     source_version=source_version,
-    target_mip="ScenarioMIP",
-    title="{equal-to-source_id}",
-    Conventions="CF-1.6",
+    # target_mip="ScenarioMIP",
+    # title="{equal-to-source_id}",
+    # Conventions="CF-1.6",
     activity_id="input4MIPs",
-    mip_era="CMIP6",
+    mip_era="CMIP6Plus",
     source=f"CR {source_version}",
 )
 
+metadata_universal
+
 # %%
+import json
+import urllib.request
+
+cv_experiment_id_url = "https://raw.githubusercontent.com/WCRP-CMIP/CMIP6_CVs/master/CMIP6_experiment_id.json"
+
+with urllib.request.urlopen(cv_experiment_id_url) as url:
+    cv_experiment_id = json.load(url)
+
+cv_experiment_id["version_metadata"]
+
+# %%
+import numpy as np
+
+
+def lat_fifteen_deg(ds: xr.Dataset) -> bool:
+    return np.allclose(
+        ds.lat.values,
+        np.array(
+            [-82.5, -67.5, -52.5, -37.5, -22.5, -7.5, 7.5, 22.5, 37.5, 52.5, 67.5, 82.5]
+        ),
+    )
+
+
+def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
+    scenario = list(np.unique(ds["scenario"].values))
+    assert len(scenario) == 1
+    scenario = scenario[0]
+
+    ds = ds.loc[{"scenario": scenario}]
+    dims = ds.dims
+
+    grid_label = None
+    nominal_resolution = None
+    if "lon" not in dims:
+        if "lat" in dims:
+            if lat_fifteen_deg(ds) and list(dims) == ["lat", "time"]:
+                grid_label = "gn-15x360deg"
+                nominal_resolution = "2500km"
+
+        elif "sector" in dims:
+            # TODO: more stable handling of dims and whether bounds
+            # have already been added or not
+            if inp["sector"].size == 3 and list(sorted(dims)) == [  # noqa: PLR2004
+                "bounds",
+                "sector",
+                "time",
+            ]:
+                grid_label = "gr1-GMNHSH"
+                nominal_resolution = "10000 km"
+
+    if any([v is None for v in [grid_label, nominal_resolution]]):
+        raise NotImplementedError(  # noqa: TRY003
+            f"Could not determine grid_label for data: {ds}"
+        )
+
+    target_mip = cv_experiment_id["experiment_id"][scenario]["activity_id"]
+    assert len(target_mip) == 1
+    target_mip = target_mip[0]
+
+    # This seems wrong logic?
+    source_id = scenario
+
+    return {
+        "grid_label": grid_label,
+        "nominal_resolution": nominal_resolution,
+        "target_mip": target_mip,
+        "source_id": source_id,
+        # This seems like a misunderstanding too?
+        "title": scenario,
+    }
+
+
+def infer_metadata_from_dataset(ds: xr.Dataset) -> dict[str, str]:
+    out = {**get_grid_label_nominal_resolution(ds)}
+
+    return out
+
+
+# %%
+ds = raw_gridded.loc[dict(region="World")][["Atmospheric Concentrations|CO2"]]
+
+# grid_label="{grid_label}",  # TODO: check this against controlled vocabulary
+# nominal_resolution="{nominal_resolution}",
+# source_id="{scenario}",
+# title="{equal-to-source_id}",
+# target_mip="ScenarioMIP",
+# dataset_category="GHGConcentrations",
+# realm="atmos",
+# Conventions="CF-1.6",
+# frequency="mon",
+infer_metadata_from_dataset(ds)
+
+# %%
+
 input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
-    raw_gridded.loc[dict(region="World", scenario="historical")][
-        ["Atmospheric Concentrations|CO2"]
-    ],
-    dimensions=("lat", "time"),
+    ds,
+    dimensions=tuple(ds.dims.keys()),
     metadata=metadata_junk,
 )
 input4mips_ds
