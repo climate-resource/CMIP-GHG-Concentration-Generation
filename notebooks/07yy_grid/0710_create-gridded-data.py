@@ -171,7 +171,7 @@ for gas, gridder in gridders.items():
     res = gridder.calculate(global_means_dict[gas])
     # TODO: add cell_methods attribute?
 
-    res_time_axis = convert_year_month_to_time(res)
+    res_time_axis = convert_year_month_to_time(res).dropna(dim="time")
     gridded_concs_list.append(res_time_axis)
 
     ## Plotting

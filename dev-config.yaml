@@ -1,3 +1,5 @@
+name: dev
+version: "0.1.0-alpha"
 retrieve:
 - step_config_id: only
   law_dome:
@@ -22,6 +24,9 @@ process:
 grid:
 - step_config_id: only
   processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
+write_input4mips:
+- step_config_id: only
+  input4mips_out_dir: data/processed/input4MIPs
 quick_crunch:
 - step_config_id: only
   processed_data_file_global_means: data/processed/quick_crunch/yyyy_processed-global-means.csv
@@ -61,7 +66,6 @@ figures:
   draw_comparison_figure: figures/920_draw-comparison.pdf
   draw_comparison_table: data/processed/910_draw-table.csv
   misc_figures_dir: figures/misc
-name: dev
 preparation:
 - step_config_id: only
   seed: 2847539

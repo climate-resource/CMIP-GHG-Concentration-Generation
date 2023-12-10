@@ -17,6 +17,7 @@ from .preparation import PreparationConfig
 from .process import ProcessConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
+from .write_input4mips import WriteInput4MIPsConfig
 
 
 @frozen
@@ -31,6 +32,10 @@ class Config:
     name: str
     """Name of the configuration"""
 
+    version: str
+    """Version ID for this configuration"""
+    # TODO: add validation that this matches semantic versioning
+
     retrieve: list[RetrieveConfig]
     """Configurations to use with the retrieve step"""
     # TODO: add validation that these all have unique step_config_id
@@ -41,6 +46,10 @@ class Config:
 
     grid: list[GridConfig]
     """Configurations to use with the grid step"""
+    # TODO: add validation that these all have unique step_config_id
+
+    write_input4mips: list[WriteInput4MIPsConfig]
+    """Configurations to use with the write input4MIPs step"""
     # TODO: add validation that these all have unique step_config_id
 
     quick_crunch: list[QuickCrunchConfig]
