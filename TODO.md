@@ -1,5 +1,10 @@
 # TODO
 
+- new release of carpet concentrations
+- create the draft outputs from doit
+- re-build CI pipeline and get it passing
+- pass make checks
+
 ## Concs
 
 - download data using e.g. pooch (make sure it goes into the bundle so we don't have to rely on data without DOIs)
