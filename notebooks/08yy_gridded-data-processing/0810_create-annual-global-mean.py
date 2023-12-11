@@ -184,9 +184,16 @@ time_weights = xr.DataArray(
 print(time_weights)
 
 time_name = "time"
-gmnhsh_data_annual_mean = (gmnhsh_data * time_weights).groupby("time.year").sum(
-    time_name
-) / time_weights.groupby("time.year").sum(time_name)
+gmnhsh_data_annual_mean = (
+    (gmnhsh_data * time_weights)
+    .groupby("time.year")
+    .sum(
+        time_name,
+        # ensure we only take averages over full years
+        min_count=12,
+    )
+    / time_weights.groupby("time.year").sum(time_name)
+).dropna("year")
 
 for vda in gmnhsh_data_annual_mean.data_vars.values():
     vda.sel(region="World", scenario="historical").plot(hue="sector", alpha=0.7)

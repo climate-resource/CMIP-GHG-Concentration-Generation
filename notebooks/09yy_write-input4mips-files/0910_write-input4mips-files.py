@@ -17,7 +17,7 @@
 #
 # TODO:
 #
-# - process annual- and global-means in previous notebook, then use here
+# - process finer grid in previous notebook, then use here
 # - speak to Paul about infering metadata automatically, surely there already tools for this...
 # - check correct grant reference with Eleanor
 
@@ -65,6 +65,9 @@ config_step = get_config_for_step_id(
 
 # %%
 config_grid = get_config_for_step_id(config=config, step="grid", step_config_id="only")
+config_gridded_data_processing = get_config_for_step_id(
+    config=config, step="gridded_data_processing", step_config_id="only"
+)
 
 # %% [markdown]
 # ## Action
@@ -81,23 +84,36 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(unit_registr
 # In future, this should load all the gridded data, having already been crunched to global-means, annual-means etc.
 
 # %%
-assert False, "Load summarised and finer-grid data too"
-
-# %%
-
-# Put time back in and drop year so that writing still behaves in line with input4MIPs
-# TODO: speak to Paul about whether this is sensible or not
-tmp = gmnhsh_data_annual_mean.copy().rename({"year": "time"})
-tmp = tmp.assign_coords(
-    time=[cftime.DatetimeGregorian(y, 7, 2, 12) for y in tmp["time"]]
-)
-tmp
-
-# %%
 raw_gridded = xr.open_dataset(
     config_grid.processed_data_file, use_cftime=True
 ).pint.quantify()
 raw_gridded
+
+# %%
+gmnhsh_data_global_hemisphere_mean = xr.open_dataset(
+    config_gridded_data_processing.processed_data_file_global_hemispheric_means,
+    use_cftime=True,
+)
+gmnhsh_data_global_hemisphere_mean
+
+# %%
+gmnhsh_data_annual_mean = xr.open_dataset(
+    config_gridded_data_processing.processed_data_file_global_hemispheric_annual_means
+)
+
+# Put time back in and drop year so that writing still behaves in line with input4MIPs
+# TODO: speak to Paul about whether this is sensible or not
+gmnhsh_data_annual_mean = gmnhsh_data_annual_mean.rename({"year": "time"})
+gmnhsh_data_annual_mean = gmnhsh_data_annual_mean.assign_coords(
+    time=[
+        cftime.DatetimeGregorian(y, 7, 2, 12) for y in gmnhsh_data_annual_mean["time"]
+    ]
+)
+# TODO: No idea why this is needed
+gmnhsh_data_annual_mean["time"].encoding = gmnhsh_data_global_hemisphere_mean[
+    "time"
+].encoding
+gmnhsh_data_annual_mean
 
 # %%
 version = config.version
@@ -125,6 +141,7 @@ metadata_universal_optional = dict(
 
 # %%
 # TODO: use this pattern with rest of CV?
+# input4MIPs CV here: https://github.com/PCMDI/input4MIPs-cmor-tables
 # wrap with pooch too?
 import json
 import urllib.request
@@ -195,20 +212,29 @@ def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
     if "lon" not in dims:
         if "lat" in dims:
             if lat_fifteen_deg(ds) and list(dims) == ["lat", "time"]:
-                grid_label = "gn-15x360deg"
+                # In CMIP6 input4MIPs, we used a grid label of "gn-15x360deg"
+                # This doesn't seem to be in the CVs anymore
+                # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
+                # so changing to "gr", which seems to be the best fit
+                # TODO: discuss with Paul
+                grid_label = "gr"
                 nominal_resolution = "2500km"
                 grid = "15x360 degree latitude x longitude"
 
-        # elif "sector" in dims:
-        #     # TODO: more stable handling of dims and whether bounds
-        #     # have already been added or not
-        #     if inp["sector"].size == 3 and list(sorted(dims)) == [
-        #         "bounds",
-        #         "sector",
-        #         "time",
-        #     ]:
-        #         grid_label = "gr1-GMNHSH"
-        #         nominal_resolution = "10000 km"
+        elif "sector" in dims:
+            # In CMIP6 input4MIPs, we used a grid label of "gr1-GMNHSH"
+            # This doesn't seem to be in the CVs anymore
+            # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
+            # so changing to "gr1", which seems to be the best fit
+            # TODO: discuss with Paul
+            grid_label = "gr1"
+            if "sector" in ds:
+                hemispheric_means_lat_bounds = (
+                    "0: -90.0, 90.0; 1: 0.0, 90.0; 2: -90.0, 0.0"
+                )
+                if ds["sector"].attrs["lat_bounds"] == hemispheric_means_lat_bounds:
+                    nominal_resolution = "10000 km"
+                    grid = "Global- and hemispheric-means"
 
     if any([v is None for v in [grid_label, nominal_resolution]]):
         raise NotImplementedError(  # noqa: TRY003
@@ -230,6 +256,7 @@ def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
 def get_frequency(ds: xr.Dataset) -> str:
     time_ax = ds["time"].values
     base_type = type(time_ax[0])
+
     # Horribly slow but ok for now
     monthly_steps = [
         base_type(y, m, 1, 0) for y, m in zip(ds["time"].dt.year, ds["time"].dt.month)
@@ -237,6 +264,12 @@ def get_frequency(ds: xr.Dataset) -> str:
 
     if np.all(np.equal(time_ax, monthly_steps)):
         return {"frequency": "mon"}
+
+    # Horribly slow but ok for now
+    yearly_steps = [base_type(y, 7, 2, 12) for y in ds["time"].dt.year]
+
+    if np.all(np.equal(time_ax, yearly_steps)):
+        return {"frequency": "yr"}
 
     raise NotImplementedError(ds)
 
@@ -279,45 +312,75 @@ rcmip_to_cmip_variable_renaming = {
 }
 
 # %%
-for variable_id, dav in tqdman.tqdm(
-    raw_gridded.loc[dict(region="World")].data_vars.items()
+for dat_resolution, yearly_time_bounds in tqdman.tqdm(
+    [
+        (raw_gridded, False),
+        (gmnhsh_data_global_hemisphere_mean, False),
+        (gmnhsh_data_annual_mean, True),
+    ],
+    desc="Resolutions",
 ):
-    dsv = dav.to_dataset().rename_vars(
-        {variable_id: rcmip_to_cmip_variable_renaming[variable_id]}
-    )
+    for variable_id, dav in tqdman.tqdm(
+        dat_resolution.loc[dict(region="World")].data_vars.items(),
+        desc="Variables",
+        leave=False,
+    ):
+        dsv = dav.to_dataset().rename_vars(
+            {variable_id: rcmip_to_cmip_variable_renaming[variable_id]}
+        )
 
-    scenario = list(np.unique(dsv["scenario"].values))
-    assert len(scenario) == 1
-    scenario = scenario[0]
+        scenario = list(np.unique(dsv["scenario"].values))
+        assert len(scenario) == 1
+        scenario = scenario[0]
 
-    dsv = dsv.loc[{"scenario": scenario}]
+        dsv = dsv.loc[{"scenario": scenario}]
 
-    metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
-        dsv, scenario
-    )
+        metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
+            dsv, scenario
+        )
 
-    metadata = Input4MIPsMetadata(
-        **metadata_universal,
-        **metadata_inferred,
-    )
+        metadata = Input4MIPsMetadata(
+            **metadata_universal,
+            **metadata_inferred,
+        )
 
-    metadata_optional = Input4MIPsMetadataOptional(
-        **metadata_universal_optional,
-        **metadata_inferred_optional,
-    )
+        metadata_optional = Input4MIPsMetadataOptional(
+            **metadata_universal_optional,
+            **metadata_inferred_optional,
+        )
 
-    input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
-        dsv,
-        dimensions=tuple(dsv.dims.keys()),
-        metadata=metadata,
-    )
+        input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
+            dsv,
+            dimensions=tuple(dsv.dims.keys()),
+            metadata=metadata,
+        )
+        if yearly_time_bounds:
+            # TODO: remove this horrible hack and fix up the carpet_concentrations
+            # behaviour instead
+            ds_bnd = input4mips_ds.ds
+            variable = "time"
+            bname = f"{variable}_bounds"
 
-    config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
-    print("Writing")
-    written = input4mips_ds.write(config_step.input4mips_out_dir)
-    print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
-    print("")
-    # break
+            bounds_time = xr.DataArray(
+                [
+                    [cftime.datetime(y, 1, 1), cftime.datetime(y + 1, 1, 1)]
+                    for y in ds_bnd["time"].dt.year
+                ],
+                dims=(variable, "bounds"),
+                coords={variable: ds_bnd[variable], "bounds": [0, 1]},
+            ).transpose(..., "bounds")
+
+            ds_bnd.coords[bname] = bounds_time
+            ds_bnd[variable].attrs["bounds"] = bname
+
+            input4mips_ds = Input4MIPsDataset(ds=ds_bnd)
+
+        config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
+        print("Writing")
+        written = input4mips_ds.write(config_step.input4mips_out_dir)
+        print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
+        print("")
+        # break
 
 checklist_path = generate_directory_checklist(config_step.input4mips_out_dir)
 # # Not sure if this is needed or not

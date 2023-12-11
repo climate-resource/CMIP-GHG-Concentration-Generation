@@ -240,5 +240,3 @@ gridded_concs
 config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
 gridded_concs.pint.dequantify().to_netcdf(config_step.processed_data_file)
 config_step.processed_data_file
-
-# %%
