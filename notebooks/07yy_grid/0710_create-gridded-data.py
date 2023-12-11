@@ -78,7 +78,7 @@ config_quick_crunch = get_config_for_step_id(
 # ## Action
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# ## Set-up unit registry
+# ### Set-up unit registry
 
 # %% editable=true slideshow={"slide_type": ""}
 pint_xarray.accessors.default_registry = pint_xarray.setup_registry(unit_registry)
@@ -209,6 +209,27 @@ for gas, gridder in gridders.items():
     )
     plt.show()
 
+    print("Flying carpet")
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    tmp = res_time_axis.copy()
+    tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
+    (
+        tmp.sel(scenario="historical", region="World")[rcmip_variable]
+        .isel(time=range(-150, 0))
+        .plot.surface(
+            x="time",
+            y="lat",
+            ax=ax,
+            cmap="rocket_r",
+            levels=30,
+            # alpha=0.7,
+        )
+    )
+    ax.view_init(15, -135, 0)
+    plt.tight_layout()
+    plt.show()
+
     # break
 
 ## Join back together
@@ -219,3 +240,5 @@ gridded_concs
 config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
 gridded_concs.pint.dequantify().to_netcdf(config_step.processed_data_file)
 config_step.processed_data_file
+
+# %%

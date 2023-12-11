@@ -25,8 +25,8 @@
 # ## Imports
 
 # %%
-
 import cf_xarray  # noqa: F401 # required to add cf accessors
+import cftime
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
@@ -79,6 +79,19 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(unit_registr
 # ## Load data
 #
 # In future, this should load all the gridded data, having already been crunched to global-means, annual-means etc.
+
+# %%
+assert False, "Load summarised and finer-grid data too"
+
+# %%
+
+# Put time back in and drop year so that writing still behaves in line with input4MIPs
+# TODO: speak to Paul about whether this is sensible or not
+tmp = gmnhsh_data_annual_mean.copy().rename({"year": "time"})
+tmp = tmp.assign_coords(
+    time=[cftime.DatetimeGregorian(y, 7, 2, 12) for y in tmp["time"]]
+)
+tmp
 
 # %%
 raw_gridded = xr.open_dataset(

@@ -24,6 +24,10 @@ process:
 grid:
 - step_config_id: only
   processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
+gridded_data_processing:
+- step_config_id: only
+  processed_data_file_global_hemispheric_means: data/processed/gridded/0810_global-hemispheric-means.nc
+  processed_data_file_global_hemispheric_annual_means: data/processed/gridded/0810_global-hemispheric-annual-means.nc
 write_input4mips:
 - step_config_id: only
   input4mips_out_dir: data/processed/input4MIPs

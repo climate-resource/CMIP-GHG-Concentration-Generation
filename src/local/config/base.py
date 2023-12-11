@@ -13,6 +13,7 @@ from .covariance import CovarianceConfig
 from .covariance_plotting import CovariancePlottingConfig
 from .figures import FiguresConfig
 from .grid import GridConfig
+from .gridded_data_processing import GriddedDataProcessingConfig
 from .preparation import PreparationConfig
 from .process import ProcessConfig
 from .quick_crunch import QuickCrunchConfig
@@ -46,6 +47,10 @@ class Config:
 
     grid: list[GridConfig]
     """Configurations to use with the grid step"""
+    # TODO: add validation that these all have unique step_config_id
+
+    gridded_data_processing: list[GriddedDataProcessingConfig]
+    """Configurations to use with the gridded data processing step"""
     # TODO: add validation that these all have unique step_config_id
 
     write_input4mips: list[WriteInput4MIPsConfig]

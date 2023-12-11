@@ -30,6 +30,7 @@ scipy = "1.11.4"
 carpet-concentrations = "^0.4.2"
 cf-xarray = "^0.8.6"
 nc-time-axis = "^1.4.1"
+netcdf4 = "^1.6.5"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
