@@ -25,8 +25,12 @@
 # ## Imports
 
 # %%
+import json
+import urllib.request
+
 import cf_xarray  # noqa: F401 # required to add cf accessors
 import cftime
+import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
@@ -143,19 +147,32 @@ metadata_universal_optional = dict(
 # TODO: use this pattern with rest of CV?
 # input4MIPs CV here: https://github.com/PCMDI/input4MIPs-cmor-tables
 # wrap with pooch too?
-import json
-import urllib.request
 
 cv_experiment_id_url = "https://raw.githubusercontent.com/WCRP-CMIP/CMIP6_CVs/master/CMIP6_experiment_id.json"
 
-with urllib.request.urlopen(cv_experiment_id_url) as url:
+if not cv_experiment_id_url.startswith("https:"):
+    raise ValueError(cv_experiment_id_url)
+
+with urllib.request.urlopen(cv_experiment_id_url) as url:  # noqa: S310 # checked above
     cv_experiment_id = json.load(url)
 
 cv_experiment_id["version_metadata"]
 
 
-def get_target_mip(scenario: str) -> str:
-    target_mip = cv_experiment_id["experiment_id"][scenario]["activity_id"]
+def get_target_mip(experiment: str) -> dict[str, str]:
+    """
+    Get target MIP for a given experiment
+
+    Parameters
+    ----------
+    experiment
+        Experiment for which to find the parent MIP
+
+    Returns
+    -------
+        Target MIP according to the controlled vocabulary
+    """
+    target_mip = cv_experiment_id["experiment_id"][experiment]["activity_id"]
     assert len(target_mip) == 1
     target_mip = target_mip[0]
 
@@ -163,10 +180,21 @@ def get_target_mip(scenario: str) -> str:
 
 
 # %%
-import numpy as np
 
 
 def lat_fifteen_deg(ds: xr.Dataset) -> bool:
+    """
+    Check if the latitude grid is our expected 15 degree grid
+
+    Parameters
+    ----------
+    ds
+        Dataset to check
+
+    Returns
+    -------
+        Is the latitude grid our expected 15 degree grid?
+    """
     return np.allclose(
         ds.lat.values,
         np.array(
@@ -175,7 +203,24 @@ def lat_fifteen_deg(ds: xr.Dataset) -> bool:
     )
 
 
-def get_dataset_category(variable: str) -> str:
+def get_dataset_category(variable: str) -> dict[str, str]:
+    """
+    Get dataset category
+
+    Parameters
+    ----------
+    variable
+        Variable for which to retrieve the category
+
+    Returns
+    -------
+        Dataset category metadata
+
+    Raises
+    ------
+    KeyError
+        We don't know the category for ``variable``
+    """
     category_map = {
         "mole_fraction_of_carbon_dioxide_in_air": "GHGConcentrations",
         "mole_fraction_of_methane_in_air": "GHGConcentrations",
@@ -189,7 +234,24 @@ def get_dataset_category(variable: str) -> str:
         raise
 
 
-def get_realm(variable: str) -> str:
+def get_realm(variable: str) -> dict[str, str]:
+    """
+    Get realm
+
+    Parameters
+    ----------
+    variable
+        Variable for which to retrieve the realm
+
+    Returns
+    -------
+        Realm of the variable metadata
+
+    Raises
+    ------
+    KeyError
+        We don't know the realm for ``variable``
+    """
     realm_map = {
         "mole_fraction_of_carbon_dioxide_in_air": "atmos",
         "mole_fraction_of_methane_in_air": "atmos",
@@ -203,11 +265,26 @@ def get_realm(variable: str) -> str:
         raise
 
 
-def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
+def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
+    """
+    Get grid metadata for dataset
+
+    Parameters
+    ----------
+    ds
+        Dataset for which to derive the grid metadata
+
+    Returns
+    -------
+        Compulsory metadata and optional metadata related to the grid
+
+    Raises
+    ------
+    NotImplementedError
+        We cannot determine the grid metadata for ``ds``
+    """
     dims = ds.dims
 
-    grid_label = None
-    nominal_resolution = None
     grid = None
     if "lon" not in dims:
         if "lat" in dims:
@@ -236,15 +313,15 @@ def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
                     nominal_resolution = "10000 km"
                     grid = "Global- and hemispheric-means"
 
-    if any([v is None for v in [grid_label, nominal_resolution]]):
+    try:
+        out = {
+            "grid_label": grid_label,
+            "nominal_resolution": nominal_resolution,
+        }
+    except NameError as exc:
         raise NotImplementedError(  # noqa: TRY003
             f"Could not determine grid_label for data: {ds}"
-        )
-
-    out = {
-        "grid_label": grid_label,
-        "nominal_resolution": nominal_resolution,
-    }
+        ) from exc
 
     out_optional = {}
     if grid is not None:
@@ -253,7 +330,24 @@ def get_grid_label_nominal_resolution(ds: xr.Dataset) -> dict[str, str]:
     return out, out_optional
 
 
-def get_frequency(ds: xr.Dataset) -> str:
+def get_frequency(ds: xr.Dataset) -> dict[str, str]:
+    """
+    Get frequency metadata of dataset
+
+    Parameters
+    ----------
+    ds
+        Dataset to get frequency metadata for
+
+    Returns
+    -------
+        Frequency metadata
+
+    Raises
+    ------
+    NotImplementedError
+        We cannot infer the frequency metadata for ``ds``
+    """
     time_ax = ds["time"].values
     base_type = type(time_ax[0])
 
@@ -274,23 +368,47 @@ def get_frequency(ds: xr.Dataset) -> str:
     raise NotImplementedError(ds)
 
 
-def infer_metadata_from_dataset(ds: xr.Dataset, scenario: str) -> dict[str, str]:
+def infer_metadata_from_dataset(
+    ds: xr.Dataset, experiment: str
+) -> tuple[dict[str, str], dict[str, str]]:
+    """
+    Infer metadata from a dataset
+
+    Parameters
+    ----------
+    ds
+        Dataset for which to infer metdata
+
+    experiment
+        Scenario to which the data belongs (this data is not stored on the
+        dataset at this stage so has to be passed in separately, we could of
+        course change this pattern which might be smart)
+
+    Returns
+    -------
+        Inferred metadata and inferred optional metadata
+
+    Raises
+    ------
+    AssertionError
+        There is more than one data variable in ``ds``
+    """
     if len(ds.data_vars) == 1:
         variable_id = list(ds.data_vars.keys())[0]
     else:
         raise AssertionError("Can only write one variable per file")  # noqa: TRY003
 
     # This seems wrong logic?
-    source_id = scenario
+    source_id = experiment
 
-    grid_info, grid_info_optional = get_grid_label_nominal_resolution(ds)
+    grid_info, grid_info_optional = get_grid_metadata(ds)
 
     out = {
         **grid_info,
-        **get_target_mip(scenario),
+        **get_target_mip(experiment),
         "source_id": source_id,
         # TODO: This seems like a misunderstanding too?
-        "title": scenario,
+        "title": experiment,
         **get_dataset_category(variable_id),
         **get_realm(variable_id),
         # TODO: No idea what this is or means, is it meant to be
@@ -329,9 +447,9 @@ for dat_resolution, yearly_time_bounds in tqdman.tqdm(
             {variable_id: rcmip_to_cmip_variable_renaming[variable_id]}
         )
 
-        scenario = list(np.unique(dsv["scenario"].values))
-        assert len(scenario) == 1
-        scenario = scenario[0]
+        scenario_list = list(np.unique(dsv["scenario"].values))
+        assert len(scenario_list) == 1
+        scenario = scenario_list[0]
 
         dsv = dsv.loc[{"scenario": scenario}]
 

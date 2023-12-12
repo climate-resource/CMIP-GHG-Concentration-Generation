@@ -1,6 +1,5 @@
 # TODO
 
-- re-build CI pipeline and get it passing
 - pass `make checks`
 
 ## Concs

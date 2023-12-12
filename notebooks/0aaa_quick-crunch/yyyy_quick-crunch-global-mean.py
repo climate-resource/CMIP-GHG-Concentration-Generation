@@ -70,7 +70,19 @@ csiro_law_dome
 
 
 # %%
-def interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
+def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
+    """
+    Get :obj:`dt.datetime` at the start of each year-month combination to use for interpolation
+
+    Parameters
+    ----------
+    df
+        :obj:`pd.DataFrame` for which to determine the timesteps to interpolate
+
+    Returns
+    -------
+        Timesteps to interpolate
+    """
     col_min = df.columns.min()
     col_max = df.columns.max()
 
@@ -99,46 +111,46 @@ for vdf in run_append(
         gggrn_global_mean,
     ]
 ).groupby("variable"):
-    sources = []
+    sources_list = []
     for source, sdf in vdf.timeseries().groupby("source"):
         sdf_clean = sdf.copy().dropna(how="all", axis="columns")
-        interp_steps = interp_year_month_dts(sdf_clean)
+        interp_steps = get_interp_year_month_dts(sdf_clean)
         yearly_in_interp = (
             BaseScmRun(sdf_clean.copy()).interpolate(interp_steps).timeseries()
         )
-        sources.append(yearly_in_interp)
+        sources_list.append(yearly_in_interp)
 
-    sources = pd.concat(sources)
+    sources = pd.concat(sources_list)
     avg = sources.groupby(["region", "scenario", "unit", "variable"]).mean()
     avg["source"] = "average"
-    avg = BaseScmRun(avg)
+    avg_run = BaseScmRun(avg)
 
     if not config.ci:
         # Interpolate onto the full timespan of interest i.e. back to year 1
-        tmp = avg.timeseries().copy()
+        tmp: pd.DataFrame = avg.timeseries().copy()  # type: ignore
         tmp.columns = avg.time_points.as_cftime()
         tmp.loc[:, type(tmp.columns.values[0])(1, 1, 1)] = 0
-        interp_years = interp_year_month_dts(tmp)
+        interp_years = get_interp_year_month_dts(tmp)
 
-        avg = avg.interpolate(
+        avg_run = avg_run.interpolate(
             interp_years,
             extrapolation_type="constant",
         )
 
     fig, axes = plt.subplots(ncols=2, sharey=False, figsize=(10, 4))
 
-    vdf.append(avg).lineplot(
+    vdf.append(avg_run).lineplot(  # type: ignore
         hue="source", style="variable", ax=axes[0], time_axis="seconds since 1970-01-01"
     )
 
-    vdf.append(avg).filter(year=range(1980, 2030)).lineplot(
+    vdf.append(avg_run).filter(year=range(1980, 2030)).lineplot(  # type: ignore
         hue="source", style="variable", ax=axes[1]
     )
     axes[1].legend().remove()
     plt.show()
 
-    print(avg)
-    out_list.append(avg)
+    print(avg_run)
+    out_list.append(avg_run)
     # break
 
 out = run_append(out_list)

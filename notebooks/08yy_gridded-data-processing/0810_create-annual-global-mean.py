@@ -23,6 +23,8 @@
 # ## Imports
 
 # %%
+from collections.abc import Callable
+
 import carpet_concentrations.xarray_utils
 import cf_xarray.units
 import matplotlib.pyplot as plt
@@ -89,9 +91,6 @@ bounded_gridded = raw_gridded.cf.add_bounds("lat").pint.quantify(
 )
 bounded_gridded
 
-# %%
-from collections.abc import Callable
-
 
 # TODO: speak with Paul about this. This sector business seems like a pain for
 # all involved.
@@ -103,7 +102,7 @@ def get_gmnhsh_data(
         [xr.Dataset, list[str]], xr.Dataset
     ]
     | None = None,
-):
+) -> xr.Dataset:
     """
     Get global-mean and hemispheric data
     """
@@ -138,7 +137,7 @@ def get_gmnhsh_data(
         ids.append(f"{idx}: {name}")
         lat_bounds.append(f"{idx}: {lat_min:.1f}, {lat_max:.1f}")
 
-    out = xr.concat(means, dim=output_spatial_dim_name).cf.add_bounds(
+    out: xr.Dataset = xr.concat(means, dim=output_spatial_dim_name).cf.add_bounds(
         output_spatial_dim_name
     )
 

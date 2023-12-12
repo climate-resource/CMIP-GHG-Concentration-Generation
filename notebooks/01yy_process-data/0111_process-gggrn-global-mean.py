@@ -77,7 +77,7 @@ for url_source in config_retrieve.gggrn.urls_global_mean:
             skiprows = i
             break
     else:
-        raise ValueError("header not found")
+        raise ValueError("header not found")  # noqa: TRY003
 
     raw = pd.read_csv(
         config_retrieve.gggrn.raw_dir / filename,
@@ -109,9 +109,9 @@ for url_source in config_retrieve.gggrn.urls_global_mean:
     translated["unit"] = unit
     translated["source"] = "GGGRN_global-mean-estimates"
 
-    translated = BaseScmRun(translated)
+    translated_run = BaseScmRun(translated)
 
-    out_list.append(translated)
+    out_list.append(translated_run)
 
 out = run_append(out_list)
 

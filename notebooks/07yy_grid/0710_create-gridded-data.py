@@ -97,11 +97,11 @@ global_means
 global_means_dict = {}
 for vdf in global_means.groupby("variable"):
     variable = vdf.get_unique_meta("variable", True)
-    gas = variable.split("Atmospheric Concentrations|")[-1]
+    gas = variable.split("Atmospheric Concentrations|")[-1]  # type: ignore
     units = vdf.get_unique_meta("unit", True)
 
     vxr = convert_time_to_year_month(
-        vdf.to_xarray(dimensions=["region", "scenario"]).pint.quantify(
+        vdf.to_xarray(dimensions=["region", "scenario"]).pint.quantify(  # type: ignore
             **{variable: units}
         )
     )
@@ -121,7 +121,6 @@ latitudes = np.arange(-82.5, 83, 15)
 grid_shape = (*years.shape, *months.shape, *latitudes.shape)
 
 # %% editable=true slideshow={"slide_type": ""}
-seasonality_gradients = []
 gridders = {}
 for gas, seasonality_amp, seasonality_shift, latitudinal_grad_m, units in (
     ("CO2", 2, -2, 1 / 82.5, "ppm"),
@@ -226,7 +225,7 @@ for gas, gridder in gridders.items():
             # alpha=0.7,
         )
     )
-    ax.view_init(15, -135, 0)
+    ax.view_init(15, -135, 0)  # type: ignore
     plt.tight_layout()
     plt.show()
 

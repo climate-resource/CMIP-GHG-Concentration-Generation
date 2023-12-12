@@ -1,0 +1,3 @@
+from pathlib import Path
+
+def retrieve(url: str, known_hash: str, fname: str, path: Path) -> None: ...
