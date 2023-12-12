@@ -60,7 +60,7 @@ def configure_notebooks(
                 Path("01yyy_process-data") / "0101_process-law-dome"
             ],
             configuration=(config_step.law_dome,),
-            dependencies=(),
+            dependencies=(get_checklist_file(config_retrieve.law_dome.raw_dir),),
             targets=(config_step.law_dome.processed_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,

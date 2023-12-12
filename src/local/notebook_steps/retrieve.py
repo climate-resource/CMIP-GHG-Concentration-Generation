@@ -58,7 +58,7 @@ def configure_notebooks(
             ],
             configuration=(config_step.law_dome,),
             dependencies=(),
-            targets=(),
+            targets=(get_checklist_file(config_step.law_dome.raw_dir),),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),

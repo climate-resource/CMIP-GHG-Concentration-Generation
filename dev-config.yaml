@@ -4,8 +4,9 @@ retrieve:
 - step_config_id: only
   law_dome:
     doi: https://doi.org/10.25919/5bfe29ff807fb
+    raw_dir: data/raw/law_dome
     files_md5_sum:
-      data/raw/law_dome/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+      data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
   gggrn:
     raw_dir: data/raw/gggrn
     urls_global_mean:

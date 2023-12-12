@@ -37,6 +37,9 @@ class LawDomeConfig:
     doi: str
     """DOI of the dataset"""
 
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
     files_md5_sum: dict[Path, str]
     """MD5 hashes for the files in the dataset"""
 

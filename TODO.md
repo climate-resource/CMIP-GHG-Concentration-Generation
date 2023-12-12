@@ -1,7 +1,6 @@
 # TODO
 
 - re-build CI pipeline and get it passing
-    - add in retrieval step for CSIRO data
 - pass `make checks`
 
 ## Concs
