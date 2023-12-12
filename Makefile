@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
 
+CI_CONFIG_YAML=ci-config.yaml
 CI_CONFIG_ABSOLUTE_YAML=ci-config-absolute.yaml
 DEV_CONFIG_YAML=dev-config.yaml
 DEV_CONFIG_ABSOLUTE_YAML=dev-config-absolute.yaml
@@ -53,10 +54,10 @@ doit-list-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## list all the doit tasks using the
 # - doit info for info (i.e. metadata) of individual tasks
 # - doit forget --all for resetting the database
 
-test: $(DEV_CONFIG_ABSOLUTE_YAML)  ## run the tests
+test: $(CI_CONFIG_YAML)  ## run the tests
 	poetry run pytest -r a -v src tests --doctest-modules
 
-$(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-ci-config-absolute.py
+$(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-ci-config-absolute.py
 	poetry run python scripts/create-dev-ci-config-absolute.py
 
 .PHONY: checks

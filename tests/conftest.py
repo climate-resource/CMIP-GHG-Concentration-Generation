@@ -17,7 +17,7 @@ def basic_workflow_output_info() -> dict[str, str | Path]:
     """
     Run the basic workflow and get the output info
     """
-    config_file = "dev-config.yaml"
+    config_file = "ci-config.yaml"
     root_dir_output = "output-bundles-tests"
     run_id = "test-basic-workflow"
 

@@ -1,6 +1,7 @@
 # Dev config with absolute paths
 dev-config-absolute.yaml
-# CI config with absolute paths
+# CI configs (created with scripts)
+ci-config.yaml
 ci-config-absolute.yaml
 
 # Output

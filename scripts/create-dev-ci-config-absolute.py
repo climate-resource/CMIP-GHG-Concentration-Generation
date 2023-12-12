@@ -18,6 +18,7 @@ DEV_FILE: Path = Path("dev-config.yaml")
 DEV_ABSOLUTE_FILE: Path = Path("dev-config-absolute.yaml")
 DEV_RUN_ID: str = "dev-test-run"
 
+CI_FILE: Path = Path("ci-config.yaml")
 CI_ABSOLUTE_FILE: Path = Path("ci-config-absolute.yaml")
 CI_RUN_ID: str = "CI"
 
@@ -36,12 +37,17 @@ with open(DEV_ABSOLUTE_FILE, "w") as fh:
 
 print(f"Updated {DEV_ABSOLUTE_FILE}")
 
+ci_config = evolve(config_relative, ci=True, name=CI_RUN_ID)
+with open(CI_FILE, "w") as fh:
+    fh.write(converter_yaml.dumps(ci_config))
 
-ci_config = insert_path_prefix(
+print(f"Updated {CI_FILE}")
+
+ci_config_absolute = insert_path_prefix(
     config=evolve(config_relative, ci=True, name=CI_RUN_ID),
     prefix=ROOT_DIR_OUTPUT / CI_RUN_ID,
 )
 with open(CI_ABSOLUTE_FILE, "w") as fh:
-    fh.write(converter_yaml.dumps(ci_config))
+    fh.write(converter_yaml.dumps(ci_config_absolute))
 
 print(f"Updated {CI_ABSOLUTE_FILE}")
