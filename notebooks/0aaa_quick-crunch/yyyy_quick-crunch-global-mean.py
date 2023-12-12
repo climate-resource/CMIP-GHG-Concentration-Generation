@@ -127,8 +127,8 @@ for vdf in run_append(
 
     if not config.ci:
         # Interpolate onto the full timespan of interest i.e. back to year 1
-        tmp: pd.DataFrame = avg.timeseries().copy()  # type: ignore
-        tmp.columns = avg.time_points.as_cftime()
+        tmp = avg_run.timeseries().copy()
+        tmp.columns = avg_run.time_points.as_cftime()
         tmp.loc[:, type(tmp.columns.values[0])(1, 1, 1)] = 0
         interp_years = get_interp_year_month_dts(tmp)
 
