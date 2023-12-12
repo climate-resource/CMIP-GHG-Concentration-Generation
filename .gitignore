@@ -18,6 +18,9 @@ data
 *.db
 *db*.json
 
+# Zip archives
+*.zip
+
 # Jupyter cache
 .jupyter_cache
 
