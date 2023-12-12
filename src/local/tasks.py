@@ -9,14 +9,8 @@ from pathlib import Path
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
-    analysis,
-    constraint,
-    covariance,
-    covariance_plotting,
-    figures,
     grid,
     gridded_data_processing,
-    preparation,
     process,
     quick_crunch,
     retrieve,
@@ -63,12 +57,6 @@ def gen_all_tasks(
         grid,
         gridded_data_processing,
         write_input4mips,
-        preparation,
-        covariance,
-        constraint,
-        covariance_plotting,
-        analysis,
-        figures,
     ]:
         for task in step_module.step.gen_notebook_tasks(
             config_bundle=config_bundle,

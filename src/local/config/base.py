@@ -7,14 +7,8 @@ from pathlib import Path
 
 from attrs import frozen
 
-from .analysis import AnalysisConfig
-from .constraint import ConstraintConfig
-from .covariance import CovarianceConfig
-from .covariance_plotting import CovariancePlottingConfig
-from .figures import FiguresConfig
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
-from .preparation import PreparationConfig
 from .process import ProcessConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
@@ -67,30 +61,6 @@ class Config:
 
     quick_crunch: list[QuickCrunchConfig]
     """Configurations to use with the quick crunch step"""
-    # TODO: add validation that these all have unique step_config_id
-
-    preparation: list[PreparationConfig]
-    """Configurations to use with the preparation step"""
-    # TODO: add validation that these all have unique step_config_id
-
-    covariance: list[CovarianceConfig]
-    """Configurations to use with the covariance step"""
-    # TODO: add validation that these all have unique step_config_id
-
-    covariance_plotting: list[CovariancePlottingConfig]
-    """Configuration to use for the quick plots of the covariance draws"""
-    # TODO: add validation that these all have unique step_config_id
-
-    constraint: list[ConstraintConfig]
-    """Configurations to use with the constraint step"""
-    # TODO: add validation that these all have unique step_config_id
-
-    analysis: list[AnalysisConfig]
-    """Configurations to use with the analysis step"""
-    # TODO: add validation that these all have unique step_config_id
-
-    figures: list[FiguresConfig]
-    """Configurations to use with the figures step"""
     # TODO: add validation that these all have unique step_config_id
 
 

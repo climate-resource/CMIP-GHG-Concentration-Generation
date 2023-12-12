@@ -57,7 +57,7 @@ def configure_notebooks(
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yyy_process-data") / "0101_process-law-dome"
+                Path("01yy_process-data") / "0101_process-law-dome"
             ],
             configuration=(config_step.law_dome,),
             dependencies=(get_checklist_file(config_retrieve.law_dome.raw_dir),),
@@ -67,7 +67,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yyy_process-data") / "0111_process-gggrn-global-mean"
+                Path("01yy_process-data") / "0111_process-gggrn-global-mean"
             ],
             configuration=None,
             dependencies=(get_checklist_file(config_retrieve.gggrn.raw_dir),),
@@ -84,13 +84,13 @@ step = UnconfiguredNotebookBasedStep(
     step_name="process",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("01yyy_process-data") / "0101_process-law-dome",
+            notebook_path=Path("01yy_process-data") / "0101_process-law-dome",
             raw_notebook_ext=".py",
             summary="process - Law Dome",
             doc="Process data for Law Dome observations",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("01yyy_process-data") / "0111_process-gggrn-global-mean",
+            notebook_path=Path("01yy_process-data") / "0111_process-gggrn-global-mean",
             raw_notebook_ext=".py",
             summary="process - Global Greenhouse Gas Research Network (GGGRN)",
             doc=(
