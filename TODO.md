@@ -1,7 +1,5 @@
 # TODO
 
-- pass `make checks`
-
 ## Concs
 
 - download data using e.g. pooch (make sure it goes into the bundle so we don't have to rely on data without DOIs)
