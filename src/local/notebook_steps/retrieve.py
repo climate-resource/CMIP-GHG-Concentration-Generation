@@ -7,6 +7,7 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from ..pydoit_nb.checklist import get_checklist_file
 from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -60,7 +61,17 @@ def configure_notebooks(
             targets=(),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
-        )
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("00yy_retrieve-data") / "0010_gggrn"
+            ],
+            configuration=(config_step.gggrn.urls_global_mean,),
+            dependencies=(),
+            targets=(get_checklist_file(config_step.gggrn.raw_dir),),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -74,7 +85,16 @@ step = UnconfiguredNotebookBasedStep(
             raw_notebook_ext=".py",
             summary="retrieve - Law Dome",
             doc="Retrieve data for Law Dome observations",
-        )
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("00yy_retrieve-data") / "0010_gggrn",
+            raw_notebook_ext=".py",
+            summary="retrieve - Global Greenhouse Gas Research Network (GGGRN)",
+            doc=(
+                "Retrieve data from the Global Greenhouse Gas Research Network (GGGRN). "
+                "At present, this notebook only retrieves global-mean data."
+            ),
+        ),
     ],
     configure_notebooks=configure_notebooks,
 )

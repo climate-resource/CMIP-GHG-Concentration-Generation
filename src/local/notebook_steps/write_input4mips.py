@@ -1,5 +1,5 @@
 """
-Process raw data notebook steps
+Write files in input4MIPs format notebook steps
 """
 from __future__ import annotations
 
@@ -50,28 +50,25 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
+    config_grid = get_config_for_step_id(
+        config=config, step="grid", step_config_id="only"
+    )
+    config_gridded_data_processing = get_config_for_step_id(
+        config=config, step="gridded_data_processing", step_config_id="only"
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yyy_process-data") / "0101_process-law-dome"
-            ],
-            configuration=(config_step.law_dome,),
-            dependencies=(),
-            targets=(config_step.law_dome.processed_file,),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("01yyy_process-data") / "0111_process-gggrn-global-mean"
+                Path("09yy_write-input4mips-files") / "0910_write-input4mips-files"
             ],
             configuration=None,
-            dependencies=(get_checklist_file(config_retrieve.gggrn.raw_dir),),
-            targets=(config_step.gggrn.processed_file_global_mean,),
+            dependencies=(
+                config_grid.processed_data_file,
+                config_gridded_data_processing.processed_data_file_global_hemispheric_means,
+                config_gridded_data_processing.processed_data_file_global_hemispheric_annual_means,
+            ),
+            targets=(get_checklist_file(config_step.input4mips_out_dir),),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -81,22 +78,14 @@ def configure_notebooks(
 
 
 step = UnconfiguredNotebookBasedStep(
-    step_name="process",
+    step_name="write_input4mips",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("01yyy_process-data") / "0101_process-law-dome",
+            notebook_path=Path("09yy_write-input4mips-files")
+            / "0910_write-input4mips-files",
             raw_notebook_ext=".py",
-            summary="process - Law Dome",
-            doc="Process data for Law Dome observations",
-        ),
-        UnconfiguredNotebook(
-            notebook_path=Path("01yyy_process-data") / "0111_process-gggrn-global-mean",
-            raw_notebook_ext=".py",
-            summary="process - Global Greenhouse Gas Research Network (GGGRN)",
-            doc=(
-                "Process data from the Global Greenhouse Gas Research Network (GGGRN). "
-                "At present, this notebook only processes global-mean data."
-            ),
+            summary="write input4MIPs - write all files",
+            doc="Write all files in input4MIPs format",
         ),
     ],
     configure_notebooks=configure_notebooks,

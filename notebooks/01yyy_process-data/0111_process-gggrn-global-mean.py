@@ -13,7 +13,9 @@
 # ---
 
 # %% [markdown]
-# # Law dome
+# # Global greenhouse gas research network
+#
+# Process global-mean data from the Global Greenhouse Gas Research Network (GGGRN). This notebook just retrieves global-mean data. In future, we will pull in individual station data instead.
 
 # %% [markdown]
 # ## Imports

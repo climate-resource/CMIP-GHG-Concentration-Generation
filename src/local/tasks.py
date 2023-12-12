@@ -14,9 +14,13 @@ from .notebook_steps import (
     covariance,
     covariance_plotting,
     figures,
+    grid,
+    gridded_data_processing,
     preparation,
     process,
+    quick_crunch,
     retrieve,
+    write_input4mips,
 )
 from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
 from .pydoit_nb.typing import DoitTaskSpec
@@ -55,6 +59,10 @@ def gen_all_tasks(
     for step_module in [
         retrieve,
         process,
+        quick_crunch,
+        grid,
+        gridded_data_processing,
+        write_input4mips,
         preparation,
         covariance,
         constraint,

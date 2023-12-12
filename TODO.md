@@ -1,8 +1,8 @@
 # TODO
 
-- create the draft outputs from doit
 - re-build CI pipeline and get it passing
-- pass make checks
+    - add in retrieval step for CSIRO data
+- pass `make checks`
 
 ## Concs
 

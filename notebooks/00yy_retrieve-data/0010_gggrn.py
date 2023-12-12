@@ -41,6 +41,7 @@
 import pooch
 
 from local.config import load_config_from_file
+from local.pydoit_nb.checklist import generate_directory_checklist
 from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
@@ -52,7 +53,7 @@ step: str = "retrieve"
 # %% [markdown]
 # ## Parameters
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
@@ -76,6 +77,9 @@ for url_source in config_step.gggrn.urls_global_mean:
         fname=url_source.url.split("/")[-1],
         path=config_step.gggrn.raw_dir,
     )
+
+# %%
+generate_directory_checklist(config_step.gggrn.raw_dir)
 
 # %% [markdown]
 # NOAA network URL, the obspack (maybe personal to me, need to check):
