@@ -296,14 +296,14 @@ xyzservices = ">=2021.09.1"
 
 [[package]]
 name = "carpet-concentrations"
-version = "0.4.2"
+version = "0.5.0"
 description = "Core tools for the development of greenhouse gas concentration input files (i.e. flying carpets)."
 category = "main"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "carpet_concentrations-0.4.2-py3-none-any.whl", hash = "sha256:d79efa28044ce0478d630f5732d857d19a0792c7370a5d26bdea721c1f1b1ca3"},
-    {file = "carpet_concentrations-0.4.2.tar.gz", hash = "sha256:bcfa396735e8fbcbfe46574e8b31206d6a8bb15c9e429a38d534be5e22de4991"},
+    {file = "carpet_concentrations-0.5.0-py3-none-any.whl", hash = "sha256:654fc62f6a4ed87961508ed239f4eda4a61c570436f13fcc09378a62c608ca38"},
+    {file = "carpet_concentrations-0.5.0.tar.gz", hash = "sha256:613f04c14e7ddb20b658b514948fcbdc2d40ca5766dda87200b8aea2b28195fa"},
 ]
 
 [package.dependencies]
@@ -3775,4 +3775,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "da9b9fa884fcc775ed972df045b5dcdc2371b20a16d162aa8928562f1ed3ae5c"
+content-hash = "0530fde7c8184eae30343d47d228327e72cf19b83691ddd92ee2b5ebde268431"
