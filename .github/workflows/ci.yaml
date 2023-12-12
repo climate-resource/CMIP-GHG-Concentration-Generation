@@ -38,6 +38,7 @@ jobs:
           poetry-dependency-install-flags: "--all-extras --only 'main,tests,coverage'"
       - name: Run tests relevant for coverage
         run: |
+          poetry run python scripts/create-dev-ci-config-absolute.py
           poetry run pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
           poetry run coverage report
       - name: Upload coverage reports to Codecov
@@ -46,4 +47,4 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Run tests that break coverage
         run: |
-          poetry run pytest -r a -v tests -m coverage_breaker
+          poetry run pytest -s -r a -v tests -m coverage_breaker
