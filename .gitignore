@@ -1,5 +1,7 @@
 # Dev config with absolute paths
 dev-config-absolute.yaml
+# CI config with absolute paths
+ci-config-absolute.yaml
 
 # Output
 output-bundles*

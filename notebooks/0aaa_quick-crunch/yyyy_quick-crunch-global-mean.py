@@ -68,6 +68,29 @@ gggrn_global_mean
 csiro_law_dome = BaseScmRun(config_process.law_dome.processed_file)
 csiro_law_dome
 
+
+# %%
+def interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
+    col_min = df.columns.min()
+    col_max = df.columns.max()
+
+    year_max = col_max.year
+    month_max = col_max.month
+    interp_times = [
+        dt.datetime(y, m, 1)
+        for y in range(col_min.year, year_max)
+        for m in range(1, 12 + 1)
+    ]
+
+    current_month = 1
+    while current_month <= month_max:
+        interp_times.append(dt.datetime(year_max, current_month, 1))
+
+        current_month += 1
+
+    return interp_times
+
+
 # %%
 out_list = []
 for vdf in run_append(
@@ -79,33 +102,28 @@ for vdf in run_append(
     sources = []
     for source, sdf in vdf.timeseries().groupby("source"):
         sdf_clean = sdf.copy().dropna(how="all", axis="columns")
+        interp_steps = interp_year_month_dts(sdf_clean)
         yearly_in_interp = (
-            BaseScmRun(sdf_clean.copy())
-            .interpolate(
-                [
-                    dt.datetime(year, m, 1)
-                    for year in range(
-                        sdf_clean.columns.min().year, sdf_clean.columns.max().year + 1
-                    )
-                    for m in range(1, 12 + 1)
-                ]
-            )
-            .timeseries()
+            BaseScmRun(sdf_clean.copy()).interpolate(interp_steps).timeseries()
         )
         sources.append(yearly_in_interp)
 
     sources = pd.concat(sources)
     avg = sources.groupby(["region", "scenario", "unit", "variable"]).mean()
     avg["source"] = "average"
-    avg = BaseScmRun(avg).interpolate(
-        [dt.datetime(year, m, 1) for year in range(1, 2023) for m in range(1, 12 + 1)]
-        + [
-            dt.datetime(year, m, 1)
-            for year in range(2023, 2023 + 1)
-            for m in range(1, 8 + 1)
-        ],
-        extrapolation_type="constant",
-    )
+    avg = BaseScmRun(avg)
+
+    if not config.ci:
+        # Interpolate onto the full timespan of interest i.e. back to year 1
+        tmp = avg.timeseries().copy()
+        tmp.columns = avg.time_points.as_cftime()
+        tmp.loc[:, type(tmp.columns.values[0])(1, 1, 1)] = 0
+        interp_years = interp_year_month_dts(tmp)
+
+        avg = avg.interpolate(
+            interp_years,
+            extrapolation_type="constant",
+        )
 
     fig, axes = plt.subplots(ncols=2, sharey=False, figsize=(10, 4))
 
@@ -119,13 +137,22 @@ for vdf in run_append(
     axes[1].legend().remove()
     plt.show()
 
+    print(avg)
     out_list.append(avg)
     # break
 
 out = run_append(out_list)
 
-# %%
-assert not out.timeseries().isna().any().any()
+if config.ci:
+    # Just do dumb resampling to get rid of nans
+    out = out.resample("MS")
+else:
+    # Drop any years for which we don't have data for all variables
+    out = BaseScmRun(out.timeseries().dropna(axis="columns"))
+
+assert not out.timeseries().isna().any().any(), (
+    out.timeseries().isna().any(axis="columns")
+)
 out
 
 # %%

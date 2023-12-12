@@ -56,10 +56,13 @@ print(f"DOI for dataset: {config_step.law_dome.doi}")
 # %% [markdown]
 # ## Retrieve the data
 #
-# **Note**: The keys below may be rotated so this may break without warning. If it does, the files can be downloaded from the DOI above. If this happens a lot, we may just add the data to the repo as it is tiny.
-
-# %%
+# **Note**: We would like to automate this using the command below. However, the keys are rotated.
+#
+# ```
 # !AWS_ACCESS_KEY_ID=ADROIMK8WFURFMTPLD9A AWS_SECRET_ACCESS_KEY=woGxqR3TD5gmn1/ICDEp9G8iQLhm968IqHtV0rF0 aws s3 cp --endpoint-url https://s3.data.csiro.au --recursive s3://dapprd/000037077v001/ {config_step.law_dome.raw_dir}
+# ```
+#
+# As a result, we just include the data in the repository instead (not perfect, but fine for now and the DOI is above for clarity).
 
 # %% [markdown]
 # ### Check we have the intended files

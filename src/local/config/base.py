@@ -37,6 +37,14 @@ class Config:
     """Version ID for this configuration"""
     # TODO: add validation that this matches semantic versioning
 
+    ci: bool
+    """
+    Is this configuration for a CI run?
+
+    We use this to help us create a short-cut path that can reasonably be run
+    as part of our CI workflow.
+    """
+
     retrieve: list[RetrieveConfig]
     """Configurations to use with the retrieve step"""
     # TODO: add validation that these all have unique step_config_id

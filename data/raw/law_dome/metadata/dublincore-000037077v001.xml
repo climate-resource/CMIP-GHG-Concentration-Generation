@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dcterms:dc xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://purl.org/dc/elements/1.1/ https://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd">
+  <dc:title>Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2</dc:title>
+  <dc:creator>Mauro Rubino</dc:creator>
+  <dc:subject>Palaeoclimatology</dc:subject>
+  <dc:description>Law Dome ice core (DSS, DSS0506, DE08 and DE08-2) and firn air (DE08-2 and DSSW20K) records of CO2, CH4 and N2O concentrations for the past 2000 years and d13C-CO2 for the past 1000 years. Law Dome location: The dome summit is as follows, individual cores are within about 25 km (see publications), 66?44&amp;apos;S, 112?50&amp;apos;E, 1390m elevation.</dc:description>
+  <dc:publisher>CSIRO</dc:publisher>
+  <dc:contributor>David Etheridge</dc:contributor>
+  <dc:contributor>David Thornton</dc:contributor>
+  <dc:contributor>Colin Allison</dc:contributor>
+  <dc:contributor>Roger Francey</dc:contributor>
+  <dc:contributor>Raymond Langenfelds</dc:contributor>
+  <dc:contributor>Lloyd Steele</dc:contributor>
+  <dc:contributor>Cathy Trudinger</dc:contributor>
+  <dc:contributor>Darren Spencer</dc:contributor>
+  <dc:contributor>Mark Curran</dc:contributor>
+  <dc:contributor>Tas Van Ommen</dc:contributor>
+  <dc:contributor>Andrew Smith</dc:contributor>
+  <dc:date>2018-11-28</dc:date>
+  <dc:type />
+  <dc:format />
+  <dc:identifier>https://doi.org/10.25919/5bfe29ff807fb</dc:identifier>
+  <dc:language />
+  <dcterms:temporal xsi:type="dcterms:Period">start=1992-01-01; end=2018-01-01</dcterms:temporal>
+  <dcterms:spatial xsi:type="dcterms:Point">north=-66.7333; east=112.8333; projection=WGS84; projection=WGS84</dcterms:spatial>
+  <dc:rights />
+</dcterms:dc>

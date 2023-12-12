@@ -1,5 +1,6 @@
 name: dev
 version: "0.1.0-alpha"
+ci: false
 retrieve:
 - step_config_id: only
   law_dome:

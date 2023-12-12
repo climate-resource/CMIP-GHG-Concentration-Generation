@@ -114,6 +114,11 @@ for url_source in config_retrieve.gggrn.urls_global_mean:
     out_list.append(translated)
 
 out = run_append(out_list)
+
+if config.ci:
+    # Chop the data to speed things up
+    out = out.filter(year=range(1850, 3000))
+
 out
 
 # %%

@@ -95,6 +95,10 @@ for sheet, gas, unit in [
     processed_runs.append(BaseScmRun(useable))
 
 processed = run_append(processed_runs)
+if config.ci:
+    # Chop the data to speed things up
+    processed = processed.filter(year=range(1850, 3000))
+
 processed
 
 # %%

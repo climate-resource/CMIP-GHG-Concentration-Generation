@@ -1,0 +1,3 @@
+e2fb9ef0b36b46857c63bc171f3a8fff6af302ccae4d3d9e6f27df04fa6514d4  ./data/Law_Dome_GHG_2000years.xlsx
+69939e9d58b672c28c56735642f5eb74f2a9133f643676210c5b8e8b55dec8aa  ./metadata/CSIRO_DAP_Metadata/37077v001_checksums_unix.md5
+d0e583c13053c6c4e59202ea2140c4913ecedd23df40b2b44ecf451cc6aae602  ./metadata/CSIRO_DAP_Metadata/37077v001_checksums_windows.md5
