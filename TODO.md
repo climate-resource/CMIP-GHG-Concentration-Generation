@@ -1,5 +1,76 @@
 # TODO
 
+## Meinshausen et al., 2017 reproduction
+
+- Looking at Figure 1
+    - if you only have a global-mean estimate, super unclear to me what happens
+        - extrapolate somehow and then assume zero latitudinal gradient or seasonality?
+    - otherwise
+        - bin raw station data (15 degree latitudinal bins, 60 degree longitudinal bins)
+        - average with equal station weight
+        - average all observations over the month to get a monthly mean (need to check this with Malte, seems odd to average measurements at different stages in the month but maybe error is negligible)
+            - treak flask and in situ measurements as separate stations
+        - spatially interpolate any missing values using linear 2D interpolation
+            - need to work out what algorithm is used for this
+        - at this point, you have a complete, interpolated, lat-long, monthly field over the instrumental period
+        - calculate average over longitude (i.e. end up with lat, monthly field)
+        - branch
+            - latitudinal gradient
+                - calculate annual-average deviations from smoothed annual-mean at each latitude
+                    - unclear to me why it would be smoothed annual-mean
+                - now you have a (y, l) field of annual latitudinal deviations
+                - do principle component analysis on this (where the PCA is done over the year dimension i.e. your principle components should have variation with latitude only)
+                - get principle component scores by projecting principle components back onto original deviations
+                    - slide 10 onwards here best resource I could find for this https://www.ess.uci.edu/~yu/class/ess210b/lecture.5.EOF.all.pdf
+                - if you have ice/firn records in both hemispheres
+                    - some optimisation of principal component scores to match global-mean concentrations, but I don't really understand how/what is being optimised
+                - elif ice/firn record in one hemisphere
+                    - regress principal component score against global emissions
+                    - use this to extend principal component score back in time
+                    - then combine principal component score, principal component and observation to infer latitudinal concentrations hence global-mean concentrations
+                - else
+                    - super unclear what goes on here, will have to speak to Malte
+            - global-mean
+                - calculate smoothed trendline
+                    - unclear to me where this is used
+                - extrapolate back/forwards in time as needed (unclear to me what this actually entails though)
+            - seasonality
+                - calculate monthly deviations from annual-mean at each latitude
+                - now you have a (y, m, l) field of monthly deviations
+                - calculate average deviation over all years
+                - now you have a (m, l) field of average seasonality over the instrumental period
+                - if not CO2
+                    - if sufficient data and clear seasonality
+                        - scale seasonality with global-mean concentrations for the year
+                        - now you have a (y, m, l) field of seasonality over the entire time period
+                    - else
+                        - assume zero seasonality
+                - else
+                    - calculate deviations of monthly deviations from annual-mean at each latitude from average seasonality
+                    - now you have a (y, m, l) field of deviations from average seasonality
+                    - do principle component analysis on this (where the PCA is done over the year dimension i.e. your principle components should have variation with both month and latitude)
+                    - get principle component scores by projecting principle components back onto original deviations
+                        - slide 10 onwards here best resource I could find for this https://www.ess.uci.edu/~yu/class/ess210b/lecture.5.EOF.all.pdf
+                    - extend principal component score forward/backwards based on regression with concentrations and warming
+                    - principal component scores should now have dimensions (y, m)
+                    - apply extended principal component scores back onto principal components (M17 only used first EOF) to get change in seasonality over full time period
+                    - your change in seasonality should now be a (y, m, l) field
+                    - add on average seasonality to get full seasonality over full time period
+                    - now you have a (y, m, l) field of seasonality over the full time period
+
+To actually tackle this:
+
+- start with CO2
+- then CH4
+- then N2O
+- then HFCs
+- then PFCs
+- then CFCs
+- then everything else
+
+- have to be super careful with notebook steps. Need to keep them very split/at the level of steps in Figure 1 so they can be combined with flexibility
+    - going to be lots of notebook steps and config...
+
 ## Concs
 
 - download data using e.g. pooch (make sure it goes into the bundle so we don't have to rely on data without DOIs)
