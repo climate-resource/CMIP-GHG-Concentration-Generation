@@ -14,6 +14,8 @@
 
 # %% [markdown]
 # # Law dome
+#
+# Retrieve data from the [Law Dome ice core dataset](https://data.csiro.au/collection/csiro%3A37077v2).
 
 # %% [markdown]
 # ## Imports
