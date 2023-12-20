@@ -2,12 +2,19 @@
 
 ## Meinshausen et al., 2017 reproduction
 
+- Original source code
+    - https://gitlab.com/magicc/CopyForDeletion_CMIP6GHGconcentrations
+    - key driver here: https://gitlab.com/magicc/CopyForDeletion_CMIP6GHGconcentrations/-/blob/master/main_script_histGHG_generator.m?ref_type=heads
+- Some documentation stuff: see #34
 - Looking at Figure 1
     - if you only have a global-mean estimate, super unclear to me what happens
         - extrapolate somehow and then assume zero latitudinal gradient or seasonality?
     - otherwise
         - bin raw station data (15 degree latitudinal bins, 60 degree longitudinal bins)
+        - filter raw station data
+            - some thoughts in #29
         - average with equal station weight
+            - i.e. take average over the month for the station first, then average over stations
         - average all observations over the month to get a monthly mean (need to check this with Malte, seems odd to average measurements at different stages in the month but maybe error is negligible)
             - treak flask and in situ measurements as separate stations
         - spatially interpolate any missing values using linear 2D interpolation
@@ -15,13 +22,14 @@
         - at this point, you have a complete, interpolated, lat-long, monthly field over the instrumental period
         - calculate average over longitude (i.e. end up with lat, monthly field)
         - branch
-            - latitudinal gradient
+            - latitudinal gradient (Section 3 of M17 has suggestions for improvements, Section 5.6 also has important point about handling time-varying data coverage)
                 - calculate annual-average deviations from smoothed annual-mean at each latitude
                     - unclear to me why it would be smoothed annual-mean
                 - now you have a (y, l) field of annual latitudinal deviations
                 - do principle component analysis on this (where the PCA is done over the year dimension i.e. your principle components should have variation with latitude only)
                 - get principle component scores by projecting principle components back onto original deviations
                     - slide 10 onwards here best resource I could find for this https://www.ess.uci.edu/~yu/class/ess210b/lecture.5.EOF.all.pdf
+                    - previous implementation: https://gitlab.com/magicc/CopyForDeletion_CMIP6GHGconcentrations/-/blob/master/eof_ghg_residuals.m?ref_type=heads
                 - if you have ice/firn records in both hemispheres
                     - some optimisation of principal component scores to match global-mean concentrations, but I don't really understand how/what is being optimised
                 - elif ice/firn record in one hemisphere
@@ -33,8 +41,9 @@
             - global-mean
                 - calculate smoothed trendline
                     - unclear to me where this is used
+                    - this is probably where high-frequency variations are removed (see Section 3 of M17)
                 - extrapolate back/forwards in time as needed (unclear to me what this actually entails though)
-            - seasonality
+            - seasonality (Section 2.1.5 describes a potentially better approach)
                 - calculate monthly deviations from annual-mean at each latitude
                 - now you have a (y, m, l) field of monthly deviations
                 - calculate average deviation over all years
@@ -70,6 +79,18 @@ To actually tackle this:
 
 - have to be super careful with notebook steps. Need to keep them very split/at the level of steps in Figure 1 so they can be combined with flexibility
     - going to be lots of notebook steps and config...
+
+- There are other composite sources, use these as comparison values, e.g.
+    - NOAA's global-mean product (derived based on a bunch of curve-fitting before taking the mean)
+    - other ideas in #36
+
+If/when we look at projections, need:
+
+- gradient-preserving harmonisation (also see discussion in only office)
+
+Off the table improvements for now:
+
+- longitudinal gradients
 
 ## Concs
 
