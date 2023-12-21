@@ -319,7 +319,7 @@ def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
             "nominal_resolution": nominal_resolution,
         }
     except NameError as exc:
-        raise NotImplementedError(  # noqa: TRY003
+        raise NotImplementedError(
             f"Could not determine grid_label for data: {ds}"
         ) from exc
 
@@ -394,7 +394,8 @@ def infer_metadata_from_dataset(
         There is more than one data variable in ``ds``
     """
     if len(ds.data_vars) == 1:
-        variable_id = list(ds.data_vars.keys())[0]
+        # error mis-identified by ruff, think it's because it's xarray not a list
+        variable_id = list(ds.data_vars.keys())[0]  # noqa: RUF015
     else:
         raise AssertionError("Can only write one variable per file")  # noqa: TRY003
 

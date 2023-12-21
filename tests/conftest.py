@@ -34,6 +34,7 @@ def basic_workflow_output_info() -> dict[str, str | Path]:
             "DOIT_RUN_ID": run_id,
             **os.environ,
         },
+        check=True,
     )
 
     return {

@@ -34,6 +34,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
+        check=True,
     )
 
     subprocess.run(
@@ -45,6 +46,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
+        check=True,
     )
 
     venv_check = subprocess.run(
@@ -57,6 +59,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
         stdout=subprocess.PIPE,
+        check=True,
     )
     assert str(copied_output_dir) in venv_check.stdout.decode(), "venv incorrectly set"
 
@@ -81,6 +84,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
             "DOIT_RUN_ID": run_id,
             **os.environ,
         },
+        check=True,
     )
 
     for compare_file in (
