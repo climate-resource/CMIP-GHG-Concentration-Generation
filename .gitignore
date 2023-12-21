@@ -1,5 +1,8 @@
 # Dev config with absolute paths
 dev-config-absolute.yaml
+# CI configs (created with scripts)
+ci-config.yaml
+ci-config-absolute.yaml
 
 # Output
 output-bundles*
@@ -14,6 +17,9 @@ data
 # Databases
 *.db
 *db*.json
+
+# Zip archives
+*.zip
 
 # Jupyter cache
 .jupyter_cache

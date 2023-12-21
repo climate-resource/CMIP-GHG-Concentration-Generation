@@ -1,3 +1,41 @@
+name: dev
+version: "0.1.0-alpha"
+ci: false
+retrieve:
+- step_config_id: only
+  law_dome:
+    doi: https://doi.org/10.25919/5bfe29ff807fb
+    raw_dir: data/raw/law_dome
+    files_md5_sum:
+      data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+  gggrn:
+    raw_dir: data/raw/gggrn
+    urls_global_mean:
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
+      known_hash: 4d29a1e83b38039f0130d1bed34fd6b59b6a2c0b074cd69c39d88737b4346b27
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt
+      known_hash: 9d28596968b777f7a5ce0e4e8737ed496aa70d9bff5fd14eb84f4d8ab2bd94ba
+    - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
+      known_hash: b960224afc091028633e4f330f85a5b943018c11f470a00f1b50ae782f8cb874
+process:
+- step_config_id: only
+  law_dome:
+    processed_file: data/processed/law_dome/0101_processed-law-dome.csv
+  gggrn:
+    processed_file_global_mean: data/processed/gggrn/0111_processed-gggrn-global-mean.csv
+grid:
+- step_config_id: only
+  processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
+gridded_data_processing:
+- step_config_id: only
+  processed_data_file_global_hemispheric_means: data/processed/gridded/0810_global-hemispheric-means.nc
+  processed_data_file_global_hemispheric_annual_means: data/processed/gridded/0810_global-hemispheric-annual-means.nc
+write_input4mips:
+- step_config_id: only
+  input4mips_out_dir: data/processed/input4MIPs
+quick_crunch:
+- step_config_id: only
+  processed_data_file_global_means: data/processed/quick_crunch/yyyy_processed-global-means.csv
 analysis:
 - step_config_id: only
   mean_dir: data/processed/710_means
@@ -34,7 +72,6 @@ figures:
   draw_comparison_figure: figures/920_draw-comparison.pdf
   draw_comparison_table: data/processed/910_draw-table.csv
   misc_figures_dir: figures/misc
-name: dev
 preparation:
 - step_config_id: only
   seed: 2847539

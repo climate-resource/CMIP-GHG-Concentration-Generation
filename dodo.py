@@ -24,6 +24,7 @@ import datetime as dt
 import os
 import time
 from collections.abc import Iterable
+from distutils.dir_util import copy_tree
 from pathlib import Path
 from typing import Any
 
@@ -120,6 +121,13 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     # TODO: consider giving the user more control over this or not
     root_dir_output_run = root_dir_output / run_id
     root_dir_output_run.mkdir(parents=True, exist_ok=True)
+
+    # TODO: make this handling of raw data a separate task
+    # TODO: ask Jared and Mika for thoughts. Copying in full raw data every time
+    # seems silly, better to make symlinks at start then only copy when making
+    # final bundle?
+    # (root_dir_output_run / "data").mkdir(exist_ok=True)
+    copy_tree(str(Path("data")), str(root_dir_output_run / "data"))
 
     # TOOD: refactor out a re-useable gen_show_configuration_task function
     yield {

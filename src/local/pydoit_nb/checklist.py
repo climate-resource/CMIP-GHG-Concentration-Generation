@@ -104,6 +104,14 @@ def generate_directory_checklist(
         Directory containing arbitary files (we haven't tested this on any file
         but any directory containing hashable data files is the intended target)
 
+    checklist_file
+        Where to write the checklist file. If not supplied, the result of
+        `get_checklist_file(directory)` is used.
+
+    exclusions
+        Functions used to check if a file should be excluded or not. If not
+        supplied, we use `[is_checklist_file]`.
+
     Returns
     -------
         Path of the generated checklist file
@@ -124,7 +132,7 @@ def generate_directory_checklist(
         exclusions = [is_checklist_file]
 
     # sort to ensure same result for same set of files
-    files = sorted(directory.rglob("*"))
+    files = sorted([f for f in directory.rglob("*") if f.is_file()])
 
     md5s = create_md5_dict(files, exclusions=exclusions)
 

@@ -6,19 +6,19 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Protocol, TypeAlias, TypeVar
 
-T = TypeVar("T", covariant=True)
+T_co = TypeVar("T_co", covariant=True)
 T_contra = TypeVar("T_contra", contravariant=True)
 
 DoitTaskSpec: TypeAlias = dict[str, Any]
 
 
-class ConfigBundleLike(Protocol[T]):
+class ConfigBundleLike(Protocol[T_co]):
     """
     Protocol for configuration bundles
     """
 
     @property
-    def config_hydrated(self) -> T:
+    def config_hydrated(self) -> T_co:
         """Hydrated config"""
         ...
 
@@ -56,7 +56,7 @@ class Converter(Protocol[T_contra]):
         """
         ...  # pragma: no cover
 
-    def loads(self, inp: str, target: type[T]) -> T:
+    def loads(self, inp: str, target: type[T_co]) -> T_co:
         """
         Load an instance of ``target`` from a string
 

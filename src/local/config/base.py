@@ -7,12 +7,12 @@ from pathlib import Path
 
 from attrs import frozen
 
-from .analysis import AnalysisConfig
-from .constraint import ConstraintConfig
-from .covariance import CovarianceConfig
-from .covariance_plotting import CovariancePlottingConfig
-from .figures import FiguresConfig
-from .preparation import PreparationConfig
+from .grid import GridConfig
+from .gridded_data_processing import GriddedDataProcessingConfig
+from .process import ProcessConfig
+from .quick_crunch import QuickCrunchConfig
+from .retrieve import RetrieveConfig
+from .write_input4mips import WriteInput4MIPsConfig
 
 
 @frozen
@@ -27,28 +27,40 @@ class Config:
     name: str
     """Name of the configuration"""
 
-    preparation: list[PreparationConfig]
-    """Configurations to use with the preparation step"""
+    version: str
+    """Version ID for this configuration"""
+    # TODO: add validation that this matches semantic versioning
+
+    ci: bool
+    """
+    Is this configuration for a CI run?
+
+    We use this to help us create a short-cut path that can reasonably be run
+    as part of our CI workflow.
+    """
+
+    retrieve: list[RetrieveConfig]
+    """Configurations to use with the retrieve step"""
     # TODO: add validation that these all have unique step_config_id
 
-    covariance: list[CovarianceConfig]
-    """Configurations to use with the covariance step"""
+    process: list[ProcessConfig]
+    """Configurations to use with the process step"""
     # TODO: add validation that these all have unique step_config_id
 
-    covariance_plotting: list[CovariancePlottingConfig]
-    """Configuration to use for the quick plots of the covariance draws"""
+    grid: list[GridConfig]
+    """Configurations to use with the grid step"""
     # TODO: add validation that these all have unique step_config_id
 
-    constraint: list[ConstraintConfig]
-    """Configurations to use with the constraint step"""
+    gridded_data_processing: list[GriddedDataProcessingConfig]
+    """Configurations to use with the gridded data processing step"""
     # TODO: add validation that these all have unique step_config_id
 
-    analysis: list[AnalysisConfig]
-    """Configurations to use with the analysis step"""
+    write_input4mips: list[WriteInput4MIPsConfig]
+    """Configurations to use with the write input4MIPs step"""
     # TODO: add validation that these all have unique step_config_id
 
-    figures: list[FiguresConfig]
-    """Configurations to use with the figures step"""
+    quick_crunch: list[QuickCrunchConfig]
+    """Configurations to use with the quick crunch step"""
     # TODO: add validation that these all have unique step_config_id
 
 

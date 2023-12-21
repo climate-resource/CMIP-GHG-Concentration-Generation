@@ -21,16 +21,16 @@ if TYPE_CHECKING:
     from .notebook import ConfiguredNotebook, UnconfiguredNotebook
 
 
-CB = TypeVar("CB", contravariant=True, bound=ConfigBundleLike[Any])
+CB_contra = TypeVar("CB_contra", contravariant=True, bound=ConfigBundleLike[Any])
 
 
-class ConfigureNotebooksCallable(Protocol[CB]):
+class ConfigureNotebooksCallable(Protocol[CB_contra]):
     """Callable that can be used for configuring notebooks"""
 
     def __call__(  # noqa: D102
         self,
         unconfigured_notebooks: Iterable[UnconfiguredNotebook],
-        config_bundle: CB,
+        config_bundle: CB_contra,
         step_name: str,
         step_config_id: str,
     ) -> list[ConfiguredNotebook]:
@@ -38,7 +38,7 @@ class ConfigureNotebooksCallable(Protocol[CB]):
 
 
 @frozen
-class UnconfiguredNotebookBasedStep(Generic[CB]):
+class UnconfiguredNotebookBasedStep(Generic[CB_contra]):
     """
     An unconfigured notebook-based step
 
@@ -53,12 +53,12 @@ class UnconfiguredNotebookBasedStep(Generic[CB]):
     unconfigured_notebooks: list[UnconfiguredNotebook]
     """Unconfigured notebooks that make up this step"""
 
-    configure_notebooks: ConfigureNotebooksCallable[CB]
+    configure_notebooks: ConfigureNotebooksCallable[CB_contra]
     """Function which can configure the notebooks based on run-time information"""
 
     def gen_notebook_tasks(
         self,
-        config_bundle: CB,
+        config_bundle: CB_contra,
         root_dir_raw_notebooks: Path,
         converter: Converter[tuple[HandleableConfiguration, ...]] | None = None,
         clean: bool = True,

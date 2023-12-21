@@ -7,11 +7,10 @@ import copy
 import os
 import shutil
 import subprocess
-from pathlib import Path
 
-import pandas as pd
-import pandas.testing as pdt
 import pytest
+import xarray as xr
+import xarray.testing as xrt
 
 
 @pytest.mark.coverage_breaker
@@ -19,7 +18,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
     copied_output_dir = tmpdir / "copied-workflow-output"
     shutil.copytree(basic_workflow_output_info["root_dir_output"], copied_output_dir)
 
-    assumed_raw_config_file = "dev-config-raw.yaml"
+    assumed_raw_config_file = "ci-config-raw.yaml"
     run_id = "bundle-run"
 
     env_here = copy.deepcopy(os.environ)
@@ -35,6 +34,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
+        check=True,
     )
 
     subprocess.run(
@@ -46,6 +46,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
+        check=True,
     )
 
     venv_check = subprocess.run(
@@ -58,6 +59,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
         stdout=subprocess.PIPE,
+        check=True,
     )
     assert str(copied_output_dir) in venv_check.stdout.decode(), "venv incorrectly set"
 
@@ -82,21 +84,21 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
             "DOIT_RUN_ID": run_id,
             **os.environ,
         },
+        check=True,
     )
 
-    for compare_file in [Path("data") / "processed" / "910_draw-table.csv"]:
-        bundle_res = pd.read_csv(
+    for compare_file in (
+        basic_workflow_output_info["root_dir_output"]
+        / basic_workflow_output_info["run_id"]
+        / "data"
+        / "processed"
+        / "input4MIPs"
+    ).rglob("*.nc"):
+        bundle_res = xr.open_dataset(
             copied_output_dir
-            / basic_workflow_output_info["run_id"]
-            / "output-bundles"
-            / "bundle-run"
-            / compare_file
+            / compare_file.relative_to(basic_workflow_output_info["root_dir_output"])
         )
 
-        test_res = pd.read_csv(
-            basic_workflow_output_info["root_dir_output"]
-            / basic_workflow_output_info["run_id"]
-            / compare_file
-        )
+        test_res = xr.open_dataset(compare_file)
 
-        pdt.assert_frame_equal(bundle_res, test_res)
+        xrt.assert_equal(test_res, bundle_res)

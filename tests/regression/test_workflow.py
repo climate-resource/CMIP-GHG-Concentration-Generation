@@ -3,11 +3,14 @@ Test the workflow results
 
 This is a regression test so the entire workflow is run
 """
+from __future__ import annotations
 
-import pandas as pd
+import re
+
+import xarray as xr
 
 
-def test_basic_workflow(basic_workflow_output_info, dataframe_regression):
+def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
     """
     Test the basic workflow
 
@@ -15,12 +18,27 @@ def test_basic_workflow(basic_workflow_output_info, dataframe_regression):
     used as a test. Less than 30 seconds to run the test is what we should be
     aiming for.
     """
-    for data_file in [
+    array_contents = {}
+    for input4mips_file in (
         basic_workflow_output_info["root_dir_output"]
         / basic_workflow_output_info["run_id"]
         / "data"
         / "processed"
-        / "910_draw-table.csv"
-    ]:
-        data = pd.read_csv(data_file)
-        dataframe_regression.check(data)
+        / "input4MIPs"
+    ).rglob("*.nc"):
+        ds = xr.open_dataset(input4mips_file)
+        for key, value in ds.data_vars.items():
+            filepath_write = re.sub(
+                r"v\d{8}",
+                "vYYYYMMDD",
+                str(
+                    input4mips_file.relative_to(
+                        basic_workflow_output_info["root_dir_output"]
+                    )
+                ),
+            )
+
+            key_write = f"{filepath_write}__{key}"
+            array_contents[key_write] = value.data
+
+    ndarrays_regression.check(array_contents)

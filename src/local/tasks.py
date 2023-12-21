@@ -9,12 +9,12 @@ from pathlib import Path
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
-    analysis,
-    constraint,
-    covariance,
-    covariance_plotting,
-    figures,
-    preparation,
+    grid,
+    gridded_data_processing,
+    process,
+    quick_crunch,
+    retrieve,
+    write_input4mips,
 )
 from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
 from .pydoit_nb.typing import DoitTaskSpec
@@ -51,12 +51,12 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
-        preparation,
-        covariance,
-        constraint,
-        covariance_plotting,
-        analysis,
-        figures,
+        retrieve,
+        process,
+        quick_crunch,
+        grid,
+        gridded_data_processing,
+        write_input4mips,
     ]:
         for task in step_module.step.gen_notebook_tasks(
             config_bundle=config_bundle,
