@@ -16,6 +16,10 @@
 # # NOAA
 #
 # Process data from NOAA.
+#
+# To-do's:
+#
+# - parameterise notebook so we can do same for CH4, N2O and SF6 observations
 
 # %% [markdown]
 # ## Imports
@@ -228,9 +232,6 @@ def read_noaa_zip(
 
 
 # %%
-df_events.columns.tolist()
-
-# %%
 assert len(available_zip_files) == 1
 df_events, df_months = read_noaa_zip(available_zip_files[0])
 display(df_events)
@@ -246,79 +247,6 @@ df_events_sc_g = get_site_code_grouped_dict(df_events)
 df_months_sc_g = get_site_code_grouped_dict(df_months)
 
 # %%
-# Work out best-estimate location of each monthly value
-stationary_site_movement_tolerance = 0.5
-
-
-for site_code_filename, site_monthly_df in tqdman.tqdm(
-    df_months_sc_g.items(), desc="Monthly sites"
-):
-    # site_events_df =
-    if len(site_code_filename) == 3:
-        site_events_df = df_events_sc_g[site_code_filename]
-
-        spatial_cols = ["latitude", "longitude"]
-        locs = site_events_df[spatial_cols].drop_duplicates()
-        assert (
-            False
-        ), "Group by year-month here to handle fact that some sites move a bit"
-        site_events_df.groupby(["year", "month"])[spatial_cols].mean()
-        site_events_df.groupby(["year", "month"])[spatial_cols].std()
-
-        means = {}
-        for col in spatial_cols:
-            mean_col = locs[col].mean()
-            std_col = locs[col].std()
-            if std_col >= stationary_site_movement_tolerance:
-                raise ValueError(
-                    f"Surprisingly large move in {col} of stationary station: {locs}"
-                )
-
-            means[col] = mean_col
-    else:
-        pass
-        # raise NotImplementedError(site_code_filename)
-    # break
-
-# %%
-site_events_df.groupby(["year", "month"])[spatial_cols].std().max()
-
-# %%
-site_code_filename
-
-# %%
-locs
-
-# %%
-site_code_filename
-
-# %%
-
-# %%
-sorted(df_months_sc_g.keys())
-
-# %%
-df_events_sc_g["poc"]
-
-# %%
-df_months_sc_g["poc000"]
-
-# %%
-sorted(df_months_sc_g.keys())
-
-# %%
-set(df_events_sc_g.keys()) - set(df_months_sc_g.keys())
-
-# %%
-set(df_months_sc_g.keys()) - set(df_events_sc_g.keys())
-
-# %%
-df_events
-
-# %%
-df_months
-
-# %%
 countries = gpd.read_file(
     config_retrieve.natural_earth.raw_dir
     / config_retrieve.natural_earth.countries_shape_file_name
@@ -326,34 +254,163 @@ countries = gpd.read_file(
 # countries.columns.tolist()
 
 # %%
-assert False
+# Work out best-estimate location of each monthly value
+stationary_site_movement_tolerance = 1
 
-# %% [markdown]
-# To-do's:
-# - read monthly data
-# - make plot of events and monthly against time on left-hand side and location of samples on right-hand side
-#     - this will also check that all monthly data has event data sitting underneath it
-# - save data
-# - parameterise notebook so we can do same for CH4, N2O and SF6 observations
-
-# %%
-coords = df_events[["latitude", "longitude", "surf_or_ship"]].drop_duplicates()
-fig, ax = plt.subplots()
-countries.plot(color="lightgray", ax=ax)
-
-for kind, colour, alpha in (
-    ("surface", "tab:orange", 0.7),
-    ("shipboard", "tab:blue", 0.1),
+monthly_dfs_with_loc = []
+for site_code_filename, site_monthly_df in tqdman.tqdm(
+    df_months_sc_g.items(), desc="Monthly sites"
 ):
-    coords[coords["surf_or_ship"] == kind].plot(
+    # site_events_df =
+    if len(site_code_filename) == 3:
+        site_events_df = df_events_sc_g[site_code_filename]
+
+    else:
+        site_code_indicator = site_code_filename[:3]
+        if site_code_indicator.startswith("poc"):
+            # Guessing from files
+            band_width = 2.5
+        elif site_code_indicator.startswith("scs"):
+            # Guessing from files
+            band_width = 1.5
+        else:
+            raise NotImplementedError(site_code_indicator)
+
+        lat_indicator = site_code_filename[-3:]
+
+        site_events_df = df_events_sc_g[site_code_indicator]
+
+        if lat_indicator == "000":
+            lat_band = [-band_width, band_width]
+
+        elif lat_indicator.startswith("n"):
+            centre = int(lat_indicator[-2:])
+            lat_band = [centre - band_width, centre + band_width]
+
+        elif lat_indicator.startswith("s"):
+            centre = -int(lat_indicator[-2:])
+            lat_band = [centre - band_width, centre + band_width]
+
+        else:
+            raise NotImplementedError(lat_indicator)
+
+        site_events_df = site_events_df[
+            (site_events_df["latitude"] >= lat_band[0])
+            & (site_events_df["latitude"] <= lat_band[1])
+        ]
+
+    spatial_cols = ["latitude", "longitude"]
+    locs = site_events_df[spatial_cols].drop_duplicates()
+
+    locs_means = site_events_df.groupby(["year", "month"])[spatial_cols].mean()
+    locs_stds = site_events_df.groupby(["year", "month"])[spatial_cols].std()
+
+    if locs_stds.max().max() > stationary_site_movement_tolerance:
+        print(
+            f"Surprisingly large move in location of station {site_code_filename}:\n{locs_stds.max()}"
+        )
+
+    fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+
+    colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
+    countries.plot(color="lightgray", ax=axes[0])
+
+    surf_or_ship = site_events_df["surf_or_ship"].unique()
+    assert len(surf_or_ship) == 1
+    surf_or_ship = surf_or_ship[0]
+
+    site_events_df.plot(
         x="longitude",
         y="latitude",
         kind="scatter",
-        ax=ax,
-        color=colour,
-        alpha=alpha,
-        label=kind,
+        ax=axes[0],
+        color=colours[surf_or_ship],
+        alpha=0.4,
+        label="events",
+        # s=50,
     )
 
-ax.legend(loc="center left", bbox_to_anchor=(1.05, 0.5))
-ax.set_title("Sampling sites")
+    locs_means.plot(
+        x="longitude",
+        y="latitude",
+        kind="scatter",
+        ax=axes[0],
+        color=colours[surf_or_ship],
+        alpha=0.4,
+        label="mean locations",
+        marker="x",
+        s=50,
+    )
+
+    axes[0].set_xlim([-180, 180])
+    axes[0].set_ylim([-90, 90])
+    time_cols = ["year", "month"]
+
+    pdf = site_monthly_df.copy()
+    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
+    pdf.plot(
+        x="year-month",
+        y="value",
+        kind="scatter",
+        ax=axes[1],
+        label="monthly data",
+        color="tab:green",
+        alpha=0.8,
+        zorder=3,
+    )
+
+    pdf = site_events_df.copy()
+    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
+    pdf.plot(
+        x="year-month",
+        y="value",
+        kind="scatter",
+        ax=axes[1],
+        label="events data",
+        color="tab:pink",
+        marker="x",
+        alpha=0.4,
+    )
+
+    axes[1].legend()
+
+    plt.suptitle(site_code_filename)
+    plt.tight_layout()
+    plt.show()
+
+    site_monthly_with_loc = site_monthly_df.set_index(time_cols).join(locs_means)
+    assert not site_monthly_with_loc["value"].isna().any()
+
+    # interpolate lat and lon columns (for case where monthly data is
+    # based on interpolation, see 7.7 here
+    # https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/flask/surface/README_co2_surface-flask_ccgg.html
+    # which says
+    # > Monthly means are produced for each site by first averaging all
+    # > valid measurement results in the event file with a unique sample
+    # > date and time.  Values are then extracted at weekly intervals from
+    # > a smooth curve (Thoning et al., 1989) fitted to the averaged data
+    # > and these weekly values are averaged for each month to give the
+    # > monthly means recorded in the files.  Flagged data are excluded from the
+    # > curve fitting process.  Some sites are excluded from the monthly
+    # > mean directory because sparse data or a short record does not allow a
+    # > reasonable curve fit.  Also, if there are 3 or more consecutive months
+    # > without data, monthly means are not calculated for these months.
+    site_monthly_with_loc[spatial_cols] = site_monthly_with_loc[
+        spatial_cols
+    ].interpolate()
+    assert not site_monthly_with_loc.isna().any().any()
+
+    monthly_dfs_with_loc.append(site_monthly_with_loc)
+
+monthly_dfs_with_loc = pd.concat(monthly_dfs_with_loc).sort_index()
+
+# %%
+# Handy check to see if all months have at least some data
+monthly_dfs_with_loc.index.drop_duplicates().difference(
+    pd.MultiIndex.from_product([range(1968, 2022 + 1), range(1, 13)])
+)
+
+# %%
+assert set(monthly_dfs_with_loc["gas"]) == {config_step.expected_gas}
+monthly_dfs_with_loc.to_csv(config_step.processed_monthly_data_with_loc_file)
+monthly_dfs_with_loc

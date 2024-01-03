@@ -22,7 +22,8 @@
 # To-do:
 #
 # - read 0010 and extract any insights from there
-# - work out whether we need in situ measurements (as opposed to flask) too
+# - add in handling of in situ measurements too (in situ and flask measurements treated as different stations in M17)
+# - parameterise notebook so we can do same for CH4, N2O and SF6 observations
 
 # %% [markdown]
 # ## Imports
