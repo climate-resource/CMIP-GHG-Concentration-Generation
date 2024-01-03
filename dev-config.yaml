@@ -3,6 +3,12 @@ version: "0.1.0-alpha"
 ci: false
 retrieve:
 - step_config_id: only
+  noaa_network:
+    raw_dir: data/raw/noaa
+    download_urls:
+    - url: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/co2_surface-flask_ccgg_text.zip
+      known_hash: 92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17
+
   law_dome:
     doi: https://doi.org/10.25919/5bfe29ff807fb
     raw_dir: data/raw/law_dome
@@ -17,6 +23,12 @@ retrieve:
       known_hash: 9d28596968b777f7a5ce0e4e8737ed496aa70d9bff5fd14eb84f4d8ab2bd94ba
     - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
       known_hash: b960224afc091028633e4f330f85a5b943018c11f470a00f1b50ae782f8cb874
+  natural_earth:
+    raw_dir: data/raw/natural_earth
+    download_urls:
+    - url: https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip
+      known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110
+    countries_shape_file_name: ne_110m_admin_0_countries.shx
 process:
 - step_config_id: only
   law_dome:

@@ -21,11 +21,46 @@ class RetrieveConfig:
     Must be unique among all configurations for this step
     """
 
+    noaa_network: NOAANetworkConfig
+    """Configuration for retrieving data from the NOAA network"""
+
     law_dome: LawDomeConfig
     """Configuration for retrieving Law Dome data"""
 
     gggrn: GGGRNConfig
     """Configuration for the global greenhouse gas reference network"""
+
+    natural_earth: NaturalEarthConfig
+    """Configuration for retrieving data from natural earth"""
+
+
+@frozen
+class NOAANetworkConfig:
+    """
+    Configuration class for the NOAA network data
+    """
+
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
+    download_urls: list[URLSource]
+    """URLs from which to download data"""
+
+
+@frozen
+class NaturalEarthConfig:
+    """
+    Configuration class for retrieving natural earth data
+    """
+
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
+    download_urls: list[URLSource]
+    """URLs from which to download data"""
+
+    countries_shape_file_name: str
+    """Name of the file containing shape files for country borders"""
 
 
 @frozen
