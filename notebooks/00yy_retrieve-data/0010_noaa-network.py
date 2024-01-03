@@ -22,6 +22,7 @@
 # To-do:
 #
 # - read 0010 and extract any insights from there
+# - work out whether we need in situ measurements (as opposed to flask) too
 
 # %% [markdown]
 # ## Imports

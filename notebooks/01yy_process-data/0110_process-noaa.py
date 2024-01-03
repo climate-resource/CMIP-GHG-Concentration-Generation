@@ -75,12 +75,15 @@ from pathlib import Path
 import pandas as pd
 
 
-def get_metadata_from_event_file_default(filename: str) -> dict[str, str]:
-    event_file_regex = r"(?P<gas>[a-z0-9]*)_(?P<site_code_filename>[a-z]{3})_(?P<surf_or_ship>[a-z]*)-flask_1_ccgg_event.txt"
+def get_metadata_from_file_default(filename: str) -> dict[str, str]:
+    event_file_regex = r"(?P<gas>[a-z0-9]*)_(?P<site_code_filename>[a-z]{3}[a-z0-9]*)_(?P<surf_or_ship>[a-z]*)-flask_1_ccgg_(?P<reporting_id>[a-z]*).txt"
 
     re_match = re.search(event_file_regex, filename)
 
-    return {k: re_match.group(k) for k in ["gas", "site_code_filename", "surf_or_ship"]}
+    return {
+        k: re_match.group(k)
+        for k in ["gas", "site_code_filename", "surf_or_ship", "reporting_id"]
+    }
 
 
 def filter_df_events_default(inp: pd.DataFrame) -> pd.DataFrame:
@@ -114,16 +117,16 @@ def filter_df_events_default(inp: pd.DataFrame) -> pd.DataFrame:
 def read_event_data(
     open_zip: zipfile.ZipFile,
     zip_info: zipfile.ZipInfo,
-    get_metadata_from_event_file: Callable[[str], str] | None = None,
+    get_metadata_from_file: Callable[[str], str] | None = None,
     filter_df_events: Callable[[pd.DataFrame], pd.DataFrame] | None = None,
 ) -> pd.DataFrame:
-    if get_metadata_from_event_file is None:
-        get_metadata_from_event_file = get_metadata_from_event_file_default
+    if get_metadata_from_file is None:
+        get_metadata_from_file = get_metadata_from_file_default
 
     if filter_df_events is None:
         filter_df_events = filter_df_events_default
 
-    filename_metadata = get_metadata_from_event_file(zip_info.filename)
+    filename_metadata = get_metadata_from_file(zip_info.filename)
 
     file_content = open_zip.read(zip_info).decode("utf-8")
     df_events = pd.read_csv(
@@ -142,15 +145,58 @@ def read_event_data(
     return df_events_filtered
 
 
+def read_month_data(
+    open_zip: zipfile.ZipFile,
+    zip_info: zipfile.ZipInfo,
+    get_metadata_from_file: Callable[[str], str] | None = None,
+) -> pd.DataFrame:
+    if get_metadata_from_file is None:
+        get_metadata_from_file = get_metadata_from_file_default
+
+    filename_metadata = get_metadata_from_file(zip_info.filename)
+
+    file_content = open_zip.read(zip_info).decode("utf-8")
+
+    # Get headers
+    for line in file_content.splitlines():
+        if line.startswith("# data_fields:"):
+            data_fields = line.split("# data_fields: ")[1].split(" ")
+            break
+
+    df_monthly = pd.read_csv(
+        StringIO(file_content),
+        header=None,
+        names=data_fields,
+        comment="#",
+        delim_whitespace=True,
+        converters={"site": str},  # keep '000' as string
+    )
+
+    for k, v in filename_metadata.items():
+        df_monthly[k] = v
+
+    df_monthly = df_monthly.rename({"site": "site_code"}, axis="columns")
+    return df_monthly
+
+
 def event_file_identifier_default(filename: str) -> bool:
     return "event" in filename
 
 
+def month_file_identifier_default(filename: str) -> bool:
+    return "month" in filename
+
+
 def read_noaa_zip(
-    noaa_zip_file: Path, event_file_identifier: Callable[[], bool] | None = None
+    noaa_zip_file: Path,
+    event_file_identifier: Callable[[str], bool] | None = None,
+    month_file_identifier: Callable[[str], bool] | None = None,
 ):
     if event_file_identifier is None:
         event_file_identifier = event_file_identifier_default
+
+    if month_file_identifier is None:
+        month_file_identifier = month_file_identifier_default
 
     with ZipFile(noaa_zip_file) as zip:
         event_files = [
@@ -163,16 +209,114 @@ def read_noaa_zip(
             ]
         )
 
+        month_files = [
+            item for item in zip.filelist if month_file_identifier(item.filename)
+        ]
+        df_months = pd.concat(
+            [
+                read_month_data(zip, month_files_item)
+                for month_files_item in tqdman.tqdm(month_files)
+            ]
+        )
+
     # Make sure we haven't ended up with any obviously bogus data
     assert not (df_events["value"] <= -999.0).any()
     assert not (df_events["longitude"] <= -999.0).any()
-    return df_events
+    assert not (df_months["value"] <= -999.0).any()
+
+    return df_events, df_months
 
 
 # %%
-for zf in tqdman.tqdm(available_zip_files, desc="ZIP files"):
-    df_events = read_noaa_zip(zf)
-    display(df_events)
+df_events.columns.tolist()
+
+# %%
+assert len(available_zip_files) == 1
+df_events, df_months = read_noaa_zip(available_zip_files[0])
+display(df_events)
+display(df_months)
+
+
+# %%
+def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    return {site_code: scdf for site_code, scdf in indf.groupby("site_code_filename")}
+
+
+df_events_sc_g = get_site_code_grouped_dict(df_events)
+df_months_sc_g = get_site_code_grouped_dict(df_months)
+
+# %%
+# Work out best-estimate location of each monthly value
+stationary_site_movement_tolerance = 0.5
+
+
+for site_code_filename, site_monthly_df in tqdman.tqdm(
+    df_months_sc_g.items(), desc="Monthly sites"
+):
+    # site_events_df =
+    if len(site_code_filename) == 3:
+        site_events_df = df_events_sc_g[site_code_filename]
+
+        spatial_cols = ["latitude", "longitude"]
+        locs = site_events_df[spatial_cols].drop_duplicates()
+        assert (
+            False
+        ), "Group by year-month here to handle fact that some sites move a bit"
+        site_events_df.groupby(["year", "month"])[spatial_cols].mean()
+        site_events_df.groupby(["year", "month"])[spatial_cols].std()
+
+        means = {}
+        for col in spatial_cols:
+            mean_col = locs[col].mean()
+            std_col = locs[col].std()
+            if std_col >= stationary_site_movement_tolerance:
+                raise ValueError(
+                    f"Surprisingly large move in {col} of stationary station: {locs}"
+                )
+
+            means[col] = mean_col
+    else:
+        pass
+        # raise NotImplementedError(site_code_filename)
+    # break
+
+# %%
+site_events_df.groupby(["year", "month"])[spatial_cols].std().max()
+
+# %%
+site_code_filename
+
+# %%
+locs
+
+# %%
+site_code_filename
+
+# %%
+
+# %%
+sorted(df_months_sc_g.keys())
+
+# %%
+df_events_sc_g["poc"]
+
+# %%
+df_months_sc_g["poc000"]
+
+# %%
+sorted(df_months_sc_g.keys())
+
+# %%
+set(df_events_sc_g.keys()) - set(df_months_sc_g.keys())
+
+# %%
+set(df_months_sc_g.keys()) - set(df_events_sc_g.keys())
+
+# %%
+df_events
+
+# %%
+df_months
 
 # %%
 countries = gpd.read_file(
