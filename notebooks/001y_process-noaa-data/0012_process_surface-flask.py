@@ -71,6 +71,19 @@ df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
 # %%
 def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """
+    Get dictionary grouped by site site_code
+
+    Parameters
+    ----------
+    indf
+        Input :obj:`pd.DataFrame`
+
+    Returns
+    -------
+        Dictionary where keys are site codes and values are :obj:`pd.DataFrame`
+        for that site code
+    """
     return {site_code: scdf for site_code, scdf in indf.groupby("site_code_filename")}
 
 
@@ -102,7 +115,8 @@ monthly_dfs_with_loc = []
 for site_code_filename, site_monthly_df in tqdman.tqdm(
     df_months_sc_g.items(), desc="Monthly sites"
 ):
-    if len(site_code_filename) == 3:
+    no_lat_site_code_length = 3
+    if len(site_code_filename) == no_lat_site_code_length:
         site_events_df = df_events_sc_g[site_code_filename]
 
     else:
@@ -203,9 +217,11 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         # put lons in range 0-360 rather than -180 to 180 which will cause issues for averaging
         site_events_df.loc[site_events_df["longitude"] < 0, "longitude"] += 360
         # assert we are now away from annoying boundaries
+        danger_lon_max = 250
+        danger_lon_min = 50
         assert not (
-            (site_events_df["longitude"] >= 250).any()
-            and (site_events_df["longitude"] < 50).any()
+            (site_events_df["longitude"] >= danger_lon_max).any()
+            and (site_events_df["longitude"] < danger_lon_min).any()
         )
 
     locs_means = site_events_df.groupby(loc_calc_cols)[spatial_cols].mean()
@@ -217,10 +233,13 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         )
 
     if flip_lons:
-        # undo the operation
-        locs_means["longitude"][locs_means["longitude"] > 180] -= 360
+        # undo the operation (longitudes that are greater than 180 are returned back to being negative)
+        locs_means["longitude"][locs_means["longitude"] > 180] -= 360  # noqa: PLR2004
 
-    if (lat_max - lat_min >= 30).any():
+    lat_big_deviation_threshold = (
+        10  # above this, probably a sign of a processing problem
+    )
+    if (lat_max - lat_min >= lat_big_deviation_threshold).any():
         raise NotImplementedError()
 
     locs_means.plot(

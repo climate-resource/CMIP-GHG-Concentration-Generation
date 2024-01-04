@@ -101,6 +101,7 @@ surf_ship_markers = {
     "surface": "o",
     "shipboard": "x",
 }
+zoom_ts_start_year = 2019
 
 for gas, gdf in tqdman.tqdm(
     full_df.groupby("gas"),
@@ -155,7 +156,7 @@ for gas, gdf in tqdman.tqdm(
             zorder=2 if source == "flask" else 3,
         )
 
-        pdf[pdf["year"] >= 2019].plot(
+        pdf[pdf["year"] >= zoom_ts_start_year].plot(
             x="year-month",
             y="value",
             kind="scatter",

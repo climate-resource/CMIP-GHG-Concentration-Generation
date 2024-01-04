@@ -49,9 +49,6 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
-    )
 
     configured_notebooks = [
         ConfiguredNotebook(

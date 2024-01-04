@@ -63,7 +63,7 @@ for gas, source, download_hash in [
             base_retrieve = c
             break
     else:
-        raise ValueError("Didn't find base retrieve")
+        raise ValueError("Didn't find base retrieve")  # noqa: TRY003
 
     interim_files_updated = {
         k: Path(str(v).replace("co2", gas))
@@ -92,7 +92,9 @@ for gas, source, download_hash in [
                 base_process_noaa_surface = c
                 break
         else:
-            raise ValueError("Didn't find base process_noaa_surface_flask_data")
+            raise ValueError(  # noqa: TRY003
+                "Didn't find base process_noaa_surface_flask_data"
+            )
 
         interim_files_updated = {
             k: Path(str(v).replace("co2", gas))
@@ -115,7 +117,9 @@ for gas, source, download_hash in [
                 base_process_noaa_surface = c
                 break
         else:
-            raise ValueError("Didn't find base process_noaa_in_situ_data")
+            raise ValueError(  # noqa: TRY003
+                "Didn't find base process_noaa_in_situ_data"
+            )
 
         interim_files_updated = {
             k: Path(str(v).replace("co2", gas))

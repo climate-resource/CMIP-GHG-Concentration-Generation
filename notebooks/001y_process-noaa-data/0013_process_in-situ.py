@@ -108,7 +108,7 @@ markers = (m for m in ["o", "x", ".", ",", "v"])
 for station, station_df in tqdman.tqdm(
     monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"
 ):
-    display(station_df)
+    print(station_df)
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
     colour = next(colours)

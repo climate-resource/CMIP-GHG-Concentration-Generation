@@ -65,16 +65,16 @@ if config_step.source == "surface-flask":
     df_events, df_months = read_noaa_flask_zip(zf, gas=config_step.gas)
 
     print("df_events")
-    display(df_events)
+    print(df_events)
 
     print("df_months")
-    display(df_months)
+    print(df_months)
 
 elif config_step.source == "in-situ":
     df_months = read_noaa_in_situ_zip(zf)
 
     print("df_months")
-    display(df_months)
+    print(df_months)
 else:
     raise NotImplementedError(config_step.source)
 
