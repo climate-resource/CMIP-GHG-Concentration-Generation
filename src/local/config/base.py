@@ -10,6 +10,7 @@ from attrs import frozen
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
 from .process import ProcessConfig
+from .process_noaa import ProcessNOAADataConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
 from .write_input4mips import WriteInput4MIPsConfig
@@ -38,6 +39,10 @@ class Config:
     We use this to help us create a short-cut path that can reasonably be run
     as part of our CI workflow.
     """
+
+    process_noaa_data: list[ProcessNOAADataConfig]
+    """Configurations to use for processing NOAA data"""
+    # TODO: add validation that these all have unique step_config_id
 
     retrieve: list[RetrieveConfig]
     """Configurations to use with the retrieve step"""

@@ -21,7 +21,7 @@
 #
 # To-do:
 #
-# - read 0010 and extract any insights from there
+# - read old global-mean processing (also called 0010 but in a different folder) and extract any insights from there
 # - add in handling of in situ measurements too (in situ and flask measurements treated as different stations in M17)
 # - parameterise notebook so we can do same for CH4, N2O and SF6 observations
 
@@ -32,21 +32,21 @@
 import pooch
 
 from local.config import load_config_from_file
-from local.pydoit_nb.checklist import generate_directory_checklist
+from local.pydoit_nb.complete import write_complete_file
 from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "retrieve"
+step: str = "process_noaa_data"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "co2_surface-flask"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -61,14 +61,14 @@ config_step = get_config_for_step_id(
 # ## Action
 
 # %%
-for url_source in config_step.noaa_network.download_urls:
+for url_source in config_step.download_urls:
     pooch.retrieve(
         url=url_source.url,
         known_hash=url_source.known_hash,
         fname=url_source.url.split("/")[-1],
-        path=config_step.noaa_network.raw_dir,
+        path=config_step.raw_dir,
         progressbar=True,
     )
 
 # %%
-generate_directory_checklist(config_step.noaa_network.raw_dir)
+write_complete_file(config_step.download_complete_file)
