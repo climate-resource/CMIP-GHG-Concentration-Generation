@@ -23,7 +23,6 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   download_complete_file: data/raw/noaa/co2_in-situ.complete
   interim_files:
-    events_data: data/interim/noaa/events_co2_in-situ_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
 process_noaa_surface_flask_data:
 - step_config_id: co2

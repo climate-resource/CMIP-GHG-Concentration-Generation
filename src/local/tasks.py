@@ -12,9 +12,11 @@ from .notebook_steps import (
     grid,
     gridded_data_processing,
     process,
-    process_noaa_data,
+    process_noaa_in_situ_data,
+    process_noaa_surface_flask_data,
     quick_crunch,
     retrieve,
+    retrieve_and_extract_noaa_data,
     write_input4mips,
 )
 from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
@@ -52,7 +54,9 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
-        process_noaa_data,
+        retrieve_and_extract_noaa_data,
+        process_noaa_surface_flask_data,
+        process_noaa_in_situ_data,
         retrieve,
         process,
         quick_crunch,

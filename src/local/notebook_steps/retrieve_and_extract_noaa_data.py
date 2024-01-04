@@ -1,5 +1,5 @@
 """
-Process NOAA data notebook steps
+Retrieve and extract NOAA data notebook steps
 """
 from __future__ import annotations
 
@@ -73,27 +73,7 @@ def configure_notebooks(
             ],
             configuration=(),
             dependencies=(config_step.download_complete_file,),
-            targets=(
-                config_step.interim_files["events_data"],
-                config_step.interim_files["monthly_data"],
-            ),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("001y_process-noaa-data") / "0012_process"
-            ],
-            configuration=(),
-            dependencies=(
-                config_step.interim_files["events_data"],
-                config_step.interim_files["monthly_data"],
-                (
-                    config_retrieve.natural_earth.raw_dir
-                    / config_retrieve.natural_earth.countries_shape_file_name
-                ),
-            ),
-            targets=(config_step.processed_monthly_data_with_loc_file,),
+            targets=tuple(config_step.interim_files.values()),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -103,7 +83,7 @@ def configure_notebooks(
 
 
 step = UnconfiguredNotebookBasedStep(
-    step_name="process_noaa_data",
+    step_name="retrieve_and_extract_noaa_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
             notebook_path=Path("001y_process-noaa-data") / "0010_download",
@@ -116,15 +96,6 @@ step = UnconfiguredNotebookBasedStep(
             raw_notebook_ext=".py",
             summary="process NOAA data - extract",
             doc="Extract NOAA data from zip files into interim formats",
-        ),
-        UnconfiguredNotebook(
-            notebook_path=Path("001y_process-noaa-data") / "0012_process",
-            raw_notebook_ext=".py",
-            summary="process NOAA data - process",
-            doc=(
-                "Process NOAA data to create a file with monthly average "
-                "from each station and latitude and longitude information"
-            ),
         ),
     ],
     configure_notebooks=configure_notebooks,
