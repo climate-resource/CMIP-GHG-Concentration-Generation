@@ -26,7 +26,10 @@ PROCESSED_DATA_COLUMNS: list[str] = [
 ]
 """Columns in the processed data output"""
 
-UNIT_MAP: dict[str, str] = {"micromol mol-1": "ppm"}
+UNIT_MAP: dict[str, str] = {
+    "micromol mol-1": "ppm",
+    "nanomol mol-1": "ppb",
+}
 """Mapping from NOAA units to convention we use"""
 
 
