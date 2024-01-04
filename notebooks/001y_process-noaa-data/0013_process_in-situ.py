@@ -116,10 +116,6 @@ for station, station_df in tqdman.tqdm(
 
     countries.plot(color="lightgray", ax=axes[0])
 
-    surf_or_ship = station_df["surf_or_ship"].unique()
-    assert len(surf_or_ship) == 1
-    surf_or_ship = surf_or_ship[0]
-
     station_df[["longitude", "latitude"]].drop_duplicates().plot(
         x="longitude",
         y="latitude",
@@ -159,18 +155,13 @@ fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
 colours = (c for c in ["tab:blue", "tab:green", "tab:red", "tab:pink", "tab:brown"])
 markers = (m for m in ["o", "x", ".", ",", "v"])
 
+countries.plot(color="lightgray", ax=axes[0])
+
 for station, station_df in tqdman.tqdm(
     monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"
 ):
-    # display(station_df)
     colour = next(colours)
     marker = next(markers)
-
-    countries.plot(color="lightgray", ax=axes[0])
-
-    surf_or_ship = station_df["surf_or_ship"].unique()
-    assert len(surf_or_ship) == 1
-    surf_or_ship = surf_or_ship[0]
 
     station_df[["longitude", "latitude"]].drop_duplicates().plot(
         x="longitude",
@@ -211,5 +202,7 @@ plt.show()
 
 # %%
 assert set(monthly_dfs_with_loc["gas"]) == {config_step.gas}
-monthly_dfs_with_loc.to_csv(config_step.processed_monthly_data_with_loc_file)
+monthly_dfs_with_loc.to_csv(
+    config_step.processed_monthly_data_with_loc_file, index=False
+)
 monthly_dfs_with_loc

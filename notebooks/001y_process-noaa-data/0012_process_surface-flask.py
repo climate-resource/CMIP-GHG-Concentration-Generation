@@ -138,17 +138,6 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
             & (site_events_df["latitude"] <= lat_band[1])
         ].copy()
 
-    spatial_cols = ["latitude", "longitude"]
-    locs = site_events_df[spatial_cols].drop_duplicates()
-
-    locs_means = site_events_df.groupby(["year", "month"])[spatial_cols].mean()
-    locs_stds = site_events_df.groupby(["year", "month"])[spatial_cols].std()
-
-    if locs_stds.max().max() > stationary_site_movement_tolerance:
-        print(
-            f"Surprisingly large move in location of station {site_code_filename}:\n{locs_stds.max()}"
-        )
-
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
 
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
@@ -168,22 +157,6 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         label="events",
         # s=50,
     )
-
-    locs_means.plot(
-        x="longitude",
-        y="latitude",
-        kind="scatter",
-        ax=axes[0],
-        color=colours[surf_or_ship],
-        alpha=0.4,
-        label="mean locations",
-        marker="x",
-        s=50,
-    )
-
-    axes[0].set_xlim([-180, 180])
-    axes[0].set_ylim([-90, 90])
-    time_cols = ["year", "month"]
 
     pdf = site_monthly_df.copy()
     pdf["year-month"] = pdf["year"] + pdf["month"] / 12
@@ -211,13 +184,74 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         alpha=0.4,
     )
 
+    time_cols = ["year", "month"]
+    spatial_cols = ["latitude", "longitude"]
+    loc_calc_cols = [*time_cols, "surf_or_ship"]
+
+    lon_max = site_events_df.groupby(loc_calc_cols)["longitude"].max()
+    lon_min = site_events_df.groupby(loc_calc_cols)["longitude"].min()
+
+    # Have longitudes going across the 180 line, need to flip before averaging
+    flip_lons = (site_events_df["longitude"] >= 0).any() and (
+        site_events_df["longitude"] < 0
+    ).any()
+
+    lat_max = site_events_df.groupby(loc_calc_cols)["latitude"].max()
+    lat_min = site_events_df.groupby(loc_calc_cols)["latitude"].min()
+
+    if flip_lons:
+        # put lons in range 0-360 rather than -180 to 180 which will cause issues for averaging
+        site_events_df.loc[site_events_df["longitude"] < 0, "longitude"] += 360
+        # assert we are now away from annoying boundaries
+        assert not (
+            (site_events_df["longitude"] >= 250).any()
+            and (site_events_df["longitude"] < 50).any()
+        )
+
+    locs_means = site_events_df.groupby(loc_calc_cols)[spatial_cols].mean()
+    locs_stds = site_events_df.groupby(loc_calc_cols)[spatial_cols].std()
+
+    if locs_stds.max().max() > stationary_site_movement_tolerance:
+        print(
+            f"Large move in location of station {site_code_filename}:\n{locs_stds.max()}"
+        )
+
+    if flip_lons:
+        # undo the operation
+        locs_means["longitude"][locs_means["longitude"] > 180] -= 360
+
+    if (lat_max - lat_min >= 30).any():
+        raise NotImplementedError()
+
+    locs_means.plot(
+        x="longitude",
+        y="latitude",
+        kind="scatter",
+        ax=axes[0],
+        color="tab:pink",
+        alpha=0.4,
+        label="mean locations",
+        marker="x",
+        s=50,
+    )
+
+    axes[0].set_xlim([-180, 180])
+    axes[0].set_ylim([-90, 90])
+
     axes[1].legend()
 
-    plt.suptitle(site_code_filename)
-    plt.tight_layout()
+    fig.suptitle(site_code_filename)
+    fig.tight_layout()
     plt.show()
 
-    site_monthly_with_loc = site_monthly_df.set_index(time_cols).join(locs_means)
+    site_monthly_with_loc = (
+        site_monthly_df
+        # All monthly data labelled as surface, which isn't true hence
+        # extract from events df instead
+        .drop("surf_or_ship", axis="columns")
+        .set_index(time_cols)
+        .join(locs_means)
+    )
     assert not site_monthly_with_loc["value"].isna().any()
 
     # interpolate lat and lon columns (for case where monthly data is
@@ -244,9 +278,6 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
 monthly_dfs_with_loc = (
     pd.concat(monthly_dfs_with_loc).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
 )
-
-# %%
-site_monthly_df
 
 # %%
 # Handy check to see if all months have at least some data
@@ -330,5 +361,7 @@ for station in tqdman.tqdm(only_events_stations, desc="Stations with only events
 
 # %%
 assert set(monthly_dfs_with_loc["gas"]) == {config_step.gas}
-monthly_dfs_with_loc.to_csv(config_step.processed_monthly_data_with_loc_file)
+monthly_dfs_with_loc.to_csv(
+    config_step.processed_monthly_data_with_loc_file, index=False
+)
 monthly_dfs_with_loc
