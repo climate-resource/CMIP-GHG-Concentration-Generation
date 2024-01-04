@@ -19,6 +19,7 @@
 #
 # To-do:
 #
+# - move to-do's below and any learning from this notebook into 0011 and its derivatives and delete this notebook
 # - just use global-mean timeseries to start with
 #     - CO2
 #         - data: https://gml.noaa.gov/ccgg/trends/gl_data.html, specifically https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
@@ -29,7 +30,7 @@
 #     - N2O
 #         - data: https://gml.noaa.gov/ccgg/trends_n2o/, specifically https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
 #         - methods: https://gml.noaa.gov/ccgg/about/global_means.html
-# - think about whether we be using NOAA's data directly, their method directly or whether their data isn't actually what we need so just use it, but still have to do our own processing to combine etc.
+# - think about whether we should be using NOAA's data directly, their method directly or whether their data isn't actually what we need so just use it, but still have to do our own processing to combine etc.
 # - work out how this data differs, or doesn't, from AGAGE
 #     -   For example, why are there 3 timeseries in Figure 4 [here](https://www.nature.com/articles/s41586-020-2780-0#Sec2), yet CSIRO's observations are part of boath GGGRN (https://gml.noaa.gov/dv/site/?program=ccgg) and AGAGE (https://agage.mit.edu/global-network). Is there overlap yet they are somehow different products or are these products truly independent?
 # - use full station data from GGGRN (and whatever other independent estimates we have) properly a la Meinshausen et al. 2017

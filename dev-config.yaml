@@ -1,8 +1,48 @@
 name: dev
 version: "0.1.0-alpha"
 ci: false
+
+# CH4, N2O and SF6 config added in `scripts/create-dev-ci-config-absolute.py`
+retrieve_and_extract_noaa_data:
+- step_config_id: co2_surface-flask
+  gas: co2
+  source: surface-flask
+  download_urls:
+  - url: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/co2_surface-flask_ccgg_text.zip
+    known_hash: 92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17
+  raw_dir: data/raw/noaa
+  download_complete_file: data/raw/noaa/co2_surface-flask.complete
+  interim_files:
+    events_data: data/interim/noaa/events_co2_surface-flask_raw-consolidated.csv
+    monthly_data: data/interim/noaa/monthly_co2_surface-flask_raw-consolidated.csv
+- step_config_id: co2_in-situ
+  gas: co2
+  source: in-situ
+  download_urls:
+  - url: https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/in-situ/surface/co2_surface-insitu_ccgg_text.zip
+    known_hash: ae1429d14147df295d1fdc83cf7c3fd0678c477bb254ec39aab69b654669bf61
+  raw_dir: data/raw/noaa
+  download_complete_file: data/raw/noaa/co2_in-situ.complete
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+process_noaa_surface_flask_data:
+- step_config_id: co2
+  gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+process_noaa_in_situ_data:
+- step_config_id: co2
+  gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
 retrieve:
 - step_config_id: only
+  natural_earth:
+    raw_dir: data/raw/natural_earth
+    download_urls:
+    - url: https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip
+      known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110
+    countries_shape_file_name: ne_110m_admin_0_countries.shx
+
+  # TODO: These should all be deleted/moved once we have the M17 algorithm working better
   law_dome:
     doi: https://doi.org/10.25919/5bfe29ff807fb
     raw_dir: data/raw/law_dome
@@ -39,40 +79,3 @@ quick_crunch:
 analysis:
 - step_config_id: only
   mean_dir: data/processed/710_means
-constraint:
-- step_config_id: only
-  constraint_gradient: 1.2
-  draw_file: data/interim/210_constraint_draws.csv
-covariance:
-- step_config_id: cov
-  covariance:
-  - - 0.25
-    - 0.3
-  - - 0.3
-    - 0.55
-  draw_file: data/interim/110_cov_draws.csv
-- step_config_id: cov-weak
-  covariance:
-  - - 0.25
-    - 0.1
-  - - 0.1
-    - 0.55
-  draw_file: data/interim/110_cov-weak_draws.csv
-- step_config_id: no-cov
-  covariance:
-  - - 0.25
-    - 0.0
-  - - 0.0
-    - 0.55
-  draw_file: data/interim/110_no-cov_draws.csv
-covariance_plotting:
-- step_config_id: only
-figures:
-- step_config_id: only
-  draw_comparison_figure: figures/920_draw-comparison.pdf
-  draw_comparison_table: data/processed/910_draw-table.csv
-  misc_figures_dir: figures/misc
-preparation:
-- step_config_id: only
-  seed: 2847539
-  seed_file: data/interim/000_seed.txt

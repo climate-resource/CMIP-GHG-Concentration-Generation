@@ -66,6 +66,9 @@ checks:  ## run all the linting checks of the codebase
 		echo "=== mypy ==="; MYPYPATH=stubs poetry run mypy src notebooks || echo "--- mypy failed ---" >&2; \
 		echo "======"
 
+.PHONY: changelog-draft
+changelog-draft:  ## compile a draft of the next changelog
+	poetry run towncrier build --draft
 
 virtual-environment: pyproject.toml  ## update virtual environment, create a new one if it doesn't already exist
 	# Put virtual environments in the project
