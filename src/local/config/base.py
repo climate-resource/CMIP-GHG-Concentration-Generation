@@ -10,9 +10,11 @@ from attrs import frozen
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
 from .process import ProcessConfig
-from .process_noaa import ProcessNOAADataConfig
+from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
+from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
+from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
 
@@ -40,8 +42,16 @@ class Config:
     as part of our CI workflow.
     """
 
-    process_noaa_data: list[ProcessNOAADataConfig]
-    """Configurations to use for processing NOAA data"""
+    retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig]
+    """Configurations to use for retrieving and extracting NOAA data"""
+    # TODO: add validation that these all have unique step_config_id
+
+    process_noaa_surface_flask_data: list[ProcessNOAASurfaceFlaskDataConfig]
+    """Configurations to use for processing NOAA surface flask data"""
+    # TODO: add validation that these all have unique step_config_id
+
+    process_noaa_in_situ_data: list[ProcessNOAAInSituDataConfig]
+    """Configurations to use for processing NOAA in-situ data"""
     # TODO: add validation that these all have unique step_config_id
 
     retrieve: list[RetrieveConfig]

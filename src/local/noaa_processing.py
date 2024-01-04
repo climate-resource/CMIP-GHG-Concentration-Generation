@@ -10,6 +10,25 @@ from pathlib import Path
 import pandas as pd
 import tqdm.autonotebook as tqdman
 
+PROCESSED_DATA_COLUMNS: list[str] = [
+    "gas",
+    "reporting_id",
+    "year",
+    "month",
+    "latitude",
+    "longitude",
+    "value",
+    "unit",
+    "site_code_filename",
+    "site_code",
+    "surf_or_ship",
+    "source",
+]
+"""Columns in the processed data output"""
+
+UNIT_MAP: dict[str, str] = {"micromol mol-1": "ppm"}
+"""Mapping from NOAA units to convention we use"""
+
 
 def get_metadata_from_file_default(filename: str) -> dict[str, str]:
     event_file_regex = (
@@ -88,6 +107,19 @@ def read_data_incl_datetime(
     filename_metadata = get_metadata_from_file(zip_info.filename)
 
     file_content = open_zip.read(zip_info).decode("utf-8")
+
+    for line in file_content.splitlines():
+        if line.startswith("# value:units : "):
+            units = line.split("# value:units : ")[1]
+            break
+    else:
+        raise ValueError(f"Units not found. File contents:\n{file_content}")
+
+    try:
+        units = UNIT_MAP[units]
+    except KeyError:
+        print(f"Could not map {units}")
+
     df_events = pd.read_csv(
         StringIO(file_content),
         comment="#",
@@ -95,6 +127,7 @@ def read_data_incl_datetime(
         parse_dates=datetime_columns,
         delim_whitespace=True,
     )
+    df_events["unit"] = units
 
     for k, v in filename_metadata.items():
         df_events[k] = v
@@ -116,7 +149,6 @@ def read_flask_monthly_data(
 
     file_content = open_zip.read(zip_info).decode("utf-8")
 
-    # Get headers
     for line in file_content.splitlines():
         if line.startswith("# data_fields:"):
             data_fields = line.split("# data_fields: ")[1].split(" ")
@@ -148,9 +180,18 @@ def month_file_identifier_default(filename: str) -> bool:
 
 def read_noaa_flask_zip(
     noaa_zip_file: Path,
+    gas: str,
     event_file_identifier: Callable[[str], bool] | None = None,
     month_file_identifier: Callable[[str], bool] | None = None,
 ):
+    ASSUMED_MONTHLY_UNITS = {
+        "co2": "ppm",
+        "ch4": "ppb",
+        "n2o": "ppb",
+        "sf6": "ppt",
+    }
+    """Units aren't provided in monthly files so we have to asssume them instead"""
+
     if event_file_identifier is None:
         event_file_identifier = event_file_identifier_default
 
@@ -177,6 +218,7 @@ def read_noaa_flask_zip(
                 for month_files_item in tqdman.tqdm(month_files)
             ]
         )
+        df_months["unit"] = ASSUMED_MONTHLY_UNITS[gas]
 
     # Make sure we haven't ended up with any obviously bogus data
     bogus_flag = -999.0

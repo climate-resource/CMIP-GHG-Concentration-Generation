@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # NOAA
+# # NOAA - download
 #
 # Download data from the [NOAA Global Monitoring Laboratory (GML) Carbon Cycle Greenhouse Gases (CCGG) research area](https://gml.noaa.gov/ccgg/flask.html), specifically the [data page](https://gml.noaa.gov/ccgg/data/).
 #
@@ -39,7 +39,7 @@ from local.pydoit_nb.config_handling import get_config_for_step_id
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "process_noaa_data"
+step: str = "retrieve_and_extract_noaa_data"
 
 # %% [markdown]
 # ## Parameters

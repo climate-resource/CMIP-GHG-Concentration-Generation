@@ -13,9 +13,9 @@
 # ---
 
 # %% [markdown]
-# # NOAA
+# # NOAA - process surface flask
 #
-# Process data from NOAA to add lat-lon information to the monthly data.
+# Process data from NOAA's surface flask network to add lat-lon information to the monthly data.
 
 # %% [markdown]
 # ## Imports
@@ -27,20 +27,21 @@ import pandas as pd
 import tqdm.autonotebook as tqdman
 
 from local.config import load_config_from_file
+from local.noaa_processing import PROCESSED_DATA_COLUMNS
 from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "process_noaa_data"
+step: str = "process_noaa_surface_flask_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2_surface-flask"  # config ID to select for this branch
+step_config_id: str = "co2"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -50,16 +51,22 @@ config = load_config_from_file(config_file)
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
+
 config_retrieve = get_config_for_step_id(
     config=config, step="retrieve", step_config_id="only"
+)
+config_retrieve_noaa = get_config_for_step_id(
+    config=config,
+    step="retrieve_and_extract_noaa_data",
+    step_config_id=f"{config_step.gas}_surface-flask",
 )
 
 # %% [markdown]
 # ## Action
 
 # %%
-df_events = pd.read_csv(config_step.interim_files["events_data"])
-df_months = pd.read_csv(config_step.interim_files["monthly_data"])
+df_events = pd.read_csv(config_retrieve_noaa.interim_files["events_data"])
+df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
 
 # %%
@@ -234,12 +241,17 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
 
     monthly_dfs_with_loc.append(site_monthly_with_loc)
 
-monthly_dfs_with_loc = pd.concat(monthly_dfs_with_loc).sort_index()
+monthly_dfs_with_loc = (
+    pd.concat(monthly_dfs_with_loc).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
+)
+
+# %%
+site_monthly_df
 
 # %%
 # Handy check to see if all months have at least some data
-monthly_dfs_with_loc.index.drop_duplicates().difference(
-    pd.MultiIndex.from_product([range(1968, 2022 + 1), range(1, 13)])
+pd.MultiIndex.from_product([range(1967, 2022 + 1), range(1, 13)]).difference(
+    monthly_dfs_with_loc.set_index(["year", "month"]).index.drop_duplicates()
 )
 
 # %% [markdown]

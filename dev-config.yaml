@@ -2,7 +2,7 @@ name: dev
 version: "0.1.0-alpha"
 ci: false
 
-process_noaa_data:
+retrieve_and_extract_noaa_data:
 - step_config_id: co2_surface-flask
   gas: co2
   source: surface-flask
@@ -11,7 +11,6 @@ process_noaa_data:
     known_hash: 92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17
   raw_dir: data/raw/noaa
   download_complete_file: data/raw/noaa/co2_surface-flask.complete
-  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
   interim_files:
     events_data: data/interim/noaa/events_co2_surface-flask_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_co2_surface-flask_raw-consolidated.csv
@@ -23,10 +22,17 @@ process_noaa_data:
     known_hash: ae1429d14147df295d1fdc83cf7c3fd0678c477bb254ec39aab69b654669bf61
   raw_dir: data/raw/noaa
   download_complete_file: data/raw/noaa/co2_in-situ.complete
-  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
   interim_files:
     events_data: data/interim/noaa/events_co2_in-situ_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+process_noaa_surface_flask_data:
+- step_config_id: co2
+  gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+process_noaa_in_situ_data:
+- step_config_id: co2
+  gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
 retrieve:
 - step_config_id: only
   natural_earth:

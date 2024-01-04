@@ -1,5 +1,5 @@
 """
-Config for downloading and processing NOAA data
+Config for retrieving and extracting NOAA data
 """
 from __future__ import annotations
 
@@ -11,9 +11,9 @@ from local.pydoit_nb.config_tools import URLSource
 
 
 @frozen
-class ProcessNOAADataConfig:
+class RetrieveExtractNOAADataConfig:
     """
-    Configuration class for downloading and processing NOAA data
+    Configuration class for retrieving and extracting NOAA data
     """
 
     step_config_id: str
@@ -42,9 +42,6 @@ class ProcessNOAADataConfig:
     This is mainly used to help with setting the dependencies between notebooks
     correctly.
     """
-
-    processed_monthly_data_with_loc_file: Path
-    """Path in which to save the processed mothly data including location information"""
 
     interim_files: dict[str, Path]
     """
