@@ -12,6 +12,7 @@ from .notebook_steps import (
     grid,
     gridded_data_processing,
     process,
+    process_noaa_data,
     quick_crunch,
     retrieve,
     write_input4mips,
@@ -51,6 +52,7 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
+        process_noaa_data,
         retrieve,
         process,
         quick_crunch,

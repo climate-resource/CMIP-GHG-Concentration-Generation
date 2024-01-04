@@ -21,9 +21,6 @@ class RetrieveConfig:
     Must be unique among all configurations for this step
     """
 
-    noaa_network: NOAANetworkConfig
-    """Configuration for retrieving data from the NOAA network"""
-
     law_dome: LawDomeConfig
     """Configuration for retrieving Law Dome data"""
 

@@ -1,5 +1,5 @@
 """
-Retrieve notebook steps
+Process NOAA data notebook steps
 """
 from __future__ import annotations
 
@@ -7,7 +7,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from ..pydoit_nb.checklist import get_checklist_file
 from ..pydoit_nb.config_handling import get_config_for_step_id
 from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -50,40 +49,51 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
+    config_retrieve = get_config_for_step_id(
+        config=config, step="retrieve", step_config_id="only"
+    )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("00yy_retrieve-data") / "0001_law-dome"
+                Path("001y_process-noaa-data") / "0010_download"
             ],
-            configuration=(config_step.law_dome,),
+            configuration=(
+                config_step.download_urls,
+                config_step.raw_dir,
+            ),
             dependencies=(),
-            targets=(get_checklist_file(config_step.law_dome.raw_dir),),
+            targets=(config_step.download_complete_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("00yy_retrieve-data") / "0011_gggrn"
+                Path("001y_process-noaa-data") / "0011_extract"
             ],
-            configuration=(config_step.gggrn.urls_global_mean,),
-            dependencies=(),
-            targets=(get_checklist_file(config_step.gggrn.raw_dir),),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("000y_retrieve-misc-data") / "0001_natural-earth-shape-files"
-            ],
-            configuration=(config_step.natural_earth.download_urls,),
-            dependencies=(),
+            configuration=(),
+            dependencies=(config_step.download_complete_file,),
             targets=(
+                config_step.interim_files["events_data"],
+                config_step.interim_files["monthly_data"],
+            ),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("001y_process-noaa-data") / "0012_process"
+            ],
+            configuration=(),
+            dependencies=(
+                config_step.interim_files["events_data"],
+                config_step.interim_files["monthly_data"],
                 (
-                    config_step.natural_earth.raw_dir
-                    / config_step.natural_earth.countries_shape_file_name
+                    config_retrieve.natural_earth.raw_dir
+                    / config_retrieve.natural_earth.countries_shape_file_name
                 ),
             ),
+            targets=(config_step.processed_monthly_data_with_loc_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -93,29 +103,28 @@ def configure_notebooks(
 
 
 step = UnconfiguredNotebookBasedStep(
-    step_name="retrieve",
+    step_name="process_noaa_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("00yy_retrieve-data") / "0001_law-dome",
+            notebook_path=Path("001y_process-noaa-data") / "0010_download",
             raw_notebook_ext=".py",
-            summary="retrieve - Law Dome",
-            doc="Retrieve data for Law Dome observations",
+            summary="process NOAA data - download",
+            doc="Download NOAA data",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("00yy_retrieve-data") / "0011_gggrn",
+            notebook_path=Path("001y_process-noaa-data") / "0011_extract",
             raw_notebook_ext=".py",
-            summary="retrieve - Global Greenhouse Gas Research Network (GGGRN)",
+            summary="process NOAA data - extract",
+            doc="Extract NOAA data from zip files into interim formats",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("001y_process-noaa-data") / "0012_process",
+            raw_notebook_ext=".py",
+            summary="process NOAA data - process",
             doc=(
-                "Retrieve data from the Global Greenhouse Gas Research Network (GGGRN). "
-                "At present, this notebook only retrieves global-mean data."
+                "Process NOAA data to create a file with monthly average "
+                "from each station and latitude and longitude information"
             ),
-        ),
-        UnconfiguredNotebook(
-            notebook_path=Path("000y_retrieve-misc-data")
-            / "0001_natural-earth-shape-files",
-            raw_notebook_ext=".py",
-            summary="retrieve - Natural Earth shape files",
-            doc="Retrieve shape files from Natural Earth",
         ),
     ],
     configure_notebooks=configure_notebooks,
