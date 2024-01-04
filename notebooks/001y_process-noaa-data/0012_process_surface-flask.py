@@ -291,7 +291,9 @@ pd.MultiIndex.from_product([range(1967, 2022 + 1), range(1, 13)]).difference(
 # %%
 only_events_stations = set(df_events_sc_g.keys()) - set(df_months_sc_g.keys())
 
-for station in tqdman.tqdm(only_events_stations, desc="Stations with only events data"):
+for station in tqdman.tqdm(
+    sorted(only_events_stations), desc="Stations with only events data"
+):
     header = f"Examining {station}"
     print("=" * len(header))
     print(header)
@@ -351,10 +353,13 @@ for station in tqdman.tqdm(only_events_stations, desc="Stations with only events
     print("=" * len(header))
     print()
 
+# %%
+only_events_stations
+
 # %% [markdown]
-# Conclusion: I can't really work out why these sites don't have monthly data.
+# Conclusion: I can't really work out why these sites don't have monthly data (they pass quality control and seem to have enough data to do a fit...).
 #
-# To-do: include this question when I reach out to NOAA people.
+# TODO: include this question when I reach out to NOAA people.
 
 # %% [markdown]
 # ### Save out result

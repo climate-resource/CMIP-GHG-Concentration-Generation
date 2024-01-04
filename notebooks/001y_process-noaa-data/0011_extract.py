@@ -58,23 +58,6 @@ zip_files = [
 zip_files
 
 # %%
-import zipfile
-
-with zipfile.ZipFile(zip_files[0]) as zip:
-    print(zip.filelist)
-    # event_files = [item for item in zip.filelist if event_file_identifier(item.filename)]
-    # df_events = pd.concat(
-    #     [read_data_incl_datetime(zip, event_file_item) for event_file_item in tqdman.tqdm(event_files)]
-    # )
-
-    # month_files = [item for item in zip.filelist if month_file_identifier(item.filename)]
-    # df_months = pd.concat(
-    #     [read_flask_monthly_data(zip, month_files_item) for month_files_item in tqdman.tqdm(month_files)]
-    # )
-    # df_months["unit"] = ASSUMED_MONTHLY_UNITS[gas]
-
-
-# %%
 assert len(zip_files) == 1, "Re-think how you're doing this"
 zf = zip_files[0]
 

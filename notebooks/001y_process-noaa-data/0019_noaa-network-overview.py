@@ -54,9 +54,21 @@ config = load_config_from_file(config_file)
 config_process_noaa_surface_flask_data_co2 = get_config_for_step_id(
     config=config, step="process_noaa_surface_flask_data", step_config_id="co2"
 )
-config_process_noaa_in_situ_data_co2 = get_config_for_step_id(
-    config=config, step="process_noaa_in_situ_data", step_config_id="co2"
-)
+
+gas_configs = {
+    f"{gas}_{source}": get_config_for_step_id(
+        config=config, step=step, step_config_id=gas
+    )
+    for gas, source, step in (
+        ("co2", "in-situ", "process_noaa_in_situ_data"),
+        ("ch4", "in-situ", "process_noaa_in_situ_data"),
+        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
+        ("ch4", "surface-flask", "process_noaa_surface_flask_data"),
+        ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
+        ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
+    )
+}
+
 config_retrieve = get_config_for_step_id(
     config=config, step="retrieve", step_config_id="only"
 )
@@ -65,12 +77,13 @@ config_retrieve = get_config_for_step_id(
 # ## Action
 
 # %%
-df_flask = pd.read_csv(
-    config_process_noaa_surface_flask_data_co2.processed_monthly_data_with_loc_file
+full_df = pd.concat(
+    [
+        pd.read_csv(c.processed_monthly_data_with_loc_file)
+        for c in tqdman.tqdm(gas_configs.values())
+    ]
 )
-df_in_situ = pd.read_csv(
-    config_process_noaa_in_situ_data_co2.processed_monthly_data_with_loc_file
-)
+full_df
 
 # %%
 countries = gpd.read_file(
@@ -78,10 +91,6 @@ countries = gpd.read_file(
     / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
-
-# %%
-full_df = pd.concat([df_flask, df_in_situ])
-full_df
 
 # %%
 source_colours = {
@@ -93,54 +102,86 @@ surf_ship_markers = {
     "shipboard": "x",
 }
 
-fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-
-countries.plot(color="lightgray", ax=axes[0])
-
-labels = []
-for (station, source, surf_or_ship), station_df in tqdman.tqdm(
-    full_df.groupby(["site_code_filename", "source", "surf_or_ship"]),
-    desc="Stations",
+for gas, gdf in tqdman.tqdm(
+    full_df.groupby("gas"),
+    desc="Gases",
 ):
-    label = f"{source} {surf_or_ship}"
-
-    station_df[["longitude", "latitude"]].round(0).drop_duplicates().plot(
-        x="longitude",
-        y="latitude",
-        kind="scatter",
-        ax=axes[0],
-        alpha=0.3 if source == "flask" else 1.0,
-        zorder=2 if source == "flask" else 3,
-        label=label if label not in labels else None,
-        color=source_colours[source],
-        # s=100,
-        marker=surf_ship_markers[surf_or_ship],
+    labels = []
+    fig, axes = plt.subplot_mosaic(
+        [
+            ["map", "map"],
+            ["full_ts", "zoom_ts"],
+        ],
+        figsize=(8, 5),
+        layout="constrained",
     )
+    countries.plot(color="lightgray", ax=axes["map"])
 
-    pdf = station_df.copy()
-    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
-    pdf.plot(
-        x="year-month",
-        y="value",
-        kind="scatter",
-        ax=axes[1],
-        label=label if label not in labels else None,
-        color=source_colours[source],
-        marker=surf_ship_markers[surf_or_ship],
-        alpha=0.3 if source == "flask" else 1.0,
-        zorder=2 if source == "flask" else 3,
-    )
-    labels.append(label)
-    # break
+    unit = gdf["unit"].unique()
+    assert len(unit) == 1
+    unit = unit[0]
 
-axes[0].set_xlim([-180, 180])
-axes[0].set_ylim([-90, 90])
+    for (station, source, surf_or_ship), station_df in tqdman.tqdm(
+        gdf.groupby(["site_code_filename", "source", "surf_or_ship"]),
+        desc=f"{gas} stations",
+        leave=False,
+    ):
+        label = f"{source} {surf_or_ship}"
 
-axes[0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-axes[1].legend()
+        station_df[["longitude", "latitude"]].round(0).drop_duplicates().plot(
+            x="longitude",
+            y="latitude",
+            kind="scatter",
+            ax=axes["map"],
+            alpha=0.3 if source == "flask" else 1.0,
+            zorder=2 if source == "flask" else 3,
+            label=label if label not in labels else None,
+            color=source_colours[source],
+            # s=100,
+            marker=surf_ship_markers[surf_or_ship],
+        )
 
-plt.tight_layout()
-plt.show()
+        pdf = station_df.copy()
+        pdf["year-month"] = pdf["year"] + pdf["month"] / 12
+        pdf.plot(
+            x="year-month",
+            y="value",
+            kind="scatter",
+            ax=axes["full_ts"],
+            label=label if label not in labels else None,
+            color=source_colours[source],
+            marker=surf_ship_markers[surf_or_ship],
+            alpha=0.3 if source == "flask" else 1.0,
+            zorder=2 if source == "flask" else 3,
+        )
+
+        pdf[pdf["year"] >= 2019].plot(
+            x="year-month",
+            y="value",
+            kind="scatter",
+            ax=axes["zoom_ts"],
+            label=label if label not in labels else None,
+            color=source_colours[source],
+            marker=surf_ship_markers[surf_or_ship],
+            alpha=0.3 if source == "flask" else 1.0,
+            zorder=2 if source == "flask" else 3,
+        )
+
+        labels.append(label)
+        # break
+
+    axes["map"].set_xlim([-180, 180])
+    axes["map"].set_ylim([-90, 90])
+    axes["map"].legend(loc="center left", bbox_to_anchor=(1.05, 0.5))
+
+    axes["full_ts"].set_ylabel(unit)
+    axes["zoom_ts"].set_ylabel(unit)
+    axes["full_ts"].legend().remove()
+    axes["zoom_ts"].legend().remove()
+
+    plt.suptitle(gas)
+    # plt.tight_layout()
+    plt.show()
 
 # %% [markdown]
 # Could probably do something cool here with interactivity if we had more time.
