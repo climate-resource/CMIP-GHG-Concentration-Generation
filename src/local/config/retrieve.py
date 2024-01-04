@@ -32,19 +32,6 @@ class RetrieveConfig:
 
 
 @frozen
-class NOAANetworkConfig:
-    """
-    Configuration class for the NOAA network data
-    """
-
-    raw_dir: Path
-    """Directory in which to save the raw data"""
-
-    download_urls: list[URLSource]
-    """URLs from which to download data"""
-
-
-@frozen
 class NaturalEarthConfig:
     """
     Configuration class for retrieving natural earth data
