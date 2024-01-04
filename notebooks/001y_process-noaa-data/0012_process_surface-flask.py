@@ -84,7 +84,9 @@ def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
         Dictionary where keys are site codes and values are :obj:`pd.DataFrame`
         for that site code
     """
-    return {site_code: scdf for site_code, scdf in indf.groupby("site_code_filename")}
+    return {
+        str(site_code): scdf for site_code, scdf in indf.groupby("site_code_filename")
+    }
 
 
 df_events_sc_g = get_site_code_grouped_dict(df_events)
@@ -111,7 +113,7 @@ for large deviations.
 """
 
 
-monthly_dfs_with_loc = []
+monthly_dfs_with_loc_l = []
 for site_code_filename, site_monthly_df in tqdman.tqdm(
     df_months_sc_g.items(), desc="Monthly sites"
 ):
@@ -157,9 +159,9 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])
 
-    surf_or_ship = site_events_df["surf_or_ship"].unique()
-    assert len(surf_or_ship) == 1
-    surf_or_ship = surf_or_ship[0]
+    surf_or_ship_arr = site_events_df["surf_or_ship"].unique()
+    assert len(surf_or_ship_arr) == 1
+    surf_or_ship = str(surf_or_ship_arr[0])
 
     site_events_df.plot(
         x="longitude",
@@ -292,15 +294,15 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     ].interpolate()
     assert not site_monthly_with_loc.isna().any().any()
 
-    monthly_dfs_with_loc.append(site_monthly_with_loc)
+    monthly_dfs_with_loc_l.append(site_monthly_with_loc)
 
 monthly_dfs_with_loc = (
-    pd.concat(monthly_dfs_with_loc).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
+    pd.concat(monthly_dfs_with_loc_l).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
 )
 
 # %%
 # Handy check to see if all months have at least some data
-pd.MultiIndex.from_product([range(1967, 2022 + 1), range(1, 13)]).difference(
+pd.MultiIndex.from_product([range(1967, 2022 + 1), range(1, 13)]).difference(  # type: ignore
     monthly_dfs_with_loc.set_index(["year", "month"]).index.drop_duplicates()
 )
 
@@ -332,9 +334,9 @@ for station in tqdman.tqdm(
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])
 
-    surf_or_ship = site_events_df["surf_or_ship"].unique()
-    assert len(surf_or_ship) == 1
-    surf_or_ship = surf_or_ship[0]
+    surf_or_ship_arr = site_events_df["surf_or_ship"].unique()
+    assert len(surf_or_ship_arr) == 1
+    surf_or_ship = str(surf_or_ship_arr[0])
 
     site_events_df.plot(
         x="longitude",

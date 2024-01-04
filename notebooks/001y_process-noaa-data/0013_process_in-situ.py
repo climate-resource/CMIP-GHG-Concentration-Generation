@@ -87,7 +87,7 @@ monthly_dfs_with_loc
 
 # %%
 # Handy check to see if all months have at least some data
-pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(
+pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(  # type: ignore
     monthly_dfs_with_loc.set_index(["year", "month"]).index.drop_duplicates()
 )
 

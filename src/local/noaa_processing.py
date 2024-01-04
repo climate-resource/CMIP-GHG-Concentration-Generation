@@ -58,6 +58,10 @@ def get_metadata_from_filename_default(filename: str) -> dict[str, str]:
     )
 
     re_match = re.search(event_file_regex, filename)
+    if not re_match:
+        raise ValueError(  # noqa: TRY003
+            f"Failed to extract metadata from filename: {filename}"
+        )
 
     return {
         k: re_match.group(k)
@@ -107,7 +111,7 @@ def filter_df_events_default(inp: pd.DataFrame) -> pd.DataFrame:
 def read_data_incl_datetime(
     open_zip: zipfile.ZipFile,
     zip_info: zipfile.ZipInfo,
-    get_metadata_from_filename: Callable[[str], str] | None = None,
+    get_metadata_from_filename: Callable[[str], dict[str, str]] | None = None,
     filter_df_events: Callable[[pd.DataFrame], pd.DataFrame] | None = None,
     datetime_columns: list[str] | None = None,
 ) -> pd.DataFrame:
@@ -186,7 +190,7 @@ def read_data_incl_datetime(
 def read_flask_monthly_data(
     open_zip: zipfile.ZipFile,
     zip_info: zipfile.ZipInfo,
-    get_metadata_from_filename: Callable[[str], str] | None = None,
+    get_metadata_from_filename: Callable[[str], dict[str, str]] | None = None,
 ) -> pd.DataFrame:
     """
     Read monthly flask data

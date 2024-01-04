@@ -118,9 +118,9 @@ for gas, gdf in tqdman.tqdm(
     )
     countries.plot(color="lightgray", ax=axes["map"])
 
-    unit = gdf["unit"].unique()
-    assert len(unit) == 1
-    unit = unit[0]
+    unit_arr = gdf["unit"].unique()
+    assert len(unit_arr) == 1
+    unit = str(unit_arr[0])
 
     for (station, source, surf_or_ship), station_df in tqdman.tqdm(
         gdf.groupby(["site_code_filename", "source", "surf_or_ship"]),
@@ -171,8 +171,8 @@ for gas, gdf in tqdman.tqdm(
         labels.append(label)
         # break
 
-    axes["map"].set_xlim([-180, 180])
-    axes["map"].set_ylim([-90, 90])
+    axes["map"].set_xlim((-180.0, 180.0))
+    axes["map"].set_ylim((-90.0, 90.0))
     axes["map"].legend(loc="center left", bbox_to_anchor=(1.05, 0.5))
 
     axes["full_ts"].set_ylabel(unit)
@@ -180,7 +180,7 @@ for gas, gdf in tqdman.tqdm(
     axes["full_ts"].legend().remove()
     axes["zoom_ts"].legend().remove()
 
-    plt.suptitle(gas)
+    plt.suptitle(str(gas))
     # plt.tight_layout()
     plt.show()
 

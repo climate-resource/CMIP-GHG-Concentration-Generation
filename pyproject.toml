@@ -101,6 +101,7 @@ line-length = 110
 "stubs/*" = [
     "D100",  # Missing docstring in public module
     "D103",  # Missing docstring in public function
+    "PLR0913",  # Too many arguments
 ]
 "tests/*" = [
     "D103",  # Missing docstring in public function

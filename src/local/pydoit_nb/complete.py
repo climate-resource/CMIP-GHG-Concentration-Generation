@@ -29,3 +29,5 @@ def write_complete_file(complete_file: Path, contents: str | None = None) -> Pat
 
     with open(complete_file, "w") as fh:
         fh.write(contents)
+
+    return complete_file
