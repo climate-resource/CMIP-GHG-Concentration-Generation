@@ -15,6 +15,18 @@ process_noaa_data:
   interim_files:
     events_data: data/interim/noaa/events_co2_surface-flask_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_co2_surface-flask_raw-consolidated.csv
+- step_config_id: co2_in-situ
+  gas: co2
+  source: in-situ
+  download_urls:
+  - url: https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/in-situ/surface/co2_surface-insitu_ccgg_text.zip
+    known_hash: ae1429d14147df295d1fdc83cf7c3fd0678c477bb254ec39aab69b654669bf61
+  raw_dir: data/raw/noaa
+  download_complete_file: data/raw/noaa/co2_in-situ.complete
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+  interim_files:
+    events_data: data/interim/noaa/events_co2_in-situ_raw-consolidated.csv
+    monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
 retrieve:
 - step_config_id: only
   natural_earth:

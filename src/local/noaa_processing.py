@@ -12,13 +12,21 @@ import tqdm.autonotebook as tqdman
 
 
 def get_metadata_from_file_default(filename: str) -> dict[str, str]:
-    event_file_regex = r"(?P<gas>[a-z0-9]*)_(?P<site_code_filename>[a-z]{3}[a-z0-9]*)_(?P<surf_or_ship>[a-z]*)-flask_1_ccgg_(?P<reporting_id>[a-z]*).txt"
+    event_file_regex = (
+        r"(?P<gas>[a-z0-9]*)"
+        r"_(?P<site_code_filename>[a-z]{3}[a-z0-9]*)"
+        r"_(?P<surf_or_ship>[a-z]*)"
+        r"-(?P<source>[a-z0-9-]*)"
+        r"_1_ccgg"
+        r"_(?P<reporting_id>[a-zA-Z]*)"
+        ".txt"
+    )
 
     re_match = re.search(event_file_regex, filename)
 
     return {
         k: re_match.group(k)
-        for k in ["gas", "site_code_filename", "surf_or_ship", "reporting_id"]
+        for k in ["gas", "site_code_filename", "surf_or_ship", "source", "reporting_id"]
     }
 
 
@@ -61,17 +69,21 @@ def filter_df_events_default(inp: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def read_event_data(
+def read_data_incl_datetime(
     open_zip: zipfile.ZipFile,
     zip_info: zipfile.ZipInfo,
     get_metadata_from_file: Callable[[str], str] | None = None,
     filter_df_events: Callable[[pd.DataFrame], pd.DataFrame] | None = None,
+    datetime_columns: list[str] | None = None,
 ) -> pd.DataFrame:
     if get_metadata_from_file is None:
         get_metadata_from_file = get_metadata_from_file_default
 
     if filter_df_events is None:
         filter_df_events = filter_df_events_default
+
+    if datetime_columns is None:
+        datetime_columns = ["datetime", "analysis_datetime"]
 
     filename_metadata = get_metadata_from_file(zip_info.filename)
 
@@ -80,7 +92,7 @@ def read_event_data(
         StringIO(file_content),
         comment="#",
         date_format={},
-        parse_dates=["datetime", "analysis_datetime"],
+        parse_dates=datetime_columns,
         delim_whitespace=True,
     )
 
@@ -92,7 +104,7 @@ def read_event_data(
     return df_events_filtered
 
 
-def read_month_data(
+def read_flask_monthly_data(
     open_zip: zipfile.ZipFile,
     zip_info: zipfile.ZipInfo,
     get_metadata_from_file: Callable[[str], str] | None = None,
@@ -134,7 +146,7 @@ def month_file_identifier_default(filename: str) -> bool:
     return "month" in filename
 
 
-def read_noaa_zip(
+def read_noaa_flask_zip(
     noaa_zip_file: Path,
     event_file_identifier: Callable[[str], bool] | None = None,
     month_file_identifier: Callable[[str], bool] | None = None,
@@ -151,7 +163,7 @@ def read_noaa_zip(
         ]
         df_events = pd.concat(
             [
-                read_event_data(zip, event_file_item)
+                read_data_incl_datetime(zip, event_file_item)
                 for event_file_item in tqdman.tqdm(event_files)
             ]
         )
@@ -161,7 +173,7 @@ def read_noaa_zip(
         ]
         df_months = pd.concat(
             [
-                read_month_data(zip, month_files_item)
+                read_flask_monthly_data(zip, month_files_item)
                 for month_files_item in tqdman.tqdm(month_files)
             ]
         )
@@ -178,3 +190,39 @@ def read_noaa_zip(
         raise ValueError("Obviously wrong values in monthly data")
 
     return df_events, df_months
+
+
+def month_file_identifier_in_situ(filename: str) -> bool:
+    return "MonthlyData" in filename
+
+
+def read_noaa_in_situ_zip(
+    noaa_zip_file: Path,
+    month_file_identifier: Callable[[str], bool] | None = None,
+):
+    if month_file_identifier is None:
+        month_file_identifier = month_file_identifier_in_situ
+
+    with zipfile.ZipFile(noaa_zip_file) as zip:
+        month_files = [
+            item for item in zip.filelist if month_file_identifier(item.filename)
+        ]
+        df_months = pd.concat(
+            [
+                read_data_incl_datetime(
+                    zip, month_files_item, datetime_columns=["datetime"]
+                )
+                for month_files_item in tqdman.tqdm(month_files)
+            ]
+        )
+
+    # Make sure we haven't ended up with any obviously bogus data
+    bogus_flag = -999.0
+
+    if (df_months["longitude"] <= bogus_flag).any():
+        raise ValueError("Obviously wrong longitude in events data")
+
+    if (df_months["value"] <= bogus_flag).any():
+        raise ValueError("Obviously wrong values in monthly data")
+
+    return df_months

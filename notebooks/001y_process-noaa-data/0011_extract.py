@@ -21,9 +21,8 @@
 # ## Imports
 
 # %%
-
 from local.config import load_config_from_file
-from local.noaa_processing import read_noaa_zip
+from local.noaa_processing import read_noaa_flask_zip, read_noaa_in_situ_zip
 from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
@@ -37,7 +36,7 @@ step: str = "process_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2_surface-flask"  # config ID to select for this branch
+step_config_id: str = "co2_in-situ"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -61,17 +60,32 @@ zip_files
 # %%
 assert len(zip_files) == 1, "Re-think how you're doing this"
 zf = zip_files[0]
-df_events, df_months = read_noaa_zip(zf)
+
+if config_step.source == "surface-flask":
+    df_events, df_months = read_noaa_flask_zip(zf)
+
+    print("df_events")
+    display(df_events)
+
+    print("df_months")
+    display(df_months)
+
+elif config_step.source == "in-situ":
+    df_months = read_noaa_in_situ_zip(zf)
+
+    print("df_months")
+    display(df_months)
+else:
+    raise NotImplementedError(config_step.source)
 
 # %%
-df_events
+if config_step.source == "surface-flask":
+    config_step.interim_files["events_data"].parent.mkdir(exist_ok=True, parents=True)
+    df_events.to_csv(config_step.interim_files["events_data"], index=False)
 
-# %%
-df_months
+    config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
+    df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
 
-# %%
-config_step.interim_files["events_data"].parent.mkdir(exist_ok=True, parents=True)
-df_events.to_csv(config_step.interim_files["events_data"], index=False)
-
-config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
-df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
+elif config_step.source == "in-situ":
+    config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
+    df_months.to_csv(config_step.interim_files["monthly_data"], index=False)

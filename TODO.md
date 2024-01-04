@@ -3,8 +3,6 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- save NOAA processed data (needs config update)
-- clean up a bit (prep for next step)
 - handle NOAA in situ data
 - clean up
 - MR reviews
