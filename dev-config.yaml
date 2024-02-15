@@ -52,11 +52,11 @@ retrieve:
     raw_dir: data/raw/gggrn
     urls_global_mean:
     - url: https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
-      known_hash: 4d29a1e83b38039f0130d1bed34fd6b59b6a2c0b074cd69c39d88737b4346b27
+      known_hash: a847c08e4be116ac263e6c5e710f67e2b40ac123105960b24cbab2bc515e4c76
     - url: https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt
-      known_hash: 9d28596968b777f7a5ce0e4e8737ed496aa70d9bff5fd14eb84f4d8ab2bd94ba
+      known_hash: 69ffadf064256059a61e9d0faf6e0ea1449559becf99c42c502f5e442e3afce0
     - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
-      known_hash: b960224afc091028633e4f330f85a5b943018c11f470a00f1b50ae782f8cb874
+      known_hash: 29d32d5ab8db08580acc8fbdbe714a6b3664f4cb9aa96a534320eb049228afba
 process:
 - step_config_id: only
   law_dome:
