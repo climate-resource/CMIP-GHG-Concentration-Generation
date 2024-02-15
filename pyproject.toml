@@ -24,10 +24,9 @@ cf-xarray = "0.8.9"
 pint-xarray = "0.3"
 nc-time-axis = "1.4.1"
 netcdf4 = "1.6.5"
-# Need to ensure loose dependency pins here
-pydoit-nb = "0.3.2"
-carpet-concentrations = "0.5.0"
-# input4mips-validation = "0.2.0"
+input4mips-validation = "0.2.0"
+pydoit-nb = "0.3.3"
+carpet-concentrations = "0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
