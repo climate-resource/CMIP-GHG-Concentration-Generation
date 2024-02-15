@@ -37,9 +37,7 @@ geopandas = "0.14.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
-# Pin to commit until 1.7.0 is released,
-# see https://github.com/python/mypy/issues/16254
-mypy = { git = "https://github.com/python/mypy.git", rev = "bc591c7" }
+mypy = "^1.7.0"
 pandas-stubs = "^2.1.1.230928"
 types-tqdm = "^4.66.0.5"
 towncrier = "^23.11.0"
