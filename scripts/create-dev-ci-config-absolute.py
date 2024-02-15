@@ -9,10 +9,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from attrs import evolve
+from pydoit_nb.config_handling import insert_path_prefix
+from pydoit_nb.config_tools import URLSource
 
 from local.config import Config, converter_yaml
-from local.pydoit_nb.config_handling import insert_path_prefix
-from local.pydoit_nb.config_tools import URLSource
 
 DEV_FILE: Path = Path("dev-config.yaml")
 
