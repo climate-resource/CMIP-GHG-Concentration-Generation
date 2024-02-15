@@ -6,6 +6,9 @@ from __future__ import annotations
 from collections.abc import Iterable
 from pathlib import Path
 
+from pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
+from pydoit_nb.typing import DoitTaskSpec
+
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
@@ -19,8 +22,6 @@ from .notebook_steps import (
     retrieve_and_extract_noaa_data,
     write_input4mips,
 )
-from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
-from .pydoit_nb.typing import DoitTaskSpec
 
 
 def gen_all_tasks(
