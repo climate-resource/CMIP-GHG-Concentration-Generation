@@ -42,10 +42,10 @@ from carpet_concentrations.time import (
     convert_year_month_to_time,
 )
 from openscm_units import unit_registry
+from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun
 
 from local.config import load_config_from_file
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

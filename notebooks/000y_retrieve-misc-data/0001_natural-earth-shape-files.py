@@ -23,10 +23,10 @@
 # %%
 
 import pooch
+from pydoit_nb.checklist import generate_directory_checklist
+from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
-from local.pydoit_nb.checklist import generate_directory_checklist
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

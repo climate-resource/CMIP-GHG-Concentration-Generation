@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -40,10 +40,10 @@ from carpet_concentrations.input4MIPs.dataset import (
     Input4MIPsMetadataOptional,
 )
 from openscm_units import unit_registry
+from pydoit_nb.checklist import generate_directory_checklist
+from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
-from local.pydoit_nb.checklist import generate_directory_checklist
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -147,6 +147,7 @@ metadata_universal_optional = dict(
 # TODO: use this pattern with rest of CV?
 # input4MIPs CV here: https://github.com/PCMDI/input4MIPs-cmor-tables
 # wrap with pooch too?
+# TODO: get rid of this download step
 
 cv_experiment_id_url = "https://raw.githubusercontent.com/WCRP-CMIP/CMIP6_CVs/master/CMIP6_experiment_id.json"
 
@@ -288,7 +289,7 @@ def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
     grid = None
     if "lon" not in dims:
         if "lat" in dims:
-            if lat_fifteen_deg(ds) and list(dims) == ["lat", "time"]:
+            if lat_fifteen_deg(ds) and set(dims) == {"lat", "time"}:
                 # In CMIP6 input4MIPs, we used a grid label of "gn-15x360deg"
                 # This doesn't seem to be in the CVs anymore
                 # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)

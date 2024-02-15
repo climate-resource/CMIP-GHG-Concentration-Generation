@@ -21,9 +21,10 @@
 # ## Imports
 
 # %%
+from pydoit_nb.config_handling import get_config_for_step_id
+
 from local.config import load_config_from_file
 from local.noaa_processing import read_noaa_flask_zip, read_noaa_in_situ_zip
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
