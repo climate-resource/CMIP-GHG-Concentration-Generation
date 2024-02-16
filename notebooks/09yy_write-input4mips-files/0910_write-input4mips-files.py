@@ -43,8 +43,8 @@ import xarray as xr
 #     Input4MIPsMetadata,
 #     Input4MIPsMetadataOptional,
 # )
-from input4mips_validation.dataset import (
-    Input4MIPsDataset,
+from input4mips_validation.dataset import Input4MIPsDataset
+from input4mips_validation.metadata import (
     Input4MIPsMetadata,
     Input4MIPsMetadataOptional,
 )
@@ -142,7 +142,7 @@ metadata_universal = dict(
     # source=f"CR {version}",
 )
 
-metadata_universal_optional = dict(
+metadata_universal_optional: dict[str, str] = dict(
     # product="derived",
     # # TODO: check if there is a more exact grant agreement to refer to
     # comment=(
@@ -336,7 +336,7 @@ def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
             f"Could not determine grid_label for data: {ds}"
         ) from exc
 
-    out_optional = {}
+    out_optional: dict[str, str] = {}
     # if grid is not None:
     #     out_optional["grid"] = grid
 

@@ -12,7 +12,7 @@ from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
 if TYPE_CHECKING:
-    from ..config.base import ConfigBundle
+    from ..config.base import Config, ConfigBundle
 
 
 def configure_notebooks(
@@ -69,7 +69,9 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[
+    Config, ConfigBundle
+] = UnconfiguredNotebookBasedStep(
     step_name="grid",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
