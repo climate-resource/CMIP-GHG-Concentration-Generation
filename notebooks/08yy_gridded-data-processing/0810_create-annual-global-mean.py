@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -25,14 +25,16 @@
 # %%
 from collections.abc import Callable
 
+# TODO: consider putting in input4MIPs validation, don't actually need it there yet though
 import carpet_concentrations.xarray_utils
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import pint_xarray
 import xarray as xr
 
-# TODO: move this function
-from carpet_concentrations.input4MIPs.dataset import add_time_bounds
+# # TODO: remove this function from carpet_concentrations
+# from carpet_concentrations.input4MIPs.dataset import add_time_bounds
+from input4mips_validation.xarray_helpers import add_time_bounds
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file

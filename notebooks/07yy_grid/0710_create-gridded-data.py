@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -37,7 +37,13 @@ import xarray as xr
 from carpet_concentrations.gridders.latitude_seasonality_gridder import (
     LatitudeSeasonalityGridder,
 )
-from carpet_concentrations.time import (
+
+# # TODO: remove from carpet_concentrations
+# from carpet_concentrations.time import (
+#     convert_time_to_year_month,
+#     convert_year_month_to_time,
+# )
+from input4mips_validation.time import (
     convert_time_to_year_month,
     convert_year_month_to_time,
 )

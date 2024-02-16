@@ -18,7 +18,7 @@
 # TODO:
 #
 # - process finer grid in previous notebook, then use here
-# - speak to Paul about infering metadata automatically, surely there already tools for this...
+# - ~speak to Paul about infering metadata automatically, surely there already tools for this...~
 # - check correct grant reference with Eleanor
 
 # %% [markdown]
@@ -27,14 +27,23 @@
 # %%
 import json
 import urllib.request
+from functools import partial
 
 import cf_xarray  # noqa: F401 # required to add cf accessors
 import cftime
+import input4mips_validation.xarray_helpers
 import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
-from carpet_concentrations.input4MIPs.dataset import (
+
+# # TODO: rip the below out of carpet_concentrations
+# from carpet_concentrations.input4MIPs.dataset import (
+#     Input4MIPsDataset,
+#     Input4MIPsMetadata,
+#     Input4MIPsMetadataOptional,
+# )
+from input4mips_validation.dataset import (
     Input4MIPsDataset,
     Input4MIPsMetadata,
     Input4MIPsMetadataOptional,
@@ -124,23 +133,23 @@ version = config.version
 
 metadata_universal = dict(
     contact="zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com",
-    further_info_url="TBD TODO",
-    institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
+    # further_info_url="TBD TODO",
+    # institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
     institution_id="CR",
-    source_version=version,
+    # source_version=version,
     activity_id="input4MIPs",
     mip_era="CMIP6Plus",
-    source=f"CR {version}",
+    # source=f"CR {version}",
 )
 
 metadata_universal_optional = dict(
-    product="derived",
-    # TODO: check if there is a more exact grant agreement to refer to
-    comment=(
-        "Data produced by Climate Resource supported by funding "
-        "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office)"
-    ),
-    references="[TODO]",
+    # product="derived",
+    # # TODO: check if there is a more exact grant agreement to refer to
+    # comment=(
+    #     "Data produced by Climate Resource supported by funding "
+    #     "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office)"
+    # ),
+    # references="[TODO]",
 )
 
 # %%
@@ -284,40 +293,43 @@ def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
     NotImplementedError
         We cannot determine the grid metadata for ``ds``
     """
-    dims = ds.dims
-
-    grid = None
-    if "lon" not in dims:
-        if "lat" in dims:
-            if lat_fifteen_deg(ds) and set(dims) == {"lat", "time"}:
-                # In CMIP6 input4MIPs, we used a grid label of "gn-15x360deg"
-                # This doesn't seem to be in the CVs anymore
-                # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
-                # so changing to "gr", which seems to be the best fit
-                # TODO: discuss with Paul
-                grid_label = "gr"
-                nominal_resolution = "2500km"
-                grid = "15x360 degree latitude x longitude"
-
-        elif "sector" in dims:
-            # In CMIP6 input4MIPs, we used a grid label of "gr1-GMNHSH"
-            # This doesn't seem to be in the CVs anymore
-            # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
-            # so changing to "gr1", which seems to be the best fit
-            # TODO: discuss with Paul
-            grid_label = "gr1"
-            if "sector" in ds:
-                hemispheric_means_lat_bounds = (
-                    "0: -90.0, 90.0; 1: 0.0, 90.0; 2: -90.0, 0.0"
-                )
-                if ds["sector"].attrs["lat_bounds"] == hemispheric_means_lat_bounds:
-                    nominal_resolution = "10000 km"
-                    grid = "Global- and hemispheric-means"
+    # # TODO: trun this back on
+    # dims = ds.dims
+    #
+    # grid = None
+    # if "lon" not in dims:
+    #     if "lat" in dims:
+    #         if lat_fifteen_deg(ds) and set(dims) == {"lat", "time"}:
+    #             # In CMIP6 input4MIPs, we used a grid label of "gn-15x360deg"
+    #             # This doesn't seem to be in the CVs anymore
+    #             # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
+    #             # so changing to "gr", which seems to be the best fit
+    #             # TODO: discuss with Paul
+    #             # grid_label = "gr"
+    #             # nominal_resolution = "2500km"
+    #             # grid = "15x360 degree latitude x longitude"
+    #
+    #     elif "sector" in dims:
+    #         # In CMIP6 input4MIPs, we used a grid label of "gr1-GMNHSH"
+    #         # This doesn't seem to be in the CVs anymore
+    #         # (https://github.com/PCMDI/input4MIPs-cmor-tables/blob/master/input4MIPs_grid_label.json)
+    #         # so changing to "gr1", which seems to be the best fit
+    #         # TODO: discuss with Paul
+    #         # grid_label = "gr1"
+    #         if "sector" in ds:
+    #             hemispheric_means_lat_bounds = (
+    #                 "0: -90.0, 90.0; 1: 0.0, 90.0; 2: -90.0, 0.0"
+    #             )
+    #             # if ds["sector"].attrs["lat_bounds"] == hemispheric_means_lat_bounds:
+    #             #     nominal_resolution = "10000 km"
+    #             #     grid = "Global- and hemispheric-means"
 
     try:
         out = {
-            "grid_label": grid_label,
-            "nominal_resolution": nominal_resolution,
+            # TODO: fix input4mips-validation
+            "grid_label": "placeholder",
+            # "grid_label": grid_label,
+            # "nominal_resolution": nominal_resolution,
         }
     except NameError as exc:
         raise NotImplementedError(
@@ -325,8 +337,8 @@ def get_grid_metadata(ds: xr.Dataset) -> tuple[dict[str, str], dict[str, str]]:
         ) from exc
 
     out_optional = {}
-    if grid is not None:
-        out_optional["grid"] = grid
+    # if grid is not None:
+    #     out_optional["grid"] = grid
 
     return out, out_optional
 
@@ -394,14 +406,15 @@ def infer_metadata_from_dataset(
     AssertionError
         There is more than one data variable in ``ds``
     """
-    if len(ds.data_vars) == 1:
-        # error mis-identified by ruff, think it's because it's xarray not a list
-        variable_id = list(ds.data_vars.keys())[0]  # noqa: RUF015
-    else:
-        raise AssertionError("Can only write one variable per file")  # noqa: TRY003
+    # TODO: use input4mips-validation instead
+    # if len(ds.data_vars) == 1:
+    #     # error mis-identified by ruff, think it's because it's xarray not a list
+    #     variable_id = list(ds.data_vars.keys())[0]
+    # else:
+    #     raise AssertionError("Can only write one variable per file")
 
-    # This seems wrong logic?
-    source_id = experiment
+    # TODO: check how this should be in input4mips-validation
+    source_id = "CR-CMIP-0-2-0"
 
     grid_info, grid_info_optional = get_grid_metadata(ds)
 
@@ -409,14 +422,14 @@ def infer_metadata_from_dataset(
         **grid_info,
         **get_target_mip(experiment),
         "source_id": source_id,
-        # TODO: This seems like a misunderstanding too?
-        "title": experiment,
-        **get_dataset_category(variable_id),
-        **get_realm(variable_id),
-        # TODO: No idea what this is or means, is it meant to be
-        # added as part of writing?
-        "Conventions": "CF-1.6",
-        **get_frequency(ds),
+        # # TODO: This seems like a misunderstanding too?
+        # "title": experiment,
+        # **get_dataset_category(variable_id),
+        # **get_realm(variable_id),
+        # # TODO: No idea what this is or means, is it meant to be
+        # # added as part of writing?
+        # "Conventions": "CF-1.6",
+        # **get_frequency(ds),
     }
 
     out_optional = {**grid_info_optional}
@@ -469,11 +482,23 @@ for dat_resolution, yearly_time_bounds in tqdman.tqdm(
             **metadata_inferred_optional,
         )
 
-        input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
+        input4mips_ds = Input4MIPsDataset.from_raw_dataset(
             dsv,
             dimensions=tuple(dsv.dims.keys()),
+            time_dimension="time",
             metadata=metadata,
+            metadata_optional=metadata_optional,
+            add_time_bounds=partial(
+                input4mips_validation.xarray_helpers.add_time_bounds,
+                monthly_time_bounds=True,
+            ),
         )
+
+        # input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
+        #     dsv,
+        #     dimensions=tuple(dsv.dims.keys()),
+        #     metadata=metadata,
+        # )
         if yearly_time_bounds:
             # TODO: remove this horrible hack and fix up the carpet_concentrations
             # behaviour instead
