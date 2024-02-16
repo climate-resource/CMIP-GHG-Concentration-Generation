@@ -6,8 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from attrs import frozen
-
-from local.pydoit_nb.config_tools import URLSource
+from pydoit_nb.config_tools import URLSource
 
 
 @frozen

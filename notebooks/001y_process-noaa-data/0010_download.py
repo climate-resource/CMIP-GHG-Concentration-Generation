@@ -30,10 +30,10 @@
 
 # %%
 import pooch
+from pydoit_nb.complete import write_complete_file
+from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
-from local.pydoit_nb.complete import write_complete_file
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

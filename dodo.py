@@ -28,14 +28,15 @@ from distutils.dir_util import copy_tree
 from pathlib import Path
 from typing import Any
 
+from pydoit_nb.config_handling import insert_path_prefix
+from pydoit_nb.display import print_config
+from pydoit_nb.doit_tools import setup_logging
+from pydoit_nb.serialization import write_config_in_config_bundle_to_disk
+from pydoit_nb.typing import DoitTaskSpec
+
 from local import get_key_info
 from local.config import converter_yaml, load_config_from_file
 from local.config.base import ConfigBundle
-from local.pydoit_nb.config_handling import insert_path_prefix
-from local.pydoit_nb.display import print_config
-from local.pydoit_nb.doit_tools import setup_logging
-from local.pydoit_nb.serialization import write_config_bundle_to_disk
-from local.pydoit_nb.typing import DoitTaskSpec
 from local.tasks import gen_all_tasks
 
 RUN_ID: str = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -160,7 +161,9 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
         root_dir_output=root_dir_output,
         root_dir_output_run=root_dir_output_run,
     )
-    write_config_bundle_to_disk(config_bundle=config_bundle, converter=converter_yaml)
+    write_config_in_config_bundle_to_disk(
+        config_bundle=config_bundle, converter=converter_yaml
+    )
 
     yield {
         "basename": "generate_workflow_tasks",

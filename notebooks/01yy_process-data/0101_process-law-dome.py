@@ -26,10 +26,10 @@ import pandas as pd
 from bokeh.io import output_notebook, show
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.plotting import figure
+from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun, run_append
 
 from local.config import load_config_from_file
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

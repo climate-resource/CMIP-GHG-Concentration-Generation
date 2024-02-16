@@ -9,10 +9,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from attrs import evolve
+from pydoit_nb.config_handling import insert_path_prefix
+from pydoit_nb.config_tools import URLSource
 
 from local.config import Config, converter_yaml
-from local.pydoit_nb.config_handling import insert_path_prefix
-from local.pydoit_nb.config_tools import URLSource
 
 DEV_FILE: Path = Path("dev-config.yaml")
 
@@ -45,7 +45,7 @@ for gas, source, download_hash in [
     (
         "ch4",
         "in-situ",
-        "09e19eafd639526ec605f2b1e0f48c440edf424edebe247a4488ab2308ecb99d",
+        "c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
     ),
     (
         "n2o",

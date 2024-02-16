@@ -7,9 +7,9 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from ..pydoit_nb.config_handling import get_config_for_step_id
-from ..pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
-from ..pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
+from pydoit_nb.config_handling import get_config_for_step_id
+from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
+from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
 if TYPE_CHECKING:
     from ..config.base import ConfigBundle
