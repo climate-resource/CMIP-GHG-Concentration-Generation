@@ -1224,32 +1224,36 @@ files = [
 
 [[package]]
 name = "input4mips-validation"
-version = "0.2.0"
+version = "0.2.2a0"
 description = "Validation of input4MIPs data (checking file formats, metadata etc.)."
 category = "main"
 optional = false
-python-versions = ">=3.9,<4.0"
-files = [
-    {file = "input4mips_validation-0.2.0-py3-none-any.whl", hash = "sha256:35d9e11c21784f07e80e2b219ed3bb54618cad94c464a53c07adfa51fe951e36"},
-    {file = "input4mips_validation-0.2.0.tar.gz", hash = "sha256:ac0f6fb58d8c23f54259e34b0e3740fe8654b3efaad0e3834199784526705808"},
-]
+python-versions = "^3.9"
+files = []
+develop = false
 
 [package.dependencies]
-attrs = ">=23.2.0,<24.0.0"
-cf-xarray = ">=0.8.9,<0.9.0"
-cftime = ">=1.6.3,<2.0.0"
-click = ">=8.1.7,<9.0.0"
-loguru = ">=0.7.2,<0.8.0"
-netcdf4 = ">=1.6.5,<2.0.0"
-numpy = ">=1.26.4,<2.0.0"
-pint-xarray = ">=0.3,<0.4"
-pooch = ">=1.8.0,<2.0.0"
-typing-extensions = ">=4.9.0,<5.0.0"
-xarray = ">=2024.1.1,<2025.0.0"
+attrs = ">=22.0"
+cf-xarray = ">=0.8"
+cftime = ">=1.6"
+click = ">=8.0"
+loguru = ">=0.7"
+netcdf4 = ">=1.0"
+numpy = ">=1.23"
+pint-xarray = ">=0.3"
+pooch = ">=1.0"
+typing-extensions = ">=4.0"
+xarray = ">=2022.0"
 
 [package.extras]
-notebooks = ["notebook (>=6.5.3,<7.0.0)"]
-plots = ["matplotlib (>=3.7.1,<4.0.0)"]
+notebooks = ["notebook (>=6.0)"]
+plots = ["matplotlib (>=3.0)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/climate-resource/input4mips_validation.git"
+reference = "first-use"
+resolved_reference = "bb65eece2651a218ef1c8382794faa3ee967e5c7"
 
 [[package]]
 name = "ipykernel"
@@ -4101,4 +4105,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "f108acd4edaba198c3305c4881882313198ed235f2ab1bf870a49a7212662779"
+content-hash = "90101231123c6bccb134cfdfa92c8deced54fb1fff027cf8560716a6350e81a9"

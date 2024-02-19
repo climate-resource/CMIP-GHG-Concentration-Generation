@@ -24,7 +24,9 @@ cf-xarray = "0.8.9"
 pint-xarray = "0.3"
 nc-time-axis = "1.4.1"
 netcdf4 = "1.6.5"
-input4mips-validation = "0.2.0"
+# TODO: cut new release of input4mips-validation
+# input4mips-validation = "0.2.0"
+input4mips-validation = { git = "https://github.com/climate-resource/input4mips_validation.git", branch = "first-use" }
 pydoit-nb = "0.3.3"
 carpet-concentrations = "0.5.1"
 
