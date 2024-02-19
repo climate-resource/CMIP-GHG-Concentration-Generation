@@ -5,6 +5,9 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 
 - new release of input4mips-validation so we no longer need the local install
 - move onto handling AGAGE data
+  - just process it, don't worry about adding it into global-mean mucking around
+  - then merge
+  - then onto next to-do's
 - reach out to NOAA providers and ask them what they recommend
 - reach out to AGAGE providers and ask them what they recommend
 - process NOAA and AGAGE data grids
