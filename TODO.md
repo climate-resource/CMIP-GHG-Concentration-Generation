@@ -3,7 +3,6 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- new release of input4mips-validation so we no longer need the local install
 - move onto handling AGAGE data
   - just process it, don't worry about adding it into global-mean mucking around
   - then merge
@@ -11,8 +10,9 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 - reach out to NOAA providers and ask them what they recommend
 - reach out to AGAGE providers and ask them what they recommend
 - process NOAA and AGAGE data grids
+  - i.e. implement algorithm
   - tricky because we'll have data going everywhere at the same time as we try and reimplement M17
-- implement algorithm
+- new release of input4mips-validation so we no longer need the local install
 
 ## Concs
 
