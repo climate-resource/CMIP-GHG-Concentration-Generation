@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -37,15 +37,21 @@ import xarray as xr
 from carpet_concentrations.gridders.latitude_seasonality_gridder import (
     LatitudeSeasonalityGridder,
 )
-from carpet_concentrations.time import (
+
+# # TODO: remove from carpet_concentrations
+# from carpet_concentrations.time import (
+#     convert_time_to_year_month,
+#     convert_year_month_to_time,
+# )
+from input4mips_validation.time import (
     convert_time_to_year_month,
     convert_year_month_to_time,
 )
 from openscm_units import unit_registry
+from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun
 
 from local.config import load_config_from_file
-from local.pydoit_nb.config_handling import get_config_for_step_id
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

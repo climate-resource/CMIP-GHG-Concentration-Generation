@@ -27,6 +27,25 @@ class RetrieveConfig:
     gggrn: GGGRNConfig
     """Configuration for the global greenhouse gas reference network"""
 
+    natural_earth: NaturalEarthConfig
+    """Configuration for retrieving data from natural earth"""
+
+
+@frozen
+class NaturalEarthConfig:
+    """
+    Configuration class for retrieving natural earth data
+    """
+
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
+    download_urls: list[URLSource]
+    """URLs from which to download data"""
+
+    countries_shape_file_name: str
+    """Name of the file containing shape files for country borders"""
+
 
 @frozen
 class LawDomeConfig:

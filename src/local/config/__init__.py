@@ -9,8 +9,7 @@ from typing import Any, TypeAlias, cast
 import cattrs.preconf.pyyaml
 import numpy as np
 import numpy.typing as npt
-
-import local.pydoit_nb.serialization
+import pydoit_nb.serialization
 
 from .base import Config
 
@@ -72,7 +71,7 @@ converter_yaml.register_structure_hook_func(_is_np_array, structure_np_array)
 
 
 load_config_from_file = partial(
-    local.pydoit_nb.serialization.load_config_from_file,
+    pydoit_nb.serialization.load_config_from_file,
     target=Config,
     converter=converter_yaml,
 )

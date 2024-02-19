@@ -3,6 +3,17 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
+- new release of input4mips-validation so we no longer need the local install
+- move onto handling AGAGE data
+  - just process it, don't worry about adding it into global-mean mucking around
+  - then merge
+  - then onto next to-do's
+- reach out to NOAA providers and ask them what they recommend
+- reach out to AGAGE providers and ask them what they recommend
+- process NOAA and AGAGE data grids
+  - tricky because we'll have data going everywhere at the same time as we try and reimplement M17
+- implement algorithm
+
 ## Concs
 
 To actually tackle this:
@@ -91,6 +102,7 @@ Inspired by the next section
     - spatially interpolate any missing values using linear 2D interpolation
       - need to work out what algorithm is used for this (looking at Matlab code, it is https://de.mathworks.com/help/matlab/ref/griddata.html)
     - at this point, you have a complete, interpolated, lat-long, monthly field over the instrumental period
+      - if you have any missing time points at this stage (within the series, not back in time, that comes later), have to think about how to handle them...
     - calculate average over longitude (i.e. end up with lat, monthly field)
     - branch
       - latitudinal gradient (Section 3 of M17 has suggestions for improvements, Section 5.6 also has important point about handling time-varying data coverage)

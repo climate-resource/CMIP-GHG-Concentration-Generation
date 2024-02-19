@@ -1,5 +1,5 @@
 """
-Write files in input4MIPs format notebook steps
+Process NOAA surface flask data
 """
 from __future__ import annotations
 
@@ -7,7 +7,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from pydoit_nb.checklist import get_checklist_file
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -50,25 +49,31 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_grid = get_config_for_step_id(
-        config=config, step="grid", step_config_id="only"
+
+    config_retrieve = get_config_for_step_id(
+        config=config, step="retrieve", step_config_id="only"
     )
-    config_gridded_data_processing = get_config_for_step_id(
-        config=config, step="gridded_data_processing", step_config_id="only"
+    config_retrieve_noaa = get_config_for_step_id(
+        config=config,
+        step="retrieve_and_extract_noaa_data",
+        step_config_id=f"{config_step.gas}_surface-flask",
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("09yy_write-input4mips-files") / "0910_write-input4mips-files"
+                Path("001y_process-noaa-data") / "0012_process_surface-flask"
             ],
-            configuration=None,
+            configuration=(),
             dependencies=(
-                config_grid.processed_data_file,
-                config_gridded_data_processing.processed_data_file_global_hemispheric_means,
-                config_gridded_data_processing.processed_data_file_global_hemispheric_annual_means,
+                config_retrieve_noaa.interim_files["events_data"],
+                config_retrieve_noaa.interim_files["monthly_data"],
+                (
+                    config_retrieve.natural_earth.raw_dir
+                    / config_retrieve.natural_earth.countries_shape_file_name
+                ),
             ),
-            targets=(get_checklist_file(config_step.input4mips_out_dir),),
+            targets=(config_step.processed_monthly_data_with_loc_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -80,14 +85,16 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="write_input4mips",
+    step_name="process_noaa_surface_flask_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("09yy_write-input4mips-files")
-            / "0910_write-input4mips-files",
+            notebook_path=Path("001y_process-noaa-data") / "0012_process_surface-flask",
             raw_notebook_ext=".py",
-            summary="write input4MIPs - write all files",
-            doc="Write all files in input4MIPs format",
+            summary="process NOAA surface flask data - process",
+            doc=(
+                "Process NOAA surface flask data to create a file with monthly average "
+                "from each station and latitude and longitude information"
+            ),
         ),
     ],
     configure_notebooks=configure_notebooks,

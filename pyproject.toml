@@ -12,34 +12,30 @@ license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
-notebook = "7.0.6"
-doit = "0.36.0"
-attrs = "23.1.0"
-cattrs = "23.1.2"
-jupytext = "1.15.2"
-papermill = "2.4.0"
-numpy = "1.26.1"
-black = "23.10.1"
-matplotlib = "3.8.1"
-seaborn = "0.13.0"
-jupyter-bokeh = "3.0.7"
-openpyxl = "3.1.2"
-scmdata = "0.16.1"
+notebook = "7.1.0"
 pooch = "1.8.0"
-scipy = "1.11.4"
-carpet-concentrations = "0.5.0"
-cf-xarray = "0.8.6"
+geopandas = "0.14.3"
+seaborn = "0.13.2"
+bokeh = "3.3.4"
+scmdata = "0.17.0"
+openpyxl = "3.1.2"
+scipy = "1.12.0"
+cf-xarray = "0.8.9"
+pint-xarray = "0.3"
 nc-time-axis = "1.4.1"
 netcdf4 = "1.6.5"
-awscli = "1.31.12"
+# TODO: cut new release of input4mips-validation
+# input4mips-validation = "0.2.0"
+input4mips-validation = { git = "https://github.com/climate-resource/input4mips_validation.git", rev = "5f9b60e8f46e1710eb6fa44b30f3a224a81f17c7" }
+pydoit-nb = "0.3.3"
+carpet-concentrations = "0.5.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
-# Pin to commit until 1.7.0 is released,
-# see https://github.com/python/mypy/issues/16254
-mypy = { git = "https://github.com/python/mypy.git", rev = "bc591c7" }
+mypy = "^1.7.0"
 pandas-stubs = "^2.1.1.230928"
 types-tqdm = "^4.66.0.5"
+towncrier = "^23.11.0"
 
 [tool.poetry.group.tests.dependencies]
 pytest = "^7.4.3"
@@ -99,6 +95,7 @@ line-length = 110
 "stubs/*" = [
     "D100",  # Missing docstring in public module
     "D103",  # Missing docstring in public function
+    "PLR0913",  # Too many arguments
 ]
 "tests/*" = [
     "D103",  # Missing docstring in public function
@@ -120,6 +117,50 @@ show_error_context = true
 warn_unreachable = true
 # importing following uses default settings
 follow_imports = "normal"
+
+[tool.towncrier]
+package = "local"
+package_dir = "src"
+filename = "docs/source/changelog.md"
+directory = "changelog/"
+title_format = "## CMIP Greenhouse Gas Concentration Generation {version} ({project_date})"
+underlines = ["", "", ""]
+issue_format = "[#{issue}](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/{issue})"
+
+  [[tool.towncrier.type]]
+  directory = "breaking"
+  name = "Breaking Changes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "deprecation"
+  name = "Deprecations"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "feature"
+  name = "Features"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "improvement"
+  name = "Improvements"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "fix"
+  name = "Bug Fixes"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "docs"
+  name = "Improved Documentation"
+  showcontent = true
+
+  [[tool.towncrier.type]]
+  directory = "trivial"
+  name = "Trivial/Internal Changes"
+  showcontent = false
 
 [tool.coverage.report]
 fail_under = 95

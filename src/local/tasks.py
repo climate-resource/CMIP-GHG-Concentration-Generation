@@ -6,18 +6,22 @@ from __future__ import annotations
 from collections.abc import Iterable
 from pathlib import Path
 
+from pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
+from pydoit_nb.typing import DoitTaskSpec
+
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
     grid,
     gridded_data_processing,
     process,
+    process_noaa_in_situ_data,
+    process_noaa_surface_flask_data,
     quick_crunch,
     retrieve,
+    retrieve_and_extract_noaa_data,
     write_input4mips,
 )
-from .pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
-from .pydoit_nb.typing import DoitTaskSpec
 
 
 def gen_all_tasks(
@@ -51,6 +55,9 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
+        retrieve_and_extract_noaa_data,
+        process_noaa_surface_flask_data,
+        process_noaa_in_situ_data,
         retrieve,
         process,
         quick_crunch,
