@@ -26,7 +26,7 @@ nc-time-axis = "1.4.1"
 netcdf4 = "1.6.5"
 # TODO: cut new release of input4mips-validation
 # input4mips-validation = "0.2.0"
-input4mips-validation = { git = "https://github.com/climate-resource/input4mips_validation.git", branch = "first-use" }
+input4mips-validation = { git = "https://github.com/climate-resource/input4mips_validation.git", rev = "5f9b60e8f46e1710eb6fa44b30f3a224a81f17c7" }
 pydoit-nb = "0.3.3"
 carpet-concentrations = "0.5.1"
 
