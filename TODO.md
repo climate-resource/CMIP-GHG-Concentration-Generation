@@ -7,6 +7,9 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 - move onto handling AGAGE data
 - reach out to NOAA providers and ask them what they recommend
 - reach out to AGAGE providers and ask them what they recommend
+- process NOAA and AGAGE data grids
+  - tricky because we'll have data going everywhere at the same time as we try and reimplement M17
+- implement algorithm
 
 ## Concs
 

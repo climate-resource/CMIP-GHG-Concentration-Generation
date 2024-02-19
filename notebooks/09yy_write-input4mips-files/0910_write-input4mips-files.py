@@ -490,35 +490,10 @@ for dat_resolution, yearly_time_bounds in tqdman.tqdm(
             metadata_optional=metadata_optional,
             add_time_bounds=partial(
                 input4mips_validation.xarray_helpers.add_time_bounds,
-                monthly_time_bounds=True,
+                monthly_time_bounds=not yearly_time_bounds,
+                yearly_time_bounds=yearly_time_bounds,
             ),
         )
-
-        # input4mips_ds = Input4MIPsDataset.from_metadata_autoadd_bounds_to_dimensions(
-        #     dsv,
-        #     dimensions=tuple(dsv.dims.keys()),
-        #     metadata=metadata,
-        # )
-        if yearly_time_bounds:
-            # TODO: remove this horrible hack and fix up the carpet_concentrations
-            # behaviour instead
-            ds_bnd = input4mips_ds.ds
-            variable = "time"
-            bname = f"{variable}_bounds"
-
-            bounds_time = xr.DataArray(
-                [
-                    [cftime.datetime(y, 1, 1), cftime.datetime(y + 1, 1, 1)]
-                    for y in ds_bnd["time"].dt.year
-                ],
-                dims=(variable, "bounds"),
-                coords={variable: ds_bnd[variable], "bounds": [0, 1]},
-            ).transpose(..., "bounds")
-
-            ds_bnd.coords[bname] = bounds_time
-            ds_bnd[variable].attrs["bounds"] = bname
-
-            input4mips_ds = Input4MIPsDataset(ds=ds_bnd)
 
         config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
         print("Writing")
