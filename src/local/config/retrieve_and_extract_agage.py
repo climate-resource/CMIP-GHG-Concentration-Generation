@@ -22,14 +22,14 @@ class RetrieveExtractAGAGEDataConfig:
     Must be unique among all configurations for this step
     """
 
+    gas: str
+    """Gas for which we are processing data"""
+
     instrument: str
     """Instrument for which to retrieve data"""
 
     time_frequency: str
     """Time frequency to retrieve"""
-
-    gas: str
-    """Gas for which we are processing data"""
 
     download_urls: list[URLSource]
     """URLs from which to download the data"""

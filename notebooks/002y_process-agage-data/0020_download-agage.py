@@ -95,33 +95,35 @@ for link in soup_base.find_all("a"):
             raise AssertionError("Unexpected data formats")  # noqa: TRY003
 
         for file_format in soup_loc_file_formats:
-            url_loc_gas = f"{start_url}/{loc}{file_format}"
-            print(f"{url_loc_gas=}")
+            url_loc_file_format = f"{start_url}/{loc}{file_format}"
+            print(f"{url_loc_file_format=}")
 
-            soup_loc_gas = BeautifulSoup(
-                urllib.request.urlopen(url_loc_gas).read(),  # noqa: S310
+            soup_loc_file_format = BeautifulSoup(
+                urllib.request.urlopen(url_loc_file_format).read(),  # noqa: S310
                 "html.parser",
             )
-            soup_loc_gas_data_files = [
+            soup_loc_gas_format_data_files = [
                 link.get("href")
-                for link in soup_loc_gas.find_all("a")
+                for link in soup_loc_file_format.find_all("a")
                 if link.get("href").endswith(".txt")
                 and config_step.gas in link.get("href")
             ]
-            if len(soup_loc_gas_data_files) == 0:
+            if len(soup_loc_gas_format_data_files) == 0:
                 print(
                     f"No data available for {config_step.gas} from observing site {loc}"
                 )
                 continue
 
-            if len(soup_loc_gas_data_files) > 1:
+            if len(soup_loc_gas_format_data_files) > 1:
                 raise AssertionError(  # noqa: TRY003
-                    f"Unexpected number of files, found: {soup_loc_gas_data_files}"
+                    f"Unexpected number of files, found: {soup_loc_gas_format_data_files}"
                 )
 
-            soup_loc_gas_data_file = soup_loc_gas_data_files[0]
+            soup_loc_gas_format_data_file = soup_loc_gas_format_data_files[0]
 
-            data_file_url = f"{start_url}/{loc}{file_format}{soup_loc_gas_data_file}"
+            data_file_url = (
+                f"{start_url}/{loc}{file_format}{soup_loc_gas_format_data_file}"
+            )
             print(f"{data_file_url=}")
             url_sources.append(URLSource(url=data_file_url, known_hash="placeholder"))
 
