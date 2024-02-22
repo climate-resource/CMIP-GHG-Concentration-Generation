@@ -21,6 +21,7 @@ from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
+from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
@@ -75,6 +76,15 @@ class Config:
         ]
     )
     """Configurations to use for processing NOAA in-situ data"""
+
+    retrieve_and_extract_agage_data: list[RetrieveExtractAGAGEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting AGAGE data"""
 
     retrieve: list[RetrieveConfig] = field(
         validator=[

@@ -25,14 +25,38 @@ retrieve_and_extract_noaa_data:
   download_complete_file: data/raw/noaa/co2_in-situ.complete
   interim_files:
     monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+
 process_noaa_surface_flask_data:
 - step_config_id: co2
   gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+
 process_noaa_in_situ_data:
 - step_config_id: co2
   gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+
+# CH4, N2O and SF6 config added in `scripts/create-dev-ci-config-absolute.py`
+retrieve_and_extract_agage_data:
+- step_config_id: "ccl4_gc-md_monthly"
+  gas: ccl4
+  instrument: gc-md
+  time_frequency: monthly
+  download_urls:
+    - known_hash: e218c5e4f8aefb6077e55dc841733837159c2fbe8bbadad803a33b31322ac45c
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_ccl4_mon.txt
+    - known_hash: 4f54dc4c0fbaefca699d57676436358d0a46e32fda1a794cabc564bd190a32da
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_ccl4_mon.txt
+    - known_hash: 921a67ea36d570215b3b1ca115bf4c805b4e4df593bb3dc975ce7427d62fa52d
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_ccl4_mon.txt
+    - known_hash: 33150a904cf5f1f172731eefa739625d300971a2510565e129d71f7cf50c9e8c
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/samoa/ascii/AGAGE-GCMD_SMO_ccl4_mon.txt
+    - known_hash: 399de71b4419516f5afd3e307f67ed7751e0a13e3fa0afde4752709f819ca417
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_ccl4_mon.txt
+  raw_dir: data/raw/agage/agage
+  download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
+  generate_hashes: True
+
 retrieve:
 - step_config_id: only
   natural_earth:

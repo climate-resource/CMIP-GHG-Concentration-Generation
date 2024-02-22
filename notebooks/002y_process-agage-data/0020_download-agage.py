@@ -64,13 +64,8 @@ config_step = get_config_for_step_id(
 # ### Find out which sources are available
 
 # %%
-instrument = "gc-md"
-time_freq = "monthly"
-gas = "ccl4"
-generate_hashes = True
-
-# %%
-start_url = f"https://agage2.eas.gatech.edu/data_archive/agage/{instrument}/{time_freq}"
+start_url = f"https://agage2.eas.gatech.edu/data_archive/agage/{config_step.instrument}/{config_step.time_frequency}"
+print(f"{start_url=}")
 soup_base = BeautifulSoup(
     urllib.request.urlopen(start_url).read(),  # noqa: S310
     "html.parser",
@@ -85,7 +80,7 @@ for link in soup_base.find_all("a"):
         print("-----")
         print(f"Checking observing location: {loc}")
         url_loc = f"{start_url}/{loc}"
-        print(url_loc)
+        print(f"{url_loc=}")
 
         soup_loc = BeautifulSoup(
             urllib.request.urlopen(url_loc).read(),  # noqa: S310
@@ -101,7 +96,7 @@ for link in soup_base.find_all("a"):
 
         for file_format in soup_loc_file_formats:
             url_loc_gas = f"{start_url}/{loc}{file_format}"
-            print(url_loc_gas)
+            print(f"{url_loc_gas=}")
 
             soup_loc_gas = BeautifulSoup(
                 urllib.request.urlopen(url_loc_gas).read(),  # noqa: S310
@@ -110,10 +105,13 @@ for link in soup_base.find_all("a"):
             soup_loc_gas_data_files = [
                 link.get("href")
                 for link in soup_loc_gas.find_all("a")
-                if link.get("href").endswith(".txt") and gas in link.get("href")
+                if link.get("href").endswith(".txt")
+                and config_step.gas in link.get("href")
             ]
             if len(soup_loc_gas_data_files) == 0:
-                print(f"No data available for {gas} from observing site {loc}")
+                print(
+                    f"No data available for {config_step.gas} from observing site {loc}"
+                )
                 continue
 
             if len(soup_loc_gas_data_files) > 1:
@@ -124,13 +122,13 @@ for link in soup_base.find_all("a"):
             soup_loc_gas_data_file = soup_loc_gas_data_files[0]
 
             data_file_url = f"{start_url}/{loc}{file_format}{soup_loc_gas_data_file}"
-            print(data_file_url)
+            print(f"{data_file_url=}")
             url_sources.append(URLSource(url=data_file_url, known_hash="placeholder"))
 
 url_sources
 
 # %%
-if generate_hashes:
+if config_step.generate_hashes:
     with tempfile.TemporaryDirectory() as tmp_path:
         # Download to tmp and get the hashes
         for i, source in enumerate(url_sources):
@@ -160,3 +158,11 @@ if missing_urls:
     )
 
 # %%
+for url_source in config_step.download_urls:
+    pooch.retrieve(
+        url=url_source.url,
+        known_hash=url_source.known_hash,
+        fname=url_source.url.split("/")[-1],
+        path=config_step.raw_dir,
+        progressbar=True,
+    )
