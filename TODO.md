@@ -26,6 +26,8 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 
   - to be consistent with NOAA, only save out the monthly data with lat-lon info
 
+    - need some processing notebooks
+
   - then merge
 
   - then onto next to-do's

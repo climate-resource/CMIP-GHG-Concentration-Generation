@@ -15,7 +15,7 @@
 # %% [markdown]
 # # AGAGE - download
 #
-# Download data from [Advanced Global Atmospheric Gases Experiment (AGAGE)](https://agage.mit.edu/), specifically their [data page](https://agage.mit.edu/data/use-agage-data).
+# Download data from the [Advanced Global Atmospheric Gases Experiment (AGAGE)](https://agage.mit.edu/), specifically their [data page](https://agage.mit.edu/data/use-agage-data).
 #
 # For simplicity, we refer to all data from AGAGE, including its predecessors GAGE and ALE, as AGAGE data.
 
@@ -138,6 +138,9 @@ for link in soup_base.find_all("a"):
 
 url_sources
 
+# %% [markdown]
+# #### If requested, generate hashes
+
 # %%
 if config_step.generate_hashes:
     with tempfile.TemporaryDirectory() as tmp_path:
@@ -159,6 +162,9 @@ if config_step.generate_hashes:
     print("")
     print(converter_yaml.dumps(url_sources))
 
+# %% [markdown]
+# ### Make sure we're not missing any sources
+
 # %%
 missing_urls = set(v.url for v in url_sources) - set(
     v.url for v in config_step.download_urls
@@ -167,6 +173,9 @@ if missing_urls:
     raise AssertionError(  # noqa: TRY003
         f"You are missing download urls for: {missing_urls}"
     )
+
+# %% [markdown]
+# ### Download
 
 # %%
 for url_source in config_step.download_urls:

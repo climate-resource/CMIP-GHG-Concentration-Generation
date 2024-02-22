@@ -22,6 +22,8 @@ from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
 from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
+from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
+from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
@@ -85,6 +87,24 @@ class Config:
         ]
     )
     """Configurations to use for retrieving and extracting AGAGE data"""
+
+    retrieve_and_extract_gage_data: list[RetrieveExtractGAGEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting GAGE data"""
+
+    retrieve_and_extract_ale_data: list[RetrieveExtractALEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting ALE data"""
 
     retrieve: list[RetrieveConfig] = field(
         validator=[
