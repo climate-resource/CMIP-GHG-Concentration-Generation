@@ -19,6 +19,7 @@ from .notebook_steps import (
     process_noaa_surface_flask_data,
     quick_crunch,
     retrieve,
+    retrieve_and_extract_agage_data,
     retrieve_and_extract_noaa_data,
     write_input4mips,
 )
@@ -58,6 +59,7 @@ def gen_all_tasks(
         retrieve_and_extract_noaa_data,
         process_noaa_surface_flask_data,
         process_noaa_in_situ_data,
+        retrieve_and_extract_agage_data,
         retrieve,
         process,
         quick_crunch,

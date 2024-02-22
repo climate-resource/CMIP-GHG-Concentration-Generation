@@ -55,7 +55,7 @@ retrieve_and_extract_agage_data:
       url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_ccl4_mon.txt
   raw_dir: data/raw/agage/agage
   download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
-  generate_hashes: True
+  generate_hashes: False
 
 retrieve:
 - step_config_id: only

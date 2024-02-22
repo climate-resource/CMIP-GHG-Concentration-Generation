@@ -30,6 +30,7 @@ from pathlib import Path
 import pooch
 from attrs import evolve
 from bs4 import BeautifulSoup
+from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.config_tools import URLSource
 
@@ -44,7 +45,7 @@ step: str = "retrieve_and_extract_agage_data"
 # %% [markdown]
 # ## Parameters
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "ccl4_gc-md_monthly"  # config ID to select for this branch
 
@@ -106,8 +107,16 @@ for link in soup_base.find_all("a"):
                 link.get("href")
                 for link in soup_loc_file_format.find_all("a")
                 if link.get("href").endswith(".txt")
-                and config_step.gas in link.get("href")
+                and f"_{config_step.gas}_" in link.get("href")
             ]
+            if config_step.gas == "h2":
+                # Weird, not sure what this file is meant for
+                soup_loc_gas_format_data_files = [
+                    file
+                    for file in soup_loc_gas_format_data_files
+                    if "h2_pdd" not in file
+                ]
+
             if len(soup_loc_gas_format_data_files) == 0:
                 print(
                     f"No data available for {config_step.gas} from observing site {loc}"
@@ -168,3 +177,6 @@ for url_source in config_step.download_urls:
         path=config_step.raw_dir,
         progressbar=True,
     )
+
+# %%
+write_complete_file(config_step.download_complete_file)
