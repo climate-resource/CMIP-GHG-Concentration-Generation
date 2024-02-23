@@ -77,7 +77,7 @@ full_df = pd.concat(
         ),
         *[
             pd.read_csv(c.processed_monthly_data_with_loc_file)
-            for c in config.retrieve_and_extract_agage_data[:20]
+            for c in config.retrieve_and_extract_agage_data
         ],
     ]
 )
