@@ -35,3 +35,8 @@ class RetrieveExtractGAGEDataConfig:
     This is mainly used to help with setting the dependencies between notebooks
     correctly.
     """
+
+    processed_monthly_data_with_loc_file: Path
+    """
+    Path in which to write the processed monthly data including location information
+    """

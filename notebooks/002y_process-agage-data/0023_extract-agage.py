@@ -45,6 +45,7 @@ step: str = "retrieve_and_extract_agage_data"
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "ccl4_gc-md_monthly"  # config ID to select for this branch
+step_config_id = "cfc-12_gc-md_monthly"
 
 # %% [markdown]
 # ## Load config
@@ -77,7 +78,7 @@ def is_relevant_file(f):
     """
     Check if a data file is relevant for this notebook
     """
-    if not (f.name.endswith(suffix) and config_step.gas in f.name):
+    if not (f.name.endswith(suffix) and f"_{config_step.gas}_" in f.name):
         return False
 
     if config_step.instrument == "gc-ms-medusa" and "GCMS-Medusa" not in f.name:
@@ -211,6 +212,9 @@ plt.show()
 
 # %% [markdown]
 # ### Save
+
+# %%
+set(df_monthly["gas"])
 
 # %%
 assert set(df_monthly["gas"]) == {config_step.gas}

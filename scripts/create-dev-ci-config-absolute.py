@@ -473,10 +473,6 @@ retrieve_and_extract_agage_data = [
                 known_hash="6c4f82c2f04141731c6f7e7f58a47b559d15b0b494988be1187f50984fcd8ebc",
             ),
             URLSource(
-                url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_h2_pdd_mon.txt",
-                known_hash="744215b498a5b262aca060e7fc4cb05b17d94d53207f645f26a4f86f80bac77c",
-            ),
-            URLSource(
                 url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_h2_mon.txt",
                 known_hash="c0526519aa34d89b747d1d4d1b3f31e1cab153f80376d900f848adc82cb73535",
             ),

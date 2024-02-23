@@ -72,6 +72,7 @@ retrieve_and_extract_gage_data:
     - known_hash: 5705e7d9d0f57de33ec4baaa66f9ec78d5c053f50949f1e5f60d1e8d4af5a40b
       url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/SMO-gage.mon
   raw_dir: data/raw/agage/gage
+  processed_monthly_data_with_loc_file: data/interim/agage/gage/monthly.csv
   download_complete_file: data/raw/agage/gage/gage_monthly.complete
 
 retrieve_and_extract_ale_data:
@@ -88,6 +89,7 @@ retrieve_and_extract_ale_data:
     - known_hash: f12ffc3e4f31f77e449d12f924bffa5597c5595d09a94e46f9e716398981c845
       url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/SMO-ale.mon
   raw_dir: data/raw/agage/ale
+  processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   download_complete_file: data/raw/agage/ale/ale_monthly.complete
 
 retrieve:

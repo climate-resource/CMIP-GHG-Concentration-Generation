@@ -68,6 +68,20 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("002y_process-agage-data") / "0023_extract-agage"
+            ],
+            configuration=(
+                config_step.gas,
+                config_step.instrument,
+                config_step.time_frequency,
+            ),
+            dependencies=(config_step.download_complete_file,),
+            targets=(config_step.processed_monthly_data_with_loc_file,),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -83,6 +97,12 @@ step: UnconfiguredNotebookBasedStep[
             raw_notebook_ext=".py",
             summary="process AGAGE data - download",
             doc="Download AGAGE data",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("002y_process-agage-data") / "0023_extract-agage",
+            raw_notebook_ext=".py",
+            summary="process AGAGE data - extract",
+            doc="Extract AGAGE data",
         ),
     ],
     configure_notebooks=configure_notebooks,
