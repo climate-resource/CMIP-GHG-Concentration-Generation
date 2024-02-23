@@ -90,7 +90,10 @@ def is_relevant_file(f):
         if "GCMS-" not in f.name:
             return False
 
-    elif config_step.instrument == "gc-md" and "-GCMD_" not in f.name:
+    # Honestly, this SF6 exception, what is that?
+    elif config_step.instrument == "gc-md" and not (
+        "-GCMD_" in f.name or ("sf6" in f.name and "-GC-ECD-SF6" in f.name)
+    ):
         return False
 
     return True
@@ -114,7 +117,12 @@ def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
         file_content = fh.read()
 
     site_code = f.name.split("_")[1]
-    gas = re.search(r"species: (?P<species>\S*)", file_content).group("species")
+    try:
+        gas = re.search(r"species: (?P<species>\S*)", file_content).group("species")
+    except AttributeError:
+        print(f"File is missing species information: {f}")
+        gas = config_step.gas
+
     lat = re.search(r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content).group(
         "latitude"
     )
@@ -124,7 +132,60 @@ def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
     lon = re.search(r"inlet_longitude: (?P<longitude>-?\d*\.\d*)", file_content).group(
         "longitude"
     )
-    unit = re.search(r"units: (?P<unit>\S*)", file_content).group("unit")
+    try:
+        unit = re.search(r"units: (?P<unit>\S*)", file_content).group("unit")
+    except AttributeError:
+        print(f"File is missing units information: {f}")
+        if any(
+            v in f.name
+            for v in (
+                "cf4",
+                "cfc-13",
+                "cfc-113",
+                "cfc-114",
+                "cfc-115",
+                "ch2cl2",
+                "ch3br",
+                "ch3ccl3",
+                "ch3cl",
+                "chcl3",
+                "h-1211",
+                "h-1301",
+                "h-2402",
+                "hcfc-22",
+                "hcfc-124",
+                "hcfc-132b",
+                "hcfc-133a",
+                "hcfc-141b",
+                "hcfc-142b",
+                "hfc-23",
+                "hfc-32",
+                "hfc-125",
+                "hfc-134a",
+                "hfc-143a",
+                "hfc-152a",
+                "hfc-227ea",
+                "hfc-236fa",
+                "hfc-245fa",
+                "hfc-365mfc",
+                "hfc-4310mee",
+                "nf3",
+                "pce",
+                "pfc-116",
+                "pfc-218",
+                "pfc-318",
+                "sf6",
+                "so2f2",
+                "ccl4",
+                "cfc-11",
+                "cfc-12",
+            )
+        ):
+            # Guess, file is missing metadata
+            unit = "ppt"
+        else:
+            raise
+
     contact_points = re.search(
         r"CONTACT POINT: (?P<contact_points>.*)", file_content
     ).group("contact_points")
@@ -162,8 +223,22 @@ countries = gpd.read_file(
 
 # %%
 fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-colours = (c for c in ["tab:blue", "tab:green", "tab:red", "tab:pink", "tab:brown"])
-markers = (m for m in ["o", "x", ".", ",", "v"])
+colours = (
+    c
+    for c in [
+        "tab:blue",
+        "tab:green",
+        "tab:red",
+        "tab:pink",
+        "tab:brown",
+        "tab:cyan",
+        "lime",
+        "purple",
+        "magenta",
+        "blue",
+    ]
+)
+markers = (m for m in ["o", "x", ".", ",", "v", "+", "1", "2", "3", "4"])
 
 countries.plot(color="lightgray", ax=axes[0])
 

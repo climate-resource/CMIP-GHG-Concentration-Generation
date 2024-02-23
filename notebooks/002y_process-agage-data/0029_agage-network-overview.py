@@ -77,7 +77,7 @@ full_df = pd.concat(
         ),
         *[
             pd.read_csv(c.processed_monthly_data_with_loc_file)
-            for c in config.retrieve_and_extract_agage_data[:3]
+            for c in config.retrieve_and_extract_agage_data[:20]
         ],
     ]
 )
@@ -114,6 +114,11 @@ station_colours = {
     "RPB": "tab:cyan",  # Ragged Point, Barbados
     "SMO": "tab:olive",  # Cape Matatula, Samoa
     "THD": "tab:purple",  # Trinidad Head (?)
+    "CMN": "lime",  # ?
+    "GSN": "magenta",  # ?
+    "JFJ": "tab:orange",  # Jungfrauchjoch, Austria
+    "TAC": "red",  # ?
+    "ZEP": "magenta",  # Zeppelin
 }
 source_markers = {
     "AGAGE": "o",
