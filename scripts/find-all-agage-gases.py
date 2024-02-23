@@ -116,6 +116,7 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                         f"{gas}_{instrument.replace('/', '')}_{time_frequency}"
                     )
                     raw_dir = Path("data") / "raw" / "agage" / "agage"
+                    interim_dir = Path("data") / "interim" / "agage" / "agage"
                     step_conf = RetrieveExtractAGAGEDataConfig(
                         step_config_id=step_config_id,
                         gas=gas,
@@ -124,6 +125,8 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                         download_urls=urls,
                         raw_dir=raw_dir,
                         download_complete_file=raw_dir / f"{step_config_id}.complete",
+                        processed_monthly_data_with_loc_file=interim_dir
+                        / f"{step_config_id}.csv",
                         generate_hashes=False,
                     )
                     print(f"{step_conf},")

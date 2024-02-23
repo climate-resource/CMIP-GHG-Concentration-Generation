@@ -169,6 +169,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/ccl4_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ccl4_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -201,6 +204,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-11_gc-md_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-11_gc-md_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -235,6 +241,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-12_gc-md_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-12_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -267,6 +276,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-113_gc-md_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-113_gc-md_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -301,6 +313,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch3ccl3_gc-md_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3ccl3_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -332,6 +347,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/ch4_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch4_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -365,6 +383,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/chcl3_gc-md_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/chcl3_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -396,6 +417,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/n2o_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/n2o_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -411,6 +435,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/sf6_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/sf6_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -430,6 +457,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/co_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/co_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -443,12 +473,19 @@ retrieve_and_extract_agage_data = [
                 known_hash="6c4f82c2f04141731c6f7e7f58a47b559d15b0b494988be1187f50984fcd8ebc",
             ),
             URLSource(
+                url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_h2_pdd_mon.txt",
+                known_hash="744215b498a5b262aca060e7fc4cb05b17d94d53207f645f26a4f86f80bac77c",
+            ),
+            URLSource(
                 url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_h2_mon.txt",
                 known_hash="c0526519aa34d89b747d1d4d1b3f31e1cab153f80376d900f848adc82cb73535",
             ),
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/h2_gc-md_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h2_gc-md_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -501,6 +538,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cf4_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cf4_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -555,6 +595,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-13_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-13_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -607,6 +650,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-113_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-113_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -661,6 +707,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-114_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-114_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -709,6 +758,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-115_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-115_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -763,6 +815,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch2cl2_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch2cl2_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -815,6 +870,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/ch3br_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3br_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -869,6 +927,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch3ccl3_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3ccl3_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -921,6 +982,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/ch3cl_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3cl_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -975,6 +1039,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/chcl3_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/chcl3_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1027,6 +1094,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/h-1211_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h-1211_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1081,6 +1151,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/h-1301_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h-1301_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1133,6 +1206,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/h-2402_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h-2402_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1187,6 +1263,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-22_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-22_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1235,6 +1314,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-124_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-124_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1289,6 +1371,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-132b_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-132b_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1341,6 +1426,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-133a_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-133a_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1395,6 +1483,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-141b_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-141b_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1447,6 +1538,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-142b_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-142b_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1501,6 +1595,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-23_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-23_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1553,6 +1650,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-32_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-32_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1607,6 +1707,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-125_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-125_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1659,6 +1762,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-134a_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-134a_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1713,6 +1819,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-143a_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-143a_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1766,6 +1875,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-152a_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-152a_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1814,6 +1926,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-227ea_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-227ea_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1864,6 +1979,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-236fa_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-236fa_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -1912,6 +2030,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-245fa_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-245fa_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -1962,6 +2083,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-365mfc_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-365mfc_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2011,6 +2135,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-4310mee_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-4310mee_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2055,6 +2182,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/nf3_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/nf3_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2104,6 +2234,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/pce_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pce_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2158,6 +2291,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/pfc-116_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pfc-116_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2210,6 +2346,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/pfc-218_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pfc-218_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2264,6 +2403,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/pfc-318_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pfc-318_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2316,6 +2458,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/sf6_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/sf6_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2370,6 +2515,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/so2f2_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/so2f2_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2394,6 +2542,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/ccl4_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ccl4_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2428,6 +2579,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-11_gc-ms-medusa_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-11_gc-ms-medusa_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2460,6 +2614,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-12_gc-ms-medusa_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-12_gc-ms-medusa_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2494,6 +2651,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch2cl2_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch2cl2_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2526,6 +2686,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/ch3br_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3br_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2560,6 +2723,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch3cl_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3cl_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2592,6 +2758,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/chcl3_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/chcl3_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2626,6 +2795,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/h-1211_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h-1211_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2659,6 +2831,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/h-1301_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/h-1301_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2687,6 +2862,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-22_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-22_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2721,6 +2899,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-141b_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-141b_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2749,6 +2930,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-142b_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-142b_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2783,6 +2967,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-125_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-125_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2815,6 +3002,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-134a_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-134a_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2849,6 +3039,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-152a_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-152a_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2882,6 +3075,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-365mfc_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-365mfc_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2909,6 +3105,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/pce_gc-ms_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pce_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2934,6 +3133,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch3ccl3_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch3ccl3_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2954,6 +3156,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-227ea_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-227ea_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -2976,6 +3181,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-245fa_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-245fa_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -2995,6 +3203,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/tce_gc-ms_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/tce_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3010,6 +3221,9 @@ retrieve_and_extract_agage_data = [
         ],
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path("data/raw/agage/agage/ccl4_gc-ms_monthly.complete"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ccl4_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3026,6 +3240,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-11_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-11_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3044,6 +3261,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-12_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-12_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3060,6 +3280,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-114_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-114_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3078,6 +3301,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/cfc-115_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/cfc-115_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3094,6 +3320,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-132b_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-132b_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3112,6 +3341,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hcfc-133a_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hcfc-133a_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3128,6 +3360,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-32_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-32_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3146,6 +3381,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-143a_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-143a_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3162,6 +3400,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/hfc-236fa_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/hfc-236fa_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3180,6 +3421,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/pfc-218_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pfc-218_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3197,6 +3441,9 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/pfc-318_gc-ms_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/pfc-318_gc-ms_monthly.csv"
+        ),
         generate_hashes=False,
     ),
     RetrieveExtractAGAGEDataConfig(
@@ -3213,6 +3460,9 @@ retrieve_and_extract_agage_data = [
         raw_dir=Path("data/raw/agage/agage"),
         download_complete_file=Path(
             "data/raw/agage/agage/so2f2_gc-ms_monthly.complete"
+        ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/so2f2_gc-ms_monthly.csv"
         ),
         generate_hashes=False,
     ),
@@ -3239,8 +3489,19 @@ retrieve_and_extract_agage_data = [
         download_complete_file=Path(
             "data/raw/agage/agage/ch4_picarro_monthly.complete"
         ),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/agage/ch4_picarro_monthly.csv"
+        ),
         generate_hashes=False,
     ),
+]
+
+retrieve_and_extract_agage_data = [
+    insert_path_prefix(
+        config=v,
+        prefix=ROOT_DIR_OUTPUT / DEV_RUN_ID,
+    )
+    for v in retrieve_and_extract_agage_data
 ]
 
 config_full = evolve(

@@ -45,6 +45,11 @@ class RetrieveExtractAGAGEDataConfig:
     correctly.
     """
 
+    processed_monthly_data_with_loc_file: Path
+    """
+    Path in which to write the processed monthly data including location information
+    """
+
     generate_hashes: bool
     """
     Should we generate the hashes for the files?
