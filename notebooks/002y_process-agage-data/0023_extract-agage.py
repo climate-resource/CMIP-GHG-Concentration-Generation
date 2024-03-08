@@ -21,7 +21,6 @@
 # ## Imports
 
 # %%
-import re
 from io import StringIO
 from pathlib import Path
 
@@ -32,6 +31,7 @@ import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+from local.regexp_helpers import re_search_and_retrieve_group
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -70,11 +70,11 @@ config_retrieve = get_config_for_step_id(
 if config_step.time_frequency == "monthly":
     suffix = "_mon.txt"
 else:
-    raise NotImplementedError(suffix)
+    raise NotImplementedError(config_step.time_frequency)
 
 
 # %%
-def is_relevant_file(f):
+def is_relevant_file(f: Path) -> bool:
     """
     Check if a data file is relevant for this notebook
     """
@@ -109,7 +109,9 @@ relevant_files
 
 
 # %%
-def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
+def read_agage_file(
+    f: Path, skiprows: int = 32, sep: str = r"\s+"
+) -> tuple[tuple[str, ...], pd.DataFrame]:
     """
     Read a data file from the AGAGE experiment
     """
@@ -117,24 +119,26 @@ def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
         file_content = fh.read()
 
     site_code = f.name.split("_")[1]
+
     try:
-        gas = re.search(r"species: (?P<species>\S*)", file_content).group("species")
-    except AttributeError:
+        gas = re_search_and_retrieve_group(
+            r"species: (?P<species>\S*)", file_content, "species"
+        )
+    except ValueError:
         print(f"File is missing species information: {f}")
         gas = config_step.gas
 
-    lat = re.search(r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content).group(
-        "latitude"
+    lat = re_search_and_retrieve_group(
+        r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content, "latitude"
     )
-    lat = re.search(r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content).group(
-        "latitude"
-    )
-    lon = re.search(r"inlet_longitude: (?P<longitude>-?\d*\.\d*)", file_content).group(
-        "longitude"
+    lon = re_search_and_retrieve_group(
+        r"inlet_longitude: (?P<longitude>-?\d*\.\d*)", file_content, "longitude"
     )
     try:
-        unit = re.search(r"units: (?P<unit>\S*)", file_content).group("unit")
-    except AttributeError:
+        unit = re_search_and_retrieve_group(
+            r"units: (?P<unit>\S*)", file_content, "unit"
+        )
+    except ValueError:
         print(f"File is missing units information: {f}")
         if any(
             v in f.name
@@ -186,10 +190,10 @@ def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
         else:
             raise
 
-    contact_points = re.search(
-        r"CONTACT POINT: (?P<contact_points>.*)", file_content
-    ).group("contact_points")
-    contacts = [v.strip() for v in contact_points.split(";")]
+    contact_points = re_search_and_retrieve_group(
+        r"CONTACT POINT: (?P<contact_points>.*)", file_content, "contact_points"
+    )
+    contacts = tuple(v.strip() for v in contact_points.split(";"))
 
     res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep)
     res["gas"] = gas
@@ -201,14 +205,14 @@ def read_agage_file(f: Path, skiprows: int = 32, sep=r"\s+") -> pd.DataFrame:
     res["source"] = "AGAGE"
     res = res.rename({"mean": "value"}, axis="columns")
 
-    return {"df": res, "contacts": contacts}
+    return contacts, res
 
 
 # %%
 read_info = [read_agage_file(f) for f in tqdman.tqdm(relevant_files)]
-contacts = set([c for v in read_info for c in v["contacts"]])
+contacts = set([c for v in read_info for c in v[0]])
 print(f"{contacts=}")
-df_monthly = pd.concat([v["df"] for v in read_info], axis=0)
+df_monthly = pd.concat([v[1] for v in read_info], axis=0)
 df_monthly
 
 # %% [markdown]

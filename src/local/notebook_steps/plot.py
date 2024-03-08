@@ -47,15 +47,17 @@ def configure_notebooks(
     config = config_bundle.config_hydrated
 
     # config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
-    dependencies = (
-        c.processed_monthly_data_with_loc_file
-        for cfg_step in [
-            config.retrieve_and_extract_agage_data,
-            config.retrieve_and_extract_gage_data,
-            config.retrieve_and_extract_ale_data,
-        ]
-        for c in cfg_step
-    )
+
+    # Multiple loops because mypy is being stupid
+    dependencies = []
+    for c_ale in config.retrieve_and_extract_ale_data:
+        dependencies.append(c_ale.processed_monthly_data_with_loc_file)
+
+    for c_gage in config.retrieve_and_extract_gage_data:
+        dependencies.append(c_gage.processed_monthly_data_with_loc_file)
+
+    for c_agage in config.retrieve_and_extract_agage_data:
+        dependencies.append(c_agage.processed_monthly_data_with_loc_file)
 
     configured_notebooks = [
         ConfiguredNotebook(
@@ -63,7 +65,7 @@ def configure_notebooks(
                 Path("002y_process-agage-data") / "0029_agage-network-overview"
             ],
             configuration=(),
-            dependencies=dependencies,
+            dependencies=tuple(dependencies),
             targets=(),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,

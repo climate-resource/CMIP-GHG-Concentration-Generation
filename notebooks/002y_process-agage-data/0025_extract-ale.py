@@ -21,7 +21,6 @@
 # ## Imports
 
 # %%
-import re
 from io import StringIO
 from pathlib import Path
 
@@ -32,6 +31,7 @@ import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+from local.regexp_helpers import re_search_and_retrieve_group
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -68,7 +68,7 @@ config_retrieve = get_config_for_step_id(
 
 
 # %%
-def is_relevant_file(f):
+def is_relevant_file(f: Path) -> bool:
     """
     Check if a data file is relevant for this notebook
     """
@@ -85,7 +85,7 @@ relevant_files
 
 
 # %%
-def read_ale_file(f: Path, skiprows: int = 3, sep=r"\s+") -> pd.DataFrame:
+def read_ale_file(f: Path, skiprows: int = 3, sep: str = r"\s+") -> pd.DataFrame:
     """
     Read a data file from the ALE experiment
     """
@@ -93,27 +93,25 @@ def read_ale_file(f: Path, skiprows: int = 3, sep=r"\s+") -> pd.DataFrame:
         file_content = fh.read()
 
     site_code = f.name.split("-ale")[0]
-    print(site_code)
-    print(file_content[:120])
-    lat = re.search(r"Lat.: (?P<latitude>-?\d*(\.\d*)?[SN])", file_content).group(
-        "latitude"
+    lat_str = re_search_and_retrieve_group(
+        r"Lat.: (?P<latitude>-?\d*(\.\d*)?[SN])", file_content, "latitude"
     )
-    if lat.endswith("S"):
-        lat = -float(lat[:-1])
-    elif lat.endswith("N"):
-        lat = float(lat[:-1])
+    if lat_str.endswith("S"):
+        lat = -float(lat_str[:-1])
+    elif lat_str.endswith("N"):
+        lat = float(lat_str[:-1])
     else:
-        raise NotImplementedError(lat)
+        raise NotImplementedError(lat_str)
 
-    lon = re.search(r"Lon.: (?P<longitude>-?\d*(\.\d*)?[EW])", file_content).group(
-        "longitude"
+    lon_str = re_search_and_retrieve_group(
+        r"Lon.: (?P<longitude>-?\d*(\.\d*)?[EW])", file_content, "longitude"
     )
-    if lon.endswith("W"):
-        lon = -float(lon[:-1])
-    elif lon.endswith("E"):
-        lon = float(lon[:-1])
+    if lon_str.endswith("W"):
+        lon = -float(lon_str[:-1])
+    elif lon_str.endswith("E"):
+        lon = float(lon_str[:-1])
     else:
-        raise NotImplementedError(lon)
+        raise NotImplementedError(lon_str)
 
     res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep)
 
@@ -122,7 +120,7 @@ def read_ale_file(f: Path, skiprows: int = 3, sep=r"\s+") -> pd.DataFrame:
         if ":" not in unit and "---" not in unit:
             gas_units[gas] = unit
 
-    res.columns = res.iloc[1, :]
+    res.columns = res.iloc[1, :]  # type: ignore
     res = res.iloc[2:, :]
     res = res.rename({"MM": "month", "YYYY": "year"}, axis="columns")
     res = res.set_index(["month", "year"]).sort_index()
@@ -139,12 +137,12 @@ def read_ale_file(f: Path, skiprows: int = 3, sep=r"\s+") -> pd.DataFrame:
     # Not sure why it is like this, but ok
     res = res[res["value"] > 0]
 
-    return {"df": res}
+    return res
 
 
 # %%
 read_info = [read_ale_file(f) for f in tqdman.tqdm(relevant_files)]
-df_monthly = pd.concat([v["df"] for v in read_info], axis=0)
+df_monthly = pd.concat([v for v in read_info], axis=0)
 df_monthly
 
 # %% [markdown]
@@ -203,7 +201,7 @@ for gas, gas_df in tqdman.tqdm(df_monthly.groupby("gas"), desc="gas"):
     )
     axes[1].legend()
 
-    plt.suptitle(gas)
+    plt.suptitle(str(gas))
     plt.tight_layout()
     plt.show()
 
