@@ -92,6 +92,9 @@ retrieve_and_extract_ale_data:
   processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   download_complete_file: data/raw/agage/ale/ale_monthly.complete
 
+plot:
+- step_config_id: only
+
 retrieve:
 - step_config_id: only
   natural_earth:

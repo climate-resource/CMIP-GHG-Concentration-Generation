@@ -32,13 +32,13 @@ from local.config import load_config_from_file
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
-# %%
-step: str = "plots"
+# %% editable=true slideshow={"slide_type": ""}
+step: str = "plot"
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
 
-# %%
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
@@ -47,9 +47,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %%
 config = load_config_from_file(config_file)
-# config_step = get_config_for_step_id(
-#     config=config, step=step, step_config_id=step_config_id
-# )
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
 
 config_retrieve_and_extract_gage_data = get_config_for_step_id(
     config=config, step="retrieve_and_extract_gage_data", step_config_id="monthly"

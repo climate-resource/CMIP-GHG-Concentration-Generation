@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Process GAGE
 #
 # Process data from the GAGE part of the AGAGE network. We extract the monthly data with lat-lon information.
