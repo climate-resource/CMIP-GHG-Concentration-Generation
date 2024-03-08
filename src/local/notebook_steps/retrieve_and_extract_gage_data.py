@@ -1,6 +1,7 @@
 """
 Retrieve and extract GAGE data notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -64,6 +65,16 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("002y_process-agage-data") / "0024_extract-gage"
+            ],
+            configuration=(),
+            dependencies=(config_step.download_complete_file,),
+            targets=(config_step.processed_monthly_data_with_loc_file,),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -79,6 +90,12 @@ step: UnconfiguredNotebookBasedStep[
             raw_notebook_ext=".py",
             summary="process GAGE data - download",
             doc="Download GAGE data",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("002y_process-agage-data") / "0024_extract-gage",
+            raw_notebook_ext=".py",
+            summary="process GAGE data - extract",
+            doc="Extract GAGE data",
         ),
     ],
     configure_notebooks=configure_notebooks,
