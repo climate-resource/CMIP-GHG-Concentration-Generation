@@ -11,9 +11,10 @@ class Unzip:
 
 def retrieve(
     url: str,
-    known_hash: str,
+    known_hash: str | None,
     fname: str | None = None,
     path: Path | None = None,
     processor: None | Callable[[str, str, Pooch], Path | list[Path]] = None,
     progressbar: bool = False,
 ) -> Path | list[Path]: ...
+def file_hash(file: Path) -> str: ...

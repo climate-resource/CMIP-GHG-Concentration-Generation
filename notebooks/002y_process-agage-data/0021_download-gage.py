@@ -13,22 +13,17 @@
 # ---
 
 # %% [markdown]
-# # NOAA - download
+# # GAGE - download
 #
-# Download data from the [NOAA Global Monitoring Laboratory (GML) Carbon Cycle Greenhouse Gases (CCGG) research area](https://gml.noaa.gov/ccgg/flask.html), specifically the [data page](https://gml.noaa.gov/ccgg/data/).
+# Download data from the Global Atmospheric Gases Experiment (GAGE), an earlier iteration of the [Advanced Global Atmospheric Gases Experiment (AGAGE)](https://agage.mit.edu/), specifically their [data page](https://agage.mit.edu/data/use-agage-data).
 #
-# For simplicity, here we just refer to this as the NOAA network. This is sort of line with what is done in [Forster et al., 2023](https://essd.copernicus.org/articles/15/2295/2023/essd-15-2295-2023.pdf), who call it the "NOAA Global Monitoring Laboratory (GML)" (which appears to be the name of the top-level program). Puzzlingly, this network seems to also be referred to as the [Global Greenhouse Gas Reference Network (GGGRN)](https://gml.noaa.gov/ccgg/data/) (TODO: ask someone who knows what the difference between the acronyms is meant to mean).
-#
-# To-do:
-#
-# - read old global-mean processing (also called 0010 but in a different folder) and extract any insights from there
-# - add in handling of in situ measurements too (in situ and flask measurements treated as different stations in M17)
-# - parameterise notebook so we can do same for CH4, N2O and SF6 observations
+# For simplicity, we refer to all data from AGAGE, including its predecessors GAGE and ALE, as AGAGE data.
 
 # %% [markdown]
 # ## Imports
 
 # %%
+
 import pooch
 from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
@@ -39,14 +34,14 @@ from local.config import load_config_from_file
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "retrieve_and_extract_noaa_data"
+step: str = "retrieve_and_extract_gage_data"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2_in-situ"  # config ID to select for this branch
+step_config_id: str = "monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config

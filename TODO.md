@@ -3,16 +3,48 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- new release of input4mips-validation so we no longer need the local install
-- move onto handling AGAGE data
-  - just process it, don't worry about adding it into global-mean mucking around
+- AGAGE data handling
+
+  - extract GAGE
+
+  - extract ALE
+
+  - combine into one, consistent data set
+
+    - should be able to make figures that look like this: https://agage2.eas.gatech.edu/data_archive/data_figures/monthly/png
+
+  - will need data from all 3 experiments from ale-gage-agage to get full time coverage
+
+    - https://agage2.eas.gatech.edu/data_archive/readme.agA_new
+
   - then merge
-  - then onto next to-do's
-- reach out to NOAA providers and ask them what they recommend
-- reach out to AGAGE providers and ask them what they recommend
+
+  - ALE
+
+    - all stations seem to have monthly data
+    - use mon not mop (we want baseline, not including pollution)
+    - https://agage2.eas.gatech.edu/data_archive/ale/monthly
+
+  - GAGE
+
+    - all stations seem to have monthly data
+    - use mon not mop (we want baseline, not including pollution)
+
+  - AGAGE
+
+    - all stations seem to have monthly data
+    - use all the different instruments
+
+  - reach out to AGAGE authors to ask if this is the right choice
+
+- reach out to NOAA and AGAGE authors to ask them what the right choice is in terms of using monthly vs. event data
+
 - process NOAA and AGAGE data grids
+
+  - i.e. implement algorithm
   - tricky because we'll have data going everywhere at the same time as we try and reimplement M17
-- implement algorithm
+
+- new release of input4mips-validation so we no longer need the local install
 
 ## Concs
 

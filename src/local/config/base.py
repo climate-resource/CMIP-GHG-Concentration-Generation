@@ -1,19 +1,31 @@
 """
 Base configuration classes
 """
+
 from __future__ import annotations
 
 from pathlib import Path
 
-from attrs import frozen
+from attrs import field, frozen
+from pydoit_nb.attrs_helpers import make_attrs_validator_compatible_single_input
+from pydoit_nb.config_helpers import (
+    assert_path_exists,
+    assert_path_is_absolute,
+    assert_path_is_subdirectory_of_root_dir_output,
+    assert_step_config_ids_are_unique,
+)
 
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
+from .plot import PlotConfig
 from .process import ProcessConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
 from .retrieve import RetrieveConfig
+from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
+from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
+from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
@@ -42,41 +54,122 @@ class Config:
     as part of our CI workflow.
     """
 
-    retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig]
+    retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use for retrieving and extracting NOAA data"""
-    # TODO: add validation that these all have unique step_config_id
 
-    process_noaa_surface_flask_data: list[ProcessNOAASurfaceFlaskDataConfig]
+    process_noaa_surface_flask_data: list[ProcessNOAASurfaceFlaskDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use for processing NOAA surface flask data"""
-    # TODO: add validation that these all have unique step_config_id
 
-    process_noaa_in_situ_data: list[ProcessNOAAInSituDataConfig]
+    process_noaa_in_situ_data: list[ProcessNOAAInSituDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use for processing NOAA in-situ data"""
-    # TODO: add validation that these all have unique step_config_id
 
-    retrieve: list[RetrieveConfig]
+    retrieve_and_extract_agage_data: list[RetrieveExtractAGAGEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting AGAGE data"""
+
+    retrieve_and_extract_gage_data: list[RetrieveExtractGAGEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting GAGE data"""
+
+    retrieve_and_extract_ale_data: list[RetrieveExtractALEDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and extracting ALE data"""
+
+    plot: list[PlotConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for the plotting step"""
+
+    retrieve: list[RetrieveConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the retrieve step"""
-    # TODO: add validation that these all have unique step_config_id
 
-    process: list[ProcessConfig]
+    process: list[ProcessConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the process step"""
-    # TODO: add validation that these all have unique step_config_id
 
-    grid: list[GridConfig]
+    grid: list[GridConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the grid step"""
-    # TODO: add validation that these all have unique step_config_id
 
-    gridded_data_processing: list[GriddedDataProcessingConfig]
+    gridded_data_processing: list[GriddedDataProcessingConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the gridded data processing step"""
-    # TODO: add validation that these all have unique step_config_id
 
-    write_input4mips: list[WriteInput4MIPsConfig]
+    write_input4mips: list[WriteInput4MIPsConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the write input4MIPs step"""
-    # TODO: add validation that these all have unique step_config_id
 
-    quick_crunch: list[QuickCrunchConfig]
+    quick_crunch: list[QuickCrunchConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
     """Configurations to use with the quick crunch step"""
-    # TODO: add validation that these all have unique step_config_id
 
 
 @frozen
@@ -96,11 +189,20 @@ class ConfigBundle:
     config_hydrated_path: Path
     """Path in/from which to read/write ``config_hydrated``"""
 
-    root_dir_output: Path
-    """Root output directory"""
-    # TODO: add validation here that this is an absolute path and exists
+    root_dir_output: Path = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(assert_path_is_absolute),
+            make_attrs_validator_compatible_single_input(assert_path_exists),
+        ]
+    )
 
-    root_dir_output_run: Path
+    """Root output directory"""
+
+    root_dir_output_run: Path = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(assert_path_is_absolute),
+            make_attrs_validator_compatible_single_input(assert_path_exists),
+            assert_path_is_subdirectory_of_root_dir_output,
+        ]
+    )
     """Root output directory for this run"""
-    # TODO: add validation here that this is an absolute path and exists
-    # TODO: add validation that this is a sub-directory of root_dir_output

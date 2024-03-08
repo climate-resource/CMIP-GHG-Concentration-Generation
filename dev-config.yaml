@@ -25,14 +25,76 @@ retrieve_and_extract_noaa_data:
   download_complete_file: data/raw/noaa/co2_in-situ.complete
   interim_files:
     monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+
 process_noaa_surface_flask_data:
 - step_config_id: co2
   gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+
 process_noaa_in_situ_data:
 - step_config_id: co2
   gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+
+# other gases config added in `scripts/create-dev-ci-config-absolute.py`
+retrieve_and_extract_agage_data:
+- step_config_id: "ccl4_gc-md_monthly"
+  gas: ccl4
+  instrument: gc-md
+  time_frequency: monthly
+  download_urls:
+    - known_hash: e218c5e4f8aefb6077e55dc841733837159c2fbe8bbadad803a33b31322ac45c
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_ccl4_mon.txt
+    - known_hash: 4f54dc4c0fbaefca699d57676436358d0a46e32fda1a794cabc564bd190a32da
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_ccl4_mon.txt
+    - known_hash: 921a67ea36d570215b3b1ca115bf4c805b4e4df593bb3dc975ce7427d62fa52d
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_ccl4_mon.txt
+    - known_hash: 33150a904cf5f1f172731eefa739625d300971a2510565e129d71f7cf50c9e8c
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/samoa/ascii/AGAGE-GCMD_SMO_ccl4_mon.txt
+    - known_hash: 399de71b4419516f5afd3e307f67ed7751e0a13e3fa0afde4752709f819ca417
+      url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_ccl4_mon.txt
+  raw_dir: data/raw/agage/agage
+  download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
+  processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-md_monthly.csv
+  generate_hashes: False
+
+retrieve_and_extract_gage_data:
+- step_config_id: "monthly"
+  download_urls:
+    - known_hash: 3955484431eb728cfcbb42df2364939870f2b444367c9dab0c875052b6ff40ff
+      url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/CGO-gage.mon
+    - known_hash: 8e7fd65035cf5b79da473d59bda2b1f499b35d211003f64a9e268cab04c59ea7
+      url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/MHD-gage.mon
+    - known_hash: 31deafb97e07c390b5d0647f655a3dc9d82c74b918305f99505cdd6595c4ea99
+      url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/ORG-gage.mon
+    - known_hash: b2608a3836ed41c925d7b30395fefced4e9f1706be620a607401d6f3ba578447
+      url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/RPB-gage.mon
+    - known_hash: 5705e7d9d0f57de33ec4baaa66f9ec78d5c053f50949f1e5f60d1e8d4af5a40b
+      url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/SMO-gage.mon
+  raw_dir: data/raw/agage/gage
+  processed_monthly_data_with_loc_file: data/interim/agage/gage/monthly.csv
+  download_complete_file: data/raw/agage/gage/gage_monthly.complete
+
+retrieve_and_extract_ale_data:
+- step_config_id: "monthly"
+  download_urls:
+    - known_hash: 38872b27c595bfb8a1509155bd713d2f519dab5c12b51e43f9256f8fa20ca040
+      url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/ADR-ale.mon
+    - known_hash: 7fd99c7f6014b9422da8144ff832e5b9b9ef143aa3f11ee199008d86528795b9
+      url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/CGO-ale.mon
+    - known_hash: 1603e2401243fa73e41ac45a840c8b17a8d46cf8219aac4ac77d9824a48ce658
+      url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/ORG-ale.mon
+    - known_hash: d6f3e73214817262950b29dd10abc260c44cc1aaf4e371b7245b804d118c7d57
+      url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/RPB-ale.mon
+    - known_hash: f12ffc3e4f31f77e449d12f924bffa5597c5595d09a94e46f9e716398981c845
+      url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/SMO-ale.mon
+  raw_dir: data/raw/agage/ale
+  processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
+  download_complete_file: data/raw/agage/ale/ale_monthly.complete
+
+plot:
+- step_config_id: only
+
 retrieve:
 - step_config_id: only
   natural_earth:
@@ -52,11 +114,11 @@ retrieve:
     raw_dir: data/raw/gggrn
     urls_global_mean:
     - url: https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
-      known_hash: a847c08e4be116ac263e6c5e710f67e2b40ac123105960b24cbab2bc515e4c76
+      known_hash: 040e45aa53102d8bec17b4b535668b56d02e01aadf259e881b2aeefabdfdf777
     - url: https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt
-      known_hash: 69ffadf064256059a61e9d0faf6e0ea1449559becf99c42c502f5e442e3afce0
+      known_hash: ba65e43b5d7a298c45f6fcf311bf367fd524bc599146376666e7a560418c4b80
     - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
-      known_hash: 29d32d5ab8db08580acc8fbdbe714a6b3664f4cb9aa96a534320eb049228afba
+      known_hash: a5ec24a92284dc71c29375a96e30513df8e23923801fa0081543b609ec0fcaba
 process:
 - step_config_id: only
   law_dome:
