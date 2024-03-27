@@ -15,15 +15,14 @@ from .config.base import ConfigBundle
 from .notebook_steps import (
     grid,
     gridded_data_processing,
-    plot,
-    process,
+    plot_input_data_overviews,
     process_noaa_in_situ_data,
     process_noaa_surface_flask_data,
     quick_crunch,
-    retrieve,
     retrieve_and_extract_agage_data,
     retrieve_and_extract_ale_data,
     retrieve_and_extract_gage_data,
+    retrieve_and_extract_misc_data,
     retrieve_and_extract_noaa_data,
     write_input4mips,
 )
@@ -60,15 +59,14 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
+        retrieve_and_extract_misc_data,
         retrieve_and_extract_noaa_data,
         process_noaa_surface_flask_data,
         process_noaa_in_situ_data,
         retrieve_and_extract_agage_data,
         retrieve_and_extract_gage_data,
         retrieve_and_extract_ale_data,
-        retrieve,
-        plot,
-        process,
+        plot_input_data_overviews,
         quick_crunch,
         grid,
         gridded_data_processing,
