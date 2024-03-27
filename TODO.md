@@ -3,7 +3,21 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
+- Download Law Dome into same style as NOAA and AGAGE
+
+- Download EPICA into same style as NOAA and AGAGE
+
+- Download NEEM into same style as NOAA and AGAGE
+
+- Download Scripps merged data into same style as NOAA and AGAGE
+  - probably don't use, as I think we have all raw data from elsewhere (although I am puzzled by why we don't have MLO pre 1968 in other sources)
+  - https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
+  - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
+    - Malte's paper used polluted
+
+- use third-order piecewise smoothing to fill in data gaps
 
 - reach out to NOAA and AGAGE authors to ask them what the right choice is in terms of using monthly vs. event data
 
@@ -13,6 +27,10 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
   - tricky because we'll have data going everywhere at the same time as we try and reimplement M17
 
 - new release of input4mips-validation so we no longer need the local install
+
+- dealing with scales of gases is going to require sitting down and thinking for a minute
+
+- dealing with all the data sources is going to be a grind
 
 ## Concs
 
@@ -179,19 +197,27 @@ Off the table improvements for now:
 
 ### Data sources
 
-- N2O budget: https://auburn.app.box.com/s/7fxesyrfzpj2k8h9cnu3vxbb014xj3sq/
-  - BUT, paper basically says use CSIRO, AGAGE and NOAA: https://www.nature.com/articles/s41586-020-2780-0#Sec2
-- Global methane budget: https://www.icos-cp.eu/GCP-CH4/2019
-  - data file then points out to relevant observational networks
-  - paper here: https://essd.copernicus.org/articles/12/1561/2020/
+- NOAA: done
+- AGAGE: done
+
 - Law dome ice core
   - https://data.csiro.au/collection/csiro:37077
-- Scripps stations
-  - https://scrippsco2.ucsd.edu/data/atmospheric_co2/alt.html
-- Scripps merged (not sure whether to use raw or not)
-  - https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-- Scipps other links
-  - https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+- EPICA Dronning Maud Laud ice core
+  - https://doi.pangaea.de/10.1594/PANGAEA.552232
+    - https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
+- NEEM methane
+  - https://doi.pangaea.de/10.1594/PANGAEA.899040
+  - start with outliers removed (https://doi.pangaea.de/10.1594/PANGAEA.899037), then ask providers
+    - https://doi.pangaea.de/10.1594/PANGAEA.899037?format=textfile
+- Scripps
+  - very confusing what this is
+    - why don't measurements pre-1968 appear in other networks?
+    - are all their stations in e.g. NOAA, or only some?
+    - should we be using Scripps' ice age core merged product and their spline?
+- UCI network? (I emailed them on 2024-03-27 asking about data access)
+
+- Full list of data sources is in Table 12 of M17
+  - https://gmd.copernicus.org/articles/10/2057/2017/gmd-10-2057-2017.pdf
 
 ## Repo
 
