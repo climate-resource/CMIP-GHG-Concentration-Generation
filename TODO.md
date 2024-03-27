@@ -3,39 +3,7 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- AGAGE data handling
-
-  - extract GAGE
-
-  - extract ALE
-
-  - combine into one, consistent data set
-
-    - should be able to make figures that look like this: https://agage2.eas.gatech.edu/data_archive/data_figures/monthly/png
-
-  - will need data from all 3 experiments from ale-gage-agage to get full time coverage
-
-    - https://agage2.eas.gatech.edu/data_archive/readme.agA_new
-
-  - then merge
-
-  - ALE
-
-    - all stations seem to have monthly data
-    - use mon not mop (we want baseline, not including pollution)
-    - https://agage2.eas.gatech.edu/data_archive/ale/monthly
-
-  - GAGE
-
-    - all stations seem to have monthly data
-    - use mon not mop (we want baseline, not including pollution)
-
-  - AGAGE
-
-    - all stations seem to have monthly data
-    - use all the different instruments
-
-  - reach out to AGAGE authors to ask if this is the right choice
+- reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
 
 - reach out to NOAA and AGAGE authors to ask them what the right choice is in terms of using monthly vs. event data
 
@@ -236,8 +204,6 @@ Off the table improvements for now:
 - think about whether using taipy would be a better way to do all this
 
 - think about whether hydra would be a good tool to use/point to
-
-- split out pydoit-nb into separate package then use here
 
 - Makefile
 
