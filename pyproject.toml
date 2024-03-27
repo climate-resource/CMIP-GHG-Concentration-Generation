@@ -58,6 +58,7 @@ markers = [
 
 [tool.ruff]
 src = ["src"]
+exclude = ["notebooks-archive/*"]
 target-version = "py311"
 select = [
     "E",  # pycodestyle error
