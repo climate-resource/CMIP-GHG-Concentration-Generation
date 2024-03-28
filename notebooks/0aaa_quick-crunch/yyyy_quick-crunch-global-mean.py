@@ -53,9 +53,13 @@ config_step = get_config_for_step_id(
 )
 
 # %% editable=true slideshow={"slide_type": ""}
-config_process_noaa_in_situ = get_config_for_step_id(
-    config=config, step="process_noaa_in_situ_data", step_config_id="co2"
-)
+noaa_gases = ["co2", "ch4", "n2o"] if not config.ci else ["co2"]
+configs_process_noaa_in_situ = {
+    gas: get_config_for_step_id(
+        config=config, step="process_noaa_surface_flask_data", step_config_id=gas
+    )
+    for gas in noaa_gases
+}
 config_process_law_dome = get_config_for_step_id(
     config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
 )
@@ -64,22 +68,49 @@ config_process_law_dome = get_config_for_step_id(
 # ## Action
 
 # %% editable=true slideshow={"slide_type": ""}
-gggrn_data = pd.read_csv(config_process_noaa_in_situ.processed_monthly_data_with_loc_file)
+gggrn_data = pd.concat(
+    [
+        pd.read_csv(c.processed_monthly_data_with_loc_file)
+        for c in configs_process_noaa_in_situ.values()
+    ]
+)
 gggrn_data
 
 # %% editable=true slideshow={"slide_type": ""}
-gggrn_global_mean = gggrn_data.groupby(["year", "month", "unit", "gas"])[["value"]].mean().reset_index()
-gggrn_global_mean["time"] = gggrn_global_mean["year"] + (gggrn_global_mean["month"] -0.5)/ 12
-gggrn_global_mean["variable"] = "Atmospheric Concentrations|" + gggrn_global_mean["gas"].str.upper()
-gggrn_global_mean = gggrn_global_mean.drop(["year", "month", "gas"], axis="columns")
-gggrn_global_mean["region"] = "World"
-gggrn_global_mean["scenario"] = "historical"
-gggrn_global_mean["source"] = "GGGRN_hack"
-gggrn_global_mean = BaseScmRun(gggrn_global_mean)
+gggrn_global_mean_df = (
+    gggrn_data.groupby(["year", "month", "unit", "gas"])[["value"]].mean().reset_index()
+)
+gggrn_global_mean_df["time"] = (
+    gggrn_global_mean_df["year"] + (gggrn_global_mean_df["month"] - 0.5) / 12
+)
+gggrn_global_mean_df["variable"] = (
+    "Atmospheric Concentrations|" + gggrn_global_mean_df["gas"].str.upper()
+)
+gggrn_global_mean_df = gggrn_global_mean_df.drop(
+    ["year", "month", "gas"], axis="columns"
+)
+gggrn_global_mean_df["region"] = "World"
+gggrn_global_mean_df["scenario"] = "historical"
+gggrn_global_mean_df["source"] = "GGGRN_hack"
+gggrn_global_mean = BaseScmRun(gggrn_global_mean_df)
 gggrn_global_mean
 
 # %% editable=true slideshow={"slide_type": ""}
-csiro_law_dome = BaseScmRun(config_process.law_dome.processed_file)
+csiro_law_dome_data = (
+    pd.read_csv(config_process_law_dome.processed_data_with_loc_file)
+    .groupby(["time", "unit", "gas"])[["value"]]
+    .mean()
+    .reset_index()
+)
+
+csiro_law_dome_data["variable"] = (
+    "Atmospheric Concentrations|" + csiro_law_dome_data["gas"].str.upper()
+)
+csiro_law_dome_data = csiro_law_dome_data.drop(["gas"], axis="columns")
+csiro_law_dome_data["region"] = "World"
+csiro_law_dome_data["scenario"] = "historical"
+csiro_law_dome_data["source"] = "Law_Dome_hack"
+csiro_law_dome = BaseScmRun(csiro_law_dome_data)
 csiro_law_dome
 
 
@@ -117,7 +148,7 @@ def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
     return interp_times
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 out_list = []
 for vdf in run_append(
     [
@@ -181,7 +212,7 @@ assert not out.timeseries().isna().any().any(), (
 )
 out
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.processed_data_file_global_means.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_data_file_global_means)
 config_step.processed_data_file_global_means

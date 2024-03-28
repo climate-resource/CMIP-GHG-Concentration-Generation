@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Process AGAGE
 #
 # Process data from the AGAGE network. We extract the monthly data with lat-lon information.
@@ -50,14 +50,14 @@ step_config_id = "cfc-12_gc-md_monthly"
 # %% [markdown]
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 
 # %% [markdown]

@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - extract
 #
 # Extract data from NOAA from the downloaded zip file.
@@ -79,7 +79,7 @@ elif config_step.source == "in-situ":
 else:
     raise NotImplementedError(config_step.source)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 if config_step.source == "surface-flask":
     config_step.interim_files["events_data"].parent.mkdir(exist_ok=True, parents=True)
     df_events.to_csv(config_step.interim_files["events_data"], index=False)

@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - process in-situ
 #
 # Process data from NOAA's in-situ network.
@@ -57,7 +57,7 @@ config_step = get_config_for_step_id(
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
