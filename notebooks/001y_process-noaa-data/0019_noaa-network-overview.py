@@ -51,11 +51,13 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-gas_configs = {
-    f"{gas}_{source}": get_config_for_step_id(
-        config=config, step=step, step_config_id=gas
+if config.ci:
+    to_show = (
+        ("co2", "in-situ", "process_noaa_in_situ_data"),
+        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
     )
-    for gas, source, step in (
+else:
+    to_show = (
         ("co2", "in-situ", "process_noaa_in_situ_data"),
         ("ch4", "in-situ", "process_noaa_in_situ_data"),
         ("co2", "surface-flask", "process_noaa_surface_flask_data"),
@@ -63,6 +65,12 @@ gas_configs = {
         ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
         ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
     )
+
+gas_configs = {
+    f"{gas}_{source}": get_config_for_step_id(
+        config=config, step=step, step_config_id=gas
+    )
+    for gas, source, step in to_show
 }
 
 config_retrieve = get_config_for_step_id(

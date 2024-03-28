@@ -111,7 +111,7 @@ processed
 for gas_label, gdf in processed.groupby("gas"):
     ax = gdf.plot(x="time", y="value")
     unit_gas = gdf["unit"].unique()
-    assert len(unit) == 1
+    assert len(unit_gas) == 1
     ax.set_ylabel(f"{gas_label} ({unit_gas[0]})")
 
     plt.show()
