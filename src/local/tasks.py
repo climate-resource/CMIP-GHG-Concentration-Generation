@@ -24,6 +24,7 @@ from .notebook_steps import (
     retrieve_and_extract_gage_data,
     retrieve_and_extract_misc_data,
     retrieve_and_extract_noaa_data,
+    retrieve_and_process_law_dome_data,
     write_input4mips,
 )
 
@@ -66,6 +67,7 @@ def gen_all_tasks(
         retrieve_and_extract_agage_data,
         retrieve_and_extract_gage_data,
         retrieve_and_extract_ale_data,
+        retrieve_and_process_law_dome_data,
         plot_input_data_overviews,
         quick_crunch,
         grid,

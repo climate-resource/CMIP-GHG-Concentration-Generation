@@ -100,7 +100,7 @@ retrieve_and_process_law_dome_data:
     data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
   processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
 
-plot:
+plot_input_data_overviews:
 - step_config_id: only
 
 retrieve:

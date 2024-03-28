@@ -17,7 +17,7 @@ from pydoit_nb.config_helpers import (
 
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
-from .plot import PlotConfig
+from .plot_input_data_overviews import PlotInputDataOverviewsConfig
 from .process import ProcessConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
@@ -118,7 +118,7 @@ class Config:
     )
     """Configurations to use for retrieving and processing Law Dome data"""
 
-    plot: list[PlotConfig] = field(
+    plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[
             make_attrs_validator_compatible_single_input(
                 assert_step_config_ids_are_unique

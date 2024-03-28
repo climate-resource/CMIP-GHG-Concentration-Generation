@@ -32,8 +32,8 @@ from local.config import load_config_from_file
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
-# %%
-step: str = "plots"
+# %% editable=true slideshow={"slide_type": ""}
+step: str = "plot_input_data_overviews"
 
 # %% [markdown]
 # ## Parameters
@@ -42,14 +42,14 @@ step: str = "plots"
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
-# config_step = get_config_for_step_id(
-#     config=config, step=step, step_config_id=step_config_id
-# )
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
 
 gas_configs = {
     f"{gas}_{source}": get_config_for_step_id(

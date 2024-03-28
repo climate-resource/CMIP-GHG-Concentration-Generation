@@ -12,12 +12,12 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Law dome ice core - process
 #
 # Process data from the Law Dome record.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -85,6 +85,8 @@ for sheet, gas, unit in [
     useable.columns = useable.columns.map(col_map)
     useable["unit"] = unit
     useable["gas"] = gas.lower()
+    # TODO: Check
+    #       Should there be a polynomial smoothing here?
     useable["year"] = useable["time"].apply(np.floor).astype(int)
     month = ((useable["time"] - useable["year"]) * 12).apply(np.ceil).astype(int)
     month[month == 0] = 1

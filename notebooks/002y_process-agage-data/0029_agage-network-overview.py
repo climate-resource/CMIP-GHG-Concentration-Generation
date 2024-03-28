@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # AGAGE - overview
 #
 # Overview of all AGAGE data.
@@ -33,7 +33,7 @@ from local.config import load_config_from_file
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "plot"
+step: str = "plot_input_data_overviews"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
