@@ -12,12 +12,12 @@
 #     name: python3
 # ---
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown]
 # # Law dome ice core - process
 #
 # Process data from the Law Dome record.
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown]
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -66,7 +66,7 @@ LAW_DOME_LONGITUDE = 112 + 50 / 60
 
 # %% editable=true slideshow={"slide_type": ""}
 file_name_dict = {k.name: k for k in config_step.files_md5_sum}
-print(pretty(file_name_dict))
+print(pretty(file_name_dict))  # type: ignore
 
 # %% editable=true slideshow={"slide_type": ""}
 processed_dfs = []
@@ -85,8 +85,7 @@ for sheet, gas, unit in [
     useable.columns = useable.columns.map(col_map)
     useable["unit"] = unit
     useable["gas"] = gas.lower()
-    # TODO: Check
-    #       Should there be a polynomial smoothing here?
+    # TODO: Check, should there be polynomial smoothing here?
     useable["year"] = useable["time"].apply(np.floor).astype(int)
     month = ((useable["time"] - useable["year"]) * 12).apply(np.ceil).astype(int)
     month[month == 0] = 1
@@ -109,11 +108,11 @@ if config.ci:
 processed
 
 # %% editable=true slideshow={"slide_type": ""}
-for gas, gdf in processed.groupby("gas"):
+for gas_label, gdf in processed.groupby("gas"):
     ax = gdf.plot(x="time", y="value")
-    unit = gdf["unit"].unique()
+    unit_gas = gdf["unit"].unique()
     assert len(unit) == 1
-    ax.set_ylabel(f"{gas} ({unit[0]})")
+    ax.set_ylabel(f"{gas_label} ({unit_gas[0]})")
 
     plt.show()
 

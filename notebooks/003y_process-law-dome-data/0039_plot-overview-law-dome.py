@@ -79,7 +79,6 @@ for gas, gdf in tqdman.tqdm(
     full_df.groupby("gas"),
     desc="Gases",
 ):
-    labels = []
     fig, axes = plt.subplot_mosaic(
         [
             ["map", "map"],
