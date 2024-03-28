@@ -47,7 +47,9 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
+    config_step = get_config_for_step_id(
+        config=config, step=step_name, step_config_id=step_config_id
+    )
     config_process_noaa_in_situ = get_config_for_step_id(
         config=config, step="process_noaa_in_situ_data", step_config_id="co2"
     )
@@ -57,7 +59,9 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("0aaa_quick-crunch") / "yyyy_quick-crunch-global-mean"],
+            unconfigured_notebook=uc_nbs_dict[
+                Path("0aaa_quick-crunch") / "yyyy_quick-crunch-global-mean"
+            ],
             configuration=None,
             dependencies=(
                 config_process_noaa_in_situ.processed_monthly_data_with_loc_file,
@@ -72,7 +76,9 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[
+    Config, ConfigBundle
+] = UnconfiguredNotebookBasedStep(
     step_name="quick_crunch",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

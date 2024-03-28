@@ -46,7 +46,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %%
 config = load_config_from_file(config_file)
-config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
 
 # %% [markdown]
 # ## Action
