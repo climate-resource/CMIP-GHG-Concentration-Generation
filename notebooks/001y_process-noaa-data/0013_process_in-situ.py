@@ -21,7 +21,7 @@
 #
 # - work out why MLO only starts in 1974 when https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html says it starts in 1958...
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
 # %%
@@ -68,15 +68,18 @@ config_retrieve_noaa = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
-# %% [markdown]
+# %% editable=true slideshow={"slide_type": ""}
+df_months
+
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Extract data
 #
 # Nice and easy as this data already has everything we need.
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 monthly_dfs_with_loc = df_months[PROCESSED_DATA_COLUMNS]
 assert (
     not monthly_dfs_with_loc[["gas", "year", "month", "site_code_filename"]]
@@ -85,7 +88,7 @@ assert (
 ), "Duplicate entries for a station in a month"
 monthly_dfs_with_loc
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # Handy check to see if all months have at least some data
 pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(  # type: ignore
     monthly_dfs_with_loc.set_index(["year", "month"]).index.drop_duplicates()

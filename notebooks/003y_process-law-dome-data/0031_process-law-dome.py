@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Law dome ice core - process
 #
 # Process data from the Law Dome record.

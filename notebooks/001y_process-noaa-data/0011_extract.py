@@ -90,3 +90,6 @@ if config_step.source == "surface-flask":
 elif config_step.source == "in-situ":
     config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
     df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
+
+# %% editable=true slideshow={"slide_type": ""}
+config_step.interim_files

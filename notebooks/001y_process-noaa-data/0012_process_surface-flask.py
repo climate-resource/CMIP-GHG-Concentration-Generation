@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - process surface flask
 #
 # Process data from NOAA's surface flask network to add lat-lon information to the monthly data.
@@ -53,7 +53,7 @@ config_step = get_config_for_step_id(
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
@@ -64,12 +64,18 @@ config_retrieve_noaa = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 df_events = pd.read_csv(config_retrieve_noaa.interim_files["events_data"])
 df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
+# %% editable=true slideshow={"slide_type": ""}
+df_months["year"].max()
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+df_events["year"].max()
+
+
+# %% editable=true slideshow={"slide_type": ""}
 def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """
     Get dictionary grouped by site site_code
@@ -385,7 +391,7 @@ only_events_stations
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save out result
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 assert set(monthly_dfs_with_loc["gas"]) == {config_step.gas}
 monthly_dfs_with_loc.to_csv(
     config_step.processed_monthly_data_with_loc_file, index=False
