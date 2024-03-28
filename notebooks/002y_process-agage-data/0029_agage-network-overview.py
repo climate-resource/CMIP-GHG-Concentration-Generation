@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # AGAGE - overview
 #
 # Overview of all AGAGE data.
@@ -33,7 +33,7 @@ from local.config import load_config_from_file
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "plot"
+step: str = "plot_input_data_overviews"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -45,7 +45,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # %% [markdown]
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
@@ -60,7 +60,7 @@ config_retrieve_and_extract_ale_data = get_config_for_step_id(
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 
 # %% [markdown]

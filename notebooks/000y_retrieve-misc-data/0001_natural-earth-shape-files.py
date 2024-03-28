@@ -32,7 +32,7 @@ from local.config import load_config_from_file
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "retrieve"
+step: str = "retrieve_misc_data"
 
 # %% [markdown]
 # ## Parameters

@@ -17,16 +17,16 @@ from pydoit_nb.config_helpers import (
 
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
-from .plot import PlotConfig
-from .process import ProcessConfig
+from .plot_input_data_overviews import PlotInputDataOverviewsConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
-from .retrieve import RetrieveConfig
 from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
+from .retrieve_misc_data import RetrieveMiscDataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
 
@@ -53,6 +53,15 @@ class Config:
     We use this to help us create a short-cut path that can reasonably be run
     as part of our CI workflow.
     """
+
+    retrieve_misc_data: list[RetrieveMiscDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use with the retrieve step"""
 
     retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig] = field(
         validator=[
@@ -108,7 +117,16 @@ class Config:
     )
     """Configurations to use for retrieving and extracting ALE data"""
 
-    plot: list[PlotConfig] = field(
+    retrieve_and_process_law_dome_data: list[RetrieveProcessLawDomeConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and processing Law Dome data"""
+
+    plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[
             make_attrs_validator_compatible_single_input(
                 assert_step_config_ids_are_unique
@@ -116,24 +134,6 @@ class Config:
         ]
     )
     """Configurations to use for the plotting step"""
-
-    retrieve: list[RetrieveConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the retrieve step"""
-
-    process: list[ProcessConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the process step"""
 
     grid: list[GridConfig] = field(
         validator=[

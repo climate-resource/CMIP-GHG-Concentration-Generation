@@ -1,5 +1,5 @@
 """
-Config for the plot step
+Config for the input data overview plotting step
 """
 
 from __future__ import annotations
@@ -8,9 +8,9 @@ from attrs import frozen
 
 
 @frozen
-class PlotConfig:
+class PlotInputDataOverviewsConfig:
     """
-    Configuration class for the plot step
+    Configuration class for the input data overview plotting step
     """
 
     step_config_id: str

@@ -1,6 +1,7 @@
 """
 Process NOAA surface flask data
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -50,8 +51,8 @@ def configure_notebooks(
         config=config, step=step_name, step_config_id=step_config_id
     )
 
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
+    config_retrieve_misc_data = get_config_for_step_id(
+        config=config, step="retrieve_misc_data", step_config_id="only"
     )
     config_retrieve_noaa = get_config_for_step_id(
         config=config,
@@ -69,8 +70,8 @@ def configure_notebooks(
                 config_retrieve_noaa.interim_files["events_data"],
                 config_retrieve_noaa.interim_files["monthly_data"],
                 (
-                    config_retrieve.natural_earth.raw_dir
-                    / config_retrieve.natural_earth.countries_shape_file_name
+                    config_retrieve_misc_data.natural_earth.raw_dir
+                    / config_retrieve_misc_data.natural_earth.countries_shape_file_name
                 ),
             ),
             targets=(config_step.processed_monthly_data_with_loc_file,),

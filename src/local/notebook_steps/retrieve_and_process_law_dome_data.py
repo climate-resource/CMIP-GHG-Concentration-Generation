@@ -1,6 +1,7 @@
 """
-Process raw data notebook steps
+Retrieve and extract Law Dome data notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -50,28 +51,25 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
-    )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yy_process-data") / "0101_process-law-dome"
+                Path("003y_process-law-dome-data") / "0030_download-law-dome"
             ],
-            configuration=(config_step.law_dome,),
-            dependencies=(get_checklist_file(config_retrieve.law_dome.raw_dir),),
-            targets=(config_step.law_dome.processed_file,),
+            configuration=(config_step.files_md5_sum, config_step.doi),
+            dependencies=(),
+            targets=(get_checklist_file(config_step.raw_dir),),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yy_process-data") / "0111_process-gggrn-global-mean"
+                Path("003y_process-law-dome-data") / "0031_process-law-dome"
             ],
-            configuration=None,
-            dependencies=(get_checklist_file(config_retrieve.gggrn.raw_dir),),
-            targets=(config_step.gggrn.processed_file_global_mean,),
+            configuration=(),
+            dependencies=(get_checklist_file(config_step.raw_dir),),
+            targets=(config_step.processed_data_with_loc_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -83,22 +81,19 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="process",
+    step_name="retrieve_and_process_law_dome_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("01yy_process-data") / "0101_process-law-dome",
+            notebook_path=Path("003y_process-law-dome-data") / "0030_download-law-dome",
             raw_notebook_ext=".py",
-            summary="process - Law Dome",
-            doc="Process data for Law Dome observations",
+            summary="process Law Dome data - download",
+            doc="Download Law Dome data",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("01yy_process-data") / "0111_process-gggrn-global-mean",
+            notebook_path=Path("003y_process-law-dome-data") / "0031_process-law-dome",
             raw_notebook_ext=".py",
-            summary="process - Global Greenhouse Gas Research Network (GGGRN)",
-            doc=(
-                "Process data from the Global Greenhouse Gas Research Network (GGGRN). "
-                "At present, this notebook only processes global-mean data."
-            ),
+            summary="process Law Dome data - process",
+            doc="Process Law Dome data into a file with latitude and longitude information",
         ),
     ],
     configure_notebooks=configure_notebooks,
