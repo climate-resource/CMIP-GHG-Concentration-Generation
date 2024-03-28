@@ -5,14 +5,14 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Law dome
 
 # %% [markdown]
@@ -66,11 +66,11 @@ config_retrieve = get_config_for_step_id(
 #     - will need lat and lon information in future, for now ignore that
 # - save
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 file_name_dict = {k.name: k for k in config_retrieve.law_dome.files_md5_sum}
 pprint(file_name_dict)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 processed_runs = []
 for sheet, gas, unit in [
     ("CO2byAge", "CO2", "ppm"),
@@ -101,7 +101,7 @@ if config.ci:
 
 processed
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.law_dome.processed_file.parent.mkdir(exist_ok=True, parents=True)
 processed.to_csv(config_step.law_dome.processed_file)
 config_step.law_dome.processed_file

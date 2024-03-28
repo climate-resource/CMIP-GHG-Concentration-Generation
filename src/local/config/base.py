@@ -27,6 +27,7 @@ from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
 
@@ -107,6 +108,15 @@ class Config:
         ]
     )
     """Configurations to use for retrieving and extracting ALE data"""
+
+    retrieve_and_process_law_dome_data: list[RetrieveProcessLawDomeConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and processing Law Dome data"""
 
     plot: list[PlotConfig] = field(
         validator=[

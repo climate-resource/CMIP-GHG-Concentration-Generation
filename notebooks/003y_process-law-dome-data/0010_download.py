@@ -13,9 +13,22 @@
 # ---
 
 # %% [markdown]
-# # Law dome
+# # Law dome ice core - download
 #
-# Retrieve data from the [Law Dome ice core dataset](https://data.csiro.au/collection/csiro%3A37077v2).
+# Download data from the [Law Dome ice core dataset](https://data.csiro.au/collection/csiro%3A37077v2),
+# specifically [this DOI](https://doi.org/10.25919/5bfe29ff807fb).
+#
+# This notebook doesn't actually do any downloading.
+# Instead, we have included the data in the repository.
+# All we do here is check we have the expected data.
+#
+# The reason for including the data in the repository is to faciliate automated testing of the workflow.
+# We cannot download the data automatically from CSIRO, because they do not provide a persistent download link
+# (and we felt that reverse engineering the link was not in the spirit of things,
+# and also likely not possible because CSIRO rotates the permission tokens anyway).
+# If you want CSIRO's data, **do not use the data in this repository**.
+# Instead, go and download it from [the record](https://doi.org/10.25919/5bfe29ff807fb)
+# and then cite the original references therein.
 
 # %% [markdown]
 # ## Imports
@@ -27,11 +40,11 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
-# %%
-step: str = "retrieve"
+# %% editable=true slideshow={"slide_type": ""}
+step: str = "retrieve_and_process_law_dome_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -40,10 +53,10 @@ step: str = "retrieve"
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
@@ -52,25 +65,11 @@ config_step = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
-print(f"DOI for dataset: {config_step.law_dome.doi}")
-
-# %% [markdown]
-# ## Retrieve the data
-#
-# **Note**: We would like to automate this using the command below. However, the keys are rotated.
-#
-# ```
-# !AWS_ACCESS_KEY_ID=ADROIMK8WFURFMTPLD9A AWS_SECRET_ACCESS_KEY=woGxqR3TD5gmn1/ICDEp9G8iQLhm968IqHtV0rF0 aws s3 cp --endpoint-url https://s3.data.csiro.au --recursive s3://dapprd/000037077v001/ {config_step.law_dome.raw_dir}
-# ```
-#
-# As a result, we just include the data in the repository instead (not perfect, but fine for now and the DOI is above for clarity).
-
 # %% [markdown]
 # ### Check we have the intended files
 
 # %%
-for fp, expected_md5 in config_step.law_dome.files_md5_sum.items():
+for fp, expected_md5 in config_step.files_md5_sum.items():
     actual_md5 = get_file_md5(fp)
     if not expected_md5 == actual_md5:
         error_msg = (
@@ -78,5 +77,5 @@ for fp, expected_md5 in config_step.law_dome.files_md5_sum.items():
         )
         raise AssertionError(error_msg)
 
-# %% editable=true slideshow={"slide_type": ""}
-generate_directory_checklist(config_step.law_dome.raw_dir)
+# %%
+generate_directory_checklist(config_step.raw_dir)

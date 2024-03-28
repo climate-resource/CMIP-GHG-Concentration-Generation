@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - download
 #
 # Download data from the [NOAA Global Monitoring Laboratory (GML) Carbon Cycle Greenhouse Gases (CCGG) research area](https://gml.noaa.gov/ccgg/flask.html), specifically the [data page](https://gml.noaa.gov/ccgg/data/).

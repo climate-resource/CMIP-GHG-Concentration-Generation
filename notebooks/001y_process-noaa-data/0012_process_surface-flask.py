@@ -17,10 +17,10 @@
 #
 # Process data from NOAA's surface flask network to add lat-lon information to the monthly data.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -30,7 +30,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 from local.config import load_config_from_file
 from local.noaa_processing import PROCESSED_DATA_COLUMNS
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %%
@@ -382,7 +382,7 @@ only_events_stations
 #
 # TODO: include this question when I reach out to NOAA people.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save out result
 
 # %%

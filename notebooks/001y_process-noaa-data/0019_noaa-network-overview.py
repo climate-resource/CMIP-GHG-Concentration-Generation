@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - overview
 #
 # Overview of all NOAA data.
@@ -72,7 +72,7 @@ config_retrieve = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 full_df = pd.concat(
     [
         pd.read_csv(c.processed_monthly_data_with_loc_file)

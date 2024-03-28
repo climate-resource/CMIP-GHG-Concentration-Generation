@@ -92,6 +92,14 @@ retrieve_and_extract_ale_data:
   processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   download_complete_file: data/raw/agage/ale/ale_monthly.complete
 
+retrieve_and_process_law_dome_data:
+- step_config_id: "only"
+  doi: https://doi.org/10.25919/5bfe29ff807fb
+  raw_dir: data/raw/law_dome
+  files_md5_sum:
+    data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+  processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
+
 plot:
 - step_config_id: only
 
