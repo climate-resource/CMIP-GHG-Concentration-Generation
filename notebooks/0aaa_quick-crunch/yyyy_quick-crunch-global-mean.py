@@ -113,6 +113,30 @@ csiro_law_dome_data["source"] = "Law_Dome_hack"
 csiro_law_dome = BaseScmRun(csiro_law_dome_data)
 csiro_law_dome
 
+# %%
+# TODO: move this smoothing elsewhere and updated it to match M17
+import numpy as np
+from scipy.interpolate import BSpline, splrep
+
+for gas, vdf in csiro_law_dome_data.groupby("variable"):
+    # vdf = vdf.loc[(vdf["time"]>=1750) & (vdf["time"]<=1950)]
+    year_min_interp = int(np.ceil(vdf["time"].min()))
+    year_max_interp = int(np.floor(vdf["time"].max()))
+    monthly_times = [
+        y + m
+        for y in range(year_min_interp, year_max_interp)
+        for m in (np.arange(12) + 0.5) / 12
+    ]
+    # cubic_spline = CubicSpline(vdf["time"], vdf["value"])
+    interpolator = BSpline(*splrep(vdf["time"], vdf["value"], s=2000))
+    interpolated = interpolator(monthly_times)
+
+    ax = vdf.plot.line(x="time", y="value", alpha=0.3)
+    vdf.plot.scatter(x="time", y="value", ax=ax, color="tab:orange", zorder=3)
+    # ax.scatter(monthly_times, interpolated, marker="x")
+    ax.plot(monthly_times, interpolated, alpha=0.5, color="tab:green", zorder=4)
+    plt.show()
+
 
 # %% editable=true slideshow={"slide_type": ""}
 def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:

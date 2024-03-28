@@ -4,6 +4,7 @@ Task definition and retrieval
 
 from __future__ import annotations
 
+import shutil
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -27,6 +28,47 @@ from .notebook_steps import (
     retrieve_and_process_law_dome_data,
     write_input4mips,
 )
+
+
+def copy_no_output(src: Path, dst: Path) -> None:
+    """
+    Copy a file, producing no output
+
+    Required so that pydoit doesn't think the shutil operation failed.
+    Defined here as parallel runs fail if we use pydoit's ``swallow_output`` helper.
+
+    Parameters
+    ----------
+    src
+        Source
+
+    dst
+        Destination
+    """
+    shutil.copy2(src=src, dst=dst)
+
+
+def copy_tree_no_output(src: Path, dst: Path) -> None:
+    """
+    Copy a file tree, producing no output
+
+    Required so that pydoit doesn't think the shutil operation failed.
+    Defined here as parallel runs fail if we use pydoit's ``swallow_output`` helper.
+
+    Parameters
+    ----------
+    src
+        Source
+
+    dst
+        Destination
+    """
+    shutil.copytree(
+        src=src,
+        dst=dst,
+        ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
+        dirs_exist_ok=True,
+    )
 
 
 def gen_all_tasks(
@@ -89,4 +131,6 @@ def gen_all_tasks(
         run_id=config_bundle.run_id,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
         config_file_raw=config_file_raw,
+        copy_file=copy_no_output,
+        copy_tree=copy_tree_no_output,
     )

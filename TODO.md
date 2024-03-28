@@ -102,6 +102,7 @@ Inspired by the next section
 
   - https://gitlab.com/magicc/CopyForDeletion_CMIP6GHGconcentrations
   - key driver here: https://gitlab.com/magicc/CopyForDeletion_CMIP6GHGconcentrations/-/blob/master/main_script_histGHG_generator.m?ref_type=heads
+  - full set of stuff here: https://drive.google.com/drive/u/1/folders/19I8VMDAwG1JJ_K_Wzw05qrv9ENpFhRD8
 
 - Some documentation stuff: see #34
 
