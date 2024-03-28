@@ -1,6 +1,7 @@
 """
 Process NOAA surface flask data
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -46,12 +47,10 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
+    config_retrieve_misc_data = get_config_for_step_id(
+        config=config, step="retrieve_misc_data", step_config_id="only"
     )
     config_retrieve_noaa = get_config_for_step_id(
         config=config,
@@ -61,16 +60,14 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("001y_process-noaa-data") / "0012_process_surface-flask"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("001y_process-noaa-data") / "0012_process_surface-flask"],
             configuration=(),
             dependencies=(
                 config_retrieve_noaa.interim_files["events_data"],
                 config_retrieve_noaa.interim_files["monthly_data"],
                 (
-                    config_retrieve.natural_earth.raw_dir
-                    / config_retrieve.natural_earth.countries_shape_file_name
+                    config_retrieve_misc_data.natural_earth.raw_dir
+                    / config_retrieve_misc_data.natural_earth.countries_shape_file_name
                 ),
             ),
             targets=(config_step.processed_monthly_data_with_loc_file,),
@@ -82,9 +79,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="process_noaa_surface_flask_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

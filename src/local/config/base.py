@@ -18,16 +18,15 @@ from pydoit_nb.config_helpers import (
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
-from .process import ProcessConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .quick_crunch import QuickCrunchConfig
-from .retrieve import RetrieveConfig
 from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
+from .retrieve_misc_data import RetrieveMiscDataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
 
@@ -55,129 +54,68 @@ class Config:
     as part of our CI workflow.
     """
 
+    retrieve_misc_data: list[RetrieveMiscDataConfig] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use with the retrieve step"""
+
     retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting NOAA data"""
 
     process_noaa_surface_flask_data: list[ProcessNOAASurfaceFlaskDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA surface flask data"""
 
     process_noaa_in_situ_data: list[ProcessNOAAInSituDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA in-situ data"""
 
     retrieve_and_extract_agage_data: list[RetrieveExtractAGAGEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting AGAGE data"""
 
     retrieve_and_extract_gage_data: list[RetrieveExtractGAGEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting GAGE data"""
 
     retrieve_and_extract_ale_data: list[RetrieveExtractALEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting ALE data"""
 
     retrieve_and_process_law_dome_data: list[RetrieveProcessLawDomeConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing Law Dome data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for the plotting step"""
 
-    retrieve: list[RetrieveConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the retrieve step"""
-
-    process: list[ProcessConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the process step"""
-
     grid: list[GridConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the grid step"""
 
     gridded_data_processing: list[GriddedDataProcessingConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the gridded data processing step"""
 
     write_input4mips: list[WriteInput4MIPsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the write input4MIPs step"""
 
     quick_crunch: list[QuickCrunchConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the quick crunch step"""
 

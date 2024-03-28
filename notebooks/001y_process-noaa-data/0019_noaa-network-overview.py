@@ -74,7 +74,7 @@ gas_configs = {
 }
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 
 # %% [markdown]

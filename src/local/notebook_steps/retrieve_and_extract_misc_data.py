@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
@@ -59,10 +57,7 @@ def configure_notebooks(
             configuration=(config_step.natural_earth.download_urls,),
             dependencies=(),
             targets=(
-                (
-                    config_step.natural_earth.raw_dir
-                    / config_step.natural_earth.countries_shape_file_name
-                ),
+                (config_step.natural_earth.raw_dir / config_step.natural_earth.countries_shape_file_name),
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -72,14 +67,11 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
-    step_name="retrieve",
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
+    step_name="retrieve_misc_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("000y_retrieve-misc-data")
-            / "0001_natural-earth-shape-files",
+            notebook_path=Path("000y_retrieve-misc-data") / "0001_natural-earth-shape-files",
             raw_notebook_ext=".py",
             summary="retrieve - Natural Earth shape files",
             doc="Retrieve shape files from Natural Earth",

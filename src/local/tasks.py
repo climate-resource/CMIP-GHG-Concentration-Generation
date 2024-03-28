@@ -74,13 +74,18 @@ def gen_all_tasks(
         gridded_data_processing,
         write_input4mips,
     ]:
-        for task in step_module.step.gen_notebook_tasks(
-            config_bundle=config_bundle,
-            root_dir_raw_notebooks=root_dir_raw_notebooks,
-            converter=converter_yaml,
-        ):
-            yield task
-            notebook_tasks.append(task)
+        try:
+            for task in step_module.step.gen_notebook_tasks(
+                config_bundle=config_bundle,
+                root_dir_raw_notebooks=root_dir_raw_notebooks,
+                converter=converter_yaml,
+            ):
+                yield task
+                notebook_tasks.append(task)
+        except:
+            import pdb
+
+            pdb.set_trace()
 
     yield from gen_copy_source_into_output_tasks(
         all_preceeding_tasks=notebook_tasks,

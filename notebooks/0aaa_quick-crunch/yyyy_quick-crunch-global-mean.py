@@ -5,22 +5,22 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Quick calculate global-mean
 #
 # This isn't how we will do the calculations in the end, but it is a quick route to having a global-mean value with which we can then test the formats etc.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 import datetime as dt
 
 import matplotlib.pyplot as plt
@@ -30,7 +30,7 @@ from scmdata.run import BaseScmRun, run_append
 
 from local.config import load_config_from_file
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -53,23 +53,37 @@ config_step = get_config_for_step_id(
 )
 
 # %% editable=true slideshow={"slide_type": ""}
-config_process = get_config_for_step_id(
-    config=config, step="process", step_config_id="only"
+config_process_noaa_in_situ = get_config_for_step_id(
+    config=config, step="process_noaa_in_situ_data", step_config_id="co2"
+)
+config_process_law_dome = get_config_for_step_id(
+    config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
 )
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %%
-gggrn_global_mean = BaseScmRun(config_process.gggrn.processed_file_global_mean)
+# %% editable=true slideshow={"slide_type": ""}
+gggrn_data = pd.read_csv(config_process_noaa_in_situ.processed_monthly_data_with_loc_file)
+gggrn_data
+
+# %% editable=true slideshow={"slide_type": ""}
+gggrn_global_mean = gggrn_data.groupby(["year", "month", "unit", "gas"])[["value"]].mean().reset_index()
+gggrn_global_mean["time"] = gggrn_global_mean["year"] + (gggrn_global_mean["month"] -0.5)/ 12
+gggrn_global_mean["variable"] = "Atmospheric Concentrations|" + gggrn_global_mean["gas"].str.upper()
+gggrn_global_mean = gggrn_global_mean.drop(["year", "month", "gas"], axis="columns")
+gggrn_global_mean["region"] = "World"
+gggrn_global_mean["scenario"] = "historical"
+gggrn_global_mean["source"] = "GGGRN_hack"
+gggrn_global_mean = BaseScmRun(gggrn_global_mean)
 gggrn_global_mean
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 csiro_law_dome = BaseScmRun(config_process.law_dome.processed_file)
 csiro_law_dome
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
     """
     Get :obj:`dt.datetime` at the start of each year-month combination to use for interpolation
