@@ -114,7 +114,8 @@ csiro_law_dome = BaseScmRun(csiro_law_dome_data)
 csiro_law_dome
 
 # %%
-# TODO: move this smoothing elsewhere and updated it to match M17
+# TODO: move this smoothing elsewhere and update it to match M17.
+# Nicolai wrote some custom algorithm
 import numpy as np
 from scipy.interpolate import BSpline, splrep
 
@@ -122,19 +123,15 @@ for gas, vdf in csiro_law_dome_data.groupby("variable"):
     # vdf = vdf.loc[(vdf["time"]>=1750) & (vdf["time"]<=1950)]
     year_min_interp = int(np.ceil(vdf["time"].min()))
     year_max_interp = int(np.floor(vdf["time"].max()))
-    monthly_times = [
-        y + m
-        for y in range(year_min_interp, year_max_interp)
-        for m in (np.arange(12) + 0.5) / 12
-    ]
+    years = np.arange(year_min_interp, year_max_interp + 1)
     # cubic_spline = CubicSpline(vdf["time"], vdf["value"])
     interpolator = BSpline(*splrep(vdf["time"], vdf["value"], s=2000))
-    interpolated = interpolator(monthly_times)
+    interpolated = interpolator(years)
 
     ax = vdf.plot.line(x="time", y="value", alpha=0.3)
     vdf.plot.scatter(x="time", y="value", ax=ax, color="tab:orange", zorder=3)
     # ax.scatter(monthly_times, interpolated, marker="x")
-    ax.plot(monthly_times, interpolated, alpha=0.5, color="tab:green", zorder=4)
+    ax.plot(years, interpolated, alpha=0.5, color="tab:green", zorder=4)
     plt.show()
 
 
@@ -212,7 +209,7 @@ for vdf in run_append(
         hue="source", style="variable", ax=axes[0], time_axis="seconds since 1970-01-01"
     )
 
-    vdf.append(avg_run).filter(year=range(1980, 2030)).lineplot(  # type: ignore
+    vdf.append(avg_run).filter(year=range(1950, 2030)).lineplot(  # type: ignore
         hue="source", style="variable", ax=axes[1]
     )
     axes[1].legend().remove()
