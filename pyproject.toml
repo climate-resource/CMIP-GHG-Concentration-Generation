@@ -30,6 +30,7 @@ input4mips-validation = { git = "https://github.com/climate-resource/input4mips_
 pydoit-nb = "0.3.3"
 carpet-concentrations = "0.5.1"
 beautifulsoup4 = "4.12.3"
+ipywidgets = "^8.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
