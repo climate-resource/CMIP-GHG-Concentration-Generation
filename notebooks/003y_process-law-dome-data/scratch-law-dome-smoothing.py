@@ -284,7 +284,7 @@ class WeightedQuantileRegression:
             [
                 np.repeat(self.weight_min, n),
                 # 1 - np.abs(z.m) / np.max(np.abs(z.m))
-                1 - np.abs(z) / np.max(np.abs(z)),
+                (1 - np.abs(z) / np.max(np.abs(z))).to("dimensionless").m,
             ],
             axis=0,
         )
@@ -318,19 +318,40 @@ class WeightedQuantileRegression:
                 -Q(np.diag([1] * 2 * n), "dimensionless"),
             ]
         ).T
-        res = scipy.optimize.linprog(
-            f,
-            b_ub=b.m,
-            # Tracking the units through properly would be difficult
-            A_ub=A.m,
-        )
+
+        for maxiter in [1e5, 1e6, 1e7, 1e8, 1e9]:
+            res = scipy.optimize.linprog(
+                f,
+                b_ub=b.m,
+                # Tracking the units through properly would be difficult
+                A_ub=A.m,
+                method="highs",
+                options=dict(maxiter=int(maxiter)),
+            )
+            if res.success:
+                break
+
+        else:
+            print(f"didn't converge for {target_x=}")
+            return None
+
         opt = Q(res.x[0] - res.x[1], b.units)
 
         return opt
 
 
 # %%
+# noise_adder
+
+# %%
+# point_selector
+
+# %%
 for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
+    print(gas)
+    # if gas != "n2o":
+    #     continue
+
     gas_unit = gdf["unit"].unique()
     if len(gas_unit) > 1:
         raise ValueError(f"More than one unit found for {gas=}, {gas_unit=}")
@@ -341,58 +362,75 @@ for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
     y_raw = Q(gdf["value"].values, gas_unit)
 
     noise_adder = noise_adders[gas]
-
-    x_plus_noise, y_plus_noise = noise_adder.add_noise(
-        x=x_raw,
-        y=y_raw,
-    )
-    x_plus_noise_sorted_idx = np.argsort(x_plus_noise)
-    x_plus_noise_sorted = x_plus_noise[x_plus_noise_sorted_idx]
-    y_plus_noise_sorted = y_plus_noise[x_plus_noise_sorted_idx]
-
-    fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(8, 6))
-    plot_noise_addition(
-        x_raw=x_raw,
-        y_raw=y_raw,
-        x_plus_noise=x_plus_noise,
-        y_plus_noise=y_plus_noise,
-        axes=axes,
-    )
-    fig.suptitle(gas)
-    plt.tight_layout()
-    plt.show()
-
-    point_selector = PointSelector(
-        **point_selector_settings[gas],
-        x_pool=x_plus_noise_sorted,
-        y_pool=y_plus_noise_sorted,
-    )
+    print(noise_adder)
+    print(f"{noise_adder.percentage_time_error * Q(2000, 'yr')=}")
 
     years_to_calculate = Q(
         np.arange(
-            np.floor(x_plus_noise_sorted.to("yr").m.min()),
-            np.ceil(x_plus_noise_sorted.to("yr").m.max()) + 1,
+            np.floor(x_raw.to("yr").m.min()),
+            np.ceil(x_raw.to("yr").m.max()) + 1,
         ),
         "yr",
     )
 
     regressor = WeightedQuantileRegression(quantile=0.5)
     n_draws = 250
-    n_draws = 30
+    # n_draws = 30
+    n_draws = 3
 
     smoothed_all_samples = []
+
     for i in tqdman.tqdm(range(n_draws)):
+        x_plus_noise, y_plus_noise = noise_adder.add_noise(
+            x=x_raw,
+            y=y_raw,
+        )
+        x_plus_noise_sorted_idx = np.argsort(x_plus_noise)
+        x_plus_noise_sorted = x_plus_noise[x_plus_noise_sorted_idx]
+        y_plus_noise_sorted = y_plus_noise[x_plus_noise_sorted_idx]
+
+        point_selector = PointSelector(
+            **point_selector_settings[gas],
+            x_pool=x_plus_noise_sorted,
+            y_pool=y_plus_noise_sorted,
+        )
+
+        if i < 1:
+            print(f"{point_selector.window_width=}")
+            print(f"{point_selector.minimum_data_points_either_side=}")
+            print(f"{point_selector.maximum_data_points_either_side=}")
+
+            fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(8, 6))
+            plot_noise_addition(
+                x_raw=x_raw,
+                y_raw=y_raw,
+                x_plus_noise=x_plus_noise,
+                y_plus_noise=y_plus_noise,
+                axes=axes,
+            )
+            fig.suptitle(gas)
+            plt.tight_layout()
+            plt.show()
+
         smoothed = []
 
-        for i, target_year in tqdman.tqdm(enumerate(years_to_calculate), leave=False):
+        quantile_regression_success = True
+        for i, target_year in enumerate(years_to_calculate):
             selected_points = point_selector.get_points(target_year)
             quantile_regression_fitted = regressor.fit(
                 selected_points[0], selected_points[1], target_x=target_year
             )
+            if quantile_regression_fitted is None:
+                print("Quantile regression failed, re-drawing")
+                quantile_regression_success = False
+                break
+
             smoothed.append(quantile_regression_fitted)
 
-        smoothed = np.hstack(smoothed)
-        smoothed_all_samples.append(smoothed)
+        if not quantile_regression_success:
+            continue
+
+        smoothed_all_samples.append(np.hstack(smoothed))
 
     smoothed_all_samples = np.vstack(smoothed_all_samples)
 
@@ -406,12 +444,37 @@ for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
         s=20,
         zorder=2,
     )
-    ax.plot(years_to_calculate.m, smoothed_all_samples.m.T, color="gray", alpha=0.6)
+    ax.plot(
+        years_to_calculate.m,
+        smoothed_all_samples.m.T,
+        color="gray",
+        alpha=0.5,
+        linewidth=1.0,
+    )
     ax.plot(
         years_to_calculate.m,
         smoothed_all_samples_median.m,
         color="tab:green",
-        alpha=0.9,
+        alpha=0.4,
+        linewidth=3,
+    )
+    plt.show()
+
+    fig, ax = plt.subplots()
+    ax.scatter(
+        point_selector.x_pool.m,
+        point_selector.y_pool.m,
+        alpha=0.6,
+        s=20,
+        zorder=2,
+    )
+
+    ax.plot(
+        years_to_calculate.m,
+        smoothed_all_samples_median.m,
+        color="tab:green",
+        alpha=0.4,
+        linewidth=3,
     )
     plt.show()
     # break
@@ -487,11 +550,3 @@ ax.scatter(
     zorder=2,
 )
 ax.plot(years_to_calculate.m, smoothed.m, color="tab:green", alpha=0.9)
-
-# %%
-years_to_calculate.m
-
-# %%
-point_selector.x_pool.m.min()
-
-# %%
