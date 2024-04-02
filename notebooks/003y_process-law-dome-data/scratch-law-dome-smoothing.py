@@ -12,8 +12,16 @@
 #     name: python3
 # ---
 
-# %%
-# TODO: move notebook to its own step
+# %% [markdown]
+# When translating:
+#
+# - split all the code out into its own module
+# - put the serialised point selector, regressor etc. into the config
+#     - one config per gas
+# - fix up the unit handling
+# - save out all the ensemble members and median
+#
+# Add notes from here https://docs.google.com/document/d/12r3B__DQGgwbfcI_BH6ZZjgEtOTVPN7h6c5NFhTLhJM/edit
 
 # %%
 import matplotlib.pyplot as plt
@@ -67,7 +75,7 @@ class NoiseAdder:
     ) -> tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity]:
         # Uniform noise seems weird to me, but ok,
         # will copy Nicolai for now.
-        # Different to choice to Nicolai here, time error scales with age,
+        # Different choice to Nicolai here, time error scales with age,
         # with zero being now rather than minimum value in input array.
         x_plus_noise = x + (
             self.time_now - x
@@ -82,7 +90,7 @@ class NoiseAdder:
 
 
 # %%
-# Super unclear what the right choice is here.
+# Super unclear what the right choice for time_now is.
 time_now = Q(2024, "yr")
 noise_adders = {
     "co2": NoiseAdder(
@@ -198,7 +206,8 @@ class PointSelector:
     def get_points(
         self, target_year: pint.UnitRegistry.Quantity
     ) -> tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity]:
-        # TODO: sort on entry
+        # TODO: sort on entry rather than in here
+        # which is a surprising side effect.
         x_pool_sorted_idx = np.argsort(self.x_pool)
         self.x_pool = self.x_pool[x_pool_sorted_idx]
         self.y_pool = self.y_pool[x_pool_sorted_idx]
@@ -269,63 +278,65 @@ class WeightedQuantileRegression:
     which then makes things weird.
     """
 
-    eps: float = 1e-3
+    lambda_reg: float = 1e-3
     """
-    Epsilon to use for regularisation
+    Lambda to use for regularisation
     """
 
-    def fit(self, x, y, target_x):
-        yuse = y
-        z = x - target_x
-        n = len(z)
-        tau = self.quantile
+    model_order: int = 3
+    """
+    Order of the model to fit.
 
-        weights = np.max(
-            [
-                np.repeat(self.weight_min, n),
-                # 1 - np.abs(z.m) / np.max(np.abs(z.m))
-                (1 - np.abs(z) / np.max(np.abs(z))).to("dimensionless").m,
-            ],
-            axis=0,
-        )
+    1 means a linear model.
+    """
 
-        tmp = np.hstack(
-            [
-                Q(np.repeat(-1, n), "dimensionless"),
-                Q(np.repeat(1, n), "dimensionless"),
-            ]
-        )
-        b = np.hstack([-yuse, yuse])
-        f = np.hstack(
-            [
-                np.repeat(self.eps, 8),
-                weights * np.repeat(tau, n),
-                weights * np.repeat(1 - tau, n),
-            ]
-        )
-        A = np.vstack(
-            [
-                tmp,
-                -tmp,
-                *[
-                    [
-                        # Something funny with units here
-                        np.hstack([-(z**p), z**p]) / Q(1, (z**p).units),
-                        np.hstack([z**p, -(z**p)]) / Q(1, (z**p).units),
-                    ]
-                    for p in [1, 2, 3]
-                ],
-                -Q(np.diag([1] * 2 * n), "dimensionless"),
-            ]
-        ).T
+    def fit(self, x, y, weights):
+        if x.shape != y.shape:
+            raise AssertionError
+
+        if len(x.shape) > 1:
+            raise AssertionError
+
+        N = len(x)
+        beta_len = self.model_order + 1
+
+        c = self.lambda_reg * np.ones(2 * (beta_len + N))
+        # # Prefer models with smaller higher-order terms
+        # for i in range(1, beta_len + 1):
+        #     c[i] = self.lambda_reg ** (1 / (i + 1))
+        #     c[beta_len + i] = self.lambda_reg ** (1 / (i + 1))
+
+        c[2 * beta_len : 2 * beta_len + N] = weights * self.quantile
+        c[2 * beta_len + N :] = weights * (1 - self.quantile)
+
+        A = np.zeros((N, 2 * (beta_len + N)))
+        A[
+            (
+                np.arange(N),
+                np.arange(2 * beta_len, 2 * beta_len + N),
+            )
+        ] = 1
+        A[
+            (
+                np.arange(N),
+                np.arange(2 * beta_len + N, 2 * beta_len + 2 * N),
+            )
+        ] = -1
+
+        for i in range(beta_len):
+            A[:, i] = (x**i).m
+            A[:, i + beta_len] = -(x**i).m
+
+        # Tracking the units through properly will take a bit more thinking
+        b = y.m
 
         for maxiter in [1e5, 1e6, 1e7, 1e8, 1e9]:
             res = scipy.optimize.linprog(
-                f,
-                b_ub=b.m,
-                # Tracking the units through properly would be difficult
-                A_ub=A.m,
+                c,
+                b_eq=b,
+                A_eq=A,
                 method="highs",
+                bounds=(0, None),
                 options=dict(maxiter=int(maxiter)),
             )
             if res.success:
@@ -335,27 +346,165 @@ class WeightedQuantileRegression:
             print(f"didn't converge for {target_x=}")
             return None
 
-        opt = Q(res.x[0] - res.x[1], b.units)
+        beta = res.x[:beta_len] - res.x[beta_len : 2 * beta_len]
 
-        return opt
+        def fit(x):
+            return Q(beta @ np.array([x**i for i in range(beta_len)]), y.units)
+
+        return fit
+
+
+# %%
+def get_plt_index_width(years_to_calculate):
+    return (
+        (0, 500),
+        (10, 500),
+        (210, 500),
+        (500, 900),
+        (1500, 500),
+        (1500, 500),
+        (len(years_to_calculate) - 100, 50),
+        (len(years_to_calculate) - 50, 50),
+        (len(years_to_calculate) - 1, 50),
+    )
 
 
 # %%
-# noise_adder
+def get_weights(x, target_year, window_width):
+    z = x - target_year
+    # Linear weights don't make sense to me
+    # weights = np.max(
+    #     [
+    #         np.repeat(0.0001, len(z)),
+    #         # 1 - np.abs(z.m) / np.max(np.abs(z.m))
+    #         (1 - np.abs(z) / np.max(np.abs(z))).to("dimensionless").m,
+    #     ],
+    #     axis=0,
+    # )
+    return np.max(
+        [
+            np.repeat(0.0001, len(z)),
+            np.exp(-np.abs(z) / window_width),
+            # 1 - np.abs(z.m) / np.max(np.abs(z.m))
+            # (1 - np.abs(z) / np.max(np.abs(z))).to("dimensionless").m,
+        ],
+        axis=0,
+    )
+
 
 # %%
-# point_selector
+def plot_regression_fit(
+    point_selector,
+    selected_points_x,
+    selected_points_y,
+    quantile_regression_fit,
+    target_year,
+    ax,
+    xlim_width,
+):
+    ax.scatter(
+        point_selector.x_pool.m, point_selector.y_pool.m, alpha=0.6, s=100, zorder=2
+    )
+    print(f"select points size={selected_points[0].shape}")
+
+    ax.scatter(
+        selected_points_x.m,
+        selected_points_y.m,
+        alpha=0.9,
+        s=60,
+        marker="x",
+        zorder=3,
+    )
+    ax.scatter(
+        target_year,
+        quantile_regression_fitted(target_year.m),
+        marker="o",
+        s=120,
+        alpha=0.4,
+        zorder=2.2,
+    )
+    sorted_selected_fine = np.linspace(
+        selected_points_x.m.min(), selected_points_x.m.max(), 300
+    )
+    ax.plot(
+        sorted_selected_fine,
+        quantile_regression_fitted(sorted_selected_fine),
+        alpha=0.9,
+        zorder=4.0,
+        color="tab:cyan",
+    )
+
+    ax.axvline(target_year.m)
+    ax.axvline(target_year.m - point_selector.window_width.m, color="k")
+    ax.axvline(target_year.m + point_selector.window_width.m, color="k")
+    ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
+    ax.set_ylim([0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m])
+
+    return ax
+
 
 # %%
+def plot_ensemble_fit(
+    axes,
+    point_selector,
+    years_to_calculate,
+    smoothed_all_samples,
+    smoothed_all_samples_median,
+):
+    axes[0].scatter(
+        point_selector.x_pool.m,
+        point_selector.y_pool.m,
+        alpha=0.6,
+        s=20,
+        zorder=2,
+    )
+    axes[0].plot(
+        years_to_calculate.m,
+        smoothed_all_samples.m.T,
+        color="gray",
+        alpha=0.5,
+        linewidth=1.0,
+    )
+    axes[0].plot(
+        years_to_calculate.m,
+        smoothed_all_samples_median.m,
+        color="tab:green",
+        alpha=0.4,
+        linewidth=3,
+    )
+
+    axes[1].scatter(
+        point_selector.x_pool.m,
+        point_selector.y_pool.m,
+        alpha=0.6,
+        s=20,
+        zorder=2,
+    )
+
+    axes[1].plot(
+        years_to_calculate.m,
+        smoothed_all_samples_median.m,
+        color="tab:green",
+        alpha=0.4,
+        linewidth=3,
+    )
+
+    axes[1].set_xlabel("year")
+    axes[1].set_ylabel(smoothed_all_samples_median.units)
+
+
+# %%
+n_draws = 250
+# n_draws = 30
+# n_draws = 3
+
 for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
-    print(gas)
     # if gas != "n2o":
     #     continue
 
     gas_unit = gdf["unit"].unique()
     if len(gas_unit) > 1:
         raise ValueError(f"More than one unit found for {gas=}, {gas_unit=}")
-
     gas_unit = gas_unit[0]
 
     x_raw = Q(gdf["time"].values, "yr")
@@ -373,13 +522,15 @@ for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
         "yr",
     )
 
-    regressor = WeightedQuantileRegression(quantile=0.5)
-    n_draws = 250
-    # n_draws = 30
-    n_draws = 3
+    plt_index_width = get_plt_index_width(years_to_calculate)
+    plt_indexes = [v[0] for v in plt_index_width]
+    xlim_widths = {v[0]: v[1] for v in plt_index_width}
+
+    regressor = WeightedQuantileRegression(quantile=0.5, model_order=3)
+    print(regressor)
+    # regressor = WeightedQuantileRegression(quantile=0.5, model_order=1)
 
     smoothed_all_samples = []
-
     for i in tqdman.tqdm(range(n_draws)):
         x_plus_noise, y_plus_noise = noise_adder.add_noise(
             x=x_raw,
@@ -415,17 +566,37 @@ for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
         smoothed = []
 
         quantile_regression_success = True
-        for i, target_year in enumerate(years_to_calculate):
+        for ii, target_year in enumerate(years_to_calculate):
             selected_points = point_selector.get_points(target_year)
+            selected_points_x = selected_points[0]
+            selected_points_y = selected_points[1]
+
+            weights = get_weights(
+                selected_points_x, target_year, window_width=point_selector.window_width
+            )
+
             quantile_regression_fitted = regressor.fit(
-                selected_points[0], selected_points[1], target_x=target_year
+                selected_points_x, selected_points_y, weights=weights
             )
             if quantile_regression_fitted is None:
                 print("Quantile regression failed, re-drawing")
                 quantile_regression_success = False
                 break
 
-            smoothed.append(quantile_regression_fitted)
+            if ii in plt_indexes and i < 1:
+                fig, ax = plt.subplots()
+                plot_regression_fit(
+                    point_selector=point_selector,
+                    selected_points_x=selected_points_x,
+                    selected_points_y=selected_points_y,
+                    quantile_regression_fit=quantile_regression_fitted,
+                    target_year=target_year,
+                    ax=ax,
+                    xlim_width=xlim_widths[ii],
+                )
+                plt.show()
+
+            smoothed.append(quantile_regression_fitted(target_year.m))
 
         if not quantile_regression_success:
             continue
@@ -436,117 +607,14 @@ for gas, gdf in full_df.sort_values(by="time").groupby("gas"):
 
     smoothed_all_samples_median = np.median(smoothed_all_samples, axis=0)
 
-    fig, ax = plt.subplots()
-    ax.scatter(
-        point_selector.x_pool.m,
-        point_selector.y_pool.m,
-        alpha=0.6,
-        s=20,
-        zorder=2,
+    fig, axes = plt.subplots(nrows=2, sharex=True, sharey=True)
+    plot_ensemble_fit(
+        axes=axes,
+        point_selector=point_selector,
+        years_to_calculate=years_to_calculate,
+        smoothed_all_samples=smoothed_all_samples,
+        smoothed_all_samples_median=smoothed_all_samples_median,
     )
-    ax.plot(
-        years_to_calculate.m,
-        smoothed_all_samples.m.T,
-        color="gray",
-        alpha=0.5,
-        linewidth=1.0,
-    )
-    ax.plot(
-        years_to_calculate.m,
-        smoothed_all_samples_median.m,
-        color="tab:green",
-        alpha=0.4,
-        linewidth=3,
-    )
-    plt.show()
-
-    fig, ax = plt.subplots()
-    ax.scatter(
-        point_selector.x_pool.m,
-        point_selector.y_pool.m,
-        alpha=0.6,
-        s=20,
-        zorder=2,
-    )
-
-    ax.plot(
-        years_to_calculate.m,
-        smoothed_all_samples_median.m,
-        color="tab:green",
-        alpha=0.4,
-        linewidth=3,
-    )
+    fig.suptitle(gas)
     plt.show()
     # break
-
-# %%
-smoothed = []
-plt_index_width = (
-    (0, 500),
-    # (10, 500),
-    # (210, 500),
-    # (500, 900),
-    # (1500, 500),
-    # (1500, 500),
-    (list(years_to_calculate.m).index(1011), 650),
-    (list(years_to_calculate.m).index(1012), 650),
-    (list(years_to_calculate.m).index(1013), 650),
-    (list(years_to_calculate.m).index(1014), 650),
-    # (len(years_to_calculate) - 1, 50),
-)
-plt_indexes = [v[0] for v in plt_index_width]
-xlim_widths = {v[0]: v[1] for v in plt_index_width}
-
-for i, target_year in tqdman.tqdm(enumerate(years_to_calculate)):
-    selected_points = point_selector.get_points(target_year)
-    quantile_regression_fitted = regressor.fit(
-        selected_points[0], selected_points[1], target_x=target_year
-    )
-    smoothed.append(quantile_regression_fitted)
-
-    if i in plt_indexes:
-        xlim_width = xlim_widths[i]
-
-        fig, ax = plt.subplots()
-        ax.scatter(
-            point_selector.x_pool.m, point_selector.y_pool.m, alpha=0.6, s=100, zorder=2
-        )
-        print(f"select points size={selected_points[0].shape}")
-
-        ax.scatter(
-            selected_points[0].m,
-            selected_points[1].m,
-            alpha=0.9,
-            s=60,
-            marker="x",
-            zorder=3,
-        )
-        display(quantile_regression_fitted)
-        ax.scatter(
-            target_year,
-            quantile_regression_fitted.m,
-            marker="o",
-            s=120,
-            alpha=0.4,
-            zorder=2.2,
-        )
-
-        ax.axvline(target_year.m)
-        ax.axvline(target_year.m - point_selector.window_width.m, color="k")
-        ax.axvline(target_year.m + point_selector.window_width.m, color="k")
-        ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
-        ax.set_ylim(
-            [0.99 * selected_points[1].min().m, 1.01 * selected_points[1].max().m]
-        )
-        plt.show()
-
-smoothed = np.hstack(smoothed)
-fig, ax = plt.subplots()
-ax.scatter(
-    point_selector.x_pool.m,
-    point_selector.y_pool.m,
-    alpha=0.6,
-    s=100,
-    zorder=2,
-)
-ax.plot(years_to_calculate.m, smoothed.m, color="tab:green", alpha=0.9)
