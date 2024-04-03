@@ -1,0 +1,185 @@
+# ---
+# jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.16.1
+#   kernelspec:
+#     display_name: Python 3 (ipykernel)
+#     language: python
+#     name: python3
+# ---
+
+# %% [markdown]
+# # Law dome - smoothing
+#
+# Smooth the Law Dome data.
+#
+# Follows Section 2.1.6 of [Meinshausen et al., 2017](https://gmd.copernicus.org/articles/10/2057/2017/), with some tweaks.
+
+# %% [markdown]
+# ## Imports
+
+# %%
+import matplotlib.pyplot as plt
+import pandas as pd
+import pint
+from attrs import asdict
+from openscm_units import unit_registry
+from pydoit_nb.config_handling import get_config_for_step_id
+
+from local.config import load_config_from_file
+
+# %%
+ur = unit_registry
+pint.set_application_registry(ur)
+Q = ur.Quantity
+
+# %% [markdown]
+# ## Define branch this notebook belongs to
+
+# %%
+step: str = "smooth_law_dome_data"
+
+# %% [markdown]
+# ## Parameters
+
+# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+config_file: str = "../../dev-config-absolute.yaml"  # config file
+step_config_id: str = "co2"  # config ID to select for this branch
+
+# %% [markdown]
+# ## Load config
+
+# %%
+config = load_config_from_file(config_file)
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
+
+config_process_law_dome = get_config_for_step_id(
+    config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
+)
+
+# %% [markdown]
+# ## Action
+
+# %%
+full_df = pd.read_csv(config_process_law_dome.processed_data_with_loc_file)
+full_df
+
+# %% [markdown]
+# ### Just get the data for the gas of interest
+
+# %%
+gas_df = full_df[full_df["gas"] == config_step.gas]
+assert gas_df["gas"].unique() == [config_step.gas]
+gas_df
+
+# %%
+gas_unit = gas_df["unit"].unique()
+if len(gas_unit) > 1:
+    raise ValueError(f"More than one unit found for {gas=}, {gas_unit=}")
+gas_unit = gas_unit[0]
+
+x_raw = Q(gas_df["time"].values, "yr")
+y_raw = Q(gas_df["value"].values, gas_unit)
+
+# %%
+plt.scatter(x_raw.m, y_raw.m)
+plt.xlabel(x_raw.units)
+plt.ylabel(y_raw.units)
+
+# %% [markdown]
+# ## Demonstrate how the noise adder works
+
+# %%
+noise_adder = config_step.noise_adder
+noise_adder
+
+# %%
+print(
+    "Random time axis error is "
+    f"{(noise_adder.x_relative_random_error * Q(2000, 'yr')).to('year')} "
+    "per 2000 years"
+)
+
+
+# %%
+x_plus_noise, y_plus_noise = noise_adder.add_noise(
+    x=x_raw,
+    y=y_raw,
+)
+
+# %%
+fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(8, 6))
+
+x_units = [x_raw.units, x_plus_noise.units]
+assert len(set(x_units)) == 1, set(x_units)
+x_units = x_units[0]
+
+y_units = [y_raw.units, y_plus_noise.units]
+assert len(set(y_units)) == 1, set(y_units)
+y_units = y_units[0]
+
+x_raw_m = x_raw.m
+y_raw_m = y_raw.m
+x_plus_noise_m = x_plus_noise.m
+y_plus_noise_m = y_plus_noise.m
+
+axes[0][0].scatter(x_raw_m, x_plus_noise_m)
+axes[0][0].set_xlabel(f"x raw ({x_units})")
+axes[0][0].set_ylabel(f"x plus noise ({x_units})")
+
+axes[0][1].scatter(x_raw_m, x_plus_noise_m - x_raw_m)
+axes[0][1].set_xlabel(f"x raw ({x_units})")
+axes[0][1].set_ylabel(f"x plus noise - x raw ({x_units})")
+
+axes[0][2].hist(x_plus_noise_m - x_raw_m)
+axes[0][2].set_xlabel(f"x plus noise - x raw ({x_units})")
+axes[0][2].set_ylabel("count")
+
+axes[1][0].scatter(y_raw_m, y_plus_noise_m)
+axes[1][0].set_xlabel(f"y raw ({y_units})")
+axes[1][0].set_ylabel(f"y plus noise ({y_units})")
+
+axes[1][1].scatter(y_raw_m, y_plus_noise_m - y_raw_m)
+axes[1][1].set_xlabel(f"y raw ({y_units})")
+axes[1][1].set_ylabel(f"y plus noise - y raw ({y_units})")
+
+axes[1][2].hist(y_plus_noise_m - y_raw_m)
+axes[1][2].set_xlabel(f"y plus noise - y raw ({y_units})")
+axes[1][2].set_ylabel("count")
+
+fig.suptitle(config_step.gas)
+plt.tight_layout()
+plt.show()
+
+fig, ax = plt.subplots()
+
+ax.scatter(x_raw_m, y_raw_m)
+ax.scatter(x_plus_noise_m, y_plus_noise_m, alpha=0.3, zorder=3)
+
+# %% [markdown]
+# ## Demonstrate how the point selector works
+
+# %%
+asdict(config_step.point_selector_settings)
+
+# %% [markdown]
+# Use same quantile weighting model for all gases.
+
+# %%
+weighted_quantile_regressor = local.regressors.WeightedQuantileRegressor(
+    quantile=0.5, model_order=3
+)
+weighted_quantile_regressor
+
+# %%
+
+config_step.point_selector_settings
+
+# %%
+assert False, "write out file"
