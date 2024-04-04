@@ -31,6 +31,9 @@ from openscm_units import unit_registry
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+from local.point_selection import PointSelector
+
+# from local.regressors import WeightedQuantileRegressor
 
 # %%
 ur = unit_registry
@@ -81,7 +84,8 @@ gas_df
 # %%
 gas_unit = gas_df["unit"].unique()
 if len(gas_unit) > 1:
-    raise ValueError(f"More than one unit found for {gas=}, {gas_unit=}")
+    msg = f"More than one unit {gas_unit=}"
+    raise ValueError(msg)
 gas_unit = gas_unit[0]
 
 x_raw = Q(gas_df["time"].values, "yr")
@@ -157,29 +161,107 @@ fig.suptitle(config_step.gas)
 plt.tight_layout()
 plt.show()
 
-fig, ax = plt.subplots()
+fig, axes = plt.subplots(nrows=2)
 
-ax.scatter(x_raw_m, y_raw_m)
-ax.scatter(x_plus_noise_m, y_plus_noise_m, alpha=0.3, zorder=3)
+for i, (xlim, ylim) in enumerate(((None, None), ((1500, 1750), (260, 300)))):
+    axes[i].scatter(x_raw_m, y_raw_m)
+    axes[i].scatter(x_plus_noise_m, y_plus_noise_m, alpha=0.3, zorder=3)
+
+    if xlim is not None:
+        axes[i].set_xlim(xlim)
+
+    if ylim is not None:
+        axes[i].set_ylim(ylim)
 
 # %% [markdown]
 # ## Demonstrate how the point selector works
 
 # %%
-asdict(config_step.point_selector_settings)
+point_selector = PointSelector(
+    pool=(x_raw, y_raw), **asdict(config_step.point_selector_settings)
+)
+
+config_step.point_selector_settings
+
+# %%
+plt_yrs_width = (
+    (x_raw.m.min(), 500),
+    (240, 500),
+    (250, 500),
+    (500, 500),
+    (750, 900),
+    (1500, 500),
+    (1750, 500),
+    (1900, 50),
+    (1950, 50),
+    (1990, 50),
+    (x_raw.m.max(), 50),
+)
+
+for yr, xlim_width in plt_yrs_width:
+    fig, ax = plt.subplots()
+
+    target_year = Q(yr, "yr")
+    selected_points = point_selector.get_points(target_year)
+    selected_points_x = selected_points[0]
+    selected_points_y = selected_points[1]
+
+    print(f"{target_year=}")
+    print(f"{len(selected_points_x)=}")
+    print(f"{(selected_points_x >= target_year).sum()=}")
+    print(f"{(selected_points_x < target_year).sum()=}")
+
+    ax.scatter(
+        point_selector.pool[0].m,
+        point_selector.pool[1].m,
+        alpha=0.9,
+        s=60,
+        marker="o",
+        zorder=2,
+        label="pool",
+    )
+    ax.scatter(
+        selected_points_x.m,
+        selected_points_y.m,
+        alpha=0.9,
+        s=60,
+        marker="x",
+        zorder=3,
+        label="selected",
+    )
+
+    ax.axvline(target_year.m)
+    ax.axvspan(
+        target_year.m - point_selector.window_width.m,
+        target_year.m + point_selector.window_width.m,
+        color="tab:gray",
+        label="Within window",
+    )
+    ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
+    ax.set_ylim([0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m])
+    ax.legend()
+
+    plt.show()
+
+# %% [markdown]
+# ## Demonstrate how the quantile regressor works
 
 # %% [markdown]
 # Use same quantile weighting model for all gases.
 
 # %%
-weighted_quantile_regressor = local.regressors.WeightedQuantileRegressor(
-    quantile=0.5, model_order=3
-)
+weighted_quantile_regressor = WeightedQuantileRegressor(quantile=0.5, model_order=3)
 weighted_quantile_regressor
 
 # %%
 
 config_step.point_selector_settings
+
+# %% [markdown]
+# ## Smooth
+
+# %% [markdown]
+# ## Write output
 
 # %%
 assert False, "write out file"

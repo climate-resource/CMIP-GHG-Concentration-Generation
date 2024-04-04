@@ -2810,13 +2810,13 @@ files = [
 
 [[package]]
 name = "pydoit-nb"
-version = "0.3.3"
+version = "0.3.4"
 description = "Library to support combining jupyter notebooks and pydoit."
 optional = false
-python-versions = ">=3.9,<4.0"
+python-versions = "<4.0,>=3.9"
 files = [
-    {file = "pydoit_nb-0.3.3-py3-none-any.whl", hash = "sha256:e87adb817da2d074bedb46d9ebde6469e35f8ddfc2942996dc75573a00841c19"},
-    {file = "pydoit_nb-0.3.3.tar.gz", hash = "sha256:e531b378d8b117e93c5a4c4d631e8236f1c774a4f82f521cf8ab886e017d632a"},
+    {file = "pydoit_nb-0.3.4-py3-none-any.whl", hash = "sha256:edf461615b6a49a53eee2b6aaefc1957a1a79d96929c5e6e172ed73b72820267"},
+    {file = "pydoit_nb-0.3.4.tar.gz", hash = "sha256:1fe7bcecc01d4da1611bd1f1960ecdfc89fb64a6e65a12d1fd616033fc76726e"},
 ]
 
 [package.dependencies]
@@ -4014,4 +4014,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "5b6d6feda4d4fc2ddc84e1f769a1640448bed8e400ff2f22244a0d9a4c16c7d9"
+content-hash = "4b2b34ee64cce4b5202beec80427580405f5e31e578ecb478b1cfbd4022d8682"
