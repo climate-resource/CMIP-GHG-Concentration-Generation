@@ -4,6 +4,8 @@ Config for smoothing the Law Dome data
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pint
 from attrs import frozen
 
@@ -23,6 +25,11 @@ class SmoothLawDomeDataConfig:
     Must be unique among all configurations for this step
     """
 
+    n_draws: int
+    """
+    Number of times to add noise to date when smoothing
+    """
+
     gas: str
     """Gas being smoothed"""
 
@@ -31,6 +38,12 @@ class SmoothLawDomeDataConfig:
 
     point_selector_settings: PointSelectorSettings
     """Settings to use when creating our point selector"""
+
+    smoothed_draws_file: Path
+    """Path in which to save the smoothed draws"""
+
+    smoothed_median_file: Path
+    """Path in which to save the median of the smoothed draws"""
 
 
 @frozen

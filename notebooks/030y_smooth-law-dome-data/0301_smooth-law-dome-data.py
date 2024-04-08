@@ -24,16 +24,18 @@
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+import pandas.testing as pdt
 import pint
+import tqdm.autonotebook as tqdman
 from attrs import asdict
 from openscm_units import unit_registry
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 from local.point_selection import PointSelector
-
-# from local.regressors import WeightedQuantileRegressor
+from local.regressors import WeightedQuantileRegressor
 
 # %%
 ur = unit_registry
@@ -178,7 +180,7 @@ for i, (xlim, ylim) in enumerate(((None, None), ((1500, 1750), (260, 300)))):
 
 # %%
 point_selector = PointSelector(
-    pool=(x_raw, y_raw), **asdict(config_step.point_selector_settings)
+    pool=(x_plus_noise, y_plus_noise), **asdict(config_step.point_selector_settings)
 )
 
 config_step.point_selector_settings
@@ -191,6 +193,7 @@ plt_yrs_width = (
     (500, 500),
     (750, 900),
     (1500, 500),
+    (1600, 500),
     (1750, 500),
     (1900, 50),
     (1950, 50),
@@ -247,21 +250,291 @@ for yr, xlim_width in plt_yrs_width:
 # ## Demonstrate how the quantile regressor works
 
 # %% [markdown]
-# Use same quantile weighting model for all gases.
+# Use same quantile weighting model and weighting function for all gases, hence hard-coded below.
 
 # %%
 weighted_quantile_regressor = WeightedQuantileRegressor(quantile=0.5, model_order=3)
 weighted_quantile_regressor
 
-# %%
 
-config_step.point_selector_settings
+# %%
+def get_weights(
+    x: pint.UnitRegistry.Quantity,
+    target_year: pint.UnitRegistry.Quantity,
+    window_width: pint.UnitRegistry.Quantity,
+    weight_min: float = 1e-4,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Get the weights to use when performing the regression
+
+    Parameters
+    ----------
+    x
+        x-values
+
+    target_year
+        Year which we are targeting with the regression
+
+    window_width
+        Window width to use when calculating weights
+
+    weight_min
+        Minimum weight to return
+
+    Returns
+    -------
+        Weights to use for ``x`` when performing a regression for ``target_year``.
+    """
+    z = x - target_year
+    # Linear weights don't make sense to me, which is what was used previously
+    # weights = np.max(
+    #     [
+    #         np.repeat(0.0001, len(z)),
+    #         # 1 - np.abs(z.m) / np.max(np.abs(z.m))
+    #         (1 - np.abs(z) / np.max(np.abs(z))).to("dimensionless").m,
+    #     ],
+    #     axis=0,
+    # )
+    return np.max(
+        [
+            np.repeat(weight_min, len(z)),
+            np.exp(-np.abs(z) / window_width).to("dimensionless").m,
+        ],
+        axis=0,
+    )
+
+
+# %%
+for yr, xlim_width in plt_yrs_width:
+    fig, ax = plt.subplots()
+
+    target_year = Q(yr, "yr")
+    selected_points = point_selector.get_points(target_year)
+    selected_points_x = selected_points[0]
+    selected_points_y = selected_points[1]
+
+    regression_result = weighted_quantile_regressor.fit(
+        x=selected_points_x,
+        y=selected_points_y,
+        weights=get_weights(
+            x=selected_points_x,
+            target_year=target_year,
+            window_width=point_selector.window_width,
+        ),
+    )
+
+    print(f"{target_year=}")
+    print(f"{len(selected_points_x)=}")
+    print(f"{(selected_points_x >= target_year).sum()=}")
+    print(f"{(selected_points_x < target_year).sum()=}")
+
+    ax.scatter(
+        point_selector.pool[0].m,
+        point_selector.pool[1].m,
+        alpha=0.4,
+        s=60,
+        marker="o",
+        zorder=2,
+        label="pool",
+    )
+    ax.scatter(
+        selected_points_x.m,
+        selected_points_y.m,
+        alpha=0.4,
+        s=60,
+        marker="x",
+        zorder=3,
+        label="selected",
+    )
+    ax.scatter(
+        target_year.m,
+        regression_result.predict(target_year).to(selected_points_y.units).m,
+        marker="+",
+        linewidth=3,
+        s=300,
+        alpha=1.0,
+        zorder=8.2,
+        label="fitted",
+    )
+    sorted_selected_fine = Q(
+        np.linspace(selected_points_x.m.min(), selected_points_x.m.max(), 300),
+        selected_points_x.units,
+    )
+    ax.plot(
+        sorted_selected_fine.m,
+        regression_result.predict(sorted_selected_fine).to(selected_points_y.units).m,
+        alpha=0.9,
+        zorder=4.0,
+        color="tab:cyan",
+        label="regression",
+    )
+
+    ax.axvline(target_year.m, color="tab:gray", linestyle="--", alpha=0.3)
+    ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
+    ax.set_ylim([0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m])
+    ax.legend()
+
+    plt.show()
 
 # %% [markdown]
 # ## Smooth
+
+# %%
+years_to_calculate = Q(
+    np.arange(
+        np.floor(x_raw.to("yr").m.min()),
+        np.ceil(x_raw.to("yr").m.max()) + 1,
+    ),
+    "yr",
+)
+
+years_to_calculate
+
+# %%
+smoothed_all_samples = []
+for i in tqdman.tqdm(range(config_step.n_draws)):
+    x_plus_noise, y_plus_noise = noise_adder.add_noise(
+        x=x_raw,
+        y=y_raw,
+    )
+
+    point_selector = PointSelector(
+        pool=(x_plus_noise, y_plus_noise), **asdict(config_step.point_selector_settings)
+    )
+
+    smoothed = []
+    quantile_regression_success = True
+    for ii, target_year in enumerate(years_to_calculate):
+        selected_points = point_selector.get_points(target_year)
+        selected_points_x = selected_points[0]
+        selected_points_y = selected_points[1]
+
+        weights = get_weights(
+            selected_points_x, target_year, window_width=point_selector.window_width
+        )
+
+        regression_result = weighted_quantile_regressor.fit(
+            x=selected_points_x,
+            y=selected_points_y,
+            weights=get_weights(
+                x=selected_points_x,
+                target_year=target_year,
+                window_width=point_selector.window_width,
+            ),
+        )
+
+        if not regression_result.success:
+            print("Quantile regression failed, re-drawing")
+            quantile_regression_success = False
+            break
+
+        smoothed.append(regression_result.predict(target_year))
+
+    if not quantile_regression_success:
+        continue
+
+    smoothed_all_samples.append(np.hstack(smoothed))
+
+smoothed_all_samples = np.vstack(smoothed_all_samples)
+
+smoothed_all_samples_median = np.median(smoothed_all_samples, axis=0)
+smoothed_all_samples_median
+
+# %% [markdown]
+# Plot
+
+# %%
+fig, axes = plt.subplots(nrows=2)
+
+axes[0].scatter(
+    x_raw.m,
+    y_raw.m,
+    alpha=0.4,
+    s=20,
+    zorder=2,
+)
+axes[0].plot(
+    years_to_calculate.m,
+    smoothed_all_samples.m.T,
+    color="gray",
+    alpha=0.5,
+    linewidth=1.0,
+)
+axes[0].plot(
+    years_to_calculate.m,
+    smoothed_all_samples_median.m,
+    color="tab:green",
+    alpha=0.4,
+    linewidth=3,
+)
+
+axes[1].scatter(
+    x_raw.m,
+    y_raw.m,
+    alpha=0.6,
+    s=20,
+    zorder=2,
+)
+
+axes[1].plot(
+    years_to_calculate.m,
+    smoothed_all_samples_median.m,
+    color="tab:green",
+    alpha=0.8,
+    linewidth=3,
+)
+
+axes[1].set_xlabel("year")
+axes[1].set_ylabel(smoothed_all_samples_median.units)
 
 # %% [markdown]
 # ## Write output
 
 # %%
-assert False, "write out file"
+smoothed_median_df = pd.DataFrame(
+    smoothed_all_samples_median.m,
+    columns=pd.Index(["median"], name="draw"),
+    index=pd.Index(years_to_calculate.m, name="year"),
+)
+smoothed_median_df["unit"] = str(smoothed_all_samples.units)
+smoothed_median_df = (
+    smoothed_median_df.set_index(["unit"], append=True)
+    .melt(ignore_index=False)
+    .reset_index()
+)
+
+smoothed_median_df
+
+# %%
+smoothed_draws_df = pd.DataFrame(
+    smoothed_all_samples.m.T,
+    columns=pd.Index(range(smoothed_all_samples.shape[0]), name="draw"),
+    index=pd.Index(years_to_calculate.m, name="year"),
+)
+smoothed_draws_df["unit"] = str(smoothed_all_samples.units)
+smoothed_draws_df = (
+    smoothed_draws_df.set_index(["unit"], append=True)
+    .melt(ignore_index=False)
+    .reset_index()
+)
+
+smoothed_draws_df
+
+# %% [markdown]
+# Check we didn't muck up our processing somehow.
+
+# %%
+pdt.assert_series_equal(
+    smoothed_draws_df.groupby(["year", "unit"])["value"].median(),
+    smoothed_median_df.set_index(["year", "unit"])["value"],
+)
+
+# %%
+config_step.smoothed_draws_file.parent.mkdir(exist_ok=True, parents=True)
+smoothed_draws_df.to_csv(config_step.smoothed_draws_file, index=False)
+config_step.smoothed_draws_file
+
+# %%
+config_step.smoothed_median_file.parent.mkdir(exist_ok=True, parents=True)
+smoothed_median_df.to_csv(config_step.smoothed_median_file, index=False)
+config_step.smoothed_median_file

@@ -115,6 +115,9 @@ plot_input_data_overviews:
 # TODO: other gases config added in `scripts/create-dev-ci-config-absolute.py`
 smooth_law_dome_data:
 - step_config_id: co2
+  n_draws: 10
+  smoothed_draws_file: data/interim/law_dome/law-dome_co2_smoothed_all-draws.csv
+  smoothed_median_file: data/interim/law_dome/law-dome_co2_smoothed_median.csv
   gas: co2
   noise_adder:
     x_ref:
