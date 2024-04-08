@@ -4,16 +4,22 @@ Create dev config with absolute paths
 This should be run before working with the notebooks in dev mode to make sure
 that you don't end up with files everywhere.
 """
+
 from __future__ import annotations
 
 from pathlib import Path
 
+import openscm_units
 from attrs import evolve
 from pydoit_nb.config_handling import insert_path_prefix
 from pydoit_nb.config_tools import URLSource
 
 from local.config import Config, converter_yaml
 from local.config.retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
+from local.config.smooth_law_dome_data import PointSelectorSettings
+from local.noise_addition import NoiseAdderPercentageXNoise
+
+Q = openscm_units.unit_registry.Quantity
 
 DEV_FILE: Path = Path("dev-config.yaml")
 
@@ -36,6 +42,7 @@ config = insert_path_prefix(
 retrieve_config = config.retrieve_and_extract_noaa_data
 process_noaa_surface_flask_data = config.process_noaa_surface_flask_data
 process_noaa_in_situ_data = config.process_noaa_in_situ_data
+smooth_law_dome_data = config.smooth_law_dome_data
 
 for gas, source, download_hash in [
     (
@@ -3500,12 +3507,64 @@ retrieve_and_extract_agage_data = [
     for v in retrieve_and_extract_agage_data
 ]
 
+smooth_law_dome_data_updated = [smooth_law_dome_data[0]]
+for gas, noise_adder, point_selector_settings in (
+    (
+        "ch4",
+        NoiseAdderPercentageXNoise(
+            x_ref=smooth_law_dome_data_updated[0].noise_adder.x_ref,
+            x_relative_random_error=Q(50 / 2000, "yr / yr"),
+            y_random_error=Q(3, "ppb"),
+        ),
+        PointSelectorSettings(
+            window_width=Q(100, "yr"),
+            minimum_data_points_either_side=4,
+            maximum_data_points_either_side=10,
+        ),
+    ),
+    (
+        "n2o",
+        NoiseAdderPercentageXNoise(
+            x_ref=smooth_law_dome_data_updated[0].noise_adder.x_ref,
+            x_relative_random_error=Q(90 / 2000, "yr / yr"),
+            y_random_error=Q(3, "ppb"),
+        ),
+        PointSelectorSettings(
+            window_width=Q(300, "yr"),
+            minimum_data_points_either_side=7,
+            maximum_data_points_either_side=15,
+        ),
+    ),
+):
+    smooth_law_dome_data_updated.append(
+        evolve(
+            smooth_law_dome_data_updated[0],
+            step_config_id=gas,
+            gas=gas,
+            noise_adder=noise_adder,
+            point_selector_settings=point_selector_settings,
+            smoothed_draws_file=Path(
+                str(smooth_law_dome_data_updated[0].smoothed_draws_file).replace(
+                    "co2", gas
+                )
+            ),
+            smoothed_median_file=Path(
+                str(smooth_law_dome_data_updated[0].smoothed_median_file).replace(
+                    "co2", gas
+                )
+            ),
+        )
+    )
+
+
+### Config full
 config_full = evolve(
     config,
     retrieve_and_extract_noaa_data=retrieve_config,
     retrieve_and_extract_agage_data=retrieve_and_extract_agage_data,
     process_noaa_surface_flask_data=process_noaa_surface_flask_data,
     process_noaa_in_situ_data=process_noaa_in_situ_data,
+    smooth_law_dome_data=smooth_law_dome_data_updated,
 )
 
 with open(DEV_ABSOLUTE_FILE, "w") as fh:
@@ -3513,12 +3572,14 @@ with open(DEV_ABSOLUTE_FILE, "w") as fh:
 
 print(f"Updated {DEV_ABSOLUTE_FILE}")
 
+### Config CI
 ci_config = evolve(config_relative, ci=True, name=CI_RUN_ID)
 with open(CI_FILE, "w") as fh:
     fh.write(converter_yaml.dumps(ci_config))
 
 print(f"Updated {CI_FILE}")
 
+### Config CI absolute
 ci_config_absolute = insert_path_prefix(
     config=evolve(config_relative, ci=True, name=CI_RUN_ID),
     prefix=ROOT_DIR_OUTPUT / CI_RUN_ID,

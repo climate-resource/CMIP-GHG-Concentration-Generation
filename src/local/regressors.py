@@ -44,7 +44,8 @@ class WeightedQuantileRegressor:
     """
     Regressor which performs a weighted quantile regression
 
-    Notes will arrive once I translate the Google Doc
+    Add notes from here:
+    https://docs.google.com/document/d/12r3B__DQGgwbfcI_BH6ZZjgEtOTVPN7h6c5NFhTLhJM/edit
     """
 
     quantile: float = field(default=0.5, validator=[validators.ge(0), validators.le(1)])
