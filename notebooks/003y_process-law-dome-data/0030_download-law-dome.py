@@ -34,11 +34,16 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+import openscm_units
+import pint
 from doit.dependency import get_file_md5
 from pydoit_nb.checklist import generate_directory_checklist
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

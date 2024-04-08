@@ -29,6 +29,8 @@ from collections.abc import Callable
 import carpet_concentrations.xarray_utils
 import cf_xarray.units
 import matplotlib.pyplot as plt
+import openscm_units
+import pint
 import pint_xarray
 import xarray as xr
 
@@ -38,6 +40,9 @@ from input4mips_validation.xarray_helpers import add_time_bounds
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

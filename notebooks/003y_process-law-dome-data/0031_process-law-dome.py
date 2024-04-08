@@ -23,11 +23,16 @@
 # %% editable=true slideshow={"slide_type": ""}
 import matplotlib.pyplot as plt
 import numpy as np
+import openscm_units
 import pandas as pd
+import pint
 from IPython.lib.pretty import pretty
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

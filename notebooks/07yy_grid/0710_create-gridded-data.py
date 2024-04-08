@@ -32,6 +32,8 @@
 import cf_xarray  # noqa: F401 # required to add cf accessors
 import matplotlib.pyplot as plt
 import numpy as np
+import openscm_units
+import pint
 import pint_xarray
 import xarray as xr
 from carpet_concentrations.gridders.latitude_seasonality_gridder import (
@@ -52,6 +54,9 @@ from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
