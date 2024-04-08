@@ -24,11 +24,16 @@
 import datetime as dt
 
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun, run_append
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
@@ -60,9 +65,13 @@ configs_process_noaa_in_situ = {
     )
     for gas in noaa_gases
 }
-config_process_law_dome = get_config_for_step_id(
-    config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
-)
+
+configs_smoooth_law_dome = {
+    gas: get_config_for_step_id(
+        config=config, step="smooth_law_dome_data", step_config_id=gas
+    )
+    for gas in noaa_gases
+}
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
@@ -95,44 +104,23 @@ gggrn_global_mean_df["source"] = "GGGRN_hack"
 gggrn_global_mean = BaseScmRun(gggrn_global_mean_df)
 gggrn_global_mean
 
-# %% editable=true slideshow={"slide_type": ""}
-csiro_law_dome_data = (
-    pd.read_csv(config_process_law_dome.processed_data_with_loc_file)
-    .groupby(["time", "unit", "gas"])[["value"]]
-    .mean()
-    .reset_index()
+# %%
+csiro_law_dome_data = pd.concat(
+    [pd.read_csv(c.smoothed_median_file) for c in configs_smoooth_law_dome.values()]
 )
+csiro_law_dome_data
 
+# %% editable=true slideshow={"slide_type": ""}
 csiro_law_dome_data["variable"] = (
     "Atmospheric Concentrations|" + csiro_law_dome_data["gas"].str.upper()
 )
 csiro_law_dome_data = csiro_law_dome_data.drop(["gas"], axis="columns")
 csiro_law_dome_data["region"] = "World"
 csiro_law_dome_data["scenario"] = "historical"
-csiro_law_dome_data["source"] = "Law_Dome_hack"
+csiro_law_dome_data["source"] = "Law Dome"
+csiro_law_dome_data
 csiro_law_dome = BaseScmRun(csiro_law_dome_data)
 csiro_law_dome
-
-# %%
-# TODO: move this smoothing elsewhere and update it to match M17.
-# Nicolai wrote some custom algorithm
-import numpy as np
-from scipy.interpolate import BSpline, splrep
-
-for gas, vdf in csiro_law_dome_data.groupby("variable"):
-    # vdf = vdf.loc[(vdf["time"]>=1750) & (vdf["time"]<=1950)]
-    year_min_interp = int(np.ceil(vdf["time"].min()))
-    year_max_interp = int(np.floor(vdf["time"].max()))
-    years = np.arange(year_min_interp, year_max_interp + 1)
-    # cubic_spline = CubicSpline(vdf["time"], vdf["value"])
-    interpolator = BSpline(*splrep(vdf["time"], vdf["value"], s=2000))
-    interpolated = interpolator(years)
-
-    ax = vdf.plot.line(x="time", y="value", alpha=0.3)
-    vdf.plot.scatter(x="time", y="value", ax=ax, color="tab:orange", zorder=3)
-    # ax.scatter(monthly_times, interpolated, marker="x")
-    ax.plot(years, interpolated, alpha=0.5, color="tab:green", zorder=4)
-    plt.show()
 
 
 # %% editable=true slideshow={"slide_type": ""}

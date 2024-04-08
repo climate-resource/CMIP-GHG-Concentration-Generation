@@ -487,8 +487,39 @@ axes[1].plot(
 axes[1].set_xlabel("year")
 axes[1].set_ylabel(smoothed_all_samples_median.units)
 
+
 # %% [markdown]
 # ## Write output
+
+
+# %%
+def get_column_ensure_only_one(idf: pd.DataFrame, col: str) -> float | str:
+    """
+    Get a column's value, ensuring that there is only one value
+
+    Parameters
+    ----------
+    idf
+        Data frame from which to retrieve the value
+
+    col
+        Column for which to get the value
+
+    Returns
+    -------
+        Retrieved value
+
+    Raises
+    ------
+    AssertionError
+        There is more than one value in ``idf[col]``
+    """
+    vals = idf[col].unique()
+    if len(vals) > 1:
+        raise AssertionError(vals)
+
+    return vals[0]
+
 
 # %%
 smoothed_median_df = pd.DataFrame(
@@ -497,8 +528,11 @@ smoothed_median_df = pd.DataFrame(
     index=pd.Index(years_to_calculate.m, name="year"),
 )
 smoothed_median_df["unit"] = str(smoothed_all_samples.units)
+smoothed_median_df["gas"] = get_column_ensure_only_one(gas_df, "gas")
+smoothed_median_df["latitude"] = get_column_ensure_only_one(gas_df, "latitude")
+smoothed_median_df["longitude"] = get_column_ensure_only_one(gas_df, "longitude")
 smoothed_median_df = (
-    smoothed_median_df.set_index(["unit"], append=True)
+    smoothed_median_df.set_index(["unit", "gas", "latitude", "longitude"], append=True)
     .melt(ignore_index=False)
     .reset_index()
 )
@@ -512,8 +546,11 @@ smoothed_draws_df = pd.DataFrame(
     index=pd.Index(years_to_calculate.m, name="year"),
 )
 smoothed_draws_df["unit"] = str(smoothed_all_samples.units)
+smoothed_draws_df["gas"] = get_column_ensure_only_one(gas_df, "gas")
+smoothed_draws_df["latitude"] = get_column_ensure_only_one(gas_df, "latitude")
+smoothed_draws_df["longitude"] = get_column_ensure_only_one(gas_df, "longitude")
 smoothed_draws_df = (
-    smoothed_draws_df.set_index(["unit"], append=True)
+    smoothed_draws_df.set_index(["latitude", "longitude", "gas", "unit"], append=True)
     .melt(ignore_index=False)
     .reset_index()
 )
@@ -525,8 +562,12 @@ smoothed_draws_df
 
 # %%
 pdt.assert_series_equal(
-    smoothed_draws_df.groupby(["year", "unit"])["value"].median(),
-    smoothed_median_df.set_index(["year", "unit"])["value"],
+    smoothed_draws_df.groupby(["year", "unit", "gas", "latitude", "longitude"])[
+        "value"
+    ].median(),
+    smoothed_median_df.set_index(["year", "unit", "gas", "latitude", "longitude"])[
+        "value"
+    ],
 )
 
 # %%
