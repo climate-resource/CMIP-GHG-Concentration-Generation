@@ -31,7 +31,7 @@ from .notebook_steps import (
 )
 
 
-def copy_no_output(src: Path, dst: Path) -> None:
+def copy_no_output(in_path: Path, out_path: Path) -> None:
     """
     Copy a file, producing no output
 
@@ -40,16 +40,16 @@ def copy_no_output(src: Path, dst: Path) -> None:
 
     Parameters
     ----------
-    src
+    in_path
         Source
 
-    dst
+    out_path
         Destination
     """
-    shutil.copy2(src=src, dst=dst)
+    shutil.copy2(src=in_path, dst=out_path)
 
 
-def copy_tree_no_output(src: Path, dst: Path) -> None:
+def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
     """
     Copy a file tree, producing no output
 
@@ -58,15 +58,15 @@ def copy_tree_no_output(src: Path, dst: Path) -> None:
 
     Parameters
     ----------
-    src
+    in_path
         Source
 
-    dst
+    out_path
         Destination
     """
     shutil.copytree(
-        src=src,
-        dst=dst,
+        src=in_path,
+        dst=out_path,
         ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
         dirs_exist_ok=True,
     )

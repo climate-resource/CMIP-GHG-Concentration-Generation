@@ -33,7 +33,7 @@ from local.config import load_config_from_file
 from local.noaa_processing import PROCESSED_DATA_COLUMNS
 
 # %%
-pint.set_application_registry(openscm_units.unit_registry)
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

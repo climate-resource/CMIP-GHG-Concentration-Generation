@@ -39,7 +39,7 @@ from pydoit_nb.config_tools import URLSource
 from local.config import converter_yaml, load_config_from_file
 
 # %%
-pint.set_application_registry(openscm_units.unit_registry)
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

@@ -56,7 +56,7 @@ from scmdata.run import BaseScmRun
 from local.config import load_config_from_file
 
 # %%
-pint.set_application_registry(openscm_units.unit_registry)
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to

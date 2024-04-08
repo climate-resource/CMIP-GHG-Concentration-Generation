@@ -42,7 +42,7 @@ from local.config import converter_yaml, load_config_from_file
 from local.config.base import ConfigBundle
 from local.tasks import gen_all_tasks
 
-pint.set_application_registry(openscm_units.unit_registry)
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 RUN_ID: str = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
 """ID to use with this run"""
