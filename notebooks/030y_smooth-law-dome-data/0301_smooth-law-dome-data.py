@@ -39,7 +39,7 @@ from local.regressors import WeightedQuantileRegressor
 
 # %%
 ur = unit_registry
-pint.set_application_registry(ur)
+pint.set_application_registry(ur)  # type: ignore
 Q = ur.Quantity
 
 # %% [markdown]
@@ -95,8 +95,8 @@ y_raw = Q(gas_df["value"].values, gas_unit)
 
 # %%
 plt.scatter(x_raw.m, y_raw.m)
-plt.xlabel(x_raw.units)
-plt.ylabel(y_raw.units)
+plt.xlabel(str(x_raw.units))
+plt.ylabel(str(y_raw.units))
 
 # %% [markdown]
 # ## Demonstrate how the noise adder works
@@ -295,13 +295,15 @@ def get_weights(
     #     ],
     #     axis=0,
     # )
-    return np.max(
+    out: pint.UnitRegistry.Quantity = np.max(
         [
             np.repeat(weight_min, len(z)),
             np.exp(-np.abs(z) / window_width).to("dimensionless").m,
         ],
         axis=0,
     )
+
+    return out
 
 
 # %%
@@ -348,7 +350,7 @@ for yr, xlim_width in plt_yrs_width:
     )
     ax.scatter(
         target_year.m,
-        regression_result.predict(target_year).to(selected_points_y.units).m,
+        regression_result.predict(target_year).to(selected_points_y.units).m,  # type: ignore
         marker="+",
         linewidth=3,
         s=300,
@@ -362,7 +364,7 @@ for yr, xlim_width in plt_yrs_width:
     )
     ax.plot(
         sorted_selected_fine.m,
-        regression_result.predict(sorted_selected_fine).to(selected_points_y.units).m,
+        regression_result.predict(sorted_selected_fine).to(selected_points_y.units).m,  # type: ignore
         alpha=0.9,
         zorder=4.0,
         color="tab:cyan",
@@ -391,7 +393,7 @@ years_to_calculate = Q(
 years_to_calculate
 
 # %%
-smoothed_all_samples = []
+smoothed_all_samples_l = []
 for i in tqdman.tqdm(range(config_step.n_draws)):
     x_plus_noise, y_plus_noise = noise_adder.add_noise(
         x=x_raw,
@@ -428,14 +430,14 @@ for i in tqdman.tqdm(range(config_step.n_draws)):
             quantile_regression_success = False
             break
 
-        smoothed.append(regression_result.predict(target_year))
+        smoothed.append(regression_result.predict(target_year))  # type: ignore
 
     if not quantile_regression_success:
         continue
 
-    smoothed_all_samples.append(np.hstack(smoothed))
+    smoothed_all_samples_l.append(np.hstack(smoothed))
 
-smoothed_all_samples = np.vstack(smoothed_all_samples)
+smoothed_all_samples: pint.UnitRegistry.Quantity = np.vstack(smoothed_all_samples_l)  # type: ignore
 
 smoothed_all_samples_median = np.median(smoothed_all_samples, axis=0)
 smoothed_all_samples_median
@@ -518,7 +520,7 @@ def get_column_ensure_only_one(idf: pd.DataFrame, col: str) -> float | str:
     if len(vals) > 1:
         raise AssertionError(vals)
 
-    return vals[0]
+    return vals[0]  # type: ignore
 
 
 # %%

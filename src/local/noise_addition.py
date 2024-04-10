@@ -39,7 +39,7 @@ class NoiseAdderPercentageXNoise:
     """
 
     def add_noise(
-        self, x, y
+        self, x: pint.UnitRegistry.Quantity, y: pint.UnitRegistry.Quantity
     ) -> tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity]:
         """
         Add noise to an input data set
@@ -78,4 +78,9 @@ class NoiseAdderPercentageXNoise:
             low=-0.5, high=0.5, size=y.shape
         )
 
-        return (x_plus_noise, y_plus_noise)
+        out: tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity] = (
+            x_plus_noise,
+            y_plus_noise,
+        )
+
+        return out

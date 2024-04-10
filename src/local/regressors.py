@@ -8,8 +8,9 @@ from collections.abc import Callable
 from typing import TypeAlias
 
 import numpy as np
+import numpy.typing as npt
 import pint
-import scipy.optimize
+import scipy.optimize  # type: ignore
 from attrs import define, field, validators
 
 PredictCallableLike: TypeAlias = Callable[
@@ -33,7 +34,7 @@ class WeightedQuantileRegressionResult:
     Function which can be used to predict y-values at given x-values, based on the regression
     """
 
-    beta: pint.registry.UnitRegistry.Quantity | None
+    beta: list[pint.registry.UnitRegistry.Quantity] | None
     """
     Beta vector that defines our regression result
     """
@@ -148,9 +149,13 @@ class WeightedQuantileRegressor:
             )
 
         Q = pint.get_application_registry().Quantity  # type: ignore
-        beta_m = res.x[:beta_len] - res.x[beta_len : 2 * beta_len]
+        beta_m: npt.NDArray[np.float64] = (
+            res.x[:beta_len] - res.x[beta_len : 2 * beta_len]
+        )
         # Ah yes, different units in one array aren't supported so this is super awkward to handle.
-        beta = [Q(v, f"{y.units} / {(x[0] ** i).units}") for i, v in enumerate(beta_m)]
+        beta: list[pint.UnitRegistry.Quantity] = [
+            Q(v, f"{y.units} / {(x[0] ** i).units}") for i, v in enumerate(beta_m)
+        ]
 
         def predict(
             x: pint.registry.UnitRegistry.Quantity,
@@ -169,7 +174,9 @@ class WeightedQuantileRegressor:
             """
             vec_prod = [beta[i] * (x**i) for i in range(beta_len)]
 
-            return np.vstack(vec_prod).sum(axis=0)
+            out: pint.UnitRegistry.Quantity = np.vstack(vec_prod).sum(axis=0)
+
+            return out
 
         return WeightedQuantileRegressionResult(
             predict=predict,

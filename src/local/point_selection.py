@@ -126,7 +126,12 @@ class PointSelector:
                 ]
             )
 
-        return (
-            np.hstack(selected_x),
-            np.hstack(selected_y),
+        selected_x_stacked: pint.UnitRegistry.Quantity = np.hstack(selected_x)  # type: ignore
+        selected_y_stacked: pint.UnitRegistry.Quantity = np.hstack(selected_y)  # type: ignore
+
+        out: tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity] = (
+            selected_x_stacked,
+            selected_y_stacked,
         )
+
+        return out
