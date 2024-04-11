@@ -116,10 +116,6 @@ print(
 
 
 # %%
-int(config_step.gas)
-
-
-# %%
 def string_to_seed(inp: str) -> int:
     """
     Convert a string to an integer that can be used as a random seed
