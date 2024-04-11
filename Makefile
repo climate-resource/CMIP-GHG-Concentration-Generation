@@ -34,7 +34,7 @@ all:  ## compile all outputs
 doit-list:  ## list all the doit tasks
 	poetry run doit list --all --status
 
-all-ci: $(CI_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id
+all-ci: $(CI_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the CI run-id
 	DOIT_CONFIGURATION_FILE=$(CI_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID="CI"  DOIT_DB_FILE=".doit_ci.db" poetry run doit run --verbosity=2
 
 all-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id

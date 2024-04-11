@@ -138,6 +138,10 @@ for gas, seasonality_amp, seasonality_shift, latitudinal_grad_m, units in (
     ("CH4", 5, -1, 2 / 82.5, "ppb"),
     ("N2O", 0.01, -6, 0 / 82.5, "ppb"),
 ):
+    if config.ci and gas != "CO2":
+        # On CI, only crunch CO2
+        continue
+
     seasonality_values = np.broadcast_to(
         seasonality_amp * np.sin(2 * np.pi * (months - seasonality_shift) / 12),
         grid_shape,
