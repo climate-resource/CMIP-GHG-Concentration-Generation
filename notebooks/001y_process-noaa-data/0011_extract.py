@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - extract
 #
 # Extract data from NOAA from the downloaded zip file.
@@ -21,10 +21,15 @@
 # ## Imports
 
 # %%
+import openscm_units
+import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 from local.noaa_processing import read_noaa_flask_zip, read_noaa_in_situ_zip
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -79,7 +84,7 @@ elif config_step.source == "in-situ":
 else:
     raise NotImplementedError(config_step.source)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 if config_step.source == "surface-flask":
     config_step.interim_files["events_data"].parent.mkdir(exist_ok=True, parents=True)
     df_events.to_csv(config_step.interim_files["events_data"], index=False)
@@ -90,3 +95,6 @@ if config_step.source == "surface-flask":
 elif config_step.source == "in-situ":
     config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
     df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
+
+# %% editable=true slideshow={"slide_type": ""}
+config_step.interim_files

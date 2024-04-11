@@ -5,32 +5,37 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Quick calculate global-mean
 #
 # This isn't how we will do the calculations in the end, but it is a quick route to having a global-mean value with which we can then test the formats etc.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 import datetime as dt
 
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 from scmdata.run import BaseScmRun, run_append
 
 from local.config import load_config_from_file
 
-# %% [markdown]
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
+
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -53,23 +58,72 @@ config_step = get_config_for_step_id(
 )
 
 # %% editable=true slideshow={"slide_type": ""}
-config_process = get_config_for_step_id(
-    config=config, step="process", step_config_id="only"
-)
+noaa_gases = ["co2", "ch4", "n2o"] if not config.ci else ["co2"]
+configs_process_noaa_in_situ = {
+    gas: get_config_for_step_id(
+        config=config, step="process_noaa_surface_flask_data", step_config_id=gas
+    )
+    for gas in noaa_gases
+}
+
+configs_smoooth_law_dome = {
+    gas: get_config_for_step_id(
+        config=config, step="smooth_law_dome_data", step_config_id=gas
+    )
+    for gas in noaa_gases
+}
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %%
-gggrn_global_mean = BaseScmRun(config_process.gggrn.processed_file_global_mean)
+# %% editable=true slideshow={"slide_type": ""}
+gggrn_data = pd.concat(
+    [
+        pd.read_csv(c.processed_monthly_data_with_loc_file)
+        for c in configs_process_noaa_in_situ.values()
+    ]
+)
+gggrn_data
+
+# %% editable=true slideshow={"slide_type": ""}
+gggrn_global_mean_df = (
+    gggrn_data.groupby(["year", "month", "unit", "gas"])[["value"]].mean().reset_index()
+)
+gggrn_global_mean_df["time"] = (
+    gggrn_global_mean_df["year"] + (gggrn_global_mean_df["month"] - 0.5) / 12
+)
+gggrn_global_mean_df["variable"] = (
+    "Atmospheric Concentrations|" + gggrn_global_mean_df["gas"].str.upper()
+)
+gggrn_global_mean_df = gggrn_global_mean_df.drop(
+    ["year", "month", "gas"], axis="columns"
+)
+gggrn_global_mean_df["region"] = "World"
+gggrn_global_mean_df["scenario"] = "historical"
+gggrn_global_mean_df["source"] = "GGGRN_hack"
+gggrn_global_mean = BaseScmRun(gggrn_global_mean_df)
 gggrn_global_mean
 
 # %%
-csiro_law_dome = BaseScmRun(config_process.law_dome.processed_file)
+csiro_law_dome_data = pd.concat(
+    [pd.read_csv(c.smoothed_median_file) for c in configs_smoooth_law_dome.values()]
+)
+csiro_law_dome_data
+
+# %% editable=true slideshow={"slide_type": ""}
+csiro_law_dome_data["variable"] = (
+    "Atmospheric Concentrations|" + csiro_law_dome_data["gas"].str.upper()
+)
+csiro_law_dome_data = csiro_law_dome_data.drop(["gas"], axis="columns")
+csiro_law_dome_data["region"] = "World"
+csiro_law_dome_data["scenario"] = "historical"
+csiro_law_dome_data["source"] = "Law Dome"
+csiro_law_dome_data
+csiro_law_dome = BaseScmRun(csiro_law_dome_data)
 csiro_law_dome
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
     """
     Get :obj:`dt.datetime` at the start of each year-month combination to use for interpolation
@@ -103,7 +157,7 @@ def get_interp_year_month_dts(df: pd.DataFrame) -> list[dt.datetime]:
     return interp_times
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 out_list = []
 for vdf in run_append(
     [
@@ -143,7 +197,7 @@ for vdf in run_append(
         hue="source", style="variable", ax=axes[0], time_axis="seconds since 1970-01-01"
     )
 
-    vdf.append(avg_run).filter(year=range(1980, 2030)).lineplot(  # type: ignore
+    vdf.append(avg_run).filter(year=range(1950, 2030)).lineplot(  # type: ignore
         hue="source", style="variable", ax=axes[1]
     )
     axes[1].legend().remove()
@@ -167,7 +221,7 @@ assert not out.timeseries().isna().any().any(), (
 )
 out
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.processed_data_file_global_means.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_data_file_global_means)
 config_step.processed_data_file_global_means

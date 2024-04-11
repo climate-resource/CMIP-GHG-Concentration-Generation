@@ -1,6 +1,7 @@
 """
 Quick crunch notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -49,8 +50,12 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_process = get_config_for_step_id(
-        config=config, step="process", step_config_id="only"
+    # Hacking here, so ok that we're only looking at CO2
+    config_process_noaa_in_situ = get_config_for_step_id(
+        config=config, step="process_noaa_in_situ_data", step_config_id="co2"
+    )
+    config_smoooth_law_dome = get_config_for_step_id(
+        config=config, step="smooth_law_dome_data", step_config_id="co2"
     )
 
     configured_notebooks = [
@@ -60,8 +65,8 @@ def configure_notebooks(
             ],
             configuration=None,
             dependencies=(
-                config_process.gggrn.processed_file_global_mean,
-                config_process.law_dome.processed_file,
+                config_process_noaa_in_situ.processed_monthly_data_with_loc_file,
+                config_smoooth_law_dome.smoothed_median_file,
             ),
             targets=(config_step.processed_data_file_global_means,),
             config_file=config_bundle.config_hydrated_path,

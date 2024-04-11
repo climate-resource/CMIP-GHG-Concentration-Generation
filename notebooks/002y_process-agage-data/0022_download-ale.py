@@ -24,11 +24,16 @@
 
 # %%
 
+import openscm_units
+import pint
 import pooch
 from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to

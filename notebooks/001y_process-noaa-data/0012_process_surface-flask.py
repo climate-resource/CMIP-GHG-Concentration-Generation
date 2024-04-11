@@ -12,25 +12,30 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - process surface flask
 #
 # Process data from NOAA's surface flask network to add lat-lon information to the monthly data.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 from local.noaa_processing import PROCESSED_DATA_COLUMNS
 
-# %% [markdown]
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
+
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %%
@@ -53,7 +58,7 @@ config_step = get_config_for_step_id(
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
@@ -64,12 +69,18 @@ config_retrieve_noaa = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 df_events = pd.read_csv(config_retrieve_noaa.interim_files["events_data"])
 df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
+# %% editable=true slideshow={"slide_type": ""}
+df_months["year"].max()
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+df_events["year"].max()
+
+
+# %% editable=true slideshow={"slide_type": ""}
 def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
     """
     Get dictionary grouped by site site_code
@@ -382,10 +393,10 @@ only_events_stations
 #
 # TODO: include this question when I reach out to NOAA people.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save out result
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 assert set(monthly_dfs_with_loc["gas"]) == {config_step.gas}
 monthly_dfs_with_loc.to_csv(
     config_step.processed_monthly_data_with_loc_file, index=False

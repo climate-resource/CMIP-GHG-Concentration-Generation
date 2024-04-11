@@ -4,6 +4,7 @@ Task definition and retrieval
 
 from __future__ import annotations
 
+import shutil
 from collections.abc import Iterable
 from pathlib import Path
 
@@ -15,18 +16,60 @@ from .config.base import ConfigBundle
 from .notebook_steps import (
     grid,
     gridded_data_processing,
-    plot,
-    process,
+    plot_input_data_overviews,
     process_noaa_in_situ_data,
     process_noaa_surface_flask_data,
     quick_crunch,
-    retrieve,
     retrieve_and_extract_agage_data,
     retrieve_and_extract_ale_data,
     retrieve_and_extract_gage_data,
+    retrieve_and_extract_misc_data,
     retrieve_and_extract_noaa_data,
+    retrieve_and_process_law_dome_data,
+    smooth_law_dome_data,
     write_input4mips,
 )
+
+
+def copy_no_output(in_path: Path, out_path: Path) -> None:
+    """
+    Copy a file, producing no output
+
+    Required so that pydoit doesn't think the shutil operation failed.
+    Defined here as parallel runs fail if we use pydoit's ``swallow_output`` helper.
+
+    Parameters
+    ----------
+    in_path
+        Source
+
+    out_path
+        Destination
+    """
+    shutil.copy2(src=in_path, dst=out_path)
+
+
+def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
+    """
+    Copy a file tree, producing no output
+
+    Required so that pydoit doesn't think the shutil operation failed.
+    Defined here as parallel runs fail if we use pydoit's ``swallow_output`` helper.
+
+    Parameters
+    ----------
+    in_path
+        Source
+
+    out_path
+        Destination
+    """
+    shutil.copytree(
+        src=in_path,
+        dst=out_path,
+        ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
+        dirs_exist_ok=True,
+    )
 
 
 def gen_all_tasks(
@@ -60,15 +103,16 @@ def gen_all_tasks(
     """
     notebook_tasks: list[DoitTaskSpec] = []
     for step_module in [
+        retrieve_and_extract_misc_data,
         retrieve_and_extract_noaa_data,
         process_noaa_surface_flask_data,
         process_noaa_in_situ_data,
         retrieve_and_extract_agage_data,
         retrieve_and_extract_gage_data,
         retrieve_and_extract_ale_data,
-        retrieve,
-        plot,
-        process,
+        retrieve_and_process_law_dome_data,
+        plot_input_data_overviews,
+        smooth_law_dome_data,
         quick_crunch,
         grid,
         gridded_data_processing,
@@ -89,4 +133,6 @@ def gen_all_tasks(
         run_id=config_bundle.run_id,
         root_dir_raw_notebooks=root_dir_raw_notebooks,
         config_file_raw=config_file_raw,
+        copy_file=copy_no_output,
+        copy_tree=copy_tree_no_output,
     )

@@ -27,9 +27,10 @@ netcdf4 = "1.6.5"
 # TODO: cut new release of input4mips-validation
 # input4mips-validation = "0.2.0"
 input4mips-validation = { git = "https://github.com/climate-resource/input4mips_validation.git", rev = "5f9b60e8f46e1710eb6fa44b30f3a224a81f17c7" }
-pydoit-nb = "0.3.3"
+pydoit-nb = "0.3.4"
 carpet-concentrations = "0.5.1"
 beautifulsoup4 = "4.12.3"
+ipywidgets = "^8.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
@@ -58,6 +59,7 @@ markers = [
 
 [tool.ruff]
 src = ["src"]
+exclude = ["notebooks-archive/*"]
 target-version = "py311"
 select = [
     "E",  # pycodestyle error

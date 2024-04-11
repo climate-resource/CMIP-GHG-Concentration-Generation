@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Process ALE
 #
 # Process data from the ALE part of the AGAGE network. We extract the monthly data with lat-lon information.
@@ -26,12 +26,17 @@ from pathlib import Path
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 from local.regexp_helpers import re_search_and_retrieve_group
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -49,14 +54,14 @@ step_config_id: str = "monthly"  # config ID to select for this branch
 # %% [markdown]
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 
 

@@ -18,6 +18,7 @@ different runs using the same database and hence clashing is avoided. This does
 feel like a bit of a hack though, not sure if there is a better pattern or
 whether this is actually best.
 """
+
 from __future__ import annotations
 
 import datetime as dt
@@ -28,6 +29,8 @@ from distutils.dir_util import copy_tree
 from pathlib import Path
 from typing import Any
 
+import openscm_units
+import pint
 from pydoit_nb.config_handling import insert_path_prefix
 from pydoit_nb.display import print_config
 from pydoit_nb.doit_tools import setup_logging
@@ -38,6 +41,8 @@ from local import get_key_info
 from local.config import converter_yaml, load_config_from_file
 from local.config.base import ConfigBundle
 from local.tasks import gen_all_tasks
+
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 RUN_ID: str = os.environ.get("DOIT_RUN_ID", dt.datetime.now().strftime("%Y%m%d%H%M%S"))
 """ID to use with this run"""

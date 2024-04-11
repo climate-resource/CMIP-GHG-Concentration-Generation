@@ -1,6 +1,16 @@
 name: dev
 version: "0.1.0-alpha"
+base_seed: 20240411
 ci: false
+
+retrieve_misc_data:
+- step_config_id: only
+  natural_earth:
+    raw_dir: data/raw/natural_earth
+    download_urls:
+    - url: https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip
+      known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110
+    countries_shape_file_name: ne_110m_admin_0_countries.shx
 
 # CH4, N2O and SF6 config added in `scripts/create-dev-ci-config-absolute.py`
 retrieve_and_extract_noaa_data:
@@ -92,52 +102,58 @@ retrieve_and_extract_ale_data:
   processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   download_complete_file: data/raw/agage/ale/ale_monthly.complete
 
-plot:
+retrieve_and_process_law_dome_data:
+- step_config_id: "only"
+  doi: https://doi.org/10.25919/5bfe29ff807fb
+  raw_dir: data/raw/law_dome
+  files_md5_sum:
+    data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
+  processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
+
+plot_input_data_overviews:
 - step_config_id: only
 
-retrieve:
-- step_config_id: only
-  natural_earth:
-    raw_dir: data/raw/natural_earth
-    download_urls:
-    - url: https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip
-      known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110
-    countries_shape_file_name: ne_110m_admin_0_countries.shx
+# TODO: other gases config added in `scripts/create-dev-ci-config-absolute.py`
+smooth_law_dome_data:
+- step_config_id: co2
+  n_draws: 10
+  smoothed_draws_file: data/interim/law_dome/law-dome_co2_smoothed_all-draws.csv
+  smoothed_median_file: data/interim/law_dome/law-dome_co2_smoothed_median.csv
+  gas: co2
+  noise_adder:
+    x_ref:
+    - 2024
+    - yr
+    x_relative_random_error:
+    - 0.03  # 60 / 2000
+    - dimensionless
+    y_random_error:
+    - 2
+    - ppm
+  point_selector_settings:
+    window_width:
+    - 120
+    - yr
+    minimum_data_points_either_side: 7
+    maximum_data_points_either_side: 25
 
-  # TODO: These should all be deleted/moved once we have the M17 algorithm working better
-  law_dome:
-    doi: https://doi.org/10.25919/5bfe29ff807fb
-    raw_dir: data/raw/law_dome
-    files_md5_sum:
-      data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
-  gggrn:
-    raw_dir: data/raw/gggrn
-    urls_global_mean:
-    - url: https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_gl.txt
-      known_hash: 040e45aa53102d8bec17b4b535668b56d02e01aadf259e881b2aeefabdfdf777
-    - url: https://gml.noaa.gov/webdata/ccgg/trends/ch4/ch4_mm_gl.txt
-      known_hash: ba65e43b5d7a298c45f6fcf311bf367fd524bc599146376666e7a560418c4b80
-    - url: https://gml.noaa.gov/webdata/ccgg/trends/n2o/n2o_mm_gl.txt
-      known_hash: a5ec24a92284dc71c29375a96e30513df8e23923801fa0081543b609ec0fcaba
-process:
-- step_config_id: only
-  law_dome:
-    processed_file: data/processed/law_dome/0101_processed-law-dome.csv
-  gggrn:
-    processed_file_global_mean: data/processed/gggrn/0111_processed-gggrn-global-mean.csv
 grid:
 - step_config_id: only
   processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
+
 gridded_data_processing:
 - step_config_id: only
   processed_data_file_global_hemispheric_means: data/processed/gridded/0810_global-hemispheric-means.nc
   processed_data_file_global_hemispheric_annual_means: data/processed/gridded/0810_global-hemispheric-annual-means.nc
+
 write_input4mips:
 - step_config_id: only
   input4mips_out_dir: data/processed/input4MIPs
+
 quick_crunch:
 - step_config_id: only
   processed_data_file_global_means: data/processed/quick_crunch/yyyy_processed-global-means.csv
+
 analysis:
 - step_config_id: only
   mean_dir: data/processed/710_means

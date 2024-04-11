@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.16.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -78,5 +78,5 @@ for fp, expected_md5 in config_step.law_dome.files_md5_sum.items():
         )
         raise AssertionError(error_msg)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 generate_directory_checklist(config_step.law_dome.raw_dir)

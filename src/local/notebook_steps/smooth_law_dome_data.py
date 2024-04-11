@@ -1,13 +1,13 @@
 """
-Process raw data notebook steps
+Law Dome data smoothing notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from pydoit_nb.checklist import get_checklist_file
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -50,31 +50,25 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_retrieve = get_config_for_step_id(
-        config=config, step="retrieve", step_config_id="only"
+    config_process_law_dome = get_config_for_step_id(
+        config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("01yy_process-data") / "0101_process-law-dome"
+                Path("030y_smooth-law-dome-data") / "0301_smooth-law-dome-data"
             ],
-            configuration=(config_step.law_dome,),
-            dependencies=(get_checklist_file(config_retrieve.law_dome.raw_dir),),
-            targets=(config_step.law_dome.processed_file,),
+            configuration=(
+                config_step.n_draws,
+                config_step.noise_adder,
+                config_step.point_selector_settings,
+            ),
+            dependencies=(config_process_law_dome.processed_data_with_loc_file,),
+            targets=(config_step.smoothed_draws_file, config_step.smoothed_median_file),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
-        ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("01yy_process-data") / "0111_process-gggrn-global-mean"
-            ],
-            configuration=None,
-            dependencies=(get_checklist_file(config_retrieve.gggrn.raw_dir),),
-            targets=(config_step.gggrn.processed_file_global_mean,),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
+        )
     ]
 
     return configured_notebooks
@@ -83,23 +77,19 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="process",
+    step_name="smooth_law_dome_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("01yy_process-data") / "0101_process-law-dome",
+            notebook_path=Path("030y_smooth-law-dome-data")
+            / "0301_smooth-law-dome-data",
             raw_notebook_ext=".py",
-            summary="process - Law Dome",
-            doc="Process data for Law Dome observations",
-        ),
-        UnconfiguredNotebook(
-            notebook_path=Path("01yy_process-data") / "0111_process-gggrn-global-mean",
-            raw_notebook_ext=".py",
-            summary="process - Global Greenhouse Gas Research Network (GGGRN)",
+            summary="Smooth Law Dome data - do smoothing",
             doc=(
-                "Process data from the Global Greenhouse Gas Research Network (GGGRN). "
-                "At present, this notebook only processes global-mean data."
+                "Add uncertainty to the Law Dome data, "
+                "then smooth it using a weighted quantile regression. "
+                "Repeat multiple times then take the median of the result."
             ),
-        ),
+        )
     ],
     configure_notebooks=configure_notebooks,
 )

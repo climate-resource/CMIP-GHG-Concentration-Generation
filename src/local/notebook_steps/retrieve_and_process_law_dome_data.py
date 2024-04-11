@@ -1,5 +1,5 @@
 """
-Plot notebook steps
+Retrieve and extract Law Dome data notebook steps
 """
 
 from __future__ import annotations
@@ -8,6 +8,8 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from pydoit_nb.checklist import get_checklist_file
+from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
@@ -46,27 +48,28 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    # config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
-
-    # Multiple loops because mypy is being stupid
-    dependencies = []
-    for c_ale in config.retrieve_and_extract_ale_data:
-        dependencies.append(c_ale.processed_monthly_data_with_loc_file)
-
-    for c_gage in config.retrieve_and_extract_gage_data:
-        dependencies.append(c_gage.processed_monthly_data_with_loc_file)
-
-    for c_agage in config.retrieve_and_extract_agage_data:
-        dependencies.append(c_agage.processed_monthly_data_with_loc_file)
+    config_step = get_config_for_step_id(
+        config=config, step=step_name, step_config_id=step_config_id
+    )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("002y_process-agage-data") / "0029_agage-network-overview"
+                Path("003y_process-law-dome-data") / "0030_download-law-dome"
+            ],
+            configuration=(config_step.files_md5_sum, config_step.doi),
+            dependencies=(),
+            targets=(get_checklist_file(config_step.raw_dir),),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("003y_process-law-dome-data") / "0031_process-law-dome"
             ],
             configuration=(),
-            dependencies=tuple(dependencies),
-            targets=(),
+            dependencies=(get_checklist_file(config_step.raw_dir),),
+            targets=(config_step.processed_data_with_loc_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -78,14 +81,19 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="plot",
+    step_name="retrieve_and_process_law_dome_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("002y_process-agage-data")
-            / "0029_agage-network-overview",
+            notebook_path=Path("003y_process-law-dome-data") / "0030_download-law-dome",
             raw_notebook_ext=".py",
-            summary="plot - Plot AGAGE network overview",
-            doc="Plot an overview of the AGAGE network for all gases",
+            summary="process Law Dome data - download",
+            doc="Download Law Dome data",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("003y_process-law-dome-data") / "0031_process-law-dome",
+            raw_notebook_ext=".py",
+            summary="process Law Dome data - process",
+            doc="Process Law Dome data into a file with latitude and longitude information",
         ),
     ],
     configure_notebooks=configure_notebooks,

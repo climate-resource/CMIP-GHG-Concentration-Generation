@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - overview
 #
 # Overview of all NOAA data.
@@ -23,17 +23,22 @@
 # %%
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
+
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
-# %%
-step: str = "plots"
+# %% editable=true slideshow={"slide_type": ""}
+step: str = "plot_input_data_overviews"
 
 # %% [markdown]
 # ## Parameters
@@ -42,20 +47,22 @@ step: str = "plots"
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(config_file)
-# config_step = get_config_for_step_id(
-#     config=config, step=step, step_config_id=step_config_id
-# )
+config_step = get_config_for_step_id(
+    config=config, step=step, step_config_id=step_config_id
+)
 
-gas_configs = {
-    f"{gas}_{source}": get_config_for_step_id(
-        config=config, step=step, step_config_id=gas
+if config.ci:
+    to_show: tuple[tuple[str, str, str], ...] = (
+        ("co2", "in-situ", "process_noaa_in_situ_data"),
+        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
     )
-    for gas, source, step in (
+else:
+    to_show = (
         ("co2", "in-situ", "process_noaa_in_situ_data"),
         ("ch4", "in-situ", "process_noaa_in_situ_data"),
         ("co2", "surface-flask", "process_noaa_surface_flask_data"),
@@ -63,16 +70,22 @@ gas_configs = {
         ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
         ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
     )
+
+gas_configs = {
+    f"{gas}_{source}": get_config_for_step_id(
+        config=config, step=step, step_config_id=gas
+    )
+    for gas, source, step in to_show
 }
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 full_df = pd.concat(
     [
         pd.read_csv(c.processed_monthly_data_with_loc_file)

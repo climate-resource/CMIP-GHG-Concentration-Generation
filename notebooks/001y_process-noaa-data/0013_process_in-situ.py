@@ -12,7 +12,7 @@
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # NOAA - process in-situ
 #
 # Process data from NOAA's in-situ network.
@@ -21,18 +21,23 @@
 #
 # - work out why MLO only starts in 1974 when https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html says it starts in 1958...
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
 # %%
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import openscm_units
 import pandas as pd
+import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 from local.noaa_processing import PROCESSED_DATA_COLUMNS
+
+# %%
+pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -57,7 +62,7 @@ config_step = get_config_for_step_id(
 )
 
 config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve", step_config_id="only"
+    config=config, step="retrieve_misc_data", step_config_id="only"
 )
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
@@ -68,15 +73,18 @@ config_retrieve_noaa = get_config_for_step_id(
 # %% [markdown]
 # ## Action
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
 
-# %% [markdown]
+# %% editable=true slideshow={"slide_type": ""}
+df_months
+
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Extract data
 #
 # Nice and easy as this data already has everything we need.
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 monthly_dfs_with_loc = df_months[PROCESSED_DATA_COLUMNS]
 assert (
     not monthly_dfs_with_loc[["gas", "year", "month", "site_code_filename"]]
@@ -85,7 +93,7 @@ assert (
 ), "Duplicate entries for a station in a month"
 monthly_dfs_with_loc
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 # Handy check to see if all months have at least some data
 pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(  # type: ignore
     monthly_dfs_with_loc.set_index(["year", "month"]).index.drop_duplicates()
