@@ -47,6 +47,15 @@ class Config:
     """Version ID for this configuration"""
     # TODO: add validation that this matches semantic versioning
 
+    base_seed: int
+    """
+    Base value to use for setting random seeds
+
+    This value is not used directly to avoid accidental correlations between draws.
+    Instead, it is a base to which offsets can be added to ensure reproducibility
+    while avoiding spurious correlations.
+    """
+
     ci: bool
     """
     Is this configuration for a CI run?

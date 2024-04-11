@@ -23,6 +23,8 @@
 # ## Imports
 
 # %%
+import string
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -114,9 +116,41 @@ print(
 
 
 # %%
+int(config_step.gas)
+
+
+# %%
+def string_to_seed(inp: str) -> int:
+    """
+    Convert a string to an integer that can be used as a random seed
+
+    Parameters
+    ----------
+    inp
+        Input to convert
+
+    Returns
+    -------
+        Integer that can be used as a random seed
+    """
+    res = []
+    for v in inp:
+        try:
+            res.append(int(v))
+        except ValueError:
+            try:
+                res.append(string.ascii_lowercase.index(v))
+            except ValueError:
+                res.append(string.ascii_uppercase.index(v))
+
+    return sum(res)
+
+
+# %%
 x_plus_noise, y_plus_noise = noise_adder.add_noise(
     x=x_raw,
     y=y_raw,
+    seed=config.base_seed + string_to_seed(config_step.gas),
 )
 
 # %%
@@ -398,6 +432,7 @@ for i in tqdman.tqdm(range(config_step.n_draws)):
     x_plus_noise, y_plus_noise = noise_adder.add_noise(
         x=x_raw,
         y=y_raw,
+        seed=i + config.base_seed + string_to_seed(config_step.gas),
     )
 
     point_selector = PointSelector(

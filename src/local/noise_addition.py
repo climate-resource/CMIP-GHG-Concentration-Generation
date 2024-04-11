@@ -39,7 +39,7 @@ class NoiseAdderPercentageXNoise:
     """
 
     def add_noise(
-        self, x: pint.UnitRegistry.Quantity, y: pint.UnitRegistry.Quantity
+        self, x: pint.UnitRegistry.Quantity, y: pint.UnitRegistry.Quantity, seed: int
     ) -> tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity]:
         """
         Add noise to an input data set
@@ -51,6 +51,12 @@ class NoiseAdderPercentageXNoise:
 
         y
             y-data to which to add noise
+
+        seed
+            Seed to use with the random number generator.
+
+            Ensures reproducibility of results.
+            Don't use the same seed for successive calls.
 
         Returns
         -------
@@ -65,15 +71,15 @@ class NoiseAdderPercentageXNoise:
         # Different choice to Nicolai here, time error scales with age,
         # with zero being now rather than minimum value in input array.
 
-        # TODO: add seed
-        rng_x = np.random.default_rng(seed=None)
+        rng_x = np.random.default_rng(seed=seed)
         x_plus_noise = x + (
             self.x_ref - x
         ) * self.x_relative_random_error * rng_x.uniform(
             low=-0.5, high=0.5, size=x.shape
         )
 
-        rng_y = np.random.default_rng(seed=None)
+        # Increment seed to avoid spurious correlations in draws
+        rng_y = np.random.default_rng(seed=seed + 13781)
         y_plus_noise = y + self.y_random_error * rng_y.uniform(
             low=-0.5, high=0.5, size=y.shape
         )

@@ -1,5 +1,6 @@
 name: dev
 version: "0.1.0-alpha"
+base_seed: 20240411
 ci: false
 
 retrieve_misc_data:
