@@ -39,14 +39,6 @@ class RetrieveProcessScrippsConfig:
     (Noting that we can't automatically download the CSIRO data)
     """
 
-    download_complete_file: Path
-    """
-    Path in which to write the time at which the download was completed
-
-    This is mainly used to help with setting the dependencies between notebooks
-    correctly.
-    """
-
     processed_data_with_loc_file: Path
     """File in which to save the processed data, including location information"""
 

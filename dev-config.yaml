@@ -192,7 +192,6 @@ retrieve_and_process_scripps_data:
 
   raw_dir: data/raw/scripps
   processed_data_with_loc_file: data/interim/scripps/monthly.csv
-  download_complete_file: data/raw/scripps/scripps_monthly.complete
 
 plot_input_data_overviews:
 - step_config_id: only
