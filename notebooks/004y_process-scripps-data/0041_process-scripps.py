@@ -13,20 +13,23 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # Law dome ice core - process
+# # Scripps - process
 #
-# Process data from the Law Dome record.
+# Process data from the Scripps CO2 program.
 
 # %% [markdown]
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+import io
+
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
 import pandas as pd
 import pint
-from IPython.lib.pretty import pretty
+import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
@@ -38,7 +41,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_law_dome_data"
+step: str = "retrieve_and_process_scripps_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -56,75 +59,211 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+config_retrieve_misc = get_config_for_step_id(
+    config=config, step="retrieve_misc_data", step_config_id="only"
+)
+
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# ### Define Law Dome's location
+# %% [markdown]
+# ### Read and process merged ice core data
 
-# %% editable=true slideshow={"slide_type": ""}
-LAW_DOME_LATITUDE = -(66 + 44 / 60)
-LAW_DOME_LONGITUDE = 112 + 50 / 60
+# %%
+with open(
+    config_step.raw_dir / config_step.merged_ice_core_data.url.split("/")[-1]
+) as fh:
+    raw_ice_core = fh.read()
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# ### Load and clean data
+assert "CO2 in ppm" in raw_ice_core
 
-# %% editable=true slideshow={"slide_type": ""}
-file_name_dict = {k.name: k for k in config_step.files_md5_sum}
-print(pretty(file_name_dict))  # type: ignore
 
-# %% editable=true slideshow={"slide_type": ""}
-processed_dfs = []
-for sheet, gas, unit in [
-    ("CO2byAge", "CO2", "ppm"),
-    ("CH4byAge", "CH4", "ppb"),
-    ("N2ObyAge", "N2O", "ppb"),
-]:
-    raw = pd.read_excel(file_name_dict["Law_Dome_GHG_2000years.xlsx"], sheet_name=sheet)
-    col_map = {
-        f"{gas} Age (year AD)": "time",
-        # "CO2 Age (year AD)": "x",
-        f"{gas} ({unit})": "value",
-    }
-    useable = raw[col_map.keys()].copy()
-    useable.columns = useable.columns.map(col_map)
-    useable["unit"] = unit
-    useable["gas"] = gas.lower()
-    # TODO: Check, should there be polynomial smoothing here?
-    useable["year"] = useable["time"].apply(np.floor).astype(int)
-    month = ((useable["time"] - useable["year"]) * 12).apply(np.ceil).astype(int)
-    month[month == 0] = 1
-    useable["month"] = month
-    useable["latitude"] = LAW_DOME_LATITUDE
-    useable["longitude"] = LAW_DOME_LONGITUDE
-    # # TODO: work out convention for this
-    # useable["source"] = "CSIRO-law-dome"
+merged_ice_core = pd.read_csv(
+    config_step.raw_dir / config_step.merged_ice_core_data.url.split("/")[-1],
+    skiprows=47,
+    header=0,
+)
+merged_ice_core.columns = [v.strip() for v in merged_ice_core.columns]
+merged_ice_core["unit"] = "ppm"
+merged_ice_core = merged_ice_core.rename({"sample_date": "time"}, axis="columns")
+merged_ice_core
 
-    processed_dfs.append(useable)
-#     # TODO: be more careful with time conversions
-#     processed_runs.append(BaseScmRun(useable))
+# %%
+merged_ice_core.set_index("time")["co2"].plot()
 
-processed = pd.concat(processed_dfs)
+# %% [markdown]
+# ### Save
+#
+# This can be saved as is because it will just be used for later comparisons (and we can tweak the format in future).
 
-if config.ci:
-    # Chop the data to speed things up
-    processed = processed[processed["year"] >= 1750]  # noqa: PLR2004
-
-processed
-
-# %% editable=true slideshow={"slide_type": ""}
-for gas_label, gdf in processed.groupby("gas"):
-    ax = gdf.plot(x="time", y="value")
-    unit_gas = gdf["unit"].unique()
-    assert len(unit_gas) == 1
-    ax.set_ylabel(f"{gas_label} ({unit_gas[0]})")
-
-    plt.show()
+# %%
+config_step.merged_ice_core_data_processed_data_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+merged_ice_core.to_csv(
+    config_step.merged_ice_core_data_processed_data_file, index=False
+)
+config_step.merged_ice_core_data_processed_data_file
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
+# ### Read and process station data
+
+# %%
+LAST_INTERESTING_DATA_COLUMN: int = 5
+"""
+Last column which contains data we're interested in.
+
+The README of the data files species that column 5 is the CO2 data,
+after that we can ignore the info.
+"""
+
+EXPECTED_FORMAT_LINES: list[str] = [
+    "The data file below contains 10 columns",
+    "Columns 1-4 give the dates in several redundant",
+    "Column 5 below gives monthly CO2 concentrations in micro-mol CO2",
+]
+"""
+Lines in the data file which give information about the format.
+"""
+
+monthly_dfs_with_loc = []
+for scripps_source in config_step.station_data:
+    filepath = config_step.raw_dir / scripps_source.url_source.url.split("/")[-1]
+    with open(filepath) as fh:
+        raw = fh.read()
+        contents = io.StringIO(raw)
+
+    for expected_line in EXPECTED_FORMAT_LINES:
+        assert expected_line in raw.replace("Mauna Loa CO2 ", "").replace(
+            "monthly concentrations", "monthly CO2 concentrations"
+        ), expected_line
+
+    found_source = False
+    found_unit = False
+    next_line = contents.readline()
+    while next_line.startswith('"'):
+        loc = contents.tell()
+        next_line = contents.readline()
+
+        if next_line.startswith(
+            '" Monthly average CO2 concentrations (ppm)'
+        ) or next_line.startswith('" Atmospheric CO2 concentrations (ppm)'):
+            found_unit = True
+            unit = "ppm"
+
+            if "derived from flask air samples" in next_line:
+                source = "flask"
+                found_source = True
+
+            elif "derived from in situ air measurements" in next_line:
+                source = "in_situ"
+                found_source = True
+
+            elif "derived from daily flask and in situ (continuous) data" in next_line:
+                source = "flask-in_situ-blend"
+                found_source = True
+
+            else:
+                raise NotImplementedError(next_line)
+
+        continue
+
+    if not found_unit:
+        msg = f"No unit found for: {filepath}"
+        raise ValueError(msg)
+
+    if not found_source:
+        msg = f"No source found for: {filepath}"
+        raise ValueError(msg)
+
+    contents.seek(loc)
+    raw_df = pd.read_csv(contents)
+
+    raw_df.columns = [v.strip() for v in raw_df.columns]
+
+    keep = (
+        raw_df.iloc[:, :5][["Yr", "Mn", "CO2"]]
+        .iloc[2:, :]
+        .rename({"CO2": "value", "Yr": "year", "Mn": "month"}, axis="columns")
+    )
+    keep["unit"] = unit
+    keep["source"] = source
+    if scripps_source.lon.endswith("W"):
+        keep["longitude"] = -float(scripps_source.lon.split(" ")[0])
+    elif scripps_source.lon.endswith("E"):
+        keep["longitude"] = float(scripps_source.lon.split(" ")[0])
+    else:
+        raise NotImplementedError(scripps_source.lon)
+
+    if scripps_source.lat.endswith("S"):
+        keep["latitude"] = -float(scripps_source.lat.split(" ")[0])
+    elif scripps_source.lat.endswith("N"):
+        keep["latitude"] = float(scripps_source.lat.split(" ")[0])
+    else:
+        raise NotImplementedError(scripps_source.lat)
+
+    keep["station_code"] = scripps_source.station_code
+    keep["gas"] = "co2"
+    keep[["year", "month"]] = keep[["year", "month"]].astype(int)
+    keep["value"] = keep["value"].astype(float)
+    keep["value"] = keep["value"].replace(-99.99, np.NaN)
+
+    monthly_dfs_with_loc.append(keep)
+
+monthly_df_with_loc = pd.concat(monthly_dfs_with_loc)
+monthly_df_with_loc
+
+# %% [markdown]
+# ### Quick plot
+
+# %%
+countries = gpd.read_file(
+    config_retrieve_misc.natural_earth.raw_dir
+    / config_retrieve_misc.natural_earth.countries_shape_file_name
+)
+# countries.columns.tolist()
+
+# %%
+fig, axes = plt.subplots(ncols=2, figsize=(12, 8))
+
+countries.plot(color="lightgray", ax=axes[0])
+
+for (station, source), sdf in tqdman.tqdm(
+    monthly_df_with_loc.groupby(["station_code", "source"]),
+):
+    # if station != "mlo":
+    #     continue
+    # print(f"Examining {station} ")
+    label = f"{station} {source}"
+
+    axes[0].scatter(
+        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
+    )
+
+    axes[0].set_xlim([-180, 180])
+    axes[0].set_ylim([-90, 90])
+
+    pdf = sdf.copy()
+    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
+    axes[1].scatter(
+        x=pdf["year-month"],
+        y=pdf["value"],
+        alpha=0.4,
+        label=f"{label} monthly data",
+        zorder=2,
+    )
+
+    # break
+
+axes[0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
+axes[1].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
 # ### Save out result
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 config_step.processed_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
-processed.to_csv(config_step.processed_data_with_loc_file, index=False)
-config_step.processed_data_with_loc_file
+monthly_df_with_loc.to_csv(config_step.processed_data_with_loc_file, index=False)
+monthly_df_with_loc

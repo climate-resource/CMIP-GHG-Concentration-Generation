@@ -26,8 +26,11 @@ class RetrieveProcessScrippsConfig:
     merged_ice_core_data: URLSource
     """URLs from which to download the merged ice core data"""
 
-    station_data: list[URLSource]
-    """URLs from which to download the station data"""
+    merged_ice_core_data_processed_data_file: Path
+    """Path in which to save the processed merged ice core data"""
+
+    station_data: list[ScrippsSource]
+    """Information about the station data"""
 
     raw_dir: Path
     """
@@ -46,3 +49,20 @@ class RetrieveProcessScrippsConfig:
 
     processed_data_with_loc_file: Path
     """File in which to save the processed data, including location information"""
+
+
+@frozen
+class ScrippsSource:
+    """Information about a Scripps station"""
+
+    url_source: URLSource
+    """URL from which to download the data"""
+
+    station_code: str
+    """Station code"""
+
+    lat: str
+    """Latitude"""
+
+    lon: str
+    """Longitude"""

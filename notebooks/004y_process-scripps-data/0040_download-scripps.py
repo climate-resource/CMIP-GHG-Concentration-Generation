@@ -75,14 +75,15 @@ pooch.retrieve(
 # ### Download station data
 
 # %%
-for url_source in config_step.station_data:
-    pooch.retrieve(
-        url=url_source.url,
-        known_hash=url_source.known_hash,
-        fname=url_source.url.split("/")[-1],
+for scripps_source in config_step.station_data:
+    outfile = pooch.retrieve(
+        url=scripps_source.url_source.url,
+        known_hash=scripps_source.url_source.known_hash,
+        fname=scripps_source.url_source.url.split("/")[-1],
         path=config_step.raw_dir,
         progressbar=True,
     )
+    assert scripps_source.station_code in outfile
 
 # %%
 generate_directory_checklist(config_step.raw_dir)
