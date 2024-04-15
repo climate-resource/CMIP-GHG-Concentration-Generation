@@ -3,6 +3,8 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
+- Add checking of data formats before trying to process everything
+
 - Download Law Dome into same style as NOAA and AGAGE
 
 - Download EPICA into same style as NOAA and AGAGE
@@ -10,7 +12,6 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 - Download NEEM into same style as NOAA and AGAGE
 
 - Download Scripps merged data into same style as NOAA and AGAGE
-  - probably don't use, as I think we have all raw data from elsewhere (although I am puzzled by why we don't have MLO pre 1968 in other sources)
   - https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
   - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
 
@@ -201,8 +202,6 @@ Off the table improvements for now:
 - NOAA: done
 - AGAGE: done
 
-- Law dome ice core
-  - https://data.csiro.au/collection/csiro:37077
 - EPICA Dronning Maud Laud ice core
   - https://doi.pangaea.de/10.1594/PANGAEA.552232
     - https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
