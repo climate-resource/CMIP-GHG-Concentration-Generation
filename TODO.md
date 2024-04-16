@@ -205,17 +205,11 @@ Off the table improvements for now:
   - may also be relevant: https://stackoverflow.com/questions/32418045/running-python-code-by-clicking-a-button-in-bokeh?rq=4
   - probably also google 'bokeh update plot on click'
 
-### Data sources
-
-- NOAA: done
-- AGAGE: done
-
-- NEEM methane
-  - https://doi.pangaea.de/10.1594/PANGAEA.899040
-  - start with outliers removed (https://doi.pangaea.de/10.1594/PANGAEA.899037), then ask providers
-    - https://doi.pangaea.de/10.1594/PANGAEA.899037?format=textfile
+### Data sources to follow up on
 
 - UCI network? (I emailed them on 2024-03-27 asking about data access)
+
+- All the data sources for gases other than CO2, CH4 and N2O (that aren't AGAGAE)
 
 - Full list of data sources is in Table 12 of M17
   - https://gmd.copernicus.org/articles/10/2057/2017/gmd-10-2057-2017.pdf

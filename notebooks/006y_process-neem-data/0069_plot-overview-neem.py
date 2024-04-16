@@ -13,15 +13,16 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # EPICA - process
+# # NEEM - overview
 #
-# Process data from the EPICA dataset.
+# Overview of the NEEM data.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
-
+import geopandas as gpd
+import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
 import pint
@@ -36,7 +37,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_epica_data"
+step: str = "plot_input_data_overviews"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -54,49 +55,59 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+config_retrieve_misc = get_config_for_step_id(
+    config=config, step="retrieve_misc_data", step_config_id="only"
+)
+
+config_process = get_config_for_step_id(
+    config=config, step="retrieve_and_process_neem_data", step_config_id="only"
+)
+
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown]
-# ### Read and process data
+# %%
+monthly_df_with_loc = pd.read_csv(config_process.processed_data_with_loc_file)
+
+# %% editable=true slideshow={"slide_type": ""}
+countries = gpd.read_file(
+    config_retrieve_misc.natural_earth.raw_dir
+    / config_retrieve_misc.natural_earth.countries_shape_file_name
+)
+# countries.columns.tolist()
 
 # %%
-with open(config_step.raw_dir / config_step.download_url.url.split("/")[-1]) as fh:
-    raw = fh.read()
+fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-assert "Methane [ppbv] (CH4)" in raw
-units = "ppb"
-assert "DATE/TIME END: 2006-01-17T00:00:00" in raw
-year_now = 2006
-assert "LATITUDE: -75.002500 * LONGITUDE: 0.068400" in raw
-lat = -75.002500
-lon = 0.068400
+countries.plot(color="lightgray", ax=axes[0])
 
-
-read_df = pd.read_csv(
-    config_step.raw_dir / config_step.download_url.url.split("/")[-1],
-    skiprows=17,
-    header=0,
-    delimiter="\t",
+axes[0].scatter(
+    x=monthly_df_with_loc["longitude"],
+    y=monthly_df_with_loc["latitude"],
+    alpha=0.4,
+    zorder=2,
 )
-read_df = read_df.rename(
-    {
-        "CH4 [ppbv]": "value",
-    },
-    axis="columns",
+
+axes[0].set_xlim([-180, 180])
+axes[0].set_ylim([-90, 90])
+
+axes[1].scatter(
+    x=monthly_df_with_loc["year"],
+    y=monthly_df_with_loc["value"],
+    alpha=0.4,
+    zorder=2,
 )
-read_df["unit"] = units
-read_df["year"] = year_now - (read_df["Age [ka BP]"] * 1000)
-read_df["latitude"] = lat
-read_df["longitude"] = lon
-read_df["gas"] = "ch4"
-read_df = read_df.drop(["Depth ice/snow [m]", "Age [ka BP]"], axis="columns")
-read_df
 
-# %% [markdown]
-# ### Save
 
-# %%
-config_step.processed_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
-read_df.to_csv(config_step.processed_data_with_loc_file, index=False)
-config_step.processed_data_with_loc_file
+axes[2].scatter(
+    x=monthly_df_with_loc["year"],
+    y=monthly_df_with_loc["value"],
+    alpha=0.4,
+    zorder=2,
+)
+
+axes[2].set_xlim([0, 2020])
+axes[2].set_ylim([600, 1300])
+
+plt.tight_layout()
+plt.show()

@@ -57,9 +57,15 @@ def configure_notebooks(
             unconfigured_notebook=uc_nbs_dict[
                 Path("006y_process-neem-data") / "0060_download-neem"
             ],
-            configuration=(config_step.download_url,),
+            configuration=(
+                config_step.merged_ice_core_data,
+                config_step.station_data,
+            ),
             dependencies=(),
-            targets=(get_checklist_file(config_step.raw_dir),),
+            targets=(
+                config_step.merged_ice_core_data_processed_data_file,
+                get_checklist_file(config_step.raw_dir),
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
