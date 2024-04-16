@@ -15,6 +15,11 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 - Download Scripps merged data into same style as NOAA and AGAGE
   - https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
   - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+  - very confusing what this is
+    - why don't measurements pre-1968 appear in other networks?
+    - are all their stations in e.g. NOAA, or only some?
+    - should we be using Scripps' ice age core merged product and their spline?
+    - need to ask Paul/Peter
 
 - Add checking of data formats before trying to process everything
 
@@ -205,18 +210,11 @@ Off the table improvements for now:
 - NOAA: done
 - AGAGE: done
 
-- EPICA Dronning Maud Laud ice core
-  - https://doi.pangaea.de/10.1594/PANGAEA.552232
-    - https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
 - NEEM methane
   - https://doi.pangaea.de/10.1594/PANGAEA.899040
   - start with outliers removed (https://doi.pangaea.de/10.1594/PANGAEA.899037), then ask providers
     - https://doi.pangaea.de/10.1594/PANGAEA.899037?format=textfile
-- Scripps
-  - very confusing what this is
-    - why don't measurements pre-1968 appear in other networks?
-    - are all their stations in e.g. NOAA, or only some?
-    - should we be using Scripps' ice age core merged product and their spline?
+
 - UCI network? (I emailed them on 2024-03-27 asking about data access)
 
 - Full list of data sources is in Table 12 of M17

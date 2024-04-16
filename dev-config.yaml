@@ -201,6 +201,14 @@ retrieve_and_process_epica_data:
     url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
   processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
 
+retrieve_and_process_neem_data:
+- step_config_id: "only"
+  raw_dir: data/raw/neem
+  download_url:
+    known_hash: 3b57ca16db32f729a414422347f9292f2083c8d602f1f13d47a7fe7709d63d2d
+    url: https://doi.pangaea.de/10.1594/PANGAEA.899039?format=textfile
+  processed_data_with_loc_file: data/interim/neem/neem_with_location.csv
+
 plot_input_data_overviews:
 - step_config_id: only
 
