@@ -29,6 +29,7 @@ import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.raw_data_processing
 from local.config import load_config_from_file
 from local.noaa_processing import PROCESSED_DATA_COLUMNS
 
@@ -393,12 +394,24 @@ only_events_stations
 #
 # TODO: include this question when I reach out to NOAA people.
 
+# %% [markdown]
+# ### Prepare and check output
+
+# %%
+out = monthly_dfs_with_loc.copy()
+out["network"] = "NOAA"
+out["station"] = out["site_code"].str.lower()
+out["measurement_method"] = out["source"]
+
+out
+
+# %%
+local.raw_data_processing.check_processed_data_columns_for_latitudinal_mean(out)
+
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save out result
 
 # %% editable=true slideshow={"slide_type": ""}
 assert set(monthly_dfs_with_loc["gas"]) == {config_step.gas}
-monthly_dfs_with_loc.to_csv(
-    config_step.processed_monthly_data_with_loc_file, index=False
-)
-monthly_dfs_with_loc
+out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
+out
