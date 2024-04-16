@@ -23,13 +23,10 @@
 # %% editable=true slideshow={"slide_type": ""}
 import io
 
-import geopandas as gpd
-import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
 import pandas as pd
 import pint
-import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
@@ -212,53 +209,6 @@ for scripps_source in config_step.station_data:
 
 monthly_df_with_loc = pd.concat(monthly_dfs_with_loc)
 monthly_df_with_loc
-
-# %% [markdown]
-# ### Quick plot
-
-# %%
-countries = gpd.read_file(
-    config_retrieve_misc.natural_earth.raw_dir
-    / config_retrieve_misc.natural_earth.countries_shape_file_name
-)
-# countries.columns.tolist()
-
-# %%
-fig, axes = plt.subplots(ncols=2, figsize=(12, 8))
-
-countries.plot(color="lightgray", ax=axes[0])
-
-for (station, source), sdf in tqdman.tqdm(
-    monthly_df_with_loc.groupby(["station_code", "source"]),
-):
-    # if station != "mlo":
-    #     continue
-    # print(f"Examining {station} ")
-    label = f"{station} {source}"
-
-    axes[0].scatter(
-        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
-    )
-
-    axes[0].set_xlim([-180, 180])
-    axes[0].set_ylim([-90, 90])
-
-    pdf = sdf.copy()
-    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
-    axes[1].scatter(
-        x=pdf["year-month"],
-        y=pdf["value"],
-        alpha=0.4,
-        label=f"{label} monthly data",
-        zorder=2,
-    )
-
-    # break
-
-axes[0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-axes[1].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-plt.tight_layout()
-plt.show()
 
 # %% [markdown]
 # ### Save out result
