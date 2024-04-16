@@ -9,10 +9,19 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 
 - Download NEEM into same style as NOAA and AGAGE
 
+- Download CH4 budget into same style as NOAA and AGAGE
+  - https://www.icos-cp.eu/GCP-CH4-2019
+
 - Download Scripps merged data into same style as NOAA and AGAGE
-  - probably don't use, as I think we have all raw data from elsewhere (although I am puzzled by why we don't have MLO pre 1968 in other sources)
   - https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
   - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+  - very confusing what this is
+    - why don't measurements pre-1968 appear in other networks?
+    - are all their stations in e.g. NOAA, or only some?
+    - should we be using Scripps' ice age core merged product and their spline?
+    - need to ask Paul/Peter
+
+- Add checking of data formats before trying to process everything
 
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
@@ -196,26 +205,11 @@ Off the table improvements for now:
   - may also be relevant: https://stackoverflow.com/questions/32418045/running-python-code-by-clicking-a-button-in-bokeh?rq=4
   - probably also google 'bokeh update plot on click'
 
-### Data sources
+### Data sources to follow up on
 
-- NOAA: done
-- AGAGE: done
-
-- Law dome ice core
-  - https://data.csiro.au/collection/csiro:37077
-- EPICA Dronning Maud Laud ice core
-  - https://doi.pangaea.de/10.1594/PANGAEA.552232
-    - https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
-- NEEM methane
-  - https://doi.pangaea.de/10.1594/PANGAEA.899040
-  - start with outliers removed (https://doi.pangaea.de/10.1594/PANGAEA.899037), then ask providers
-    - https://doi.pangaea.de/10.1594/PANGAEA.899037?format=textfile
-- Scripps
-  - very confusing what this is
-    - why don't measurements pre-1968 appear in other networks?
-    - are all their stations in e.g. NOAA, or only some?
-    - should we be using Scripps' ice age core merged product and their spline?
 - UCI network? (I emailed them on 2024-03-27 asking about data access)
+
+- All the data sources for gases other than CO2, CH4 and N2O (that aren't AGAGAE)
 
 - Full list of data sources is in Table 12 of M17
   - https://gmd.copernicus.org/articles/10/2057/2017/gmd-10-2057-2017.pdf

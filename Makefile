@@ -40,6 +40,9 @@ all-ci: $(CI_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the CI run-id
 all-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id
 	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --verbosity=2
 
+all-dev-parallel: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --verbosity=2 -n 6
+
 all-debug-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id, falling to debugger on failure
 	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --pdb
 

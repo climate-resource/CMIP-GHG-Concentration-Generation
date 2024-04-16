@@ -25,7 +25,9 @@ from .notebook_steps import (
     retrieve_and_extract_gage_data,
     retrieve_and_extract_misc_data,
     retrieve_and_extract_noaa_data,
+    retrieve_and_process_epica_data,
     retrieve_and_process_law_dome_data,
+    retrieve_and_process_scripps_data,
     smooth_law_dome_data,
     write_input4mips,
 )
@@ -111,6 +113,8 @@ def gen_all_tasks(
         retrieve_and_extract_gage_data,
         retrieve_and_extract_ale_data,
         retrieve_and_process_law_dome_data,
+        retrieve_and_process_scripps_data,
+        retrieve_and_process_epica_data,
         plot_input_data_overviews,
         smooth_law_dome_data,
         quick_crunch,

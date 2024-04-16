@@ -104,6 +104,16 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("004y_process-scripps-data") / "0049_plot-overview-scripps"
+            ],
+            configuration=(),
+            dependencies=dependencies_law_dome,
+            targets=(),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -133,6 +143,13 @@ step: UnconfiguredNotebookBasedStep[
             raw_notebook_ext=".py",
             summary="plot - Plot Law Dome observations overview",
             doc="Plot an overview of the Law Dome observations for all gases",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("004y_process-scripps-data")
+            / "0049_plot-overview-scripps",
+            raw_notebook_ext=".py",
+            summary="plot - Plot Scripps observations overview",
+            doc="Plot an overview of the Scripps observations for all gases",
         ),
     ],
     configure_notebooks=configure_notebooks,

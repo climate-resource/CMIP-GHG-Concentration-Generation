@@ -110,6 +110,105 @@ retrieve_and_process_law_dome_data:
     data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
   processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
 
+retrieve_and_process_scripps_data:
+- step_config_id: "only"
+  merged_ice_core_data:
+    known_hash: 7a89e63bc92bd0666058e627d01be9698bf0ae0ae0f5c1764ea0ad32002b21aa
+    url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
+  merged_ice_core_data_processed_data_file: data/interim/scripps/merged_ice_core.csv
+  station_data:
+    - station_code: mlo
+      lat: 19.5 N
+      lon: 155.6 W
+      url_source:
+        known_hash: 3883b992cbef27e9346bce8e5f7a7fefd479b151dbba4b9471d0ed499a7d94bf
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv
+    - station_code: mlo
+      lat: 19.5 N
+      lon: 155.6 W
+      url_source:
+        known_hash: bf4b0cd8f80ab41d216cc09318a6fb65ac0450c0e4005740cf76a65451b2dab8
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_mlo.csv
+    - station_code: alt
+      lat: 82.3 N
+      lon: 62.3 W
+      url_source:
+        known_hash: 90f36c9ad1b9f853e0e05fa99a858206dbcdc449100d46ce87dc1dc32cd768fd
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_alt.csv
+    - station_code: ptb
+      lat: 71.3 N
+      lon: 156.6 W
+      url_source:
+        known_hash: 20293a1820fe896cc44d86d9fde1aa19562eccad08d216052ee2f0761de827e8
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/merged_in_situ_and_flask/monthly/monthly_merge_co2_ptb.csv
+    - station_code: ljo
+      lat: 32.9 N
+      lon: 117.3 W
+      url_source:
+        known_hash: c77ca1ef1f34b3b2193480c5b92857ff09acbbc95b4d717fc1499ec4eb311b8b
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/merged_in_situ_and_flask/monthly/monthly_merge_co2_ljo.csv
+    - station_code: kum
+      lat: 19.5 N
+      lon: 154.8 W
+      url_source:
+        known_hash: 81d3cfdbc04f6ec508d5fc3b44f505b5825f49b37bd045acd3aa406b66a198b0
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_kum.csv
+    - station_code: fan
+      lat: 3.9 N
+      lon: 159.4 W
+      url_source:
+        known_hash: 46f5b4def0f51ac0c355b3fc93f69df95c06fb06fd23705bb9e08f8ebb86cb46
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_fan.csv
+    - station_code: chr
+      lat: 2.0 N
+      lon: 157.3 W
+      url_source:
+        known_hash: 640918d8d8117a551d2530ad1f1559714a530fb4d727115a552e00c92fc24d83
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_chr.csv
+    - station_code: sam
+      lat: 14.2 S
+      lon: 170.6 W
+      url_source:
+        known_hash: 4155ff5a75df75b05f1c4883310be4a37ed878af67f819368cc8968ed1667c53
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_sam.csv
+    - station_code: ker
+      lat: 29.2 S
+      lon: 177.9 W
+      url_source:
+        known_hash: cc2e75642bc76538eb671ffe9cec55a34c467cfa2ba21ee22b2ce8b4636960e6
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_ker.csv
+    - station_code: spo
+      lat: 90.0 S
+      lon: 180.0 W
+      url_source:
+        known_hash: e2e893108f8806a94ba7e5cccd200b6f85b0b4bab2dade2e43798cb4f0059e7a
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/merged_in_situ_and_flask/monthly/monthly_merge_co2_spo.csv
+    - station_code: nzd
+      lat: 41.4 S
+      lon: 174.9 E
+      url_source:
+        known_hash: 7efbdbf808857d7c127747f921c7fccb8a474f3a77b76df5446006e2ede86c74
+        url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/flask_co2/monthly/monthly_flask_co2_nzd.csv
+
+  raw_dir: data/raw/scripps
+  processed_data_with_loc_file: data/interim/scripps/monthly.csv
+
+retrieve_and_process_epica_data:
+- step_config_id: "only"
+  raw_dir: data/raw/epica
+  download_url:
+    known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
+    url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
+  processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
+
+retrieve_and_process_neem_data:
+- step_config_id: "only"
+  raw_dir: data/raw/neem
+  download_url:
+    known_hash: 3b57ca16db32f729a414422347f9292f2083c8d602f1f13d47a7fe7709d63d2d
+    url: https://doi.pangaea.de/10.1594/PANGAEA.899039?format=textfile
+  processed_data_with_loc_file: data/interim/neem/neem_with_location.csv
+
 plot_input_data_overviews:
 - step_config_id: only
 
