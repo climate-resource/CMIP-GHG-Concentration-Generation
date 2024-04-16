@@ -25,6 +25,7 @@ from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
 from .retrieve_and_process_scripps_data import RetrieveProcessScrippsConfig
 from .retrieve_misc_data import RetrieveMiscDataConfig
@@ -145,6 +146,15 @@ class Config:
         ]
     )
     """Configurations to use for retrieving and processing Scripps data"""
+
+    retrieve_and_process_epica_data: list[RetrieveProcessEPICAConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for retrieving and processing EPICA data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[

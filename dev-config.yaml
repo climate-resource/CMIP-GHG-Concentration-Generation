@@ -193,6 +193,14 @@ retrieve_and_process_scripps_data:
   raw_dir: data/raw/scripps
   processed_data_with_loc_file: data/interim/scripps/monthly.csv
 
+retrieve_and_process_epica_data:
+- step_config_id: "only"
+  raw_dir: data/raw/epica
+  download_url:
+    known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
+    url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
+  processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
+
 plot_input_data_overviews:
 - step_config_id: only
 
