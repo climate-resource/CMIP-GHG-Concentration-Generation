@@ -13,9 +13,9 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # Scripps - overview
+# # EPICA - overview
 #
-# Overview of all Scripps data.
+# Overview of the EPICA data.
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
@@ -26,7 +26,6 @@ import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
 import pint
-import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
@@ -61,7 +60,7 @@ config_retrieve_misc = get_config_for_step_id(
 )
 
 config_process = get_config_for_step_id(
-    config=config, step="retrieve_and_process_scripps_data", step_config_id="only"
+    config=config, step="retrieve_and_process_epica_data", step_config_id="only"
 )
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -78,70 +77,37 @@ countries = gpd.read_file(
 # countries.columns.tolist()
 
 # %%
-for (station, source), sdf in tqdman.tqdm(
-    monthly_df_with_loc.groupby(["station_code", "source"]),
-):
-    fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-
-    countries.plot(color="lightgray", ax=axes[0])
-
-    label = f"{station} {source}"
-
-    axes[0].scatter(
-        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
-    )
-
-    axes[0].set_xlim([-180, 180])
-    axes[0].set_ylim([-90, 90])
-
-    pdf = sdf.copy()
-    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
-    axes[1].scatter(
-        x=pdf["year-month"],
-        y=pdf["value"],
-        alpha=0.4,
-        label=f"{label} monthly data",
-        zorder=2,
-    )
-
-    axes[0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-    axes[1].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-    plt.tight_layout()
-    plt.show()
-
-# %%
-fig, axes = plt.subplots(ncols=2, figsize=(12, 8))
+fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
 countries.plot(color="lightgray", ax=axes[0])
 
-for (station, source), sdf in tqdman.tqdm(
-    monthly_df_with_loc.groupby(["station_code", "source"]),
-):
-    # if station != "mlo":
-    #     continue
-    # print(f"Examining {station} ")
-    label = f"{station} {source}"
+axes[0].scatter(
+    x=monthly_df_with_loc["longitude"],
+    y=monthly_df_with_loc["latitude"],
+    alpha=0.4,
+    zorder=2,
+)
 
-    axes[0].scatter(
-        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
-    )
+axes[0].set_xlim([-180, 180])
+axes[0].set_ylim([-90, 90])
 
-    axes[0].set_xlim([-180, 180])
-    axes[0].set_ylim([-90, 90])
+axes[1].scatter(
+    x=monthly_df_with_loc["year"],
+    y=monthly_df_with_loc["value"],
+    alpha=0.4,
+    zorder=2,
+)
 
-    pdf = sdf.copy()
-    pdf["year-month"] = pdf["year"] + pdf["month"] / 12
-    axes[1].scatter(
-        x=pdf["year-month"],
-        y=pdf["value"],
-        alpha=0.4,
-        label=f"{label} monthly data",
-        zorder=2,
-    )
 
-    # break
+axes[2].scatter(
+    x=monthly_df_with_loc["year"],
+    y=monthly_df_with_loc["value"],
+    alpha=0.4,
+    zorder=2,
+)
 
-axes[0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
-axes[1].legend(loc="upper center", bbox_to_anchor=(0.5, -0.2))
+axes[2].set_xlim([0, 2020])
+axes[2].set_ylim([600, 750])
+
 plt.tight_layout()
 plt.show()
