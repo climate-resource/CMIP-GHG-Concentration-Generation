@@ -450,7 +450,7 @@ seasonality.sum("month")
 from scipy.interpolate import BSpline, make_interp_spline
 
 # %%
-X = np.arange(3)
+X = np.arange(3) + 0.5
 X
 
 # %%
@@ -459,7 +459,7 @@ Y
 
 # %%
 # TODO: add check for evenly spaced X
-x_interp = np.arange(X.size * 12) / 12 - 0.5
+x_interp = np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / 12) + 1 / 24
 x_interp
 
 # %%
@@ -468,10 +468,6 @@ alpha = 1.01
 
 degrees_freedom = int(np.ceil(alpha * Y.size))
 degrees_freedom
-
-# %%
-alpha_len = knots.size - degree - 1
-alpha_len
 
 # %%
 knots_prev = np.repeat(x_interp[0], degree)
@@ -488,6 +484,10 @@ knots_internal
 # %%
 knots = np.hstack([knots_prev, knots_internal, knots_post])
 knots
+
+# %%
+alpha_len = knots.size - degree - 1
+alpha_len
 
 # %%
 B = np.vstack(
