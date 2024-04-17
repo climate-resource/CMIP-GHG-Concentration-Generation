@@ -442,3 +442,195 @@ seasonality
 
 # %%
 seasonality.sum("month")
+
+# %% [markdown]
+# Exploring Nicolai's mean-preserving interpolation
+
+# %%
+from scipy.interpolate import BSpline, make_interp_spline
+
+# %%
+X = np.arange(3)
+X
+
+# %%
+Y = np.array([200, 201, 202])
+Y
+
+# %%
+# TODO: add check for evenly spaced X
+x_interp = np.arange(X.size * 12) / 12 - 0.5
+x_interp
+
+# %%
+degree = 2
+alpha = 1.01
+
+degrees_freedom = int(np.ceil(alpha * Y.size))
+degrees_freedom
+
+# %%
+alpha_len = knots.size - degree - 1
+alpha_len
+
+# %%
+knots_prev = np.repeat(x_interp[0], degree)
+knots_prev
+
+# %%
+knots_post = np.repeat(x_interp[-1], degree)
+knots_post
+
+# %%
+knots_internal = np.quantile(x_interp, np.linspace(0, 1, degrees_freedom - degree))
+knots_internal
+
+# %%
+knots = np.hstack([knots_prev, knots_internal, knots_post])
+knots
+
+# %%
+B = np.vstack(
+    [
+        # np.ones(Y.size),
+        BSpline.design_matrix(x_interp, t=knots, k=degree).toarray(),
+    ]
+)
+assert alpha_len == B.shape[1]
+B
+
+# %%
+BM = np.zeros((Y.size, B.shape[1]))
+for i in range(Y.size):
+    BM[i, :] = np.mean(B[i * 12 : (i + 1) * 12], axis=0)
+
+BM
+
+# %%
+BD = np.diff(B, axis=0)
+BD
+
+# %%
+c = np.hstack([np.ones(BD.shape[0]), np.zeros(2 * alpha_len)])
+print(f"{c.shape=}")
+c
+
+# %%
+b_top_half = Y
+print(f"{b_top_half.shape=}")
+b_top_half
+
+# %%
+b_bottom_half = np.zeros(2 * BD.shape[0])
+print(f"{b_bottom_half.shape=}")
+b_bottom_half
+
+# %%
+A_top_half = np.hstack([np.zeros((Y.size, BD.shape[0])), BM, -BM])
+print(f"{A_top_half.shape=}")
+A_top_half
+
+# %%
+A_bottom_half = np.vstack(
+    [
+        np.hstack([-np.eye(BD.shape[0]), BD, -BD]),
+        np.hstack([-np.eye(BD.shape[0]), -BD, BD]),
+    ]
+)
+print(f"{A_bottom_half.shape=}")
+A_bottom_half
+
+# %%
+import scipy.optimize
+
+# %%
+res = scipy.optimize.linprog(
+    c,
+    b_eq=b_top_half,
+    A_eq=A_top_half,
+    b_ub=b_bottom_half,
+    A_ub=A_bottom_half,
+    # method="highs",
+    # bounds=(0, None),
+    # options=dict(maxiter=int(maxiter)),
+)
+res.success
+
+# %%
+alpha_len
+
+# %%
+res.x[-alpha_len:]
+
+# %%
+alpha = res.x[-2 * alpha_len : -alpha_len] - res.x[-alpha_len:]
+alpha
+
+# %%
+y_interp = B @ alpha
+
+# %%
+mean_of_interp = []
+for i in range(Y.size):
+    mean_of_interp.append(np.mean(y_interp[12 * i : 12 * (i + 1)]))
+
+mean_of_interp = np.array(mean_of_interp)
+np.testing.assert_allclose(mean_of_interp, Y)
+mean_of_interp
+
+# %%
+fig, ax = plt.subplots()
+ax.scatter(X, Y, label="input")
+
+ax.scatter(x_interp, y_interp, label="mean-preserving fit")
+
+# %%
+
+# %%
+res.x
+
+
+# %%
+A[: BM.shape[0], BD.shape[0] + BM.shape[1] :]
+
+# %%
+BM
+
+# %%
+assert False
+
+# %%
+
+# %%
+
+# %%
+
+# %%
+
+# %%
+
+# %%
+knots.shape
+
+# %%
+BSpline.design_matrix(x, t=knots, k=degree).toarray().shape
+
+# %%
+
+# %%
+BSpline.design_matrix(x, t=knots, k=degree).shape
+
+# %%
+BSpline.design_matrix(x, t=knots, k=degree).toarray()
+
+# %%
+bs = make_interp_spline(x=x, y=x * 2, k=degree)
+bs.design_matrix(x=x, t=bs.t, k=bs.k).toarray().shape
+
+# %%
+bs.c
+
+# %%
+bs.design_matrix(x=x, t=bs.t, k=bs.k).toarray() @ bs.c
+
+# %%
