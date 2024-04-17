@@ -450,11 +450,11 @@ seasonality.sum("month")
 from scipy.interpolate import BSpline, make_interp_spline
 
 # %%
-X = np.arange(3) + 0.5
+X = np.arange(9) + 0.5 + 1950
 X
 
 # %%
-Y = np.array([200, 201, 202])
+Y = np.array([200, 202, 203, 204, 206, 205, 208, 209, 209.1])
 Y
 
 # %%
