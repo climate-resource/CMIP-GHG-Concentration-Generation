@@ -447,7 +447,7 @@ seasonality.sum("month")
 # Exploring Nicolai's mean-preserving interpolation
 
 # %%
-from scipy.interpolate import BSpline, make_interp_spline
+from scipy.interpolate import BSpline
 
 # %%
 X = np.arange(9) + 0.5 + 1950
@@ -463,7 +463,7 @@ x_interp = np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / 12) + 1 / 24
 x_interp
 
 # %%
-degree = 2
+degree = 3
 alpha = 1.01
 
 degrees_freedom = int(np.ceil(alpha * Y.size))
@@ -568,6 +568,10 @@ alpha
 
 # %%
 y_interp = B @ alpha
+y_interp.shape
+
+# %%
+x_interp.shape
 
 # %%
 mean_of_interp = []
@@ -583,54 +587,3 @@ fig, ax = plt.subplots()
 ax.scatter(X, Y, label="input")
 
 ax.scatter(x_interp, y_interp, label="mean-preserving fit")
-
-# %%
-
-# %%
-res.x
-
-
-# %%
-A[: BM.shape[0], BD.shape[0] + BM.shape[1] :]
-
-# %%
-BM
-
-# %%
-assert False
-
-# %%
-
-# %%
-
-# %%
-
-# %%
-
-# %%
-
-# %%
-knots.shape
-
-# %%
-BSpline.design_matrix(x, t=knots, k=degree).toarray().shape
-
-# %%
-
-# %%
-BSpline.design_matrix(x, t=knots, k=degree).shape
-
-# %%
-BSpline.design_matrix(x, t=knots, k=degree).toarray()
-
-# %%
-bs = make_interp_spline(x=x, y=x * 2, k=degree)
-bs.design_matrix(x=x, t=bs.t, k=bs.k).toarray().shape
-
-# %%
-bs.c
-
-# %%
-bs.design_matrix(x=x, t=bs.t, k=bs.k).toarray() @ bs.c
-
-# %%
