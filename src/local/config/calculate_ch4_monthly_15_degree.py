@@ -28,8 +28,20 @@ class CalculateCH4Monthly15DegreeConfig:
     processed_bin_averages_file: Path
     """Path in which to save the spatial bin averages from the observational networks"""
 
-    interpolated_observational_network_file: Path
+    observational_network_interpolated_file: Path
     """Path in which to save the interpolated observational network data"""
+
+    observational_network_global_mean_file: Path
+    """Path in which to save the global-mean of the observational network data"""
+
+    lat_gradient_n_eofs_to_use: int
+    """Number of EOFs to use for latitudinal gradient calculations"""
+
+    observational_network_latitudinal_gradient_eofs_file: Path
+    """Path in which to save the latitudinal gradient EOFs of the observational network data"""
+
+    observational_network_seasonality_file: Path
+    """Path in which to save the seasonality of the observational network data"""
 
     processed_data_file: Path
     """Path in which to save the processed, gridded data"""

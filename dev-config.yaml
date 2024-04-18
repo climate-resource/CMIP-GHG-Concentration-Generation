@@ -240,7 +240,11 @@ calculate_ch4_monthly_15_degree:
 - step_config_id: only
   gas: ch4
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
-  interpolated_observational_network_file: data/interim/ch4/ch4_observational-network_interpolated.nc
+  observational_network_interpolated_file: data/interim/ch4/ch4_observational-network_interpolated.nc
+  observational_network_global_mean_file: data/interim/ch4/ch4_observational-network_gloabl-mean.nc
+  lat_gradient_n_eofs_to_use: 2
+  observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
+  observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
   processed_data_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
 
 calculate_n2o_monthly_15_degree:

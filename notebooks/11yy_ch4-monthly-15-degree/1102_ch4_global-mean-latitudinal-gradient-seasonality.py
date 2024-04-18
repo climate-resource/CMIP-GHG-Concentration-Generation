@@ -23,14 +23,15 @@
 # %%
 import cf_xarray.units
 import matplotlib.pyplot as plt
-import numpy as np
 import pint_xarray
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.latitudinal_gradient
 import local.raw_data_processing
+import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
@@ -74,7 +75,7 @@ config_step = get_config_for_step_id(
 
 # %%
 interpolated_spatial = xr.load_dataarray(
-    config_step.interpolated_observational_network_file
+    config_step.observational_network_interpolated_file
 ).pint.quantify()
 interpolated_spatial
 
@@ -93,7 +94,7 @@ interpolated_spatial_nan_free = local.xarray_time.convert_year_month_to_time(
 
 # %%
 lon_mean = interpolated_spatial_nan_free.mean(dim="lon")
-lon_mean
+lon_mean.plot(hue="lat")
 
 # %% [markdown]
 # ### Global-mean
@@ -101,62 +102,25 @@ lon_mean
 # %%
 global_mean = local.xarray_space.calculate_global_mean_from_lon_mean(lon_mean)
 global_mean.plot()
-# variable
-
-# %% [markdown]
-# ### Smoothed global-mean
-
-# %%
-# TBD
 
 # %% [markdown]
 # ### Latitudinal gradient
 
 # %%
-lat_residuals = lon_mean - global_mean
-lat_residuals
-
-# %%
-lat_residuals_annual_mean = local.xarray_time.convert_time_to_year_month(
-    lat_residuals
-).mean("month")
-# lat_residuals_annual_mean
-
-# %%
-lat_residuals_annual_mean.pint.dequantify()
-
-# %%
-# Super helpful: https://www.ess.uci.edu/~yu/class/ess210b/lecture.5.EOF.all.pdf
-svd_ready = lat_residuals_annual_mean.transpose("year", "lat").pint.dequantify()
-U, D, Vh = np.linalg.svd(
-    svd_ready,
-    full_matrices=False,
-)
-
-# If you take the full SVD, you get back the original matrix
-assert np.allclose(
-    svd_ready,
-    U @ np.diag(D) @ Vh,
-)
-
-# Principal components are the scaling factors on the EOFs
-principal_components = U @ np.diag(D)
-
-# Empirical orthogonal functions
-eofs = Vh.T
-
-# Similarly, if you use the full EOFs and principal components,
-# you get back the original matrix
-assert np.allclose(
-    svd_ready,
-    principal_components @ eofs.T,
-)
+(
+    lat_residuals_annual_mean,
+    full_eofs_pcs,
+) = local.latitudinal_gradient.calculate_eofs_pcs(lon_mean, global_mean)
+full_eofs_pcs
 
 # %%
 fig, ax = plt.subplots()
 
-for i, pc in enumerate(principal_components.T):
-    ax.plot(pc, label=f"Principal component {i + 1}")
+for i in range(3):
+    ax.plot(
+        full_eofs_pcs["principal-components"].sel(eof=i).data.m,
+        label=f"Principal component {i + 1}",
+    )
     if i > 3:
         break
 
@@ -167,8 +131,8 @@ fig, ax = plt.subplots()
 
 for i in range(3):
     ax.plot(
-        eofs[:, i],
-        lat_residuals_annual_mean.lat,
+        full_eofs_pcs["eofs"].sel(eof=i).data.m,
+        full_eofs_pcs["lat"].data,
         label=f"EOF {i + 1}",
         zorder=2 - i / 10,
     )
@@ -180,54 +144,21 @@ fig, ax = plt.subplots()
 
 for i in range(3):
     ax.plot(
-        eofs[:, i] * principal_components[0, i],
-        lat_residuals_annual_mean.lat,
+        full_eofs_pcs["principal-components"].sel(eof=i).isel(year=1)
+        @ full_eofs_pcs["eofs"].sel(eof=i),
+        full_eofs_pcs["lat"],
         label=f"EOF {i + 1}",
         zorder=2 - i / 10,
     )
 
 ax.legend(loc="center left", bbox_to_anchor=(1.05, 0.5))
 
-# %% [markdown]
-# TODO: split the below into a function
+# %%
+eofs_pcs = full_eofs_pcs.sel(eof=range(config_step.lat_gradient_n_eofs_to_use))
+eofs_pcs
 
 # %%
-N_EOFS_TO_USE = 2
-
-# %%
-xr_principal_components_keep = xr.DataArray(
-    name=f"{config_step.gas}_latitudinal-gradient_principal-components",
-    data=principal_components[:, :N_EOFS_TO_USE],
-    dims=["year", "eof"],
-    coords=dict(year=lat_residuals_annual_mean["year"], eof=range(N_EOFS_TO_USE)),
-    attrs=dict(
-        description="Principal components for the latitudinal gradient EOFs",
-        units="dimensionless",
-    ),
-).pint.quantify()
-xr_principal_components_keep
-
-# %%
-xr_eofs_keep = xr.DataArray(
-    name=f"{config_step.gas}_latitudinal-gradient_eofs",
-    data=eofs[:, :N_EOFS_TO_USE],
-    dims=["lat", "eof"],
-    coords=dict(lat=lat_residuals_annual_mean["lat"], eof=range(N_EOFS_TO_USE)),
-    attrs=dict(
-        description="EOFs for the latitudinal gradient",
-        units=lat_residuals_annual_mean.data.units,
-    ),
-).pint.quantify()
-xr_eofs_keep
-
-# %%
-xr.merge([xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts")
-
-# %%
-assert False, "Clean this up too"
-
-# %%
-latitudinal_anomaly_from_eofs = xr_principal_components_keep @ xr_eofs_keep
+latitudinal_anomaly_from_eofs = eofs_pcs["principal-components"] @ eofs_pcs["eofs"]
 
 for year in latitudinal_anomaly_from_eofs["year"]:
     if year % 5:
@@ -256,40 +187,44 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-lon_mean_ym = local.xarray_time.convert_time_to_year_month(lon_mean)
-if lon_mean_ym.isnull().any():
-    msg = "Drop out any years with nan data before starting"
-    raise AssertionError(msg)
-
-lon_mean_ym_annual_mean = lon_mean_ym.mean("month")
-lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean
-lon_mean_ym_monthly_anomalies_year_average = lon_mean_ym_monthly_anomalies.mean("year")
-seasonality = lon_mean_ym_monthly_anomalies_year_average
-np.testing.assert_allclose(
-    seasonality.mean("month").pint.to("ppb").pint.dequantify(), 0.0, atol=1e-13
+seasonality, relative_seasonality = local.seasonality.calculate_seasonality(
+    lon_mean=lon_mean,
+    global_mean=global_mean,
 )
-seasonality.plot.line(hue="lat")
-seasonality
 
 # %%
 seasonality.plot.line(hue="lat")
+
+# %%
+relative_seasonality.plot.line(hue="lat")
 
 # %% [markdown]
 # ### Save
 
 # %%
-assert False, "Save global-mean"
-assert False, "Save global-mean smoothed"
-assert False, "Save latitudinal gradient EOF and PC"
-assert False, "Save seasonality"
-
-# %%
-local.binned_data_interpolation.check_data_columns_for_binned_data_interpolation(
-    bins_interpolated
+config_step.observational_network_global_mean_file.parent.mkdir(
+    exist_ok=True, parents=True
 )
-assert set(bins_interpolated["gas"]) == {config_step.gas}
+global_mean.pint.dequantify().to_netcdf(
+    config_step.observational_network_global_mean_file
+)
+global_mean
 
 # %%
-config_step.processed_bin_averages_file.parent.mkdir(exist_ok=True, parents=True)
-bins_interpolated.to_csv(config_step.processed_bin_averages_file, index=False)
-bins_interpolated
+config_step.observational_network_latitudinal_gradient_eofs_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+eofs_pcs.pint.dequantify().to_netcdf(
+    config_step.observational_network_latitudinal_gradient_eofs_file
+)
+eofs_pcs
+
+# %%
+# Use relative seasonality for CH4
+config_step.observational_network_seasonality_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+relative_seasonality.pint.dequantify().to_netcdf(
+    config_step.observational_network_seasonality_file
+)
+relative_seasonality

@@ -137,8 +137,8 @@ out
 # ### Save
 
 # %%
-config_step.interpolated_observational_network_file.parent.mkdir(
+config_step.observational_network_interpolated_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-out.to_netcdf(config_step.interpolated_observational_network_file)
+out.to_netcdf(config_step.observational_network_interpolated_file)
 out
