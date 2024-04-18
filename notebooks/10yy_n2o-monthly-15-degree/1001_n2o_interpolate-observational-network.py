@@ -23,6 +23,7 @@
 # %%
 import cftime
 import matplotlib.pyplot as plt
+import numpy as np
 import openscm_units
 import pandas as pd
 import pint
@@ -71,14 +72,28 @@ bin_averages = pd.read_csv(config_step.processed_bin_averages_file)
 bin_averages
 
 # %%
-MIN_POINTS_FOR_SPATIAL_INTERPOLATION = 4
+MIN_POINTS_FOR_SPATIAL_INTERPOLATION = 3
 
 # %%
 times_l = []
 interpolated_dat_l = []
 year_month_plot = (
-    (1984, 1),
-    (1984, 3),
+    # (1984, 1),
+    # (1984, 3),
+    # (1990, 1),
+    # (1990, 2),
+    (1988, 4),
+    (1989, 4),
+    (1990, 4),
+    (1991, 4),
+    (1992, 4),
+    (1993, 4),
+    (1994, 4),
+    (1995, 4),
+    (1996, 4),
+    (1997, 4),
+    (1998, 4),
+    (2000, 4),
     (2022, 12),
     (2023, 1),
 )
@@ -95,25 +110,10 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
     interpolated_dat_l.append(interpolated_ym)
 
     if (year, month) in year_month_plot:
-        # TODO: think about whether to not duplicate this logic
-        import numpy as np
-
-        from local.binned_data_interpolation import get_round_the_world_grid
-        from local.binning import LAT_BIN_CENTRES, LON_BIN_CENTRES
-
-        lon_grid, lat_grid = np.meshgrid(LON_BIN_CENTRES, LAT_BIN_CENTRES)
-        lon_grid_interp = get_round_the_world_grid(lon_grid, is_lon=True)
-        lat_grid_interp = get_round_the_world_grid(lat_grid)
-
-        # plt.pcolormesh(
-        #     lon_grid_interp, lat_grid_interp, interpolated_ym, shading="auto"
-        # )
-        # plt.plot(points_interp[:, 0], points_interp[:, 1], "ok", label="input point")
-        # plt.legend()
-        # plt.colorbar()
-        # # plt.axis("equal")
-        # plt.ylim([-90, 90])
-        # plt.show()
+        lon_grid, lat_grid = np.meshgrid(
+            local.binned_data_interpolation.LON_BIN_CENTRES,
+            local.binned_data_interpolation.LAT_BIN_CENTRES,
+        )
 
         plt.pcolormesh(lon_grid, lat_grid, interpolated_ym, shading="auto")
         plt.plot(ymdf["lon_bin"], ymdf["lat_bin"], "ok", label="input point")
@@ -128,13 +128,14 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 # ### Save
 
 # %%
+assert False, "Add data from NOAA HATS https://gml.noaa.gov/hats/combined/N2O.html"
 assert False, "Convert to xarray and save as netCDF"
 
 # %%
 local.binned_data_interpolation.check_data_columns_for_binned_data_interpolation(
-    bin_averages
+    bins_interpolated
 )
-assert set(bin_averages["gas"]) == {config_step.gas}
+assert set(bins_interpolated["gas"]) == {config_step.gas}
 
 # %%
 config_step.processed_bin_averages_file.parent.mkdir(exist_ok=True, parents=True)
