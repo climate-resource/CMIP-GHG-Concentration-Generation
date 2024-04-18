@@ -236,6 +236,13 @@ smooth_law_dome_data:
     minimum_data_points_either_side: 7
     maximum_data_points_either_side: 25
 
+calculate_ch4_monthly_15_degree:
+- step_config_id: only
+  gas: ch4
+  processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
+  interpolated_observational_network_file: data/interim/ch4/ch4_observational-network_interpolated.nc
+  processed_data_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
+
 calculate_n2o_monthly_15_degree:
 - step_config_id: only
   gas: n2o
