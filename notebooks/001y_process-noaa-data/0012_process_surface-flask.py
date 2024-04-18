@@ -47,7 +47,7 @@ step: str = "process_noaa_surface_flask_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2"  # config ID to select for this branch
+step_config_id: str = "n2o"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -406,7 +406,7 @@ out["measurement_method"] = out["source"]
 out
 
 # %%
-local.raw_data_processing.check_processed_data_columns_for_latitudinal_mean(out)
+local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save out result

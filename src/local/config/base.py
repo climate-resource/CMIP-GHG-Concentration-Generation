@@ -15,6 +15,7 @@ from pydoit_nb.config_helpers import (
     assert_step_config_ids_are_unique,
 )
 
+from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
@@ -183,6 +184,15 @@ class Config:
         ]
     )
     """Configurations to use for the smoothing of Law Dome data step"""
+
+    calculate_n2o_monthly_15_degree: list[CalculateN2OMonthly15DegreeConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for calculating the 15 degree, monthly data for N2O"""
 
     grid: list[GridConfig] = field(
         validator=[

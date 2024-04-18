@@ -218,7 +218,7 @@ out["measurement_method"] = out["source"]
 out
 
 # %%
-local.raw_data_processing.check_processed_data_columns_for_latitudinal_mean(out)
+local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 
 # %% [markdown]
 # ### Save

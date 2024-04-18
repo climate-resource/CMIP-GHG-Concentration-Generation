@@ -32,6 +32,7 @@ import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.raw_data_processing
 from local.config import load_config_from_file
 from local.regexp_helpers import re_search_and_retrieve_group
 
@@ -211,11 +212,25 @@ for gas, gas_df in tqdman.tqdm(df_monthly.groupby("gas"), desc="gas"):
     plt.show()
 
 # %% [markdown]
+# ### Prepare and check output
+
+# %%
+out = df_monthly.copy()
+out["network"] = "ALE"
+out["station"] = out["site_code"].str.lower()
+out["measurement_method"] = "ALE"
+
+out
+
+# %%
+local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
+
+# %% [markdown]
 # ### Save
 
 # %%
 config_step.processed_monthly_data_with_loc_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-df_monthly.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
-df_monthly
+out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
+out
