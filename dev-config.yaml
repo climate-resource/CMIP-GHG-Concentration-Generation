@@ -246,10 +246,11 @@ calculate_ch4_monthly_15_degree:
   gas: ch4
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
   observational_network_interpolated_file: data/interim/ch4/ch4_observational-network_interpolated.nc
-  observational_network_global_mean_file: data/interim/ch4/ch4_observational-network_gloabl-mean.nc
+  observational_network_global_annual_mean_file: data/interim/ch4/ch4_observational-network_global-annual-mean.nc
   lat_gradient_n_eofs_to_use: 2
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
+  latitudinal_gradient_eofs_extended_file: data/interim/ch4/ch4_extended_latitudinal-gradient-eofs.nc
   latitudinal_gradient_file: data/interim/ch4/ch4_latitudinal-gradient.nc
   seasonality_file: data/interim/ch4/ch4_seasonality.nc
   global_mean_file: data/interim/ch4/ch4_global-mean.nc

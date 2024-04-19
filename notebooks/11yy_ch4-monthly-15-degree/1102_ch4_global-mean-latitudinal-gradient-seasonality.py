@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - calculate global-mean, latitudinal gradient and seasonality
+# # CH$_4$ - calculate global- annual-mean, latitudinal gradient and seasonality
 #
 # Calculate global-mean, latitudinal gradient and seasonality.
 
@@ -97,11 +97,15 @@ lon_mean = interpolated_spatial_nan_free.mean(dim="lon")
 lon_mean.plot(hue="lat")
 
 # %% [markdown]
-# ### Global-mean
+# ### Global-, annual-mean
 
 # %%
 global_mean = local.xarray_space.calculate_global_mean_from_lon_mean(lon_mean)
 global_mean.plot()
+
+# %%
+global_annual_mean = global_mean.groupby("time.year").mean()
+global_annual_mean.plot()
 
 # %% [markdown]
 # ### Latitudinal gradient
@@ -202,13 +206,13 @@ relative_seasonality.plot.line(hue="lat")
 # ### Save
 
 # %%
-config_step.observational_network_global_mean_file.parent.mkdir(
+config_step.observational_network_global_annual_mean_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-global_mean.pint.dequantify().to_netcdf(
-    config_step.observational_network_global_mean_file
+global_annual_mean.pint.dequantify().to_netcdf(
+    config_step.observational_network_global_annual_mean_file
 )
-global_mean
+global_annual_mean
 
 # %%
 config_step.observational_network_latitudinal_gradient_eofs_file.parent.mkdir(

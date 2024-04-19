@@ -31,7 +31,7 @@ class CalculateCH4Monthly15DegreeConfig:
     observational_network_interpolated_file: Path
     """Path in which to save the interpolated observational network data"""
 
-    observational_network_global_mean_file: Path
+    observational_network_global_annual_mean_file: Path
     """Path in which to save the global-mean of the observational network data"""
 
     lat_gradient_n_eofs_to_use: int
@@ -42,6 +42,9 @@ class CalculateCH4Monthly15DegreeConfig:
 
     observational_network_seasonality_file: Path
     """Path in which to save the seasonality of the observational network data"""
+
+    latitudinal_gradient_eofs_extended_file: Path
+    """Path in which to save the extended latitudinal gradient EOFs and PCs"""
 
     latitudinal_gradient_file: Path
     """Path in which to save the latitudinal gradient"""

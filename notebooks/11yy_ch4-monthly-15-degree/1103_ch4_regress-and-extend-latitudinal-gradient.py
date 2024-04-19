@@ -191,36 +191,43 @@ new_pcs.attrs = dict(
     ),
     units=lat_grad_eofs["principal-components"].data.units,
 )
+new_pcs.plot(hue="eof")
 new_pcs
 
 # %%
-new_pcs.plot(hue="eof")
+res = xr.merge([new_pcs, lat_grad_eofs["eofs"]], combine_attrs="drop")
+res.attrs = {
+    "description": "EOFs and PCs for the latitudinal gradient, extended to cover the whole time period"
+}
+res
 
 # %%
-lat_gradient_extended = new_pcs @ lat_grad_eofs["eofs"]
-lat_gradient_extended.name = "latitudinal_gradient"
-lat_gradient_extended
+# lat_gradient_extended = new_pcs @ lat_grad_eofs["eofs"]
+# lat_gradient_extended.name = "latitudinal_gradient"
+# lat_gradient_extended
+# fig, axes = plt.subplots(ncols=2)
+# lat_gradient_extended.sel(
+#     year=np.hstack([
+#         1,
+#         1900,
+#         np.arange(1700, 1901, 100),
+#         2020
+#     ])
+# ).plot(y="lat", hue="year", alpha=0.7, ax=axes[0])
 
-# %%
-fig, axes = plt.subplots(ncols=2)
-lat_gradient_extended.sel(
-    year=np.hstack([1, 1900, np.arange(1700, 1901, 100), 2020])
-).plot(y="lat", hue="year", alpha=0.7, ax=axes[0])
-
-lat_gradient_extended.sel(
-    year=np.hstack(
-        [
-            np.arange(1900, 2021, 10),
-            2022,
-        ]
-    )
-).plot(y="lat", hue="year", alpha=0.7, ax=axes[1])
-plt.tight_layout()
+# lat_gradient_extended.sel(
+#     year=np.hstack([
+#         np.arange(1900, 2021, 10), 2022,
+#     ])
+# ).plot(y="lat", hue="year", alpha=0.7, ax=axes[1])
+# plt.tight_layout()
 
 # %% [markdown]
 # ### Save
 
 # %%
-config_step.latitudinal_gradient_file.parent.mkdir(exist_ok=True, parents=True)
-lat_gradient_extended.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_file)
-lat_gradient_extended
+config_step.latitudinal_gradient_eofs_extended_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+res.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_eofs_extended_file)
+res

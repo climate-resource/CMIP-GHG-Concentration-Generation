@@ -13,9 +13,9 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - regress and extend latitudinal gradient
+# # CH$_4$ - extend the global-, annual-mean
 #
-# Extend the latitudinal gradient back in time. For CH$_4$, we do this by keeping principal component 2 constant and by extending principal component 1 back in time based on a regression with fossil and industrial CH$_4$ emissions.
+# Extend the global-, annual-mean back in time. For CH$_4$, we do this by combining the values from ice cores etc. and our latitudinal gradient information.
 
 # %% [markdown]
 # ## Imports
@@ -24,8 +24,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
+import pandas as pd
 import pint
 import primap2
+import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -65,8 +67,16 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
+config_smooth_law_dome_data = get_config_for_step_id(
+    config=config, step="smooth_law_dome_data", step_config_id="ch4"
+)
+
+config_process_epica = get_config_for_step_id(
+    config=config, step="retrieve_and_process_epica_data", step_config_id="only"
+)
+
+config_process_neem = get_config_for_step_id(
+    config=config, step="retrieve_and_process_neem_data", step_config_id="only"
 )
 
 
@@ -77,14 +87,64 @@ config_retrieve_misc = get_config_for_step_id(
 # ### Load data
 
 # %%
+global_annual_mean = xr.load_dataset(
+    config_step.observational_network_global_annual_mean_file
+).pint.quantify()
+global_annual_mean
+
+# %%
 lat_grad_eofs = xr.load_dataset(
-    config_step.observational_network_latitudinal_gradient_eofs_file
+    config_step.latitudinal_gradient_eofs_extended_file
 ).pint.quantify()
 lat_grad_eofs
 
 # %%
-new_years = np.arange(1, lat_grad_eofs["year"].max() + 1)
-new_years
+smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
+smooth_law_dome
+
+# %%
+neem_data = pd.read_csv(config_process_neem.processed_data_with_loc_file)
+neem_data["year"] = neem_data["year"].round(0)
+neem_data.sort_values("year")
+
+# %%
+epica_data = pd.read_csv(config_process_epica.processed_data_with_loc_file)
+epica_data.sort_values("year")
+
+# %% [markdown]
+# ## Optimise EOF scores to match Law Dome and NEEM data
+
+# %%
+for neem_year in tqdman.tqdm(
+    sorted(neem_data[neem_data["year"] >= smooth_law_dome["year"].min()]["year"])
+):
+    break
+
+# %%
+neem_value = neem_data.loc[neem_data["year"] == neem_year, "value"]
+neem_value
+
+# %%
+smooth_law_dome_value = smooth_law_dome.loc[
+    smooth_law_dome["year"] == neem_year, "value"
+]
+smooth_law_dome_value
+
+# %%
+import cf_xarray.units
+import pint_xarray
+
+cf_xarray.units.units.define("ppm = 1 / 1000000")
+cf_xarray.units.units.define("ppb = ppm / 1000")
+
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
+    cf_xarray.units.units
+)
+
+tmp = lat_grad_eofs.sel(year=neem_year)
+lat_grad = tmp["principal-components"] @ tmp["eofs"]
+lat_grad.name = "lat_grad"
+local.xarray_space.calculate_global_mean_from_lon_mean(lat_grad)
 
 # %% [markdown]
 # ### Extend EOF one
