@@ -80,7 +80,7 @@ read_df = pd.read_csv(
 read_df = read_df.rename(
     {
         "CH4 [ppbv] (5 yr medians, see abstract)": "value",
-        "Age [a AD/CE] (Ice age (yr CE) (Sigl et al. ...)": "year",
+        "Age [a AD/CE] (Gas age (yr CE) (constant del...)": "year",
     },
     axis="columns",
 )

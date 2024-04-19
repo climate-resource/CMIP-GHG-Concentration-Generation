@@ -17,6 +17,10 @@
 #
 # Extend the latitudinal gradient back in time. For CH$_4$, we do this by keeping principal component 2 constant and by extending principal component 1 back in time based on a regression with fossil and industrial CH$_4$ emissions.
 
+# %%
+# TODO: I'm not even sure this notebook is needed for CH4,
+# all the PC scores are overwritten by the optimisation in the next step anyway I think.
+
 # %% [markdown]
 # ## Imports
 
@@ -200,6 +204,9 @@ res.attrs = {
     "description": "EOFs and PCs for the latitudinal gradient, extended to cover the whole time period"
 }
 res
+
+# %%
+(res["principal-components"] @ res["eofs"]).sel(year=1943).plot()
 
 # %%
 # lat_gradient_extended = new_pcs @ lat_grad_eofs["eofs"]

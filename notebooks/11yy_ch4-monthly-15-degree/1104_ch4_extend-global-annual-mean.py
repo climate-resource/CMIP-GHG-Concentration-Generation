@@ -21,12 +21,16 @@
 # ## Imports
 
 # %%
+from functools import partial
+
+# %%
+import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
-import openscm_units
 import pandas as pd
 import pint
-import primap2
+import pint_xarray
+import scipy.optimize
 import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
@@ -40,8 +44,12 @@ import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
 
-# %%
-pint.set_application_registry(openscm_units.unit_registry)
+cf_xarray.units.units.define("ppm = 1 / 1000000")
+cf_xarray.units.units.define("ppb = ppm / 1000")
+
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
+    cf_xarray.units.units
+)
 
 Quantity = pint.get_application_registry().Quantity
 
@@ -87,7 +95,7 @@ config_process_neem = get_config_for_step_id(
 # ### Load data
 
 # %%
-global_annual_mean = xr.load_dataset(
+global_annual_mean = xr.load_dataarray(
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean
@@ -100,187 +108,298 @@ lat_grad_eofs
 
 # %%
 smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
+smooth_law_dome["source"] = "law_dome"
 smooth_law_dome
 
 # %%
 neem_data = pd.read_csv(config_process_neem.processed_data_with_loc_file)
 neem_data["year"] = neem_data["year"].round(0)
+neem_data["source"] = "neem"
 neem_data.sort_values("year")
 
 # %%
 epica_data = pd.read_csv(config_process_epica.processed_data_with_loc_file)
+epica_data["source"] = "epica"
 epica_data.sort_values("year")
 
+
 # %% [markdown]
-# ## Optimise EOF scores to match Law Dome and NEEM data
+# ## Optimise PC zero to match Law Dome and NEEM data
+
 
 # %%
-for neem_year in tqdman.tqdm(
-    sorted(neem_data[neem_data["year"] >= smooth_law_dome["year"].min()]["year"])
-):
-    break
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+    res = idf[col].unique()
+    if len(res) != 1:
+        raise AssertionError
+
+    return res[0]
+
 
 # %%
-neem_value = neem_data.loc[neem_data["year"] == neem_year, "value"]
-neem_value
+law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
+law_dome_lat
 
 # %%
-smooth_law_dome_value = smooth_law_dome.loc[
-    smooth_law_dome["year"] == neem_year, "value"
-]
-smooth_law_dome_value
+law_dome_lat_nearest = float(
+    lat_grad_eofs.sel(lat=law_dome_lat, method="nearest")["lat"]
+)
+law_dome_lat_nearest
 
 # %%
-import cf_xarray.units
-import pint_xarray
+conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
+conc_unit
 
-cf_xarray.units.units.define("ppm = 1 / 1000000")
-cf_xarray.units.units.define("ppb = ppm / 1000")
+# %%
+neem_lat = get_col_assert_single_value(neem_data, "latitude")
+neem_lat
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
+# %%
+neem_lat_nearest = float(lat_grad_eofs.sel(lat=neem_lat, method="nearest")["lat"])
+neem_lat_nearest
+
+# %%
+neem_unit = get_col_assert_single_value(neem_data, "unit")
+if neem_unit != conc_unit:
+    raise AssertionError
+
+neem_unit
+
+
+# %%
+def diff_from_ice_cores(x, lat_grad_eofs_year, ice_core_data):
+    global_mean, pc0 = x
+
+    pcs = lat_grad_eofs_year["principal-components"].copy()
+    eofs = lat_grad_eofs_year["eofs"]
+    pcs.loc[{"eof": 0}] = pc0
+    lat_grad = pcs @ eofs
+    lat_grad.name = "lat_grad"
+
+    np.testing.assert_allclose(
+        local.xarray_space.calculate_global_mean_from_lon_mean(lat_grad).data.m,
+        0.0,
+        atol=1e-10,
+    )
+    lat_resolved = lat_grad + Quantity(global_mean, conc_unit)
+
+    lat_resolved.name = "lat_resolved"
+    lat_resolved = (
+        lat_resolved.to_dataset()
+        .cf.add_bounds("lat")
+        .pint.quantify({"lat_bounds": "degrees_north"})
+    )
+
+    diff_squared = (lat_resolved - ice_core_data) ** 2
+
+    area_weighted_diff_squared = (
+        local.xarray_space.calculate_weighted_area_mean_latitude_only(
+            diff_squared, variables=["lat_resolved"]
+        )["lat_resolved"].pint.dequantify()
+    )
+
+    return area_weighted_diff_squared**0.5
+
+
+# %%
+years_to_optimise = sorted(
+    list(set(neem_data["year"]).difference(set(global_annual_mean["year"].data)))
+)
+display(years_to_optimise[0])
+years_to_optimise[-1]
+
+# %%
+iter_df = (
+    pd.concat([neem_data, smooth_law_dome])
+    .set_index("year")
+    .loc[years_to_optimise]
+    .set_index("source", append=True)
+)
+# iter_df
+
+# %%
+optimised = []
+x0 = (1100, -70)
+for year, ydf in tqdman.tqdm(iter_df.groupby("year")):
+    if ydf.shape[0] != 2:
+        msg = "Should have both NEEM and law dome data here..."
+        raise AssertionError(msg)
+
+    ice_core_data_year = xr.DataArray(
+        data=[
+            [
+                ydf.loc[(year, "neem")]["value"],
+                ydf.loc[(year, "law_dome")]["value"],
+            ]
+        ],
+        dims=["year", "lat"],
+        coords=dict(
+            year=[year],
+            lat=[neem_lat_nearest, law_dome_lat_nearest],
+        ),
+        attrs={"units": conc_unit},
+    ).pint.quantify()
+
+    lat_grad_eofs_year = lat_grad_eofs.sel(year=year)
+    diff_from_ice_cores_year = partial(
+        diff_from_ice_cores,
+        lat_grad_eofs_year=lat_grad_eofs_year.copy(),
+        ice_core_data=ice_core_data_year,
+    )
+
+    min_res = scipy.optimize.minimize(
+        diff_from_ice_cores_year,
+        x0=x0,
+        method="Nelder-Mead",
+    )
+
+    optimised.append([year, min_res.x[0], min_res.x[1]])
+
+    x0 = min_res.x
+    # if year > 300:
+    #     break
+
+optimised_ar = np.array(optimised)
+
+optimised_pc0 = xr.DataArray(
+    name="optimised_pc0",
+    data=optimised_ar[:, 2],
+    dims=["year"],
+    coords=dict(year=optimised_ar[:, 0]),
 )
 
-tmp = lat_grad_eofs.sel(year=neem_year)
-lat_grad = tmp["principal-components"] @ tmp["eofs"]
-lat_grad.name = "lat_grad"
-local.xarray_space.calculate_global_mean_from_lon_mean(lat_grad)
+# Interpolate and also extend back to year 1 by just assuming PC is constant before the year 250.
+optimised_pc0_interpolated = optimised_pc0.interp(
+    year=np.arange(years_to_optimise[0], years_to_optimise[-1] + 1)
+).interp(
+    year=np.arange(1, years_to_optimise[-1] + 1),
+    kwargs={"fill_value": optimised_pc0.data[0]},
+)
+optimised_pc0_interpolated.plot()
+optimised_pc0_interpolated
 
 # %% [markdown]
-# ### Extend EOF one
+# ## Optimise global-mean to match Law Dome
 #
-# (Zero-indexing, hence this is the second EOF)
+# Now that we have a timeseries of PC zero, we now use Law Dome to optimise the global-mean over the whole timeseries.
 
 # %%
-# Quick assertion that things are as expected
-if len(lat_grad_eofs["eof"]) != 2:
-    raise AssertionError("Rethink")
+lat_grad_eofs_updated_pc0 = lat_grad_eofs.copy(deep=True)
+lat_grad_eofs_updated_pc0
 
 # %%
-new_pc1 = lat_grad_eofs["principal-components"].sel(eof=1).copy()
-new_pc1 = new_pc1.pint.dequantify().interp(
-    year=new_years, kwargs={"fill_value": new_pc1.data[0].m}
-)
-new_pc1
-
-# %% [markdown]
-# ### Extend EOF zero
-#
-# (Zero-indexing, hence this is the first EOF)
-
-# %%
-current_pc1 = lat_grad_eofs["principal-components"].sel(eof=0)
-
-# %%
-primap_full = primap2.open_dataset(
-    config_retrieve_misc.primap.raw_dir
-    / config_retrieve_misc.primap.download_url.url.split("/")[-1]
-)
-primap_full
-
-# %%
-fig, axes = plt.subplots(ncols=2)
-
-primap_fossil_ch4_emissions = (
-    local.xarray_time.convert_time_to_year_month(primap_full)
+pc0_keep = (
+    lat_grad_eofs_updated_pc0["principal-components"]
+    .loc[{"eof": 0}]
     .sel(
-        **{
-            "category (IPCC2006_PRIMAP)": "M.0.EL",
-            "scenario (PRIMAP-hist)": "HISTTP",
-            "area (ISO3)": "EARTH",
-            "month": 1,
-        }
-    )[config_step.gas.upper()]
-    .squeeze()
-    .pint.to("MtCH4 / yr")
-    .reset_coords(drop=True)
+        year=np.arange(
+            years_to_optimise[-1] + 1, lat_grad_eofs_updated_pc0["year"].max() + 1
+        )
+    )
 )
-primap_regression_data = primap_fossil_ch4_emissions.sel(year=current_pc1["year"])
-primap_regression_data.plot(ax=axes[0])
-
-current_pc1.plot(ax=axes[1])
-plt.tight_layout()
+pc0_keep
 
 # %%
-x = Quantity(primap_regression_data.data, str(primap_regression_data.data.units))
-A = np.vstack([x.m, np.ones(x.size)]).T
-y = Quantity(current_pc1.data, str(current_pc1.data.units))
+pc0_new = xr.concat([optimised_pc0_interpolated, pc0_keep], "year")
+pc0_new
 
 # %%
-res = np.linalg.lstsq(A, y.m, rcond=None)
-m, c = res[0]
-m = Quantity(m, (y / x).units)
-c = Quantity(c, y.units)
+lat_grad_eofs_updated_pc0["principal-components"].loc[{"eof": 0}] = pc0_new
+lat_grad_eofs_updated_pc0
 
-fig, ax = plt.subplots()
-ax.scatter(x.m, y.m, label="raw data")
-ax.plot(x.m, (m * x + c).m, color="tab:orange", label="regression")
-ax.set_ylabel("PC")
-ax.set_xlabel("PRIMAP emissions")
-ax.legend()
+# %%
+fix, axes = plt.subplots(ncols=2, sharey=True)
+
+lat_grad_eofs["principal-components"].plot(hue="eof", ax=axes[0])
+lat_grad_eofs_updated_pc0["principal-components"].plot(hue="eof", ax=axes[1])
+
+plt.show()
+
+# %%
+lat_gradient_updated_pc0 = (
+    lat_grad_eofs_updated_pc0["principal-components"]
+    @ lat_grad_eofs_updated_pc0["eofs"]
+)
 
 # %% [markdown]
-# Extend with constant back in time so that latitudinal gradient is also constant back in time.
+# Here we just add a couple of data points from EPICA to round out the Law Dome timeseries. There are probably better ways to do this (latitudes don't line up exactly, for example), but this is fine for now.
+
+# %%
+epica_data_to_add = epica_data[
+    (epica_data["year"] > -12) & (epica_data["year"] < smooth_law_dome["year"].min())
+]
+epica_data_to_add
+
+# %%
+smooth_law_dome_plus_epica = (
+    xr.DataArray(
+        data=np.hstack([epica_data_to_add["value"], smooth_law_dome["value"]]),
+        dims=["year"],
+        coords=dict(
+            year=np.hstack([epica_data_to_add["year"], smooth_law_dome["year"]])
+        ),
+        attrs={"units": "ppb"},
+    )
+    .interp(year=np.arange(1, global_annual_mean["year"].min()))
+    .pint.quantify()
+)
+smooth_law_dome_plus_epica
+
+# %%
+smooth_law_dome_plus_epica
+
+# %%
+lat_gradient_updated_pc0
+
+# %%
+global_annual_mean_extension = (
+    smooth_law_dome_plus_epica
+    - lat_gradient_updated_pc0.sel(
+        lat=law_dome_lat_nearest, year=smooth_law_dome_plus_epica["year"]
+    )
+)
+global_annual_mean_extension["lat"] = 0.0
+global_annual_mean_extension
 
 # %%
 fig, axes = plt.subplots(ncols=2)
-primap_regression_data_extended = primap_fossil_ch4_emissions.copy()
-primap_regression_data_extended = (
-    primap_regression_data_extended.pint.dequantify().interp(
-        year=new_years, kwargs={"fill_value": primap_regression_data_extended.data[0].m}
-    )
-)
-primap_regression_data_extended.plot(ax=axes[0])
-primap_regression_data_extended.sel(year=range(1700, 2023)).plot(ax=axes[1])
-axes[0].set_ylim(ymin=0)
-axes[1].set_ylim(ymin=0)
+global_annual_mean.plot(ax=axes[0])
+global_annual_mean_extension.plot(ax=axes[0])
+global_annual_mean.plot(ax=axes[1])
+global_annual_mean_extension.plot(ax=axes[1])
+# (-(lat_gradient_updated_pc0.sel(lat=law_dome_lat_nearest, year=smooth_law_dome["year"].values).pint.dequantify() - smooth_law_dome["value"])).plot(ax=ax)
+# smooth_law_dome.plot(x="year", y="value", ax=ax)
+# neem_data.plot(x="year", y="value", ax=ax)
+# epica_data[epica_data["year"] > -100].plot(x="year", y="value", ax=ax)
+axes[1].set_xlim([1950, 2000])
+# ax.set_xlim([0, 180])
 plt.tight_layout()
 
 # %%
-new_pc0 = m * primap_regression_data_extended.pint.quantify() + c
-new_pc0.name = new_pc1.name
-new_pc0 = new_pc0.assign_coords(eof=0)
-new_pc0
-
-# %%
-new_pcs = xr.concat([new_pc0, new_pc1], "eof")
-new_pcs.attrs = dict(
-    description=(
-        "Principal components for the latitudinal gradient EOFs, "
-        "extended to cover the whole time period"
-    ),
-    units=lat_grad_eofs["principal-components"].data.units,
+global_annual_mean_full = xr.concat(
+    [global_annual_mean_extension, global_annual_mean], "year"
 )
-new_pcs
+global_annual_mean_full.plot()
+global_annual_mean_full
 
 # %%
-new_pcs.plot(hue="eof")
-
-# %%
-lat_gradient_extended = new_pcs @ lat_grad_eofs["eofs"]
-lat_gradient_extended.name = "latitudinal_gradient"
-lat_gradient_extended
-
-# %%
-fig, axes = plt.subplots(ncols=2)
-lat_gradient_extended.sel(
-    year=np.hstack([1, 1900, np.arange(1700, 1901, 100), 2020])
-).plot(y="lat", hue="year", alpha=0.7, ax=axes[0])
-
-lat_gradient_extended.sel(
-    year=np.hstack(
-        [
-            np.arange(1900, 2021, 10),
-            2022,
-        ]
-    )
-).plot(y="lat", hue="year", alpha=0.7, ax=axes[1])
-plt.tight_layout()
+# Checks:
+# - match law dome in all years in which we used law dome
+# - match neem in all years in which we used neem
+# - match EPICA in all years in which we used EPICA
+# - jumps/steps/bumps at joins between data sets that make things look weird/bad
 
 # %% [markdown]
 # ### Save
 
 # %%
 config_step.latitudinal_gradient_file.parent.mkdir(exist_ok=True, parents=True)
-lat_gradient_extended.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_file)
-lat_gradient_extended
+lat_gradient_updated_pc0.pint.dequantify().to_netcdf(
+    config_step.latitudinal_gradient_file
+)
+lat_gradient_updated_pc0
+
+# %%
+config_step.global_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean_full.pint.dequantify().to_netcdf(config_step.global_annual_mean_file)
+global_annual_mean_full

@@ -21,6 +21,7 @@
 # ## Imports
 
 # %%
+import matplotlib.pyplot as plt
 import openscm_units
 import pint
 import xarray as xr
@@ -76,10 +77,29 @@ seasonality = xr.load_dataarray(
 seasonality
 
 # %%
-tmp = xr.load_dataarray(
-    config_step.observational_network_global_annual_mean_file
+global_annual_mean = xr.load_dataarray(
+    config_step.global_annual_mean_file
 ).pint.quantify()
-tmp
+global_annual_mean
+
+# %%
+seasonality_full = global_annual_mean * seasonality
+
+fig, axes = plt.subplots(ncols=2, sharey=True)
+local.xarray_time.convert_year_month_to_time(
+    seasonality_full.sel(year=range(2017, 2023))
+).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
+
+local.xarray_time.convert_year_month_to_time(
+    seasonality_full.sel(year=range(1984, 1986))
+).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
+
+plt.tight_layout()
+
+# %%
+local.xarray_time.convert_year_month_to_time(
+    seasonality_full.sel(year=range(2015, 2023))
+).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
 local.xarray_time.convert_year_month_to_time(seasonality_full).plot(
@@ -90,9 +110,6 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(
 # ### Save
 
 # %%
-assert False, "Work out saving"
-
-# %%
-config_step.latitudinal_gradient_file.parent.mkdir(exist_ok=True, parents=True)
-lat_gradient_extended.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_file)
-lat_gradient_extended
+config_step.seasonality_file.parent.mkdir(exist_ok=True, parents=True)
+seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_file)
+seasonality_full
