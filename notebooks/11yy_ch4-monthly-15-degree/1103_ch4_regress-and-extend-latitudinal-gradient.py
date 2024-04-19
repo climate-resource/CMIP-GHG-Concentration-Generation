@@ -13,17 +13,20 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - calculate global-mean, latitudinal gradient and seasonality
+# # CH$_4$ - regress and extend latitudinal gradient
 #
-# Calculate global-mean, latitudinal gradient and seasonality.
+# Extend the latitudinal gradient back in time. For CH$_4$, we do this by keeping principal component 2 constant and by extending principal component 1 back in time based on a regression with fossil and industrial CH$_4$ emissions.
 
 # %% [markdown]
 # ## Imports
 
 # %%
-import cf_xarray.units
 import matplotlib.pyplot as plt
+import numpy as np
+import openscm_units
+import pint
 import pint_xarray
+import primap2
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -37,12 +40,9 @@ import local.xarray_time
 from local.config import load_config_from_file
 
 # %%
-cf_xarray.units.units.define("ppm = 1 / 1000000")
-cf_xarray.units.units.define("ppb = ppm / 1000")
+pint.set_application_registry(openscm_units.unit_registry)
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+Quantity = pint.get_application_registry().Quantity
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -66,6 +66,10 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+config_retrieve_misc = get_config_for_step_id(
+    config=config, step="retrieve_misc_data", step_config_id="only"
+)
+
 
 # %% [markdown]
 # ## Action
@@ -74,10 +78,170 @@ config_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-interpolated_spatial = xr.load_dataarray(
-    config_step.observational_network_interpolated_file
+lat_grad_eofs = xr.load_dataset(config_step.observational_network_latitudinal_gradient_eofs_file).pint.quantify()
+lat_grad_eofs
+
+# %% [markdown]
+# ### Extend EOF one
+#
+# (Zero-indexing, hence this is the second EOF)
+
+# %%
+# Quick assertion that things are as expected
+if len(lat_grad_eofs["eof"]) != 2:
+    raise AssertionError("Rethink")
+
+# %%
+new_years = np.arange(1, lat_grad_eofs["year"].max() + 1)
+new_years
+
+# %%
+current_pc2 = lat_grad_eofs["principal-components"].sel(eof=1).data.m
+new_pc2 = np.hstack([
+    current_pc2[0] * np.ones(new_years.size - current_pc2.size),
+    current_pc2,
+])
+
+if new_pc2.size != new_years.size:
+    msg = "PC2 extrapolation led to wrong size"
+    raise AssertionError(msg)
+
+new_pc2
+
+# %% [markdown]
+# ### Extend EOF zero
+#
+# (Zero-indexing, hence this is the first EOF)
+
+# %%
+current_pc1 = lat_grad_eofs["principal-components"].sel(eof=0)
+
+# %%
+primap_full = primap2.open_dataset(config_retrieve_misc.primap.raw_dir / config_retrieve_misc.primap.download_url.url.split("/")[-1])
+primap_full
+
+# %%
+fig, axes = plt.subplots(ncols=2)
+
+primap_fossil_ch4_emissions = (
+    local
+    .xarray_time
+    .convert_time_to_year_month(primap_full)
+    .pr.loc[
+        {"category": "M.0.EL", "scenario": "HISTTP", "area": "EARTH", "month": 1}
+    ][config_step.gas.upper()]
+    .squeeze()
+    .pint.to("MtCH4 / yr")
+)
+primap_regression_data = (
+    primap_fossil_ch4_emissions
+    .sel(year=current_pc1["year"])
+
+)
+primap_regression_data.plot(ax=axes[0])
+
+current_pc1.plot(ax=axes[1])
+plt.tight_layout()
+
+# %%
+x = Quantity(primap_regression_data.data, str(primap_regression_data.data.units))
+A = np.vstack([x.m, np.ones(x.size)]).T
+y = Quantity(current_pc1.data, str(current_pc1.data.units))
+
+# %%
+res = np.linalg.lstsq(A, y.m, rcond=None)
+m, c = res[0]
+m = Quantity(m, (y / x).units)
+c = Quantity(c, y.units)
+
+fig, ax = plt.subplots()
+ax.scatter(x, y, label="raw data")
+ax.plot(x, m * x + c, color="tab:orange", label="regression")
+ax.set_ylabel("PC")
+ax.set_xlabel("PRIMAP emissions")
+ax.legend()
+
+# %%
+fig, ax = plt.subplots()
+primap_regression_data_extended = primap_fossil_ch4_emissions
+primap_regression_data_extended.plot(ax=ax)
+ax.set_ylim(ymin=0)
+
+# %%
+m * primap_regression_data_extended.data + c
+
+# %%
+m
+
+# %%
+c
+
+# %%
+c
+
+# %%
+- grab PRIMAP data
+- get out M0EL CH4
+- get years that match our PC years
+- regress (CH4 on x, PC on y)
+- assume anthropogenic emissions zero before the start of PRIMAP so we can extend emissions back in time
+
+
+# %%
+
+# %%
+assert False
+
+# %%
+new_pcs = np.vstack([
+    new_pc1,
+    new_pc2,
+]).T
+
+# Check that we didn't break the data as we put everything back together
+xr.testing.assert_equal(
+   xr_new_pcs.sel(year=lat_grad_eofs["year"]),
+   lat_grad_eofs["principal-components"],
+)
+
+xr_new_pcs = xr.DataArray(
+    name="principal-components",
+    data=new_pcs,
+    dims=["year", "eof"],
+    coords=dict(
+        year=new_years,
+        eof=range(new_pcs.shape[1]),
+    ),
+    attrs=dict(
+        description=(
+            "Principal components for the latitudinal gradient EOFs, "
+            "extended to cover the whole time period"
+        ),
+        units=lat_grad_eofs["principal-components"].data.units,
+    ),
 ).pint.quantify()
-interpolated_spatial
+xr_new_pcs
+
+# %%
+
+    # %%
+    xr_principal_components_keep = xr.DataArray(
+        name="principal-components",
+        data=principal_components,
+        dims=["year", "eof"],
+        coords=dict(
+            year=lat_residuals_annual_mean["year"],
+            eof=range(principal_components.shape[1]),
+        ),
+        attrs=dict(
+            description="Principal components for the latitudinal gradient EOFs",
+            units="dimensionless",
+        ),
+    ).pint.quantify()
+
+
+# %%
+lat_grad_eofs["principal-components"]
 
 # %% [markdown]
 # ### Drop out any years that have nan
@@ -119,7 +283,7 @@ fig, ax = plt.subplots()
 for i in range(3):
     ax.plot(
         full_eofs_pcs["principal-components"].sel(eof=i).data.m,
-        label=f"Principal component {i}",
+        label=f"Principal component {i + 1}",
     )
     if i > 3:
         break
@@ -133,7 +297,7 @@ for i in range(3):
     ax.plot(
         full_eofs_pcs["eofs"].sel(eof=i).data.m,
         full_eofs_pcs["lat"].data,
-        label=f"EOF {i}",
+        label=f"EOF {i + 1}",
         zorder=2 - i / 10,
     )
 
@@ -147,7 +311,7 @@ for i in range(3):
         full_eofs_pcs["principal-components"].sel(eof=i).isel(year=1)
         @ full_eofs_pcs["eofs"].sel(eof=i),
         full_eofs_pcs["lat"],
-        label=f"EOF {i}",
+        label=f"EOF {i + 1}",
         zorder=2 - i / 10,
     )
 
