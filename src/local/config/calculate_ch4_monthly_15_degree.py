@@ -43,5 +43,14 @@ class CalculateCH4Monthly15DegreeConfig:
     observational_network_seasonality_file: Path
     """Path in which to save the seasonality of the observational network data"""
 
+    latitudinal_gradient_file: Path
+    """Path in which to save the latitudinal gradient"""
+
+    seasonality_file: Path
+    """Path in which to save the seasonality"""
+
+    global_mean_file: Path
+    """Path in which to save the global-mean"""
+
     processed_data_file: Path
     """Path in which to save the processed, gridded data"""

@@ -250,6 +250,9 @@ calculate_ch4_monthly_15_degree:
   lat_gradient_n_eofs_to_use: 2
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
+  latitudinal_gradient_file: data/interim/ch4/ch4_latitudinal-gradient.nc
+  seasonality_file: data/interim/ch4/ch4_seasonality.nc
+  global_mean_file: data/interim/ch4/ch4_global-mean.nc
   processed_data_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
 
 calculate_n2o_monthly_15_degree:
