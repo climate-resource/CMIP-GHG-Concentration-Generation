@@ -208,27 +208,6 @@ res
 # %%
 (res["principal-components"] @ res["eofs"]).sel(year=1943).plot()
 
-# %%
-# lat_gradient_extended = new_pcs @ lat_grad_eofs["eofs"]
-# lat_gradient_extended.name = "latitudinal_gradient"
-# lat_gradient_extended
-# fig, axes = plt.subplots(ncols=2)
-# lat_gradient_extended.sel(
-#     year=np.hstack([
-#         1,
-#         1900,
-#         np.arange(1700, 1901, 100),
-#         2020
-#     ])
-# ).plot(y="lat", hue="year", alpha=0.7, ax=axes[0])
-
-# lat_gradient_extended.sel(
-#     year=np.hstack([
-#         np.arange(1900, 2021, 10), 2022,
-#     ])
-# ).plot(y="lat", hue="year", alpha=0.7, ax=axes[1])
-# plt.tight_layout()
-
 # %% [markdown]
 # ### Save
 

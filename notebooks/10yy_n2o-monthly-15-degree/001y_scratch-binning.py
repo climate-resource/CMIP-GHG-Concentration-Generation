@@ -91,7 +91,7 @@ config_process_noaa_surface_flask_data = get_config_for_step_id(
 # %%
 def check_and_read(f):
     out = pd.read_csv(f)
-    local.raw_data_processing.check_processed_data_columns_for_latitudinal_mean(out)
+    local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 
     return out
 
@@ -490,6 +490,9 @@ alpha_len = knots.size - degree - 1
 alpha_len
 
 # %%
+Y.size
+
+# %%
 B = np.vstack(
     [
         # np.ones(Y.size),
@@ -497,7 +500,7 @@ B = np.vstack(
     ]
 )
 assert alpha_len == B.shape[1]
-B
+B.shape
 
 # %%
 BM = np.zeros((Y.size, B.shape[1]))
@@ -544,6 +547,7 @@ A_bottom_half
 import scipy.optimize
 
 # %%
+
 res = scipy.optimize.linprog(
     c,
     b_eq=b_top_half,
@@ -587,3 +591,5 @@ fig, ax = plt.subplots()
 ax.scatter(X, Y, label="input")
 
 ax.scatter(x_interp, y_interp, label="mean-preserving fit")
+
+# %%

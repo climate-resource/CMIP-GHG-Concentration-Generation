@@ -17,13 +17,17 @@
 #
 # Extend the global-, annual-mean back in time. For CH$_4$, we do this by combining the values from ice cores etc. and our latitudinal gradient information.
 
+# %%
+assert (
+    False
+), "Check this notebook, have made a real mess with monthly interpolated data vs. not"
+
 # %% [markdown]
 # ## Imports
 
 # %%
 from functools import partial
 
-# %%
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
@@ -38,12 +42,14 @@ from pydoit_nb.config_handling import get_config_for_step_id
 import local.binned_data_interpolation
 import local.binning
 import local.latitudinal_gradient
+import local.mean_preserving_interpolation
 import local.raw_data_processing
 import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
 
+# %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
@@ -278,11 +284,6 @@ optimised_pc0_interpolated = optimised_pc0.interp(
 optimised_pc0_interpolated.plot()
 optimised_pc0_interpolated
 
-# %% [markdown]
-# ## Optimise global-mean to match Law Dome
-#
-# Now that we have a timeseries of PC zero, we now use Law Dome to optimise the global-mean over the whole timeseries.
-
 # %%
 lat_grad_eofs_updated_pc0 = lat_grad_eofs.copy(deep=True)
 lat_grad_eofs_updated_pc0
@@ -307,11 +308,29 @@ pc0_new
 lat_grad_eofs_updated_pc0["principal-components"].loc[{"eof": 0}] = pc0_new
 lat_grad_eofs_updated_pc0
 
+# %% [markdown]
+# ### Mean-preserving interpolation
+#
+# Interpolate the PC to a monthly time axis before continuing,
+# so that we get a latitudinal gradient on a monthly time step.
+# This is needed to avoid jumps at the boundary of years
+# when we combine everything back together.
+
+# %%
+lat_grad_eofs_updated_pc0["principal-components"] = (
+    lat_grad_eofs_updated_pc0["principal-components"]
+    .groupby("eof", squeeze=False)
+    .apply(local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly)
+)
+lat_grad_eofs_updated_pc0
+
 # %%
 fix, axes = plt.subplots(ncols=2, sharey=True)
 
 lat_grad_eofs["principal-components"].plot(hue="eof", ax=axes[0])
-lat_grad_eofs_updated_pc0["principal-components"].plot(hue="eof", ax=axes[1])
+local.xarray_time.convert_year_month_to_time(lat_grad_eofs_updated_pc0)[
+    "principal-components"
+].plot(hue="eof", ax=axes[1])
 
 plt.show()
 
@@ -320,6 +339,34 @@ lat_gradient_updated_pc0 = (
     lat_grad_eofs_updated_pc0["principal-components"]
     @ lat_grad_eofs_updated_pc0["eofs"]
 )
+lat_gradient_updated_pc0
+
+# %%
+fig, axes = plt.subplots(ncols=2)
+local.xarray_time.convert_year_month_to_time(
+    lat_gradient_updated_pc0.sel(
+        year=np.hstack([1, 1900, np.arange(1700, 1901, 100), 2020]), month=[6]
+    )
+).plot(y="lat", hue="time", alpha=0.7, ax=axes[0])
+
+local.xarray_time.convert_year_month_to_time(
+    lat_gradient_updated_pc0.sel(
+        year=np.hstack(
+            [
+                np.arange(1900, 2021, 10),
+                2022,
+            ]
+        ),
+        month=[6],
+    )
+).plot(y="lat", hue="time", alpha=0.7, ax=axes[1])
+
+plt.tight_layout()
+
+# %% [markdown]
+# ## Optimise global-mean to match Law Dome
+#
+# Now that we have a timeseries of PC zero, we now use Law Dome to optimise the global-mean over the whole timeseries.
 
 # %% [markdown]
 # Here we just add a couple of data points from EPICA to round out the Law Dome timeseries. There are probably better ways to do this (latitudes don't line up exactly, for example), but this is fine for now.
@@ -346,12 +393,6 @@ smooth_law_dome_plus_epica = (
 smooth_law_dome_plus_epica
 
 # %%
-smooth_law_dome_plus_epica
-
-# %%
-lat_gradient_updated_pc0
-
-# %%
 global_annual_mean_extension = (
     smooth_law_dome_plus_epica
     - lat_gradient_updated_pc0.sel(
@@ -362,18 +403,25 @@ global_annual_mean_extension["lat"] = 0.0
 global_annual_mean_extension
 
 # %%
+import cftime
+
+# %%
 fig, axes = plt.subplots(ncols=2)
-global_annual_mean.plot(ax=axes[0])
-global_annual_mean_extension.plot(ax=axes[0])
-global_annual_mean.plot(ax=axes[1])
-global_annual_mean_extension.plot(ax=axes[1])
-# (-(lat_gradient_updated_pc0.sel(lat=law_dome_lat_nearest, year=smooth_law_dome["year"].values).pint.dequantify() - smooth_law_dome["value"])).plot(ax=ax)
-# smooth_law_dome.plot(x="year", y="value", ax=ax)
-# neem_data.plot(x="year", y="value", ax=ax)
-# epica_data[epica_data["year"] > -100].plot(x="year", y="value", ax=ax)
-axes[1].set_xlim([1950, 2000])
-# ax.set_xlim([0, 180])
+tmp = global_annual_mean.copy()
+tmp["year"] = [cftime.datetime(y, 1, 1) for y in tmp["year"]]
+tmp.plot(ax=axes[0])
+local.xarray_time.convert_year_month_to_time(global_annual_mean_extension).plot(
+    ax=axes[0]
+)
+tmp.plot(ax=axes[1])
+local.xarray_time.convert_year_month_to_time(global_annual_mean_extension).plot(
+    ax=axes[1]
+)
+# axes[1].set_xlim([0, 2000])
 plt.tight_layout()
+
+# %%
+global_annual_mean_full
 
 # %%
 global_annual_mean_full = xr.concat(
