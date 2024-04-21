@@ -86,6 +86,42 @@ def convert_year_month_to_time(
     )
 
 
+def convert_year_to_time(
+    inp: xr.Dataset,
+    month: int = 6,
+    day: int = 2,
+    **kwargs: Any,
+) -> xr.Dataset:
+    """
+    Convert year co-ordinates into a time axis
+
+    This is a facade to :func:`convert_to_time`
+
+    Parameters
+    ----------
+    inp
+        Data to convert
+
+    month
+        Month to assume in output
+
+    day
+        Day of the month to assume in output
+
+    **kwargs
+        Passed to intialiser of :class:`cftime.datetime`
+
+    Returns
+    -------
+        Data with time axis
+    """
+    return convert_to_time(
+        inp,
+        time_coords=("year",),
+        cftime_converter=partial(cftime.datetime, month=month, day=day, **kwargs),
+    )
+
+
 class CftimeConverter(Protocol):  # pylint: disable=too-few-public-methods
     """
     Callable that supports converting stacked time co-ordinates to :obj:`cftime.datetime`
