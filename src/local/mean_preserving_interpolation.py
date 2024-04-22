@@ -18,13 +18,21 @@ from local.xarray_time import convert_time_to_year_month
 Quantity = pint.get_application_registry().Quantity
 
 
-def interpolate_annual_mean_to_monthly(annual_mean: xr.DataArray) -> xr.DataArray:
+def interpolate_annual_mean_to_monthly(
+    annual_mean: xr.DataArray,
+    degrees_freedom_scalar: float = 1.1,
+) -> xr.DataArray:
     X = annual_mean["year"].data
     Y = annual_mean.data.m
     # These are monthly timesteps, centred in the middle of each month
     N_MONTHS_PER_YEAR = 12
+    # TODO: speak with Nicolai about how to boundary counditions better.
+    # The below is a hack to try and get slightly more sensible behaviour at the boundaries.
+    # It just does basic linear extrapolation at the boundaries.
+    X = np.hstack([2 * X[0] - X[1], X, 2 * X[-1] - X[-2]])
+    Y = np.hstack([2 * Y[0] - Y[1], Y, 2 * Y[-1] - Y[-2]])
     x = (
-        np.arange(np.floor(np.min(X)), np.ceil(np.max(X) + 1), 1 / N_MONTHS_PER_YEAR)
+        np.arange(np.floor(np.min(X)), np.ceil(np.max(X)) + 1, 1 / N_MONTHS_PER_YEAR)
         + 1 / N_MONTHS_PER_YEAR / 2
     )
 
@@ -32,11 +40,16 @@ def interpolate_annual_mean_to_monthly(annual_mean: xr.DataArray) -> xr.DataArra
         X=X,
         Y=Y,
         x=x,
+        degrees_freedom_scalar=degrees_freedom_scalar,
     )
 
-    def interpolator(x):
+    # Undo hack above
+    x = x[N_MONTHS_PER_YEAR:-N_MONTHS_PER_YEAR]
+
+    def interpolator(xh):
         return Quantity(
-            scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept,
+            scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(xh)
+            + intercept,
             annual_mean.data.units,
         )
 
@@ -67,6 +80,7 @@ def interpolate_annual_mean_to_monthly(annual_mean: xr.DataArray) -> xr.DataArra
 
 def interpolate_lat_15_degree_to_half_degree(
     lat_15_degree: xr.DataArray,
+    degrees_freedom_scalar: float = 1.75,
 ) -> xr.DataArray:
     ASSUMED_INPUT_LAT_SPACING = 15
     TARGET_LAT_SPACING = 0.5
@@ -103,6 +117,7 @@ def interpolate_lat_15_degree_to_half_degree(
         Y=Y,
         x=x,
         weights=weights,
+        degrees_freedom_scalar=degrees_freedom_scalar,
     )
 
     def interpolator(x):
@@ -134,8 +149,8 @@ def mean_preserving_interpolation(
     X: np.ndarray,
     Y: np.ndarray,
     x: np.ndarray,
+    degrees_freedom_scalar: float,
     degree: int = 3,
-    degrees_freedom_scalar: float = 1.01,
     weights: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, int]:
     if weights is None:
@@ -147,7 +162,7 @@ def mean_preserving_interpolation(
 
     knots_prev = np.repeat(x[0], degree)
     knots_post = np.repeat(x[-1], degree)
-    knots_internal = np.quantile(x, np.linspace(0, 1, degrees_freedom - degree))
+    knots_internal = np.quantile(x, np.linspace(0, 1, degrees_freedom - degree + 1))
     knots = np.hstack([knots_prev, knots_internal, knots_post])
 
     alpha_len = knots.size - degree
@@ -158,6 +173,7 @@ def mean_preserving_interpolation(
             scipy.interpolate.BSpline.design_matrix(x, t=knots, k=degree).toarray(),
         ]
     )
+
     if alpha_len != B.shape[1]:
         raise AssertionError
 
@@ -173,12 +189,12 @@ def mean_preserving_interpolation(
 
     c = np.hstack([np.ones(BD.shape[0]), np.zeros(2 * alpha_len)])
 
-    A_eq = np.column_stack([np.zeros((Y.size, BD.shape[0])), BM, -BM])
+    A_eq = np.column_stack([np.zeros((X.size, BD.shape[0])), BM, -BM])
     b_eq = Y
-    A_ub = np.column_stack(
+    A_ub = np.row_stack(
         [
-            np.hstack([-np.eye(BD.shape[0]), BD, -BD]),
-            np.hstack([-np.eye(BD.shape[0]), -BD, BD]),
+            np.column_stack([-np.eye(BD.shape[0]), BD, -BD]),
+            np.column_stack([-np.eye(BD.shape[0]), -BD, BD]),
         ]
     )
     b_ub = np.zeros(2 * BD.shape[0])
@@ -199,7 +215,5 @@ def mean_preserving_interpolation(
     alpha = res.x[-2 * alpha_len : -alpha_len] - res.x[-alpha_len:]
     intercept = alpha[0]
     coefficients = alpha[1:]
-
-    print(f"{intercept=}")
 
     return coefficients, intercept, knots, degree
