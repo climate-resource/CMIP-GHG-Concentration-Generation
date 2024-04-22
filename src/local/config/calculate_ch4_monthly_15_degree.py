@@ -52,8 +52,8 @@ class CalculateCH4Monthly15DegreeConfig:
     seasonality_file: Path
     """Path in which to save the seasonality"""
 
-    global_annual_mean_file: Path
-    """Path in which to save the global-, annual-mean"""
+    global_annual_mean_monthly_file: Path
+    """Path in which to save the global-, annual-mean on a (year, month) time axis"""
 
     processed_data_file: Path
     """Path in which to save the processed, gridded data"""

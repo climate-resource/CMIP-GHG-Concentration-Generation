@@ -24,6 +24,7 @@
 import matplotlib.pyplot as plt
 import openscm_units
 import pint
+import pint_xarray  # noqa: F401
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -77,10 +78,20 @@ seasonality = xr.load_dataarray(
 seasonality
 
 # %%
-global_annual_mean = xr.load_dataarray(
-    config_step.global_annual_mean_file
+global_annual_mean_monthly = xr.load_dataarray(
+    config_step.global_annual_mean_monthly_file
 ).pint.quantify()
+global_annual_mean_monthly
+
+# %% [markdown]
+# ### Calculate global-, annual-mean
+
+# %%
+global_annual_mean = global_annual_mean_monthly.mean("month")
 global_annual_mean
+
+# %% [markdown]
+# ### Calculate seasonality
 
 # %%
 seasonality_full = global_annual_mean * seasonality
