@@ -78,9 +78,3 @@ class CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig:
     """
     Path in which to save the 0.5 degree latitudinal gradient, interpolated to monthly steps for all years
     """
-
-    fifteen_degree_data_file: Path
-    """Path in which to save the processed, 15 degree gridded data"""
-
-    half_degree_data_file: Path
-    """Path in which to save the processed, 0.5 degree gridded data"""

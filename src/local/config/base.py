@@ -19,6 +19,7 @@ from .calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig,
 )
 from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
+from .crunch_grid import GridCrunchingConfig
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
@@ -207,6 +208,15 @@ class Config:
         ]
     )
     """Configurations to use for calculating the 15 degree, monthly data for N2O"""
+
+    crunch_grids: list[GridCrunchingConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use with the grid crunching step"""
 
     grid: list[GridConfig] = field(
         validator=[

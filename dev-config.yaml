@@ -255,11 +255,10 @@ calculate_ch4_monthly_fifteen_degree_half_degree:
   latitudinal_gradient_pc0_ch4_fossil_emissions_regression_file: data/interim/ch4/ch4_pc0-ch4-fossil-emissions-regression.yaml
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
-  seasonality_allyears_monthly_file: data/interim/ch4/ch4_seasonality_allyears-monthly.nc
-  latitudinal_gradient_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_allyears-monthly.nc
-  latitudinal_gradient_half_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient-half-degree_allyears-monthly.nc
-  fifteen_degree_data_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
-  half_degree_data_file: data/processed/gridded/ch4_half-degree_monthly.nc
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
+  seasonality_allyears_half_degree_monthly_file: data/interim/ch4/ch4_seasonality_half-degree_allyears-monthly.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_half_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_half-degree_allyears-monthly.nc
 
 calculate_n2o_monthly_15_degree:
 - step_config_id: only
@@ -267,6 +266,15 @@ calculate_n2o_monthly_15_degree:
   processed_bin_averages_file: data/interim/n2o/n2o_observational-network-bin-averages.csv
   processed_data_file: data/processed/gridded/n2o_fifteen-degree_monthly.nc
 
+crunch_grids:
+- step_config_id: ch4
+  gas: ch4
+  fifteen_degree_monthly_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
+  half_degree_monthly_file: data/processed/gridded/ch4_half-degree_monthly.nc
+  gmnhsh_mean_monthly_file: data/processed/gridded/ch4_gmnhsh-mean_monthly.nc
+  gmnhsh_mean_annual_file: data/processed/gridded/ch4_gmnhsh-mean_annual.nc
+
+# TODO: delete the below
 grid:
 - step_config_id: only
   processed_data_file: data/processed/gridded/0710_fifteen-degree-gridded-data.nc
