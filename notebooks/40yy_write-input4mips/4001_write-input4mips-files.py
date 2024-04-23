@@ -27,11 +27,19 @@
 # ## Imports
 
 # %%
+from functools import partial
+
 import cf_xarray.units
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
 from input4mips_validation.dataset import Input4MIPsDataset
+from input4mips_validation.metadata import (
+    Input4MIPsMetadata,
+    Input4MIPsMetadataOptional,
+)
+from input4mips_validation.xarray_helpers import add_time_bounds
+from pydoit_nb.checklist import generate_directory_checklist
 from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
@@ -130,22 +138,25 @@ version = config.version
 metadata_universal = dict(
     activity_id="input4MIPs",
     contact="zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com",
-    further_info_url="https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-    institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
+    # institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
     institution_id="CR",
     mip_era="CMIP6Plus",
     target_mip="CMIP",
+    source_id=f"CR_hist-ghg-concs_{version}",
 )
 
 metadata_universal_optional: dict[str, str] = dict(
     # product="derived",
+    # TODO: add support for this to input4mips-validation
+    # further_info_url="https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
     # # TODO: check if there is a more exact grant agreement to refer to
     comment=(
         "[TBC which grant] Data produced by Climate Resource supported by funding "
         "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
         "This is an interim dataset, do not use in production."
     ),
-    references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
+    # TODO: add support for this to input4mips-validation
+    # references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
 )
 
 # %% [markdown]
@@ -162,40 +173,33 @@ gas_to_cmip_variable_renaming = {
 # ### Write files
 
 # %%
-import input4mips_validation
+config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
 
-# %%
-
-# %%
 time_dimension = "time"
-for dat_resolution, yearly_time_bounds in tqdman.tqdm(
+for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     [
-        (fifteen_degree_data, False),
-        (half_degree_data, False),
-        (gmnhsh_data, False),
-        (gmnhsh_annual_data, True),
+        (fifteen_degree_data, "15_deg_lat", False),
+        (half_degree_data, "05_deg_lat", False),
+        (gmnhsh_data, "gmnhsh", False),
+        (gmnhsh_annual_data, "gmnhsh", True),
     ],
     desc="Resolutions",
 ):
+    grid_info = " x ".join(
+        [f"{dat_resolution[v].size} ({v})" for v in dat_resolution.dims]
+    )
+    print(f"Processing {grid_info} grid")
+
     variable_name_raw = dat_resolution.name
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
     da_to_write = dat_resolution.to_dataset().rename_vars(
         {variable_name_raw: variable_name_output}
     )
-
-    input4mips_ds = Input4MIPsDataset.from_raw_dataset(
-        da_to_write,
-        dimensions=da_to_write[variable_name_output].dims,
-        time_dimension=time_dimension,
-        metadata=metadata,
-        metadata_optional=metadata_optional,
-        add_time_bounds=partial(
-            input4mips_validation.xarray_helpers.add_time_bounds,
-            monthly_time_bounds=True,
-        ),
-    )
-    written = input4mips_ds.write(root_data_dir=tmp_path)
-
+    da_to_write["time"].encoding = {
+        "calendar": "standard",
+        "units": "days since 2010-01-01",
+    }
+    # TODO: use inference again once I know how it is meant to work
     # metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
     #     da_to_write, scenario
     # )
@@ -210,29 +214,35 @@ for dat_resolution, yearly_time_bounds in tqdman.tqdm(
     #     **metadata_inferred_optional,
     # )
 
-    # input4mips_ds = Input4MIPsDataset.from_raw_dataset(
-    #     dsv,
-    #     dimensions=tuple(dsv.dims.keys()),
-    #     time_dimension="time",
-    #     metadata=metadata,
-    #     metadata_optional=metadata_optional,
-    #     add_time_bounds=partial(
-    #         input4mips_validation.xarray_helpers.add_time_bounds,
-    #         monthly_time_bounds=not yearly_time_bounds,
-    #         yearly_time_bounds=yearly_time_bounds,
-    #     ),
-    # )
+    metadata = Input4MIPsMetadata(
+        **metadata_universal,
+        # Rules here make no sense to me,
+        # can this be inferred from the data or only checked against it?
+        grid_label=tmp_grid_name,
+    )
+    metadata_optional = Input4MIPsMetadataOptional(
+        **metadata_universal_optional,
+    )
 
-    # config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
-    # print("Writing")
-    # written = input4mips_ds.write(config_step.input4mips_out_dir)
-    # print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
-    # print("")
-    break
+    input4mips_ds = Input4MIPsDataset.from_raw_dataset(
+        da_to_write,
+        dimensions=da_to_write[variable_name_output].dims,
+        time_dimension=time_dimension,
+        metadata=metadata,
+        metadata_optional=metadata_optional,
+        add_time_bounds=partial(
+            add_time_bounds,
+            monthly_time_bounds=not yearly_time_bounds,
+            yearly_time_bounds=yearly_time_bounds,
+        ),
+    )
+    print("Writing")
+    written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
+    print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
+    print("")
 
 checklist_path = generate_directory_checklist(config_step.input4mips_out_dir)
 # # Not sure if this is needed or not
 # with open(config.input4mips_archive.complete_file_concentrations, "w") as fh:
 #     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-
-# %%
+checklist_path

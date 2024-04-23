@@ -266,15 +266,15 @@ calculate_n2o_monthly_15_degree:
 crunch_grids:
 - step_config_id: ch4
   gas: ch4
-  fifteen_degree_monthly_file: data/processed/gridded/ch4_fifteen-degree_monthly.nc
-  half_degree_monthly_file: data/processed/gridded/ch4_half-degree_monthly.nc
-  gmnhsh_mean_monthly_file: data/processed/gridded/ch4_gmnhsh-mean_monthly.nc
-  gmnhsh_mean_annual_file: data/processed/gridded/ch4_gmnhsh-mean_annual.nc
+  fifteen_degree_monthly_file: data/interim/ch4/ch4_fifteen-degree_monthly.nc
+  half_degree_monthly_file: data/interim/ch4/ch4_half-degree_monthly.nc
+  gmnhsh_mean_monthly_file: data/interim/ch4/ch4_gmnhsh-mean_monthly.nc
+  gmnhsh_mean_annual_file: data/interim/ch4/ch4_gmnhsh-mean_annual.nc
 
 write_input4mips:
 - step_config_id: ch4
   gas: ch4
-  input4mips_out_dir: data/processed/input4MIPs
+  input4mips_out_dir: data/processed/esgf-ready
 
 # TODO: delete the below
 grid:
