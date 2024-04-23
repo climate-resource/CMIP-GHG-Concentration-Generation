@@ -22,8 +22,17 @@ def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
 ) -> xr.DataArray:
-    X = annual_mean["year"].data
-    Y = annual_mean.data.m
+    X = annual_mean["year"].data.squeeze()
+    Y = annual_mean.data.m.squeeze()
+
+    if len(X.shape) != 1:
+        msg = f"Squeezed X must be 1D, received {X.shape=}"
+        raise AssertionError(msg)
+
+    if len(Y.shape) != 1:
+        msg = f"Squeezed Y must be 1D, received {Y.shape=}"
+        raise AssertionError(msg)
+
     # These are monthly timesteps, centred in the middle of each month
     N_MONTHS_PER_YEAR = 12
     # TODO: speak with Nicolai about how to boundary counditions better.
@@ -72,7 +81,7 @@ def interpolate_annual_mean_to_monthly(
 
     pint.testing.assert_allclose(
         out.groupby("time.year").mean().data,
-        annual_mean.data.squeeze(),
+        annual_mean.squeeze().data,
     )
 
     return convert_time_to_year_month(out)

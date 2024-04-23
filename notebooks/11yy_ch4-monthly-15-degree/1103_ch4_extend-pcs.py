@@ -68,7 +68,7 @@ QuantityOSCM = openscm_units.unit_registry.Quantity
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_15_degree"
+step: str = "calculate_ch4_monthly_fifteen_degree_half_degree"
 
 # %% [markdown]
 # ## Parameters

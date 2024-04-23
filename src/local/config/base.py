@@ -15,7 +15,9 @@ from pydoit_nb.config_helpers import (
     assert_step_config_ids_are_unique,
 )
 
-from .calculate_ch4_monthly_15_degree import CalculateCH4Monthly15DegreeConfig
+from .calculate_ch4_monthly_15_degree import (
+    CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig,
+)
 from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
 from .grid import GridConfig
 from .gridded_data_processing import GriddedDataProcessingConfig
@@ -186,14 +188,16 @@ class Config:
     )
     """Configurations to use for the smoothing of Law Dome data step"""
 
-    calculate_ch4_monthly_15_degree: list[CalculateCH4Monthly15DegreeConfig] = field(
+    calculate_ch4_monthly_fifteen_degree_half_degree: list[
+        CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig
+    ] = field(
         validator=[
             make_attrs_validator_compatible_single_input(
                 assert_step_config_ids_are_unique
             )
         ]
     )
-    """Configurations to use for calculating the 15 degree, monthly data for CH4"""
+    """Configurations to use for calculating the 15 degree and 0.5 degree, monthly data for CH4"""
 
     calculate_n2o_monthly_15_degree: list[CalculateN2OMonthly15DegreeConfig] = field(
         validator=[
