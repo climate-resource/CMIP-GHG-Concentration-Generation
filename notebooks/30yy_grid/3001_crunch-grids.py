@@ -30,6 +30,7 @@
 # %%
 import cf_xarray.units
 import matplotlib.pyplot as plt
+import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
@@ -37,6 +38,7 @@ from carpet_concentrations.gridders.latitude_seasonality_gridder import (
     LatitudeSeasonalityGridder,
 )
 from pydoit_nb.config_handling import get_config_for_step_id
+from tqdm.contrib.concurrent import process_map
 
 import local.binned_data_interpolation
 import local.binning
@@ -80,7 +82,7 @@ config_step = get_config_for_step_id(
 
 config_gridding_pieces_step = get_config_for_step_id(
     config=config,
-    step=f"calculate_{config_step.gas}_monthly_fifteen_degree_half_degree",
+    step=f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces",
     step_config_id="only",
 )
 
@@ -100,24 +102,17 @@ global_annual_mean_monthly
 
 # %%
 seasonality_monthly = xr.load_dataarray(
-    config_gridding_pieces_step.seasonality_allyears_monthly_file
+    config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file
 ).pint.quantify()
 seasonality_monthly.name = "seasonality"
 seasonality_monthly
 
 # %%
 lat_grad_fifteen_degree_monthly = xr.load_dataarray(
-    config_gridding_pieces_step.latitudinal_gradient_allyears_monthly_file
+    config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
 ).pint.quantify()
 lat_grad_fifteen_degree_monthly.name = "latitudinal_gradient"
 lat_grad_fifteen_degree_monthly
-
-# %%
-lat_grad_half_degree_monthly = xr.load_dataarray(
-    config_gridding_pieces_step.latitudinal_gradient_half_degree_allyears_monthly_file
-).pint.quantify()
-lat_grad_half_degree_monthly.name = "latitudinal_gradient"
-lat_grad_half_degree_monthly
 
 # %% [markdown]
 # ### 15 &deg; monthly file
@@ -186,81 +181,120 @@ plt.show()
 # ### 0.5 &deg; monthly file
 
 # %%
-lat_grad_half_degree_monthly
-
-# %%
-gridding_values_half_degree = (
-    xr.merge([seasonality_monthly.copy(), lat_grad_half_degree_monthly])
-    .cf.add_bounds("lat")
-    .pint.quantify({"lat_bounds": "deg"})
+process_map_res = process_map(
+    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+    local.xarray_time.convert_year_month_to_time(
+        fifteen_degree_data
+        # .sel(year=range(1981, 2023))
+    )
+    .pint.dequantify()
+    .groupby("time", squeeze=False),
+    max_workers=6,
+    chunksize=24,
 )
-gridding_values_half_degree
+len(process_map_res)
 
 # %%
+half_degree_data_l = []
+for map_res in tqdman.tqdm(process_map_res):
+    half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
 
-# %%
-half_degree_data = LatitudeSeasonalityGridder(gridding_values_half_degree).calculate(
-    global_annual_mean_monthly.to_dataset()
-)[config_step.gas]
+half_degree_data = local.xarray_time.convert_time_to_year_month(
+    xr.concat(half_degree_data_l, "time")
+)
+half_degree_data.name = fifteen_degree_data.name
 half_degree_data
 
 # %%
-print("Annual-mean concs at different latitudes")
-gridded_time_axis[config_step.gas].sel(lat=[-87.5, 0, 87.5], method="nearest").groupby(
-    "time.year"
-).mean().plot.line(hue="lat", alpha=0.4)
-plt.show()
+np.testing.assert_allclose(
+    fifteen_degree_data.transpose("year", "month", "lat").data.m,
+    half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)
+    .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
+    .transpose("year", "month", "lat_bins")
+    .data.m,
+)
 
 # %%
-print("Annual-, global-mean")
-fifteen_degree_data_time_axis[config_step.gas].groupby("time.year").mean().mean(
-    "lat"
-).plot()
-plt.show()
-
-# %% [markdown]
-# ### 0.5 degree resolution
-
-# %%
-monthly_05_degree_l = []
-for time, time_da in tqdman.tqdm(
-    local.xarray_time.convert_year_month_to_time(
-        monthly_15_degree.sel(year=range(2021, 2023))
-    ).groupby("time", squeeze=False)
-):
-    time_intp = (
-        local.mean_preserving_interpolation.interpolate_lat_15_degree_to_half_degree(
-            time_da
-        )
+print("Flying carpet")
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(projection="3d")
+tmp = local.xarray_time.convert_year_month_to_time(half_degree_data).copy()
+tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
+(
+    tmp.isel(time=range(-150, 0)).plot.surface(
+        x="time",
+        y="lat",
+        ax=ax,
+        cmap="rocket_r",
+        levels=30,
+        # alpha=0.7,
     )
-    time_intp.assign_coords(time=time)
-    monthly_05_degree_l.append(time_intp)
-
-monthly_05_degree = xr.concat(monthly_05_degree_l, "time")
-monthly_05_degree
+)
+ax.view_init(15, -135, 0)  # type: ignore
+plt.tight_layout()
+plt.show()
 
 # %% [markdown]
 # ### Global-, northern-hemisphere- and southern-hemisphere-means
 
 # %%
-# assert False, "Skip this until we've discussed sensible convention with Paul"
+gmnhsh_l = []
+sector_str_l = []
+for id, sector, lat_sel in (
+    ("global-mean", 0, fifteen_degree_data["lat"]),
+    ("northern hemisphere-mean", 1, fifteen_degree_data["lat"] > 0),
+    ("southern hemisphere-mean", 2, fifteen_degree_data["lat"] < 0),
+):
+    tmp = local.xarray_space.calculate_global_mean_from_lon_mean(
+        fifteen_degree_data.sel(lat=lat_sel)
+    )
+    tmp = tmp.assign_coords(sector=sector)
+    gmnhsh_l.append(tmp)
+
+    sector_str_l.append(f"{sector}: {id}")
+
+sector_str = ";".join(sector_str_l)
+print(sector_str)
+gmnhsh = xr.concat(gmnhsh_l, "sector")
+gmnhsh.attrs["sectors"] = sector_str
+gmnhsh
 
 # %%
-# global_mean = local.xarray_space.calculate_global_mean_from_lon_mean(monthly_15_degree)
-# global_mean
+print("Global-, hemispheric-means")
+local.xarray_time.convert_year_month_to_time(gmnhsh).plot(hue="sector")
+plt.show()
+
+# %% [markdown]
+# ### Global-, northern-hemisphere- and southern-hemisphere-means, annual-means
 
 # %%
-# nh_mean = local.xarray_space.calculate_global_mean_from_lon_mean(monthly_15_degree.sel(lat=monthly_15_degree["lat"]>0))
-# nh_mean
+gmnhsh_annual_mean = gmnhsh.mean("month")
+gmnhsh_annual_mean
 
 # %%
-# sh_mean = local.xarray_space.calculate_global_mean_from_lon_mean(monthly_15_degree.sel(lat=monthly_15_degree["lat"]<0))
-# sh_mean
-
-# %%
-# global_mean.mean("month")
+print("Annual-, global-mean")
+gmnhsh_annual_mean.plot(hue="sector")
+plt.show()
 
 # %% [markdown]
 # ### Save
 
 # %%
+config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+fifteen_degree_data.pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
+fifteen_degree_data
+
+# %%
+config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
+half_degree_data
+
+# %%
+config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+gmnhsh.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_monthly_file)
+gmnhsh
+
+# %%
+config_step.gmnhsh_mean_annual_file.parent.mkdir(exist_ok=True, parents=True)
+gmnhsh_annual_mean.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_annual_file)
+gmnhsh_annual_mean

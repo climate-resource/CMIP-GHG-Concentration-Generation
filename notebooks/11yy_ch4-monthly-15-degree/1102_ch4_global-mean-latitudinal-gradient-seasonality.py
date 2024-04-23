@@ -48,7 +48,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_half_degree"
+step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters

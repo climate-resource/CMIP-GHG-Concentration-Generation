@@ -4,6 +4,8 @@ Mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
+from typing import TypeVar
+
 import cftime
 import numpy as np
 import pint
@@ -15,13 +17,14 @@ import xarray as xr
 from local.xarray_space import calculate_global_mean_from_lon_mean
 from local.xarray_time import convert_time_to_year_month
 
-Quantity = pint.get_application_registry().Quantity
+T = TypeVar("T")
 
 
 def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
 ) -> xr.DataArray:
+    Quantity = pint.get_application_registry().Quantity
     X = annual_mean["year"].data.squeeze()
     Y = annual_mean.data.m.squeeze()
 
@@ -91,6 +94,7 @@ def interpolate_lat_15_degree_to_half_degree(
     lat_15_degree: xr.DataArray,
     degrees_freedom_scalar: float = 1.75,
 ) -> xr.DataArray:
+    Quantity = pint.get_application_registry().Quantity
     ASSUMED_INPUT_LAT_SPACING = 15
     TARGET_LAT_SPACING = 0.5
 
@@ -226,3 +230,22 @@ def mean_preserving_interpolation(
     coefficients = alpha[1:]
 
     return coefficients, intercept, knots, degree
+
+
+def interpolate_time_slice_parallel_helper(
+    inp: tuple[T, xr.DataArray]
+) -> tuple[T, xr.DataArray]:
+    time, da = inp
+    import cf_xarray.units
+    import pint_xarray
+
+    cf_xarray.units.units.define("ppm = 1 / 1000000")
+    cf_xarray.units.units.define("ppb = ppm / 1000")
+    cf_xarray.units.units.define("ppt = ppb / 1000")
+
+    pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
+        cf_xarray.units.units
+    )
+    pint.set_application_registry(pint_xarray.accessors.default_registry)
+
+    return time, interpolate_lat_15_degree_to_half_degree(da.pint.quantify())

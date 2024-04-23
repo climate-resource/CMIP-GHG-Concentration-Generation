@@ -241,8 +241,7 @@ smooth_law_dome_data:
     minimum_data_points_either_side: 7
     maximum_data_points_either_side: 25
 
-# TODO: re-name to calculate_ch4_global_annual_mean_seasonality_lat_gradient_pcs_eofs
-calculate_ch4_monthly_fifteen_degree_half_degree:
+calculate_ch4_monthly_fifteen_degree_pieces:
 - step_config_id: only
   gas: ch4
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
@@ -256,9 +255,7 @@ calculate_ch4_monthly_fifteen_degree_half_degree:
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
-  seasonality_allyears_half_degree_monthly_file: data/interim/ch4/ch4_seasonality_half-degree_allyears-monthly.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
-  latitudinal_gradient_half_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_half-degree_allyears-monthly.nc
 
 calculate_n2o_monthly_15_degree:
 - step_config_id: only
@@ -274,6 +271,11 @@ crunch_grids:
   gmnhsh_mean_monthly_file: data/processed/gridded/ch4_gmnhsh-mean_monthly.nc
   gmnhsh_mean_annual_file: data/processed/gridded/ch4_gmnhsh-mean_annual.nc
 
+write_input4mips:
+- step_config_id: ch4
+  gas: ch4
+  input4mips_out_dir: data/processed/input4MIPs
+
 # TODO: delete the below
 grid:
 - step_config_id: only
@@ -283,10 +285,6 @@ gridded_data_processing:
 - step_config_id: only
   processed_data_file_global_hemispheric_means: data/processed/gridded/0810_global-hemispheric-means.nc
   processed_data_file_global_hemispheric_annual_means: data/processed/gridded/0810_global-hemispheric-annual-means.nc
-
-write_input4mips:
-- step_config_id: only
-  input4mips_out_dir: data/processed/input4MIPs
 
 quick_crunch:
 - step_config_id: only

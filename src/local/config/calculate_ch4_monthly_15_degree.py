@@ -10,9 +10,9 @@ from attrs import frozen
 
 
 @frozen
-class CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig:
+class CalculateCH4MonthlyFifteenDegreePieces:
     """
-    Configuration class for the calculation of the 15 degree and 0.5 degree monthly data for CH4
+    Configuration class for the calculation of the 15 degree monthly data pieces for CH4
     """
 
     step_config_id: str
@@ -64,17 +64,12 @@ class CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig:
     Path in which to save the global-, annual-mean, interpolated to monthly steps for all years
     """
 
-    seasonality_allyears_monthly_file: Path
+    seasonality_allyears_fifteen_degree_monthly_file: Path
     """
-    Path in which to save the seasonality, interpolated to monthly steps for all years
-    """
-
-    latitudinal_gradient_allyears_monthly_file: Path
-    """
-    Path in which to save the latitudinal gradient, interpolated to monthly steps for all years
+    Path for the seasonality on a 15 degree grid, interpolated to monthly steps for all years
     """
 
-    latitudinal_gradient_half_degree_allyears_monthly_file: Path
+    latitudinal_gradient_fifteen_degree_allyears_monthly_file: Path
     """
-    Path in which to save the 0.5 degree latitudinal gradient, interpolated to monthly steps for all years
+    Path for the latitudinal gradient on a 15 degree grid, interpolated to monthly steps for all years
     """

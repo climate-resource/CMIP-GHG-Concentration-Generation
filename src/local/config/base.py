@@ -16,7 +16,7 @@ from pydoit_nb.config_helpers import (
 )
 
 from .calculate_ch4_monthly_15_degree import (
-    CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig,
+    CalculateCH4MonthlyFifteenDegreePieces,
 )
 from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
 from .crunch_grid import GridCrunchingConfig
@@ -189,8 +189,8 @@ class Config:
     )
     """Configurations to use for the smoothing of Law Dome data step"""
 
-    calculate_ch4_monthly_fifteen_degree_half_degree: list[
-        CalculateCH4MonthlyFifteenDegreeHalfDegreeConfig
+    calculate_ch4_monthly_fifteen_degree_pieces: list[
+        CalculateCH4MonthlyFifteenDegreePieces
     ] = field(
         validator=[
             make_attrs_validator_compatible_single_input(

@@ -20,7 +20,6 @@
 # - global-, annual-mean, interpolated to monthly timesteps
 # - seasonality, extended over all years
 # - latitudinal gradient, interpolated to monthly timesteps
-# - latitudinal gradient on a 0.5&deg; grid, interpolated to monthly timesteps
 #
 # Then we check consistency between these pieces.
 
@@ -31,9 +30,8 @@
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
-import openscm_units
 import pint
-import pint_xarray  # noqa: F401
+import pint_xarray
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -61,7 +59,7 @@ Quantity = pint.get_application_registry().Quantity
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_half_degree"
+step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -108,15 +106,19 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-    global_annual_mean
+global_annual_mean_monthly = (
+    local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+        global_annual_mean
+    )
 )
 global_annual_mean_monthly
 
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(ax=axes[0])
+local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(
+    ax=axes[0]
+)
 local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
     x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
 )
@@ -217,111 +219,48 @@ plt.tight_layout()
 plt.show()
 
 # %%
-latitudinal_gradient_monthly = (
-    pcs_monthly
-    @ lat_gradient_eofs_pcs["eofs"]
-)
+latitudinal_gradient_monthly = pcs_monthly @ lat_gradient_eofs_pcs["eofs"]
 
 # Ensure spatial mean is zero
 tmp = latitudinal_gradient_monthly
 tmp.name = "latitudinal-gradient"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.m,
-    0.0,
-    atol=1e-13
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.m, 0.0, atol=1e-13
 )
 
 latitudinal_gradient_monthly
 
 # %%
-local.xarray_time.convert_year_month_to_time(latitudinal_gradient_monthly).plot(hue="lat")
-
-# %% [markdown]
-# ### Latitudinal gradient, 0.5&deg;
-#
-# We do this by interpolating the EOFs first,
-# then combining with the PCs.
-# This is much faster than interpolating every time step individually.
-# We can't see an argument for doing it the other way around.
-
-# %%
-eofs_half_degree = (
-    lat_gradient_eofs_pcs["eofs"]
-    .groupby("eof", squeeze=False)
-    .apply(local.mean_preserving_interpolation.interpolate_lat_15_degree_to_half_degree)
+local.xarray_time.convert_year_month_to_time(latitudinal_gradient_monthly).plot(
+    hue="lat"
 )
-eofs_half_degree
-
-# %%
-fig, ax = plt.subplots(ncols=1, figsize=(12, 4))
-
-lat_gradient_eofs_pcs["eofs"].plot.scatter(x="lat", hue="eof", zorder=3, alpha=0.5, ax=ax)
-eofs_half_degree.plot(ax=ax, hue="eof")
-
-plt.tight_layout()
-plt.show()
-
-# %%
-latitudinal_gradient_monthly_half_degree = (
-    pcs_monthly
-    @ eofs_half_degree
-)
-
-# Ensure spatial mean is zero
-tmp = latitudinal_gradient_monthly_half_degree
-tmp.name = "latitudinal-gradient"
-np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.m,
-    0.0,
-    atol=1e-12
-)
-
-latitudinal_gradient_monthly_half_degree
-
-# %% [markdown]
-# As one more check, we make sure that our half degree latitudinal gradient's spatial mean
-# matches our 15 degree latitudinal gradient.
-
-# %%
-np.testing.assert_allclose(
-    latitudinal_gradient_monthly_half_degree.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS).apply(
-        local.xarray_space.calculate_global_mean_from_lon_mean
-    ).data.m,
-    latitudinal_gradient_monthly.data.m
-)
-
-# %% [markdown]
-# As a note, interpolating the EOFs 
-# doesn't give exactly the same answer as interpolating each time point individually.
-# However, the difference is small and it is not obvious to us that either is
-# objectively correct (particularly as the correct spatial means are preserved).
-# Hence we go with the computationally faster option.
-
-# %%
-latitudinal_gradient_monthly_half_degree.sel(year=2022, month=6).plot()
-local.mean_preserving_interpolation.interpolate_lat_15_degree_to_half_degree(
-        latitudinal_gradient_monthly.sel(year=2022, month=6)
-).plot()
 
 # %% [markdown]
 # ### Save
 
 # %%
-config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-global_annual_mean_monthly.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_monthly_file)
+config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+global_annual_mean_monthly.pint.dequantify().to_netcdf(
+    config_step.global_annual_mean_allyears_monthly_file
+)
 global_annual_mean_monthly
 
 # %%
-config_step.seasonality_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_allyears_monthly_file)
+config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+seasonality_full.pint.dequantify().to_netcdf(
+    config_step.seasonality_allyears_fifteen_degree_monthly_file
+)
 seasonality_full
 
 # %%
-config_step.latitudinal_gradient_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-latitudinal_gradient_monthly.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_monthly_file)
+config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file.parent.mkdir(
+    exist_ok=True, parents=True
+)
+latitudinal_gradient_monthly.pint.dequantify().to_netcdf(
+    config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
+)
 latitudinal_gradient_monthly
-
-# %%
-config_step.latitudinal_gradient_half_degree_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-latitudinal_gradient_monthly_half_degree.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_half_degree_allyears_monthly_file)
-latitudinal_gradient_monthly_half_degree
