@@ -18,6 +18,8 @@
 # Extend the latitudinal gradient and global-, annual-mean back in time.
 # For CH$_4$, we do this by combining the values from ice cores etc.
 # and our latitudinal gradient information.
+#
+# TODO: split this notebook
 
 # %% [markdown]
 # ## Imports
@@ -751,8 +753,7 @@ local.xarray_time.convert_year_month_to_time(allyears_global_annual_mean_monthly
 #
 # We have to be a bit careful here.
 # We want to preserve the latitudinal gradient's spatial mean of zero.
-# Hence we first decompose back into EOFs and PCs.
-# Then we interpolate the PCs onto a monthly timestep.
+# Hence we first interpolate the PCs onto a monthly timestep.
 # Then we re-create our latitudinal gradient.
 
 # %%
@@ -786,6 +787,40 @@ xr.testing.assert_allclose(
     ),
     allyears_full_field,
 )
+
+# %% [markdown]
+# #### Latitudinal gradient fine-grid
+#
+# We interpolate the EOFs, then multiply out by the PCs.
+# We do it in this order to avoid repeating the interpolation for every time step.
+# We pick a few time points to check that doing it in
+# this order preserves the same latitudinal gradient.
+
+# %%
+eofs_fine = (
+    lat_grad_eofs_obs_network["eofs"]
+    .groupby("eof")
+    .apply(
+        local.mean_preserving_interpolation.interpolate_lat_15_degree_to_half_degree
+    )
+)
+eofs_fine
+
+# %%
+allyears_latitudinal_gradient_fine_monthly = (
+    allyears_pcs_monthly @ eofs_fine
+)
+allyears_latitudinal_gradient_fine_monthly
+
+# %%
+for time in [
+    allyears_latitudinal_gradient_fine_monthly["time"][0],
+    allyears_latitudinal_gradient_fine_monthly["time"][3],
+    allyears_latitudinal_gradient_fine_monthly["time"][-1],
+]:
+
+# %%
+assert False, "TODO: implement"
 
 # %% [markdown]
 # ## Save
