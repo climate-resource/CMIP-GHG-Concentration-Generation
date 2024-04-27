@@ -14,6 +14,8 @@ from pydoit_nb.typing import DoitTaskSpec
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
+    calculate_ch4_monthly_fifteen_degree_pieces,
+    crunch_grids,
     # grid,
     # gridded_data_processing,
     plot_input_data_overviews,
@@ -117,6 +119,8 @@ def gen_all_tasks(
         retrieve_and_process_epica_data,
         plot_input_data_overviews,
         smooth_law_dome_data,
+        calculate_ch4_monthly_fifteen_degree_pieces,
+        crunch_grids,
         # quick_crunch,
         # grid,
         # gridded_data_processing,

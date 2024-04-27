@@ -1,6 +1,7 @@
 """
-Gridding notebook steps
+Crunch grids notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -46,43 +47,49 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
-    config_quick_crunch = get_config_for_step_id(
-        config=config, step="quick_crunch", step_config_id="only"
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
+
+    config_gridding_pieces_step = get_config_for_step_id(
+        config=config,
+        step=f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces",
+        step_config_id="only",
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("07yy_grid") / "0710_create-gridded-data"
-            ],
-            configuration=None,
-            dependencies=(config_quick_crunch.processed_data_file_global_means,),
-            targets=(config_step.processed_data_file,),
+            unconfigured_notebook=uc_nbs_dict[Path("30yy_grid") / "3001_crunch-grids"],
+            configuration=(),
+            dependencies=(
+                config_gridding_pieces_step.global_annual_mean_allyears_monthly_file,
+                config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file,
+                config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file,
+            ),
+            targets=(
+                config_step.fifteen_degree_monthly_file,
+                config_step.half_degree_monthly_file,
+                config_step.gmnhsh_mean_monthly_file,
+                config_step.gmnhsh_mean_annual_file,
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
-        )
+        ),
     ]
 
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
-    step_name="grid",
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
+    step_name="crunch_grids",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("07yy_grid") / "0710_create-gridded-data",
+            notebook_path=Path("30yy_grid") / "3001_crunch-grids",
             raw_notebook_ext=".py",
-            summary="grid - Create gridded data",
+            summary="grid - Grid data from based on the gridding pieces",
             doc=(
-                "Create gridded data based on calculated global-means, "
-                "seasonality and latitudinal gradients"
+                "Create gridded data products based on the seasonality, "
+                "latituindal gradient and global-means from earlier steps."
             ),
-        )
+        ),
     ],
     configure_notebooks=configure_notebooks,
 )
