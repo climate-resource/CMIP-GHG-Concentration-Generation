@@ -275,6 +275,7 @@ write_input4mips:
 - step_config_id: ch4
   gas: ch4
   input4mips_out_dir: data/processed/esgf-ready
+  complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
 
 # TODO: delete the below
 grid:

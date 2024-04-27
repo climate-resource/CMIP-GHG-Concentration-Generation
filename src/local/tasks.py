@@ -14,12 +14,12 @@ from pydoit_nb.typing import DoitTaskSpec
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
-    grid,
-    gridded_data_processing,
+    # grid,
+    # gridded_data_processing,
     plot_input_data_overviews,
     process_noaa_in_situ_data,
     process_noaa_surface_flask_data,
-    quick_crunch,
+    # quick_crunch,
     retrieve_and_extract_agage_data,
     retrieve_and_extract_ale_data,
     retrieve_and_extract_gage_data,
@@ -117,9 +117,9 @@ def gen_all_tasks(
         retrieve_and_process_epica_data,
         plot_input_data_overviews,
         smooth_law_dome_data,
-        quick_crunch,
-        grid,
-        gridded_data_processing,
+        # quick_crunch,
+        # grid,
+        # gridded_data_processing,
         write_input4mips,
     ]:
         for task in step_module.step.gen_notebook_tasks(

@@ -27,3 +27,6 @@ class WriteInput4MIPsConfig:
 
     input4mips_out_dir: Path
     """Path in which to save the processed input4MIPs-ready data"""
+
+    complete_file: Path
+    """Path in which to save the timestamp of the time at which this step was completed"""

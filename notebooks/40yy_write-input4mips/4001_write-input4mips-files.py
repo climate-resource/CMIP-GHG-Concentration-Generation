@@ -27,6 +27,7 @@
 # ## Imports
 
 # %%
+import datetime
 from functools import partial
 
 import cf_xarray.units
@@ -242,7 +243,8 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     print("")
 
 checklist_path = generate_directory_checklist(config_step.input4mips_out_dir)
-# # Not sure if this is needed or not
-# with open(config.input4mips_archive.complete_file_concentrations, "w") as fh:
-#     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+# Not sure if this is needed or not
+with open(config_step.complete_file, "w") as fh:
+    fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+
 checklist_path
