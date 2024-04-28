@@ -56,11 +56,6 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_noaa = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
-
-
 config_process_noaa_surface_flask_data = get_config_for_step_id(
     config=config,
     step="process_noaa_surface_flask_data",

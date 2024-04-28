@@ -92,10 +92,6 @@ config_process_neem = get_config_for_step_id(
     config=config, step="retrieve_and_process_neem_data", step_config_id="only"
 )
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
-
 
 # %% [markdown]
 # ## Action
