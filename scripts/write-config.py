@@ -10,21 +10,28 @@ from pydoit_nb.config_handling import insert_path_prefix
 
 import local
 from local.config import Config, converter_yaml
+from local.config_creation.noaa_handling import create_noaa_handling_config
+from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 
 
 def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
+    noaa_handling_steps = create_noaa_handling_config(
+        data_sources=(
+            ("ch4", "in-situ"),
+            ("ch4", "surface-flask"),
+        )
+    )
+
     return Config(
         name="CI",
         version=f"{local.__version__}-ci",
         base_seed=20240427,
         ci=True,
-        retrieve_misc_data=[],
-        retrieve_and_extract_noaa_data=[],
-        process_noaa_surface_flask_data=[],
-        process_noaa_in_situ_data=[],
+        retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
+        **noaa_handling_steps,
         retrieve_and_extract_agage_data=[],
         retrieve_and_extract_gage_data=[],
         retrieve_and_extract_ale_data=[],
