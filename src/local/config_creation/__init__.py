@@ -1,0 +1,3 @@
+"""
+Creation of different configurations
+"""
