@@ -136,7 +136,6 @@ def configure_notebooks(
                 config_step.observational_network_latitudinal_gradient_eofs_file,
                 config_smooth_law_dome_data.smoothed_median_file,
                 config_process_neem.processed_data_with_loc_file,
-                config_process_epica.processed_data_with_loc_file,
                 config_retrieve_misc.primap.raw_dir
                 / config_retrieve_misc.primap.download_url.url.split("/")[-1],
             ),

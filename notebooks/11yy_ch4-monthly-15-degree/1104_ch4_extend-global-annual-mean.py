@@ -153,7 +153,12 @@ epica_data.sort_values("year")
 # ### Define some important constants
 
 # %%
-out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
+if not config.ci:
+    out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
+
+else:
+    out_years = np.arange(1750, global_annual_mean_obs_network["year"].max() + 1)
+
 out_years
 
 # %%
@@ -297,54 +302,76 @@ epica_lat
 
 # %%
 law_dome_start_year = law_dome_da["year"].min()
-years_use_epica = np.arange(1, law_dome_start_year)
+
+if not config.ci:
+    years_use_epica = np.arange(1, law_dome_start_year)
+else:
+    years_use_epica = np.empty(0)
+
 years_use_epica
 
 # %%
-harmonisation_value = float(
-    law_dome_years_full_field.sel(year=law_dome_start_year)
-    .sel(lat=epica_lat, method="nearest")
-    .data.m
-)
-harmonisation_value
-
-# %%
-fig, ax = plt.subplots()
-
-epica_da = (
-    xr.DataArray(
-        data=np.hstack([epica_data_to_add["value"], harmonisation_value]),
-        dims=["year"],
-        coords=dict(year=np.hstack([epica_data_to_add["year"], law_dome_start_year])),
-        attrs=dict(units=conc_unit),
+if years_use_epica.size > 0:
+    harmonisation_value = float(
+        law_dome_years_full_field.sel(year=law_dome_start_year)
+        .sel(lat=epica_lat, method="nearest")
+        .data.m
     )
-    .interp(year=years_use_epica)
-    .pint.quantify()
-)
-
-epica_da.pint.dequantify().plot(ax=ax, label="interpolated")
-epica_data[(epica_data["year"] > -1000) & (epica_data["year"] < 200)].plot.scatter(
-    x="year", y="value", ax=ax, color="tab:orange", label="EPICA raw"
-)
-
-ax.legend()
-
-epica_da
+    harmonisation_value
 
 # %%
-offset_epica = epica_da - allyears_latitudinal_gradient.sel(
-    lat=epica_lat, method="nearest"
-)
-epica_years_full_field = allyears_latitudinal_gradient + offset_epica
-epica_years_full_field
+if years_use_epica.size > 0:
+    fig, ax = plt.subplots()
+
+    epica_da = (
+        xr.DataArray(
+            data=np.hstack([epica_data_to_add["value"], harmonisation_value]),
+            dims=["year"],
+            coords=dict(
+                year=np.hstack([epica_data_to_add["year"], law_dome_start_year])
+            ),
+            attrs=dict(units=conc_unit),
+        )
+        .interp(year=years_use_epica)
+        .pint.quantify()
+    )
+
+    epica_da.pint.dequantify().plot(ax=ax, label="interpolated")
+    epica_data[(epica_data["year"] > -1000) & (epica_data["year"] < 200)].plot.scatter(
+        x="year", y="value", ax=ax, color="tab:orange", label="EPICA raw"
+    )
+
+    ax.legend()
+
+    epica_da
+
+# %%
+if years_use_epica.size > 0:
+    offset_epica = epica_da - allyears_latitudinal_gradient.sel(
+        lat=epica_lat, method="nearest"
+    )
+    epica_years_full_field = allyears_latitudinal_gradient + offset_epica
+    epica_years_full_field
 
 # %% [markdown]
 # #### Join back together
 
 # %%
-allyears_full_field = xr.concat(
-    [epica_years_full_field, law_dome_years_full_field, obs_network_full_field], "year"
-)
+if years_use_epica.size > 0:
+    allyears_full_field = xr.concat(
+        [epica_years_full_field, law_dome_years_full_field, obs_network_full_field],
+        "year",
+    )
+
+else:
+    if not config.ci:
+        msg = "Should be using EPICA"
+        raise AssertionError(msg)
+
+    allyears_full_field = xr.concat(
+        [law_dome_years_full_field, obs_network_full_field], "year"
+    )
+
 allyears_full_field
 
 # %%
@@ -369,6 +396,7 @@ allyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
+assert False, "Something wrong with how this works in CI set up"
 np.testing.assert_allclose(
     allyears_full_field.sel(lat=neem_lat, method="nearest")
     .sel(year=neem_data["year"].values)
@@ -383,13 +411,19 @@ np.testing.assert_allclose(
     .m,
     smooth_law_dome_to_use["value"],
 )
-np.testing.assert_allclose(
-    allyears_full_field.sel(lat=epica_lat, method="nearest")
-    .sel(year=epica_da["year"].values)
-    .data.to(conc_unit)
-    .m,
-    epica_da.data.m,
-)
+if years_use_epica.size > 0:
+    np.testing.assert_allclose(
+        allyears_full_field.sel(lat=epica_lat, method="nearest")
+        .sel(year=epica_da["year"].values)
+        .data.to(conc_unit)
+        .m,
+        epica_da.data.m,
+    )
+
+else:
+    if not config.ci:
+        msg = "Should be using EPICA"
+        raise AssertionError(msg)
 
 # %%
 allyears_full_field

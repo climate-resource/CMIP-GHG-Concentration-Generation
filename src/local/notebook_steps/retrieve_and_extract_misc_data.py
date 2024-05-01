@@ -65,8 +65,19 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
-        # TODO: add notebook that downloads PRIMAP
-        # config_step.primap.raw_dir / config_step.primap.download_url.url.split("/")[-1],
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("000y_retrieve-misc-data") / "0002_primap"
+            ],
+            configuration=(config_step.primap.download_url,),
+            dependencies=(),
+            targets=(
+                config_step.primap.raw_dir
+                / config_step.primap.download_url.url.split("/")[-1],
+            ),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -83,6 +94,12 @@ step: UnconfiguredNotebookBasedStep[
             raw_notebook_ext=".py",
             summary="retrieve - Natural Earth shape files",
             doc="Retrieve shape files from Natural Earth",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("000y_retrieve-misc-data") / "0002_primap",
+            raw_notebook_ext=".py",
+            summary="retrieve - PRIMAP data",
+            doc="Retrieve PRIMAP data",
         ),
     ],
     configure_notebooks=configure_notebooks,

@@ -1,5 +1,5 @@
 """
-Retrieve and extract NEEM data notebook steps
+Retrieve and extract EPICA data notebook steps
 """
 
 from __future__ import annotations
@@ -55,7 +55,7 @@ def configure_notebooks(
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("006y_process-neem-data") / "0060_download-neem"
+                Path("005y_process-epica-data") / "0050_download-epica"
             ],
             configuration=(config_step.download_url,),
             dependencies=(),
@@ -65,7 +65,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("006y_process-neem-data") / "0061_process-neem"
+                Path("005y_process-epica-data") / "0051_process-epica"
             ],
             configuration=(),
             dependencies=(get_checklist_file(config_step.raw_dir),),
@@ -81,19 +81,19 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="retrieve_and_process_neem_data",
+    step_name="retrieve_and_process_epica_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("006y_process-neem-data") / "0060_download-neem",
+            notebook_path=Path("005y_process-epica-data") / "0050_download-epica",
             raw_notebook_ext=".py",
-            summary="process NEEM data - download",
-            doc="Download NEEM data",
+            summary="process EPICA data - download",
+            doc="Download EPICA data",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("006y_process-neem-data") / "0061_process-neem",
+            notebook_path=Path("005y_process-epica-data") / "0051_process-epica",
             raw_notebook_ext=".py",
-            summary="process NEEM data - process",
-            doc="Process NEEM data into a single file with monthly information etc.",
+            summary="process EPICA data - process",
+            doc="Process EPICA data into a single file with monthly information etc.",
         ),
     ],
     configure_notebooks=configure_notebooks,
