@@ -59,14 +59,14 @@ def configure_notebooks(
             configuration=(config_step.natural_earth.download_urls,),
             dependencies=(),
             targets=(
-                (
-                    config_step.natural_earth.raw_dir
-                    / config_step.natural_earth.countries_shape_file_name
-                ),
+                config_step.natural_earth.raw_dir
+                / config_step.natural_earth.countries_shape_file_name,
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
+        # TODO: add notebook that downloads PRIMAP
+        # config_step.primap.raw_dir / config_step.primap.download_url.url.split("/")[-1],
     ]
 
     return configured_notebooks

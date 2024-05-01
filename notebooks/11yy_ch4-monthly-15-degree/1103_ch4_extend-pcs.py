@@ -90,10 +90,6 @@ config_smooth_law_dome_data = get_config_for_step_id(
     config=config, step="smooth_law_dome_data", step_config_id="ch4"
 )
 
-config_process_epica = get_config_for_step_id(
-    config=config, step="retrieve_and_process_epica_data", step_config_id="only"
-)
-
 config_process_neem = get_config_for_step_id(
     config=config, step="retrieve_and_process_neem_data", step_config_id="only"
 )
@@ -154,16 +150,16 @@ neem_data["year"] = neem_data["year"].round(0)
 neem_data["source"] = "neem"
 neem_data.sort_values("year")
 
-# %%
-epica_data = pd.read_csv(config_process_epica.processed_data_with_loc_file)
-epica_data["source"] = "epica"
-epica_data.sort_values("year")
-
 # %% [markdown]
 # ### Define some important constants
 
 # %%
-out_years = np.arange(1, lat_grad_eofs_obs_network["year"].max() + 1)
+if not config.ci:
+    out_years = np.arange(1, lat_grad_eofs_obs_network["year"].max() + 1)
+
+else:
+    out_years = np.arange(1750, lat_grad_eofs_obs_network["year"].max() + 1)
+
 out_years
 
 # %%
@@ -247,16 +243,6 @@ neem_lat_nearest = float(
 neem_lat_nearest
 
 # %%
-epica_lat = get_col_assert_single_value(epica_data, "latitude")
-epica_lat
-
-# %%
-epica_lat_nearest = float(
-    lat_grad_eofs_obs_network.sel(lat=epica_lat, method="nearest")["lat"]
-)
-epica_lat_nearest
-
-# %%
 conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
 conc_unit
 
@@ -266,13 +252,6 @@ if neem_unit != conc_unit:
     raise AssertionError
 
 neem_unit
-
-# %%
-epica_unit = get_col_assert_single_value(epica_data, "unit")
-if epica_unit != conc_unit:
-    raise AssertionError
-
-epica_unit
 
 
 # %%
@@ -308,6 +287,7 @@ def diff_from_ice_cores(x, pc1, eofs, ice_core_data):
 
 # %%
 years_to_optimise = np.setdiff1d(neem_data["year"], obs_network_years.data)
+years_to_optimise = years_to_optimise[np.in1d(years_to_optimise, out_years)]
 years_to_optimise
 
 # %%

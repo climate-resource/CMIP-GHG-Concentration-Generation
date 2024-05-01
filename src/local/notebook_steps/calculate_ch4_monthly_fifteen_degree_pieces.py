@@ -93,6 +93,8 @@ def configure_notebooks(
                 config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
                 config_process_ale_data.processed_monthly_data_with_loc_file,
                 config_process_gage_data.processed_monthly_data_with_loc_file,
+                config_retrieve_misc.primap.raw_dir
+                / config_retrieve_misc.primap.download_url.url.split("/")[-1],
             ),
             targets=(config_step.processed_bin_averages_file,),
             config_file=config_bundle.config_hydrated_path,

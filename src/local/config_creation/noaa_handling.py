@@ -15,8 +15,6 @@ from local.config.process_noaa_surface_flask_data import (
 )
 from local.config.retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 
-base = dict()
-
 IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-situ/surface/{gas}_surface-insitu_ccgg_text.zip"
 SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
 
@@ -102,17 +100,21 @@ def create_noaa_data_source_handling_pieces(
 
     raw_dir = "data/raw/noaa"
     interim_dir = "data/interim/noaa"
-    assert False, "in situ does not have events data"
+    interim_files = dict(
+        monthly_data=f"{interim_dir}/monthly_{gas}_{network}_raw-consolidated.csv",
+    )
+    if network == "surface-flask":
+        interim_files[
+            "events_data"
+        ] = f"{interim_dir}/events_{gas}_{network}_raw-consolidated.csv"
+
     out["retrieve_and_extract_noaa_data"] = RetrieveExtractNOAADataConfig(
         step_config_id=f"{gas}_{network}",
         gas=gas,
         source=network,
         raw_dir=raw_dir,
         download_complete_file=f"{raw_dir}/{gas}_{network}.complete",
-        interim_files=dict(
-            events_data=f"{interim_dir}/events_{gas}_{network}_raw-consolidated.csv",
-            monthly_data=f"{interim_dir}/monthly_{gas}_{network}_raw-consolidated.csv",
-        ),
+        interim_files=interim_files,
         download_urls=DOWNLOAD_URLS[(gas, network)],
     )
 

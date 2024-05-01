@@ -20,8 +20,6 @@ from .calculate_ch4_monthly_15_degree import (
 )
 from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
 from .crunch_grid import GridCrunchingConfig
-from .grid import GridConfig
-from .gridded_data_processing import GriddedDataProcessingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
@@ -216,24 +214,6 @@ class Config:
         ]
     )
     """Configurations to use with the grid crunching step"""
-
-    grid: list[GridConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the grid step"""
-
-    gridded_data_processing: list[GriddedDataProcessingConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
-    )
-    """Configurations to use with the gridded data processing step"""
 
     write_input4mips: list[WriteInput4MIPsConfig] = field(
         validator=[
