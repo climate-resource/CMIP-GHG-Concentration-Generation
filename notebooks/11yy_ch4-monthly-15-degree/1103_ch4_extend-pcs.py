@@ -379,7 +379,7 @@ pc0_optimised_years_to_optimise = pc0_optimised.pint.dequantify().interp(
 # Assuming PC0 is constant before the start of the NEEM data.
 pc0_optimised_years_to_optimise_back_to_year_one = (
     pc0_optimised_years_to_optimise.pint.dequantify().interp(
-        year=np.arange(1, years_to_optimise[-1] + 1),
+        year=np.arange(out_years[0], years_to_optimise[-1] + 1),
         kwargs={"fill_value": pc0_optimised.data[0].m},
     )
 )

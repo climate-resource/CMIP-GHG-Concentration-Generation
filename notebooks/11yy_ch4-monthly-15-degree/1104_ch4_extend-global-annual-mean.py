@@ -396,21 +396,45 @@ allyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
-assert False, "Something wrong with how this works in CI set up"
-np.testing.assert_allclose(
-    allyears_full_field.sel(lat=neem_lat, method="nearest")
-    .sel(year=neem_data["year"].values)
-    .data.to(conc_unit)
-    .m,
-    neem_data["value"],
-)
-np.testing.assert_allclose(
-    allyears_full_field.sel(lat=law_dome_lat, method="nearest")
-    .sel(year=smooth_law_dome_to_use["year"].values)
-    .data.to(conc_unit)
-    .m,
-    smooth_law_dome_to_use["value"],
-)
+if not config.ci:
+    np.testing.assert_allclose(
+        allyears_full_field.sel(lat=neem_lat, method="nearest")
+        .sel(year=neem_data["year"].values)
+        .data.to(conc_unit)
+        .m,
+        neem_data["value"],
+    )
+    np.testing.assert_allclose(
+        allyears_full_field.sel(lat=law_dome_lat, method="nearest")
+        .sel(year=smooth_law_dome_to_use["year"].values)
+        .data.to(conc_unit)
+        .m,
+        smooth_law_dome_to_use["value"],
+    )
+else:
+    neem_compare_years = neem_data["year"].values[
+        np.isin(neem_data["year"].values, out_years)
+    ]
+    np.testing.assert_allclose(
+        allyears_full_field.sel(lat=neem_lat, method="nearest")
+        .sel(year=neem_compare_years)
+        .data.to(conc_unit)
+        .m,
+        neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
+    )
+    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
+        np.isin(smooth_law_dome_to_use["year"].values, out_years)
+    ]
+    np.testing.assert_allclose(
+        allyears_full_field.sel(lat=law_dome_lat, method="nearest")
+        .sel(year=law_dome_compare_years)
+        .data.to(conc_unit)
+        .m,
+        smooth_law_dome_to_use[
+            np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)
+        ]["value"],
+    )
+
 if years_use_epica.size > 0:
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=epica_lat, method="nearest")
