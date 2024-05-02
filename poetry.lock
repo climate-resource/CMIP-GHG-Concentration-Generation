@@ -361,13 +361,13 @@ files = [
 
 [[package]]
 name = "cf-xarray"
-version = "0.8.9"
+version = "0.9.0"
 description = "A convenience wrapper for using CF attributes on xarray objects"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "cf_xarray-0.8.9-py3-none-any.whl", hash = "sha256:e6267926f388898a4298152cf173c095bb88774acb0b56b7c411e47f5510365b"},
-    {file = "cf_xarray-0.8.9.tar.gz", hash = "sha256:fa0137a876431f5208dd2a1f6ebf53d98d3828410696d5ba27860d99a8d89af3"},
+    {file = "cf_xarray-0.9.0-py3-none-any.whl", hash = "sha256:338ae3e55138b6374f64a70844a1f0dac63811781c456b4c30878874b8b4c2c0"},
+    {file = "cf_xarray-0.9.0.tar.gz", hash = "sha256:01213bdc5ed4d41eeb5da179d99076f49a905b1995daef2a0c7ec402b148675c"},
 ]
 
 [package.dependencies]
@@ -4223,13 +4223,13 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 
 [[package]]
 name = "xarray"
-version = "2024.3.0"
+version = "2024.1.1"
 description = "N-D labeled arrays and datasets in Python"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "xarray-2024.3.0-py3-none-any.whl", hash = "sha256:ca2bc4da2bf2e7879e15862a7a7c3fc76ad19f6a08931d030220cef39a29118d"},
-    {file = "xarray-2024.3.0.tar.gz", hash = "sha256:5c1db19efdde61db7faedad8fc944f4e29698fb6fbd578d352668b63598bd1d8"},
+    {file = "xarray-2024.1.1-py3-none-any.whl", hash = "sha256:0bec81303b088c8df4f075e1579c00cfd7e5069688e4434007f0b8d7df17fc1c"},
+    {file = "xarray-2024.1.1.tar.gz", hash = "sha256:a1ba2d87a74892e213c9c83f4a462dbcdf68212320a4e31b34bd789ba7a64e35"},
 ]
 
 [package.dependencies]
@@ -4239,8 +4239,7 @@ pandas = ">=1.5"
 
 [package.extras]
 accel = ["bottleneck", "flox", "numbagg", "opt-einsum", "scipy"]
-complete = ["xarray[accel,dev,io,parallel,viz]"]
-dev = ["hypothesis", "pre-commit", "pytest", "pytest-cov", "pytest-env", "pytest-timeout", "pytest-xdist", "ruff", "xarray[complete]"]
+complete = ["xarray[accel,io,parallel,viz]"]
 io = ["cftime", "fsspec", "h5netcdf", "netCDF4", "pooch", "pydap", "scipy", "zarr"]
 parallel = ["dask[complete]"]
 viz = ["matplotlib", "nc-time-axis", "seaborn"]
@@ -4274,4 +4273,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "4bfda9f1c943b91fa8a412a949cceaeeb3ac684155e9e92a941d41a0f4995c5e"
+content-hash = "cb9b5a32acdfff3e4ff2127c4a1ff0447c7058f5f6581345ffe1dd22b063313b"
