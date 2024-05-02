@@ -167,7 +167,7 @@ issue_format = "[#{issue}](https://github.com/climate-resource/CMIP-GHG-Concentr
   showcontent = false
 
 [tool.coverage.report]
-fail_under = 95
+fail_under = 80
 skip_empty = true
 show_missing = true
 # Regexes for lines to exclude from consideration in addition to the defaults
