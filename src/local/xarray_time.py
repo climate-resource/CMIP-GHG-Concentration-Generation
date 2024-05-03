@@ -5,18 +5,18 @@ Time manipulation of xarray objects
 from __future__ import annotations
 
 from functools import partial
-from typing import TYPE_CHECKING, Protocol, TypeVar, overload
+from typing import TYPE_CHECKING, Protocol, overload
 
 import cftime
 import numpy as np
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
-    from typing import Any
+    from typing import Any, TypeVar
 
     import xarray as xr
 
-XRT = TypeVar("XRT", xr.DataArray, xr.Dataset)
+    XRT = TypeVar("XRT", xr.DataArray, xr.Dataset)
 
 MONTHS_PER_YEAR: int = 12
 """Months per year"""
