@@ -10,6 +10,18 @@ from local.config.write_input4mips import WriteInput4MIPsConfig
 def create_write_input4mips_config(
     gases: tuple[str, ...]
 ) -> list[WriteInput4MIPsConfig]:
+    """
+    Create configuration for writing input4MIPs data
+
+    Parameters
+    ----------
+    gases
+        Gases for which to create the configuration
+
+    Returns
+    -------
+        Created configuration
+    """
     input4mips_out_dir = "data/processed/esgf-ready"
 
     return [

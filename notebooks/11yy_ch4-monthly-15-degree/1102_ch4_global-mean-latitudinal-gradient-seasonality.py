@@ -119,14 +119,13 @@ full_eofs_pcs
 
 # %%
 fig, ax = plt.subplots()
+n_eofs_to_show = 3
 
-for i in range(3):
+for i in range(n_eofs_to_show):
     ax.plot(
         full_eofs_pcs["principal-components"].sel(eof=i).data.m,
         label=f"Principal component {i}",
     )
-    if i > 3:
-        break
 
 ax.legend(loc="center left", bbox_to_anchor=(1.05, 0.5))
 

@@ -5,6 +5,7 @@ Interpolation of binned data
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 import xarray as xr
 from scipy.interpolate import griddata
@@ -21,10 +22,30 @@ when creating :obj:`xr.DataArray`.
 
 
 def get_spatial_dimension_order() -> tuple[str, str]:
+    """
+    Get the order of spatial dimensions
+
+    Returns
+    -------
+        Order of spatial dimensions
+    """
     return tuple(v.replace("_bin", "") for v in SPATIAL_BIN_COLUMNS)
 
 
 def check_data_columns_for_binned_data_interpolation(indf: pd.DataFrame) -> None:
+    """
+    Check that the data columns match those required for binned data interpolation
+
+    Parameters
+    ----------
+    indf
+        :obj:`pd.DataFrame` to check
+
+    Raises
+    ------
+    AssertionError
+        Required columns are missing
+    """
     missing = set(indf.columns).difference(
         {"gas", "lat_bin", "lon_bin", "month", "unit", "value", "year"}
     )
@@ -33,7 +54,22 @@ def check_data_columns_for_binned_data_interpolation(indf: pd.DataFrame) -> None
         raise AssertionError(msg)
 
 
-def get_round_the_world_grid(inv, is_lon: bool = False):
+def get_round_the_world_grid(inv, is_lon: bool = False) -> npt.NDArray[np.float64]:
+    """
+    Get the grid required for 'round the world' interpolation
+
+    Parameters
+    ----------
+    inv
+        Input values
+
+    is_lon
+        Whether the input values represent longitudes or not
+
+    Returns
+    -------
+        Grid to use for 'round the world' interpolation
+    """
     if is_lon:
         out = np.hstack([inv - 360, inv, inv + 360])
 
@@ -44,6 +80,24 @@ def get_round_the_world_grid(inv, is_lon: bool = False):
 
 
 def interpolate(ymdf: pd.DataFrame, value_column: str = "value") -> pd.DataFrame:
+    """
+    Interpolate binned values
+
+    Uses 'round the world' interpolation,
+    i.e. longitudes interpolate based on values in both directions.
+
+    Parameters
+    ----------
+    ymdf
+        :obj:`pd.DataFrame` on which to do the interpolation.
+
+    value_column
+        The column in ``ymdf`` which contains the values in each bin.
+
+    Returns
+    -------
+        Interpolated values in each bin, derived from ``ymdf``.
+    """
     # Have to be hard-coded to ensure ordering is correct
     spatial_bin_columns = list(SPATIAL_BIN_COLUMNS)
 
@@ -92,6 +146,30 @@ def to_xarray_dataarray(
     times: np.ndarray,
     name: str,
 ) -> xr.DataArray:
+    """
+    Create an :obj:`xr.DataArray` from interpolated values
+
+    Parameters
+    ----------
+    bin_averages_df
+        Initial bin averages :obj:`pd.DataFrame`.
+        This is just used to extract metadata, e.g. units.
+
+    data
+        Data for the array. We assume that this has already been interpolated
+        onto a lat, lon grid defined by {py:const}`LAT_BIN_CENTRES`,
+        {py:const}`LON_BIN_CENTRES` and {py:func}`get_spatial_dimension_order`.
+
+    times
+        Time axis of the data
+
+    name
+        Name of the output :obj:`xr.DataArray`
+
+    Returns
+    -------
+        Created :obj:`xr.DataArray`
+    """
     # lat and lon come from the module scope (not best pattern, not the worst)
     units = bin_averages_df["unit"].unique()
     if len(units) > 1:

@@ -8,6 +8,7 @@ from typing import TypeVar
 
 import cftime
 import numpy as np
+import numpy.typing as npt
 import pint
 import pint.testing
 import scipy.interpolate
@@ -24,6 +25,23 @@ def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
 ) -> xr.DataArray:
+    """
+    Interpolate annual-mean values to monthly values.
+
+    The interpolation preserves the annual-mean.
+
+    Parameters
+    ----------
+    annual_mean
+        Annual-mean values to interpolate.
+
+    degrees_freedom_scalar
+        Degrees of freedom to use when calculating the interpolating spline.
+
+    Returns
+    -------
+        Values, interpolated onto a monthly time axis.
+    """
     Quantity = pint.get_application_registry().Quantity
     X = annual_mean["year"].data.squeeze()
     Y = annual_mean.data.m.squeeze()
@@ -94,6 +112,22 @@ def interpolate_lat_15_degree_to_half_degree(
     lat_15_degree: xr.DataArray,
     degrees_freedom_scalar: float = 1.75,
 ) -> xr.DataArray:
+    """
+    Interpolate data on a 15 degree latitudinal grid to a 0.5 degree latitudinal grid.
+
+    Parameters
+    ----------
+    lat_15_degree
+        Data on a 15 degree latitudinal grid
+
+    degrees_freedom_scalar
+        Degrees of freedom to use in the interpolation
+
+    Returns
+    -------
+        Data interpolated onto a 0.5 degree latitudinal grid.
+        The interpolation reflects the area-weighted mean of ``lat_15_degree``.
+    """
     Quantity = pint.get_application_registry().Quantity
     ASSUMED_INPUT_LAT_SPACING = 15
     TARGET_LAT_SPACING = 0.5
@@ -113,6 +147,7 @@ def interpolate_lat_15_degree_to_half_degree(
         TARGET_LAT_SPACING,
     )
 
+    assert False, "fix this"
     # TODO: split out get_lat_weights function
     # Also re-think. This function assumes that our quantities apply to the whole
     # cell, whereas ours probably only apply to the centre of the cell (points)
@@ -158,14 +193,44 @@ def interpolate_lat_15_degree_to_half_degree(
     return out
 
 
-def mean_preserving_interpolation(
+def mean_preserving_interpolation(  # noqa: PLR0913
     X: np.ndarray,
     Y: np.ndarray,
     x: np.ndarray,
     degrees_freedom_scalar: float,
     degree: int = 3,
     weights: np.ndarray | None = None,
-) -> tuple[np.ndarray, np.ndarray, int]:
+) -> tuple[npt.NDArray[np.float64], np.float64, npt.NDArray[np.float64], int]:
+    """
+    Perform a mean-preserving interpolation
+
+    Parameters
+    ----------
+    X
+        x-values of the input
+
+    Y
+        y-values of the input
+
+    x
+        x-values of the target x-grid
+
+    degrees_freedom_scalar
+        Degrees of freedom to use when creating our interpolating spline
+
+    degree
+        Degree of the interpolating spline (3, the default, is a cubic spline)
+
+    weights
+        Weights to apply to each point in x when calculating the mean.
+
+
+    Returns
+    -------
+        The coeffecients, intercept, knots and degree of the interpolating B-spline.
+        This can be turned into an interpolating function using
+        ``scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept``.
+    """
     if weights is None:
         weights = np.ones_like(x)
 
@@ -235,6 +300,24 @@ def mean_preserving_interpolation(
 def interpolate_time_slice_parallel_helper(
     inp: tuple[T, xr.DataArray]
 ) -> tuple[T, xr.DataArray]:
+    """
+    Interpolate time slice in parallel.
+
+    This is a helper function that makes the parallelisation possible.
+    It applies {py:func}`interpolate_lat_15_degree_to_half_degree`
+    to the given time slice.
+
+    Parameters
+    ----------
+    inp
+        Input values. The first element should be the time to which this slice applies.
+        The second is the time slice to interpolate.
+
+    Returns
+    -------
+        The time slice to which this slice applies
+        and the interpolated time slice.
+    """
     time, da = inp
     import cf_xarray.units
     import pint_xarray

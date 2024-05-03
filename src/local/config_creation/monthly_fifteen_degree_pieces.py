@@ -12,6 +12,19 @@ from local.config.calculate_ch4_monthly_15_degree import (
 def create_monthly_fifteen_degree_pieces_configs(
     gases: tuple[str, ...],
 ) -> dict[str, CalculateCH4MonthlyFifteenDegreePieces]:
+    """
+    Create configuration for calculating the monthly, 15 degree pieces for different gases
+
+    Parameters
+    ----------
+    gases
+        Gases for which to create the configuration
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for each gas
+        in ``gases``
+    """
     out = {}
 
     for gas in gases:
@@ -29,6 +42,13 @@ def create_monthly_fifteen_degree_pieces_configs(
 def get_ch4_monthly_fifteen_degree_pieces_config() -> (
     CalculateCH4MonthlyFifteenDegreePieces
 ):
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for CH4
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for CH4
+    """
     interim_dir = "data/interim/ch4"
 
     return CalculateCH4MonthlyFifteenDegreePieces(

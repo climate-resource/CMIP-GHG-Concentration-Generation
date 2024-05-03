@@ -108,6 +108,7 @@ config_retrieve_misc = get_config_for_step_id(
 
 # %%
 def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+    """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
         raise AssertionError
@@ -117,8 +118,9 @@ def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
 
 # %%
 @contextmanager
-def split_time_axes() -> [plt.Axes, plt.Axes]:
-    fig, axes = plt.subplots(ncols=2)
+def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+    """Get two split axes, formatting after exiting the context"""
+    fig, axes = plt.subplots(ncols=ncols)
     yield axes
     plt.tight_layout()
     plt.show()
@@ -179,7 +181,8 @@ use_extensions_years
 
 # %%
 # Quick assertion that things are as expected
-if len(lat_grad_eofs_obs_network["eof"]) != 2:
+exp_n_eofs = 2
+if len(lat_grad_eofs_obs_network["eof"]) != exp_n_eofs:
     raise AssertionError("Rethink")
 
 # %%
@@ -188,7 +191,7 @@ allyears_pc1 = allyears_pc1.pint.dequantify().interp(
     year=out_years, kwargs={"fill_value": allyears_pc1.data[0].m}
 )
 
-with split_time_axes() as axes:
+with axes_vertical_split() as axes:
     allyears_pc1.plot(ax=axes[0])
     allyears_pc1.sel(year=range(1950, 2023)).plot(ax=axes[1])
 
@@ -255,7 +258,33 @@ neem_unit
 
 
 # %%
-def diff_from_ice_cores(x, pc1, eofs, ice_core_data):
+def diff_from_ice_cores(
+    x: tuple[float, float], pc1: float, eofs: xr.DataArray, ice_core_data: xr.DataArray
+) -> float:
+    """
+    Calculate the difference from the ice core data
+
+    Parameters
+    ----------
+    x
+        Current x-vector.
+        Element zero should be the global-mean,
+        element one is the value of pc0.
+
+    pc1
+        Value of PC1 to use when calculating the value at each latitude.
+
+    eofs
+        EOFs to use when calculating the value at each latitude.
+
+    ice_core_data
+        Ice core data to compare to
+
+    Returns
+    -------
+        Area-weighted squared difference between the model's prediction
+        and the ice core values.
+    """
     global_mean, pc0 = x
 
     pcs = xr.DataArray([pc0, pc1], dims=["eof"], coords=dict(eof=[0, 1]))
@@ -304,7 +333,8 @@ optimised = []
 x0 = (1100, -70)
 eofs = lat_grad_eofs_obs_network["eofs"]
 for year, ydf in tqdman.tqdm(iter_df.groupby("year")):
-    if ydf.shape[0] != 2:
+    exp_n_ice_core_data_points = 2
+    if ydf.shape[0] != exp_n_ice_core_data_points:
         msg = "Should have both NEEM and law dome data here..."
         raise AssertionError(msg)
 
@@ -430,7 +460,7 @@ pc0_obs_network = lat_grad_eofs_obs_network["principal-components"].sel(eof=0)
 pc0_obs_network
 
 # %%
-with split_time_axes() as axes:
+with axes_vertical_split() as axes:
     primap_regression_data.plot(ax=axes[0])
     pc0_obs_network.plot(ax=axes[1])
 
@@ -497,7 +527,7 @@ allyears_pc0 = xr.concat(
     "year",
 )
 
-with split_time_axes() as axes:
+with axes_vertical_split() as axes:
     allyears_pc0.plot(ax=axes[0])
 
     pc0_optimised_years_to_optimise_back_to_year_one.sel(

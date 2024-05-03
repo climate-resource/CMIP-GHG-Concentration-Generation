@@ -81,6 +81,20 @@ class NOAAHandlingPieces(TypedDict):
 def create_noaa_handling_config(
     data_sources: tuple[tuple[str, str]]
 ) -> NOAAHandlingPieces:
+    """
+    Create configuration for handling NOAA data
+
+    Parameters
+    ----------
+    data_sources
+        Data sources from NOAA for which to create handling configuration.
+        The zeroth element of each tuple should be the gas,
+        the first element should be the NOAA network.
+
+    Returns
+    -------
+        Handling configuration for each data source in ``data_sources``
+    """
     res = defaultdict(list)
     for data_source in data_sources:
         pieces = create_noaa_data_source_handling_pieces(
@@ -96,6 +110,21 @@ def create_noaa_handling_config(
 def create_noaa_data_source_handling_pieces(
     gas: str, network: str
 ) -> NOAAHandlingPieces:
+    """
+    Create the handling pieces for a given NOAA data source
+
+    Parameters
+    ----------
+    gas
+        Gas for which to create the handling pieces
+
+    network
+        Network for which to create the handling pieces
+
+    Returns
+    -------
+        Created handling pieces
+    """
     out = {}
 
     raw_dir = "data/raw/noaa"

@@ -29,6 +29,21 @@ RETRIEVE_AND_PROCESS_LAW_DOME_STEPS = [
 def create_smooth_law_dome_data_config(
     gases: tuple[str, ...], n_draws: int
 ) -> list[SmoothLawDomeDataConfig]:
+    """
+    Create configuration for smoothing Law Dome data
+
+    Parameters
+    ----------
+    gases
+        Gases for which to create the config
+
+    n_draws
+        Number of draws to use when smoothing the Law Dome data
+
+    Returns
+    -------
+        Configuration for smoothing Law Dome data
+    """
     Q = pint.get_application_registry().Quantity
 
     res = []

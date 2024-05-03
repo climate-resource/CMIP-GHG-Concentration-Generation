@@ -37,6 +37,22 @@ DOWNLOAD_URLS = {
 def create_agage_handling_config(
     data_sources: tuple[tuple[str, str, str]],
 ) -> list[RetrieveExtractAGAGEDataConfig]:
+    """
+    Create config for handling AGAGE data
+
+    Parameters
+    ----------
+    data_sources
+        Data sources to retrieve.
+        Each input tuple should contain
+        the gas of interest (zeroth element),
+        the instrument of interest (first element)
+        and the time frequency of interest (second element).
+
+    Returns
+    -------
+        Configuration for handling AGAGE data for the requested data sources.
+    """
     res = []
     for data_source in data_sources:
         gas, instrument, frequency = data_source

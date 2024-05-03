@@ -8,6 +8,18 @@ from local.config.crunch_grid import GridCrunchingConfig
 
 
 def create_crunch_grids_config(gases: tuple[str, ...]) -> list[GridCrunchingConfig]:
+    """
+    Create configuration for crunching the gridded data for different gases
+
+    Parameters
+    ----------
+    gases
+        Gases for which to create grid crunching configurations
+
+    Returns
+    -------
+        Grid crunching configurations for the requested gases
+    """
     out = []
 
     for gas in gases:

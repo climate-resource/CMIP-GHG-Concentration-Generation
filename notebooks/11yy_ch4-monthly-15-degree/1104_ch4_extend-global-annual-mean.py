@@ -102,6 +102,7 @@ config_process_neem = get_config_for_step_id(
 
 # %%
 def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+    """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
         raise AssertionError
@@ -111,7 +112,8 @@ def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
 
 # %%
 @contextmanager
-def split_time_axes():
+def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+    """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=2)
     yield axes
     plt.tight_layout()
@@ -286,8 +288,12 @@ law_dome_years_full_field
 # There are probably better ways to do this, but this is fine for now.
 
 # %%
+# Make sure that we have epica data before our start year,
+# so that the interpolation will have something to join with.
+epica_data_pre_start_year = -50
 epica_data_to_add = epica_data[
-    (epica_data["year"] > -12) & (epica_data["year"] < smooth_law_dome["year"].min())
+    (epica_data["year"] > epica_data_pre_start_year)
+    & (epica_data["year"] < smooth_law_dome["year"].min())
 ].sort_values(by="year")
 epica_data_to_add
 
@@ -337,9 +343,9 @@ if years_use_epica.size > 0:
     )
 
     epica_da.pint.dequantify().plot(ax=ax, label="interpolated")
-    epica_data[(epica_data["year"] > -1000) & (epica_data["year"] < 200)].plot.scatter(
-        x="year", y="value", ax=ax, color="tab:orange", label="EPICA raw"
-    )
+    epica_data[
+        (epica_data["year"] > -1000) & (epica_data["year"] < 200)  # noqa: PLR2004
+    ].plot.scatter(x="year", y="value", ax=ax, color="tab:orange", label="EPICA raw")
 
     ax.legend()
 
@@ -444,10 +450,9 @@ if years_use_epica.size > 0:
         epica_da.data.m,
     )
 
-else:
-    if not config.ci:
-        msg = "Should be using EPICA"
-        raise AssertionError(msg)
+elif not config.ci:
+    msg = "Should be using EPICA"
+    raise AssertionError(msg)
 
 # %%
 allyears_full_field

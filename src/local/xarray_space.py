@@ -91,6 +91,21 @@ def calculate_weighted_area_mean_latitude_only(
 
 
 def calculate_global_mean_from_lon_mean(inda: xr.DataArray) -> xr.DataArray:
+    """
+    Calculate global-mean data from data which has already had a longitudinal mean applied.
+
+    In other words, we assume that the data is on a latitudinal grid
+    (with perhaps other non-spatial elements too).
+
+    Parameters
+    ----------
+    inda
+        Input data
+
+    Returns
+    -------
+        Global-mean of ``inda``.
+    """
     return calculate_weighted_area_mean_latitude_only(
         inda.to_dataset()
         .cf.add_bounds("lat")

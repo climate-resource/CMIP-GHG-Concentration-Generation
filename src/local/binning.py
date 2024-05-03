@@ -120,6 +120,23 @@ def add_lat_lon_bin_columns(
 
 
 def get_network_summary(source_df: pd.DataFrame, max_show_all_stations: int = 6) -> str:
+    """
+    Get a summary of the source :obj:`pd.DataFrame`'s networks and measurement methods
+
+    Parameters
+    ----------
+    source_df
+        :obj:`pd.DataFrame` to summarise
+
+    max_show_all_stations
+        Up to this number of stations, all station names are printed.
+        If there are more stations than this, we just print the first few
+        and the last few.
+
+    Returns
+    -------
+        Summary of ``source_df``'s networks and measurement methods
+    """
     out = ["Collating data from:"]
 
     for (network, measurement_method), nmmdf in source_df.groupby(
@@ -139,6 +156,23 @@ def get_network_summary(source_df: pd.DataFrame, max_show_all_stations: int = 6)
 
 
 def verbose_groupby_mean(inseries: pd.Series, groupby: list[str]) -> pd.Series:
+    """
+    Verbose version of groupby-mean.
+
+    This also prints information about which columns the mean was taken over.
+
+    Parameters
+    ----------
+    inseries
+        Input :obj:`pd.Series` on which to operate
+
+    groupby
+        Columns to groupby.
+
+    Returns
+    -------
+        ``inseries.groupby(groupby).mean()``
+    """
     out = inseries.groupby(groupby).mean()
 
     in_index = inseries.index.names
@@ -151,6 +185,19 @@ def verbose_groupby_mean(inseries: pd.Series, groupby: list[str]) -> pd.Series:
 
 
 def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate the average value in each bin
+
+    Parameters
+    ----------
+    station_monthly_averages
+        :obj:`pd.DataFrame` containing monthly averages for each station
+        (in each bin).
+
+    Returns
+    -------
+        Average bin values.
+    """
     units = station_monthly_averages["unit"].unique()
     if len(units) > 1:
         msg = f"Unit conversion required, have {units=}"
@@ -158,7 +205,9 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
 
     keep_cols = [*EQUALLY_WEIGHTED_GROUP_COLS, VALUE_COLUMN]
     ignore_columns = [c for c in station_monthly_averages.columns if c not in keep_cols]
-    print(f"Will ignore columns: {ignore_columns}")
+    if ignore_columns:
+        print(f"Will ignore columns: {ignore_columns}")
+
     station_monthly_averages = station_monthly_averages[keep_cols]
 
     # explicitly drop nan in columns we care about before calculating,
