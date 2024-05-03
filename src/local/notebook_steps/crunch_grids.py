@@ -88,10 +88,10 @@ step: UnconfiguredNotebookBasedStep[
         UnconfiguredNotebook(
             notebook_path=Path("30yy_grid") / "3001_crunch-grids",
             raw_notebook_ext=".py",
-            summary="grid - Grid data from based on the gridding pieces",
+            summary="grid - Grid data from the gridding pieces",
             doc=(
                 "Create gridded data products based on the seasonality, "
-                "latituindal gradient and global-means from earlier steps."
+                "latitutindal gradient and global-means from earlier steps."
             ),
         ),
     ],

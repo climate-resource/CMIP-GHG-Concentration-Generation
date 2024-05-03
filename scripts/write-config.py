@@ -32,6 +32,54 @@ from local.config_creation.write_input4mips import create_write_input4mips_confi
 pint.set_application_registry(openscm_units.unit_registry)
 
 
+def create_dev_config() -> Config:
+    """
+    Create our (relative) dev config
+    """
+    gases_to_write = ("ch4",)
+
+    noaa_handling_steps = create_noaa_handling_config(
+        data_sources=(
+            ("ch4", "in-situ"),
+            ("ch4", "surface-flask"),
+        )
+    )
+
+    retrieve_and_extract_agage_data = create_agage_handling_config(
+        data_sources=(("ch4", "gc-md", "monthly"),)
+    )
+
+    smooth_law_dome_data = create_smooth_law_dome_data_config(
+        gases=("ch4",), n_draws=250
+    )
+
+    monthly_fifteen_degree_pieces_configs = (
+        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+    )
+
+    return Config(
+        name="CI",
+        version=f"{local.__version__}-dev",
+        base_seed=20240428,
+        ci=False,
+        retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
+        **noaa_handling_steps,
+        retrieve_and_extract_agage_data=retrieve_and_extract_agage_data,
+        retrieve_and_extract_gage_data=RETRIEVE_AND_EXTRACT_GAGE_STEPS,
+        retrieve_and_extract_ale_data=RETRIEVE_AND_EXTRACT_ALE_STEPS,
+        retrieve_and_process_law_dome_data=RETRIEVE_AND_PROCESS_LAW_DOME_STEPS,
+        retrieve_and_process_scripps_data=[],
+        retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
+        retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
+        plot_input_data_overviews=[],
+        smooth_law_dome_data=smooth_law_dome_data,
+        **monthly_fifteen_degree_pieces_configs,
+        calculate_n2o_monthly_15_degree=[],  # Will move into config creation function in future
+        crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        write_input4mips=create_write_input4mips_config(gases=gases_to_write),
+    )
+
+
 def create_ci_config() -> Config:
     """
     Create our (relative) CI config
@@ -82,7 +130,24 @@ def create_ci_config() -> Config:
 
 if __name__ == "__main__":
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
-    CI_RUN_ID: str = "CI"
+
+    ### Dev config
+    DEV_FILE: Path = Path("dev-config.yaml")
+    dev_config = create_dev_config()
+    with open(DEV_FILE, "w") as fh:
+        fh.write(converter_yaml.dumps(dev_config))
+
+    print(f"Updated {DEV_FILE}")
+
+    ### Dev config absolute
+    DEV_ABSOLUTE_FILE: Path = Path("dev-config-absolute.yaml")
+    DEV_RUN_ID: str = "dev-test-run"
+    dev_config_absolute = insert_path_prefix(
+        config=dev_config,
+        prefix=ROOT_DIR_OUTPUT / DEV_RUN_ID,
+    )
+    with open(DEV_ABSOLUTE_FILE, "w") as fh:
+        fh.write(converter_yaml.dumps(dev_config_absolute))
 
     ### Config CI
     CI_FILE: Path = Path("ci-config.yaml")
@@ -94,6 +159,7 @@ if __name__ == "__main__":
 
     ### Config CI absolute
     CI_ABSOLUTE_FILE: Path = Path("ci-config-absolute.yaml")
+    CI_RUN_ID: str = "CI"
 
     ci_config_absolute = insert_path_prefix(
         config=ci_config,

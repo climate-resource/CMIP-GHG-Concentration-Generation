@@ -225,7 +225,9 @@ latitudinal_gradient_monthly = pcs_monthly @ lat_gradient_eofs_pcs["eofs"]
 tmp = latitudinal_gradient_monthly
 tmp.name = "latitudinal-gradient"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.m, 0.0, atol=1e-13
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+    0.0,
+    atol=1e-10,
 )
 
 latitudinal_gradient_monthly

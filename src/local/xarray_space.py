@@ -8,7 +8,7 @@ import numpy as np
 import xarray as xr
 
 
-def calculate_weighted_area_mean_latitude_only(
+def calculate_area_weighted_mean_latitude_only(
     inp: xr.DataArray,
     variables: list[str],
     bounds_dim_name: str = "bounds",
@@ -16,7 +16,14 @@ def calculate_weighted_area_mean_latitude_only(
     lat_bounds_name: str = "lat_bounds",
 ) -> xr.Dataset:
     """
-    Calculate area mean based on only latitude information
+    Calculate an area-weighted mean based on only latitude information
+
+    This assumes that the data applies to the entire cell
+    and is constant across the cell,
+    hence we're effectively doing a weighted integral
+    of a piecewise-constant function,
+    rather than a weighted sum
+    (which is what pure cos-weighting implies).
 
     See :footcite:t:`kelly_savric_2020_computation`
 
@@ -90,12 +97,47 @@ def calculate_weighted_area_mean_latitude_only(
     return out
 
 
+def calculate_cos_lat_weighted_mean_latitude_only(
+    inda: xr.DataArray,
+    lat_name: str = "lat",
+) -> xr.DataArray:
+    """
+    Calculate cos of latitude-weighted mean
+
+    This is just a simple, cos of latitude-weighted mean of the input data.
+    Implicitly, this assumes that the data only applies to the point it sits on,
+    in contrast to {py:func}`calculate_area_weighted_mean_latitude_only`,
+    which implicitly assumes that the data applies to the entire cell
+    (and some other things,
+    see the docstring of {py:func}`calculate_area_weighted_mean_latitude_only`).
+
+    Parameters
+    ----------
+    inda
+        Input data on which to calculate the mean
+
+    lat_name
+        Name of the latitudinal dimension in ``inda``
+
+    Returns
+    -------
+        Cos of latitude-weighted, latitudinal mean of ``inda``
+    """
+    weights = np.cos(np.deg2rad(inda[lat_name]))
+    weights.name = "weights"
+
+    return inda.weighted(weights=weights).mean(lat_name)
+
+
 def calculate_global_mean_from_lon_mean(inda: xr.DataArray) -> xr.DataArray:
     """
     Calculate global-mean data from data which has already had a longitudinal mean applied.
 
     In other words, we assume that the data is on a latitudinal grid
     (with perhaps other non-spatial elements too).
+    We also assume that the data applies to points, rather than areas.
+    Hence we use {py:func}`calculate_cos_lat_weighted_mean_latitude_only`
+    rather than {py:func}`calculate_area_weighted_mean_latitude_only`.
 
     Parameters
     ----------
@@ -106,9 +148,4 @@ def calculate_global_mean_from_lon_mean(inda: xr.DataArray) -> xr.DataArray:
     -------
         Global-mean of ``inda``.
     """
-    return calculate_weighted_area_mean_latitude_only(
-        inda.to_dataset()
-        .cf.add_bounds("lat")
-        .pint.quantify({"lat_bounds": "degrees_north"}),
-        [inda.name],
-    )[inda.name]
+    return calculate_cos_lat_weighted_mean_latitude_only(inda)

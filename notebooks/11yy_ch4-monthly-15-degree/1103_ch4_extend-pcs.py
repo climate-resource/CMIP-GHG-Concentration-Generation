@@ -282,7 +282,7 @@ def diff_from_ice_cores(
 
     Returns
     -------
-        Area-weighted squared difference between the model's prediction
+        Cos of latitude-weighted squared difference between the model's prediction
         and the ice core values.
     """
     global_mean, pc0 = x
@@ -294,24 +294,17 @@ def diff_from_ice_cores(
 
     lat_resolved = lat_grad + Quantity(global_mean, conc_unit)
 
-    lat_resolved.name = "lat_resolved"
-    lat_resolved = (
-        lat_resolved.to_dataset()
-        .cf.add_bounds("lat")
-        .pint.quantify({"lat_bounds": "degrees_north"})
-    )
-
     diff_squared = (lat_resolved - ice_core_data) ** 2
-    if not str(diff_squared["lat_resolved"].data.units) == f"{conc_unit} ** 2":
-        raise AssertionError(diff_squared["lat_resolved"].data.units)
+    if not str(diff_squared.data.units) == f"{conc_unit} ** 2":
+        raise AssertionError(diff_squared.data.units)
 
-    area_weighted_diff_squared = (
-        local.xarray_space.calculate_weighted_area_mean_latitude_only(
-            diff_squared, variables=["lat_resolved"]
-        )["lat_resolved"].pint.dequantify()
+    cos_weighted_diff_squared = (
+        local.xarray_space.calculate_cos_lat_weighted_mean_latitude_only(
+            diff_squared
+        ).pint.dequantify()
     )
 
-    return area_weighted_diff_squared**0.5
+    return cos_weighted_diff_squared**0.5
 
 
 # %%

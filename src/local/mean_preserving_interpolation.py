@@ -147,18 +147,11 @@ def interpolate_lat_15_degree_to_half_degree(
         TARGET_LAT_SPACING,
     )
 
-    assert False, "fix this"
-    # TODO: split out get_lat_weights function
-    # Also re-think. This function assumes that our quantities apply to the whole
-    # cell, whereas ours probably only apply to the centre of the cell (points)
-    # hence cos weighting probably better.
-    x_lb = Quantity(x - TARGET_LAT_SPACING / 2, "degrees_north")
-    x_ub = Quantity(x_lb.m + TARGET_LAT_SPACING, "degrees_north")
-    weights = (
-        (np.sin(x_ub.to("radian")) - np.sin(x_lb.to("radian")))
-        .to("dimensionless")
-        .m.squeeze()
-    )
+    # Assume that each value just applies to a point
+    # (no area extent/interpolation of the data,
+    # i.e. we're calculating a weighted sum, not an integral).
+    # Hence use cos here.
+    weights = np.cos(np.deg2rad(x))
 
     coefficients, intercept, knots, degree = mean_preserving_interpolation(
         X=X,
