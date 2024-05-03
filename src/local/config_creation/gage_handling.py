@@ -4,6 +4,8 @@ GAGE data handling config creation
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
@@ -11,9 +13,11 @@ from local.config.retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 RETRIEVE_AND_EXTRACT_GAGE_STEPS = [
     RetrieveExtractGAGEDataConfig(
         step_config_id="monthly",
-        raw_dir="data/raw/agage/gage",
-        processed_monthly_data_with_loc_file="data/interim/agage/gage/monthly.csv",
-        download_complete_file="data/raw/agage/gage/gage_monthly.complete",
+        raw_dir=Path("data/raw/agage/gage"),
+        processed_monthly_data_with_loc_file=Path(
+            "data/interim/agage/gage/monthly.csv"
+        ),
+        download_complete_file=Path("data/raw/agage/gage/gage_monthly.complete"),
         download_urls=[
             URLSource(
                 known_hash="3955484431eb728cfcbb42df2364939870f2b444367c9dab0c875052b6ff40ff",

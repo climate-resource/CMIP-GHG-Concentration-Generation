@@ -97,16 +97,19 @@ config_grid_crunching = get_config_for_step_id(
 # ### Load data
 
 # %%
-fifteen_degree_data_raw = xr.load_dataarray(
+fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_grid_crunching.fifteen_degree_monthly_file
 ).pint.quantify()
-half_degree_data_raw = xr.load_dataarray(
+
+half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_grid_crunching.half_degree_monthly_file
 ).pint.quantify()
-gmnhsh_data_raw = xr.load_dataarray(
+
+gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_grid_crunching.gmnhsh_mean_monthly_file
 ).pint.quantify()
-gmnhsh_annual_data_raw = xr.load_dataarray(
+
+gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_grid_crunching.gmnhsh_mean_annual_file
 ).pint.quantify()
 
@@ -191,7 +194,7 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     )
     print(f"Processing {grid_info} grid")
 
-    variable_name_raw = dat_resolution.name
+    variable_name_raw = str(dat_resolution.name)
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
     da_to_write = dat_resolution.to_dataset().rename_vars(
         {variable_name_raw: variable_name_output}
@@ -225,9 +228,11 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
         **metadata_universal_optional,
     )
 
+    dimensions = tuple(str(v) for v in da_to_write[variable_name_output].dims)
+
     input4mips_ds = Input4MIPsDataset.from_raw_dataset(
         da_to_write,
-        dimensions=da_to_write[variable_name_output].dims,
+        dimensions=dimensions,
         time_dimension=time_dimension,
         metadata=metadata,
         metadata_optional=metadata_optional,

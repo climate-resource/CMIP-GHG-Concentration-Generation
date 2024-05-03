@@ -4,11 +4,14 @@ Interpolation of binned data
 
 from __future__ import annotations
 
+from typing import cast
+
+import cftime
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
 import xarray as xr
-from scipy.interpolate import griddata
+from scipy.interpolate import griddata  # type: ignore
 
 from local.binning import LAT_BIN_CENTRES, LON_BIN_CENTRES
 
@@ -21,7 +24,7 @@ when creating :obj:`xr.DataArray`.
 """
 
 
-def get_spatial_dimension_order() -> tuple[str, str]:
+def get_spatial_dimension_order() -> tuple[str, ...]:
     """
     Get the order of spatial dimensions
 
@@ -54,7 +57,9 @@ def check_data_columns_for_binned_data_interpolation(indf: pd.DataFrame) -> None
         raise AssertionError(msg)
 
 
-def get_round_the_world_grid(inv, is_lon: bool = False) -> npt.NDArray[np.float64]:
+def get_round_the_world_grid(
+    inv: npt.NDArray[np.float64], is_lon: bool = False
+) -> npt.NDArray[np.float64]:
     """
     Get the grid required for 'round the world' interpolation
 
@@ -79,7 +84,9 @@ def get_round_the_world_grid(inv, is_lon: bool = False) -> npt.NDArray[np.float6
     return out
 
 
-def interpolate(ymdf: pd.DataFrame, value_column: str = "value") -> pd.DataFrame:
+def interpolate(
+    ymdf: pd.DataFrame, value_column: str = "value"
+) -> npt.NDArray[np.float64]:
     """
     Interpolate binned values
 
@@ -137,13 +144,13 @@ def interpolate(ymdf: pd.DataFrame, value_column: str = "value") -> pd.DataFrame
 
     # Have to return the transpose to ensure we match the column order specified above.
     # This is super flaky, alter with care!
-    return res_linear.T
+    return cast(npt.NDArray[np.float64], res_linear.T)
 
 
 def to_xarray_dataarray(
     bin_averages_df: pd.DataFrame,
-    data: list[np.ndarray],
-    times: np.ndarray,
+    data: list[npt.NDArray[np.float64]],
+    times: list[cftime.datetime],
     name: str,
 ) -> xr.DataArray:
     """

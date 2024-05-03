@@ -11,8 +11,8 @@ import numpy as np
 import numpy.typing as npt
 import pint
 import pint.testing
-import scipy.interpolate
-import scipy.optimize
+import scipy.interpolate  # type: ignore
+import scipy.optimize  # type: ignore
 import xarray as xr
 
 from local.xarray_space import calculate_global_mean_from_lon_mean
@@ -42,7 +42,7 @@ def interpolate_annual_mean_to_monthly(
     -------
         Values, interpolated onto a monthly time axis.
     """
-    Quantity = pint.get_application_registry().Quantity
+    Quantity = pint.get_application_registry().Quantity  # type: ignore
     X = annual_mean["year"].data.squeeze()
     Y = annual_mean.data.m.squeeze()
 
@@ -76,8 +76,10 @@ def interpolate_annual_mean_to_monthly(
     # Undo hack above
     x = x[N_MONTHS_PER_YEAR:-N_MONTHS_PER_YEAR]
 
-    def interpolator(xh):
-        return Quantity(
+    def interpolator(
+        xh: float | int | npt.NDArray[np.float64],
+    ) -> pint.UnitRegistry.Quantity:
+        return Quantity(  # type: ignore
             scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(xh)
             + intercept,
             annual_mean.data.units,
@@ -128,7 +130,7 @@ def interpolate_lat_15_degree_to_half_degree(
         Data interpolated onto a 0.5 degree latitudinal grid.
         The interpolation reflects the area-weighted mean of ``lat_15_degree``.
     """
-    Quantity = pint.get_application_registry().Quantity
+    Quantity = pint.get_application_registry().Quantity  # type: ignore
     ASSUMED_INPUT_LAT_SPACING = 15
     TARGET_LAT_SPACING = 0.5
 
@@ -161,8 +163,10 @@ def interpolate_lat_15_degree_to_half_degree(
         degrees_freedom_scalar=degrees_freedom_scalar,
     )
 
-    def interpolator(x):
-        return Quantity(
+    def interpolator(
+        x: float | int | npt.NDArray[np.float64],
+    ) -> pint.UnitRegistry.Quantity:
+        return Quantity(  # type: ignore
             scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept,
             lat_15_degree.data.units,
         )
@@ -177,7 +181,7 @@ def interpolate_lat_15_degree_to_half_degree(
     )
 
     pint.testing.assert_allclose(
-        out.groupby_bins("lat", ASSUMED_LAT_BINS)
+        out.groupby_bins("lat", ASSUMED_LAT_BINS)  # type: ignore
         .apply(calculate_global_mean_from_lon_mean)
         .data.squeeze(),
         lat_15_degree.data.squeeze(),
@@ -187,12 +191,12 @@ def interpolate_lat_15_degree_to_half_degree(
 
 
 def mean_preserving_interpolation(  # noqa: PLR0913
-    X: np.ndarray,
-    Y: np.ndarray,
-    x: np.ndarray,
+    X: npt.NDArray[np.float64],
+    Y: npt.NDArray[np.float64],
+    x: npt.NDArray[np.float64],
     degrees_freedom_scalar: float,
     degree: int = 3,
-    weights: np.ndarray | None = None,
+    weights: npt.NDArray[np.float64] | None = None,
 ) -> tuple[npt.NDArray[np.float64], np.float64, npt.NDArray[np.float64], int]:
     """
     Perform a mean-preserving interpolation
@@ -322,6 +326,6 @@ def interpolate_time_slice_parallel_helper(
     pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
         cf_xarray.units.units
     )
-    pint.set_application_registry(pint_xarray.accessors.default_registry)
+    pint.set_application_registry(pint_xarray.accessors.default_registry)  # type: ignore
 
     return time, interpolate_lat_15_degree_to_half_degree(da.pint.quantify())

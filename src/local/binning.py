@@ -4,7 +4,10 @@ Tools for binning data
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
 LON_BIN_BOUNDS = np.arange(-180, 181, 60)
@@ -41,7 +44,11 @@ VALUE_COLUMN = "value"
 """Column that specifies the value of the data"""
 
 
-def get_spatial_bin(value, bin_bounds, bin_centres):
+def get_spatial_bin(
+    value: float,
+    bin_bounds: npt.NDArray[np.float64],
+    bin_centres: npt.NDArray[np.float64],
+) -> np.float64:
     """
     Get spatial bin for a given value
 
@@ -67,9 +74,9 @@ def get_spatial_bin(value, bin_bounds, bin_centres):
     max_bound_lt = np.max(np.where(value >= bin_bounds)[0])
     if max_bound_lt == bin_centres.size:
         # Value equal to last bound
-        return bin_centres[-1]
+        return cast(np.float64, bin_centres[-1])
 
-    return bin_centres[max_bound_lt]
+    return cast(np.float64, bin_centres[max_bound_lt])
 
 
 def add_lat_lon_bin_columns(
@@ -106,12 +113,12 @@ def add_lat_lon_bin_columns(
     out = indf.copy()
 
     out[lon_bin_col] = out[lon_col].apply(
-        get_spatial_bin,
+        get_spatial_bin,  # type: ignore
         bin_bounds=LON_BIN_BOUNDS,
         bin_centres=LON_BIN_CENTRES,
     )
     out[lat_bin_col] = out[lat_col].apply(
-        get_spatial_bin,
+        get_spatial_bin,  # type: ignore
         bin_bounds=LAT_BIN_BOUNDS,
         bin_centres=LAT_BIN_CENTRES,
     )
@@ -155,7 +162,9 @@ def get_network_summary(source_df: pd.DataFrame, max_show_all_stations: int = 6)
     return "\n".join(out)
 
 
-def verbose_groupby_mean(inseries: pd.Series, groupby: list[str]) -> pd.Series:
+def verbose_groupby_mean(
+    inseries: pd.Series[float], groupby: list[str]
+) -> pd.Series[float]:
     """
     Verbose version of groupby-mean.
 

@@ -4,6 +4,8 @@ ALE data handling config creation
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_and_extract_ale import RetrieveExtractALEDataConfig
@@ -11,9 +13,9 @@ from local.config.retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 RETRIEVE_AND_EXTRACT_ALE_STEPS = [
     RetrieveExtractALEDataConfig(
         step_config_id="monthly",
-        raw_dir="data/raw/agage/ale",
-        processed_monthly_data_with_loc_file="data/interim/agage/ale/monthly.csv",
-        download_complete_file="data/raw/agage/ale/ale_monthly.complete",
+        raw_dir=Path("data/raw/agage/ale"),
+        processed_monthly_data_with_loc_file=Path("data/interim/agage/ale/monthly.csv"),
+        download_complete_file=Path("data/raw/agage/ale/ale_monthly.complete"),
         download_urls=[
             URLSource(
                 known_hash="38872b27c595bfb8a1509155bd713d2f519dab5c12b51e43f9256f8fa20ca040",

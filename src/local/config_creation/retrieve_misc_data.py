@@ -4,6 +4,8 @@ Retrieve misc data config creation
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_misc_data import (
@@ -16,7 +18,7 @@ RETRIEVE_MISC_DATA_STEPS = [
     RetrieveMiscDataConfig(
         step_config_id="only",
         natural_earth=NaturalEarthConfig(
-            raw_dir="data/raw/natural_earth",
+            raw_dir=Path("data/raw/natural_earth"),
             download_urls=[
                 URLSource(
                     url="https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip",
@@ -26,7 +28,7 @@ RETRIEVE_MISC_DATA_STEPS = [
             countries_shape_file_name="ne_110m_admin_0_countries.shx",
         ),
         primap=PRIMAPConfig(
-            raw_dir="data/raw/primap",
+            raw_dir=Path("data/raw/primap"),
             download_url=URLSource(
                 url="https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_27-Feb-2024.nc?download=1",
                 known_hash="12f4097cd380cb7bb5e42ab6382fabbc5d63a478da94b5c5bb207e88c210fad8",

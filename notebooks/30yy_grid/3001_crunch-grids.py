@@ -94,21 +94,21 @@ config_gridding_pieces_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-global_annual_mean_monthly = xr.load_dataarray(
+global_annual_mean_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_gridding_pieces_step.global_annual_mean_allyears_monthly_file
 ).pint.quantify()
 global_annual_mean_monthly.name = config_step.gas
 global_annual_mean_monthly
 
 # %%
-seasonality_monthly = xr.load_dataarray(
+seasonality_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file
 ).pint.quantify()
 seasonality_monthly.name = "seasonality"
 seasonality_monthly
 
 # %%
-lat_grad_fifteen_degree_monthly = xr.load_dataarray(
+lat_grad_fifteen_degree_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
 ).pint.quantify()
 lat_grad_fifteen_degree_monthly.name = "latitudinal_gradient"
@@ -181,7 +181,7 @@ plt.show()
 # ### 0.5 &deg; monthly file
 
 # %%
-process_map_res = process_map(
+process_map_res: list[xr.DataArray] = process_map(  # type: ignore
     local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
     local.xarray_time.convert_year_month_to_time(
         fifteen_degree_data
@@ -208,7 +208,7 @@ half_degree_data
 # %%
 np.testing.assert_allclose(
     fifteen_degree_data.transpose("year", "month", "lat").data.m,
-    half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)
+    half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
     .transpose("year", "month", "lat_bins")
     .data.m,

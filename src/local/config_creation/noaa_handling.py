@@ -5,7 +5,8 @@ Creation of configuration for handling NOAA's data
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import TypedDict
+from pathlib import Path
+from typing import TypedDict, cast
 
 from pydoit_nb.config_tools import URLSource
 
@@ -104,7 +105,7 @@ def create_noaa_handling_config(
         for key, value in pieces.items():
             res[key].append(value)
 
-    return res
+    return cast(NOAAHandlingPieces, res)
 
 
 def create_noaa_data_source_handling_pieces(
@@ -127,22 +128,22 @@ def create_noaa_data_source_handling_pieces(
     """
     out = {}
 
-    raw_dir = "data/raw/noaa"
-    interim_dir = "data/interim/noaa"
+    raw_dir = Path("data/raw/noaa")
+    interim_dir = Path("data/interim/noaa")
     interim_files = dict(
-        monthly_data=f"{interim_dir}/monthly_{gas}_{network}_raw-consolidated.csv",
+        monthly_data=interim_dir / f"monthly_{gas}_{network}_raw-consolidated.csv",
     )
     if network == "surface-flask":
-        interim_files[
-            "events_data"
-        ] = f"{interim_dir}/events_{gas}_{network}_raw-consolidated.csv"
+        interim_files["events_data"] = (
+            interim_dir / f"events_{gas}_{network}_raw-consolidated.csv"
+        )
 
     out["retrieve_and_extract_noaa_data"] = RetrieveExtractNOAADataConfig(
         step_config_id=f"{gas}_{network}",
         gas=gas,
         source=network,
         raw_dir=raw_dir,
-        download_complete_file=f"{raw_dir}/{gas}_{network}.complete",
+        download_complete_file=raw_dir / f"{gas}_{network}.complete",
         interim_files=interim_files,
         download_urls=DOWNLOAD_URLS[(gas, network)],
     )
@@ -150,19 +151,20 @@ def create_noaa_data_source_handling_pieces(
     process_step_attrs = dict(
         step_config_id=gas,
         gas=gas,
-        processed_monthly_data_with_loc_file=f"{interim_dir}/monthly_{gas}_{network}.csv",
+        processed_monthly_data_with_loc_file=interim_dir
+        / f"monthly_{gas}_{network}.csv",
     )
     if network == "surface-flask":
-        out["process_noaa_surface_flask_data"] = ProcessNOAASurfaceFlaskDataConfig(
-            **process_step_attrs
+        out["process_noaa_surface_flask_data"] = ProcessNOAASurfaceFlaskDataConfig(  # type: ignore
+            **process_step_attrs  # type: ignore
         )
 
     elif network == "in-situ":
-        out["process_noaa_in_situ_data"] = ProcessNOAAInSituDataConfig(
-            **process_step_attrs
+        out["process_noaa_in_situ_data"] = ProcessNOAAInSituDataConfig(  # type: ignore
+            **process_step_attrs  # type: ignore
         )
 
     else:
         raise NotImplementedError(network)
 
-    return out
+    return cast(NOAAHandlingPieces, out)

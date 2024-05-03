@@ -5,7 +5,7 @@ Time manipulation of xarray objects
 from __future__ import annotations
 
 from functools import partial
-from typing import TYPE_CHECKING, Protocol
+from typing import TYPE_CHECKING, Protocol, TypeVar, overload
 
 import cftime
 import numpy as np
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
     import xarray as xr
 
+XRT = TypeVar("XRT", xr.DataArray, xr.Dataset)
 
 MONTHS_PER_YEAR: int = 12
 """Months per year"""
@@ -55,10 +56,10 @@ class NonUniqueYearMonths(ValueError):
 
 
 def convert_year_month_to_time(
-    inp: xr.Dataset,
+    inp: XRT,
     day: int = 1,
     **kwargs: Any,
-) -> xr.Dataset:
+) -> XRT:
     """
     Convert year and month co-ordinates into a time axis
 
@@ -87,11 +88,11 @@ def convert_year_month_to_time(
 
 
 def convert_year_to_time(
-    inp: xr.Dataset,
+    inp: XRT,
     month: int = 6,
     day: int = 2,
     **kwargs: Any,
-) -> xr.Dataset:
+) -> XRT:
     """
     Convert year co-ordinates into a time axis
 
@@ -136,11 +137,29 @@ class CftimeConverter(Protocol):  # pylint: disable=too-few-public-methods
         """
 
 
+@overload
 def convert_to_time(
     inp: xr.Dataset,
     time_coords: tuple[str, ...],
     cftime_converter: CftimeConverter,
 ) -> xr.Dataset:
+    ...
+
+
+@overload
+def convert_to_time(
+    inp: xr.DataArray,
+    time_coords: tuple[str, ...],
+    cftime_converter: CftimeConverter,
+) -> xr.DataArray:
+    ...
+
+
+def convert_to_time(
+    inp: xr.Dataset | xr.DataArray,
+    time_coords: tuple[str, ...],
+    cftime_converter: CftimeConverter,
+) -> xr.Dataset | xr.DataArray:
     """
     Convert some co-ordinates representing time into a time axis
 
@@ -170,10 +189,26 @@ def convert_to_time(
     return inp
 
 
+@overload
 def split_time_to_year_month(
     inp: xr.Dataset,
     time_axis: str = "time",
 ) -> xr.Dataset:
+    ...
+
+
+@overload
+def split_time_to_year_month(
+    inp: xr.DataArray,
+    time_axis: str = "time",
+) -> xr.DataArray:
+    ...
+
+
+def split_time_to_year_month(
+    inp: xr.Dataset | xr.DataArray,
+    time_axis: str = "time",
+) -> xr.Dataset | xr.DataArray:
     """
     Convert the time dimension to year and month without stacking
 
@@ -203,7 +238,9 @@ def split_time_to_year_month(
 
     # Could be updated when https://github.com/pydata/xarray/issues/7104 is
     # closed
-    unique_vals, counts = np.unique(out[time_axis].values, return_counts=True)
+    unique_vals, counts = np.unique(  # type: ignore
+        out[time_axis].values, return_counts=True
+    )
 
     if (counts > 1).any():
         raise NonUniqueYearMonths(unique_vals, counts)
@@ -212,9 +249,9 @@ def split_time_to_year_month(
 
 
 def convert_time_to_year_month(
-    inp: xr.Dataset,
+    inp: XRT,
     time_axis: str = "time",
-) -> xr.Dataset:
+) -> XRT:
     """
     Convert the time dimension to year and month co-ordinates
 

@@ -53,7 +53,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -85,19 +85,19 @@ config_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-global_annual_mean = xr.load_dataarray(
+global_annual_mean: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.global_annual_mean_allyears_file
 ).pint.quantify()
 global_annual_mean
 
 # %%
-obs_network_seasonality = xr.load_dataarray(
+obs_network_seasonality: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.observational_network_seasonality_file
 ).pint.quantify()
 obs_network_seasonality
 
 # %%
-lat_gradient_eofs_pcs = xr.load_dataset(
+lat_gradient_eofs_pcs: xr.Dataset = xr.load_dataset(
     config_step.latitudinal_gradient_allyears_pcs_eofs_file
 ).pint.quantify()
 lat_gradient_eofs_pcs
@@ -116,7 +116,7 @@ global_annual_mean_monthly
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(
+local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(  # type: ignore
     ax=axes[0]
 )
 local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
@@ -125,14 +125,18 @@ local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
 
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10])
-).plot(ax=axes[1])
+).plot(
+    ax=axes[1]
+)  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10])
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:])
-).plot(ax=axes[2])
+).plot(
+    ax=axes[2]
+)  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:])
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
@@ -155,23 +159,23 @@ np.testing.assert_allclose(
 
 # %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
 
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     seasonality_full.sel(year=range(1984, 1986))
 ).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
 
 plt.tight_layout()
 
 # %%
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
-local.xarray_time.convert_year_month_to_time(seasonality_full).plot(
+local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ignore
     x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
 )
 
@@ -185,7 +189,7 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(
 
 # %%
 pcs_monthly = (
-    lat_gradient_eofs_pcs["principal-components"]
+    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
     .groupby("eof", squeeze=False)
     .apply(local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly)
 )

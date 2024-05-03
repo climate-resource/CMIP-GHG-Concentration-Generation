@@ -74,7 +74,7 @@ config_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-interpolated_spatial = xr.load_dataarray(
+interpolated_spatial: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.observational_network_interpolated_file
 ).pint.quantify()
 interpolated_spatial
@@ -94,18 +94,18 @@ interpolated_spatial_nan_free = local.xarray_time.convert_year_month_to_time(
 
 # %%
 lon_mean = interpolated_spatial_nan_free.mean(dim="lon")
-lon_mean.plot(hue="lat")
+lon_mean.plot(hue="lat")  # type: ignore
 
 # %% [markdown]
 # ### Global-, annual-mean
 
 # %%
 global_mean = local.xarray_space.calculate_global_mean_from_lon_mean(lon_mean)
-global_mean.plot()
+global_mean.plot()  # type: ignore
 
 # %%
 global_annual_mean = global_mean.groupby("time.year").mean()
-global_annual_mean.plot()
+global_annual_mean.plot()  # type: ignore
 
 # %% [markdown]
 # ### Latitudinal gradient
@@ -182,7 +182,7 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 
     axes[0].set_ylim([-90, 90])
 
-    plt.suptitle(int(year))
+    plt.suptitle(str(int(year)))
     plt.tight_layout()
     plt.show()
 

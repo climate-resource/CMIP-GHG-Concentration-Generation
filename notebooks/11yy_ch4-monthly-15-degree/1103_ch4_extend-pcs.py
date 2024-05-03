@@ -23,18 +23,21 @@
 # ## Imports
 
 # %%
+from collections.abc import Iterator
 from contextlib import contextmanager
 from functools import partial
+from typing import cast
 
 import cf_xarray.units
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
-import primap2
-import scipy.optimize
+import primap2  # type: ignore
+import scipy.optimize  # type: ignore
 import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
@@ -59,7 +62,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
 QuantityOSCM = openscm_units.unit_registry.Quantity
@@ -107,18 +110,20 @@ config_retrieve_misc = get_config_for_step_id(
 
 
 # %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str | float:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
         raise AssertionError
 
-    return res[0]
+    return cast(str | float, res[0])
 
 
 # %%
 @contextmanager
-def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+def axes_vertical_split(
+    ncols: int = 2,
+) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=ncols)
     yield axes
@@ -130,7 +135,7 @@ def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
 # ### Load data
 
 # %%
-global_annual_mean_obs_network = xr.load_dataarray(
+global_annual_mean_obs_network: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network
@@ -282,7 +287,7 @@ def diff_from_ice_cores(
 
     Returns
     -------
-        Cos of latitude-weighted squared difference between the model's prediction
+        Area-weighted squared difference between the model's prediction
         and the ice core values.
     """
     global_mean, pc0 = x
@@ -294,17 +299,24 @@ def diff_from_ice_cores(
 
     lat_resolved = lat_grad + Quantity(global_mean, conc_unit)
 
-    diff_squared = (lat_resolved - ice_core_data) ** 2
-    if not str(diff_squared.data.units) == f"{conc_unit} ** 2":
-        raise AssertionError(diff_squared.data.units)
-
-    cos_weighted_diff_squared = (
-        local.xarray_space.calculate_cos_lat_weighted_mean_latitude_only(
-            diff_squared
-        ).pint.dequantify()
+    lat_resolved.name = "lat_resolved"
+    lat_resolved = (
+        lat_resolved.to_dataset()
+        .cf.add_bounds("lat")
+        .pint.quantify({"lat_bounds": "degrees_north"})
     )
 
-    return cos_weighted_diff_squared**0.5
+    diff_squared = (lat_resolved - ice_core_data) ** 2
+    if not str(diff_squared["lat_resolved"].data.units) == f"{conc_unit} ** 2":
+        raise AssertionError(diff_squared["lat_resolved"].data.units)
+
+    area_weighted_diff_squared = (
+        local.xarray_space.calculate_area_weighted_mean_latitude_only(
+            diff_squared, variables=["lat_resolved"]
+        )["lat_resolved"].pint.dequantify()
+    )
+
+    return cast(float, area_weighted_diff_squared**0.5)
 
 
 # %%
@@ -334,8 +346,8 @@ for year, ydf in tqdman.tqdm(iter_df.groupby("year")):
     ice_core_data_year = xr.DataArray(
         data=[
             [
-                ydf.loc[(year, "neem")]["value"],
-                ydf.loc[(year, "law_dome")]["value"],
+                ydf.loc[(year, "neem")]["value"],  # type: ignore
+                ydf.loc[(year, "law_dome")]["value"],  # type: ignore
             ]
         ],
         dims=["year", "lat"],

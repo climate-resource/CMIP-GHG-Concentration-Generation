@@ -23,11 +23,15 @@
 # ## Imports
 
 # %%
+from collections.abc import Iterator
 from contextlib import contextmanager
+from typing import cast
 
 import cf_xarray.units
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 import openscm_units
 import pandas as pd
 import pint
@@ -53,7 +57,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
 QuantityOSCM = openscm_units.unit_registry.Quantity
@@ -101,18 +105,20 @@ config_process_neem = get_config_for_step_id(
 
 
 # %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str | float:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
         raise AssertionError
 
-    return res[0]
+    return cast(str | float, res[0])
 
 
 # %%
 @contextmanager
-def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+def axes_vertical_split(
+    ncols: int = 2,
+) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=2)
     yield axes
@@ -124,7 +130,7 @@ def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
 # ### Load data
 
 # %%
-global_annual_mean_obs_network = xr.load_dataarray(
+global_annual_mean_obs_network: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network
@@ -156,7 +162,9 @@ epica_data.sort_values("year")
 
 # %%
 if not config.ci:
-    out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
+    out_years: npt.NDArray[np.int64] = np.arange(
+        1, global_annual_mean_obs_network["year"].max() + 1
+    )
 
 else:
     out_years = np.arange(1750, global_annual_mean_obs_network["year"].max() + 1)
@@ -419,7 +427,7 @@ if not config.ci:
     )
 else:
     neem_compare_years = neem_data["year"].values[
-        np.isin(neem_data["year"].values, out_years)
+        np.isin(neem_data["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=neem_lat, method="nearest")
@@ -429,7 +437,7 @@ else:
         neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
     )
     law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)
+        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")

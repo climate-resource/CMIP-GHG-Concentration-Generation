@@ -4,6 +4,8 @@ Creation of configuration for handling AGAGE's data
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
@@ -57,8 +59,8 @@ def create_agage_handling_config(
     for data_source in data_sources:
         gas, instrument, frequency = data_source
 
-        raw_dir = "data/raw/agage/agage"
-        interim_dir = "data/interim/agage/agage"
+        raw_dir = Path("data/raw/agage/agage")
+        interim_dir = Path("data/interim/agage/agage")
 
         res.append(
             RetrieveExtractAGAGEDataConfig(
@@ -67,8 +69,10 @@ def create_agage_handling_config(
                 instrument=instrument,
                 time_frequency=frequency,
                 raw_dir=raw_dir,
-                download_complete_file=f"{raw_dir}/{gas}_{instrument}_{frequency}.complete",
-                processed_monthly_data_with_loc_file=f"{interim_dir}/{gas}_{instrument}_{frequency}.csv",
+                download_complete_file=raw_dir
+                / f"{gas}_{instrument}_{frequency}.complete",
+                processed_monthly_data_with_loc_file=interim_dir
+                / f"{gas}_{instrument}_{frequency}.csv",
                 generate_hashes=False,
                 download_urls=DOWNLOAD_URLS[(gas, instrument, frequency)],
             )
