@@ -61,7 +61,7 @@ test: $(CI_CONFIG_YAML)  ## run the tests
 	poetry run pytest -r a -v src tests --doctest-modules
 
 $(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-ci-config-absolute.py
-	poetry run python scripts/create-dev-ci-config-absolute.py
+	poetry run python scripts/write-config.py
 
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase

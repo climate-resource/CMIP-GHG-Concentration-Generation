@@ -26,6 +26,9 @@ class RetrieveMiscDataConfig:
     natural_earth: NaturalEarthConfig
     """Configuration for retrieving data from natural earth"""
 
+    primap: PRIMAPConfig
+    """Configuration for retrieving data from PRIMAP"""
+
 
 @frozen
 class NaturalEarthConfig:
@@ -41,3 +44,16 @@ class NaturalEarthConfig:
 
     countries_shape_file_name: str
     """Name of the file containing shape files for country borders"""
+
+
+@frozen
+class PRIMAPConfig:
+    """
+    Configuration class for retrieving PRIMAP data
+    """
+
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
+    download_url: URLSource
+    """URL from which to download data"""

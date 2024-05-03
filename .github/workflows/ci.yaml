@@ -21,7 +21,11 @@ jobs:
       - name: mypy
         run: MYPYPATH=stubs poetry run mypy src
 
-  tests:
+  # Can add non-regression tests in here somewhere too if needed.
+  # Run those even if the pull request is a draft.
+
+  tests-regression:
+    if: ${{ !github.event.pull_request.draft }}
     strategy:
       fail-fast: false
       matrix:
@@ -36,9 +40,10 @@ jobs:
           python-version: "${{ matrix.python-version }}"
           venv-id: "tests-${{ runner.os }}"
           poetry-dependency-install-flags: "--all-extras --only 'main,tests,coverage'"
-      - name: Run tests relevant for coverage
+      # TODO: change this probably to capture coverage from non-regression tests, ok for now
+      - name: Run regression tests relevant for coverage
         run: |
-          poetry run python scripts/create-dev-ci-config-absolute.py
+          poetry run python scripts/write-config.py
           poetry run pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
           poetry run coverage report
       - name: Upload coverage reports to Codecov

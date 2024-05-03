@@ -1,6 +1,7 @@
 """
 Write files in input4MIPs format notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -50,25 +51,28 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_grid = get_config_for_step_id(
-        config=config, step="grid", step_config_id="only"
-    )
-    config_gridded_data_processing = get_config_for_step_id(
-        config=config, step="gridded_data_processing", step_config_id="only"
+    config_crunch_grids = get_config_for_step_id(
+        config=config,
+        step="crunch_grids",
+        step_config_id=config_step.gas,
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("09yy_write-input4mips-files") / "0910_write-input4mips-files"
+                Path("40yy_write-input4mips") / "4001_write-input4mips-files"
             ],
             configuration=None,
             dependencies=(
-                config_grid.processed_data_file,
-                config_gridded_data_processing.processed_data_file_global_hemispheric_means,
-                config_gridded_data_processing.processed_data_file_global_hemispheric_annual_means,
+                config_crunch_grids.fifteen_degree_monthly_file,
+                config_crunch_grids.half_degree_monthly_file,
+                config_crunch_grids.gmnhsh_mean_monthly_file,
+                config_crunch_grids.gmnhsh_mean_annual_file,
             ),
-            targets=(get_checklist_file(config_step.input4mips_out_dir),),
+            targets=(
+                get_checklist_file(config_step.input4mips_out_dir),
+                config_step.complete_file,
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -83,11 +87,10 @@ step: UnconfiguredNotebookBasedStep[
     step_name="write_input4mips",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("09yy_write-input4mips-files")
-            / "0910_write-input4mips-files",
+            notebook_path=Path("40yy_write-input4mips") / "4001_write-input4mips-files",
             raw_notebook_ext=".py",
             summary="write input4MIPs - write all files",
-            doc="Write all files in input4MIPs format",
+            doc="Write input4MIPs files for our four data products",
         ),
     ],
     configure_notebooks=configure_notebooks,

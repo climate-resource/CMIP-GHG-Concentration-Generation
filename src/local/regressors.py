@@ -19,6 +19,19 @@ PredictCallableLike: TypeAlias = Callable[
 
 
 @define
+class LinearRegressionResult:
+    """
+    Result of a linear regression
+    """
+
+    m: pint.registry.UnitRegistry.Quantity
+    """Gradient of the regression"""
+
+    c: pint.registry.UnitRegistry.Quantity
+    """Intercept of the regression"""
+
+
+@define
 class WeightedQuantileRegressionResult:
     """
     Result of a weighted quantile regression

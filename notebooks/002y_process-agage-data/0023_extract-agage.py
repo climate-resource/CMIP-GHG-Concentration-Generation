@@ -32,6 +32,7 @@ import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.raw_data_processing
 from local.config import load_config_from_file
 from local.regexp_helpers import re_search_and_retrieve_group
 
@@ -49,8 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ccl4_gc-md_monthly"  # config ID to select for this branch
-step_config_id = "cfc-12_gc-md_monthly"
+step_config_id: str = "n2o_gc-md_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -295,15 +295,26 @@ plt.tight_layout()
 plt.show()
 
 # %% [markdown]
+# ### Prepare and check output
+
+# %%
+out = df_monthly.copy()
+out["network"] = "AGAGE"
+out["station"] = out["site_code"].str.lower()
+out["measurement_method"] = out["instrument"]
+
+out
+
+# %%
+local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
+
+# %% [markdown]
 # ### Save
 
 # %%
-set(df_monthly["gas"])
-
-# %%
-assert set(df_monthly["gas"]) == {config_step.gas}
+assert set(out["gas"]) == {config_step.gas}
 config_step.processed_monthly_data_with_loc_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-df_monthly.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
-df_monthly
+out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
+out

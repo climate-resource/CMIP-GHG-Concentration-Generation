@@ -6,6 +6,7 @@ ci-config-absolute.yaml
 
 # Output
 output-bundles*
+*.tar.gz
 
 # Data (generally recommended as it will bloat your repository and is captured in
 # the output bundle anyway)

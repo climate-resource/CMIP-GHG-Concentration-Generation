@@ -135,7 +135,6 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     # (root_dir_output_run / "data").mkdir(exist_ok=True)
     copy_tree(str(Path("data")), str(root_dir_output_run / "data"))
 
-    # TOOD: refactor out a re-useable gen_show_configuration_task function
     yield {
         "name": "Show configuration",
         "actions": [

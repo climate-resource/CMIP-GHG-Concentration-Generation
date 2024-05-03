@@ -76,7 +76,7 @@ merged_ice_core = pd.read_csv(
     skiprows=47,
     header=0,
 )
-merged_ice_core.columns = [v.strip() for v in merged_ice_core.columns]
+merged_ice_core.columns = [v.strip() for v in merged_ice_core.columns]  # type: ignore
 merged_ice_core["unit"] = "ppm"
 merged_ice_core = merged_ice_core.rename({"sample_date": "time"}, axis="columns")
 merged_ice_core
@@ -172,7 +172,7 @@ for scripps_source in config_step.station_data:
     contents.seek(loc)
     raw_df = pd.read_csv(contents)
 
-    raw_df.columns = [v.strip() for v in raw_df.columns]
+    raw_df.columns = [v.strip() for v in raw_df.columns]  # type: ignore
 
     keep = (
         raw_df.iloc[:, :5][["Yr", "Mn", "CO2"]]

@@ -83,7 +83,7 @@ for scripps_source in config_step.station_data:
         path=config_step.raw_dir,
         progressbar=True,
     )
-    assert scripps_source.station_code in outfile
+    assert scripps_source.station_code in str(outfile)
 
 # %%
 generate_directory_checklist(config_step.raw_dir)

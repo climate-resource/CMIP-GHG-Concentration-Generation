@@ -3,6 +3,7 @@ Test the workflow results
 
 This is a regression test so the entire workflow is run
 """
+
 from __future__ import annotations
 
 import re
@@ -24,6 +25,7 @@ def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
         / basic_workflow_output_info["run_id"]
         / "data"
         / "processed"
+        / "esgf-ready"
         / "input4MIPs"
     ).rglob("*.nc"):
         ds = xr.open_dataset(input4mips_file)

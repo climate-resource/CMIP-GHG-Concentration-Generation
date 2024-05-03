@@ -3,26 +3,6 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- Download Law Dome into same style as NOAA and AGAGE
-
-- Download EPICA into same style as NOAA and AGAGE
-
-- Download NEEM into same style as NOAA and AGAGE
-
-- Download CH4 budget into same style as NOAA and AGAGE
-  - https://www.icos-cp.eu/GCP-CH4-2019
-
-- Download Scripps merged data into same style as NOAA and AGAGE
-  - https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
-  - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
-  - very confusing what this is
-    - why don't measurements pre-1968 appear in other networks?
-    - are all their stations in e.g. NOAA, or only some?
-    - should we be using Scripps' ice age core merged product and their spline?
-    - need to ask Paul/Peter
-
-- Add checking of data formats before trying to process everything
-
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
 
@@ -206,6 +186,14 @@ Off the table improvements for now:
   - probably also google 'bokeh update plot on click'
 
 ### Data sources to follow up on
+
+- Scripps
+  - get permissions etc. from here: https://keelingcurve.ucsd.edu/permissions-and-data-sources/
+  - very confusing what this is
+    - why don't measurements pre-1968 appear in other networks?
+    - are all their stations in e.g. NOAA, or only some?
+    - should we be using Scripps' ice age core merged product and their spline?
+    - need to ask Paul/Peter
 
 - UCI network? (I emailed them on 2024-03-27 asking about data access)
 
