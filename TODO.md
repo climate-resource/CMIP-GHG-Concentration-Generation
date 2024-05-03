@@ -3,21 +3,6 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- Add checking of data formats before trying to process everything
-- Split the scratch notebook into
-    - bin and average station data
-        - going to need to be able to select which networks as a function of the gas
-    - interpolate station data and convert time axis to year-month
-        - save result as xarray
-    - calculate seasonality
-    - calculate latitudinal gradient
-        - don't need the smoothed global-, annual-mean for this as we take an average anyway
-        - SVD etc.
-    - calculate global-, annual-mean (where the annual-mean is interpolated onto a monthly step with the mean-preserving interpolation)
-        - google doc here: https://docs.google.com/document/d/1r5lAWxdoiPpvJ-Spa9QL9IBj5y27mcBYr_luHNuRQ4U/edit,
-          needs a lot of work
-    - end (so, at this point we have seasonality, latitudinal gradient and smoothed global-, annual-mean)
-
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
 
