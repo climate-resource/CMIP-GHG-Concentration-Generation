@@ -36,17 +36,19 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("ch4",)
+    gases_to_write = ("ch4", "n2o")
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
+            ("n2o", "surface-flask"),
+            ("n2o", "hats"),
         )
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"),)
+        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
@@ -74,7 +76,6 @@ def create_dev_config() -> Config:
         plot_input_data_overviews=[],
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
-        calculate_n2o_monthly_15_degree=[],  # Will move into config creation function in future
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         write_input4mips=create_write_input4mips_config(gases=gases_to_write),
     )
@@ -122,7 +123,7 @@ def create_ci_config() -> Config:
         plot_input_data_overviews=[],
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
-        calculate_n2o_monthly_15_degree=[],  # Will move into config creation function in future
+        calculate_n2o_monthly_fifteen_degree_pieces=[],
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         write_input4mips=create_write_input4mips_config(gases=gases_to_write),
     )
@@ -148,6 +149,8 @@ if __name__ == "__main__":
     )
     with open(DEV_ABSOLUTE_FILE, "w") as fh:
         fh.write(converter_yaml.dumps(dev_config_absolute))
+
+    print(f"Updated {DEV_ABSOLUTE_FILE}")
 
     ### Config CI
     CI_FILE: Path = Path("ci-config.yaml")

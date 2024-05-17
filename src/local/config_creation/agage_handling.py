@@ -33,6 +33,28 @@ DOWNLOAD_URLS = {
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_ch4_mon.txt",
         ),
     ],
+    ("n2o", "gc-md", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_n2o_mon.txt",
+            known_hash="7ac04ee39e56544dc6d98e68d52be58ab30cde620f511d70192a005c95b85fc0",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_n2o_mon.txt",
+            known_hash="7a0d7481d6d5492bf4501c107c57c6f6b0bb9991eb9ff23abb8c9c966fefa79c",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_n2o_mon.txt",
+            known_hash="849efb23da2bfad5e76e5abd7303bb3b74b3bd9f924daa4303bbc10d04cf67da",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/samoa/ascii/AGAGE-GCMD_SMO_n2o_mon.txt",
+            known_hash="3739081cf7778e205dc1c77c74ffdb72d748baaf346858850fd39e41f16f42c3",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_n2o_mon.txt",
+            known_hash="e4cdc474f71d6f80ac63fe13b7fa61a86ce0361b7995874bf074a01c69facac3",
+        ),
+    ],
 }
 
 

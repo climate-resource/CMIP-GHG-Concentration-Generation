@@ -10,6 +10,7 @@ from typing import TypedDict, cast
 
 from pydoit_nb.config_tools import URLSource
 
+from local.config.process_noaa_hats_data import ProcessNOAAHATSDataConfig
 from local.config.process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from local.config.process_noaa_surface_flask_data import (
     ProcessNOAASurfaceFlaskDataConfig,
@@ -32,6 +33,18 @@ DOWNLOAD_URLS = {
             known_hash="e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087",
         )
     ],
+    ("n2o", "surface-flask"): [
+        URLSource(
+            url=SURFACE_FLASK_URL_BASE.format(gas="n2o"),
+            known_hash="6b7e09c37b7fa456ab170a4c7b825b3d4b9f6eafb0ff61a2a46554b0e63e84b1",
+        )
+    ],
+    ("n2o", "hats"): [
+        URLSource(
+            url="https://gml.noaa.gov/aftp/data/hats/n2o/combined/GML_global_N2O.txt",
+            known_hash="d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a",
+        )
+    ],
 }
 #     (
 #         "co2",
@@ -52,11 +65,6 @@ DOWNLOAD_URLS = {
 #         "ch4",
 #         "in-situ",
 #         "c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
-#     ),
-#     (
-#         "n2o",
-#         "surface-flask",
-#         "6b7e09c37b7fa456ab170a4c7b825b3d4b9f6eafb0ff61a2a46554b0e63e84b1",
 #     ),
 #     (
 #         "sf6",
@@ -161,6 +169,11 @@ def create_noaa_data_source_handling_pieces(
 
     elif network == "in-situ":
         out["process_noaa_in_situ_data"] = ProcessNOAAInSituDataConfig(  # type: ignore
+            **process_step_attrs  # type: ignore
+        )
+
+    elif network == "hats":
+        out["process_noaa_in_situ_data"] = ProcessNOAAHATSDataConfig(  # type: ignore
             **process_step_attrs  # type: ignore
         )
 

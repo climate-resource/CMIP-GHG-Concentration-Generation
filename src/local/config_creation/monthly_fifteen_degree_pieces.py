@@ -9,6 +9,9 @@ from pathlib import Path
 from local.config.calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
+from local.config.calculate_n2o_monthly_15_degree import (
+    CalculateN2OMonthlyFifteenDegreePieces,
+)
 
 
 def create_monthly_fifteen_degree_pieces_configs(
@@ -33,6 +36,11 @@ def create_monthly_fifteen_degree_pieces_configs(
         if gas == "ch4":
             out["calculate_ch4_monthly_fifteen_degree_pieces"] = [
                 get_ch4_monthly_fifteen_degree_pieces_config()
+            ]
+
+        elif gas == "n2o":
+            out["calculate_n2o_monthly_fifteen_degree_pieces"] = [
+                get_n2o_monthly_fifteen_degree_pieces_config()
             ]
 
         else:
@@ -79,4 +87,45 @@ def get_ch4_monthly_fifteen_degree_pieces_config() -> (
         / "ch4_seasonality_fifteen-degree_allyears-monthly.nc",
         latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
         / "ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
+    )
+
+
+def get_n2o_monthly_fifteen_degree_pieces_config() -> (
+    CalculateN2OMonthlyFifteenDegreePieces
+):
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for N2O
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for N2O
+    """
+    interim_dir = Path("data/interim/n2o")
+
+    return CalculateN2OMonthlyFifteenDegreePieces(
+        step_config_id="only",
+        gas="n2o",
+        processed_bin_averages_file=interim_dir
+        / "n2o_observational-network_bin-averages.csv",
+        observational_network_interpolated_file=interim_dir
+        / "n2o_observational-network_interpolated.nc",
+        observational_network_global_annual_mean_file=interim_dir
+        / "n2o_observational-network_global-annual-mean.nc",
+        lat_gradient_n_eofs_to_use=2,
+        observational_network_latitudinal_gradient_eofs_file=interim_dir
+        / "n2o_observational-network_latitudinal-gradient-eofs.nc",
+        observational_network_seasonality_file=interim_dir
+        / "n2o_observational-network_seasonality.nc",
+        latitudinal_gradient_allyears_pcs_eofs_file=interim_dir
+        / "n2o_allyears-lat-gradient-eofs-pcs.nc",
+        latitudinal_gradient_pc0_n2o_emissions_regression_file=interim_dir
+        / "n2o_pc0-n2o-fossil-emissions-regression.yaml",
+        global_annual_mean_allyears_file=interim_dir
+        / "n2o_global-annual-mean_allyears.nc",
+        global_annual_mean_allyears_monthly_file=interim_dir
+        / "n2o_global-annual-mean_allyears-monthly.nc",
+        seasonality_allyears_fifteen_degree_monthly_file=interim_dir
+        / "n2o_seasonality_fifteen-degree_allyears-monthly.nc",
+        latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
+        / "n2o_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
     )

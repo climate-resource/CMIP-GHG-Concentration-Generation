@@ -3,6 +3,13 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
+- N2O
+    - HATS download
+        - N2O only initially
+        - then other GHGs
+    - process, copying CH4
+        - check that we can do the same time period as Malte did
+
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
 
