@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - interpolate observational network
+# # N$_2$O - interpolate observational network
 #
 # Interpolate the observational network data onto our grid.
 
@@ -42,7 +42,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
+step: str = "calculate_n2o_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -81,9 +81,10 @@ MIN_POINTS_FOR_SPATIAL_INTERPOLATION = 4
 times_l = []
 interpolated_dat_l = []
 year_month_plot = (
-    (1983, 1),
-    (1984, 1),
-    (1984, 3),
+    # (1983, 1),
+    # (1984, 1),
+    (1988, 1),
+    (1989, 1),
     (2000, 4),
     (2022, 12),
     (2023, 1),
@@ -110,8 +111,8 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
     if (year, month) in year_month_plot or show_plot:
         # This will break if we ever change our internal gridding logic, ok for now.
         lon_grid, lat_grid = np.meshgrid(
-            local.binning.LON_BIN_CENTRES,
-            local.binning.LAT_BIN_CENTRES,
+            local.binned_data_interpolation.LON_BIN_CENTRES,
+            local.binned_data_interpolation.LAT_BIN_CENTRES,
         )
 
         plt.pcolormesh(lon_grid, lat_grid, interpolated_ym.T, shading="auto")

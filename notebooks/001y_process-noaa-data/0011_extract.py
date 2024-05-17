@@ -26,7 +26,11 @@ import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
-from local.noaa_processing import read_noaa_flask_zip, read_noaa_in_situ_zip
+from local.noaa_processing import (
+    read_noaa_flask_zip,
+    read_noaa_hats,
+    read_noaa_in_situ_zip,
+)
 
 # %%
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
@@ -42,7 +46,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "no2_hats"  # config ID to select for this branch
+step_config_id: str = "n2o_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -57,15 +61,15 @@ config_step = get_config_for_step_id(
 # ## Action
 
 # %%
-zip_files = [
+files = [
     config_step.raw_dir / url_source.url.split("/")[-1]
     for url_source in config_step.download_urls
 ]
-zip_files
+files
 
 # %%
-assert len(zip_files) == 1, "Re-think how you're doing this"
-zf = zip_files[0]
+assert len(files) == 1, "Re-think how you're doing this"
+zf = files[0]
 
 if config_step.source == "surface-flask":
     df_events, df_months = read_noaa_flask_zip(zf, gas=config_step.gas)
@@ -81,6 +85,13 @@ elif config_step.source == "in-situ":
 
     print("df_months")
     print(df_months)
+
+elif config_step.source == "hats":
+    df_months = read_noaa_hats(zf, gas=config_step.gas, source=config_step.source)
+
+    print("df_months")
+    print(df_months)
+
 else:
     raise NotImplementedError(config_step.source)
 
@@ -93,6 +104,10 @@ if config_step.source == "surface-flask":
     df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
 
 elif config_step.source == "in-situ":
+    config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
+    df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
+
+elif config_step.source == "hats":
     config_step.interim_files["monthly_data"].parent.mkdir(exist_ok=True, parents=True)
     df_months.to_csv(config_step.interim_files["monthly_data"], index=False)
 

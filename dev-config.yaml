@@ -44,14 +44,16 @@ crunch_grids:
   half_degree_monthly_file: data/interim/n2o/n2o_half-degree_monthly.nc
   step_config_id: n2o
 name: CI
-plot_input_data_overviews: []
+plot_input_data_overviews:
+- step_config_id: only
+process_noaa_hats_data:
+- gas: n2o
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_hats.csv
+  step_config_id: n2o
 process_noaa_in_situ_data:
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_in-situ.csv
   step_config_id: ch4
-- gas: n2o
-  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_hats.csv
-  step_config_id: n2o
 process_noaa_surface_flask_data:
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
@@ -204,8 +206,8 @@ retrieve_misc_data:
     raw_dir: data/raw/natural_earth
   primap:
     download_url:
-      known_hash: 12f4097cd380cb7bb5e42ab6382fabbc5d63a478da94b5c5bb207e88c210fad8
-      url: https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_27-Feb-2024.nc?download=1
+      known_hash: be25ecff6639638015e3a7fc7b9488de9c048bddaed1fa1a7f1d08fde12e9c04
+      url: https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_no_rounding_27-Feb-2024.nc?download=1
     raw_dir: data/raw/primap
   step_config_id: only
 smooth_law_dome_data:
@@ -230,6 +232,27 @@ smooth_law_dome_data:
   smoothed_draws_file: data/interim/law_dome/law-dome_ch4_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_ch4_smoothed_median.csv
   step_config_id: ch4
+- gas: n2o
+  n_draws: 250
+  noise_adder:
+    x_ref:
+    - 2024
+    - a
+    x_relative_random_error:
+    - 0.045
+    - dimensionless
+    y_random_error:
+    - 3
+    - ppb
+  point_selector_settings:
+    maximum_data_points_either_side: 15
+    minimum_data_points_either_side: 7
+    window_width:
+    - 300
+    - a
+  smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
+  smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
+  step_config_id: n2o
 version: 0.1.0-dev
 write_input4mips:
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete

@@ -90,7 +90,7 @@ config_step = get_config_for_step_id(
 )
 
 config_smooth_law_dome_data = get_config_for_step_id(
-    config=config, step="smooth_law_dome_data", step_config_id="ch4"
+    config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
 )
 
 config_process_neem = get_config_for_step_id(
@@ -148,6 +148,7 @@ lat_grad_eofs_obs_network
 
 # %%
 smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
+smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
 smooth_law_dome["source"] = "law_dome"
 smooth_law_dome
 

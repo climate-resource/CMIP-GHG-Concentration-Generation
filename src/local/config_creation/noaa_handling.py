@@ -173,7 +173,7 @@ def create_noaa_data_source_handling_pieces(
         )
 
     elif network == "hats":
-        out["process_noaa_in_situ_data"] = ProcessNOAAHATSDataConfig(  # type: ignore
+        out["process_noaa_hats_data"] = ProcessNOAAHATSDataConfig(  # type: ignore
             **process_step_attrs  # type: ignore
         )
 
