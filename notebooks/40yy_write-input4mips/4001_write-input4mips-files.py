@@ -182,9 +182,9 @@ config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
 time_dimension = "time"
 for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     [
-        (fifteen_degree_data, "15_deg_lat", False),
-        (half_degree_data, "05_deg_lat", False),
-        (gmnhsh_data, "gmnhsh", False),
+        # (fifteen_degree_data, "15_deg_lat", False),
+        # (half_degree_data, "05_deg_lat", False),
+        # (gmnhsh_data, "gmnhsh", False),
         (gmnhsh_annual_data, "gmnhsh", True),
     ],
     desc="Resolutions",
@@ -200,8 +200,8 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
         {variable_name_raw: variable_name_output}
     )
     da_to_write["time"].encoding = {
-        "calendar": "standard",
-        "units": "days since 2010-01-01",
+        "calendar": "proleptic_gregorian",
+        "units": "days since 1850-01-01 00:00:00",
     }
     # TODO: use inference again once I know how it is meant to work
     # metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
@@ -253,6 +253,21 @@ with open(config_step.complete_file, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 checklist_path
+
+# %% [markdown]
+# Notes on writing:
+#
+# - Writing just with xarray is annoying, because it doesn't do CF-conventions properly
+# - Writing with iris is annoying, because you have to install with conda
+#   which means the locking is flaky as (might have to just live with this)
+
+# %%
+# !ncdump -h {str(written)}
+
+# %% [markdown]
+# Good to run this too if you have cfchecks available
+#
+# !cfchecks {str(written)}
 
 # %%
 config_step.input4mips_out_dir
