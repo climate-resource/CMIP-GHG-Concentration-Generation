@@ -38,6 +38,8 @@ def create_dev_config() -> Config:
     Create our (relative) dev config
     """
     gases_to_write = ("ch4", "n2o")
+    start_year = 1
+    end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
@@ -78,7 +80,9 @@ def create_dev_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
-        write_input4mips=create_write_input4mips_config(gases=gases_to_write),
+        write_input4mips=create_write_input4mips_config(
+            gases=gases_to_write, start_year=start_year, end_year=end_year
+        ),
     )
 
 
@@ -87,6 +91,8 @@ def create_ci_config() -> Config:
     Create our (relative) CI config
     """
     gases_to_write = ("ch4", "n2o")
+    start_year = 1750
+    end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
@@ -127,7 +133,9 @@ def create_ci_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
-        write_input4mips=create_write_input4mips_config(gases=gases_to_write),
+        write_input4mips=create_write_input4mips_config(
+            gases=gases_to_write, start_year=start_year, end_year=end_year
+        ),
     )
 
 

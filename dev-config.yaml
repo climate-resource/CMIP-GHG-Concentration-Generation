@@ -256,10 +256,14 @@ smooth_law_dome_data:
 version: 0.1.0-dev
 write_input4mips:
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
+  end_year: 2022
   gas: ch4
   input4mips_out_dir: data/processed/esgf-ready
+  start_year: 1
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete
+  end_year: 2022
   gas: n2o
   input4mips_out_dir: data/processed/esgf-ready
+  start_year: 1
   step_config_id: n2o
