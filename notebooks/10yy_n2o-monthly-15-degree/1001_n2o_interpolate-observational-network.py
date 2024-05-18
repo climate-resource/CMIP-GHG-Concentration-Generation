@@ -111,8 +111,8 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
     if (year, month) in year_month_plot or show_plot:
         # This will break if we ever change our internal gridding logic, ok for now.
         lon_grid, lat_grid = np.meshgrid(
-            local.binned_data_interpolation.LON_BIN_CENTRES,
-            local.binned_data_interpolation.LAT_BIN_CENTRES,
+            local.binning.LON_BIN_CENTRES,
+            local.binning.LAT_BIN_CENTRES,
         )
 
         plt.pcolormesh(lon_grid, lat_grid, interpolated_ym.T, shading="auto")

@@ -13,10 +13,14 @@ from local.config.calculate_n2o_monthly_15_degree import (
     CalculateN2OMonthlyFifteenDegreePieces,
 )
 
+PieceCalculationOption = (
+    CalculateCH4MonthlyFifteenDegreePieces | CalculateN2OMonthlyFifteenDegreePieces
+)
+
 
 def create_monthly_fifteen_degree_pieces_configs(
     gases: tuple[str, ...],
-) -> dict[str, list[CalculateCH4MonthlyFifteenDegreePieces]]:
+) -> dict[str, list[PieceCalculationOption],]:
     """
     Create configuration for calculating the monthly, 15 degree pieces for different gases
 
@@ -30,7 +34,7 @@ def create_monthly_fifteen_degree_pieces_configs(
         Configuration for calculating the monthly, 15 degree pieces for each gas
         in ``gases``
     """
-    out = {}
+    out: dict[str, list[PieceCalculationOption]] = {}
 
     for gas in gases:
         if gas == "ch4":

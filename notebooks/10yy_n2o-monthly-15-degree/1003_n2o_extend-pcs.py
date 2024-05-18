@@ -23,16 +23,19 @@
 # ## Imports
 
 # %%
+from collections.abc import Iterator
 from contextlib import contextmanager
+from typing import Any
 
 import cf_xarray.units
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
-import primap2
+import primap2  # type: ignore
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -56,7 +59,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
 QuantityOSCM = openscm_units.unit_registry.Quantity
@@ -96,7 +99,7 @@ config_retrieve_misc = get_config_for_step_id(
 
 
 # %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> Any:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
@@ -107,7 +110,9 @@ def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
 
 # %%
 @contextmanager
-def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+def axes_vertical_split(
+    ncols: int = 2,
+) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=ncols)
     yield axes
@@ -119,7 +124,7 @@ def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
 # ### Load data
 
 # %%
-global_annual_mean_obs_network = xr.load_dataarray(
+global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network

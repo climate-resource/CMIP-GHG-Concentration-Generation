@@ -23,9 +23,12 @@
 # ## Imports
 
 # %%
+from collections.abc import Iterator
 from contextlib import contextmanager
+from typing import Any
 
 import cf_xarray.units
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
@@ -53,7 +56,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
 QuantityOSCM = openscm_units.unit_registry.Quantity
@@ -93,7 +96,7 @@ config_smooth_law_dome_data = get_config_for_step_id(
 
 
 # %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> Any:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
@@ -104,7 +107,9 @@ def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str:
 
 # %%
 @contextmanager
-def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
+def axes_vertical_split(
+    ncols: int = 2,
+) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=2)
     yield axes
@@ -116,7 +121,7 @@ def axes_vertical_split(ncols: int = 2) -> [plt.Axes, plt.Axes]:
 # ### Load data
 
 # %%
-global_annual_mean_obs_network = xr.load_dataarray(
+global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network
@@ -268,7 +273,7 @@ if not config.ci:
     )
 else:
     law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)
+        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
         mostyears_full_field.sel(lat=law_dome_lat, method="nearest")

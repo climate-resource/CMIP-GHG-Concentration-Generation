@@ -53,7 +53,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Quantity = pint.get_application_registry().Quantity
+Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -85,13 +85,13 @@ config_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-global_annual_mean = xr.load_dataarray(
+global_annual_mean = xr.load_dataarray(  # type: ignore
     config_step.global_annual_mean_allyears_file
 ).pint.quantify()
 global_annual_mean
 
 # %%
-obs_network_seasonality = xr.load_dataarray(
+obs_network_seasonality = xr.load_dataarray(  # type: ignore
     config_step.observational_network_seasonality_file
 ).pint.quantify()
 obs_network_seasonality
@@ -116,21 +116,21 @@ global_annual_mean_monthly
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(
+local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(  # type: ignore
     ax=axes[0]
 )
 local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
     x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
 )
 
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10])
 ).plot(ax=axes[1])
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10])
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:])
 ).plot(ax=axes[2])
 local.xarray_time.convert_year_to_time(

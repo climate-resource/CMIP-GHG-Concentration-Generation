@@ -7,6 +7,7 @@ import zipfile
 from collections.abc import Callable
 from io import StringIO
 from pathlib import Path
+from typing import cast
 
 import pandas as pd
 import tqdm.autonotebook as tqdman
@@ -489,6 +490,7 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
 
     res_l = []
     for c in tmp:
+        c = cast(str, c)
         if (
             c.endswith("sd")
             or not c.endswith(gas.upper())
@@ -511,21 +513,21 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
                     lon = 0.0
 
                 else:
-                    lat = lat_lon_info.split(",")[0]
-                    if lat.endswith("N"):
-                        lat = float(lat[:-1])
-                    elif lat.endswith("S"):
-                        lat = -float(lat[:-1])
+                    lat_s = lat_lon_info.split(",")[0]
+                    if lat_s.endswith("N"):
+                        lat = float(lat_s[:-1])
+                    elif lat_s.endswith("S"):
+                        lat = -float(lat_s[:-1])
                     else:
-                        raise AssertionError(lat)
+                        raise AssertionError(lat_s)
 
-                    lon = lat_lon_info.split(",")[1]
-                    if lon.endswith("W"):
-                        lon = -float(lon[:-1])
-                    elif lon.endswith("E"):
-                        lon = float(lon[:-1])
+                    lon_s = lat_lon_info.split(",")[1]
+                    if lon_s.endswith("W"):
+                        lon = -float(lon_s[:-1])
+                    elif lon_s.endswith("E"):
+                        lon = float(lon_s[:-1])
                     else:
-                        raise AssertionError(lon)
+                        raise AssertionError(lon_s)
 
         station_dat["latitude"] = lat
         station_dat["longitude"] = lon
