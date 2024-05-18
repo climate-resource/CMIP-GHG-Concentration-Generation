@@ -1,5 +1,5 @@
 """
-Write files in input4MIPs format notebook steps
+Process NOAA HATS data
 """
 
 from __future__ import annotations
@@ -50,28 +50,30 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_crunch_grids = get_config_for_step_id(
+
+    config_retrieve_misc_data = get_config_for_step_id(
+        config=config, step="retrieve_misc_data", step_config_id="only"
+    )
+    config_retrieve_noaa = get_config_for_step_id(
         config=config,
-        step="crunch_grids",
-        step_config_id=config_step.gas,
+        step="retrieve_and_extract_noaa_data",
+        step_config_id=f"{config_step.gas}_hats",
     )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("40yy_write-input4mips") / "4001_write-input4mips-files"
+                Path("001y_process-noaa-data") / "0014_process_hats"
             ],
-            configuration=None,
+            configuration=(),
             dependencies=(
-                config_crunch_grids.fifteen_degree_monthly_file,
-                config_crunch_grids.half_degree_monthly_file,
-                config_crunch_grids.gmnhsh_mean_monthly_file,
-                config_crunch_grids.gmnhsh_mean_annual_file,
+                config_retrieve_noaa.interim_files["monthly_data"],
+                (
+                    config_retrieve_misc_data.natural_earth.raw_dir
+                    / config_retrieve_misc_data.natural_earth.countries_shape_file_name
+                ),
             ),
-            targets=(
-                # get_checklist_file(config_step.input4mips_out_dir),
-                config_step.complete_file,
-            ),
+            targets=(config_step.processed_monthly_data_with_loc_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -83,13 +85,16 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="write_input4mips",
+    step_name="process_noaa_hats_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("40yy_write-input4mips") / "4001_write-input4mips-files",
+            notebook_path=Path("001y_process-noaa-data") / "0014_process_hats",
             raw_notebook_ext=".py",
-            summary="write input4MIPs - write all files",
-            doc="Write input4MIPs files for our four data products",
+            summary="process NOAA HATS data - process",
+            doc=(
+                "Process NOAA HATS data to create a file with monthly average "
+                "from each station and latitude and longitude information"
+            ),
         ),
     ],
     configure_notebooks=configure_notebooks,

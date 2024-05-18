@@ -86,7 +86,7 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4",)
+    gases_to_write = ("ch4", "n2o")
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
@@ -98,11 +98,11 @@ def create_ci_config() -> Config:
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"),)
+        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4",), n_draws=10
+        gases=("ch4", "n2o"), n_draws=10
     )
 
     monthly_fifteen_degree_pieces_configs = (
@@ -126,7 +126,6 @@ def create_ci_config() -> Config:
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
-        calculate_n2o_monthly_fifteen_degree_pieces=[],
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         write_input4mips=create_write_input4mips_config(gases=gases_to_write),
     )

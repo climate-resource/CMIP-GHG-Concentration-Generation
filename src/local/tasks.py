@@ -15,8 +15,10 @@ from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
     calculate_ch4_monthly_fifteen_degree_pieces,
+    calculate_n2o_monthly_fifteen_degree_pieces,
     crunch_grids,
     plot_input_data_overviews,
+    process_noaa_hats,
     process_noaa_in_situ_data,
     process_noaa_surface_flask_data,
     retrieve_and_extract_agage_data,
@@ -109,6 +111,7 @@ def gen_all_tasks(
         retrieve_and_extract_noaa_data,
         process_noaa_surface_flask_data,
         process_noaa_in_situ_data,
+        process_noaa_hats,
         retrieve_and_extract_agage_data,
         retrieve_and_extract_gage_data,
         retrieve_and_extract_ale_data,
@@ -119,6 +122,7 @@ def gen_all_tasks(
         plot_input_data_overviews,
         smooth_law_dome_data,
         calculate_ch4_monthly_fifteen_degree_pieces,
+        calculate_n2o_monthly_fifteen_degree_pieces,
         crunch_grids,
         write_input4mips,
     ]:
