@@ -72,7 +72,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch4"  # config ID to select for this branch
+step_config_id: str = "n2o"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -113,23 +113,49 @@ gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_grid_crunching.gmnhsh_mean_annual_file
 ).pint.quantify()
 
+
+# %% [markdown]
+# ### Check time axis
+
+
+# %%
+def chop_time_axis(inp: xr.DataArray) -> xr.DataArray:
+    """
+    Chop the time axis to our desired time axis
+    """
+    res = inp.sel(year=range(config_step.start_year, config_step.end_year + 1))
+
+    if res.isnull().any():
+        raise AssertionError
+
+    return res
+
+
+# %%
+fifteen_degree_data_raw_chopped = chop_time_axis(fifteen_degree_data_raw)
+half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
+gmnhsh_data_raw_chopped = chop_time_axis(gmnhsh_data_raw)
+gmnhsh_annual_data_raw_chopped = chop_time_axis(gmnhsh_annual_data_raw)
+
 # %% [markdown]
 # ### Convert everything to a time axis
 
 # %%
 day = 15
 fifteen_degree_data = local.xarray_time.convert_year_month_to_time(
-    fifteen_degree_data_raw, day=day
+    fifteen_degree_data_raw_chopped, day=day
 )
 half_degree_data = local.xarray_time.convert_year_month_to_time(
-    half_degree_data_raw, day=day
+    half_degree_data_raw_chopped, day=day
 )
-gmnhsh_data = local.xarray_time.convert_year_month_to_time(gmnhsh_data_raw, day=day)
+gmnhsh_data = local.xarray_time.convert_year_month_to_time(
+    gmnhsh_data_raw_chopped, day=day
+)
 fifteen_degree_data
 
 # %%
 gmnhsh_annual_data = local.xarray_time.convert_year_to_time(
-    gmnhsh_annual_data_raw, month=7, day=2, hour=12
+    gmnhsh_annual_data_raw_chopped, month=7, day=2, hour=12
 )
 gmnhsh_annual_data
 
@@ -253,3 +279,6 @@ with open(config_step.complete_file, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 checklist_path
+
+# %%
+config_step.input4mips_out_dir

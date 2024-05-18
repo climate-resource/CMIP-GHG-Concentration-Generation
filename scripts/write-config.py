@@ -12,6 +12,7 @@ from pydoit_nb.config_handling import insert_path_prefix
 
 import local
 from local.config import Config, converter_yaml
+from local.config.plot_input_data_overviews import PlotInputDataOverviewsConfig
 from local.config_creation.agage_handling import create_agage_handling_config
 from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
 from local.config_creation.crunch_grids import create_crunch_grids_config
@@ -36,21 +37,25 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("ch4",)
+    gases_to_write = ("ch4", "n2o")
+    start_year = 1
+    end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
+            ("n2o", "surface-flask"),
+            ("n2o", "hats"),
         )
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"),)
+        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4",), n_draws=250
+        gases=("ch4", "n2o"), n_draws=250
     )
 
     monthly_fifteen_degree_pieces_configs = (
@@ -71,12 +76,13 @@ def create_dev_config() -> Config:
         retrieve_and_process_scripps_data=[],
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
-        plot_input_data_overviews=[],
+        plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
-        calculate_n2o_monthly_15_degree=[],  # Will move into config creation function in future
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
-        write_input4mips=create_write_input4mips_config(gases=gases_to_write),
+        write_input4mips=create_write_input4mips_config(
+            gases=gases_to_write, start_year=start_year, end_year=end_year
+        ),
     )
 
 
@@ -84,21 +90,25 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4",)
+    gases_to_write = ("ch4", "n2o")
+    start_year = 1750
+    end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
+            ("n2o", "surface-flask"),
+            ("n2o", "hats"),
         )
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"),)
+        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4",), n_draws=10
+        gases=("ch4", "n2o"), n_draws=10
     )
 
     monthly_fifteen_degree_pieces_configs = (
@@ -119,12 +129,13 @@ def create_ci_config() -> Config:
         retrieve_and_process_scripps_data=[],
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
-        plot_input_data_overviews=[],
+        plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
-        calculate_n2o_monthly_15_degree=[],  # Will move into config creation function in future
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
-        write_input4mips=create_write_input4mips_config(gases=gases_to_write),
+        write_input4mips=create_write_input4mips_config(
+            gases=gases_to_write, start_year=start_year, end_year=end_year
+        ),
     )
 
 
@@ -148,6 +159,8 @@ if __name__ == "__main__":
     )
     with open(DEV_ABSOLUTE_FILE, "w") as fh:
         fh.write(converter_yaml.dumps(dev_config_absolute))
+
+    print(f"Updated {DEV_ABSOLUTE_FILE}")
 
     ### Config CI
     CI_FILE: Path = Path("ci-config.yaml")

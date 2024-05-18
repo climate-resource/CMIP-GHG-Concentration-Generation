@@ -18,9 +18,10 @@ from pydoit_nb.config_helpers import (
 from .calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
-from .calculate_n2o_monthly_15_degree import CalculateN2OMonthly15DegreeConfig
+from .calculate_n2o_monthly_15_degree import CalculateN2OMonthlyFifteenDegreePieces
 from .crunch_grid import GridCrunchingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
+from .process_noaa_hats_data import ProcessNOAAHATSDataConfig
 from .process_noaa_in_situ_data import ProcessNOAAInSituDataConfig
 from .process_noaa_surface_flask_data import ProcessNOAASurfaceFlaskDataConfig
 from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
@@ -104,6 +105,15 @@ class Config:
         ]
     )
     """Configurations to use for processing NOAA in-situ data"""
+
+    process_noaa_hats_data: list[ProcessNOAAHATSDataConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for processing NOAA HATS data"""
 
     retrieve_and_extract_agage_data: list[RetrieveExtractAGAGEDataConfig] = field(
         validator=[
@@ -197,14 +207,16 @@ class Config:
     )
     """Configurations to use for calculating the 15 degree and 0.5 degree, monthly data for CH4"""
 
-    calculate_n2o_monthly_15_degree: list[CalculateN2OMonthly15DegreeConfig] = field(
+    calculate_n2o_monthly_fifteen_degree_pieces: list[
+        CalculateN2OMonthlyFifteenDegreePieces
+    ] = field(
         validator=[
             make_attrs_validator_compatible_single_input(
                 assert_step_config_ids_are_unique
             )
         ]
     )
-    """Configurations to use for calculating the 15 degree, monthly data for N2O"""
+    """Configurations to use for calculating the 15 degree and 0.5 degree, monthly data for N2O"""
 
     crunch_grids: list[GridCrunchingConfig] = field(
         validator=[

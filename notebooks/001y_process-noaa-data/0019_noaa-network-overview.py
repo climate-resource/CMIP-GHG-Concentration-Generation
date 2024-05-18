@@ -58,17 +58,22 @@ config_step = get_config_for_step_id(
 
 if config.ci:
     to_show: tuple[tuple[str, str, str], ...] = (
-        ("co2", "in-situ", "process_noaa_in_situ_data"),
-        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
+        # ("co2", "in-situ", "process_noaa_in_situ_data"),
+        # ("co2", "surface-flask", "process_noaa_surface_flask_data"),
+        ("ch4", "in-situ", "process_noaa_in_situ_data"),
+        ("ch4", "surface-flask", "process_noaa_surface_flask_data"),
+        ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
+        ("n2o", "hats", "process_noaa_hats_data"),
     )
 else:
     to_show = (
-        ("co2", "in-situ", "process_noaa_in_situ_data"),
+        # ("co2", "in-situ", "process_noaa_in_situ_data"),
+        # ("co2", "surface-flask", "process_noaa_surface_flask_data"),
         ("ch4", "in-situ", "process_noaa_in_situ_data"),
-        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
         ("ch4", "surface-flask", "process_noaa_surface_flask_data"),
         ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
-        ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
+        ("n2o", "hats", "process_noaa_hats_data"),
+        # ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
     )
 
 gas_configs = {
@@ -81,6 +86,9 @@ gas_configs = {
 config_retrieve = get_config_for_step_id(
     config=config, step="retrieve_misc_data", step_config_id="only"
 )
+
+# %%
+gas_configs
 
 # %% [markdown]
 # ## Action
@@ -95,6 +103,9 @@ full_df = pd.concat(
 full_df
 
 # %%
+full_df["source"].unique()
+
+# %%
 countries = gpd.read_file(
     config_retrieve.natural_earth.raw_dir
     / config_retrieve.natural_earth.countries_shape_file_name
@@ -105,6 +116,7 @@ countries = gpd.read_file(
 source_colours = {
     "insitu": "tab:blue",
     "flask": "tab:brown",
+    "hats": "tab:green",
 }
 surf_ship_markers = {
     "surface": "o",
@@ -113,9 +125,11 @@ surf_ship_markers = {
 zoom_ts_start_year = 2019
 
 for gas, gdf in tqdman.tqdm(
-    full_df.groupby("gas"),
+    full_df.drop("reporting_id", axis="columns").groupby("gas"),
     desc="Gases",
 ):
+    gdf["surf_or_ship"] = gdf["surf_or_ship"].fillna("surface")
+
     labels = []
     fig, axes = plt.subplot_mosaic(
         [
@@ -132,7 +146,7 @@ for gas, gdf in tqdman.tqdm(
     unit = str(unit_arr[0])
 
     for (station, source, surf_or_ship), station_df in tqdman.tqdm(
-        gdf.groupby(["site_code_filename", "source", "surf_or_ship"]),
+        gdf.groupby(["site_code", "source", "surf_or_ship"]),
         desc=f"{gas} stations",
         leave=False,
     ):

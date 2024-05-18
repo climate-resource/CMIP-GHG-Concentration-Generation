@@ -38,7 +38,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_n2o_monthly_15_degree"
+step: str = "calculate_n2o_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -56,14 +56,14 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_noaa = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
-
-
 config_process_noaa_surface_flask_data = get_config_for_step_id(
     config=config,
     step="process_noaa_surface_flask_data",
+    step_config_id=config_step.gas,
+)
+config_process_noaa_hats_data = get_config_for_step_id(
+    config=config,
+    step="process_noaa_hats_data",
     step_config_id=config_step.gas,
 )
 config_process_agage_data_gc_md = get_config_for_step_id(
@@ -89,6 +89,7 @@ config_process_gage_data = get_config_for_step_id(
 all_data_l = []
 for f in [
     config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+    config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
     config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
     config_process_ale_data.processed_monthly_data_with_loc_file,
     config_process_gage_data.processed_monthly_data_with_loc_file,

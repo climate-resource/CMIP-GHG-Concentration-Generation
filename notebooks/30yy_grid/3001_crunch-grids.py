@@ -69,7 +69,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch4"  # config ID to select for this branch
+step_config_id: str = "n2o"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -115,7 +115,7 @@ lat_grad_fifteen_degree_monthly.name = "latitudinal_gradient"
 lat_grad_fifteen_degree_monthly
 
 # %% [markdown]
-# ### 15 &deg; monthly file
+# ### 15&deg; monthly file
 
 # %%
 gridding_values = (
@@ -178,7 +178,7 @@ plt.tight_layout()
 plt.show()
 
 # %% [markdown]
-# ### 0.5 &deg; monthly file
+# ### 0.5&deg; monthly file
 
 # %%
 process_map_res: list[xr.DataArray] = process_map(  # type: ignore

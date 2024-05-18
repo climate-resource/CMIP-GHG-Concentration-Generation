@@ -1,14 +1,18 @@
 """
 NOAA processing tools and functions
 """
+
 import re
 import zipfile
 from collections.abc import Callable
 from io import StringIO
 from pathlib import Path
+from typing import cast
 
 import pandas as pd
 import tqdm.autonotebook as tqdman
+
+from local.regexp_helpers import re_search_and_retrieve_group
 
 PROCESSED_DATA_COLUMNS: list[str] = [
     "gas",
@@ -420,3 +424,119 @@ def read_noaa_in_situ_zip(
         raise ValueError("Obviously wrong values in monthly data")  # noqa: TRY003
 
     return df_months
+
+
+def read_noaa_hats(  # noqa: PLR0912, PLR0915
+    infile: Path, gas: str, source: str, skiprows: int = 67, sep: str = r"\s+"
+) -> pd.DataFrame:
+    """
+    Read NOAA HATS data file
+
+    Parameters
+    ----------
+    infile
+        File to read
+
+    gas
+        Gas we assume is in the file
+
+    source
+        Source of the file
+
+    skiprows
+        Number of rows to skip when reading the file
+
+    sep
+        Separator to assume when reading the file
+
+    Returns
+    -------
+        Read data
+    """
+    with open(infile) as fh:
+        file_content = fh.read()
+
+    gas_file = infile.stem.split("_")[2].lower()
+
+    if gas != gas_file:
+        msg = f"{gas=}, {gas_file=}"
+        raise AssertionError(msg)
+
+    try:
+        unit = re_search_and_retrieve_group(
+            r"Global monthly data are provided in .*, (?P<unit>\S*)",
+            file_content,
+            "unit",
+        )
+    except ValueError:
+        print(f"Missing units for {infile=}")
+        raise
+
+    if unit.endswith("."):
+        unit = unit[:-1]
+
+    tmp = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep)
+
+    year_col = tmp.columns[0]
+    if not year_col.endswith("YYYY"):
+        raise AssertionError()
+
+    month_col = tmp.columns[1]
+    if not month_col.endswith("MM"):
+        raise AssertionError()
+
+    tmp = tmp.set_index([year_col, month_col])
+    tmp.index.names = ["year", "month"]
+
+    res_l = []
+    for c in tmp:
+        c = cast(str, c)
+        if (
+            c.endswith("sd")
+            or not c.endswith(gas.upper())
+            or any(v in c for v in ("NH", "SH", "Global"))
+        ):
+            continue
+
+        station = c.split("_")[1]
+        station_dat = (
+            tmp[c].dropna().to_frame("value")
+        )  # .rename({c: "value"}, axis="columns")
+        station_dat["site_code"] = station
+
+        for line in file_content.splitlines():
+            if line.startswith(f"#  {station}"):
+                lat_lon_info = line.split("(")[1].split(")")[0]
+
+                if lat_lon_info == "90S":
+                    lat = -90.0
+                    lon = 0.0
+
+                else:
+                    lat_s = lat_lon_info.split(",")[0]
+                    if lat_s.endswith("N"):
+                        lat = float(lat_s[:-1])
+                    elif lat_s.endswith("S"):
+                        lat = -float(lat_s[:-1])
+                    else:
+                        raise AssertionError(lat_s)
+
+                    lon_s = lat_lon_info.split(",")[1]
+                    if lon_s.endswith("W"):
+                        lon = -float(lon_s[:-1])
+                    elif lon_s.endswith("E"):
+                        lon = float(lon_s[:-1])
+                    else:
+                        raise AssertionError(lon_s)
+
+        station_dat["latitude"] = lat
+        station_dat["longitude"] = lon
+
+        res_l.append(station_dat)
+
+    res = pd.concat(res_l)
+    res["gas"] = gas
+    res["source"] = source
+    res["unit"] = unit
+
+    return res.reset_index()

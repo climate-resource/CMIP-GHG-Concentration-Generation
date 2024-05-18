@@ -96,8 +96,6 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
         print(msg)
         continue
 
-    times_l.append(cftime.datetime(year, month, 15))
-
     interpolated_ym = local.binned_data_interpolation.interpolate(ymdf)
     show_plot = False
     if np.isnan(interpolated_ym).any():
@@ -107,6 +105,7 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 
     else:
         interpolated_dat_l.append(interpolated_ym)
+        times_l.append(cftime.datetime(year, month, 15))
 
     if (year, month) in year_month_plot or show_plot:
         # This will break if we ever change our internal gridding logic, ok for now.

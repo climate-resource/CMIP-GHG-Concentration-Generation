@@ -59,6 +59,9 @@ def configure_notebooks(
     for c_noaa_in_situ in config.process_noaa_in_situ_data:
         dependencies_noaa.append(c_noaa_in_situ.processed_monthly_data_with_loc_file)
 
+    for c_noaa_hats in config.process_noaa_hats_data:
+        dependencies_noaa.append(c_noaa_hats.processed_monthly_data_with_loc_file)
+
     dependencies_agage = []
     for c_ale in config.retrieve_and_extract_ale_data:
         dependencies_agage.append(c_ale.processed_monthly_data_with_loc_file)
@@ -104,16 +107,16 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("004y_process-scripps-data") / "0049_plot-overview-scripps"
-            ],
-            configuration=(),
-            dependencies=dependencies_law_dome,
-            targets=(),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
+        # ConfiguredNotebook(
+        #     unconfigured_notebook=uc_nbs_dict[
+        #         Path("004y_process-scripps-data") / "0049_plot-overview-scripps"
+        #     ],
+        #     configuration=(),
+        #     dependencies=dependencies_law_dome,
+        #     targets=(),
+        #     config_file=config_bundle.config_hydrated_path,
+        #     step_config_id=step_config_id,
+        # ),
     ]
 
     return configured_notebooks
@@ -144,13 +147,12 @@ step: UnconfiguredNotebookBasedStep[
             summary="plot - Plot Law Dome observations overview",
             doc="Plot an overview of the Law Dome observations for all gases",
         ),
-        UnconfiguredNotebook(
-            notebook_path=Path("004y_process-scripps-data")
-            / "0049_plot-overview-scripps",
-            raw_notebook_ext=".py",
-            summary="plot - Plot Scripps observations overview",
-            doc="Plot an overview of the Scripps observations for all gases",
-        ),
+        # UnconfiguredNotebook(
+        #     notebook_path=Path("004y_process-scripps-data") / "0049_plot-overview-scripps",
+        #     raw_notebook_ext=".py",
+        #     summary="plot - Plot Scripps observations overview",
+        #     doc="Plot an overview of the Scripps observations for all gases",
+        # ),
     ],
     configure_notebooks=configure_notebooks,
 )

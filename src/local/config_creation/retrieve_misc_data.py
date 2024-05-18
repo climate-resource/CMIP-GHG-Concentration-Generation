@@ -30,8 +30,8 @@ RETRIEVE_MISC_DATA_STEPS = [
         primap=PRIMAPConfig(
             raw_dir=Path("data/raw/primap"),
             download_url=URLSource(
-                url="https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_27-Feb-2024.nc?download=1",
-                known_hash="12f4097cd380cb7bb5e42ab6382fabbc5d63a478da94b5c5bb207e88c210fad8",
+                url="https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_no_rounding_27-Feb-2024.nc?download=1",
+                known_hash="be25ecff6639638015e3a7fc7b9488de9c048bddaed1fa1a7f1d08fde12e9c04",
             ),
         ),
     )

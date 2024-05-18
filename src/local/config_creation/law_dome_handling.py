@@ -102,6 +102,30 @@ def create_smooth_law_dome_data_config(
                     ),
                 )
             )
+
+        elif gas == "n2o":
+            res.append(
+                SmoothLawDomeDataConfig(
+                    step_config_id=gas,
+                    gas=gas,
+                    n_draws=n_draws,
+                    smoothed_draws_file=interim_dir
+                    / f"law-dome_{gas}_smoothed_all-draws.csv",
+                    smoothed_median_file=interim_dir
+                    / f"law-dome_{gas}_smoothed_median.csv",
+                    noise_adder=NoiseAdderPercentageXNoise(
+                        x_ref=Q(2024, "yr"),
+                        x_relative_random_error=Q(90, "yr") / Q(2000, "yr"),
+                        y_random_error=Q(3, "ppb"),
+                    ),
+                    point_selector_settings=PointSelectorSettings(
+                        window_width=Q(300, "yr"),
+                        minimum_data_points_either_side=7,
+                        maximum_data_points_either_side=15,
+                    ),
+                )
+            )
+
         else:
             raise NotImplementedError(gas)
 

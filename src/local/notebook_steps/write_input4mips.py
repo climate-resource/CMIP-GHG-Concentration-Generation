@@ -8,7 +8,6 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from pydoit_nb.checklist import get_checklist_file
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
@@ -70,7 +69,7 @@ def configure_notebooks(
                 config_crunch_grids.gmnhsh_mean_annual_file,
             ),
             targets=(
-                get_checklist_file(config_step.input4mips_out_dir),
+                # get_checklist_file(config_step.input4mips_out_dir),
                 config_step.complete_file,
             ),
             config_file=config_bundle.config_hydrated_path,
