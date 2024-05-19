@@ -249,7 +249,12 @@ retrieve_and_process_neem_data:
   step_config_id: only
 retrieve_and_process_scripps_data: []
 retrieve_misc_data:
-- natural_earth:
+- hadcrut5:
+    download_url:
+      known_hash: 1063dbe93d7b486464c4c3b06466cd2a4a836638249c1552619a40cda2d78298
+      url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
+    raw_dir: data/raw/hadcrut5
+  natural_earth:
     countries_shape_file_name: ne_110m_admin_0_countries.shx
     download_urls:
     - known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110

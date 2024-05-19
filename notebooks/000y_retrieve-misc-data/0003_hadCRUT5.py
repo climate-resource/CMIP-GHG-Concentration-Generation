@@ -18,7 +18,6 @@
 # Retrieve data from [HadCRUT5](https://www.metoffice.gov.uk/hadobs/hadcrut5/index.html).
 #
 # Use the global-mean file from HadCRUT5 analysis (i.e. including better infilling).
-# URL: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
 
 # %% [markdown]
 # ## Imports
@@ -68,9 +67,24 @@ fnames = pooch.retrieve(
     url=url_source.url,
     known_hash=url_source.known_hash,
     fname=fname,
-    path=config_step.primap.raw_dir,
+    path=config_step.hadcrut5.raw_dir,
     progressbar=True,
 )
 
 # %%
 generate_directory_checklist(config_step.hadcrut5.raw_dir)
+
+# %%
+import xarray as xr
+
+comment = xr.load_dataset(
+    config_step.hadcrut5.raw_dir / config_step.hadcrut5.download_url.url.split("/")[-1]
+).attrs[
+    "comment"
+]  # ["tas_mean"].plot.line()
+if "1961-1990 climatology" in comment:
+    ref_start_year = 1961
+    ref_end_year = 1990
+else:
+    msg = "Unexpected reference period"
+    raise AssertionError(msg)

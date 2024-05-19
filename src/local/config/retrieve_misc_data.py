@@ -29,6 +29,9 @@ class RetrieveMiscDataConfig:
     primap: PRIMAPConfig
     """Configuration for retrieving data from PRIMAP"""
 
+    hadcrut5: HadCRUT5Config
+    """Configuration for retrieving data from HadCRUT5"""
+
 
 @frozen
 class NaturalEarthConfig:
@@ -50,6 +53,19 @@ class NaturalEarthConfig:
 class PRIMAPConfig:
     """
     Configuration class for retrieving PRIMAP data
+    """
+
+    raw_dir: Path
+    """Directory in which to save the raw data"""
+
+    download_url: URLSource
+    """URL from which to download data"""
+
+
+@frozen
+class HadCRUT5Config:
+    """
+    Configuration class for retrieving HadCRUT5 data
     """
 
     raw_dir: Path

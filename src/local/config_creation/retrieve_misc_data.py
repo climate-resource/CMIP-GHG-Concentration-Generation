@@ -9,6 +9,7 @@ from pathlib import Path
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_misc_data import (
+    HadCRUT5Config,
     NaturalEarthConfig,
     PRIMAPConfig,
     RetrieveMiscDataConfig,
@@ -32,6 +33,14 @@ RETRIEVE_MISC_DATA_STEPS = [
             download_url=URLSource(
                 url="https://zenodo.org/records/10705513/files/Guetschow_et_al_2024-PRIMAP-hist_v2.5.1_final_no_rounding_27-Feb-2024.nc?download=1",
                 known_hash="be25ecff6639638015e3a7fc7b9488de9c048bddaed1fa1a7f1d08fde12e9c04",
+            ),
+        ),
+        hadcrut5=HadCRUT5Config(
+            raw_dir=Path("data/raw/hadcrut5"),
+            download_url=URLSource(
+                # Use the analysis time series, rather than non-infilled
+                url="https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc",
+                known_hash="1063dbe93d7b486464c4c3b06466cd2a4a836638249c1552619a40cda2d78298",
             ),
         ),
     )
