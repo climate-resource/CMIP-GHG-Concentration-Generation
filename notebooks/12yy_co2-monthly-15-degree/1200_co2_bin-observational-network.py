@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - binning
+# # CO$_2$ - binning
 #
 # Bin the observational network.
 
@@ -38,7 +38,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
+step: str = "calculate_co2_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -66,17 +66,6 @@ config_process_noaa_in_situ_data = get_config_for_step_id(
     step="process_noaa_in_situ_data",
     step_config_id=config_step.gas,
 )
-config_process_agage_data_gc_md = get_config_for_step_id(
-    config=config,
-    step="retrieve_and_extract_agage_data",
-    step_config_id=f"{config_step.gas}_gc-md_monthly",
-)
-config_process_ale_data = get_config_for_step_id(
-    config=config, step="retrieve_and_extract_ale_data", step_config_id="monthly"
-)
-config_process_gage_data = get_config_for_step_id(
-    config=config, step="retrieve_and_extract_gage_data", step_config_id="monthly"
-)
 
 
 # %% [markdown]
@@ -90,9 +79,6 @@ all_data_l = []
 for f in [
     config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
     config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
-    config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
-    config_process_ale_data.processed_monthly_data_with_loc_file,
-    config_process_gage_data.processed_monthly_data_with_loc_file,
 ]:
     try:
         all_data_l.append(local.raw_data_processing.read_and_check_binning_columns(f))

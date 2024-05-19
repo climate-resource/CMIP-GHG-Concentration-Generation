@@ -37,16 +37,18 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("ch4", "n2o")
+    gases_to_write = ("co2", "ch4", "n2o")
     start_year = 1
     end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
+            ("co2", "in-situ"),
+            ("co2", "surface-flask"),
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
-            ("n2o", "surface-flask"),
             ("n2o", "hats"),
+            ("n2o", "surface-flask"),
         )
     )
 
@@ -55,7 +57,7 @@ def create_dev_config() -> Config:
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4", "n2o"), n_draws=250
+        gases=("co2", "ch4", "n2o"), n_draws=250
     )
 
     monthly_fifteen_degree_pieces_configs = (
@@ -90,16 +92,18 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4", "n2o")
+    gases_to_write = ("co2", "ch4", "n2o")
     start_year = 1750
     end_year = 2022
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
+            ("co2", "in-situ"),
+            ("co2", "surface-flask"),
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
-            ("n2o", "surface-flask"),
             ("n2o", "hats"),
+            ("n2o", "surface-flask"),
         )
     )
 
@@ -108,7 +112,7 @@ def create_ci_config() -> Config:
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4", "n2o"), n_draws=10
+        gases=("co2", "ch4", "n2o"), n_draws=10
     )
 
     monthly_fifteen_degree_pieces_configs = (

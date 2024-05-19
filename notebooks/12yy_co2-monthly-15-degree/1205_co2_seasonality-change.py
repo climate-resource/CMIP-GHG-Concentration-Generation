@@ -418,7 +418,6 @@ if not config.ci:
         .data.to(conc_unit)
         .m,
         neem_data["value"],
-        rtol=1e-5,
     )
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")

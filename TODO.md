@@ -7,6 +7,15 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
     - check data sources, make sure they're all downloaded
     - add in retrieval of HadCRUT
     - copy CH4, tweak for CO2 methodology
+    - check whether we should be performing our seasonality change stuff
+      against NPP rather than our CO2-temp composite
+      (assumption is no given we don't have NPP back in time,
+      but the switch in methods does feel weird to me)
+        - note that seasonality change is kept constant pre-1850
+
+- rename the "**02_***_global-mean-latitudinal-gradient-seasonality.py" notebooks to
+  "**02_***_obs-network-global-mean-latitudinal-gradient-seasonality.py"
+  given that is what they actually do.
 
 - pre-industrial handling: Section 3.4 helps, but will also have to look at the code to work out when the spline to pre-industrial concs begins.
 
