@@ -8,6 +8,23 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
     - add in retrieval of HadCRUT
     - copy CH4, tweak for CO2 methodology
 
+- pre-industrial handling: Section 3.4 helps, but will also have to look at the code to work out when the spline to pre-industrial concs begins.
+
+    - Recipe appears to be:
+
+        - use observations
+        - prescribe in global-mean from other sources (other sources specified in `switch globalpara.parameter` cases in `main_script_histGHG*`)
+        - interpolate to fill gaps
+        - extrapolate constant (backwards) or linear (forwards) to fill other gaps
+
+    - (Effectively) non-zero PI concs:
+
+        - CH2Cl2
+        - CH3Br
+        - CH3Cl
+        - CHCl3
+        - CF4
+
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
 
