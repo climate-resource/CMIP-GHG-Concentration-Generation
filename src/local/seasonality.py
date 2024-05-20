@@ -6,7 +6,9 @@ from __future__ import annotations
 
 import numpy as np
 import xarray as xr
+from attrs import define
 
+from local.regressors import LinearRegressionResult
 from local.xarray_time import convert_time_to_year_month
 
 
@@ -138,3 +140,104 @@ def calculate_seasonality_change_eofs_pcs(
         raise AssertionError(msg)
 
     return seasonality_anomalies, res
+
+
+@define
+class CO2SeasonalityChangeRegression:
+    """
+    CO2 seasonality change regression
+
+    Holds both the methods for the calculation and the regression result.
+    """
+
+    ref_period_start: int = 1850
+    """Start of the reference period for the composite's inputs"""
+
+    ref_period_end: int = 1880
+    """End of the reference period for the composite's inputs"""
+
+    norm_period_start: int = 2000
+    """Start of the period over which the composite should have a value of 1"""
+
+    norm_period_end: int = 2010
+    """End of the period over which the composite should have a value of 1"""
+
+    temperature_smoothing_window: int = 15
+    """Smoothing window to use for temperature smoothing"""
+
+    temperature_smoothing_min_values: int = 5
+    """Minimum number of values to use in the temperature smoothing window"""
+
+    regression_result: LinearRegressionResult | None = None
+    """Regression result"""
+
+    def get_normed_ts(self, ts: xr.DataArray) -> xr.DataArray:
+        """
+        Get normed timeseries
+
+        Parameters
+        ----------
+        ts
+            Timeseries to norm
+
+        Returns
+        -------
+            Normed timeseries according to self's attributes.
+        """
+        ts_ref_period_mean = ts.sel(
+            year=range(self.ref_period_start, self.ref_period_end + 1)
+        ).mean()
+        ts_norm_period_mean = ts.sel(
+            year=range(self.norm_period_start, self.norm_period_end + 1)
+        ).mean()
+
+        ts_normed = (ts - ts_ref_period_mean) / (
+            ts_norm_period_mean - ts_ref_period_mean
+        )
+
+        np.testing.assert_allclose(
+            1.0,
+            ts_normed.sel(year=range(self.norm_period_start, self.norm_period_end + 1))
+            .mean()
+            .pint.dequantify(),
+        )
+
+        return ts_normed
+
+    def get_composite(
+        self, temperatures: xr.DataArray, concentrations: xr.DataArray
+    ) -> xr.DataArray:
+        """
+        Get composite timeseries
+
+        Parameters
+        ----------
+        temperatures
+            Temperatures. These should be raw (i.e. not smoothed).
+
+        concentrations
+            Annual-, global-mean CO$_2$ concentrations.
+
+        Returns
+        -------
+            Composite timeseries to use in the regresssion.
+        """
+        # The paper and code are super unclear about what was done with temperature smoothing.
+        # This guess is as good as any.
+        temperatures_smoothed = temperatures.rolling(
+            year=self.temperature_smoothing_window,
+            center=True,
+            min_periods=self.temperature_smoothing_min_values,
+        ).mean()
+        if temperatures_smoothed.isnull().any():
+            msg = "NaN in temperatures_smoothed"
+            raise AssertionError(msg)
+
+        temperatures_normed = self.get_normed_ts(temperatures_smoothed)
+        concentrations_normed = self.get_normed_ts(concentrations)
+
+        res = (temperatures_normed + concentrations_normed) / 4 + (
+            temperatures_normed * concentrations_normed
+        ) / 2
+
+        return res

@@ -25,14 +25,12 @@
 # %%
 from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import cast
 
 import cf_xarray.units
 import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
-import pandas as pd
 import pint
 import pint_xarray
 import primap2  # type: ignore
@@ -86,10 +84,6 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_smooth_law_dome_data = get_config_for_step_id(
-    config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
-)
-
 config_retrieve_misc = get_config_for_step_id(
     config=config, step="retrieve_misc_data", step_config_id="only"
 )
@@ -100,16 +94,6 @@ config_retrieve_misc = get_config_for_step_id(
 
 # %% [markdown]
 # ### Helper functions
-
-
-# %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str | float:
-    """Get a column's value, asserting that it only has one value"""
-    res = idf[col].unique()
-    if len(res) != 1:
-        raise AssertionError
-
-    return cast(str | float, res[0])
 
 
 # %%
@@ -138,12 +122,6 @@ lat_grad_eofs_obs_network = xr.load_dataset(
     config_step.observational_network_latitudinal_gradient_eofs_file
 ).pint.quantify()
 lat_grad_eofs_obs_network
-
-# %%
-smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
-smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
-smooth_law_dome["source"] = "law_dome"
-smooth_law_dome
 
 # %% [markdown]
 # ### Define some important constants
@@ -371,12 +349,7 @@ out
 (out["principal-components"] @ out["eofs"]).sel(year=1980).plot()
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=1).plot()
-
-# %%
-assert (
-    False
-), "check with Malte: reversing latitudinal gradient seems wrong, maybe doesn't matter"
+(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()
 
 # %% [markdown]
 # Quick check that our output matches the observational network in the years they overlap.

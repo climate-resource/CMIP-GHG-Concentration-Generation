@@ -34,6 +34,7 @@ import openscm_units
 import pint
 import pint_xarray
 import xarray as xr
+from attrs import evolve
 from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
@@ -59,7 +60,8 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
-QuantityOSCM = openscm_units.unit_registry.Quantity
+opscm_reg = pint_xarray.setup_registry(openscm_units.unit_registry)
+QuantityOSCM = opscm_reg.Quantity
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -93,16 +95,6 @@ config_retrieve_misc = get_config_for_step_id(
 
 # %% [markdown]
 # ### Helper functions
-
-
-# %%
-# def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str | float:
-#     """Get a column's value, asserting that it only has one value"""
-#     res = idf[col].unique()
-#     if len(res) != 1:
-#         raise AssertionError
-
-#     return cast(str | float, res[0])
 
 
 # %%
@@ -185,69 +177,7 @@ if len(seasonality_change_eofs_obs_network["eof"]) != exp_n_eofs:
 # We fill this using a regression against global-mean concentrations and temperatures.
 
 # %%
-assert False, "move the below into local"
-
-# %%
-from attrs import define
-
-
-@define
-class CO2SeasonalityChangeRegression:
-    ref_period_start: int = 1850
-    """Start of the reference period for the composite's inputs"""
-
-    ref_period_end: int = 1880
-    """End of the reference period for the composite's inputs"""
-
-    norm_period_start: int = 2000
-    """Start of the period over which the composite should have a value of 1"""
-
-    norm_period_end: int = 2010
-    """End of the period over which the composite should have a value of 1"""
-
-    regression_result: local.regressors.LinearRegressionResult | None = None
-    """Regression result"""
-
-    def get_normed_ts(self, ts: xr.DataArray) -> xr.DataArray:
-        ts_ref_period_mean = ts.sel(
-            year=range(self.ref_period_start, self.ref_period_end + 1)
-        ).mean()
-        ts_norm_period_mean = ts.sel(
-            year=range(self.norm_period_start, self.norm_period_end + 1)
-        ).mean()
-
-        ts_normed = (ts - ts_ref_period_mean) / (
-            ts_norm_period_mean - ts_ref_period_mean
-        )
-
-        np.testing.assert_allclose(
-            1.0,
-            ts_normed.sel(year=range(self.norm_period_start, self.norm_period_end + 1))
-            .mean()
-            .pint.dequantify(),
-        )
-
-        return ts_normed
-
-    def get_composite(
-        self, temperatures: xr.DataArray, concentrations: xr.DataArray
-    ) -> xr.DataArray:
-        # The paper and code are super unclear about what was done with temperature smoothing.
-        # This guess is as good as any.
-        temperatures_normed = self.get_normed_ts(
-            temperatures.rolling(year=15, center=True, min_periods=5).mean()
-        )
-        concentrations_normed = self.get_normed_ts(concentrations)
-
-        res = (temperatures_normed + concentrations_normed) / 4 + (
-            temperatures_normed * concentrations_normed
-        ) / 2
-
-        return res
-
-
-# %%
-regressor = CO2SeasonalityChangeRegression()
+regressor = local.seasonality.CO2SeasonalityChangeRegression()
 regressor
 
 # %%
@@ -273,11 +203,11 @@ with axes_vertical_split() as axes:
 
 # %%
 x = QuantityOSCM(
-    regression_timeseries_same_years.data,
+    regression_timeseries_same_years.data.m,
     str(regression_timeseries_same_years.data.units),
 )
 A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(pc0_obs_network.data, str(pc0_obs_network.data.units))
+y = QuantityOSCM(pc0_obs_network.data.m, str(pc0_obs_network.data.units))
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m, c = res[0]
@@ -291,19 +221,11 @@ latitudinal_gradient_pc0_composite_regression = local.regressors.LinearRegressio
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
 ax.plot(x.m, (m * x + c).m, color="tab:orange", label="regression")
-# ax.plot(
-#     np.hstack([0, x.m]),
-#     (m * np.hstack([0, x]) + c).m,
-#     color="tab:orange",
-#     label="regression-extended",
-# )
 ax.set_ylabel("PC0")
 ax.set_xlabel("Composite timeseries")
 ax.legend()
 
 # %%
-from attrs import evolve
-
 regressor_incl_result = evolve(
     regressor, regression_result=latitudinal_gradient_pc0_composite_regression
 )
@@ -347,7 +269,7 @@ pc0_regression_extended = (
     m
     * regression_timeseries_extended.sel(
         year=years_to_fill_with_regression
-    ).pint.quantify(unit_registry=openscm_units.unit_registry)
+    ).pint.quantify(unit_registry=opscm_reg)
     + c
 )
 pc0_regression_extended = pc0_regression_extended.assign_coords(eof=0)
@@ -379,9 +301,6 @@ with axes_vertical_split() as axes:
     axes[1].set_xlim([1900, 2030])
 
 allyears_pc0
-
-# %%
-assert False, "This jump in EOF score looks pretty non-ideal"
 
 # %% [markdown]
 # ### Join the PCs back together
