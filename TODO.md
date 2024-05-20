@@ -34,6 +34,8 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
         - CHCl3
         - CF4
 
+- use better data source to extend CO2 and N2O from the start of Law Dome back to year 1
+
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted
 

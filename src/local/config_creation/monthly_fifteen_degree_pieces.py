@@ -178,6 +178,8 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
         / "co2_allyears-lat-gradient-eofs-pcs.nc",
         latitudinal_gradient_pc0_co2_fossil_emissions_regression_file=interim_dir
         / "co2_pc0-co2-fossil-emissions-regression.yaml",
+        seasonality_change_allyears_pcs_eofs_file=interim_dir
+        / "co2_allyears-seasonality-change-eofs-pcs.nc",
         seasonality_change_temperature_co2_conc_regression_file=interim_dir
         / "co2_seasonality-change_temp-conc-regression.yaml",
         global_annual_mean_allyears_file=interim_dir

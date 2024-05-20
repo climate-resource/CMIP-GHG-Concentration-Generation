@@ -13,10 +13,10 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - extend the global-, annual-mean
+# # CO$_2$ - extend the global-, annual-mean
 #
 # Extend the global-, annual-mean back in time.
-# For CH$_4$, we do this by combining the values from ice cores etc.
+# For CO$_2$, we do this by combining the values from ice cores etc.
 # and our latitudinal gradient information.
 
 # %% [markdown]
@@ -25,13 +25,12 @@
 # %%
 from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import cast
+from typing import Any
 
 import cf_xarray.units
-import matplotlib.axes
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-import numpy.typing as npt
 import openscm_units
 import pandas as pd
 import pint
@@ -66,7 +65,7 @@ QuantityOSCM = openscm_units.unit_registry.Quantity
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
+step: str = "calculate_co2_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -88,14 +87,6 @@ config_smooth_law_dome_data = get_config_for_step_id(
     config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
 )
 
-config_process_epica = get_config_for_step_id(
-    config=config, step="retrieve_and_process_epica_data", step_config_id="only"
-)
-
-config_process_neem = get_config_for_step_id(
-    config=config, step="retrieve_and_process_neem_data", step_config_id="only"
-)
-
 
 # %% [markdown]
 # ## Action
@@ -105,13 +96,13 @@ config_process_neem = get_config_for_step_id(
 
 
 # %%
-def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> str | float:
+def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> Any:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
     if len(res) != 1:
         raise AssertionError
 
-    return cast(str | float, res[0])
+    return res[0]
 
 
 # %%
@@ -130,7 +121,7 @@ def axes_vertical_split(
 # ### Load data
 
 # %%
-global_annual_mean_obs_network: xr.DataArray = xr.load_dataarray(  # type: ignore
+global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network
@@ -147,25 +138,12 @@ smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
 smooth_law_dome["source"] = "law_dome"
 smooth_law_dome
 
-# %%
-neem_data = pd.read_csv(config_process_neem.processed_data_with_loc_file)
-neem_data["year"] = neem_data["year"].round(0)
-neem_data["source"] = "neem"
-neem_data.sort_values("year")
-
-# %%
-epica_data = pd.read_csv(config_process_epica.processed_data_with_loc_file)
-epica_data["source"] = "epica"
-epica_data.sort_values("year")
-
 # %% [markdown]
 # ### Define some important constants
 
 # %%
 if not config.ci:
-    out_years: npt.NDArray[np.int64] = np.arange(
-        1, global_annual_mean_obs_network["year"].max() + 1
-    )
+    out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
 
 else:
     out_years = np.arange(1750, global_annual_mean_obs_network["year"].max() + 1)
@@ -199,42 +177,8 @@ law_dome_lat_nearest = float(
 law_dome_lat_nearest
 
 # %%
-neem_lat = get_col_assert_single_value(neem_data, "latitude")
-neem_lat
-
-# %%
-neem_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=neem_lat, method="nearest")["lat"]
-)
-neem_lat_nearest
-
-# %%
-epica_lat = get_col_assert_single_value(epica_data, "latitude")
-epica_lat
-
-# %%
-epica_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=epica_lat, method="nearest")["lat"]
-)
-epica_lat_nearest
-
-# %%
 conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
 conc_unit
-
-# %%
-neem_unit = get_col_assert_single_value(neem_data, "unit")
-if neem_unit != conc_unit:
-    raise AssertionError
-
-neem_unit
-
-# %%
-epica_unit = get_col_assert_single_value(epica_data, "unit")
-if epica_unit != conc_unit:
-    raise AssertionError
-
-epica_unit
 
 # %% [markdown]
 # #### Create annual-mean latitudinal gradient
@@ -290,107 +234,17 @@ law_dome_years_full_field = allyears_latitudinal_gradient + offset
 law_dome_years_full_field
 
 # %% [markdown]
-# #### EPICA
-#
-# Then we add a couple of data points from EPICA to round out the Law Dome timeseries
-# so we can have a timeseries that goes back to year 1.
-# There are probably better ways to do this, but this is fine for now.
-
-# %%
-# Make sure that we have epica data before our start year,
-# so that the interpolation will have something to join with.
-epica_data_pre_start_year = -50
-epica_data_to_add = epica_data[
-    (epica_data["year"] > epica_data_pre_start_year)
-    & (epica_data["year"] < smooth_law_dome["year"].min())
-].sort_values(by="year")
-epica_data_to_add
-
-# %%
-epica_lat
-
-# %% [markdown]
-# We simply linearly interpolate the EPICA data to get a yearly timeseries over the period of interest.
-# We make sure that the interpolated values match our current values at the year in which Law Dome starts
-# to avoid having a jump.
-# This isn't perfect and could be investigated further, but will do for now.
-
-# %%
-law_dome_start_year = law_dome_da["year"].min()
-
-if not config.ci:
-    years_use_epica = np.arange(1, law_dome_start_year)
-else:
-    years_use_epica = np.empty(0)
-
-years_use_epica
-
-# %%
-if years_use_epica.size > 0:
-    harmonisation_value = float(
-        law_dome_years_full_field.sel(year=law_dome_start_year)
-        .sel(lat=epica_lat, method="nearest")
-        .data.m
-    )
-    harmonisation_value
-
-# %%
-if years_use_epica.size > 0:
-    fig, ax = plt.subplots()
-
-    epica_da = (
-        xr.DataArray(
-            data=np.hstack([epica_data_to_add["value"], harmonisation_value]),
-            dims=["year"],
-            coords=dict(
-                year=np.hstack([epica_data_to_add["year"], law_dome_start_year])
-            ),
-            attrs=dict(units=conc_unit),
-        )
-        .interp(year=years_use_epica)
-        .pint.quantify()
-    )
-
-    epica_da.pint.dequantify().plot(ax=ax, label="interpolated")
-    epica_data[
-        (epica_data["year"] > -1000) & (epica_data["year"] < 200)  # noqa: PLR2004
-    ].plot.scatter(x="year", y="value", ax=ax, color="tab:orange", label="EPICA raw")
-
-    ax.legend()
-
-    epica_da
-
-# %%
-if years_use_epica.size > 0:
-    offset_epica = epica_da - allyears_latitudinal_gradient.sel(
-        lat=epica_lat, method="nearest"
-    )
-    epica_years_full_field = allyears_latitudinal_gradient + offset_epica
-    epica_years_full_field
-
-# %% [markdown]
 # #### Join back together
 
 # %%
-if years_use_epica.size > 0:
-    allyears_full_field = xr.concat(
-        [epica_years_full_field, law_dome_years_full_field, obs_network_full_field],
-        "year",
-    )
+mostyears_full_field = xr.concat(
+    [law_dome_years_full_field, obs_network_full_field], "year"
+)
 
-else:
-    if not config.ci:
-        msg = "Should be using EPICA"
-        raise AssertionError(msg)
-
-    allyears_full_field = xr.concat(
-        [law_dome_years_full_field, obs_network_full_field], "year"
-    )
-
-allyears_full_field
+mostyears_full_field
 
 # %%
-allyears_full_field.plot(hue="lat")
+mostyears_full_field.plot(hue="lat")
 
 # %% [markdown]
 # #### Check our full field calculation
@@ -398,10 +252,8 @@ allyears_full_field.plot(hue="lat")
 # There's a lot of steps above, if we have got this right the field will:
 #
 # - have an annual-average that matches:
-#    - NEEM in the NEEM latitude (for the years of NEEM observations)
 #    - our smoothed Law Dome in the Law Dome latitude
 #      (for the years of the smoothed Law Dome timeseries)
-#    - EPICA in the EPICA latitude (for the years of EPICA observations)
 #
 # - be decomposable into:
 #   - a global-mean timeseries (with dims (year,))
@@ -413,35 +265,18 @@ allyears_full_field.plot(hue="lat")
 # %%
 if not config.ci:
     np.testing.assert_allclose(
-        allyears_full_field.sel(lat=neem_lat, method="nearest")
-        .sel(year=neem_data["year"].values)
-        .data.to(conc_unit)
-        .m,
-        neem_data["value"],
-    )
-    np.testing.assert_allclose(
-        allyears_full_field.sel(lat=law_dome_lat, method="nearest")
+        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
         .sel(year=smooth_law_dome_to_use["year"].values)
         .data.to(conc_unit)
         .m,
         smooth_law_dome_to_use["value"],
     )
 else:
-    neem_compare_years = neem_data["year"].values[
-        np.isin(neem_data["year"].values, out_years)  # type: ignore
-    ]
-    np.testing.assert_allclose(
-        allyears_full_field.sel(lat=neem_lat, method="nearest")
-        .sel(year=neem_compare_years)
-        .data.to(conc_unit)
-        .m,
-        neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
-    )
     law_dome_compare_years = smooth_law_dome_to_use["year"].values[
         np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
-        allyears_full_field.sel(lat=law_dome_lat, method="nearest")
+        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
         .sel(year=law_dome_compare_years)
         .data.to(conc_unit)
         .m,
@@ -450,28 +285,56 @@ else:
         ]["value"],
     )
 
-if years_use_epica.size > 0:
-    np.testing.assert_allclose(
-        allyears_full_field.sel(lat=epica_lat, method="nearest")
-        .sel(year=epica_da["year"].values)
-        .data.to(conc_unit)
-        .m,
-        epica_da.data.m,
-    )
-
-elif not config.ci:
-    msg = "Should be using EPICA"
-    raise AssertionError(msg)
-
 # %%
-allyears_full_field
-
-# %%
-tmp = allyears_full_field.copy()
-tmp.name = "allyears_global_annual_mean"
-allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
+tmp = mostyears_full_field.copy()
+tmp.name = "mostyears_global_annual_mean"
+mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
     tmp
 )
+mostyears_global_annual_mean
+
+# %% [markdown]
+# #### Extending back to year 1
+#
+# We simply assume that global-mean concentrations are constant
+# before the start of the Law Dome record.
+
+# %%
+back_extend_years = np.setdiff1d(
+    out_years[np.where(out_years < mostyears_global_annual_mean["year"].values[-1])],
+    mostyears_global_annual_mean["year"],
+)
+back_extend_years
+
+# %%
+if back_extend_years.size > 0:
+    tmp = mostyears_global_annual_mean.sel(
+        year=[mostyears_global_annual_mean["year"][0]]
+    )
+    back_extended_global_annual_mean = (
+        mostyears_global_annual_mean.pint.dequantify()
+        .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
+        .pint.quantify()
+    )
+    allyears_global_annual_mean = (
+        mostyears_global_annual_mean.pint.dequantify()
+        .interp(year=out_years, kwargs={"fill_value": tmp.data[0].m})
+        .pint.quantify()
+    )
+
+    back_extended_full_field = (
+        allyears_latitudinal_gradient.sel(year=back_extend_years)
+        + back_extended_global_annual_mean
+    )
+    allyears_full_field = xr.concat(
+        [back_extended_full_field, mostyears_full_field], "year"
+    )
+
+
+else:
+    allyears_full_field = mostyears_full_field
+    allyears_global_annual_mean = mostyears_global_annual_mean
+
 allyears_global_annual_mean
 
 # %% [markdown]

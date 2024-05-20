@@ -62,6 +62,14 @@ class CalculateCO2MonthlyFifteenDegreePieces:
     Path in which to save the regression between pc0 and fossil CO2 emissions
     """
 
+    seasonality_change_allyears_pcs_eofs_file: Path
+    """
+    Path in which to save the seasonality change information for all years
+
+    This contains the PCs and EOFs separately,
+    but the PCs have been extended to cover all the years of interest.
+    """
+
     seasonality_change_temperature_co2_conc_regression_file: Path
     """
     Path in which to save the regression between delta seasonality and the composite temp-conc timeseries

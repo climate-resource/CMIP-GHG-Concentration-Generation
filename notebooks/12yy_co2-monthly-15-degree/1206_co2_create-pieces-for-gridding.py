@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CH$_4$ - Create pieces for gridding
+# # CO$_2$ - Create pieces for gridding
 #
 # Here we create:
 #
@@ -59,7 +59,7 @@ Quantity = pint.get_application_registry().Quantity  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
+step: str = "calculate_co2_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
@@ -95,6 +95,12 @@ obs_network_seasonality: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_step.observational_network_seasonality_file
 ).pint.quantify()
 obs_network_seasonality
+
+# %%
+seasonality_change_eofs_pcs: xr.Dataset = xr.load_dataset(
+    config_step.seasonality_change_allyears_pcs_eofs_file
+).pint.quantify()
+seasonality_change_eofs_pcs
 
 # %%
 lat_gradient_eofs_pcs: xr.Dataset = xr.load_dataset(
@@ -147,10 +153,14 @@ plt.show()
 # %% [markdown]
 # ### Calculate seasonality
 #
-# You have to use the global-, annual-mean on a yearly time axis otherwise the time-mean of the seasonality over each year is not zero.
+# Combine the observational network's seasonality and the seasonality change.
 
 # %%
-seasonality_full = global_annual_mean * obs_network_seasonality
+seasonality_full = (
+    obs_network_seasonality
+    + seasonality_change_eofs_pcs["principal-components"]
+    @ seasonality_change_eofs_pcs["eofs"]
+)
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
@@ -191,7 +201,10 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ig
 pcs_monthly = (
     lat_gradient_eofs_pcs["principal-components"]  # type: ignore
     .groupby("eof", squeeze=False)
-    .apply(local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+        atol=1e-7,
+    )
 )
 pcs_monthly
 

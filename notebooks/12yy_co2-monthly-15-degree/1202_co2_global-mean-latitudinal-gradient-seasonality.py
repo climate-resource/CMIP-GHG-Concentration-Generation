@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CO$_2$ - calculate global- annual-mean, latitudinal gradient and seasonality
+# # CO$_2$ - calculate observational network global- annual-mean, latitudinal gradient and seasonality
 #
 # Calculate global-mean, latitudinal gradient and seasonality
 # based on the observational network.

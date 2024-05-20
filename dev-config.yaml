@@ -29,6 +29,7 @@ calculate_co2_monthly_fifteen_degree_pieces:
   observational_network_seasonality_file: data/interim/co2/co2_observational-network_seasonality.nc
   processed_bin_averages_file: data/interim/co2/co2_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/co2/co2_seasonality_fifteen-degree_allyears-monthly.nc
+  seasonality_change_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-seasonality-change-eofs-pcs.nc
   seasonality_change_n_eofs_to_use: 1
   seasonality_change_temperature_co2_conc_regression_file: data/interim/co2/co2_seasonality-change_temp-conc-regression.yaml
   step_config_id: only
