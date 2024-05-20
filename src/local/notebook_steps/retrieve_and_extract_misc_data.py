@@ -78,6 +78,19 @@ def configure_notebooks(
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
+                Path("000y_retrieve-misc-data") / "0003_hadCRUT5"
+            ],
+            configuration=(config_step.hadcrut5.download_url,),
+            dependencies=(),
+            targets=(
+                config_step.hadcrut5.raw_dir
+                / config_step.hadcrut5.download_url.url.split("/")[-1],
+            ),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
     ]
 
     return configured_notebooks
@@ -100,6 +113,12 @@ step: UnconfiguredNotebookBasedStep[
             raw_notebook_ext=".py",
             summary="retrieve - PRIMAP data",
             doc="Retrieve PRIMAP data",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("000y_retrieve-misc-data") / "0003_hadCRUT5",
+            raw_notebook_ext=".py",
+            summary="retrieve - HadCRUT5 data",
+            doc="Retrieve HadCRUT5 data",
         ),
     ],
     configure_notebooks=configure_notebooks,
