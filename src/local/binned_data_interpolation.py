@@ -200,7 +200,7 @@ def to_xarray_dataarray(
         ),
     )
 
-    if da.isnull().any():  # noqa: PD003
+    if da.isnull().any():
         msg = "da should not contain any null values"
         raise AssertionError(msg)
 

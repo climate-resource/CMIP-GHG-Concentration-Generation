@@ -179,7 +179,7 @@ def convert_to_time(
     -------
         Data with time axis
     """
-    inp = inp.stack(time=time_coords)  # noqa: PD013
+    inp = inp.stack(time=time_coords)
     times = inp["time"].to_numpy()
 
     inp = inp.drop_vars(("time", *time_coords)).assign_coords(
@@ -264,7 +264,7 @@ def convert_time_to_year_month(
     -------
         Data with year and month co-ordinates
     """
-    return split_time_to_year_month(  # noqa: PD010
+    return split_time_to_year_month(
         inp=inp,
         time_axis=time_axis,
     ).unstack(time_axis)
