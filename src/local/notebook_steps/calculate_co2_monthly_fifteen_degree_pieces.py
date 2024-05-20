@@ -206,7 +206,7 @@ step: UnconfiguredNotebookBasedStep[
             / "1201_co2_interpolate-observational-network",
             raw_notebook_ext=".py",
             summary="CO2 pieces - Interpolate observational network onto our 15 degree x 60 degree grid",
-            doc="Interpolate the observational data for CO2.",
+            doc="Interpolate the observational data for CO2",
         ),
         UnconfiguredNotebook(
             notebook_path=Path("12yy_co2-monthly-15-degree")
@@ -232,7 +232,7 @@ step: UnconfiguredNotebookBasedStep[
             summary="CO2 pieces - Extend global, annual-mean over the entire time period",
             doc=(
                 "Extend the global, annual-mean over the entire time period of interest "
-                "using ice core records and our latitudinal gradient."
+                "using ice core records and our latitudinal gradient"
             ),
         ),
         UnconfiguredNotebook(
