@@ -46,7 +46,7 @@ step: str = "process_noaa_hats_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "n2o"  # config ID to select for this branch
+step_config_id: str = "sf6"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config

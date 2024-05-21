@@ -92,6 +92,9 @@ process_noaa_surface_flask_data:
 - gas: n2o
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_surface-flask.csv
   step_config_id: n2o
+- gas: sf6
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_sf6_surface-flask.csv
+  step_config_id: sf6
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
   download_urls:
@@ -227,6 +230,17 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: n2o_surface-flask
+- download_complete_file: data/raw/noaa/sf6_surface-flask.complete
+  download_urls:
+  - known_hash: 376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a
+    url: https://gml.noaa.gov/aftp/data/trace_gases/sf6/flask/surface/sf6_surface-flask_ccgg_text.zip
+  gas: sf6
+  interim_files:
+    events_data: data/interim/noaa/events_sf6_surface-flask_raw-consolidated.csv
+    monthly_data: data/interim/noaa/monthly_sf6_surface-flask_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: surface-flask
+  step_config_id: sf6_surface-flask
 retrieve_and_process_epica_data:
 - download_url:
     known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd

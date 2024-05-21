@@ -179,7 +179,7 @@ def read_data_incl_datetime(
         comment="#",
         date_format={},
         parse_dates=datetime_columns,
-        delim_whitespace=True,
+        sep=r"\s+",
     )
     df_events["unit"] = units
 
@@ -237,7 +237,7 @@ def read_flask_monthly_data(
         header=None,
         names=data_fields,
         comment="#",
-        delim_whitespace=True,
+        sep=r"\s+",
         converters={"site": str},  # keep '000' as string
     )
 

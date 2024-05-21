@@ -38,6 +38,8 @@ def create_dev_config() -> Config:
     Create our (relative) dev config
     """
     gases_to_write = ("co2", "ch4", "n2o")
+    # sf6 next
+    # cfc11 next
     start_year = 1
     end_year = 2022
 
@@ -49,6 +51,7 @@ def create_dev_config() -> Config:
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
             ("n2o", "surface-flask"),
+            ("sf6", "surface-flask"),
         )
     )
 
@@ -93,6 +96,8 @@ def create_ci_config() -> Config:
     Create our (relative) CI config
     """
     gases_to_write = ("co2", "ch4", "n2o")
+    # sf6 next
+    # cfc11 next
     start_year = 1750
     end_year = 2022
 
@@ -104,6 +109,7 @@ def create_ci_config() -> Config:
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
             ("n2o", "surface-flask"),
+            ("sf6", "surface-flask"),
         )
     )
 

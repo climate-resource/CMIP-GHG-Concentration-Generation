@@ -57,13 +57,13 @@ DOWNLOAD_URLS = {
             known_hash="d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a",
         )
     ],
+    ("sf6", "surface-flask"): [
+        URLSource(
+            url=SURFACE_FLASK_URL_BASE.format(gas="sf6"),
+            known_hash="376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
+        )
+    ],
 }
-#     (
-#         "sf6",
-#         "surface-flask",
-#         "376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
-#     ),
-# )
 
 
 class NOAAHandlingPieces(TypedDict):

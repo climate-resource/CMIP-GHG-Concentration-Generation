@@ -82,7 +82,7 @@ for url_source in config_retrieve.gggrn.urls_global_mean:
     raw = pd.read_csv(
         config_retrieve.gggrn.raw_dir / filename,
         skiprows=skiprows,
-        delim_whitespace=True,
+        sep=r"\s+",
     )
 
     unit = gas_units[gas]
