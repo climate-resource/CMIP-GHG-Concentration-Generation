@@ -327,7 +327,7 @@ out
 (out["principal-components"] @ out["eofs"]).sel(year=1980).plot()
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=1).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()
 
 # %% [markdown]
 # Quick check that our output matches the observational network in the years they overlap.
