@@ -13,10 +13,10 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CO$_2$ - extend the latitudinal gradient principal components
+# # SF$_6$-like - extend the latitudinal gradient principal components
 #
 # Extend the latitudinal gradient's principal components back in time.
-# For CO$_2$, we do this by using a regression against emissions.
+# For SF$_6$-like gases, we do this by using a regression against emissions.
 
 # %% [markdown]
 # ## Imports
@@ -51,6 +51,7 @@ from local.config import load_config_from_file
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
+cf_xarray.units.units.define("ppt = ppb / 1000")
 
 pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
@@ -65,14 +66,14 @@ QuantityOSCM = openscm_units.unit_registry.Quantity
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_co2_monthly_fifteen_degree_pieces"
+step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "sf6"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -143,44 +144,17 @@ use_extensions_years = np.setdiff1d(out_years, obs_network_years)
 use_extensions_years
 
 # %% [markdown]
-# ### Extend PC one
-#
-# (Zero-indexing, hence this is the second PC)
-#
-# This is returned to zero in 1850 from the start of the observational network period.
-
-# %%
-# Quick assertion that things are as expected
-exp_n_eofs = 2
-if len(lat_grad_eofs_obs_network["eof"]) != exp_n_eofs:
-    raise AssertionError("Rethink")
-
-# %%
-pc1 = lat_grad_eofs_obs_network["principal-components"].sel(eof=1).copy()
-
-zero_year = 1850
-tmp = pc1.sel(year=pc1["year"][0])
-tmp = tmp.assign_coords(year=zero_year)
-tmp.values = 0.0
-
-allyears_pc1 = (
-    xr.concat([tmp, pc1], "year")
-    .pint.dequantify()
-    .interp(year=out_years, kwargs={"fill_value": 0})
-)
-
-with axes_vertical_split() as axes:
-    allyears_pc1.plot(ax=axes[0])
-    allyears_pc1.sel(year=range(1950, 2023)).plot(ax=axes[1])
-
-allyears_pc1
-
-# %% [markdown]
 # ### Extend PC zero
 #
 # (Zero-indexing, hence this is the first PC)
 #
 # This happens in a few steps.
+
+# %%
+# Quick assertion that things are as expected
+exp_n_eofs = 1
+if len(lat_grad_eofs_obs_network["eof"]) != exp_n_eofs:
+    raise AssertionError("Rethink")
 
 # %% [markdown]
 # #### Use a regression against emissions to fill in the gap
@@ -195,49 +169,59 @@ primap_full = primap2.open_dataset(
     / config_retrieve_misc.primap.download_url.url.split("/")[-1]
 )
 
-primap_fossil_co2_emissions = (
+primap_total_emissions = (
     local.xarray_time.convert_time_to_year_month(primap_full)
     .sel(
         **{
-            "category (IPCC2006_PRIMAP)": "M.0.EL",
+            "category (IPCC2006_PRIMAP)": "0",
             "scenario (PRIMAP-hist)": "HISTTP",
             "area (ISO3)": "EARTH",
             "month": 1,
         }
     )[config_step.gas.upper()]
     .squeeze()
-    .pint.to("GtCO2 / yr")
     .reset_coords(drop=True)
 )
 
-primap_fossil_co2_emissions
+primap_total_emissions
 
 # %%
-primap_regression_data = primap_fossil_co2_emissions.sel(
-    year=lat_grad_eofs_obs_network["year"]
+regression_years = np.intersect1d(
+    lat_grad_eofs_obs_network["year"], primap_total_emissions["year"]
 )
+regression_years
+
+# %%
+primap_regression_data = primap_total_emissions.sel(year=regression_years)
 primap_regression_data
 
 # %%
 pc0_obs_network = lat_grad_eofs_obs_network["principal-components"].sel(eof=0)
+pc0_obs_network_regression = pc0_obs_network.sel(year=regression_years)
 pc0_obs_network
 
 # %%
 with axes_vertical_split() as axes:
     primap_regression_data.plot(ax=axes[0])
-    pc0_obs_network.plot(ax=axes[1])
+    pc0_obs_network_regression.plot(ax=axes[1])
 
 # %%
-x = QuantityOSCM(primap_regression_data.data, str(primap_regression_data.data.units))
-A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(pc0_obs_network.data, str(pc0_obs_network.data.units))
+# The code below fixes the y-intercept to be zero, so that the latitudinal gradient is zero
+# when emissions are zero.
+# This is fine for gases like SF6, whose pre-industrial concentrations are zero.
+# Have to be more careful when the pre-industrial concentrations are non-zero.
+x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
+A = x.m[:, np.newaxis]
+y = QuantityOSCM(
+    pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
+)
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
-m, c = res[0]
+m = res[0]
 m = QuantityOSCM(m, (y / x).units)
-c = QuantityOSCM(c, y.units)
+c = QuantityOSCM(0.0, y.units)
 
-latitudinal_gradient_pc0_co2_fossil_emissions_regression = (
+latitudinal_gradient_pc0_total_emissions_regression = (
     local.regressors.LinearRegressionResult(m=m, c=c)
 )
 
@@ -258,30 +242,30 @@ ax.legend()
 # Extend PRIMAP emissions back to year 1, assuming constant before 1750.
 
 # %%
-primap_fossil_co2_emissions_extension_years = np.union1d(
+primap_total_emissions_extension_years = np.union1d(
     np.setdiff1d(out_years, pc0_obs_network["year"]),
-    primap_fossil_co2_emissions["year"],
+    primap_total_emissions["year"],
 )
-primap_fossil_co2_emissions_extension_years
+primap_total_emissions_extension_years
 
 # %%
-primap_fossil_co2_emissions_extended = primap_fossil_co2_emissions.copy()
-primap_fossil_co2_emissions_extended = (
-    primap_fossil_co2_emissions_extended.pint.dequantify().interp(
-        year=primap_fossil_co2_emissions_extension_years,
-        kwargs={"fill_value": primap_fossil_co2_emissions.data[0].m},
+primap_total_emissions_extended = primap_total_emissions.copy()
+primap_total_emissions_extended = (
+    primap_total_emissions_extended.pint.dequantify().interp(
+        year=primap_total_emissions_extension_years,
+        kwargs={"fill_value": primap_total_emissions.data[0].m},
     )
 )
 
 with axes_vertical_split() as axes:
-    primap_fossil_co2_emissions_extended.plot(ax=axes[0])
-    primap_fossil_co2_emissions_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
+    primap_total_emissions_extended.plot(ax=axes[0])
+    primap_total_emissions_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
 
-primap_fossil_co2_emissions_extended
+primap_total_emissions_extended
 
 # %%
 years_to_fill_with_regression = np.setdiff1d(
-    primap_fossil_co2_emissions_extended["year"],
+    primap_total_emissions_extended["year"],
     pc0_obs_network["year"],
 )
 
@@ -290,12 +274,11 @@ years_to_fill_with_regression
 # %%
 pc0_emissions_extended = (
     m
-    * primap_fossil_co2_emissions_extended.sel(
+    * primap_total_emissions_extended.sel(
         year=years_to_fill_with_regression
     ).pint.quantify(unit_registry=openscm_units.unit_registry)
     + c
 )
-pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended
 
@@ -328,9 +311,7 @@ allyears_pc0
 # ### Join the PCs back together
 
 # %%
-allyears_pcs = (
-    xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
-)
+allyears_pcs = xr.concat([allyears_pc0], "eof").pint.dequantify().pint.quantify()
 allyears_pcs
 
 # %% [markdown]
@@ -373,16 +354,16 @@ out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eo
 out
 
 # %%
-config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file.parent.mkdir(
+config_step.latitudinal_gradient_pc0_total_emissions_regression_file.parent.mkdir(
     exist_ok=True, parents=True
 )
 with open(
-    config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file, "w"
+    config_step.latitudinal_gradient_pc0_total_emissions_regression_file, "w"
 ) as fh:
     fh.write(
         local.config.converter_yaml.dumps(
-            latitudinal_gradient_pc0_co2_fossil_emissions_regression
+            latitudinal_gradient_pc0_total_emissions_regression
         )
     )
 
-latitudinal_gradient_pc0_co2_fossil_emissions_regression
+latitudinal_gradient_pc0_total_emissions_regression

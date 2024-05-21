@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # CO$_2$ - calculate observational network global- annual-mean, latitudinal gradient and seasonality
+# # SF$_6$-like - calculate observational network global- annual-mean, latitudinal gradient and seasonality
 #
 # Calculate global-mean, latitudinal gradient and seasonality
 # based on the observational network.
@@ -42,6 +42,7 @@ from local.config import load_config_from_file
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
+cf_xarray.units.units.define("ppt = ppb / 1000")
 
 pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
@@ -51,14 +52,14 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "calculate_co2_monthly_fifteen_degree_pieces"
+step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "only"  # config ID to select for this branch
+step_config_id: str = "sf6"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -198,7 +199,7 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-seasonality, _ = local.seasonality.calculate_seasonality(
+seasonality, relative_seasonality = local.seasonality.calculate_seasonality(
     lon_mean=lon_mean,
     global_mean=global_mean,
 )
@@ -207,99 +208,7 @@ seasonality, _ = local.seasonality.calculate_seasonality(
 seasonality.plot.line(hue="lat")
 
 # %%
-(
-    seasonality_anomalies,
-    seasonality_change_full_eofs_pcs,
-) = local.seasonality.calculate_seasonality_change_eofs_pcs(lon_mean, global_mean)
-seasonality_change_full_eofs_pcs
-
-# %%
-local.xarray_time.convert_year_month_to_time(seasonality_anomalies).plot.line(
-    col="lat", col_wrap=3
-)
-seasonality_anomalies
-
-# %%
-n_eofs_to_show = 3
-(
-    seasonality_change_full_eofs_pcs["principal-components"]
-    .sel(eof=range(n_eofs_to_show))
-    .plot.line(hue="eof")
-)
-
-# %%
-(
-    seasonality_change_full_eofs_pcs["eofs"]
-    .unstack("lat-month")
-    .sel(eof=range(n_eofs_to_show))
-    .plot.line(hue="eof", col="lat", col_wrap=3)
-)
-
-# %%
-eof_based_anomalies = local.xarray_time.convert_year_month_to_time(
-    (
-        seasonality_change_full_eofs_pcs["principal-components"]
-        * seasonality_change_full_eofs_pcs["eofs"]
-    ).unstack("lat-month")
-)
-(
-    eof_based_anomalies.sel(eof=range(n_eofs_to_show)).plot.line(
-        hue="eof", col="lat", col_wrap=3
-    )
-)
-
-# %%
-seasonality_change_eofs_pcs = seasonality_change_full_eofs_pcs.sel(
-    eof=range(config_step.seasonality_change_n_eofs_to_use),
-)
-seasonality_change_eofs_pcs
-
-# %%
-seasonality_change_from_eofs = xr.dot(
-    seasonality_change_eofs_pcs["principal-components"],
-    seasonality_change_eofs_pcs["eofs"],
-    dim="eof",
-)
-seasonality_change_from_eofs
-
-# %%
-(seasonality_change_eofs_pcs["principal-components"].plot.line(hue="eof"))
-
-# %%
-(
-    seasonality_change_eofs_pcs["eofs"]
-    .unstack("lat-month")
-    .plot.pcolormesh(y="lat", x="month", col="eof")
-)
-
-# %%
-for year in seasonality_change_from_eofs["year"]:
-    if year % 5:
-        continue
-
-    for lat in [-37.5, 7.5, 52.5]:
-        fig, axes = plt.subplots(ncols=3, sharex=True, sharey=True)
-
-        selected = seasonality_anomalies.sel(year=year, lat=lat)
-        axes[0].plot(selected.data.m)
-        axes[0].set_title("Full anomaly")
-
-        selected_eofs = seasonality_change_from_eofs.sel(year=year, lat=lat)
-        axes[1].plot(selected_eofs.data.m)
-        axes[1].set_title("Anomaly from EOFs")
-
-        axes[2].plot(selected.data.m - selected_eofs.data.m)
-        axes[2].axhline(0, color="k", alpha=0.3)
-        axes[2].set_title("Difference")
-
-        # axes[0].set_ylim([-90, 90])
-
-        plt.suptitle(f"{float(year)=} {lat=}")
-        plt.tight_layout()
-        plt.show()
-
-        # break
-    # break
+relative_seasonality.plot.line(hue="lat")
 
 # %% [markdown]
 # ### Save
@@ -322,24 +231,12 @@ lat_gradient_eofs_pcs.pint.dequantify().to_netcdf(
 )
 lat_gradient_eofs_pcs
 
-# %% [markdown]
-# Use absolute seasonality plus seasonality change for CO2
-
 # %%
+# Use relative seasonality
 config_step.observational_network_seasonality_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-seasonality.pint.dequantify().to_netcdf(
+relative_seasonality.pint.dequantify().to_netcdf(
     config_step.observational_network_seasonality_file
 )
-seasonality
-
-# %%
-config_step.observational_network_seasonality_change_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-to_save = seasonality_change_eofs_pcs.unstack("lat-month")
-to_save.pint.dequantify().to_netcdf(
-    config_step.observational_network_seasonality_change_eofs_file
-)
-to_save
+relative_seasonality

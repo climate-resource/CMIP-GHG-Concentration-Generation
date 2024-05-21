@@ -37,8 +37,7 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("co2", "ch4", "n2o")
-    # sf6 next
+    gases_to_write = ("co2", "ch4", "n2o", "sf6")
     # cfc11 next
     start_year = 1
     end_year = 2022
@@ -57,7 +56,12 @@ def create_dev_config() -> Config:
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
+        data_sources=(
+            ("ch4", "gc-md", "monthly"),
+            ("n2o", "gc-md", "monthly"),
+            ("sf6", "gc-md", "monthly"),
+            ("sf6", "gc-ms-medusa", "monthly"),
+        )
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
@@ -96,8 +100,7 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("co2", "ch4", "n2o")
-    # sf6 next
+    gases_to_write = ("co2", "ch4", "n2o", "sf6")
     # cfc11 next
     start_year = 1750
     end_year = 2022
@@ -115,7 +118,12 @@ def create_ci_config() -> Config:
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
+        data_sources=(
+            ("ch4", "gc-md", "monthly"),
+            ("n2o", "gc-md", "monthly"),
+            ("sf6", "gc-md", "monthly"),
+            ("sf6", "gc-ms-medusa", "monthly"),
+        )
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(

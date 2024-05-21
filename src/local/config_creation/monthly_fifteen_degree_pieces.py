@@ -15,11 +15,15 @@ from local.config.calculate_co2_monthly_15_degree import (
 from local.config.calculate_n2o_monthly_15_degree import (
     CalculateN2OMonthlyFifteenDegreePieces,
 )
+from local.config.calculate_sf6_like_monthly_15_degree import (
+    CalculateSF6LikeMonthlyFifteenDegreePieces,
+)
 
 PieceCalculationOption = (
     CalculateCH4MonthlyFifteenDegreePieces
     | CalculateCO2MonthlyFifteenDegreePieces
     | CalculateN2OMonthlyFifteenDegreePieces
+    | CalculateSF6LikeMonthlyFifteenDegreePieces
 )
 
 
@@ -56,6 +60,14 @@ def create_monthly_fifteen_degree_pieces_configs(
             out["calculate_n2o_monthly_fifteen_degree_pieces"] = [
                 get_n2o_monthly_fifteen_degree_pieces_config()
             ]
+
+        elif gas in ["sf6"]:
+            if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
+                out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
+
+            out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
+                get_sf6_like_monthly_fifteen_degree_pieces_config(gas=gas)
+            )
 
         else:
             raise NotImplementedError(gas)
@@ -190,4 +202,45 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
         / "co2_seasonality_fifteen-degree_allyears-monthly.nc",
         latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
         / "co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
+    )
+
+
+def get_sf6_like_monthly_fifteen_degree_pieces_config(
+    gas: str,
+) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+    """
+    interim_dir = Path(f"data/interim/{gas}")
+
+    return CalculateSF6LikeMonthlyFifteenDegreePieces(
+        step_config_id=gas,
+        gas=gas,
+        processed_bin_averages_file=interim_dir
+        / f"{gas}_observational-network_bin-averages.csv",
+        observational_network_interpolated_file=interim_dir
+        / f"{gas}_observational-network_interpolated.nc",
+        observational_network_global_annual_mean_file=interim_dir
+        / f"{gas}_observational-network_global-annual-mean.nc",
+        lat_gradient_n_eofs_to_use=1,
+        observational_network_latitudinal_gradient_eofs_file=interim_dir
+        / f"{gas}_observational-network_latitudinal-gradient-eofs.nc",
+        observational_network_seasonality_file=interim_dir
+        / f"{gas}_observational-network_seasonality.nc",
+        latitudinal_gradient_allyears_pcs_eofs_file=interim_dir
+        / f"{gas}_allyears-lat-gradient-eofs-pcs.nc",
+        latitudinal_gradient_pc0_total_emissions_regression_file=interim_dir
+        / f"{gas}_pc0-total-emissions-regression.yaml",
+        global_annual_mean_allyears_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears.nc",
+        global_annual_mean_allyears_monthly_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears-monthly.nc",
+        seasonality_allyears_fifteen_degree_monthly_file=interim_dir
+        / f"{gas}_seasonality_fifteen-degree_allyears-monthly.nc",
+        latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
+        / f"{gas}_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
     )
