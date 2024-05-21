@@ -343,13 +343,13 @@ out = xr.merge([allyears_pcs, lat_grad_eofs_obs_network["eofs"]])
 out
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=2022).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=2022).plot()  # type: ignore
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=1980).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=1980).plot()  # type: ignore
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()  # type: ignore
 
 # %% [markdown]
 # Quick check that our output matches the observational network in the years they overlap.

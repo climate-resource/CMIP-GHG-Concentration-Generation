@@ -251,8 +251,8 @@ regression_timeseries_extended = (
 )
 
 with axes_vertical_split() as axes:
-    regression_timeseries_extended.plot(ax=axes[0])
-    regression_timeseries_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
+    regression_timeseries_extended.plot(ax=axes[0])  # type: ignore
+    regression_timeseries_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])  # type: ignore
 
 regression_timeseries_extended
 
@@ -294,11 +294,11 @@ allyears_pc0 = xr.concat(
 
 with axes_vertical_split() as axes:
     allyears_pc0.plot(ax=axes[0])
-    axes[0].set_xlim([1750, 2030])
+    axes[0].set_xlim((1750, 2030))
 
     pc0_regression_extended.plot(ax=axes[1])
     pc0_obs_network.plot(ax=axes[1])
-    axes[1].set_xlim([1900, 2030])
+    axes[1].set_xlim((1900, 2030))
 
 allyears_pc0
 
@@ -318,16 +318,16 @@ out = xr.merge([allyears_pcs, seasonality_change_eofs_obs_network["eofs"]])
 out
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=2022).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=2022).plot()  # type: ignore
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=2000).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=2000).plot()  # type: ignore
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=1980).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=1980).plot()  # type: ignore
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()
+(out["principal-components"] @ out["eofs"]).sel(year=out["year"].min()).plot()  # type: ignore
 
 # %% [markdown]
 # Quick check that our output matches the observational network in the years they overlap.
