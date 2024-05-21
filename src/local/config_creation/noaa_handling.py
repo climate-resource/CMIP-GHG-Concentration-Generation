@@ -21,6 +21,18 @@ IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-sit
 SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
 
 DOWNLOAD_URLS = {
+    ("co2", "surface-flask"): [
+        URLSource(
+            url=SURFACE_FLASK_URL_BASE.format(gas="co2"),
+            known_hash="92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17",
+        )
+    ],
+    ("co2", "in-situ"): [
+        URLSource(
+            url=IN_SITU_URL_BASE.format(gas="co2"),
+            known_hash="0a68c9716bb9ec29e23966a2394e312618ed9b822885876d1ce5517bdf70acbe",
+        )
+    ],
     ("ch4", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="ch4"),
@@ -46,26 +58,6 @@ DOWNLOAD_URLS = {
         )
     ],
 }
-#     (
-#         "co2",
-#         "surface-flask",
-#         "92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17",
-#     ),
-#     (
-#         "co2",
-#         "in-situ",
-#         "0a68c9716bb9ec29e23966a2394e312618ed9b822885876d1ce5517bdf70acbe",
-#     ),
-#     (
-#         "ch4",
-#         "surface-flask",
-#         "e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087",
-#     ),
-#     (
-#         "ch4",
-#         "in-situ",
-#         "c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
-#     ),
 #     (
 #         "sf6",
 #         "surface-flask",

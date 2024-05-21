@@ -3,12 +3,30 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
-- N2O
-    - HATS download
-        - N2O only initially
-        - then other GHGs
-    - process, copying CH4
-        - check that we can do the same time period as Malte did
+- rename the "**02_***_global-mean-latitudinal-gradient-seasonality.py" notebooks to
+  "**02_***_obs-network-global-mean-latitudinal-gradient-seasonality.py"
+  given that is what they actually do.
+
+- pre-industrial handling: Section 3.4 helps, but will also have to look at the code to work out when the spline to pre-industrial concs begins.
+
+    - Recipe appears to be:
+
+        - use observations
+        - prescribe in global-mean from other sources (other sources specified in `switch globalpara.parameter` cases in `main_script_histGHG*`)
+        - interpolate to fill gaps
+        - extrapolate constant (backwards) or linear (forwards) to fill other gaps
+
+    - (Effectively) non-zero PI concs:
+
+        - CH2Cl2
+        - CH3Br
+        - CH3Cl
+        - CHCl3
+        - CF4
+
+- Might need to use this extend poleward stuff, hopefully not
+
+- use better data source to extend CO2 and N2O from the start of Law Dome back to year 1
 
 - reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
     - Malte's paper used polluted

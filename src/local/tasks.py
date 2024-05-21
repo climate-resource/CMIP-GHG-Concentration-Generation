@@ -15,6 +15,7 @@ from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
     calculate_ch4_monthly_fifteen_degree_pieces,
+    calculate_co2_monthly_fifteen_degree_pieces,
     calculate_n2o_monthly_fifteen_degree_pieces,
     crunch_grids,
     plot_input_data_overviews,
@@ -121,6 +122,7 @@ def gen_all_tasks(
         retrieve_and_process_neem_data,
         plot_input_data_overviews,
         smooth_law_dome_data,
+        calculate_co2_monthly_fifteen_degree_pieces,
         calculate_ch4_monthly_fifteen_degree_pieces,
         calculate_n2o_monthly_fifteen_degree_pieces,
         crunch_grids,

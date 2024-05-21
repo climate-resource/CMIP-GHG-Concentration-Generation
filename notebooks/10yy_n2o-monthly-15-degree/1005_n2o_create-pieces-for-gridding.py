@@ -187,7 +187,10 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(
 pcs_monthly = (
     lat_gradient_eofs_pcs["principal-components"]
     .groupby("eof", squeeze=False)
-    .apply(local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+        rtol=1e-7,
+    )
 )
 pcs_monthly
 

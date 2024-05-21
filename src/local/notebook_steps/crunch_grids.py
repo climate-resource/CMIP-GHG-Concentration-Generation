@@ -91,7 +91,7 @@ step: UnconfiguredNotebookBasedStep[
             summary="grid - Grid data from the gridding pieces",
             doc=(
                 "Create gridded data products based on the seasonality, "
-                "latitutindal gradient and global-means from earlier steps."
+                "latitutindal gradient and global-means from earlier steps"
             ),
         ),
     ],

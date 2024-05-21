@@ -14,6 +14,25 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: only
+calculate_co2_monthly_fifteen_degree_pieces:
+- gas: co2
+  global_annual_mean_allyears_file: data/interim/co2/co2_global-annual-mean_allyears.nc
+  global_annual_mean_allyears_monthly_file: data/interim/co2/co2_global-annual-mean_allyears-monthly.nc
+  lat_gradient_n_eofs_to_use: 2
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-lat-gradient-eofs-pcs.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/co2/co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_co2_fossil_emissions_regression_file: data/interim/co2/co2_pc0-co2-fossil-emissions-regression.yaml
+  observational_network_global_annual_mean_file: data/interim/co2/co2_observational-network_global-annual-mean.nc
+  observational_network_interpolated_file: data/interim/co2/co2_observational-network_interpolated.nc
+  observational_network_latitudinal_gradient_eofs_file: data/interim/co2/co2_observational-network_latitudinal-gradient-eofs.nc
+  observational_network_seasonality_change_eofs_file: data/interim/co2/co2_observational-network_seasonality-change-eofs.nc
+  observational_network_seasonality_file: data/interim/co2/co2_observational-network_seasonality.nc
+  processed_bin_averages_file: data/interim/co2/co2_observational-network_bin-averages.csv
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/co2/co2_seasonality_fifteen-degree_allyears-monthly.nc
+  seasonality_change_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-seasonality-change-eofs-pcs.nc
+  seasonality_change_n_eofs_to_use: 1
+  seasonality_change_temperature_co2_conc_regression_file: data/interim/co2/co2_seasonality-change_temp-conc-regression.yaml
+  step_config_id: only
 calculate_n2o_monthly_fifteen_degree_pieces:
 - gas: n2o
   global_annual_mean_allyears_file: data/interim/n2o/n2o_global-annual-mean_allyears.nc
@@ -31,6 +50,12 @@ calculate_n2o_monthly_fifteen_degree_pieces:
   step_config_id: only
 ci: false
 crunch_grids:
+- fifteen_degree_monthly_file: data/interim/co2/co2_fifteen-degree_monthly.nc
+  gas: co2
+  gmnhsh_mean_annual_file: data/interim/co2/co2_gmnhsh-mean_annual.nc
+  gmnhsh_mean_monthly_file: data/interim/co2/co2_gmnhsh-mean_monthly.nc
+  half_degree_monthly_file: data/interim/co2/co2_half-degree_monthly.nc
+  step_config_id: co2
 - fifteen_degree_monthly_file: data/interim/ch4/ch4_fifteen-degree_monthly.nc
   gas: ch4
   gmnhsh_mean_annual_file: data/interim/ch4/ch4_gmnhsh-mean_annual.nc
@@ -51,10 +76,16 @@ process_noaa_hats_data:
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_hats.csv
   step_config_id: n2o
 process_noaa_in_situ_data:
+- gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+  step_config_id: co2
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_in-situ.csv
   step_config_id: ch4
 process_noaa_surface_flask_data:
+- gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+  step_config_id: co2
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
   step_config_id: ch4
@@ -133,6 +164,27 @@ retrieve_and_extract_gage_data:
   raw_dir: data/raw/agage/gage
   step_config_id: monthly
 retrieve_and_extract_noaa_data:
+- download_complete_file: data/raw/noaa/co2_in-situ.complete
+  download_urls:
+  - known_hash: 0a68c9716bb9ec29e23966a2394e312618ed9b822885876d1ce5517bdf70acbe
+    url: https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/in-situ/surface/co2_surface-insitu_ccgg_text.zip
+  gas: co2
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: in-situ
+  step_config_id: co2_in-situ
+- download_complete_file: data/raw/noaa/co2_surface-flask.complete
+  download_urls:
+  - known_hash: 92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17
+    url: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/co2_surface-flask_ccgg_text.zip
+  gas: co2
+  interim_files:
+    events_data: data/interim/noaa/events_co2_surface-flask_raw-consolidated.csv
+    monthly_data: data/interim/noaa/monthly_co2_surface-flask_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: surface-flask
+  step_config_id: co2_surface-flask
 - download_complete_file: data/raw/noaa/ch4_in-situ.complete
   download_urls:
   - known_hash: c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2
@@ -154,6 +206,16 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: ch4_surface-flask
+- download_complete_file: data/raw/noaa/n2o_hats.complete
+  download_urls:
+  - known_hash: d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a
+    url: https://gml.noaa.gov/aftp/data/hats/n2o/combined/GML_global_N2O.txt
+  gas: n2o
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_n2o_hats_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: hats
+  step_config_id: n2o_hats
 - download_complete_file: data/raw/noaa/n2o_surface-flask.complete
   download_urls:
   - known_hash: 6b7e09c37b7fa456ab170a4c7b825b3d4b9f6eafb0ff61a2a46554b0e63e84b1
@@ -165,16 +227,6 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: n2o_surface-flask
-- download_complete_file: data/raw/noaa/n2o_hats.complete
-  download_urls:
-  - known_hash: d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a
-    url: https://gml.noaa.gov/aftp/data/hats/n2o/combined/GML_global_N2O.txt
-  gas: n2o
-  interim_files:
-    monthly_data: data/interim/noaa/monthly_n2o_hats_raw-consolidated.csv
-  raw_dir: data/raw/noaa
-  source: hats
-  step_config_id: n2o_hats
 retrieve_and_process_epica_data:
 - download_url:
     known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
@@ -198,7 +250,12 @@ retrieve_and_process_neem_data:
   step_config_id: only
 retrieve_and_process_scripps_data: []
 retrieve_misc_data:
-- natural_earth:
+- hadcrut5:
+    download_url:
+      known_hash: 1063dbe93d7b486464c4c3b06466cd2a4a836638249c1552619a40cda2d78298
+      url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
+    raw_dir: data/raw/hadcrut5
+  natural_earth:
     countries_shape_file_name: ne_110m_admin_0_countries.shx
     download_urls:
     - known_hash: 0f243aeac8ac6cf26f0417285b0bd33ac47f1b5bdb719fd3e0df37d03ea37110
@@ -211,6 +268,27 @@ retrieve_misc_data:
     raw_dir: data/raw/primap
   step_config_id: only
 smooth_law_dome_data:
+- gas: co2
+  n_draws: 250
+  noise_adder:
+    x_ref:
+    - 2024
+    - a
+    x_relative_random_error:
+    - 0.03
+    - dimensionless
+    y_random_error:
+    - 2
+    - ppm
+  point_selector_settings:
+    maximum_data_points_either_side: 25
+    minimum_data_points_either_side: 7
+    window_width:
+    - 120
+    - a
+  smoothed_draws_file: data/interim/law_dome/law-dome_co2_smoothed_all-draws.csv
+  smoothed_median_file: data/interim/law_dome/law-dome_co2_smoothed_median.csv
+  step_config_id: co2
 - gas: ch4
   n_draws: 250
   noise_adder:
@@ -255,6 +333,12 @@ smooth_law_dome_data:
   step_config_id: n2o
 version: 0.1.0-dev
 write_input4mips:
+- complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
+  end_year: 2022
+  gas: co2
+  input4mips_out_dir: data/processed/esgf-ready
+  start_year: 1
+  step_config_id: co2
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: ch4

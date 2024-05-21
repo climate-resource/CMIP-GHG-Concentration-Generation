@@ -24,6 +24,8 @@ T = TypeVar("T")
 def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
+    rtol: float = 1e-8,
+    atol: float = 0.0,
 ) -> xr.DataArray:
     """
     Interpolate annual-mean values to monthly values.
@@ -37,6 +39,14 @@ def interpolate_annual_mean_to_monthly(
 
     degrees_freedom_scalar
         Degrees of freedom to use when calculating the interpolating spline.
+
+    rtol
+        Relative tolerance to apply
+        while checking the interpolation preserved the annual-mean.
+
+    atol
+        Absolute tolerance to apply
+        while checking the interpolation preserved the annual-mean.
 
     Returns
     -------
@@ -105,6 +115,8 @@ def interpolate_annual_mean_to_monthly(
     pint.testing.assert_allclose(
         out.groupby("time.year").mean().data,
         annual_mean.squeeze().data,
+        rtol=rtol,
+        atol=atol,
     )
 
     return convert_time_to_year_month(out)
