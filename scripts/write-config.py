@@ -51,6 +51,7 @@ def create_dev_config() -> Config:
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
             ("n2o", "surface-flask"),
+            ("sf6", "hats"),
             ("sf6", "surface-flask"),
         )
     )

@@ -75,6 +75,9 @@ process_noaa_hats_data:
 - gas: n2o
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_hats.csv
   step_config_id: n2o
+- gas: sf6
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_sf6_hats.csv
+  step_config_id: sf6
 process_noaa_in_situ_data:
 - gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
@@ -230,6 +233,16 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: n2o_surface-flask
+- download_complete_file: data/raw/noaa/sf6_hats.complete
+  download_urls:
+  - known_hash: 822543e2558e9e22e943478d37dffe0c758091c35d1ff9bf2b2697507dd3b39d
+    url: https://gml.noaa.gov/aftp/data/hats/sf6/combined/GML_global_SF6.txt
+  gas: sf6
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_sf6_hats_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: hats
+  step_config_id: sf6_hats
 - download_complete_file: data/raw/noaa/sf6_surface-flask.complete
   download_urls:
   - known_hash: 376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a

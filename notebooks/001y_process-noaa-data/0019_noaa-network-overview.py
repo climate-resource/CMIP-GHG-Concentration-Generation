@@ -64,6 +64,8 @@ if config.ci:
         ("ch4", "surface-flask", "process_noaa_surface_flask_data"),
         ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
         ("n2o", "hats", "process_noaa_hats_data"),
+        ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
+        ("sf6", "hats", "process_noaa_hats_data"),
     )
 else:
     to_show = (
@@ -74,6 +76,7 @@ else:
         ("n2o", "surface-flask", "process_noaa_surface_flask_data"),
         ("n2o", "hats", "process_noaa_hats_data"),
         ("sf6", "surface-flask", "process_noaa_surface_flask_data"),
+        ("sf6", "hats", "process_noaa_hats_data"),
     )
 
 gas_configs = {
