@@ -60,6 +60,12 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_interpolated_file: data/interim/sf6/sf6_observational-network_interpolated.nc
   observational_network_latitudinal_gradient_eofs_file: data/interim/sf6/sf6_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/sf6/sf6_observational-network_seasonality.nc
+  pre_industrial:
+    source: Guessing from reading M2017
+    value:
+    - 0.0
+    - ppt
+    year: 1950
   processed_bin_averages_file: data/interim/sf6/sf6_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/sf6/sf6_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: sf6

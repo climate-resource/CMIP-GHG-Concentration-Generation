@@ -6,6 +6,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pint
+
 from local.config.calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -17,7 +19,16 @@ from local.config.calculate_n2o_monthly_15_degree import (
 )
 from local.config.calculate_sf6_like_monthly_15_degree import (
     CalculateSF6LikeMonthlyFifteenDegreePieces,
+    SF6LikePreIndustrialConfig,
 )
+
+Q = pint.get_application_registry().Quantity
+
+PRE_INDUSTRIAL_VALUES_DEFAULT = {
+    "sf6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    )
+}
 
 PieceCalculationOption = (
     CalculateCH4MonthlyFifteenDegreePieces
@@ -207,9 +218,20 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
 
 def get_sf6_like_monthly_fifteen_degree_pieces_config(
     gas: str,
+    pre_industrial: SF6LikePreIndustrialConfig | None = None,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+
+    Parameters
+    ----------
+    gas
+        Gas for which to create the config
+
+    pre_industrial
+        Pre-industrial value.
+        If not supplied, we use the value from {py:const}`PRE_INDUSTRIAL_VALUES_DEFAULT`
+        for ``gas``.
 
     Returns
     -------
@@ -217,9 +239,13 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
     """
     interim_dir = Path(f"data/interim/{gas}")
 
+    if pre_industrial is None:
+        pre_industrial = PRE_INDUSTRIAL_VALUES_DEFAULT[gas]
+
     return CalculateSF6LikeMonthlyFifteenDegreePieces(
         step_config_id=gas,
         gas=gas,
+        pre_industrial=pre_industrial,
         processed_bin_averages_file=interim_dir
         / f"{gas}_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir

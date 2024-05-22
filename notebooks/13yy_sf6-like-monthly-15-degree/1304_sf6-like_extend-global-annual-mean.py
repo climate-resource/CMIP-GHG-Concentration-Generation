@@ -40,6 +40,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.global_mean_extension
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -119,27 +120,34 @@ def axes_vertical_split(
 
 # %%
 global_mean_supplement_files = (
-    local.global_mean_extension.get_global_mean_supplement_files(config_step.gas)
+    local.global_mean_extension.get_global_mean_supplement_files(
+        gas=config_step.gas, config=config
+    )
 )
 global_mean_supplement_files
 
 # %%
-global_mean_supplements_l = []
-for f in global_mean_supplement_files:
-    try:
-        global_mean_supplements_l.append(
-            local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
-                f
+if global_mean_supplement_files:
+    global_mean_supplements_l = []
+    for f in global_mean_supplement_files:
+        try:
+            global_mean_supplements_l.append(
+                local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
+                    f
+                )
             )
-        )
-    except Exception as exc:
-        msg = f"Error reading {f}"
-        raise ValueError(msg) from exc
+        except Exception as exc:
+            msg = f"Error reading {f}"
+            raise ValueError(msg) from exc
 
-global_mean_supplements = pd.concat(global_mean_supplements_l)
-# TODO: add check of gas names to processed data checker
-# global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
-assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
+    global_mean_supplements = pd.concat(global_mean_supplements_l)
+    # TODO: add check of gas names to processed data checker
+    # global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
+    assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
+
+else:
+    global_mean_supplements = None
+
 global_mean_supplements
 
 # %%
@@ -197,7 +205,10 @@ global_annual_mean_composite = global_annual_mean_obs_network.copy()
 # #### Use other global-mean sources
 
 # %%
-if "global" in global_mean_supplements["region"].tolist():
+if (
+    global_mean_supplements is not None
+    and "global" in global_mean_supplements["region"].tolist()
+):
     # Add in the global stuff here
     msg = (
         "Add some other global-mean sources handling here "
@@ -209,7 +220,10 @@ if "global" in global_mean_supplements["region"].tolist():
 # #### Use other spatial sources
 
 # %%
-if (~global_mean_supplements["lat"].isnull()).any():
+if (
+    global_mean_supplements is not None
+    and (~global_mean_supplements["lat"].isnull()).any()
+):
     # Add in the latitudinal information here
     msg = (
         "Add some other spatial sources handling here. "

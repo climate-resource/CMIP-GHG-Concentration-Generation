@@ -31,6 +31,8 @@ import datetime
 from functools import partial
 
 import cf_xarray.units
+import cftime
+import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
@@ -138,8 +140,29 @@ half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
 gmnhsh_data_raw_chopped = chop_time_axis(gmnhsh_data_raw)
 gmnhsh_annual_data_raw_chopped = chop_time_axis(gmnhsh_annual_data_raw)
 
+
 # %% [markdown]
 # ### Convert everything to a time axis
+
+
+# %%
+def get_displayable_dataarray(inp: xr.DataArray) -> xr.DataArray:
+    """
+    Get a :obj:`xr.DataArray` which we can dispaly
+
+    There is some bug in xarray's HTML representation which
+    means this doesn't work with a proleptic_gregorian calendar.
+    """
+    res = inp.copy()
+    res["time"] = np.array(
+        [
+            cftime.datetime(v.year, v.month, v.day, v.hour, calendar="standard")
+            for v in inp["time"].values
+        ]
+    )
+
+    return res
+
 
 # %%
 day = 15
@@ -152,13 +175,17 @@ half_degree_data = local.xarray_time.convert_year_month_to_time(
 gmnhsh_data = local.xarray_time.convert_year_month_to_time(
     gmnhsh_data_raw_chopped, day=day
 )
-fifteen_degree_data
+get_displayable_dataarray(fifteen_degree_data)
 
 # %%
 gmnhsh_annual_data = local.xarray_time.convert_year_to_time(
-    gmnhsh_annual_data_raw_chopped, month=7, day=2, hour=12
+    gmnhsh_annual_data_raw_chopped,
+    month=7,
+    day=2,
+    hour=12,
+    calendar="proleptic_gregorian",
 )
-gmnhsh_annual_data
+get_displayable_dataarray(gmnhsh_annual_data)
 
 # %% [markdown]
 # ### Set common metadata
@@ -228,8 +255,8 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
         {variable_name_raw: variable_name_output}
     )
     da_to_write["time"].encoding = {
-        "calendar": "standard",
-        "units": "days since 2010-01-01",
+        "calendar": "proleptic_gregorian",
+        "units": "days since 1850-01-01",
     }
     # TODO: use inference again once I know how it is meant to work
     # metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(

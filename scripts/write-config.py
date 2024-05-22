@@ -2,6 +2,8 @@
 Write our configuration files
 """
 
+# Have to the pint registry before doing other imports, hence funny order
+# ruff: noqa: E402
 from __future__ import annotations
 
 from pathlib import Path
@@ -9,6 +11,9 @@ from pathlib import Path
 import openscm_units
 import pint
 from pydoit_nb.config_handling import insert_path_prefix
+
+pint.set_application_registry(openscm_units.unit_registry)
+
 
 import local
 from local.config import Config, converter_yaml
@@ -32,8 +37,6 @@ from local.config_creation.neem_handling import RETRIEVE_AND_PROCESS_NEEM_STEPS
 from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 from local.config_creation.write_input4mips import create_write_input4mips_config
-
-pint.set_application_registry(openscm_units.unit_registry)
 
 
 def create_dev_config() -> Config:

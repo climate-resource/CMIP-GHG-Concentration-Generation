@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pint
 from attrs import frozen
 
 
@@ -24,6 +25,9 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
 
     gas: str
     """Gas to which this config applies (a bit redundant, but handy to be explicit)"""
+
+    pre_industrial: SF6LikePreIndustrialConfig
+    """Pre-industrial values to use with this gas"""
 
     processed_bin_averages_file: Path
     """Path in which to save the spatial bin averages from the observational networks"""
@@ -73,3 +77,19 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Path for the latitudinal gradient on a 15 degree grid, interpolated to monthly steps for all years
     """
+
+
+@frozen
+class SF6LikePreIndustrialConfig:
+    """
+    Pre-industrial configuration for a gas handled like SF6
+    """
+
+    value: pint.registry.UnitRegistry.Quantity
+    """Pre-industrial value"""
+
+    year: int
+    """Year, before which the pre-industrial value should apply"""
+
+    source: str
+    """The source of the pre-industrial value"""
