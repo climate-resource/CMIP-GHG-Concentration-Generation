@@ -24,11 +24,6 @@ from local.config.calculate_sf6_like_monthly_15_degree import (
 
 Q = pint.get_application_registry().Quantity
 
-PRE_INDUSTRIAL_VALUES_DEFAULT = {
-    "sf6": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
-    )
-}
 
 PieceCalculationOption = (
     CalculateCH4MonthlyFifteenDegreePieces
@@ -72,7 +67,7 @@ def create_monthly_fifteen_degree_pieces_configs(
                 get_n2o_monthly_fifteen_degree_pieces_config()
             ]
 
-        elif gas in ["sf6"]:
+        elif gas in ("sf6", "cfc11"):
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
 
@@ -214,6 +209,17 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
         latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
         / "co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
     )
+
+
+PRE_INDUSTRIAL_VALUES_DEFAULT = {
+    "sf6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "cfc11": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+}
+"""Default values to use for pre-industrial"""
 
 
 def get_sf6_like_monthly_fifteen_degree_pieces_config(

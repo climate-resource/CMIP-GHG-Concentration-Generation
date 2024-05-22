@@ -46,7 +46,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6_hats"  # config ID to select for this branch
+step_config_id: str = "cfc11_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -66,6 +66,9 @@ files = [
     for url_source in config_step.download_urls
 ]
 files
+
+# %%
+# %pdb
 
 # %%
 assert len(files) == 1, "Re-think how you're doing this"

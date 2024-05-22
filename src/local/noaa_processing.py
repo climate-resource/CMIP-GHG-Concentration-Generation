@@ -38,6 +38,12 @@ UNIT_MAP: dict[str, str] = {
 """Mapping from NOAA units to convention we use"""
 
 
+HATS_GAS_NAME_MAPPING: dict[str, str] = {"cfc11": "F11"}
+"""Mapping from HATS names for gases to our names"""
+
+HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}
+
+
 def get_metadata_from_filename_default(filename: str) -> dict[str, str]:
     """
     Get metadata from filename - default implementation
@@ -427,7 +433,7 @@ def read_noaa_in_situ_zip(
 
 
 def read_noaa_hats(  # noqa: PLR0912, PLR0915
-    infile: Path, gas: str, source: str, skiprows: int = 67, sep: str = r"\s+"
+    infile: Path, gas: str, source: str, sep: str = r"\s+"
 ) -> pd.DataFrame:
     """
     Read NOAA HATS data file
@@ -456,10 +462,18 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
     with open(infile) as fh:
         file_content = fh.read()
 
-    gas_file = infile.stem.split("_")[2].lower()
+    gas_file = infile.stem.split("_")[2]
 
-    if gas != gas_file:
-        msg = f"{gas=}, {gas_file=}"
+    if gas_file in HATS_GAS_NAME_MAPPING_REVERSE:
+        gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
+
+    else:
+        gas_file_mapped = gas_file
+
+    gas_file_mapped = gas_file_mapped.lower()
+
+    if gas != gas_file_mapped:
+        msg = f"{gas=}, {gas_file=}, {gas_file_mapped=}"
         raise AssertionError(msg)
 
     try:
@@ -475,7 +489,7 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
     if unit.endswith("."):
         unit = unit[:-1]
 
-    tmp = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep)
+    tmp = pd.read_csv(StringIO(file_content), comment="#", sep=sep)
 
     year_col = tmp.columns[0]
     if not year_col.endswith("YYYY"):
@@ -493,7 +507,7 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
         c = cast(str, c)
         if (
             c.endswith("sd")
-            or not c.endswith(gas.upper())
+            or not c.endswith(gas_file.upper())
             or any(v in c for v in ("NH", "SH", "Global"))
         ):
             continue

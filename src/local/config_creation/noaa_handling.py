@@ -16,6 +16,7 @@ from local.config.process_noaa_surface_flask_data import (
     ProcessNOAASurfaceFlaskDataConfig,
 )
 from local.config.retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from local.noaa_processing import HATS_GAS_NAME_MAPPING
 
 IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-situ/surface/{gas}_surface-insitu_ccgg_text.zip"
 SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
@@ -34,7 +35,16 @@ def get_hats_url(gas: str) -> str:
     -------
         URL from which to download the combined data
     """
-    res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
+    if "cfc" in gas:
+        if gas in HATS_GAS_NAME_MAPPING:
+            gas_hats = HATS_GAS_NAME_MAPPING[gas]
+        else:
+            gas_hats = gas
+
+        res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+
+    else:
+        res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
 
     return res
 
@@ -86,6 +96,12 @@ DOWNLOAD_URLS = {
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="sf6"),
             known_hash="376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
+        )
+    ],
+    ("cfc11", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc11"),
+            known_hash="c6067e98bf3896a45e21a248155bbf07815facce2c428bf015560602f31661f9",
         )
     ],
 }
