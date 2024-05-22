@@ -15,7 +15,7 @@
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # # SF$_6$-like - extend the global-, annual-mean
 #
-# Extend the global-, annual-mean back in time.
+# Extend the global-, annual-mean from the observational network back in time.
 # For SF$_6$, we do this by combining the values from other data sources
 # with an assumption about when zero was reached.
 
@@ -51,6 +51,7 @@ from local.config import load_config_from_file
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
+cf_xarray.units.units.define("ppt = ppb / 1000")
 
 pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
@@ -83,6 +84,9 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+
+# %%
+assert False, "Add here something like: get other sources for gas"
 
 # %% [markdown]
 # ## Action
@@ -129,6 +133,17 @@ lat_grad_eofs_allyears = xr.load_dataset(
 lat_grad_eofs_allyears
 
 # %% [markdown]
+# #### Create annual-mean latitudinal gradient
+#
+# This can be combined with our hemispheric information if needed.
+
+# %%
+allyears_latitudinal_gradient = (
+    lat_grad_eofs_allyears["principal-components"] @ lat_grad_eofs_allyears["eofs"]
+)
+allyears_latitudinal_gradient
+
+# %% [markdown]
 # ### Define some important constants
 
 # %%
@@ -154,35 +169,115 @@ use_extensions_years
 # This happens in a few steps.
 
 # %% [markdown]
-# #### Define some constants
+# #### Use other global-mean sources
 
 # %%
-law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
-law_dome_lat
-
-# %%
-law_dome_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"]
+assert False, (
+    "Add some other global-mean sources handling here "
+    "(including what to do in overlap/join periods)"
 )
-law_dome_lat_nearest
 
 # %%
-conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
-conc_unit
+global_annual_mean_composite = global_annual_mean_obs_network
 
 # %% [markdown]
-# #### Create annual-mean latitudinal gradient
-#
-# This is then combined with our ice core information.
+# #### Use other spatial sources
 
 # %%
-allyears_latitudinal_gradient = (
-    lat_grad_eofs_allyears["principal-components"] @ lat_grad_eofs_allyears["eofs"]
+assert False, (
+    "Add some other spatial sources handling here. "
+    "That will need to use the gradient information too "
+    "(including what to do in overlap/join periods)"
 )
-allyears_latitudinal_gradient
+
+# %% [markdown]
+# #### Use pre-industrial value and time
+
+# %%
+pre_ind_value = Quantity(0, "ppt")
+pre_ind_year = 1950
+
+# %%
+if (global_annual_mean_composite["year"] <= pre_ind_year).any():
+    pre_ind_years = global_annual_mean_composite["year"][
+        np.where(global_annual_mean_composite["year"] <= pre_ind_year)
+    ]
+    msg = (
+        f"You have data before your pre-industrial year, please check. {pre_ind_years=}"
+    )
+    raise AssertionError(msg)
+
+# %%
+pre_ind_part = (
+    global_annual_mean_composite.pint.dequantify()
+    .interp(
+        year=out_years[np.where(out_years <= pre_ind_year)],
+        kwargs={
+            "fill_value": pre_ind_value.to(global_annual_mean_composite.data.units).m
+        },
+    )
+    .pint.quantify()
+)
+
+# %%
+global_annual_mean_composite = xr.concat(
+    [pre_ind_part, global_annual_mean_composite], "year"
+)
+global_annual_mean_composite
+
+# %%
+with axes_vertical_split() as axes:
+    global_annual_mean_composite.plot.line(ax=axes[0])
+    global_annual_mean_composite.plot.scatter(
+        ax=axes[0], alpha=1.0, color="tab:orange", marker="x"
+    )
+
+    global_annual_mean_composite.sel(
+        year=global_annual_mean_composite["year"][
+            np.where(global_annual_mean_composite["year"] >= 1950)
+        ]
+    ).plot.line(ax=axes[1], color="tab:blue")
+    global_annual_mean_composite.sel(
+        year=global_annual_mean_composite["year"][
+            np.where(global_annual_mean_composite["year"] >= 1950)
+        ]
+    ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
+
+# %% [markdown]
+# ### Interpolate between to fill missing values
+
+# %%
+global_annual_mean_composite = (
+    global_annual_mean_composite.pint.dequantify()
+    .interp(year=out_years, method="cubic")
+    .pint.quantify()
+)
+global_annual_mean_composite
+
+# %%
+with axes_vertical_split() as axes:
+    global_annual_mean_composite.plot.line(ax=axes[0])
+    global_annual_mean_composite.plot.scatter(
+        ax=axes[0], alpha=1.0, color="tab:orange", marker="x"
+    )
+
+    global_annual_mean_composite.sel(
+        year=global_annual_mean_composite["year"][
+            np.where(global_annual_mean_composite["year"] >= 1950)
+        ]
+    ).plot.line(ax=axes[1], color="tab:blue")
+    global_annual_mean_composite.sel(
+        year=global_annual_mean_composite["year"][
+            np.where(global_annual_mean_composite["year"] >= 1950)
+        ]
+    ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 
 # %% [markdown]
 # ### Create full field over all years
+
+# %%
+allyears_full_field = global_annual_mean_composite + allyears_latitudinal_gradient
+allyears_full_field
 
 # %% [markdown]
 # #### Observational network
@@ -194,56 +289,9 @@ obs_network_full_field = allyears_latitudinal_gradient + global_annual_mean_obs_
 obs_network_full_field
 
 # %% [markdown]
-# #### Law Dome
-#
-# Then we use the Law Dome data.
-# We calculate the offset by ensuring that the value in Law Dome's bin
-# matches our smoothed Law Dome timeseries in the years in which we have Law Dome data
-# and don't have the observational network.
-
-# %%
-smooth_law_dome_to_use = smooth_law_dome[
-    smooth_law_dome["year"] < float(obs_network_full_field["year"].min())
-]
-law_dome_da = xr.DataArray(
-    data=smooth_law_dome_to_use["value"],
-    dims=["year"],
-    coords=dict(year=smooth_law_dome_to_use["year"]),
-    attrs=dict(units=conc_unit),
-).pint.quantify()
-law_dome_da
-
-# %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(
-    lat=law_dome_lat, method="nearest"
-)
-offset
-
-# %%
-law_dome_years_full_field = allyears_latitudinal_gradient + offset
-law_dome_years_full_field
-
-# %% [markdown]
-# #### Join back together
-
-# %%
-mostyears_full_field = xr.concat(
-    [law_dome_years_full_field, obs_network_full_field], "year"
-)
-
-mostyears_full_field
-
-# %%
-mostyears_full_field.plot(hue="lat")
-
-# %% [markdown]
 # #### Check our full field calculation
 #
-# There's a lot of steps above, if we have got this right the field will:
-#
-# - have an annual-average that matches:
-#    - our smoothed Law Dome in the Law Dome latitude
-#      (for the years of the smoothed Law Dome timeseries)
+# If we have got this right the field will:
 #
 # - be decomposable into:
 #   - a global-mean timeseries (with dims (year,))
@@ -253,78 +301,11 @@ mostyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
-if not config.ci:
-    np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=smooth_law_dome_to_use["year"].values)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use["value"],
-    )
-else:
-    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
-    ]
-    np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=law_dome_compare_years)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use[
-            np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)
-        ]["value"],
-    )
-
-# %%
-tmp = mostyears_full_field.copy()
-tmp.name = "mostyears_global_annual_mean"
-mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
+tmp = allyears_full_field.copy()
+tmp.name = "allyears_global_annual_mean"
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
     tmp
 )
-mostyears_global_annual_mean
-
-# %% [markdown]
-# #### Extending back to year 1
-#
-# We simply assume that global-mean concentrations are constant
-# before the start of the Law Dome record.
-
-# %%
-back_extend_years = np.setdiff1d(
-    out_years[np.where(out_years < mostyears_global_annual_mean["year"].values[-1])],
-    mostyears_global_annual_mean["year"],
-)
-back_extend_years
-
-# %%
-if back_extend_years.size > 0:
-    tmp = mostyears_global_annual_mean.sel(
-        year=[mostyears_global_annual_mean["year"][0]]
-    )
-    back_extended_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-    allyears_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=out_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-
-    back_extended_full_field = (
-        allyears_latitudinal_gradient.sel(year=back_extend_years)
-        + back_extended_global_annual_mean
-    )
-    allyears_full_field = xr.concat(
-        [back_extended_full_field, mostyears_full_field], "year"
-    )
-
-
-else:
-    allyears_full_field = mostyears_full_field
-    allyears_global_annual_mean = mostyears_global_annual_mean
-
 allyears_global_annual_mean
 
 # %% [markdown]

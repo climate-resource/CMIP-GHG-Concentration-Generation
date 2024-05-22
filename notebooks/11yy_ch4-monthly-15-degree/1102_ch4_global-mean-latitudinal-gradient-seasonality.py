@@ -190,10 +190,17 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-seasonality, relative_seasonality = local.seasonality.calculate_seasonality(
+(
+    seasonality,
+    relative_seasonality,
+    lon_mean_ym_monthly_anomalies,
+) = local.seasonality.calculate_seasonality(
     lon_mean=lon_mean,
     global_mean=global_mean,
 )
+
+# %%
+lon_mean_ym_monthly_anomalies.plot.line(hue="lat", col="year", col_wrap=3)
 
 # %%
 seasonality.plot.line(hue="lat")

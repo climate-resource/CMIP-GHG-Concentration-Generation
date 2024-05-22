@@ -198,10 +198,13 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-seasonality, _ = local.seasonality.calculate_seasonality(
+seasonality, _, lon_mean_ym_monthly_anomalies = local.seasonality.calculate_seasonality(
     lon_mean=lon_mean,
     global_mean=global_mean,
 )
+
+# %%
+lon_mean_ym_monthly_anomalies.plot.line(hue="lat", col="year", col_wrap=3)
 
 # %%
 seasonality.plot.line(hue="lat")
@@ -277,7 +280,7 @@ for year in seasonality_change_from_eofs["year"]:
     if year % 5:
         continue
 
-    for lat in [-37.5, 7.5, 52.5]:
+    for lat in [-37.5, 7.5, 52.5, 67.5]:
         fig, axes = plt.subplots(ncols=3, sharex=True, sharey=True)
 
         selected = seasonality_anomalies.sel(year=year, lat=lat)

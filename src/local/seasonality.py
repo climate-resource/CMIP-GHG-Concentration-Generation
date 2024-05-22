@@ -8,6 +8,7 @@ import numpy as np
 import xarray as xr
 from attrs import define
 
+from local.mean_preserving_interpolation import interpolate_annual_mean_to_monthly
 from local.regressors import LinearRegressionResult
 from local.xarray_time import convert_time_to_year_month
 
@@ -25,21 +26,28 @@ def calculate_seasonality(
         raise AssertionError(msg)
 
     lon_mean_ym_annual_mean = lon_mean_ym.mean("month")
-    lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean
+    lon_mean_ym_annual_mean_monthly = lon_mean_ym_annual_mean.groupby(
+        "lat", squeeze=False
+    ).apply(
+        interpolate_annual_mean_to_monthly,
+    )
+    lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean_monthly
+
     lon_mean_ym_monthly_anomalies_year_average = lon_mean_ym_monthly_anomalies.mean(
         "year"
     )
+
     seasonality = lon_mean_ym_monthly_anomalies_year_average
     relative_seasonality = seasonality / global_mean.mean("time")
 
     np.testing.assert_allclose(
-        seasonality.mean("month").pint.dequantify(), 0.0, atol=1e-13
+        seasonality.mean("month").pint.dequantify(), 0.0, atol=2e-8
     )
     np.testing.assert_allclose(
-        relative_seasonality.sum("month").pint.dequantify(), 0.0, atol=1e-13
+        relative_seasonality.sum("month").pint.dequantify(), 0.0, atol=1e-8
     )
 
-    return seasonality, relative_seasonality
+    return seasonality, relative_seasonality, lon_mean_ym_monthly_anomalies
 
 
 def calculate_seasonality_change_eofs_pcs(
@@ -51,15 +59,9 @@ def calculate_seasonality_change_eofs_pcs(
 
     Super helpful resource: https://www.ess.uci.edu/~yu/class/ess210b/lecture.5.EOF.all.pdf
     """
-    lon_mean_ym = convert_time_to_year_month(lon_mean)
-    if lon_mean_ym.isnull().any():
-        msg = "Drop out any years with nan data before starting"
-        raise AssertionError(msg)
-
-    lon_mean_ym_annual_mean = lon_mean_ym.mean("month")
-    lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean
-
-    seasonality, _ = calculate_seasonality(lon_mean=lon_mean, global_mean=global_mean)
+    seasonality, _, lon_mean_ym_monthly_anomalies = calculate_seasonality(
+        lon_mean=lon_mean, global_mean=global_mean
+    )
 
     seasonality_anomalies = lon_mean_ym_monthly_anomalies - seasonality
 

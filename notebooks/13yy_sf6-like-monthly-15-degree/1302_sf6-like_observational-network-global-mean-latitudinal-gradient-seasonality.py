@@ -33,6 +33,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 import local.binned_data_interpolation
 import local.binning
 import local.latitudinal_gradient
+import local.mean_preserving_interpolation
 import local.raw_data_processing
 import local.seasonality
 import local.xarray_space
@@ -199,10 +200,17 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-seasonality, relative_seasonality = local.seasonality.calculate_seasonality(
+(
+    seasonality,
+    relative_seasonality,
+    lon_mean_ym_monthly_anomalies,
+) = local.seasonality.calculate_seasonality(
     lon_mean=lon_mean,
     global_mean=global_mean,
 )
+
+# %%
+lon_mean_ym_monthly_anomalies.plot.line(hue="lat", col="year", col_wrap=3)
 
 # %%
 seasonality.plot.line(hue="lat")
