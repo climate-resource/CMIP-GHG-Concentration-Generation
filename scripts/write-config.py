@@ -55,9 +55,11 @@ def create_dev_config() -> Config:
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
-            ("n2o", "surface-flask"),
+            # # Don't use N2O surface flask to avoid double counting
+            # ("n2o", "surface-flask"),
             ("sf6", "hats"),
-            ("sf6", "surface-flask"),
+            # # Don't use SF6 surface flask to avoid double counting
+            # ("sf6", "surface-flask"),
         )
     )
 
@@ -119,8 +121,11 @@ def create_ci_config() -> Config:
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
-            ("n2o", "surface-flask"),
-            ("sf6", "surface-flask"),
+            # # Don't use N2O surface flask to avoid double counting
+            # ("n2o", "surface-flask"),
+            ("sf6", "hats"),
+            # # Don't use SF6 surface flask to avoid double counting
+            # ("sf6", "surface-flask"),
         )
     )
 

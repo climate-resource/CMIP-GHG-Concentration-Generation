@@ -75,14 +75,14 @@ def convert_year_month_to_time(
 
     **kwargs
         Passed to intialiser of :class:`cftime.datetime`
-        If not supplied, we use a calendar of "proleptic_gregorian".
+        If not supplied, we use a calendar of "standard".
 
     Returns
     -------
         Data with time axis
     """
     if not kwargs:
-        kwargs = dict(calendar="proleptic_gregorian")
+        kwargs = dict(calendar="standard")
 
     return convert_to_time(
         inp,
@@ -115,14 +115,14 @@ def convert_year_to_time(
 
     **kwargs
         Passed to intialiser of :class:`cftime.datetime`.
-        If not supplied, we use a calendar of "proleptic_gregorian".
+        If not supplied, we use a calendar of "standard".
 
     Returns
     -------
         Data with time axis
     """
     if not kwargs:
-        kwargs = dict(calendar="proleptic_gregorian")
+        kwargs = dict(calendar="standard")
 
     return convert_to_time(
         inp,

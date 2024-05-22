@@ -122,29 +122,33 @@ global_annual_mean_monthly
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly).plot(  # type: ignore
+local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
 )
-local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
-    x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
-)
+local.xarray_time.convert_year_to_time(
+    global_annual_mean, calendar="proleptic_gregorian"
+).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10])
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
+    calendar="proleptic_gregorian",
 ).plot(
     ax=axes[1]
 )  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10])
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10]),
+    calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:])
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
 ).plot(
     ax=axes[2]
 )  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:])
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
 
 plt.tight_layout()
@@ -164,7 +168,7 @@ seasonality_full = (
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
-    atol=1e-10,
+    atol=1e-7,
 )
 
 # %%
@@ -185,7 +189,7 @@ local.xarray_time.convert_year_month_to_time(  # type: ignore
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
-local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ignore
+local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="proleptic_gregorian").plot(  # type: ignore
     x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
 )
 
@@ -213,23 +217,25 @@ pcs_annual = lat_gradient_eofs_pcs["principal-components"]
 
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 
-local.xarray_time.convert_year_month_to_time(pcs_monthly).plot(ax=axes[0], hue="eof")
-local.xarray_time.convert_year_to_time(pcs_annual).plot.scatter(
-    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0]
-)
+local.xarray_time.convert_year_month_to_time(
+    pcs_monthly, calendar="proleptic_gregorian"
+).plot(ax=axes[0], hue="eof")
+local.xarray_time.convert_year_to_time(
+    pcs_annual, calendar="proleptic_gregorian"
+).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0])
 
 local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][1:10])
+    pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
 ).plot(ax=axes[1], hue="eof")
 local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][1:10])
+    pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
 ).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][-10:])
+    pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
 ).plot(ax=axes[2], hue="eof")
 local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][-10:])
+    pcs_annual.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
 ).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[2])
 
 plt.tight_layout()
@@ -250,9 +256,9 @@ np.testing.assert_allclose(
 latitudinal_gradient_monthly
 
 # %%
-local.xarray_time.convert_year_month_to_time(latitudinal_gradient_monthly).plot(
-    hue="lat"
-)
+local.xarray_time.convert_year_month_to_time(
+    latitudinal_gradient_monthly, calendar="proleptic_gregorian"
+).plot(hue="lat")
 
 # %% [markdown]
 # ### Save

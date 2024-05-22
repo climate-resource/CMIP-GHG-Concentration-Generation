@@ -1,5 +1,5 @@
 """
-Crunch grids notebook steps
+Calculate historical emissions notebook steps
 """
 
 from __future__ import annotations
@@ -51,35 +51,15 @@ def configure_notebooks(
         config=config, step=step_name, step_config_id=step_config_id
     )
 
-    if config_step.gas in ("co2", "ch4", "n2o"):
-        step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
-        step_config_id_gridding_pieces_step = "only"
-
-    else:
-        step = "calculate_sf6_like_monthly_fifteen_degree_pieces"
-        step_config_id_gridding_pieces_step = config_step.gas
-
-    config_gridding_pieces_step = get_config_for_step_id(
-        config=config,
-        step=step,
-        step_config_id=step_config_id_gridding_pieces_step,
-    )
-
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("30yy_grid") / "3001_crunch-grids"],
+            unconfigured_notebook=uc_nbs_dict[
+                Path("010y_compile-historical-emissions")
+                / "0109_compile-complete-dataset"
+            ],
             configuration=(),
-            dependencies=(
-                config_gridding_pieces_step.global_annual_mean_allyears_monthly_file,
-                config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file,
-                config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file,
-            ),
-            targets=(
-                config_step.fifteen_degree_monthly_file,
-                config_step.half_degree_monthly_file,
-                config_step.gmnhsh_mean_monthly_file,
-                config_step.gmnhsh_mean_annual_file,
-            ),
+            dependencies=(),
+            targets=(config_step.complete_historical_emissions_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -91,16 +71,14 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="crunch_grids",
+    step_name="compile_historical_emissions",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("30yy_grid") / "3001_crunch-grids",
+            notebook_path=Path("010y_compile-historical-emissions")
+            / "0109_compile-complete-dataset",
             raw_notebook_ext=".py",
-            summary="grid - Grid data from the gridding pieces",
-            doc=(
-                "Create gridded data products based on the seasonality, "
-                "latitutindal gradient and global-means from earlier steps"
-            ),
+            summary="Compile historical emissions - create complete dataset",
+            doc="Compile a complete historical emissions dataset from our various sources.",
         ),
     ],
     configure_notebooks=configure_notebooks,

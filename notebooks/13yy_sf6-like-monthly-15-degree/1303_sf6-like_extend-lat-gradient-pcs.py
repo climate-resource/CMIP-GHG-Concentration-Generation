@@ -60,6 +60,8 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
 # %%
+pint_xarray.setup_registry(openscm_units.unit_registry)
+
 QuantityOSCM = openscm_units.unit_registry.Quantity
 
 # %% [markdown]
@@ -73,7 +75,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "cfc11"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config

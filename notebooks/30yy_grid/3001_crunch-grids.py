@@ -70,7 +70,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "co2"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -126,8 +126,20 @@ lat_grad_fifteen_degree_monthly
 # ### 15&deg; monthly file
 
 # %%
+seasonality_monthly_use = seasonality_monthly.copy()
+seasonality_monthly_use_month_mean = seasonality_monthly_use.mean("month")
+if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
+    # Force the data to zero. This is a bit of a hack, but also basically fine.
+    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
+    seasonality_monthly_use = (
+        seasonality_monthly_use - seasonality_monthly_use_month_mean
+    )
+
+seasonality_monthly_use.mean("month")
+
+# %%
 gridding_values = (
-    xr.merge([seasonality_monthly.copy(), lat_grad_fifteen_degree_monthly])
+    xr.merge([seasonality_monthly_use.copy(), lat_grad_fifteen_degree_monthly])
     .cf.add_bounds("lat")
     .pint.quantify({"lat_bounds": "deg"})
 )
