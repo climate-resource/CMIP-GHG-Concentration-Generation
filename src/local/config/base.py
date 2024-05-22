@@ -23,6 +23,7 @@ from .calculate_n2o_monthly_15_degree import CalculateN2OMonthlyFifteenDegreePie
 from .calculate_sf6_like_monthly_15_degree import (
     CalculateSF6LikeMonthlyFifteenDegreePieces,
 )
+from .compile_historical_emissions import CompileHistoricalEmissionsConfig
 from .crunch_grid import GridCrunchingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
 from .process_noaa_hats_data import ProcessNOAAHATSDataConfig
@@ -190,6 +191,15 @@ class Config:
         ]
     )
     """Configurations to use for the plotting step"""
+
+    compile_historical_emissions: list[CompileHistoricalEmissionsConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use for the compilation of historical emissions data"""
 
     smooth_law_dome_data: list[SmoothLawDomeDataConfig] = field(
         validator=[

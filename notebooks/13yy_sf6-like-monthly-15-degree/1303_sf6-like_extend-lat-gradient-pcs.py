@@ -30,9 +30,9 @@ import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
+import pandas as pd
 import pint
 import pint_xarray
-import primap2  # type: ignore
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -126,6 +126,18 @@ lat_grad_eofs_obs_network = xr.load_dataset(
 ).pint.quantify()
 lat_grad_eofs_obs_network
 
+# %%
+historical_emissions = pd.read_csv(
+    config_historical_emissions.complete_historical_emissions_file
+)
+historical_emissions = historical_emissions[
+    historical_emissions["variable"] == f"Emissions|{config_step.gas}"
+]
+if historical_emissions.empty:
+    msg = "No data found for gas, check your config"
+    raise AssertionError(msg)
+historical_emissions
+
 # %% [markdown]
 # ### Define some important constants
 
@@ -167,36 +179,39 @@ if len(lat_grad_eofs_obs_network["eof"]) != exp_n_eofs:
 # We fill this using a regression against emissions.
 
 # %%
-primap_full = primap2.open_dataset(
-    config_retrieve_misc.primap.raw_dir
-    / config_retrieve_misc.primap.download_url.url.split("/")[-1]
-)
-
-primap_total_emissions = (
-    local.xarray_time.convert_time_to_year_month(primap_full)
-    .sel(
-        **{
-            "category (IPCC2006_PRIMAP)": "0",
-            "scenario (PRIMAP-hist)": "HISTTP",
-            "area (ISO3)": "EARTH",
-            "month": 1,
-        }
-    )[config_step.gas.upper()]
-    .squeeze()
-    .reset_coords(drop=True)
-)
-
-primap_total_emissions
+historical_emissions = historical_emissions.rename({"time": "year"}, axis="columns")
+historical_emissions
 
 # %%
 regression_years = np.intersect1d(
-    lat_grad_eofs_obs_network["year"], primap_total_emissions["year"]
+    lat_grad_eofs_obs_network["year"], historical_emissions["year"]
 )
 regression_years
 
 # %%
-primap_regression_data = primap_total_emissions.sel(year=regression_years)
-primap_regression_data
+unit = historical_emissions["unit"].unique()
+assert len(unit) == 1
+unit = unit[0]
+
+historical_emissions_xr = xr.DataArray(
+    historical_emissions["value"],
+    dims=("year",),
+    coords=dict(year=historical_emissions["year"]),
+    attrs={"units": unit},
+).pint.quantify(unit_registry=openscm_units.unit_registry)
+historical_emissions_xr = historical_emissions_xr.sel(
+    year=historical_emissions_xr["year"] <= regression_years.max()
+)
+
+
+historical_emissions_xr
+
+# %%
+historical_emissions_regression_data = historical_emissions_xr.sel(
+    year=regression_years
+)
+
+historical_emissions_regression_data
 
 # %%
 pc0_obs_network = lat_grad_eofs_obs_network["principal-components"].sel(eof=0)
@@ -205,7 +220,7 @@ pc0_obs_network
 
 # %%
 with axes_vertical_split() as axes:
-    primap_regression_data.plot(ax=axes[0])
+    historical_emissions_regression_data.plot(ax=axes[0])
     pc0_obs_network_regression.plot(ax=axes[1])
 
 # %%
@@ -213,7 +228,10 @@ with axes_vertical_split() as axes:
 # when emissions are zero.
 # This is fine for gases like SF6, whose pre-industrial concentrations are zero.
 # Have to be more careful when the pre-industrial concentrations are non-zero.
-x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
+x = QuantityOSCM(
+    historical_emissions_regression_data.data.m,
+    str(historical_emissions_regression_data.data.units),
+)
 A = x.m[:, np.newaxis]
 y = QuantityOSCM(
     pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
@@ -242,33 +260,31 @@ ax.set_xlabel("PRIMAP emissions")
 ax.legend()
 
 # %% [markdown]
-# Extend PRIMAP emissions back to year 1, assuming constant before 1750.
+# Extend historical emissions back to year 1, assuming constant before 1750.
 
 # %%
-primap_total_emissions_extension_years = np.union1d(
+historical_emissions_extension_years = np.union1d(
     np.setdiff1d(out_years, pc0_obs_network["year"]),
-    primap_total_emissions["year"],
+    historical_emissions_xr["year"],
 )
-primap_total_emissions_extension_years
+historical_emissions_extension_years
 
 # %%
-primap_total_emissions_extended = primap_total_emissions.copy()
-primap_total_emissions_extended = (
-    primap_total_emissions_extended.pint.dequantify().interp(
-        year=primap_total_emissions_extension_years,
-        kwargs={"fill_value": primap_total_emissions.data[0].m},
-    )
+historical_emissions_extended = historical_emissions_xr.copy()
+historical_emissions_extended = historical_emissions_extended.pint.dequantify().interp(
+    year=historical_emissions_extension_years,
+    kwargs={"fill_value": historical_emissions_xr.data[0].m},
 )
 
 with axes_vertical_split() as axes:
-    primap_total_emissions_extended.plot(ax=axes[0])
-    primap_total_emissions_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
+    historical_emissions_extended.plot(ax=axes[0])
+    historical_emissions_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
 
-primap_total_emissions_extended
+historical_emissions_extended
 
 # %%
 years_to_fill_with_regression = np.setdiff1d(
-    primap_total_emissions_extended["year"],
+    historical_emissions_extended["year"],
     pc0_obs_network["year"],
 )
 
@@ -277,7 +293,7 @@ years_to_fill_with_regression
 # %%
 pc0_emissions_extended = (
     m
-    * primap_total_emissions_extended.sel(
+    * historical_emissions_extended.sel(
         year=years_to_fill_with_regression
     ).pint.quantify(unit_registry=openscm_units.unit_registry)
     + c

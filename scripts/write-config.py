@@ -15,6 +15,9 @@ from local.config import Config, converter_yaml
 from local.config.plot_input_data_overviews import PlotInputDataOverviewsConfig
 from local.config_creation.agage_handling import create_agage_handling_config
 from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
+from local.config_creation.compile_historical_emissions import (
+    COMPILE_HISTORICAL_EMISSIONS_STEPS,
+)
 from local.config_creation.crunch_grids import create_crunch_grids_config
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
@@ -87,6 +90,7 @@ def create_dev_config() -> Config:
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
+        compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
@@ -149,6 +153,7 @@ def create_ci_config() -> Config:
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
+        compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),

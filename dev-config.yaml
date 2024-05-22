@@ -64,6 +64,9 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/sf6/sf6_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: sf6
 ci: false
+compile_historical_emissions:
+- complete_historical_emissions_file: data/processed/historical_emissions
+  step_config_id: only
 crunch_grids:
 - fifteen_degree_monthly_file: data/interim/co2/co2_fifteen-degree_monthly.nc
   gas: co2
