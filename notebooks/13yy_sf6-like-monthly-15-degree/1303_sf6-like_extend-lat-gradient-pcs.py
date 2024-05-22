@@ -84,6 +84,9 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+config_historical_emissions = get_config_for_step_id(
+    config=config, step="compile_historical_emissions", step_config_id="only"
+)
 config_retrieve_misc = get_config_for_step_id(
     config=config, step="retrieve_misc_data", step_config_id="only"
 )

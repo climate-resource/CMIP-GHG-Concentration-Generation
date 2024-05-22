@@ -85,9 +85,6 @@ config_step = get_config_for_step_id(
 )
 
 
-# %%
-assert False, "Add here something like: get other sources for gas"
-
 # %% [markdown]
 # ## Action
 
@@ -119,6 +116,31 @@ def axes_vertical_split(
 
 # %% [markdown]
 # ### Load data
+
+# %%
+global_mean_supplement_files = (
+    local.global_mean_extension.get_global_mean_supplement_files(config_step.gas)
+)
+global_mean_supplement_files
+
+# %%
+global_mean_supplements_l = []
+for f in global_mean_supplement_files:
+    try:
+        global_mean_supplements_l.append(
+            local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
+                f
+            )
+        )
+    except Exception as exc:
+        msg = f"Error reading {f}"
+        raise ValueError(msg) from exc
+
+global_mean_supplements = pd.concat(global_mean_supplements_l)
+# TODO: add check of gas names to processed data checker
+# global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
+assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
+global_mean_supplements
 
 # %%
 global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
@@ -168,34 +190,40 @@ use_extensions_years
 #
 # This happens in a few steps.
 
+# %%
+global_annual_mean_composite = global_annual_mean_obs_network.copy()
+
 # %% [markdown]
 # #### Use other global-mean sources
 
 # %%
-assert False, (
-    "Add some other global-mean sources handling here "
-    "(including what to do in overlap/join periods)"
-)
-
-# %%
-global_annual_mean_composite = global_annual_mean_obs_network
+if "global" in global_mean_supplements["region"].tolist():
+    # Add in the global stuff here
+    msg = (
+        "Add some other global-mean sources handling here "
+        "(including what to do in overlap/join periods)"
+    )
+    raise NotImplementedError(msg)
 
 # %% [markdown]
 # #### Use other spatial sources
 
 # %%
-assert False, (
-    "Add some other spatial sources handling here. "
-    "That will need to use the gradient information too "
-    "(including what to do in overlap/join periods)"
-)
+if (~global_mean_supplements["lat"].isnull()).any():
+    # Add in the latitudinal information here
+    msg = (
+        "Add some other spatial sources handling here. "
+        "That will need to use the gradient information too "
+        "(including what to do in overlap/join periods)"
+    )
+    raise NotImplementedError(msg)
 
 # %% [markdown]
 # #### Use pre-industrial value and time
 
 # %%
-pre_ind_value = Quantity(0, "ppt")
-pre_ind_year = 1950
+pre_ind_value = config_step.pre_industrial.value  # Quantity(0, "ppt")
+pre_ind_year = config_step.pre_industrial.year  # 1950
 
 # %%
 if (global_annual_mean_composite["year"] <= pre_ind_year).any():

@@ -28,6 +28,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.observational_network_binning
 import local.raw_data_processing
 from local.config import load_config_from_file
 
@@ -56,27 +57,6 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_process_noaa_surface_flask_data = get_config_for_step_id(
-    config=config,
-    step="process_noaa_surface_flask_data",
-    step_config_id=config_step.gas,
-)
-config_process_noaa_hats_data = get_config_for_step_id(
-    config=config,
-    step="process_noaa_hats_data",
-    step_config_id=config_step.gas,
-)
-config_process_agage_gc_md_data = get_config_for_step_id(
-    config=config,
-    step="retrieve_and_extract_agage_data",
-    step_config_id=f"{config_step.gas}_gc-md_monthly",
-)
-config_process_agage_gc_ms_medusa_data = get_config_for_step_id(
-    config=config,
-    step="retrieve_and_extract_agage_data",
-    step_config_id=f"{config_step.gas}_gc-ms-medusa_monthly",
-)
-
 
 # %% [markdown]
 # ## Action
@@ -85,13 +65,16 @@ config_process_agage_gc_ms_medusa_data = get_config_for_step_id(
 # ### Load data
 
 # %%
+obs_network_input_files = (
+    local.observational_network_binning.get_obs_network_binning_input_files(
+        gas=config_step.gas, config=config
+    )
+)
+obs_network_input_files
+
+# %%
 all_data_l = []
-for f in [
-    config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
-    config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-    config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
-    config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
-]:
+for f in obs_network_input_files:
     try:
         all_data_l.append(local.raw_data_processing.read_and_check_binning_columns(f))
     except Exception as exc:
