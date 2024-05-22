@@ -1291,13 +1291,13 @@ files = [
 
 [[package]]
 name = "input4mips-validation"
-version = "0.3.1"
+version = "0.3.2"
 description = "Validation of input4MIPs data (checking file formats, metadata etc.)."
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "input4mips_validation-0.3.1-py3-none-any.whl", hash = "sha256:de93046a7196cd303c25d44fc409bb85adc6dfeb4f5c5da01b460108df93251e"},
-    {file = "input4mips_validation-0.3.1.tar.gz", hash = "sha256:05c7367159f04f60a8e817d3fefc30cde7abe3b07d71790bee804d0e87d81a2f"},
+    {file = "input4mips_validation-0.3.2-py3-none-any.whl", hash = "sha256:471c05767c7480c536d22dd2ee57c4a1871b673937d07f17807b331b7bb437cd"},
+    {file = "input4mips_validation-0.3.2.tar.gz", hash = "sha256:57e3d391e440e06e11d6823618180264e355ae22a0f746628f460bd0e373d03d"},
 ]
 
 [package.dependencies]
@@ -4273,4 +4273,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "cb9b5a32acdfff3e4ff2127c4a1ff0447c7058f5f6581345ffe1dd22b063313b"
+content-hash = "b559be4f39e9c172637ef12f79b133879a7d8b5c5fcf701f275431101fb31557"
