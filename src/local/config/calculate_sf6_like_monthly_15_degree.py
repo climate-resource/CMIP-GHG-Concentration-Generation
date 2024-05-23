@@ -94,6 +94,13 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     This helps us deal with weird data gaps.
     """
 
+    year_drop_observational_data_after_and_including: int | None = None
+    """
+    If provided, year after which (inclusive) to drop observational data
+
+    This helps us deal with weird data gaps.
+    """
+
 
 @frozen
 class SF6LikePreIndustrialConfig:

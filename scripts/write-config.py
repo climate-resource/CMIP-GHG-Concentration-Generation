@@ -55,13 +55,15 @@ def create_dev_config() -> Config:
         "ch2cl2",
         "ch3br",
         "ch3ccl3",
+        "ch3cl",
         # Up to here
         "hfc134a",
         "sf6",
     )
     # TODO: add this to CI too
-    gases_long_poleward_extension = ("cfc114", "cfc115")
-    gases_drop_obs_data_years_inclusive = {"cfc115": 2007, "ch2cl2": 2013}
+    gases_long_poleward_extension = ("cfc114", "cfc115", "ch3ccl3")
+    gases_drop_obs_data_years_before_inclusive = {"cfc115": 2007, "ch2cl2": 2013}
+    gases_drop_obs_data_years_after_inclusive = {}
 
     start_year = 1
     end_year = 2022
@@ -81,6 +83,7 @@ def create_dev_config() -> Config:
             ("ch2cl2", "hats"),
             ("ch3br", "hats"),
             ("ch3ccl3", "hats"),
+            ("ch3cl", "hats"),
             ("hfc134a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
@@ -113,6 +116,8 @@ def create_dev_config() -> Config:
             ("ch3ccl3", "gc-md", "monthly"),
             ("ch3ccl3", "gc-ms-medusa", "monthly"),
             ("ch3ccl3", "gc-ms", "monthly"),
+            ("ch3cl", "gc-ms-medusa", "monthly"),
+            ("ch3cl", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
         )
@@ -122,12 +127,11 @@ def create_dev_config() -> Config:
         gases=("co2", "ch4", "n2o"), n_draws=250
     )
 
-    monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(
-            gases=gases_to_write,
-            gases_long_poleward_extension=gases_long_poleward_extension,
-            gases_drop_obs_data_years_inclusive=gases_drop_obs_data_years_inclusive,
-        )
+    monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
+        gases=gases_to_write,
+        gases_long_poleward_extension=gases_long_poleward_extension,
+        gases_drop_obs_data_years_before_inclusive=gases_drop_obs_data_years_before_inclusive,
+        gases_drop_obs_data_years_after_inclusive=gases_drop_obs_data_years_after_inclusive,
     )
 
     return Config(

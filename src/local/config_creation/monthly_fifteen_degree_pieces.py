@@ -33,10 +33,11 @@ PieceCalculationOption = (
 )
 
 
-def create_monthly_fifteen_degree_pieces_configs(
+def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     gases: tuple[str, ...],
     gases_long_poleward_extension: tuple[str, ...] = (),
-    gases_drop_obs_data_years_inclusive: dict[str, int] | None = None,
+    gases_drop_obs_data_years_before_inclusive: dict[str, int] | None = None,
+    gases_drop_obs_data_years_after_inclusive: dict[str, int] | None = None,
 ) -> dict[str, list[PieceCalculationOption],]:
     """
     Create configuration for calculating the monthly, 15 degree pieces for different gases
@@ -49,8 +50,12 @@ def create_monthly_fifteen_degree_pieces_configs(
     gases_long_poleward_extension
         Gases for which we allow a long poleward extension of data.
 
-    gases_drop_obs_data_years_inclusive
-        Years in which to drop observational data (inclusive) for gases.
+    gases_drop_obs_data_years_before_inclusive
+        Years before which to drop observational data (inclusive) for gases.
+        If a gas is not in the list, no drop year will be applied.
+
+    gases_drop_obs_data_years_after_inclusive
+        Years after which to drop observational data (inclusive) for gases.
         If a gas is not in the list, no drop year will be applied.
 
     Returns
@@ -58,8 +63,11 @@ def create_monthly_fifteen_degree_pieces_configs(
         Configuration for calculating the monthly, 15 degree pieces for each gas
         in ``gases``
     """
-    if gases_drop_obs_data_years_inclusive is None:
-        gases_drop_obs_data_years_inclusive = {}
+    if gases_drop_obs_data_years_before_inclusive is None:
+        gases_drop_obs_data_years_before_inclusive = {}
+
+    if gases_drop_obs_data_years_after_inclusive is None:
+        gases_drop_obs_data_years_after_inclusive = {}
 
     out: dict[str, list[PieceCalculationOption]] = {}
 
@@ -88,6 +96,7 @@ def create_monthly_fifteen_degree_pieces_configs(
             "ch2cl2",
             "ch3br",
             "ch3ccl3",
+            "ch3cl",
             # Up to here
             "hfc134a",
             "sf6",
@@ -95,18 +104,26 @@ def create_monthly_fifteen_degree_pieces_configs(
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
 
-            if gas in gases_drop_obs_data_years_inclusive:
+            if gas in gases_drop_obs_data_years_before_inclusive:
                 year_drop_observational_data_before_and_including: int | None = (
-                    gases_drop_obs_data_years_inclusive[gas]
+                    gases_drop_obs_data_years_before_inclusive[gas]
                 )
             else:
                 year_drop_observational_data_before_and_including = None
+
+            if gas in gases_drop_obs_data_years_after_inclusive:
+                year_drop_observational_data_after_and_including: int | None = (
+                    gases_drop_obs_data_years_after_inclusive[gas]
+                )
+            else:
+                year_drop_observational_data_after_and_including = None
 
             out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
                 get_sf6_like_monthly_fifteen_degree_pieces_config(
                     gas=gas,
                     allow_long_poleward_extension=gas in gases_long_poleward_extension,
                     year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+                    year_drop_observational_data_after_and_including=year_drop_observational_data_after_and_including,
                 )
             )
 
@@ -271,6 +288,10 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "ch3ccl3": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1955, source="Guessing from reading M2017"
     ),
+    "ch3cl": SF6LikePreIndustrialConfig(
+        value=Q(460.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    # up to here
     "hfc134a": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
     ),
@@ -281,12 +302,13 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
 """Default values to use for pre-industrial"""
 
 
-def get_sf6_like_monthly_fifteen_degree_pieces_config(
+def get_sf6_like_monthly_fifteen_degree_pieces_config(  # noqa: PLR0913
     gas: str,
     pre_industrial: SF6LikePreIndustrialConfig | None = None,
     allow_poleward_extension: bool = True,
     allow_long_poleward_extension: bool = False,
     year_drop_observational_data_before_and_including: int | None = None,
+    year_drop_observational_data_after_and_including: int | None = None,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
@@ -309,6 +331,10 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
 
     year_drop_observational_data_before_and_including
         Year (inclusive) before which to drop observational data.
+        This helps us deal with data gaps.
+
+    year_drop_observational_data_after_and_including
+        Year (inclusive) after which to drop observational data.
         This helps us deal with data gaps.
 
     Returns
@@ -335,6 +361,7 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         observational_network_global_annual_mean_file=interim_dir
         / f"{gas}_observational-network_global-annual-mean.nc",
         year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+        year_drop_observational_data_after_and_including=year_drop_observational_data_after_and_including,
         lat_gradient_n_eofs_to_use=1,
         observational_network_latitudinal_gradient_eofs_file=interim_dir
         / f"{gas}_observational-network_latitudinal-gradient-eofs.nc",

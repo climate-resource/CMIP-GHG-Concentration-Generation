@@ -96,7 +96,10 @@ def configure_notebooks(
                 Path("13yy_sf6-like-monthly-15-degree")
                 / "1302_sf6-like_observational-network-global-mean-latitudinal-gradient-seasonality"
             ],
-            configuration=(),
+            configuration=(
+                config_step.year_drop_observational_data_before_and_including,
+                config_step.year_drop_observational_data_after_and_including,
+            ),
             dependencies=(config_step.observational_network_interpolated_file,),
             targets=(
                 config_step.observational_network_global_annual_mean_file,
