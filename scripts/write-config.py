@@ -43,8 +43,20 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
-    # cfc11 next
+    gases_to_write = (
+        "co2",
+        "ch4",
+        "n2o",
+        "cfc11",
+        "cfc113",
+        "cfc114",
+        "cfc12",
+        "hfc134a",
+        "sf6",
+    )
+    # TODO: add this to CI too
+    gases_long_poleward_extension = ("cfc114",)
+
     start_year = 1
     end_year = 2022
 
@@ -57,12 +69,13 @@ def create_dev_config() -> Config:
             ("n2o", "hats"),
             # # Don't use N2O surface flask to avoid double counting
             # ("n2o", "surface-flask"),
+            ("cfc11", "hats"),
+            ("cfc113", "hats"),
+            ("cfc12", "hats"),
+            ("hfc134a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
-            ("cfc11", "hats"),
-            ("cfc12", "hats"),
-            ("hfc134a", "hats"),
         )
     )
 
@@ -75,6 +88,10 @@ def create_dev_config() -> Config:
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),
+            ("cfc113", "gc-md", "monthly"),
+            ("cfc113", "gc-ms-medusa", "monthly"),
+            ("cfc114", "gc-ms", "monthly"),
+            ("cfc114", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-md", "monthly"),
             ("cfc12", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-ms", "monthly"),
@@ -88,7 +105,10 @@ def create_dev_config() -> Config:
     )
 
     monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+        create_monthly_fifteen_degree_pieces_configs(
+            gases=gases_to_write,
+            gases_long_poleward_extension=gases_long_poleward_extension,
+        )
     )
 
     return Config(

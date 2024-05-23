@@ -91,22 +91,22 @@ DOWNLOAD_URLS = {
             known_hash="6b7e09c37b7fa456ab170a4c7b825b3d4b9f6eafb0ff61a2a46554b0e63e84b1",
         )
     ],
-    ("sf6", "hats"): [
-        URLSource(
-            url=get_hats_url("sf6"),
-            known_hash="822543e2558e9e22e943478d37dffe0c758091c35d1ff9bf2b2697507dd3b39d",
-        )
-    ],
-    ("sf6", "surface-flask"): [
-        URLSource(
-            url=SURFACE_FLASK_URL_BASE.format(gas="sf6"),
-            known_hash="376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
-        )
-    ],
     ("cfc11", "hats"): [
         URLSource(
             url=get_hats_url("cfc11"),
             known_hash="c6067e98bf3896a45e21a248155bbf07815facce2c428bf015560602f31661f9",
+        )
+    ],
+    ("cfc113", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc113"),
+            known_hash="7b7984976d6cadce14d27cfc67f38adba1686b6041c7676dc5296fca8ee9a3e0",
+        )
+    ],
+    ("cfc114", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc114"),
+            known_hash="7b7984976d6cadce14d27cfc67f38adba1686b6041c7676dc5296fca8ee9a3e0",
         )
     ],
     ("cfc12", "hats"): [
@@ -119,6 +119,18 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("hfc134a"),
             known_hash="b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5",
+        )
+    ],
+    ("sf6", "hats"): [
+        URLSource(
+            url=get_hats_url("sf6"),
+            known_hash="822543e2558e9e22e943478d37dffe0c758091c35d1ff9bf2b2697507dd3b39d",
+        )
+    ],
+    ("sf6", "surface-flask"): [
+        URLSource(
+            url=SURFACE_FLASK_URL_BASE.format(gas="sf6"),
+            known_hash="376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
         )
     ],
 }

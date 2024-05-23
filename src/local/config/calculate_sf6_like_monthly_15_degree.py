@@ -38,6 +38,9 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     allow_poleward_extension: bool
     """Whether to allow the data to be extended one latitude poleward to fill data gaps"""
 
+    allow_long_poleward_extension: bool
+    """Whether to allow the data to be extended multiple latitudes poleward to fill data gaps"""
+
     observational_network_interpolated_file: Path
     """Path in which to save the interpolated observational network data"""
 

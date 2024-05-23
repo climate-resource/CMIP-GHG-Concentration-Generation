@@ -49,7 +49,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc134a"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -106,53 +106,92 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
     show_plot = False
     include_data = True
     if np.isnan(interpolated_ym).any():
-        if np.isnan(interpolated_ym.T[1:-1, :]).any():
-            msg = f"Nan data after interpolation for {year=}, {month=}, not including spatial interpolation in output"
-            print(msg)
-            include_data = False
+        if config_step.allow_long_poleward_extension:
+            all_data_with_bins_ym = all_data_with_bins[
+                (all_data_with_bins["year"] == year)
+                & (all_data_with_bins["month"] == month)
+            ]
 
-        elif not config_step.allow_poleward_extension:
+            furthest_south_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[
+                0
+            ].min()
+            if furthest_south_idx > 0:
+                south_input = all_data_with_bins_ym[
+                    all_data_with_bins_ym["latitude"]
+                    == all_data_with_bins_ym["latitude"].min()
+                ]
+                south_pole_value = south_input["value"].mean()
+                interpolated_ym[:, :furthest_south_idx] = south_pole_value
+
+                msg = f"Fixed South Pole with poleward extension of {south_pole_value}"
+                print(msg)
+
+            furthest_north_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[
+                0
+            ].max()
+            if furthest_north_idx < interpolated_ym.T.shape[0] - 1:
+                north_input = all_data_with_bins_ym[
+                    all_data_with_bins_ym["latitude"]
+                    == all_data_with_bins_ym["latitude"].max()
+                ]
+                north_pole_value = north_input["value"].mean()
+                interpolated_ym[:, furthest_north_idx:] = north_pole_value
+
+                msg = f"Fixed North Pole with poleward extension of {north_pole_value}"
+                print(msg)
+
+            if np.isnan(interpolated_ym).any():
+                msg = "Should be no more nan now"
+                raise AssertionError(msg)
+
+        elif config_step.allow_poleward_extension:
+            if np.isnan(interpolated_ym.T[1:-1, :]).any():
+                msg = f"Nan data after interpolation for {year=}, {month=}, not including spatial interpolation in output"
+                print(msg)
+                include_data = False
+
+            else:
+                all_data_with_bins_ym = all_data_with_bins[
+                    (all_data_with_bins["year"] == year)
+                    & (all_data_with_bins["month"] == month)
+                ]
+
+                north_pole_has_nan = np.isnan(interpolated_ym.T[-1, :]).any()
+                south_pole_has_nan = np.isnan(interpolated_ym.T[0, :]).any()
+
+                if north_pole_has_nan:
+                    north_input = all_data_with_bins_ym[
+                        all_data_with_bins_ym["latitude"]
+                        == all_data_with_bins_ym["latitude"].max()
+                    ]
+                    north_pole_value = north_input["value"].mean()
+                    interpolated_ym[:, -1] = north_pole_value
+
+                    msg = f"Fixed North Pole with poleward extension of {north_pole_value}"
+                    print(msg)
+
+                if south_pole_has_nan:
+                    south_input = all_data_with_bins_ym[
+                        all_data_with_bins_ym["latitude"]
+                        == all_data_with_bins_ym["latitude"].min()
+                    ]
+                    south_pole_value = south_input["value"].mean()
+                    interpolated_ym[:, 0] = south_pole_value
+
+                    msg = f"Fixed South Pole with poleward extension of {south_pole_value}"
+                    print(msg)
+
+                if np.isnan(interpolated_ym).any():
+                    msg = "Should be no more nan now"
+                    raise AssertionError(msg)
+
+        else:
             msg = (
                 f"Nan data after interpolation for {year=}, {month=} and no poleward extension allowed, "
                 "not including spatial interpolation in output"
             )
             print(msg)
             include_data = False
-
-        else:
-            all_data_with_bins_ym = all_data_with_bins[
-                (all_data_with_bins["year"] == year)
-                & (all_data_with_bins["month"] == month)
-            ]
-
-            north_pole_has_nan = np.isnan(interpolated_ym.T[-1, :]).any()
-            south_pole_has_nan = np.isnan(interpolated_ym.T[0, :]).any()
-
-            if north_pole_has_nan:
-                north_input = all_data_with_bins_ym[
-                    all_data_with_bins_ym["latitude"]
-                    == all_data_with_bins_ym["latitude"].max()
-                ]
-                north_pole_value = north_input["value"].mean()
-                interpolated_ym[:, -1] = north_pole_value
-
-                msg = f"Fixed North Pole with poleward extension of {north_pole_value}"
-                print(msg)
-
-            if south_pole_has_nan:
-                south_input = all_data_with_bins_ym[
-                    all_data_with_bins_ym["latitude"]
-                    == all_data_with_bins_ym["latitude"].min()
-                ]
-                south_pole_value = south_input["value"].mean()
-                interpolated_ym[:, 0] = south_pole_value
-
-                msg = f"Fixed South Pole with poleward extension of {south_pole_value}"
-                print(msg)
-
-            if np.isnan(interpolated_ym).any():
-                msg = "Should be no more nan now"
-                raise AssertionError(msg)
 
         show_plot = True
 
@@ -175,6 +214,11 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
         plt.ylim([-90, 90])
         plt.title(f"{year} {month}")
         plt.show()
+
+# %%
+if not interpolated_dat_l:
+    msg = "Not enough observational data to create any fields"
+    raise AssertionError(msg)
 
 # %%
 out = local.binned_data_interpolation.to_xarray_dataarray(

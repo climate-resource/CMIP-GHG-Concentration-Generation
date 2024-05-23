@@ -50,7 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc12_gc-md_monthly"  # config ID to select for this branch
+step_config_id: str = "cfc114_gc-ms_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -78,7 +78,13 @@ else:
     raise NotImplementedError(config_step.time_frequency)
 
 # %%
-AGAGE_GAS_MAPPING = {"cfc11": "cfc-11", "cfc12": "cfc-12", "hfc134a": "hfc-134a"}
+AGAGE_GAS_MAPPING = {
+    "cfc11": "cfc-11",
+    "cfc113": "cfc-113",
+    "cfc114": "cfc-114",
+    "cfc12": "cfc-12",
+    "hfc134a": "hfc-134a",
+}
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 
 
@@ -232,8 +238,6 @@ contacts = set([c for v in read_info for c in v[0]])
 print(f"{contacts=}")
 df_monthly = pd.concat([v[1] for v in read_info], axis=0)
 df_monthly
-
-# %%
 
 # %%
 for gas_file_option in df_monthly["gas"].unique():

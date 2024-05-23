@@ -55,54 +55,6 @@ DOWNLOAD_URLS = {
             known_hash="e4cdc474f71d6f80ac63fe13b7fa61a86ce0361b7995874bf074a01c69facac3",
         ),
     ],
-    ("sf6", "gc-md", "monthly"): [
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim-sf6-ecd/ascii/AGAGE-GC-ECD-SF6_CGO_sf6_mon.txt",
-            known_hash="9ec255bbd55447d8ac521a4683951e0b0aa682d8252a1072e5fa555b90af5aa1",
-        )
-    ],
-    ("sf6", "gc-ms-medusa", "monthly"): [
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_sf6_mon.txt",
-            known_hash="1611fb6ed6087b506af19ca8a08cdf750e2c185b136b2460ba013ace39b47714",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_sf6_mon.txt",
-            known_hash="d387ab096cc53fae4efa5026eaaba4f3df0ceec7a1afcfc1128687372e6505d3",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/gosan/ascii/AGAGE-GCMS-Medusa_GSN_sf6_mon.txt",
-            known_hash="b556daf22abd2edf0874b875a60bd02f246315c4c5a9748273362cb210c7e077",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_sf6_mon.txt",
-            known_hash="030a37af25e2d806d8ac65be66f264f449923a1b8b077c92c647577d4efe3720",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/macehead/ascii/AGAGE-GCMS-Medusa_MHD_sf6_mon.txt",
-            known_hash="42d1f57226972df7d16786310e95288db0b604033d8fac82b8b03630d36d908a",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_sf6_mon.txt",
-            known_hash="cb05383d875d6020a0017942551f909954354ed2701a12754da6bdb80e45612f",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/samoa/ascii/AGAGE-GCMS-Medusa_SMO_sf6_mon.txt",
-            known_hash="95fa2ccc93fe2dfefcb64d1405e81e0bc556a1892e5b4818312003de92eaf23b",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_sf6_mon.txt",
-            known_hash="12270c0ab91decaaffc0f47710c27de9147a125938c3e98b1c10a98a2922f441",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/trinidad/ascii/AGAGE-GCMS-Medusa_THD_sf6_mon.txt",
-            known_hash="da146fc89d0e2b2e87846c6e5fc5712820a5f7bff69f054d90ac0ce80a1cf2a7",
-        ),
-        URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_sf6_mon.txt",
-            known_hash="2de77c7f417510878c18d4ea452815ac4555ae17719e6786548b063ee471e5bf",
-        ),
-    ],
     ("cfc11", "gc-md", "monthly"): [
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_cfc-11_mon.txt",
@@ -152,6 +104,70 @@ DOWNLOAD_URLS = {
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-11_mon.txt",
             known_hash="3394d57cc17222ccc5de8f98edbe26131afc63e718ff9d4563727a098704aa93",
         )
+    ],
+    ("cfc113", "gc-md", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_cfc-113_mon.txt",
+            known_hash="74610a0d9de3dbbbb58ff9d665f9bee799882d2b65648a6ccc36b964b145a12a",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_cfc-113_mon.txt",
+            known_hash="3572e7c19ca325751244a0072cf06f5cec97edea41f584bbc410b52a64b1aa2f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_cfc-113_mon.txt",
+            known_hash="c1979c4b61673019ccbc6801b5c13b29fa867cd52ef64c4d964cf5ff1a21998d",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/samoa/ascii/AGAGE-GCMD_SMO_cfc-113_mon.txt",
+            known_hash="36bbd53c1d932742e8cfe0cd6d3e4cf31f141e23eb99bf14ee8e1f091db76c01",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_cfc-113_mon.txt",
+            known_hash="82043f237f083079c7f15f28449a1f2fe397416cce8f89a061ddd6e7c6405bce",
+        ),
+    ],
+    ("cfc113", "gc-ms-medusa", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-113_mon.txt",
+            known_hash="98c7e141bf65b050cf4f9a6b2b602fba5bf2ca17eca5c80e51beb2ece26ac29a",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cfc-113_mon.txt",
+            known_hash="d8e071d1758cce17b6cbf85e81307b56559dba5bfc7cc2b2bda3f88886d724e9",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-113_mon.txt",
+            known_hash="c45e5c75f7b3054412e34d1aee0f15200dccddabc42fb1a2ee09e5ff0690d0be",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-113_mon.txt",
+            known_hash="302c34bcdf5f5dbc65cd922499af65d66099249660b0444cdd79f8c2f7eb1ba5",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cfc-113_mon.txt",
+            known_hash="4a982d249b179c336be985f8610a394e661c4e3d278dbf986571fe71f6787499",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-113_mon.txt",
+            known_hash="90379724f71bb19546c5f9bdc997d56b37af47fc302acc0882c3e00888bcca8f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cfc-113_mon.txt",
+            known_hash="9edbd8c6789ec71deb553facf132e8d0eb99ec5c7d7fbf39827047a646c63148",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-113_mon.txt",
+            known_hash="8cfae7483c4b3750eae1701d78bd6ce23ef5fc26ffb81ec1dd158118ca08acad",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cfc-113_mon.txt",
+            known_hash="ee374631a4a9e76f633ff527da2abbe5ac2ea3f83c1c2f6dbd8351ae469ee06e",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-113_mon.txt",
+            known_hash="5b77bb90ed6cabf5e502ea5acd6fd5b5fda0015d51e116c835903ef0234a565a",
+        ),
     ],
     ("cfc12", "gc-md", "monthly"): [
         URLSource(
@@ -203,6 +219,63 @@ DOWNLOAD_URLS = {
             known_hash="0325346db119008b4e8a7dd7b9641b8eb097b6b03e69e6af29f240155ace3a2e",
         )
     ],
+    ("cfc114", "gc-ms-medusa", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-114_mon.txt",
+            known_hash="10d38164cbc335b50cb090396077bf8f9b449f176fc770416b127eb682546d3f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cfc-114_mon.txt",
+            known_hash="b544530b8e0e42159b890761ec6e930401ef641176f4b10e30adf9254c5e4083",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-114_mon.txt",
+            known_hash="4a5703f6b4318efff2a094fb7e8499ad46e250a8b9f25c8c5d4950fcf16ddf5a",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-114_mon.txt",
+            known_hash="ec5ceaf9aa9c35161f3f58c380a3b28ecc7cce3ca2e3aab710b792b3008c6d1f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cfc-114_mon.txt",
+            known_hash="5decb9819446deefcde82198c7f12b3588e2c3c20e9f25680335df1558e815e4",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-114_mon.txt",
+            known_hash="31efeb79fd9ae410414409d00038ea94d1a6c50829dbc5b699b49d4f7b1f2e7d",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cfc-114_mon.txt",
+            known_hash="503e67b89d6464a8ad1e22b66fa943ec5d7be6f6a3f6d5699931cc2b2c93d4ec",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-114_mon.txt",
+            known_hash="08124810bd93073048ae9bf0d62399fb5eba0932082c2821309146c32ecf14ec",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cfc-114_mon.txt",
+            known_hash="39b531a6c52e78bd7ff7fd5ec097b54ed64044487a7b015075081098ee2e171f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-114_mon.txt",
+            known_hash="4a2ddb57bb738ed4abf8c667caea31e61c78778a03de3a2a79aa5f9b658b91ca",
+        ),
+    ],
+    ("cfc114", "gc-ms", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-114_mon.txt",
+            known_hash="8b0e85a59515871ae246d580e29f4876de3289cf9617a857fa3bcb045afb456a",
+        )
+    ],
+    # ("cfc11", "gc-md", "monthly"): [
+    #
+    # ],
+    # ("cfc11", "gc-ms-medusa", "monthly"): [
+    #
+    # ],
+    # ("cfc11", "gc-ms", "monthly"): [
+    #
+    # ],
     ("hfc134a", "gc-ms-medusa", "monthly"): [
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-134a_mon.txt",
@@ -267,15 +340,54 @@ DOWNLOAD_URLS = {
             known_hash="2cce94a135d6a8f48dcfd487e9196265c8f290d1f29a0b98ef5020607d615516",
         ),
     ],
-    # ("cfc11", "gc-md", "monthly"): [
-    #
-    # ],
-    # ("cfc11", "gc-ms-medusa", "monthly"): [
-    #
-    # ],
-    # ("cfc11", "gc-ms", "monthly"): [
-    #
-    # ],
+    ("sf6", "gc-md", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim-sf6-ecd/ascii/AGAGE-GC-ECD-SF6_CGO_sf6_mon.txt",
+            known_hash="9ec255bbd55447d8ac521a4683951e0b0aa682d8252a1072e5fa555b90af5aa1",
+        )
+    ],
+    ("sf6", "gc-ms-medusa", "monthly"): [
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_sf6_mon.txt",
+            known_hash="1611fb6ed6087b506af19ca8a08cdf750e2c185b136b2460ba013ace39b47714",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_sf6_mon.txt",
+            known_hash="d387ab096cc53fae4efa5026eaaba4f3df0ceec7a1afcfc1128687372e6505d3",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/gosan/ascii/AGAGE-GCMS-Medusa_GSN_sf6_mon.txt",
+            known_hash="b556daf22abd2edf0874b875a60bd02f246315c4c5a9748273362cb210c7e077",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_sf6_mon.txt",
+            known_hash="030a37af25e2d806d8ac65be66f264f449923a1b8b077c92c647577d4efe3720",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/macehead/ascii/AGAGE-GCMS-Medusa_MHD_sf6_mon.txt",
+            known_hash="42d1f57226972df7d16786310e95288db0b604033d8fac82b8b03630d36d908a",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_sf6_mon.txt",
+            known_hash="cb05383d875d6020a0017942551f909954354ed2701a12754da6bdb80e45612f",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/samoa/ascii/AGAGE-GCMS-Medusa_SMO_sf6_mon.txt",
+            known_hash="95fa2ccc93fe2dfefcb64d1405e81e0bc556a1892e5b4818312003de92eaf23b",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_sf6_mon.txt",
+            known_hash="12270c0ab91decaaffc0f47710c27de9147a125938c3e98b1c10a98a2922f441",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/trinidad/ascii/AGAGE-GCMS-Medusa_THD_sf6_mon.txt",
+            known_hash="da146fc89d0e2b2e87846c6e5fc5712820a5f7bff69f054d90ac0ce80a1cf2a7",
+        ),
+        URLSource(
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_sf6_mon.txt",
+            known_hash="2de77c7f417510878c18d4ea452815ac4555ae17719e6786548b063ee471e5bf",
+        ),
+    ],
 }
 
 

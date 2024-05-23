@@ -35,6 +35,7 @@ PieceCalculationOption = (
 
 def create_monthly_fifteen_degree_pieces_configs(
     gases: tuple[str, ...],
+    gases_long_poleward_extension: tuple[str, ...] = (),
 ) -> dict[str, list[PieceCalculationOption],]:
     """
     Create configuration for calculating the monthly, 15 degree pieces for different gases
@@ -43,6 +44,9 @@ def create_monthly_fifteen_degree_pieces_configs(
     ----------
     gases
         Gases for which to create the configuration
+
+    gases_long_poleward_extension
+        Gases for which we allow a long poleward extension of data.
 
     Returns
     -------
@@ -67,12 +71,22 @@ def create_monthly_fifteen_degree_pieces_configs(
                 get_n2o_monthly_fifteen_degree_pieces_config()
             ]
 
-        elif gas in ("sf6", "cfc11", "cfc12", "hfc134a"):
+        elif gas in (
+            "cfc11",
+            "cfc113",
+            "cfc114",
+            "cfc12",
+            "hfc134a",
+            "sf6",
+        ):
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
 
             out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
-                get_sf6_like_monthly_fifteen_degree_pieces_config(gas=gas)
+                get_sf6_like_monthly_fifteen_degree_pieces_config(
+                    gas=gas,
+                    allow_long_poleward_extension=gas in gases_long_poleward_extension,
+                )
             )
 
         else:
@@ -212,17 +226,23 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
 
 
 PRE_INDUSTRIAL_VALUES_DEFAULT = {
-    "sf6": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
-    ),
     "cfc11": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "cfc113": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1930, source="Guessing from reading M2017"
+    ),
+    "cfc114": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
     "cfc12": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
     "hfc134a": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+    "sf6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
 }
 """Default values to use for pre-industrial"""
@@ -232,6 +252,7 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
     gas: str,
     pre_industrial: SF6LikePreIndustrialConfig | None = None,
     allow_poleward_extension: bool = True,
+    allow_long_poleward_extension: bool = False,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
@@ -245,6 +266,12 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         Pre-industrial value.
         If not supplied, we use the value from {py:const}`PRE_INDUSTRIAL_VALUES_DEFAULT`
         for ``gas``.
+
+    allow_poleward_extension
+        Allow poleward extension of the data over one latitudinal bin.
+
+    allow_long_poleward_extension
+        Allow poleward extension of the data over multiple latitudinal bins.
 
     Returns
     -------
@@ -264,6 +291,7 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         processed_all_data_with_bins_file=interim_dir
         / f"{gas}_observational-network_all-data-with-bin-information.csv",
         allow_poleward_extension=allow_poleward_extension,
+        allow_long_poleward_extension=allow_long_poleward_extension,
         observational_network_interpolated_file=interim_dir
         / f"{gas}_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir

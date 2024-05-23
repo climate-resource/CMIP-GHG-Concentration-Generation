@@ -38,7 +38,12 @@ UNIT_MAP: dict[str, str] = {
 """Mapping from NOAA units to convention we use"""
 
 
-HATS_GAS_NAME_MAPPING: dict[str, str] = {"cfc11": "F11", "cfc12": "F12"}
+HATS_GAS_NAME_MAPPING: dict[str, str] = {
+    "cfc11": "F11",
+    "cfc12": "F12",
+    "cfc113": "F113",
+    "cfc114": "F114",
+}
 """Mapping from HATS names for gases to our names"""
 
 HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}

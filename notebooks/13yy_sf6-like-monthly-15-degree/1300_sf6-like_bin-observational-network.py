@@ -46,7 +46,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc134a"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -82,6 +82,7 @@ for f in obs_network_input_files:
         raise ValueError(msg) from exc
 
 all_data = pd.concat(all_data_l)
+all_data = all_data[~all_data["value"].isnull()]
 # TODO: add check of gas names to processed data checker
 all_data["gas"] = all_data["gas"].str.lower()
 all_data = all_data[all_data["gas"] == config_step.gas]
