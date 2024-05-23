@@ -22,7 +22,7 @@ from local.config.calculate_sf6_like_monthly_15_degree import (
     SF6LikePreIndustrialConfig,
 )
 
-Q = pint.get_application_registry().Quantity
+Q = pint.get_application_registry().Quantity  # type: ignore
 
 
 PieceCalculationOption = (

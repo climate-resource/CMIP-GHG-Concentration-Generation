@@ -26,6 +26,7 @@
 # %%
 
 import openscm_units
+import pandas as pd
 import pint
 import pooch
 import scmdata
@@ -82,16 +83,22 @@ rcmip_cmip6_historical
 
 # %%
 def rename_variable(v: str) -> str:
+    """
+    Re-name variable to our internal conventions
+    """
     toks = v.split("|")
     return "|".join([toks[0], toks[-1].lower()])
 
 
 def fix_units(u: str) -> str:
+    """
+    Fix units so that we can handle them
+    """
     return u
 
 
 # %%
-out = rcmip_cmip6_historical.long_data(time_axis="year")
+out: pd.DataFrame = rcmip_cmip6_historical.long_data(time_axis="year")  # type: ignore
 out["variable"] = out["variable"].apply(rename_variable)
 out["unit"] = out["unit"].apply(fix_units)
 out

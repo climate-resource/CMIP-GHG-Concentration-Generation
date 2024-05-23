@@ -128,22 +128,23 @@ global_mean_supplement_files
 
 # %%
 if global_mean_supplement_files:
-    global_mean_supplements_l = []
-    for f in global_mean_supplement_files:
-        try:
-            global_mean_supplements_l.append(
-                local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
-                    f
-                )
-            )
-        except Exception as exc:
-            msg = f"Error reading {f}"
-            raise ValueError(msg) from exc
-
-    global_mean_supplements = pd.concat(global_mean_supplements_l)
-    # TODO: add check of gas names to processed data checker
-    # global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
-    assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
+    raise NotImplementedError
+    # global_mean_supplements_l = []
+    # for f in global_mean_supplement_files:
+    #     try:
+    #         global_mean_supplements_l.append(
+    #             local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
+    #                 f
+    #             )
+    #         )
+    #     except Exception as exc:
+    #         msg = f"Error reading {f}"
+    #         raise ValueError(msg) from exc
+    #
+    # global_mean_supplements = pd.concat(global_mean_supplements_l)
+    # # TODO: add check of gas names to processed data checker
+    # # global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
+    # assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
 
 else:
     global_mean_supplements = None
@@ -205,32 +206,36 @@ global_annual_mean_composite = global_annual_mean_obs_network.copy()
 # #### Use other global-mean sources
 
 # %%
-if (
-    global_mean_supplements is not None
-    and "global" in global_mean_supplements["region"].tolist()
-):
-    # Add in the global stuff here
-    msg = (
-        "Add some other global-mean sources handling here "
-        "(including what to do in overlap/join periods)"
-    )
-    raise NotImplementedError(msg)
+if global_mean_supplements is not None:
+    raise NotImplementedError
+# if (
+#     global_mean_supplements is not None
+#     and "global" in global_mean_supplements["region"].tolist()
+# ):
+#     # Add in the global stuff here
+#     msg = (
+#         "Add some other global-mean sources handling here "
+#         "(including what to do in overlap/join periods)"
+#     )
+#     raise NotImplementedError(msg)
 
 # %% [markdown]
 # #### Use other spatial sources
 
 # %%
-if (
-    global_mean_supplements is not None
-    and (~global_mean_supplements["lat"].isnull()).any()
-):
-    # Add in the latitudinal information here
-    msg = (
-        "Add some other spatial sources handling here. "
-        "That will need to use the gradient information too "
-        "(including what to do in overlap/join periods)"
-    )
-    raise NotImplementedError(msg)
+if global_mean_supplements is not None:
+    raise NotImplementedError
+# if (
+#     global_mean_supplements is not None
+#     and (~global_mean_supplements["lat"].isnull()).any()
+# ):
+#     # Add in the latitudinal information here
+#     msg = (
+#         "Add some other spatial sources handling here. "
+#         "That will need to use the gradient information too "
+#         "(including what to do in overlap/join periods)"
+#     )
+#     raise NotImplementedError(msg)
 
 # %% [markdown]
 # #### Use pre-industrial value and time
@@ -268,6 +273,7 @@ global_annual_mean_composite = xr.concat(
 global_annual_mean_composite
 
 # %%
+SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
     global_annual_mean_composite.plot.scatter(
@@ -276,12 +282,12 @@ with axes_vertical_split() as axes:
 
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
-            np.where(global_annual_mean_composite["year"] >= 1950)
+            np.where(global_annual_mean_composite["year"] >= SHOW_AFTER_YEAR)
         ]
     ).plot.line(ax=axes[1], color="tab:blue")
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
-            np.where(global_annual_mean_composite["year"] >= 1950)
+            np.where(global_annual_mean_composite["year"] >= SHOW_AFTER_YEAR)
         ]
     ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 
@@ -297,6 +303,7 @@ global_annual_mean_composite = (
 global_annual_mean_composite
 
 # %%
+SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
     global_annual_mean_composite.plot.scatter(
@@ -305,12 +312,12 @@ with axes_vertical_split() as axes:
 
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
-            np.where(global_annual_mean_composite["year"] >= 1950)
+            np.where(global_annual_mean_composite["year"] >= SHOW_AFTER_YEAR)
         ]
     ).plot.line(ax=axes[1], color="tab:blue")
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
-            np.where(global_annual_mean_composite["year"] >= 1950)
+            np.where(global_annual_mean_composite["year"] >= SHOW_AFTER_YEAR)
         ]
     ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 

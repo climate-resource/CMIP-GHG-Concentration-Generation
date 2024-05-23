@@ -170,7 +170,7 @@ def interpolate_lat_15_degree_to_half_degree(
 
     if np.isclose(Y, 0.0, atol=atol).all():
         # Short-cut
-        y = np.zeros_like(x)
+        y = Quantity(np.zeros_like(x), lat_15_degree.data.units)
 
     else:
         # Assume that each value just applies to a point

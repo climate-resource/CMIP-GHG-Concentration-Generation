@@ -156,7 +156,7 @@ plt.show()
 # You have to use the global-, annual-mean on a yearly time axis otherwise the time-mean of the seasonality over each year is not zero.
 
 # %%
-obs_network_seasonality.plot()
+obs_network_seasonality.plot()  # type: ignore
 
 # %%
 seasonality_full = global_annual_mean * obs_network_seasonality
