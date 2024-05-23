@@ -30,7 +30,7 @@ from local.noaa_processing import (
     read_noaa_flask_zip,
     read_noaa_hats,
     read_noaa_hats_combined,
-    read_noaa_hats_halon1301,
+    read_noaa_hats_m2_and_pr1,
     read_noaa_in_situ_zip,
 )
 
@@ -48,7 +48,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hcfc22_hats"  # config ID to select for this branch
+step_config_id: str = "hfc125_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -94,8 +94,8 @@ elif config_step.source == "hats":
             zf, gas=config_step.gas, source=config_step.source
         )
 
-    elif config_step.gas in ("halon1301",):
-        df_months = read_noaa_hats_halon1301(
+    elif config_step.gas in ("halon1301", "hfc125", "hfc143a"):
+        df_months = read_noaa_hats_m2_and_pr1(
             zf, gas=config_step.gas, source=config_step.source
         )
 

@@ -50,10 +50,18 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "halon1211": "HAL1211",
     "halon1301": "H-1301_C",
     "halon2402": "Hal2402",
+    "hfc125": "HFC-125_C",
 }
 """Mapping from HATS names for gases to our names"""
 
 HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}
+
+HATS_M2_PR1_FILE_MAPPING: dict[str, str] = {
+    "halon1301": "H-1301",
+    "hfc125": "HFC-125",
+}
+HATS_M2_PR1_FILE_MAPPING_REVERSE = {v: k for k, v in HATS_M2_PR1_FILE_MAPPING.items()}
+
 HATS_ASSUMED_LOCATION: dict[str, dict[str, float]] = {
     "alt": {"latitude": 82.5, "longitude": -62.3},
     "sum": {"latitude": 72.6, "longitude": -38.4},
@@ -677,7 +685,7 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     return res.reset_index()
 
 
-def read_noaa_hats_halon1301(  # noqa: PLR0913
+def read_noaa_hats_m2_and_pr1(  # noqa: PLR0913
     infile: Path,
     gas: str,
     source: str,
@@ -686,7 +694,7 @@ def read_noaa_hats_halon1301(  # noqa: PLR0913
     time_col_assumed: str = "yyyymmdd",
 ) -> pd.DataFrame:
     """
-    Read NOAA HATS Halon-1301 data file
+    Read NOAA HATS data file that contains M2 and PR1 data
 
     Parameters
     ----------
@@ -714,15 +722,15 @@ def read_noaa_hats_halon1301(  # noqa: PLR0913
 
     gas_file = infile.stem.split("_")[0]
 
-    if gas_file != "H-1301":
-        gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
+    if gas_file in HATS_M2_PR1_FILE_MAPPING_REVERSE:
+        gas_file_mapped = HATS_M2_PR1_FILE_MAPPING_REVERSE[gas_file]
 
     else:
         gas_file_mapped = gas_file
 
     gas_file_mapped = gas_file_mapped.lower()
 
-    if gas_file != "H-1301":
+    if gas != gas_file_mapped:
         msg = f"{gas=}, {gas_file=}, {gas_file_mapped=}"
         raise AssertionError(msg)
 

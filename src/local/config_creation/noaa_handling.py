@@ -43,7 +43,9 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
             res = f"https://gml.noaa.gov/aftp/data/hats/hcfcs/{gas.lower()}/{gas.upper()}_GCMS_flask.txt"
 
     elif "cfc" in gas or "hfc" in gas:
-        if gas in HATS_GAS_NAME_MAPPING:
+        if gas in ("hfc125",):
+            gas_hats = gas.replace("hfc", "hfc-")
+        elif gas in HATS_GAS_NAME_MAPPING:
             gas_hats = HATS_GAS_NAME_MAPPING[gas]
         else:
             gas_hats = gas
@@ -229,16 +231,22 @@ DOWNLOAD_URLS = {
     ("hfc125", "hats"): [
         URLSource(
             url=get_hats_url("hfc125"),
-            known_hash="",
+            known_hash="d7ed3b857c8c7b483e1f26f4616ea049775f29956a652033ce75bb326b8424c9",
         )
     ],
-    # Up to here
     ("hfc134a", "hats"): [
         URLSource(
             url=get_hats_url("hfc134a"),
             known_hash="b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5",
         )
     ],
+    ("hfc143a", "hats"): [
+        URLSource(
+            url=get_hats_url("hfc143a"),
+            known_hash="",
+        )
+    ],
+    # Up to here
     ("sf6", "hats"): [
         URLSource(
             url=get_hats_url("sf6"),
