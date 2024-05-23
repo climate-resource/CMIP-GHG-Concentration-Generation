@@ -70,7 +70,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2"  # config ID to select for this branch
+step_config_id: str = "hfc245fa"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -199,6 +199,33 @@ plt.show()
 
 # %% [markdown]
 # ### 0.5&deg; monthly file
+
+# %%
+for degrees_freedom_scalar in np.arange(1.75, 5.1, 0.25):
+    try:
+        process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+            local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+            local.xarray_time.convert_year_month_to_time(
+                fifteen_degree_data
+                # .sel(year=range(1981, 2023))
+            )
+            .pint.dequantify()
+            .groupby("time", squeeze=False),
+            degrees_freedom_scalar=degrees_freedom_scalar,
+            max_workers=6,
+            chunksize=24,
+        )
+        print(f"Run succeeded with {degrees_freedom_scalar=}")
+        break
+    except AssertionError:
+        print(f"Run failed with {degrees_freedom_scalar=}")
+        continue
+
+else:
+    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+    raise AssertionError(msg)
+
+len(process_map_res)
 
 # %%
 process_map_res: list[xr.DataArray] = process_map(  # type: ignore

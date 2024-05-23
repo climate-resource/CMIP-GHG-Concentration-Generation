@@ -48,7 +48,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc227ea_hats"  # config ID to select for this branch
+step_config_id: str = "hfc32_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -97,7 +97,7 @@ elif config_step.source == "hats":
             zf, gas=config_step.gas, source=config_step.source
         )
 
-    elif config_step.gas in ("halon1301", "hfc125", "hfc143a", "hfc236fa"):
+    elif config_step.gas in ("halon1301", "hfc125", "hfc143a", "hfc236fa", "hfc32"):
         df_months = read_noaa_hats_m2_and_pr1(
             zf, gas=config_step.gas, source=config_step.source
         )

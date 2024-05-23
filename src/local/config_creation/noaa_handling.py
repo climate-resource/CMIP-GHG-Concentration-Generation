@@ -278,12 +278,18 @@ DOWNLOAD_URLS = {
     ("hfc32", "hats"): [
         URLSource(
             url=get_hats_url("hfc32"),
-            known_hash="",
+            known_hash="dd3ec22a6c7d4c999b5fc9a5118efddcb4d5426527cebbe38d7d0cd076edefdb",
         )
     ],
     ("hfc365mfc", "hats"): [
         URLSource(
             url=get_hats_url("hfc365mfc"),
+            known_hash="",
+        )
+    ],
+    ("nf3", "hats"): [
+        URLSource(
+            url=get_hats_url("nf3"),
             known_hash="",
         )
     ],

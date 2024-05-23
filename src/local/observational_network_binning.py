@@ -64,7 +64,7 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("chcl3",):
         return get_input_files_chcl3_like(gas=gas, config=config)
 
-    if gas in ("halon2402",):
+    if gas in ("halon2402", "nf3"):
         return get_input_files_halon2402_like(gas=gas, config=config)
 
     if gas in ("hfc23", "hfc4310mee"):
