@@ -99,6 +99,7 @@ AGAGE_GAS_MAPPING = {
     "hfc227ea": "hfc-227ea",
     "hfc23": "hfc-23",
     "hfc236fa": "hfc-236fa",
+    "hfc245fa": "hfc-245fa",
 }
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 

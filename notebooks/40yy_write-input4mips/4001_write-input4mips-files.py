@@ -250,6 +250,8 @@ gas_to_cmip_variable_renaming = {
     "hfc236fa": "mole_fraction_of_hfc236fa_in_air",
     "hfc245fa": "mole_fraction_of_hfc245fa_in_air",
     "hfc32": "mole_fraction_of_hfc32_in_air",
+    "hfc365mfc": "mole_fraction_of_hfc365mfc_in_air",
+    "hfc4310mee": "mole_fraction_of_hfc4310mee_in_air",
     # Up to here
     "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
 }

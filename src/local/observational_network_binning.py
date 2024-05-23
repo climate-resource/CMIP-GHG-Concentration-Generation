@@ -56,6 +56,8 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
         "hfc152a",
         "hfc227ea",
         "hfc236fa",
+        "hfc32",
+        "hfc365mfc",
     ):
         return get_input_files_hfc134a_like(gas=gas, config=config)
 
@@ -65,7 +67,7 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("halon2402",):
         return get_input_files_halon2402_like(gas=gas, config=config)
 
-    if gas in ("hfc23",):
+    if gas in ("hfc23", "hfc4310mee"):
         return get_input_files_hfc23_like(gas=gas, config=config)
 
     raise NotImplementedError(gas)

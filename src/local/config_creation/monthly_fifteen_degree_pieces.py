@@ -112,6 +112,9 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "hfc23",
             "hfc236fa",
             "hfc245fa",
+            "hfc32",
+            "hfc365mfc",
+            "hfc4310mee",
             # Up to here
             "sf6",
         ):
@@ -349,6 +352,15 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     ),
     "hfc245fa": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=2000, source="Guessing from reading M2017"
+    ),
+    "hfc32": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+    "hfc365mfc": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1980, source="Guessing from reading M2017"
+    ),
+    "hfc4310mee": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1985, source="Guessing from reading M2017"
     ),
     # up to here
     "sf6": SF6LikePreIndustrialConfig(
