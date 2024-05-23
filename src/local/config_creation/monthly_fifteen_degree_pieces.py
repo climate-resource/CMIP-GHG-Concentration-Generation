@@ -36,6 +36,7 @@ PieceCalculationOption = (
 def create_monthly_fifteen_degree_pieces_configs(
     gases: tuple[str, ...],
     gases_long_poleward_extension: tuple[str, ...] = (),
+    gases_drop_obs_data_years_inclusive: dict[str, int] | None = None,
 ) -> dict[str, list[PieceCalculationOption],]:
     """
     Create configuration for calculating the monthly, 15 degree pieces for different gases
@@ -48,11 +49,18 @@ def create_monthly_fifteen_degree_pieces_configs(
     gases_long_poleward_extension
         Gases for which we allow a long poleward extension of data.
 
+    gases_drop_obs_data_years_inclusive
+        Years in which to drop observational data (inclusive) for gases.
+        If a gas is not in the list, no drop year will be applied.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for each gas
         in ``gases``
     """
+    if gases_drop_obs_data_years_inclusive is None:
+        gases_drop_obs_data_years_inclusive = {}
+
     out: dict[str, list[PieceCalculationOption]] = {}
 
     for gas in gases:
@@ -75,6 +83,7 @@ def create_monthly_fifteen_degree_pieces_configs(
             "cfc11",
             "cfc113",
             "cfc114",
+            "cfc115",
             "cfc12",
             "hfc134a",
             "sf6",
@@ -82,10 +91,18 @@ def create_monthly_fifteen_degree_pieces_configs(
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
 
+            if gas in gases_drop_obs_data_years_inclusive:
+                year_drop_observational_data_before_and_including: int | None = (
+                    gases_drop_obs_data_years_inclusive[gas]
+                )
+            else:
+                year_drop_observational_data_before_and_including = None
+
             out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
                 get_sf6_like_monthly_fifteen_degree_pieces_config(
                     gas=gas,
                     allow_long_poleward_extension=gas in gases_long_poleward_extension,
+                    year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
                 )
             )
 
@@ -235,6 +252,9 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "cfc114": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
+    "cfc115": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
+    ),
     "cfc12": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
@@ -253,6 +273,7 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
     pre_industrial: SF6LikePreIndustrialConfig | None = None,
     allow_poleward_extension: bool = True,
     allow_long_poleward_extension: bool = False,
+    year_drop_observational_data_before_and_including: int | None = None,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
@@ -272,6 +293,10 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
 
     allow_long_poleward_extension
         Allow poleward extension of the data over multiple latitudinal bins.
+
+    year_drop_observational_data_before_and_including
+        Year (inclusive) before which to drop observational data.
+        This helps us deal with data gaps.
 
     Returns
     -------
@@ -296,6 +321,7 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         / f"{gas}_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
         / f"{gas}_observational-network_global-annual-mean.nc",
+        year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
         lat_gradient_n_eofs_to_use=1,
         observational_network_latitudinal_gradient_eofs_file=interim_dir
         / f"{gas}_observational-network_latitudinal-gradient-eofs.nc",

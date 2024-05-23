@@ -36,7 +36,7 @@ def get_obs_network_binning_input_files(gas: str, config: Config) -> list[Path]:
     if gas in ("cfc113",):
         return get_input_files_cfc113_like(gas=gas, config=config)
 
-    if gas in ("cfc114",):
+    if gas in ("cfc114", "cfc115"):
         return get_input_files_cfc114_like(gas=gas, config=config)
 
     if gas in ("hfc134a",):

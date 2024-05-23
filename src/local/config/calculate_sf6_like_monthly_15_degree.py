@@ -87,6 +87,13 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     Path for the latitudinal gradient on a 15 degree grid, interpolated to monthly steps for all years
     """
 
+    year_drop_observational_data_before_and_including: int | None = None
+    """
+    If provided, year before which (inclusive) to drop observational data
+
+    This helps us deal with weird data gaps.
+    """
+
 
 @frozen
 class SF6LikePreIndustrialConfig:

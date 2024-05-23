@@ -82,6 +82,7 @@ AGAGE_GAS_MAPPING = {
     "cfc11": "cfc-11",
     "cfc113": "cfc-113",
     "cfc114": "cfc-114",
+    "cfc115": "cfc-115",
     "cfc12": "cfc-12",
     "hfc134a": "hfc-134a",
 }

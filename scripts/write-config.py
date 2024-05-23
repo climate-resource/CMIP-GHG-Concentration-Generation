@@ -50,12 +50,14 @@ def create_dev_config() -> Config:
         "cfc11",
         "cfc113",
         "cfc114",
+        "cfc115",
         "cfc12",
         "hfc134a",
         "sf6",
     )
     # TODO: add this to CI too
-    gases_long_poleward_extension = ("cfc114",)
+    gases_long_poleward_extension = ("cfc114", "cfc115")
+    gases_drop_obs_data_years_inclusive = {"cfc115": 2007}
 
     start_year = 1
     end_year = 2022
@@ -92,6 +94,8 @@ def create_dev_config() -> Config:
             ("cfc113", "gc-ms-medusa", "monthly"),
             ("cfc114", "gc-ms", "monthly"),
             ("cfc114", "gc-ms-medusa", "monthly"),
+            ("cfc115", "gc-ms", "monthly"),
+            ("cfc115", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-md", "monthly"),
             ("cfc12", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-ms", "monthly"),
@@ -108,6 +112,7 @@ def create_dev_config() -> Config:
         create_monthly_fifteen_degree_pieces_configs(
             gases=gases_to_write,
             gases_long_poleward_extension=gases_long_poleward_extension,
+            gases_drop_obs_data_years_inclusive=gases_drop_obs_data_years_inclusive,
         )
     )
 
