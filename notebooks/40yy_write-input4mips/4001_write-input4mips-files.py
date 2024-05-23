@@ -225,6 +225,16 @@ gas_to_cmip_variable_renaming = {
     "co2": "mole_fraction_of_carbon_dioxide_in_air",
     "ch4": "mole_fraction_of_methane_in_air",
     "n2o": "mole_fraction_of_nitrous_oxide_in_air",
+    "c2f6": "mole_fraction_of_pfc116_in_air",
+    "c3f8": "mole_fraction_of_pfc218_in_air",
+    "c4f10": "mole_fraction_of_pfc3110_in_air",
+    "c5f12": "mole_fraction_of_pfc4112_in_air",
+    "c6f14": "mole_fraction_of_pfc5114_in_air",
+    "c7f16": "mole_fraction_of_pfc6116_in_air",
+    "c8f18": "mole_fraction_of_pfc7118_in_air",
+    "cc4f8": "mole_fraction_of_pfc318_in_air",
+    "ccl4": "mole_fraction_of_carbon_tetrachloride_in_air",
+    "cf4": "mole_fraction_of_carbon_tetrafluoride_in_air",
     "cfc11": "mole_fraction_of_cfc11_in_air",
     "cfc113": "mole_fraction_of_cfc113_in_air",
     "cfc114": "mole_fraction_of_cfc114_in_air",
@@ -253,8 +263,8 @@ gas_to_cmip_variable_renaming = {
     "hfc365mfc": "mole_fraction_of_hfc365mfc_in_air",
     "hfc4310mee": "mole_fraction_of_hfc4310mee_in_air",
     "nf3": "mole_fraction_of_nitrogen_trifluoride_in_air",
-    # Up to here
     "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
+    "so2f2": "mole_fraction_of_sulfuryl_fluoride_in_air",
 }
 
 # %% [markdown]

@@ -28,6 +28,8 @@
 # ## Imports
 
 # %%
+from functools import partial
+
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
@@ -201,44 +203,52 @@ plt.show()
 # ### 0.5&deg; monthly file
 
 # %%
-for degrees_freedom_scalar in np.arange(1.75, 5.1, 0.25):
-    try:
-        process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-            local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-            local.xarray_time.convert_year_month_to_time(
-                fifteen_degree_data
-                # .sel(year=range(1981, 2023))
-            )
-            .pint.dequantify()
-            .groupby("time", squeeze=False),
-            degrees_freedom_scalar=degrees_freedom_scalar,
-            max_workers=6,
-            chunksize=24,
+try:
+    process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+        local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+        local.xarray_time.convert_year_month_to_time(
+            fifteen_degree_data
+            # .sel(year=range(1981, 2023))
         )
-        print(f"Run succeeded with {degrees_freedom_scalar=}")
-        break
-    except AssertionError:
-        print(f"Run failed with {degrees_freedom_scalar=}")
-        continue
-
-else:
-    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-    raise AssertionError(msg)
-
-len(process_map_res)
+        .pint.dequantify()
+        .groupby("time", squeeze=False),
+        max_workers=6,
+        chunksize=24,
+    )
+    interpolation_successful = True
+    print(len(process_map_res))
+except AssertionError:
+    interpolation_successful = False
 
 # %%
-process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-    local.xarray_time.convert_year_month_to_time(
-        fifteen_degree_data
-        # .sel(year=range(1981, 2023))
-    )
-    .pint.dequantify()
-    .groupby("time", squeeze=False),
-    max_workers=6,
-    chunksize=24,
-)
+if not interpolation_successful:
+    for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
+        print(f"Trying {degrees_freedom_scalar=}")
+        try:
+            process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+                partial(
+                    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+                    degrees_freedom_scalar=degrees_freedom_scalar,
+                ),
+                local.xarray_time.convert_year_month_to_time(
+                    fifteen_degree_data
+                    # .sel(year=range(1981, 2023))
+                )
+                .pint.dequantify()
+                .groupby("time", squeeze=False),
+                max_workers=6,
+                chunksize=24,
+            )
+            print(f"Run succeeded with {degrees_freedom_scalar=}")
+            break
+        except AssertionError:
+            print(f"Run failed with {degrees_freedom_scalar=}")
+            continue
+
+    else:
+        msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+        raise AssertionError(msg)
+
 len(process_map_res)
 
 # %%

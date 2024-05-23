@@ -88,6 +88,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             ]
 
         elif gas in (
+            "c2f6",
             "cfc11",
             "cfc113",
             "cfc114",
@@ -116,8 +117,8 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "hfc365mfc",
             "hfc4310mee",
             "nf3",
-            # Up to here
             "sf6",
+            "so2f2",
         ):
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
@@ -366,9 +367,11 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "nf3": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1975, source="Guessing from reading M2017"
     ),
-    # up to here
     "sf6": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "so2f2": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
     ),
 }
 """Default values to use for pre-industrial"""

@@ -75,8 +75,8 @@ def create_dev_config() -> Config:
         "hfc365mfc",
         "hfc4310mee",
         "nf3",
-        # Up to here
         "sf6",
+        "so2f2",
     )
     # TODO: add this to CI too
     # TODO: there shouldn't be this many gasses in here
@@ -140,6 +140,7 @@ def create_dev_config() -> Config:
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
+            ("so2f2", "hats"),
         )
     )
 
@@ -205,6 +206,8 @@ def create_dev_config() -> Config:
             ("hfc365mfc", "gc-ms", "monthly"),
             ("hfc4310mee", "gc-ms-medusa", "monthly"),
             ("nf3", "gc-ms-medusa", "monthly"),
+            ("so2f2", "gc-ms-medusa", "monthly"),
+            ("so2f2", "gc-ms", "monthly"),
         )
     )
 

@@ -56,7 +56,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "hfc227ea": "F227_",
     "hfc236fa": "HFC-236fa_C",
     "hfc32": "HFC-32_C",
-    "hfc365mfc": "HFC-365mfc",
+    "hfc365mfc": "F365_",
 }
 """Mapping from HATS names for gases to our names"""
 
@@ -523,7 +523,7 @@ def read_noaa_hats(  # noqa: PLR0913
     if gas_file in HATS_GAS_NAME_MAPPING_REVERSE:
         gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
 
-    elif gas_file in ("HFC-227ea",):
+    elif gas_file in ("HFC-227ea", "HFC-365mfc"):
         gas_file_mapped = gas_file.lower().replace("-", "")
 
     else:
@@ -541,7 +541,7 @@ def read_noaa_hats(  # noqa: PLR0913
 
     if gas in ("ch3br", "ch3ccl3", "hcfc141b", "hcfc142b", "hcfc22"):
         res["value"] = res[gas.upper()]
-    elif gas in ("ch3cl", "halon1211", "halon2402", "hfc152a", "hfc227ea"):
+    elif gas in ("ch3cl", "halon1211", "halon2402", "hfc152a", "hfc227ea", "hfc365mfc"):
         res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
     else:
         res["value"] = res[gas]

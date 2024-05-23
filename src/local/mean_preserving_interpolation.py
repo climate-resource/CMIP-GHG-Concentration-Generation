@@ -321,7 +321,8 @@ def mean_preserving_interpolation(  # noqa: PLR0913
 
 
 def interpolate_time_slice_parallel_helper(
-    inp: tuple[T, xr.DataArray]
+    inp: tuple[T, xr.DataArray],
+    degrees_freedom_scalar: float = 1.75,
 ) -> tuple[T, xr.DataArray]:
     """
     Interpolate time slice in parallel.
@@ -335,6 +336,9 @@ def interpolate_time_slice_parallel_helper(
     inp
         Input values. The first element should be the time to which this slice applies.
         The second is the time slice to interpolate.
+
+    degrees_freedom_scalar
+        Degrees of freedom to use when calculating the interpolating spline.
 
     Returns
     -------
@@ -354,4 +358,6 @@ def interpolate_time_slice_parallel_helper(
     )
     pint.set_application_registry(pint_xarray.accessors.default_registry)  # type: ignore
 
-    return time, interpolate_lat_15_degree_to_half_degree(da.pint.quantify())
+    return time, interpolate_lat_15_degree_to_half_degree(
+        da.pint.quantify(), degrees_freedom_scalar=degrees_freedom_scalar
+    )
