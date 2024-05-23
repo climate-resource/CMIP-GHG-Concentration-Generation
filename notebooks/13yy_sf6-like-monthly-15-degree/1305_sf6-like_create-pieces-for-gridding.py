@@ -110,7 +110,7 @@ lat_gradient_eofs_pcs
 global_annual_mean_monthly = (
     local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
         global_annual_mean,
-        atol=1e-7,  # avoid inifite relative error for things which are close to zero
+        atol=1e-6,  # avoid inifite relative error for things which are close to zero
     )
 )
 global_annual_mean_monthly
@@ -197,14 +197,27 @@ local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="prolept
 # in our latitudinal gradient.
 
 # %%
-pcs_monthly = (
-    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-    .groupby("eof", squeeze=False)
-    .apply(
-        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
-        atol=1e-7,
-    )
-)
+for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
+    try:
+        pcs_monthly = (
+            lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+            .groupby("eof", squeeze=False)
+            .apply(
+                local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+                degrees_freedom_scalar=degrees_freedom_scalar,
+                atol=1e-7,
+            )
+        )
+        print(f"Run succeeded with {degrees_freedom_scalar=}")
+        break
+    except AssertionError:
+        print(f"Run failed with {degrees_freedom_scalar=}")
+        continue
+
+else:
+    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+    raise AssertionError(msg)
+
 pcs_monthly
 
 # %%

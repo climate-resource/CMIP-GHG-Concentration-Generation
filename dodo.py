@@ -22,6 +22,7 @@ whether this is actually best.
 from __future__ import annotations
 
 import datetime as dt
+import logging
 import os
 import time
 from collections.abc import Iterable
@@ -57,7 +58,11 @@ pydoit configuration
 See https://pydoit.org/configuration.html#configuration-at-dodo-py
 """
 
-logger = setup_logging()
+logger = setup_logging(
+    stdout_level=logging.WARNING,
+    log_file=os.environ.get("DOIT_LOG_FILE", f"doit_{RUN_ID}.log"),
+    file_level=logging.INFO,
+)
 
 
 def print_key_info() -> None:

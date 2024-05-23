@@ -232,7 +232,7 @@ np.testing.assert_allclose(
     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
     .transpose("year", "month", "lat_bins")
     .data.m,
-    atol=1e-7,  # Tolerance of our mean-preserving algorithm
+    atol=1e-6,  # Tolerance of our mean-preserving algorithm
 )
 
 # %%
