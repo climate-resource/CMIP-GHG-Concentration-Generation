@@ -55,6 +55,7 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
         "hfc143a",
         "hfc152a",
         "hfc227ea",
+        "hfc236fa",
     ):
         return get_input_files_hfc134a_like(gas=gas, config=config)
 
@@ -63,6 +64,9 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
 
     if gas in ("halon2402",):
         return get_input_files_halon2402_like(gas=gas, config=config)
+
+    if gas in ("hfc23",):
+        return get_input_files_hfc23_like(gas=gas, config=config)
 
     raise NotImplementedError(gas)
 
@@ -245,5 +249,19 @@ def get_input_files_halon2402_like(gas: str, config: Config) -> list[Path]:
     )
     return [
         config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+    ]
+
+
+def get_input_files_hfc23_like(gas: str, config: Config) -> list[Path]:
+    """
+    Get the input files to use for binning the observational network for gases we handle like HFC-23
+    """
+    config_process_agage_gc_ms_medusa_data = get_config_for_step_id(
+        config=config,
+        step="retrieve_and_extract_agage_data",
+        step_config_id=f"{gas}_gc-ms-medusa_monthly",
+    )
+    return [
         config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
     ]
