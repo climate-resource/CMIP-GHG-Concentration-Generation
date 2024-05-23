@@ -48,6 +48,8 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "ch3ccl3": "CH3CCl3",
     "ch3cl": "CH3Cl",
     "halon1211": "HAL1211",
+    "halon1301": "H-1301_C",
+    "halon2402": "Hal2402",
 }
 """Mapping from HATS names for gases to our names"""
 
@@ -69,6 +71,7 @@ HATS_ASSUMED_LOCATION: dict[str, dict[str, float]] = {
     "spo": {"latitude": -90.0, "longitude": 0.0},
     "hfm": {"latitude": 42.5, "longitude": -72.2},
     "lef": {"latitude": 45.6, "longitude": -90.27},
+    "amy": {"latitude": 36.5389, "longitude": 126.3295},
 }
 
 
@@ -518,7 +521,7 @@ def read_noaa_hats(  # noqa: PLR0913
 
     if gas in ("ch3br", "ch3ccl3"):
         res["value"] = res[gas.upper()]
-    elif gas in ("ch3cl", "halon1211"):
+    elif gas in ("ch3cl", "halon1211", "halon2402"):
         res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
     else:
         res["value"] = res[gas]
@@ -672,3 +675,100 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     res["unit"] = unit
 
     return res.reset_index()
+
+
+def read_noaa_hats_halon1301(  # noqa: PLR0913
+    infile: Path,
+    gas: str,
+    source: str,
+    sep: str = r"\s+",
+    comment: str = "#",
+    time_col_assumed: str = "yyyymmdd",
+) -> pd.DataFrame:
+    """
+    Read NOAA HATS Halon-1301 data file
+
+    Parameters
+    ----------
+    infile
+        File to read
+
+    gas
+        Gas we assume is in the file
+
+    source
+        Source of the file
+
+    sep
+        Separator to assume when reading the file
+
+    comment
+        Indicator of comments in the file
+
+    Returns
+    -------
+        Read data
+    """
+    with open(infile) as fh:
+        file_content = fh.read()
+
+    gas_file = infile.stem.split("_")[0]
+
+    if gas_file != "H-1301":
+        gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
+
+    else:
+        gas_file_mapped = gas_file
+
+    gas_file_mapped = gas_file_mapped.lower()
+
+    if gas_file != "H-1301":
+        msg = f"{gas=}, {gas_file=}, {gas_file_mapped=}"
+        raise AssertionError(msg)
+
+    try:
+        unit = re_search_and_retrieve_group(
+            r"Units: .*\((?P<unit>\S*)\)",
+            file_content,
+            "unit",
+        )
+    except ValueError:
+        print(f"Missing units for {infile=}")
+        raise
+
+    res = pd.read_csv(StringIO(file_content), comment=comment, sep=sep)
+    res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
+    res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
+
+    res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
+
+    res["unit"] = unit
+    res["gas"] = gas
+    res["source"] = "hats"
+    res["latitude"] = res["site"].apply(
+        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["latitude"]
+    )
+    res["longitude"] = res["site"].apply(
+        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["longitude"]
+    )
+    res = res.rename({"site": "site_code"}, axis="columns")
+    res = res[
+        [
+            "year",
+            "month",
+            "value",
+            "site_code",
+            "latitude",
+            "longitude",
+            "gas",
+            "source",
+            "unit",
+        ]
+    ]
+
+    # Take average where there is more than one observation in a month.
+    # Bit annoying that NOAA doesn't have a monthly file, oh well.
+    all_except_value = list(set(res.columns) - {"value"})
+    res = res.groupby(all_except_value)["value"].mean().to_frame("value").reset_index()
+
+    return res

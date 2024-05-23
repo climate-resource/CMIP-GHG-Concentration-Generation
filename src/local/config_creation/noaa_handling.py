@@ -54,7 +54,14 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912
         else:
             gas_hats = gas
 
-        res = f"https://gml.noaa.gov/aftp/data/hats/halons/flasks/{gas_hats.upper()}_GCMS_flask.txt"
+        if gas == "halon2402":
+            res = "https://gml.noaa.gov/aftp/data/hats/halons/flasks/Hal2402_GCMS_flask.txt"
+
+        elif gas == "halon1301":
+            res = "https://gml.noaa.gov/aftp/data/hats/halons/flasks/H-1301_M2&PR1_MS_flask.txt"
+
+        else:
+            res = f"https://gml.noaa.gov/aftp/data/hats/halons/flasks/{gas_hats.upper()}_GCMS_flask.txt"
 
     elif gas in ("ch2cl2",):
         if gas in HATS_GAS_NAME_MAPPING:
@@ -178,6 +185,18 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("halon1211"),
             known_hash="e09004be32c4a1cb34a55302e54b47dd1fd56a9724d562042d170d782bb7ee35",
+        )
+    ],
+    ("halon1301", "hats"): [
+        URLSource(
+            url=get_hats_url("halon1301"),
+            known_hash="92f70bff3d4009c0a6567df0de7ffb340d92ec1a6843c6d1483419f232f43669",
+        )
+    ],
+    ("halon2402", "hats"): [
+        URLSource(
+            url=get_hats_url("halon2402"),
+            known_hash="5fdbbc85fcaf9d92ccec37e3f3f073df65d4f516fbe842d23342c13317205017",
         )
     ],
     # Up to here

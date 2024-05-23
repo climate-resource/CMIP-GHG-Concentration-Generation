@@ -85,6 +85,8 @@ AGAGE_GAS_MAPPING = {
     "cfc115": "cfc-115",
     "cfc12": "cfc-12",
     "halon1211": "h-1211",
+    "halon1301": "h-1301",
+    "halon2402": "h-2402",
     "hfc134a": "hfc-134a",
 }
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
