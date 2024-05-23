@@ -163,7 +163,7 @@ seasonality_full = global_annual_mean * obs_network_seasonality
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
-    atol=1e-10,
+    atol=1e-6,  # Match the tolerance of our mean-preserving interpolation algorithm
 )
 
 # %%

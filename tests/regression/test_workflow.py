@@ -15,9 +15,10 @@ def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
     """
     Test the basic workflow
 
-    This workflow's runtime should be kept to a minimum so it can sensibly be
-    used as a test. Less than 30 seconds to run the test is what we should be
-    aiming for.
+    This workflow's runtime should be kept to a minimum
+    so it can sensibly be used as a test.
+    Less than 30 seconds to run the test is what we should be aiming for.
+    Obviously, this is not the case right now.
     """
     array_contents = {}
     for input4mips_file in (
