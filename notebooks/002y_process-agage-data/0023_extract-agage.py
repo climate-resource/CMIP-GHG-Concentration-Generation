@@ -92,6 +92,7 @@ AGAGE_GAS_MAPPING = {
     "hcfc141b": "hcfc-141b",
     "hcfc142b": "hcfc-142b",
     "hcfc22": "hcfc-22",
+    "hfc125": "hfc-125",
     # Up to here
     "hfc134a": "hfc-134a",
 }

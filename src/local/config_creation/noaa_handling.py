@@ -22,7 +22,7 @@ IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-sit
 SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
 
 
-def get_hats_url(gas: str) -> str:  # noqa: PLR0912
+def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
     """
     Get URL for downloading from NOAA HATs
 
@@ -50,6 +50,8 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912
 
         if "cfc" in gas:
             res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+        elif gas in ("hfc125",):
+            res = f"https://gml.noaa.gov/aftp/data/hats/hfcs/{gas_hats.upper()}_M2&PR1_MS_flask.txt"
         elif "hfc" in gas:
             res = f"https://gml.noaa.gov/aftp/data/hats/hfcs/{gas_hats.lower()}_GCMS_flask.txt"
         else:
@@ -222,6 +224,12 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("hcfc22"),
             known_hash="f7bf03518216bdbe5096fd95d0bed2baf895a7ef0c1d81644408f41e8215cf77",
+        )
+    ],
+    ("hfc125", "hats"): [
+        URLSource(
+            url=get_hats_url("hfc125"),
+            known_hash="",
         )
     ],
     # Up to here
