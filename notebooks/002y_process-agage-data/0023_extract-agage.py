@@ -50,7 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114_gc-ms_monthly"  # config ID to select for this branch
+step_config_id: str = "halon1211_gc-ms_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -84,6 +84,7 @@ AGAGE_GAS_MAPPING = {
     "cfc114": "cfc-114",
     "cfc115": "cfc-115",
     "cfc12": "cfc-12",
+    "halon1211": "h-1211",
     "hfc134a": "hfc-134a",
 }
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}

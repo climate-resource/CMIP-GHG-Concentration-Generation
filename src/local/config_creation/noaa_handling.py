@@ -48,6 +48,14 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912
         else:
             raise NotImplementedError(gas)
 
+    elif "halon" in gas:
+        if gas in HATS_GAS_NAME_MAPPING:
+            gas_hats = HATS_GAS_NAME_MAPPING[gas]
+        else:
+            gas_hats = gas
+
+        res = f"https://gml.noaa.gov/aftp/data/hats/halons/flasks/{gas_hats.upper()}_GCMS_flask.txt"
+
     elif gas in ("ch2cl2",):
         if gas in HATS_GAS_NAME_MAPPING:
             gas_hats = HATS_GAS_NAME_MAPPING[gas]
@@ -164,6 +172,12 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("ch3cl"),
             known_hash="8d6442dfc6216bb9ace91959ab49ad4bdbbef7042a2440d2d512660d22471080",
+        )
+    ],
+    ("halon1211", "hats"): [
+        URLSource(
+            url=get_hats_url("halon1211"),
+            known_hash="e09004be32c4a1cb34a55302e54b47dd1fd56a9724d562042d170d782bb7ee35",
         )
     ],
     # Up to here

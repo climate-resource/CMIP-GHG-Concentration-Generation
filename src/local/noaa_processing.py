@@ -47,6 +47,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "ch3br": "CH3BR",
     "ch3ccl3": "CH3CCl3",
     "ch3cl": "CH3Cl",
+    "halon1211": "HAL1211",
 }
 """Mapping from HATS names for gases to our names"""
 
@@ -517,7 +518,7 @@ def read_noaa_hats(  # noqa: PLR0913
 
     if gas in ("ch3br", "ch3ccl3"):
         res["value"] = res[gas.upper()]
-    elif gas in ("ch3cl",):
+    elif gas in ("ch3cl", "halon1211"):
         res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
     else:
         res["value"] = res[gas]
