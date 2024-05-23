@@ -112,6 +112,8 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
                 & (all_data_with_bins["month"] == month)
             ]
 
+            # TODO: change this so that it just sets the value at the pole,
+            # then tries to interpolate again.
             furthest_south_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[
                 0
             ].min()

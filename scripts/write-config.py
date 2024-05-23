@@ -86,6 +86,7 @@ def create_dev_config() -> Config:
         "hfc143a",
         "hfc152a",
         "hfc23",
+        "hfc236fa",
     )
     gases_drop_obs_data_years_before_inclusive = {
         "cfc115": 2007,

@@ -599,7 +599,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   step_config_id: hfc23
   year_drop_observational_data_after_and_including: null
   year_drop_observational_data_before_and_including: null
-- allow_long_poleward_extension: false
+- allow_long_poleward_extension: true
   allow_poleward_extension: true
   gas: hfc236fa
   global_annual_mean_allyears_file: data/interim/hfc236fa/hfc236fa_global-annual-mean_allyears.nc
@@ -2297,7 +2297,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hfc227ea_hats
 - download_complete_file: data/raw/noaa/hfc236fa_hats.complete
   download_urls:
-  - known_hash: ''
+  - known_hash: 93676d83d0ee49b0c3f8e7a372260839846f47e82e24a981d806d2c4d0211060
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/HFC-236fa_PR1_MS_flask.txt
   gas: hfc236fa
   interim_files:

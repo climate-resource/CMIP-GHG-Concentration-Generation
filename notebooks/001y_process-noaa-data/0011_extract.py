@@ -97,7 +97,7 @@ elif config_step.source == "hats":
             zf, gas=config_step.gas, source=config_step.source
         )
 
-    elif config_step.gas in ("halon1301", "hfc125", "hfc143a"):
+    elif config_step.gas in ("halon1301", "hfc125", "hfc143a", "hfc236fa"):
         df_months = read_noaa_hats_m2_and_pr1(
             zf, gas=config_step.gas, source=config_step.source
         )

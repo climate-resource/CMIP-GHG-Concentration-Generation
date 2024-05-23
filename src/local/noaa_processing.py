@@ -54,7 +54,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "hfc143a": "HFC-143a_C",
     "hfc152a": "hf152a",
     "hfc227ea": "F227_",
-    "hfc236fa": "HFC-236fa",
+    "hfc236fa": "HFC-236fa_C",
 }
 """Mapping from HATS names for gases to our names"""
 
@@ -64,6 +64,7 @@ HATS_M2_PR1_FILE_MAPPING: dict[str, str] = {
     "halon1301": "H-1301",
     "hfc125": "HFC-125",
     "hfc143a": "HFC-143a",
+    "hfc236fa": "HFC-236fa",
 }
 HATS_M2_PR1_FILE_MAPPING_REVERSE = {v: k for k, v in HATS_M2_PR1_FILE_MAPPING.items()}
 

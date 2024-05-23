@@ -45,7 +45,7 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
     elif "cfc" in gas or "hfc" in gas:
         if gas in ("hfc125",):
             gas_hats = gas.replace("hfc", "hfc-")
-        elif gas in ("hfc143a", "hfc227ea"):
+        elif gas in ("hfc143a", "hfc227ea", "hfc236fa"):
             gas_hats = gas.replace("hfc", "HFC-")
         elif gas in HATS_GAS_NAME_MAPPING:
             gas_hats = HATS_GAS_NAME_MAPPING[gas]
@@ -272,7 +272,7 @@ DOWNLOAD_URLS = {
     ("hfc236fa", "hats"): [
         URLSource(
             url=get_hats_url("hfc236fa"),
-            known_hash="",
+            known_hash="93676d83d0ee49b0c3f8e7a372260839846f47e82e24a981d806d2c4d0211060",
         )
     ],
     # Up to here
