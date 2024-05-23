@@ -61,6 +61,7 @@ def create_dev_config() -> Config:
         "halon1301",
         "halon2402",
         "hcfc141b",
+        "hcfc142b",
         # Up to here
         "hfc134a",
         "sf6",
@@ -72,6 +73,7 @@ def create_dev_config() -> Config:
         "ch3ccl3",
         "chcl3",
         "halon1301",
+        "hcfc141b",
     )
     gases_drop_obs_data_years_before_inclusive = {
         "cfc115": 2007,
@@ -103,6 +105,7 @@ def create_dev_config() -> Config:
             ("halon1301", "hats"),
             ("halon2402", "hats"),
             ("hcfc141b", "hats"),
+            ("hcfc142b", "hats"),
             ("hfc134a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
@@ -147,6 +150,8 @@ def create_dev_config() -> Config:
             ("halon2402", "gc-ms-medusa", "monthly"),
             ("hcfc141b", "gc-ms", "monthly"),
             ("hcfc141b", "gc-ms-medusa", "monthly"),
+            ("hcfc142b", "gc-ms", "monthly"),
+            ("hcfc142b", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
         )

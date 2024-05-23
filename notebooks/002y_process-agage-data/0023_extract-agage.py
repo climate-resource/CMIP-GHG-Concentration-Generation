@@ -90,6 +90,7 @@ AGAGE_GAS_MAPPING = {
     "halon1301": "h-1301",
     "halon2402": "h-2402",
     "hcfc141b": "hcfc-141b",
+    "hcfc142b": "hcfc-142b",
     # Up to here
     "hfc134a": "hfc-134a",
 }
