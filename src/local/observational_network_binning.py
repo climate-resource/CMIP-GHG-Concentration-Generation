@@ -53,6 +53,7 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
         "hcfc22",
         "hfc125",
         "hfc143a",
+        "hfc152a",
     ):
         return get_input_files_hfc134a_like(gas=gas, config=config)
 

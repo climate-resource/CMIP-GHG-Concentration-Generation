@@ -66,10 +66,12 @@ def create_dev_config() -> Config:
         "hfc125",
         "hfc134a",
         "hfc143a",
+        "hfc152a",
         # Up to here
         "sf6",
     )
     # TODO: add this to CI too
+    # TODO: there shouldn't be this many gasses in here
     gases_long_poleward_extension = (
         "cfc114",
         "cfc115",
@@ -78,6 +80,7 @@ def create_dev_config() -> Config:
         "halon1301",
         "hcfc141b",
         "hfc125",
+        "hfc143a",
     )
     gases_drop_obs_data_years_before_inclusive = {
         "cfc115": 2007,
@@ -114,6 +117,7 @@ def create_dev_config() -> Config:
             ("hfc125", "hats"),
             ("hfc134a", "hats"),
             ("hfc143a", "hats"),
+            ("hfc152a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
@@ -167,6 +171,8 @@ def create_dev_config() -> Config:
             ("hfc134a", "gc-ms", "monthly"),
             ("hfc143a", "gc-ms-medusa", "monthly"),
             ("hfc143a", "gc-ms", "monthly"),
+            ("hfc152a", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms", "monthly"),
         )
     )
 
