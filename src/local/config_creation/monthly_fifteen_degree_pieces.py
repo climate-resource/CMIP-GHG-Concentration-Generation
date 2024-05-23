@@ -67,7 +67,7 @@ def create_monthly_fifteen_degree_pieces_configs(
                 get_n2o_monthly_fifteen_degree_pieces_config()
             ]
 
-        elif gas in ("sf6", "cfc11"):
+        elif gas in ("sf6", "cfc11", "cfc12", "hfc134a"):
             if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
                 out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
 
@@ -218,6 +218,12 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "cfc11": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
+    "cfc12": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "hfc134a": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
 }
 """Default values to use for pre-industrial"""
 
@@ -225,6 +231,7 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
 def get_sf6_like_monthly_fifteen_degree_pieces_config(
     gas: str,
     pre_industrial: SF6LikePreIndustrialConfig | None = None,
+    allow_poleward_extension: bool = True,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
@@ -254,6 +261,9 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         pre_industrial=pre_industrial,
         processed_bin_averages_file=interim_dir
         / f"{gas}_observational-network_bin-averages.csv",
+        processed_all_data_with_bins_file=interim_dir
+        / f"{gas}_observational-network_all-data-with-bin-information.csv",
+        allow_poleward_extension=allow_poleward_extension,
         observational_network_interpolated_file=interim_dir
         / f"{gas}_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir

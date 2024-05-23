@@ -35,13 +35,18 @@ def get_hats_url(gas: str) -> str:
     -------
         URL from which to download the combined data
     """
-    if "cfc" in gas:
+    if "cfc" in gas or "hfc" in gas:
         if gas in HATS_GAS_NAME_MAPPING:
             gas_hats = HATS_GAS_NAME_MAPPING[gas]
         else:
             gas_hats = gas
 
-        res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+        if "cfc" in gas:
+            res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+        elif "hfc" in gas:
+            res = f"https://gml.noaa.gov/aftp/data/hats/hfcs/{gas_hats.lower()}_GCMS_flask.txt"
+        else:
+            raise NotImplementedError(gas)
 
     else:
         res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
@@ -102,6 +107,18 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("cfc11"),
             known_hash="c6067e98bf3896a45e21a248155bbf07815facce2c428bf015560602f31661f9",
+        )
+    ],
+    ("cfc12", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc12"),
+            known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",
+        )
+    ],
+    ("hfc134a", "hats"): [
+        URLSource(
+            url=get_hats_url("hfc134a"),
+            known_hash="b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5",
         )
     ],
 }

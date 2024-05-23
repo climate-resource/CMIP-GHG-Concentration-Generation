@@ -60,7 +60,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -90,8 +90,22 @@ interpolated_spatial
 # These break everything later on
 
 # %%
+interpolated_spatial_no_year_with_nan = local.xarray_time.convert_time_to_year_month(
+    interpolated_spatial
+).dropna("year")
+if interpolated_spatial_no_year_with_nan["year"].shape[0] != (
+    interpolated_spatial_no_year_with_nan["year"].max()
+    - interpolated_spatial_no_year_with_nan["year"].min()
+    + 1
+):
+    msg = "Missing years, this will not end well"
+    raise AssertionError(msg)
+
+interpolated_spatial_no_year_with_nan
+
+# %%
 interpolated_spatial_nan_free = local.xarray_time.convert_year_month_to_time(
-    local.xarray_time.convert_time_to_year_month(interpolated_spatial).dropna("year")
+    interpolated_spatial_no_year_with_nan
 )
 interpolated_spatial_nan_free
 

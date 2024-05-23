@@ -38,10 +38,28 @@ UNIT_MAP: dict[str, str] = {
 """Mapping from NOAA units to convention we use"""
 
 
-HATS_GAS_NAME_MAPPING: dict[str, str] = {"cfc11": "F11"}
+HATS_GAS_NAME_MAPPING: dict[str, str] = {"cfc11": "F11", "cfc12": "F12"}
 """Mapping from HATS names for gases to our names"""
 
 HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}
+HATS_ASSUMED_LOCATION: dict[str, dict[str, float]] = {
+    "alt": {"latitude": 82.5, "longitude": -62.3},
+    "sum": {"latitude": 72.6, "longitude": -38.4},
+    "brw": {"latitude": 71.3, "longitude": -156.6},
+    "mhd": {"latitude": 53.0, "longitude": -10.0},
+    "thd": {"latitude": 41.0, "longitude": -124.0},
+    "nwr": {"latitude": 40.052, "longitude": -105.585},
+    "kum": {"latitude": 19.5, "longitude": -154.8},
+    "mlo": {"latitude": 19.5, "longitude": -155.6},
+    # Guessing that this is Mauna Loa's emergency site...
+    "mlo_pfp": {"latitude": 19.823, "longitude": -155.469},
+    "smo": {"latitude": -14.3, "longitude": -170.6},
+    "cgo": {"latitude": -40.7, "longitude": 144.8},
+    "psa": {"latitude": -64.6, "longitude": -64.0},
+    "spo": {"latitude": -90.0, "longitude": 0.0},
+    "hfm": {"latitude": 42.5, "longitude": -72.2},
+    "lef": {"latitude": 45.6, "longitude": -90.27},
+}
 
 
 def get_metadata_from_filename_default(filename: str) -> dict[str, str]:
@@ -432,8 +450,13 @@ def read_noaa_in_situ_zip(
     return df_months
 
 
-def read_noaa_hats(  # noqa: PLR0912, PLR0915
-    infile: Path, gas: str, source: str, sep: str = r"\s+"
+def read_noaa_hats(  # noqa: PLR0913
+    infile: Path,
+    gas: str,
+    source: str,
+    sep: str = r"\s+",
+    unit_assumed: str = "ppt",
+    time_col_assumed: str = "yyyymmdd",
 ) -> pd.DataFrame:
     """
     Read NOAA HATS data file
@@ -449,8 +472,86 @@ def read_noaa_hats(  # noqa: PLR0912, PLR0915
     source
         Source of the file
 
-    skiprows
-        Number of rows to skip when reading the file
+    sep
+        Separator to assume when reading the file
+
+    unit_assumed
+        Assumed unit of the data
+
+    time_col_assumed
+        Assumed time column of the data
+
+    Returns
+    -------
+        Read data
+    """
+    with open(infile) as fh:
+        file_content = fh.read()
+
+    gas_file = infile.stem.split("_")[0]
+
+    if gas_file in HATS_GAS_NAME_MAPPING_REVERSE:
+        gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
+
+    else:
+        gas_file_mapped = gas_file
+
+    gas_file_mapped = gas_file_mapped.lower()
+
+    if gas != gas_file_mapped:
+        msg = f"{gas=}, {gas_file=}, {gas_file_mapped=}"
+        raise AssertionError(msg)
+
+    res = pd.read_csv(StringIO(file_content), skiprows=1, sep=sep)
+    res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
+    res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
+    res["value"] = res[gas]
+    res["unit"] = unit_assumed
+    res["gas"] = gas
+    res["source"] = "hats"
+    res["latitude"] = res["site"].apply(lambda x: HATS_ASSUMED_LOCATION[x]["latitude"])
+    res["longitude"] = res["site"].apply(
+        lambda x: HATS_ASSUMED_LOCATION[x]["longitude"]
+    )
+    res = res.rename({"site": "site_code"}, axis="columns")
+    res = res[
+        [
+            "year",
+            "month",
+            "value",
+            "site_code",
+            "latitude",
+            "longitude",
+            "gas",
+            "source",
+            "unit",
+        ]
+    ]
+
+    # Take average where there is more than one observation in a month.
+    # Bit annoying that NOAA doesn't have a monthly file, oh well.
+    all_except_value = list(set(res.columns) - {"value"})
+    res = res.groupby(all_except_value)["value"].mean().to_frame("value").reset_index()
+
+    return res
+
+
+def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
+    infile: Path, gas: str, source: str, sep: str = r"\s+"
+) -> pd.DataFrame:
+    """
+    Read NOAA HATS data file
+
+    Parameters
+    ----------
+    infile
+        File to read
+
+    gas
+        Gas we assume is in the file
+
+    source
+        Source of the file
 
     sep
         Separator to assume when reading the file

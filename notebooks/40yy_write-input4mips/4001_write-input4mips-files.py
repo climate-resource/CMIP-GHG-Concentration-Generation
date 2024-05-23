@@ -227,6 +227,8 @@ gas_to_cmip_variable_renaming = {
     "n2o": "mole_fraction_of_nitrous_oxide_in_air",
     "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
     "cfc11": "mole_fraction_of_cfc11_in_air",
+    "cfc12": "mole_fraction_of_cfc12_in_air",
+    "hfc134a": "mole_fraction_of_hfc134a_in_air",
 }
 
 # %% [markdown]

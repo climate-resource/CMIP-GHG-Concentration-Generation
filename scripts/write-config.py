@@ -43,7 +43,7 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11")
+    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
     # cfc11 next
     start_year = 1
     end_year = 2022
@@ -61,6 +61,8 @@ def create_dev_config() -> Config:
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
             ("cfc11", "hats"),
+            ("cfc12", "hats"),
+            ("hfc134a", "hats"),
         )
     )
 
@@ -73,6 +75,11 @@ def create_dev_config() -> Config:
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),
+            ("cfc12", "gc-md", "monthly"),
+            ("cfc12", "gc-ms-medusa", "monthly"),
+            ("cfc12", "gc-ms", "monthly"),
+            ("hfc134a", "gc-ms-medusa", "monthly"),
+            ("hfc134a", "gc-ms", "monthly"),
         )
     )
 
@@ -113,7 +120,7 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11")
+    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
     # cfc11 next
     start_year = 1750
     end_year = 2022
@@ -131,6 +138,8 @@ def create_ci_config() -> Config:
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
             ("cfc11", "hats"),
+            ("cfc12", "hats"),
+            ("hfc134a", "hats"),
         )
     )
 
@@ -143,6 +152,11 @@ def create_ci_config() -> Config:
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),
+            ("cfc12", "gc-md", "monthly"),
+            ("cfc12", "gc-ms-medusa", "monthly"),
+            ("cfc12", "gc-ms", "monthly"),
+            ("hfc134a", "gc-ms-medusa", "monthly"),
+            ("hfc134a", "gc-ms", "monthly"),
         )
     )
 

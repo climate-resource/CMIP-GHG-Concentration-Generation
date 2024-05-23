@@ -49,7 +49,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -71,6 +71,10 @@ config_step = get_config_for_step_id(
 bin_averages = pd.read_csv(config_step.processed_bin_averages_file)
 bin_averages
 
+# %%
+all_data_with_bins = pd.read_csv(config_step.processed_all_data_with_bins_file)
+all_data_with_bins
+
 # %% [markdown]
 # ## Interpolate
 
@@ -85,6 +89,8 @@ year_month_plot = (
     (1984, 1),
     (1984, 3),
     (2000, 4),
+    (2018, 1),
+    (2018, 2),
     (2022, 12),
     (2023, 1),
     (2023, 12),
@@ -98,12 +104,59 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 
     interpolated_ym = local.binned_data_interpolation.interpolate(ymdf)
     show_plot = False
+    include_data = True
     if np.isnan(interpolated_ym).any():
-        msg = f"Nan data after interpolation for {year=}, {month=}, not including spatial interpolation in output"
-        print(msg)
+        if np.isnan(interpolated_ym.T[1:-1, :]).any():
+            msg = f"Nan data after interpolation for {year=}, {month=}, not including spatial interpolation in output"
+            print(msg)
+            include_data = False
+
+        elif not config_step.allow_poleward_extension:
+            msg = (
+                f"Nan data after interpolation for {year=}, {month=} and no poleward extension allowed, "
+                "not including spatial interpolation in output"
+            )
+            print(msg)
+            include_data = False
+
+        else:
+            all_data_with_bins_ym = all_data_with_bins[
+                (all_data_with_bins["year"] == year)
+                & (all_data_with_bins["month"] == month)
+            ]
+
+            north_pole_has_nan = np.isnan(interpolated_ym.T[-1, :]).any()
+            south_pole_has_nan = np.isnan(interpolated_ym.T[0, :]).any()
+
+            if north_pole_has_nan:
+                north_input = all_data_with_bins_ym[
+                    all_data_with_bins_ym["latitude"]
+                    == all_data_with_bins_ym["latitude"].max()
+                ]
+                north_pole_value = north_input["value"].mean()
+                interpolated_ym[:, -1] = north_pole_value
+
+                msg = f"Fixed North Pole with poleward extension of {north_pole_value}"
+                print(msg)
+
+            if south_pole_has_nan:
+                south_input = all_data_with_bins_ym[
+                    all_data_with_bins_ym["latitude"]
+                    == all_data_with_bins_ym["latitude"].min()
+                ]
+                south_pole_value = south_input["value"].mean()
+                interpolated_ym[:, 0] = south_pole_value
+
+                msg = f"Fixed South Pole with poleward extension of {south_pole_value}"
+                print(msg)
+
+            if np.isnan(interpolated_ym).any():
+                msg = "Should be no more nan now"
+                raise AssertionError(msg)
+
         show_plot = True
 
-    else:
+    if include_data:
         interpolated_dat_l.append(interpolated_ym)
         times_l.append(cftime.datetime(year, month, 15))
 

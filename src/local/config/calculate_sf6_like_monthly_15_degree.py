@@ -32,6 +32,12 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     processed_bin_averages_file: Path
     """Path in which to save the spatial bin averages from the observational networks"""
 
+    processed_all_data_with_bins_file: Path
+    """Path in which to save all the data  from the observational networks, incl. bin information"""
+
+    allow_poleward_extension: bool
+    """Whether to allow the data to be extended one latitude poleward to fill data gaps"""
+
     observational_network_interpolated_file: Path
     """Path in which to save the interpolated observational network data"""
 

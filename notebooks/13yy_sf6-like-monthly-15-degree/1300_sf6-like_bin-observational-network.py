@@ -46,7 +46,8 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+config_file: str = "../../ci-config-absolute.yaml"  # config file
+step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -124,3 +125,8 @@ assert set(bin_averages["gas"]) == {config_step.gas}
 config_step.processed_bin_averages_file.parent.mkdir(exist_ok=True, parents=True)
 bin_averages.to_csv(config_step.processed_bin_averages_file, index=False)
 bin_averages
+
+# %%
+config_step.processed_all_data_with_bins_file.parent.mkdir(exist_ok=True, parents=True)
+all_data_with_bins.to_csv(config_step.processed_all_data_with_bins_file, index=False)
+all_data_with_bins

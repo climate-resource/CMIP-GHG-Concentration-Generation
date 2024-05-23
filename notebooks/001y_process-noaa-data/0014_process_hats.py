@@ -46,7 +46,7 @@ step: str = "process_noaa_hats_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -104,7 +104,7 @@ countries = gpd.read_file(
 # countries.columns.tolist()
 
 # %%
-colours = (
+colours = tuple(
     c
     for c in [
         "tab:blue",
@@ -121,7 +121,7 @@ colours = (
         "tab:cyan",
     ]
 )
-markers = (
+markers = tuple(
     m
     for m in [
         "o",
@@ -142,14 +142,14 @@ markers = (
     ]
 )
 
-for station, station_df in tqdman.tqdm(
-    monthly_dfs_with_loc.groupby("site_code"), desc="Stations"
+for i, (station, station_df) in tqdman.tqdm(
+    enumerate(monthly_dfs_with_loc.groupby("site_code")), desc="Stations"
 ):
     print(station_df)
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-    colour = next(colours)
-    marker = next(markers)
+    colour = colours[i % len(colours)]
+    marker = markers[i % len(colours)]
 
     countries.plot(color="lightgray", ax=axes[0])
 
@@ -189,7 +189,7 @@ for station, station_df in tqdman.tqdm(
 
 # %%
 fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
-colours = (
+colours = tuple(
     c
     for c in [
         "tab:blue",
@@ -206,7 +206,7 @@ colours = (
         "tab:cyan",
     ]
 )
-markers = (
+markers = tuple(
     m
     for m in [
         "o",
@@ -229,11 +229,11 @@ markers = (
 
 countries.plot(color="lightgray", ax=axes[0])
 
-for station, station_df in tqdman.tqdm(
-    monthly_dfs_with_loc.groupby("site_code"), desc="Stations"
+for i, (station, station_df) in tqdman.tqdm(
+    enumerate(monthly_dfs_with_loc.groupby("site_code")), desc="Stations"
 ):
-    colour = next(colours)
-    marker = next(markers)
+    colour = colours[i % len(colours)]
+    marker = markers[i % len(colours)]
 
     station_df[["longitude", "latitude"]].drop_duplicates().plot(
         x="longitude",

@@ -50,9 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = (
-    "cfc11_gc-ms-medusa_monthly"  # config ID to select for this branch
-)
+step_config_id: str = "cfc12_gc-md_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -80,7 +78,7 @@ else:
     raise NotImplementedError(config_step.time_frequency)
 
 # %%
-AGAGE_GAS_MAPPING = {"cfc11": "cfc-11"}
+AGAGE_GAS_MAPPING = {"cfc11": "cfc-11", "cfc12": "cfc-12", "hfc134a": "hfc-134a"}
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 
 
