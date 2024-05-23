@@ -519,7 +519,7 @@ def read_noaa_hats(  # noqa: PLR0913
     res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
     res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
 
-    if gas in ("ch3br", "ch3ccl3"):
+    if gas in ("ch3br", "ch3ccl3", "hcfc141b"):
         res["value"] = res[gas.upper()]
     elif gas in ("ch3cl", "halon1211", "halon2402"):
         res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]

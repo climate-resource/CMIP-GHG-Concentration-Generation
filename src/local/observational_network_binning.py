@@ -41,7 +41,15 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("cfc114", "cfc115"):
         return get_input_files_cfc114_like(gas=gas, config=config)
 
-    if gas in ("hfc134a", "ch2cl2", "ch3br", "ch3cl", "halon1211", "halon1301"):
+    if gas in (
+        "hfc134a",
+        "ch2cl2",
+        "ch3br",
+        "ch3cl",
+        "halon1211",
+        "halon1301",
+        "hcfc141b",
+    ):
         return get_input_files_hfc134a_like(gas=gas, config=config)
 
     if gas in ("chcl3",):

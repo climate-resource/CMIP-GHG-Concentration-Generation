@@ -50,7 +50,9 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "halon1211_gc-ms_monthly"  # config ID to select for this branch
+step_config_id: str = (
+    "hcfc141b_gc-ms-medusa_monthly"  # config ID to select for this branch
+)
 
 # %% [markdown]
 # ## Load config
@@ -87,6 +89,8 @@ AGAGE_GAS_MAPPING = {
     "halon1211": "h-1211",
     "halon1301": "h-1301",
     "halon2402": "h-2402",
+    "hcfc141b": "hcfc-141b",
+    # Up to here
     "hfc134a": "hfc-134a",
 }
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
@@ -124,6 +128,9 @@ def is_relevant_file(f: Path) -> bool:
 
     return True
 
+
+# %%
+# [f for f in list(config_step.raw_dir.glob("*")) if "hcfc" in str(f)]
 
 # %%
 relevant_files = [f for f in list(config_step.raw_dir.glob("*")) if is_relevant_file(f)]
