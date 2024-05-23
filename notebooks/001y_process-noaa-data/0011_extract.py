@@ -48,7 +48,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a_hats"  # config ID to select for this branch
+step_config_id: str = "hfc227ea_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -68,6 +68,9 @@ files = [
     for url_source in config_step.download_urls
 ]
 files
+
+# %%
+# !head -40 /Users/znicholls/Documents/repos/CMIP-GHG-Concentration-Generation/output-bundles/dev-test-run/data/raw/noaa/hf152a_GCMS_flask.txt
 
 # %%
 assert len(files) == 1, "Re-think how you're doing this"
