@@ -48,6 +48,9 @@ def get_hats_url(gas: str) -> str:
         else:
             raise NotImplementedError(gas)
 
+    elif gas in ("ch2cl2",):
+        res = f"https://gml.noaa.gov/aftp/data/hats/solvents/{gas.upper()}/flasks/{gas.lower()}_GCMS_flask.txt"
+
     else:
         res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
 
@@ -110,6 +113,12 @@ DOWNLOAD_URLS = {
         )
     ],
     ("cfc12", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc12"),
+            known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",
+        )
+    ],
+    ("ch2cl2", "hats"): [
         URLSource(
             url=get_hats_url("cfc12"),
             known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",

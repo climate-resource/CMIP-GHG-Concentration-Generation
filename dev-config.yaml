@@ -298,6 +298,9 @@ process_noaa_hats_data:
 - gas: cfc12
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_cfc12_hats.csv
   step_config_id: cfc12
+- gas: ch2cl2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch2cl2_hats.csv
+  step_config_id: ch2cl2
 - gas: hfc134a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc134a_hats.csv
   step_config_id: hfc134a
@@ -784,6 +787,16 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: cfc12_hats
+- download_complete_file: data/raw/noaa/ch2cl2_hats.complete
+  download_urls:
+  - known_hash: 2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0
+    url: https://gml.noaa.gov/aftp/data/hats/cfcs/cfc12/combined/HATS_global_F12.txt
+  gas: ch2cl2
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_ch2cl2_hats_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: hats
+  step_config_id: ch2cl2_hats
 - download_complete_file: data/raw/noaa/hfc134a_hats.complete
   download_urls:
   - known_hash: b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5

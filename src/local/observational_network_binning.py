@@ -39,7 +39,7 @@ def get_obs_network_binning_input_files(gas: str, config: Config) -> list[Path]:
     if gas in ("cfc114", "cfc115"):
         return get_input_files_cfc114_like(gas=gas, config=config)
 
-    if gas in ("hfc134a",):
+    if gas in ("hfc134a", "ch2cl2"):
         return get_input_files_hfc134a_like(gas=gas, config=config)
 
     raise NotImplementedError(gas)
