@@ -54,6 +54,7 @@ def create_dev_config() -> Config:
         "cfc12",
         "ch2cl2",
         "ch3br",
+        "ch3ccl3",
         # Up to here
         "hfc134a",
         "sf6",
@@ -79,6 +80,7 @@ def create_dev_config() -> Config:
             ("cfc12", "hats"),
             ("ch2cl2", "hats"),
             ("ch3br", "hats"),
+            ("ch3ccl3", "hats"),
             ("hfc134a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
@@ -108,6 +110,9 @@ def create_dev_config() -> Config:
             ("ch2cl2", "gc-ms", "monthly"),
             ("ch3br", "gc-ms-medusa", "monthly"),
             ("ch3br", "gc-ms", "monthly"),
+            ("ch3ccl3", "gc-md", "monthly"),
+            ("ch3ccl3", "gc-ms-medusa", "monthly"),
+            ("ch3ccl3", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
         )

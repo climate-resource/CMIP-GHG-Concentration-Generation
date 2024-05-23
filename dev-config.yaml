@@ -219,6 +219,30 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   year_drop_observational_data_before_and_including: null
 - allow_long_poleward_extension: false
   allow_poleward_extension: true
+  gas: ch3ccl3
+  global_annual_mean_allyears_file: data/interim/ch3ccl3/ch3ccl3_global-annual-mean_allyears.nc
+  global_annual_mean_allyears_monthly_file: data/interim/ch3ccl3/ch3ccl3_global-annual-mean_allyears-monthly.nc
+  lat_gradient_n_eofs_to_use: 1
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch3ccl3/ch3ccl3_allyears-lat-gradient-eofs-pcs.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch3ccl3/ch3ccl3_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/ch3ccl3/ch3ccl3_pc0-total-emissions-regression.yaml
+  observational_network_global_annual_mean_file: data/interim/ch3ccl3/ch3ccl3_observational-network_global-annual-mean.nc
+  observational_network_interpolated_file: data/interim/ch3ccl3/ch3ccl3_observational-network_interpolated.nc
+  observational_network_latitudinal_gradient_eofs_file: data/interim/ch3ccl3/ch3ccl3_observational-network_latitudinal-gradient-eofs.nc
+  observational_network_seasonality_file: data/interim/ch3ccl3/ch3ccl3_observational-network_seasonality.nc
+  pre_industrial:
+    source: Guessing from reading M2017
+    value:
+    - 0.0
+    - ppt
+    year: 1955
+  processed_all_data_with_bins_file: data/interim/ch3ccl3/ch3ccl3_observational-network_all-data-with-bin-information.csv
+  processed_bin_averages_file: data/interim/ch3ccl3/ch3ccl3_observational-network_bin-averages.csv
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_seasonality_fifteen-degree_allyears-monthly.nc
+  step_config_id: ch3ccl3
+  year_drop_observational_data_before_and_including: null
+- allow_long_poleward_extension: false
+  allow_poleward_extension: true
   gas: hfc134a
   global_annual_mean_allyears_file: data/interim/hfc134a/hfc134a_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/hfc134a/hfc134a_global-annual-mean_allyears-monthly.nc
@@ -330,6 +354,12 @@ crunch_grids:
   gmnhsh_mean_monthly_file: data/interim/ch3br/ch3br_gmnhsh-mean_monthly.nc
   half_degree_monthly_file: data/interim/ch3br/ch3br_half-degree_monthly.nc
   step_config_id: ch3br
+- fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_fifteen-degree_monthly.nc
+  gas: ch3ccl3
+  gmnhsh_mean_annual_file: data/interim/ch3ccl3/ch3ccl3_gmnhsh-mean_annual.nc
+  gmnhsh_mean_monthly_file: data/interim/ch3ccl3/ch3ccl3_gmnhsh-mean_monthly.nc
+  half_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_half-degree_monthly.nc
+  step_config_id: ch3ccl3
 - fifteen_degree_monthly_file: data/interim/hfc134a/hfc134a_fifteen-degree_monthly.nc
   gas: hfc134a
   gmnhsh_mean_annual_file: data/interim/hfc134a/hfc134a_gmnhsh-mean_annual.nc
@@ -364,6 +394,9 @@ process_noaa_hats_data:
 - gas: ch3br
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch3br_hats.csv
   step_config_id: ch3br
+- gas: ch3ccl3
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch3ccl3_hats.csv
+  step_config_id: ch3ccl3
 - gas: hfc134a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc134a_hats.csv
   step_config_id: hfc134a
@@ -783,6 +816,69 @@ retrieve_and_extract_agage_data:
   raw_dir: data/raw/agage/agage
   step_config_id: ch3br_gc-ms_monthly
   time_frequency: monthly
+- download_complete_file: data/raw/agage/agage/ch3ccl3_gc-md_monthly.complete
+  download_urls:
+  - known_hash: c2dc8cbc8793e4a3d8e073d4f40d92039f8c64baa3f26b58609377083785262f
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/barbados/ascii/AGAGE-GCMD_RPB_ch3ccl3_mon.txt
+  - known_hash: f790f7e16aab600b1ff9b25c3d8138e1e7992c85022aebc3dcb93d82e6c4bbba
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/capegrim/ascii/AGAGE-GCMD_CGO_ch3ccl3_mon.txt
+  - known_hash: 629a8d16b2f3da8cdecfa8edf17c7a4d0502622f149a47930ef16d5f08a89012
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/macehead/ascii/AGAGE-GCMD_MHD_ch3ccl3_mon.txt
+  - known_hash: 08e22bc995b9577648841c0924174315e6fb7d8be83317c2daf88dadf02b30f5
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/samoa/ascii/AGAGE-GCMD_SMO_ch3ccl3_mon.txt
+  - known_hash: 7b38d734e18dc1e0470c484166bea75047f7b9c96f373d629a76a6a8f79bf548
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly/trinidad/ascii/AGAGE-GCMD_THD_ch3ccl3_mon.txt
+  gas: ch3ccl3
+  generate_hashes: false
+  instrument: gc-md
+  processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-md_monthly.csv
+  raw_dir: data/raw/agage/agage
+  step_config_id: ch3ccl3_gc-md_monthly
+  time_frequency: monthly
+- download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms-medusa_monthly.complete
+  download_urls:
+  - known_hash: 624ed68f4338edff110389e92c9c547a8c541e19f01d1edd2555b780c2bfd414
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3ccl3_mon.txt
+  - known_hash: 08dee4f94851818c728bff56d3da25f642b6d72260adfe270459cedd4cfdb53c
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_ch3ccl3_mon.txt
+  - known_hash: 9b4621d6be05f5acf9bd4542a4ac0724d9c5b29f8a10af73d9e50bdbb6879702
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ch3ccl3_mon.txt
+  - known_hash: 050ee15a20fe727cf6fa243da1cb033bdad7e280937877b595d2a7435fb2eb56
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ch3ccl3_mon.txt
+  - known_hash: e277f71c39d3a7e50fb43f899fa99e4f9b3ea72cd30fc475e9748ff36cc21d4b
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/macehead/ascii/AGAGE-GCMS-Medusa_MHD_ch3ccl3_mon.txt
+  - known_hash: 7d1f5044074529955fce252940cec60aecb7317164b1dce278879d3954169dc0
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_ch3ccl3_mon.txt
+  - known_hash: 9ef76db3305cf03a8fc94ea80c6946dcfcc026318b3029647d041687b91fff8d
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/samoa/ascii/AGAGE-GCMS-Medusa_SMO_ch3ccl3_mon.txt
+  - known_hash: 490e838a4f75c6ff7a45d2131127ecbccd7b206d875a3c5ce0662c5d8844ed1f
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ch3ccl3_mon.txt
+  - known_hash: 41d8c5ba4e542b8b28dd255647b210d7c04bef9790e9821ccb7f1d73a054c792
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/trinidad/ascii/AGAGE-GCMS-Medusa_THD_ch3ccl3_mon.txt
+  - known_hash: c3af151c3b3f1a80cd4e8ab27b9bf485cdc7424766d1172c6beb038fc8cc96a5
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3ccl3_mon.txt
+  gas: ch3ccl3
+  generate_hashes: false
+  instrument: gc-ms-medusa
+  processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms-medusa_monthly.csv
+  raw_dir: data/raw/agage/agage
+  step_config_id: ch3ccl3_gc-ms-medusa_monthly
+  time_frequency: monthly
+- download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms_monthly.complete
+  download_urls:
+  - known_hash: ce89d7e0cdb59302527c50487b2f18f385ad0a256d97780ab9525dcc213afefe
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch3ccl3_mon.txt
+  - known_hash: a12bde6724455c7d42ee93f8de0f1ad3a40e9c1c34449a62121367c56f2a63ab
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ch3ccl3_mon.txt
+  - known_hash: 34916f3b8c2014aaeb2407e397c09879cd18759d44a054aa5ad6d4bb81af5d1d
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3ccl3_mon.txt
+  gas: ch3ccl3
+  generate_hashes: false
+  instrument: gc-ms
+  processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms_monthly.csv
+  raw_dir: data/raw/agage/agage
+  step_config_id: ch3ccl3_gc-ms_monthly
+  time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms-medusa_monthly.complete
   download_urls:
   - known_hash: d2f39aa42e4ae6182084d595bb51d7a928913819ec30dedc5fab2b09ebce50fa
@@ -966,6 +1062,16 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ch3br_hats
+- download_complete_file: data/raw/noaa/ch3ccl3_hats.complete
+  download_urls:
+  - known_hash: 71d765146c9aec0a96d0ab5ba7a3640ea1ce734b669f2218adea1b6ecb8d093a
+    url: https://gml.noaa.gov/aftp/data/hats/solvents/CH3CCl3/flasks/GCMS/ch3ccl3_GCMS_flask.txt
+  gas: ch3ccl3
+  interim_files:
+    monthly_data: data/interim/noaa/monthly_ch3ccl3_hats_raw-consolidated.csv
+  raw_dir: data/raw/noaa
+  source: hats
+  step_config_id: ch3ccl3_hats
 - download_complete_file: data/raw/noaa/hfc134a_hats.complete
   download_urls:
   - known_hash: b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5
@@ -1152,6 +1258,12 @@ write_input4mips:
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
   step_config_id: ch3br
+- complete_file: data/processed/esgf-ready/ch3ccl3_input4MIPs_esgf-ready.complete
+  end_year: 2022
+  gas: ch3ccl3
+  input4mips_out_dir: data/processed/esgf-ready
+  start_year: 1
+  step_config_id: ch3ccl3
 - complete_file: data/processed/esgf-ready/hfc134a_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: hfc134a

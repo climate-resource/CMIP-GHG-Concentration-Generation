@@ -44,6 +44,8 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "cfc113": "F113",
     "cfc114": "F114",
     "ch2cl2": "CH2Cl2",
+    "ch3br": "CH3BR",
+    "ch3ccl3": "CH3CCl3",
 }
 """Mapping from HATS names for gases to our names"""
 
@@ -511,7 +513,12 @@ def read_noaa_hats(  # noqa: PLR0913
     res = pd.read_csv(StringIO(file_content), skiprows=1, sep=sep)
     res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
     res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
-    res["value"] = res[gas]
+    if gas in ("ch3br",):
+        res["value"] = res[gas.upper()]
+
+    else:
+        res["value"] = res[gas]
+
     res["unit"] = unit_assumed
     res["gas"] = gas
     res["source"] = "hats"
