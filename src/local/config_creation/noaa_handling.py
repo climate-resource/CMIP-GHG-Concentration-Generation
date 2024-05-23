@@ -49,7 +49,15 @@ def get_hats_url(gas: str) -> str:
             raise NotImplementedError(gas)
 
     elif gas in ("ch2cl2",):
-        res = f"https://gml.noaa.gov/aftp/data/hats/solvents/{gas.upper()}/flasks/{gas.lower()}_GCMS_flask.txt"
+        if gas in HATS_GAS_NAME_MAPPING:
+            gas_hats = HATS_GAS_NAME_MAPPING[gas]
+        else:
+            gas_hats = gas
+
+        res = f"https://gml.noaa.gov/aftp/data/hats/solvents/{gas_hats}/flasks/{gas.lower()}_GCMS_flask.txt"
+
+    elif gas in ("ch3br",):
+        res = f"https://gml.noaa.gov/aftp/data/hats/methylhalides/{gas}/flasks/{gas.upper()}_GCMS_flask.txt"
 
     else:
         res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
@@ -120,10 +128,17 @@ DOWNLOAD_URLS = {
     ],
     ("ch2cl2", "hats"): [
         URLSource(
-            url=get_hats_url("cfc12"),
-            known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",
+            url=get_hats_url("ch2cl2"),
+            known_hash="e32417315bbf068c52bb160f531785c74062e5055359f1f825939846bf4dc01c",
         )
     ],
+    ("ch3br", "hats"): [
+        URLSource(
+            url=get_hats_url("ch3br"),
+            known_hash="71d765146c9aec0a96d0ab5ba7a3640ea1ce734b669f2218adea1b6ecb8d093a",
+        )
+    ],
+    # Up to here
     ("hfc134a", "hats"): [
         URLSource(
             url=get_hats_url("hfc134a"),

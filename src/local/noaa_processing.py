@@ -43,6 +43,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "cfc12": "F12",
     "cfc113": "F113",
     "cfc114": "F114",
+    "ch2cl2": "CH2Cl2",
 }
 """Mapping from HATS names for gases to our names"""
 

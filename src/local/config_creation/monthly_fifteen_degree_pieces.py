@@ -85,6 +85,8 @@ def create_monthly_fifteen_degree_pieces_configs(
             "cfc114",
             "cfc115",
             "cfc12",
+            "ch2cl2",
+            "ch3br",
             "hfc134a",
             "sf6",
         ):
@@ -257,6 +259,12 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     ),
     "cfc12": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "ch2cl2": SF6LikePreIndustrialConfig(
+        value=Q(8.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "ch3br": SF6LikePreIndustrialConfig(
+        value=Q(5.5, "ppt"), year=1925, source="Guessing from reading M2017"
     ),
     "hfc134a": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"

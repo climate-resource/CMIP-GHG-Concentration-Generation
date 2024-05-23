@@ -53,12 +53,14 @@ def create_dev_config() -> Config:
         "cfc115",
         "cfc12",
         "ch2cl2",
+        "ch3br",
+        # Up to here
         "hfc134a",
         "sf6",
     )
     # TODO: add this to CI too
     gases_long_poleward_extension = ("cfc114", "cfc115")
-    gases_drop_obs_data_years_inclusive = {"cfc115": 2007}
+    gases_drop_obs_data_years_inclusive = {"cfc115": 2007, "ch2cl2": 2013}
 
     start_year = 1
     end_year = 2022
@@ -76,6 +78,7 @@ def create_dev_config() -> Config:
             ("cfc113", "hats"),
             ("cfc12", "hats"),
             ("ch2cl2", "hats"),
+            ("ch3br", "hats"),
             ("hfc134a", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
@@ -103,6 +106,8 @@ def create_dev_config() -> Config:
             ("cfc12", "gc-ms", "monthly"),
             ("ch2cl2", "gc-ms-medusa", "monthly"),
             ("ch2cl2", "gc-ms", "monthly"),
+            ("ch3br", "gc-ms-medusa", "monthly"),
+            ("ch3br", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
         )
