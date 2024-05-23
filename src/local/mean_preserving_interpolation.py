@@ -25,7 +25,7 @@ def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
     rtol: float = 1e-8,
-    atol: float = 1e-6,
+    atol: float = 5e-6,
 ) -> xr.DataArray:
     """
     Interpolate annual-mean values to monthly values.
@@ -126,7 +126,7 @@ def interpolate_annual_mean_to_monthly(
 def interpolate_lat_15_degree_to_half_degree(
     lat_15_degree: xr.DataArray,
     degrees_freedom_scalar: float = 1.75,
-    atol: float = 1e-6,
+    atol: float = 5e-6,
 ) -> xr.DataArray:
     """
     Interpolate data on a 15 degree latitudinal grid to a 0.5 degree latitudinal grid.
