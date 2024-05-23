@@ -97,6 +97,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "ch3br",
             "ch3ccl3",
             "ch3cl",
+            "chcl3",
             # Up to here
             "hfc134a",
             "sf6",
@@ -290,6 +291,9 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     ),
     "ch3cl": SF6LikePreIndustrialConfig(
         value=Q(460.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "chcl3": SF6LikePreIndustrialConfig(
+        value=Q(6.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
     # up to here
     "hfc134a": SF6LikePreIndustrialConfig(

@@ -67,7 +67,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "ch3cl"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -107,12 +107,23 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-global_annual_mean_monthly = (
-    local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-        global_annual_mean,
-        atol=1e-6,  # avoid inifite relative error for things which are close to zero
-    )
-)
+for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
+    try:
+        global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+            global_annual_mean,
+            degrees_freedom_scalar=degrees_freedom_scalar,
+            atol=1e-6,  # avoid inifite relative error for things which are close to zero
+        )
+        print(f"Run succeeded with {degrees_freedom_scalar=}")
+        break
+    except AssertionError:
+        print(f"Run failed with {degrees_freedom_scalar=}")
+        continue
+
+else:
+    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+    raise AssertionError(msg)
+
 global_annual_mean_monthly
 
 # %%

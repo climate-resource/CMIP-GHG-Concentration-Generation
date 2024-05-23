@@ -233,6 +233,8 @@ gas_to_cmip_variable_renaming = {
     "ch2cl2": "mole_fraction_of_dichloromethane_in_air",
     "ch3br": "mole_fraction_of_methyl_bromide_in_air",
     "ch3ccl3": "mole_fraction_of_hcc140a_in_air",
+    "ch3cl": "mole_fraction_of_methyl_chloride_in_air",
+    "chcl3": "mole_fraction_of_chloroform_in_air",
     # Up to here
     "hfc134a": "mole_fraction_of_hfc134a_in_air",
     "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",

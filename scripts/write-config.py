@@ -56,12 +56,13 @@ def create_dev_config() -> Config:
         "ch3br",
         "ch3ccl3",
         "ch3cl",
+        "chcl3",
         # Up to here
         "hfc134a",
         "sf6",
     )
     # TODO: add this to CI too
-    gases_long_poleward_extension = ("cfc114", "cfc115", "ch3ccl3")
+    gases_long_poleward_extension = ("cfc114", "cfc115", "ch3ccl3", "chcl3")
     gases_drop_obs_data_years_before_inclusive = {"cfc115": 2007, "ch2cl2": 2013}
     gases_drop_obs_data_years_after_inclusive = {}
 
@@ -120,6 +121,9 @@ def create_dev_config() -> Config:
             ("ch3cl", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
+            ("chcl3", "gc-md", "monthly"),
+            ("chcl3", "gc-ms-medusa", "monthly"),
+            ("chcl3", "gc-ms", "monthly"),
         )
     )
 
