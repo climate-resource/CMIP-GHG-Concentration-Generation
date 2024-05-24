@@ -81,6 +81,7 @@ else:
 AGAGE_GAS_MAPPING = {
     "c2f6": "pfc-116",
     "c3f8": "pfc-218",
+    "cc4f8": "pfc-318",
     "cfc11": "cfc-11",
     "cfc113": "cfc-113",
     "cfc114": "cfc-114",
