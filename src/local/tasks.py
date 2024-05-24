@@ -14,6 +14,7 @@ from pydoit_nb.typing import DoitTaskSpec
 from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
+    calculate_c4f10_like_monthly_fifteen_degree_pieces,
     calculate_ch4_monthly_fifteen_degree_pieces,
     calculate_co2_monthly_fifteen_degree_pieces,
     calculate_n2o_monthly_fifteen_degree_pieces,
@@ -129,6 +130,7 @@ def gen_all_tasks(
         calculate_ch4_monthly_fifteen_degree_pieces,
         calculate_n2o_monthly_fifteen_degree_pieces,
         calculate_sf6_like_monthly_fifteen_degree_pieces,
+        calculate_c4f10_like_monthly_fifteen_degree_pieces,
         crunch_grids,
         write_input4mips,
     ]:
