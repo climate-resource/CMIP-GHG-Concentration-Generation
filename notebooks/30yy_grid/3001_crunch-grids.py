@@ -101,7 +101,7 @@ else:
 config_gridding_pieces_step = get_config_for_step_id(
     config=config,
     step=step,
-    step_config_id=step_config_id,
+    step_config_id=step_config_id_gridding_pieces_step,
 )
 
 

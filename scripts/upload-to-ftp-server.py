@@ -5,12 +5,15 @@ Upload data to the FTP server
 from __future__ import annotations
 
 import ftplib
+import os.path
 import sys
 from collections.abc import Iterable
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+import tqdm
+import tqdm.utils
 import typer
 from loguru import logger
 
@@ -125,12 +128,22 @@ def upload_file(file: Path, root_dir: Path, ftp: ftplib.FTP) -> None:
         logger.debug(f"Now in {ftp.pwd()} on FTP server")
 
     logger.info(f"Uploading {file}")
+    file_size = os.path.getsize(file)
     with open(file, "rb") as fh:
         upload_command = f"STOR {file.name}"
         logger.debug(f"Upload command: {upload_command}")
 
         try:
-            ftp.storbinary(upload_command, fh)
+            with tqdm.tqdm(
+                desc="Uploading",
+                total=file_size,
+                unit="B",
+                unit_scale=True,
+                unit_divisor=1024,
+            ) as tbar:
+                reader_wrapper = tqdm.utils.CallbackIOWrapper(tbar.update, fh, "read")
+                ftp.storbinary(upload_command, reader_wrapper)
+
             logger.info(f"Successfully uploaded {file}")
         except ftplib.error_perm:
             logger.exception(
