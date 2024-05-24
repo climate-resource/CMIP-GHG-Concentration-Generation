@@ -101,6 +101,14 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
 
         res = f"https://gml.noaa.gov/aftp/data/hats/solvents/{gas_hats}/flasks/GCMS/{gas.upper()}_GCMS_flask.txt"
 
+    elif gas in ("ccl4",):
+        if gas in HATS_GAS_NAME_MAPPING:
+            gas_hats = HATS_GAS_NAME_MAPPING[gas]
+        else:
+            gas_hats = gas
+
+        res = f"https://gml.noaa.gov/aftp/data/hats/solvents/{gas_hats}/combined/HATS_global_{gas_hats}.txt"
+
     elif gas in ("ch3br",):
         res = f"https://gml.noaa.gov/aftp/data/hats/methylhalides/{gas}/flasks/{gas.upper()}_GCMS_flask.txt"
 
@@ -126,6 +134,7 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
         "so2f2",
     ):
         res = f"https://gml.noaa.gov/aftp/data/hats/PERSEUS/{gas.upper()}_PR1_MS_flask.txt"
+
     else:
         res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
 
@@ -173,6 +182,12 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("c2f6"),
             known_hash="648cc1699f3ef50a92ed8207bca8b1f3e14298d9653f598536dc80a9bbebf20c",
+        )
+    ],
+    ("ccl4", "hats"): [
+        URLSource(
+            url=get_hats_url("ccl4"),
+            known_hash="412139fa494c9cf43f6989403c37603168d57a2d0a7936a0cbc94f1599164310",
         )
     ],
     ("cfc11", "hats"): [

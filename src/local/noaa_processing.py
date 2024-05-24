@@ -44,6 +44,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "cfc12": "F12",
     "cfc113": "F113",
     "cfc114": "F114",
+    "ccl4": "CCl4",
     "ch2cl2": "CH2Cl2",
     "ch3br": "CH3BR",
     "ch3ccl3": "CH3CCl3",
@@ -647,12 +648,17 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     tmp = tmp.set_index([year_col, month_col])
     tmp.index.names = ["year", "month"]
 
+    if gas in ("ccl4",):
+        gas_end = HATS_GAS_NAME_MAPPING[gas]
+    else:
+        gas_end = gas.upper()
+
     res_l = []
     for c in tmp:
         c = cast(str, c)
         if (
             c.endswith("sd")
-            or not c.endswith(gas_file.upper())
+            or not c.endswith(gas_end)
             or any(v in c for v in ("NH", "SH", "Global"))
         ):
             continue

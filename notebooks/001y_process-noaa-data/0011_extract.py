@@ -89,7 +89,7 @@ elif config_step.source == "in-situ":
     print(df_months)
 
 elif config_step.source == "hats":
-    if config_step.gas in ("n2o", "sf6", "cfc11", "cfc113", "cfc12"):
+    if config_step.gas in ("n2o", "sf6", "cfc11", "cfc113", "cfc12", "ccl4"):
         df_months = read_noaa_hats_combined(
             zf, gas=config_step.gas, source=config_step.source
         )

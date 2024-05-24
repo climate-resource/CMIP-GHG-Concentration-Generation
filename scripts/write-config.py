@@ -49,6 +49,7 @@ def create_dev_config() -> Config:
         "n2o",
         "c2f6",
         "c3f8",
+        "ccl4",
         "cc4f8",
         "cfc11",
         "cfc113",
@@ -86,6 +87,7 @@ def create_dev_config() -> Config:
     gases_long_poleward_extension = (
         "c2f6",
         "c3f8",
+        "cc4f8",
         "cfc114",
         "cfc115",
         "ch3ccl3",
@@ -125,6 +127,7 @@ def create_dev_config() -> Config:
             # # Don't use N2O surface flask to avoid double counting
             # ("n2o", "surface-flask"),
             ("c2f6", "hats"),
+            ("ccl4", "hats"),
             ("cfc11", "hats"),
             ("cfc113", "hats"),
             ("cfc12", "hats"),
@@ -165,6 +168,9 @@ def create_dev_config() -> Config:
             ("c3f8", "gc-ms", "monthly"),
             ("cc4f8", "gc-ms-medusa", "monthly"),
             ("cc4f8", "gc-ms", "monthly"),
+            ("ccl4", "gc-md", "monthly"),
+            ("ccl4", "gc-ms-medusa", "monthly"),
+            ("ccl4", "gc-ms", "monthly"),
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),
