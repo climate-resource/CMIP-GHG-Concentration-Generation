@@ -23,6 +23,9 @@ from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
 from local.config_creation.compile_historical_emissions import (
     COMPILE_HISTORICAL_EMISSIONS_STEPS,
 )
+from local.config_creation.crunch_equivalent_species import (
+    create_crunch_equivalent_species_config,
+)
 from local.config_creation.crunch_grids import create_crunch_grids_config
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
@@ -43,6 +46,8 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
+    equivalent_species_to_write = ("cfc11eq", "cfc12eq", "hfc134aeq")
+
     gases_to_write = (
         "co2",
         "ch4",
@@ -271,8 +276,14 @@ def create_dev_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        crunch_equivalent_species=create_crunch_equivalent_species_config(
+            gases=equivalent_species_to_write
+        ),
         write_input4mips=create_write_input4mips_config(
-            gases=gases_to_write, start_year=start_year, end_year=end_year
+            # TODO: test the equivalent species in CI too somehow
+            gases=(*gases_to_write, *equivalent_species_to_write),
+            start_year=start_year,
+            end_year=end_year,
         ),
     )
 
@@ -348,6 +359,8 @@ def create_ci_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        # TODO: test this in CI
+        crunch_equivalent_species=[],
         write_input4mips=create_write_input4mips_config(
             gases=gases_to_write, start_year=start_year, end_year=end_year
         ),

@@ -75,7 +75,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "cfc11eq"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -86,11 +86,19 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_grid_crunching = get_config_for_step_id(
-    config=config,
-    step="crunch_grids",
-    step_config_id=config_step.gas,
-)
+if "eq" in config_step.gas:
+    config_crunch_grids = get_config_for_step_id(
+        config=config,
+        step="crunch_equivalent_species",
+        step_config_id=config_step.gas,
+    )
+
+else:
+    config_crunch_grids = get_config_for_step_id(
+        config=config,
+        step="crunch_grids",
+        step_config_id=config_step.gas,
+    )
 
 
 # %% [markdown]
@@ -101,19 +109,19 @@ config_grid_crunching = get_config_for_step_id(
 
 # %%
 fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.fifteen_degree_monthly_file
+    config_crunch_grids.fifteen_degree_monthly_file
 ).pint.quantify()
 
 half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.half_degree_monthly_file
+    config_crunch_grids.half_degree_monthly_file
 ).pint.quantify()
 
 gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.gmnhsh_mean_monthly_file
+    config_crunch_grids.gmnhsh_mean_monthly_file
 ).pint.quantify()
 
 gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.gmnhsh_mean_annual_file
+    config_crunch_grids.gmnhsh_mean_annual_file
 ).pint.quantify()
 
 
@@ -265,6 +273,9 @@ gas_to_cmip_variable_renaming = {
     "nf3": "mole_fraction_of_nitrogen_trifluoride_in_air",
     "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
     "so2f2": "mole_fraction_of_sulfuryl_fluoride_in_air",
+    "cfc11eq": "mole_fraction_of_cfc11_eq_in_air",
+    "cfc12eq": "mole_fraction_of_cfc12_eq_in_air",
+    "hfc134aeq": "mole_fraction_of_hfc134a_eq_in_air",
 }
 
 # %% [markdown]

@@ -27,6 +27,7 @@ from .calculate_sf6_like_monthly_15_degree import (
     CalculateSF6LikeMonthlyFifteenDegreePieces,
 )
 from .compile_historical_emissions import CompileHistoricalEmissionsConfig
+from .crunch_equivalent_species import EquivalentSpeciesCrunchingConfig
 from .crunch_grid import GridCrunchingConfig
 from .plot_input_data_overviews import PlotInputDataOverviewsConfig
 from .process_noaa_hats_data import ProcessNOAAHATSDataConfig
@@ -276,6 +277,15 @@ class Config:
         ]
     )
     """Configurations to use with the grid crunching step"""
+
+    crunch_equivalent_species: list[EquivalentSpeciesCrunchingConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use with the equivalent species crunching step"""
 
     write_input4mips: list[WriteInput4MIPsConfig] = field(
         validator=[
