@@ -95,6 +95,7 @@ elif config_step.source == "hats":
         )
 
     elif config_step.gas in (
+        "c2f6",
         "halon1301",
         "hfc125",
         "hfc143a",

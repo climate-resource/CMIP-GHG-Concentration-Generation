@@ -47,6 +47,9 @@ def create_dev_config() -> Config:
         "co2",
         "ch4",
         "n2o",
+        "c2f6",
+        "c3f8",
+        "cc4f8",
         "cfc11",
         "cfc113",
         "cfc114",
@@ -81,6 +84,8 @@ def create_dev_config() -> Config:
     # TODO: add this to CI too
     # TODO: there shouldn't be this many gasses in here
     gases_long_poleward_extension = (
+        "c2f6",
+        "c3f8",
         "cfc114",
         "cfc115",
         "ch3ccl3",
@@ -99,6 +104,7 @@ def create_dev_config() -> Config:
         "so2f2",
     )
     gases_drop_obs_data_years_before_inclusive = {
+        "c2f6": 2007,
         "cfc115": 2007,
         "ch2cl2": 2013,
         "halon2402": 2009,
@@ -118,6 +124,7 @@ def create_dev_config() -> Config:
             ("n2o", "hats"),
             # # Don't use N2O surface flask to avoid double counting
             # ("n2o", "surface-flask"),
+            ("c2f6", "hats"),
             ("cfc11", "hats"),
             ("cfc113", "hats"),
             ("cfc12", "hats"),
@@ -153,6 +160,11 @@ def create_dev_config() -> Config:
             ("n2o", "gc-md", "monthly"),
             ("sf6", "gc-md", "monthly"),
             ("sf6", "gc-ms-medusa", "monthly"),
+            ("c2f6", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms", "monthly"),
+            ("cc4f8", "gc-ms-medusa", "monthly"),
+            ("cc4f8", "gc-ms", "monthly"),
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),

@@ -79,6 +79,9 @@ all_data_with_bins
 # ## Interpolate
 
 # %%
+# TODO: interpolate in time before in space
+
+# %%
 MIN_POINTS_FOR_SPATIAL_INTERPOLATION = 4
 
 # %%

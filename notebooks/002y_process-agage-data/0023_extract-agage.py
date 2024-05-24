@@ -50,9 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = (
-    "hcfc141b_gc-ms-medusa_monthly"  # config ID to select for this branch
-)
+step_config_id: str = "c2f6_gc-ms-medusa_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -81,6 +79,8 @@ else:
 
 # %%
 AGAGE_GAS_MAPPING = {
+    "c2f6": "pfc-116",
+    "c3f8": "pfc-218",
     "cfc11": "cfc-11",
     "cfc113": "cfc-113",
     "cfc114": "cfc-114",

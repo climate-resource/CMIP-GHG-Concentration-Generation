@@ -39,6 +39,7 @@ UNIT_MAP: dict[str, str] = {
 
 
 HATS_GAS_NAME_MAPPING: dict[str, str] = {
+    "c2f6": "PFC-116_C",
     "cfc11": "F11",
     "cfc12": "F12",
     "cfc113": "F113",
@@ -65,6 +66,7 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
 HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}
 
 HATS_M2_PR1_FILE_MAPPING: dict[str, str] = {
+    "c2f6": "PFC-116",
     "halon1301": "H-1301",
     "hfc125": "HFC-125",
     "hfc143a": "HFC-143a",

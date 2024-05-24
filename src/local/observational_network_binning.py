@@ -38,7 +38,7 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("cfc113",):
         return get_input_files_cfc113_like(gas=gas, config=config)
 
-    if gas in ("cfc114", "cfc115", "hfc245fa"):
+    if gas in ("cfc114", "cfc115", "hfc245fa", "c3f8", "cc4f8"):
         return get_input_files_cfc114_like(gas=gas, config=config)
 
     if gas in (
@@ -65,14 +65,11 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("chcl3",):
         return get_input_files_chcl3_like(gas=gas, config=config)
 
-    if gas in ("halon2402", "nf3"):
+    if gas in ("halon2402", "nf3", "c2f6"):
         return get_input_files_halon2402_like(gas=gas, config=config)
 
     if gas in ("hfc23", "hfc4310mee"):
         return get_input_files_hfc23_like(gas=gas, config=config)
-
-    if gas in ("c2f6",):
-        return get_input_files_c2f6_like(gas=gas, config=config)
 
     raise NotImplementedError(gas)
 
@@ -270,18 +267,4 @@ def get_input_files_hfc23_like(gas: str, config: Config) -> list[Path]:
     )
     return [
         config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
-    ]
-
-
-def get_input_files_c2f6_like(gas: str, config: Config) -> list[Path]:
-    """
-    Get the input files to use for binning the observational network for gases we handle like C2F6
-    """
-    config_process_noaa_hats_data = get_config_for_step_id(
-        config=config,
-        step="process_noaa_hats_data",
-        step_config_id=gas,
-    )
-    return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
     ]

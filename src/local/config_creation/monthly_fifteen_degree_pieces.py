@@ -89,6 +89,8 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
 
         elif gas in (
             "c2f6",
+            "c3f8",
+            "cc4f8",
             "cfc11",
             "cfc113",
             "cfc114",
@@ -283,6 +285,15 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
 
 
 PRE_INDUSTRIAL_VALUES_DEFAULT = {
+    "c2f6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1890, source="Guessing from reading M2017"
+    ),
+    "c3f8": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1890, source="Guessing from reading M2017"
+    ),
+    "cc4f8": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
+    ),
     "cfc11": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
