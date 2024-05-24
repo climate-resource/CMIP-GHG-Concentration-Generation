@@ -92,6 +92,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "c3f8",
             "cc4f8",
             "ccl4",
+            "cf4",
             "cfc11",
             "cfc113",
             "cfc114",
@@ -297,6 +298,9 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     ),
     "ccl4": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1900, source="Guessing from reading M2017"
+    ),
+    "cf4": SF6LikePreIndustrialConfig(
+        value=Q(34.05, "ppt"), year=1910, source="Guessing from reading M2017"
     ),
     "cfc11": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"

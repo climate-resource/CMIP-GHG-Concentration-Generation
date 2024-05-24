@@ -120,7 +120,7 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
 
         res = f"https://gml.noaa.gov/aftp/data/hats/methylhalides/{gas}/flasks/{gas_hats}_GCMS_flask.txt"
 
-    elif gas in ("c2f6",):
+    elif gas in ("c2f6", "cf4"):
         if gas in HATS_GAS_NAME_MAPPING:
             # This is now a complete mess, anyway, can fix and refactor later
             gas_hats = HATS_GAS_NAME_MAPPING[gas].replace("_C", "")
@@ -188,6 +188,12 @@ DOWNLOAD_URLS = {
         URLSource(
             url=get_hats_url("ccl4"),
             known_hash="412139fa494c9cf43f6989403c37603168d57a2d0a7936a0cbc94f1599164310",
+        )
+    ],
+    ("cf4", "hats"): [
+        URLSource(
+            url=get_hats_url("cf4"),
+            known_hash="66955d644782c4148a7c367a6f02b96b92f060db7e5d0eb659bdfb6a3b8d1e35",
         )
     ],
     ("cfc11", "hats"): [
