@@ -95,11 +95,14 @@ def create_dev_config() -> Config:
         "hfc245fa",
         "hfc32",
         "hfc4310mee",
+        "nf3",
+        "so2f2",
     )
     gases_drop_obs_data_years_before_inclusive = {
         "cfc115": 2007,
         "ch2cl2": 2013,
         "halon2402": 2009,
+        "so2f2": 2007,
     }
     gases_drop_obs_data_years_after_inclusive = {}
 

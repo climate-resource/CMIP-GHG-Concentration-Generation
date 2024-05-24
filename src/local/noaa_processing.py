@@ -57,6 +57,8 @@ HATS_GAS_NAME_MAPPING: dict[str, str] = {
     "hfc236fa": "HFC-236fa_C",
     "hfc32": "HFC-32_C",
     "hfc365mfc": "F365_",
+    "nf3": "NF3_C",
+    "so2f2": "SO2F2_C",
 }
 """Mapping from HATS names for gases to our names"""
 

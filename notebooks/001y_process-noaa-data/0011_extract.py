@@ -70,9 +70,6 @@ files = [
 files
 
 # %%
-# !head -40 /Users/znicholls/Documents/repos/CMIP-GHG-Concentration-Generation/output-bundles/dev-test-run/data/raw/noaa/hf152a_GCMS_flask.txt
-
-# %%
 assert len(files) == 1, "Re-think how you're doing this"
 zf = files[0]
 
@@ -97,7 +94,15 @@ elif config_step.source == "hats":
             zf, gas=config_step.gas, source=config_step.source
         )
 
-    elif config_step.gas in ("halon1301", "hfc125", "hfc143a", "hfc236fa", "hfc32"):
+    elif config_step.gas in (
+        "halon1301",
+        "hfc125",
+        "hfc143a",
+        "hfc236fa",
+        "hfc32",
+        "nf3",
+        "so2f2",
+    ):
         df_months = read_noaa_hats_m2_and_pr1(
             zf, gas=config_step.gas, source=config_step.source
         )
