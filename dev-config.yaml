@@ -1000,7 +1000,6 @@ crunch_equivalent_species:
   gas: cfc11eq
   gmnhsh_mean_annual_file: data/interim/cfc11eq/cfc11eq_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc11eq/cfc11eq_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc11eq/cfc11eq_half-degree_monthly.nc
   step_config_id: cfc11eq
 - equivalent_component_gases:
   - cfc11
@@ -1024,7 +1023,6 @@ crunch_equivalent_species:
   gas: cfc12eq
   gmnhsh_mean_annual_file: data/interim/cfc12eq/cfc12eq_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc12eq/cfc12eq_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc12eq/cfc12eq_half-degree_monthly.nc
   step_config_id: cfc12eq
 - equivalent_component_gases:
   - c2f6
@@ -1054,266 +1052,222 @@ crunch_equivalent_species:
   gas: hfc134aeq
   gmnhsh_mean_annual_file: data/interim/hfc134aeq/hfc134aeq_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc134aeq/hfc134aeq_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc134aeq/hfc134aeq_half-degree_monthly.nc
   step_config_id: hfc134aeq
 crunch_grids:
 - fifteen_degree_monthly_file: data/interim/co2/co2_fifteen-degree_monthly.nc
   gas: co2
   gmnhsh_mean_annual_file: data/interim/co2/co2_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/co2/co2_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/co2/co2_half-degree_monthly.nc
   step_config_id: co2
 - fifteen_degree_monthly_file: data/interim/ch4/ch4_fifteen-degree_monthly.nc
   gas: ch4
   gmnhsh_mean_annual_file: data/interim/ch4/ch4_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ch4/ch4_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ch4/ch4_half-degree_monthly.nc
   step_config_id: ch4
 - fifteen_degree_monthly_file: data/interim/n2o/n2o_fifteen-degree_monthly.nc
   gas: n2o
   gmnhsh_mean_annual_file: data/interim/n2o/n2o_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/n2o/n2o_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/n2o/n2o_half-degree_monthly.nc
   step_config_id: n2o
 - fifteen_degree_monthly_file: data/interim/c2f6/c2f6_fifteen-degree_monthly.nc
   gas: c2f6
   gmnhsh_mean_annual_file: data/interim/c2f6/c2f6_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c2f6/c2f6_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c2f6/c2f6_half-degree_monthly.nc
   step_config_id: c2f6
 - fifteen_degree_monthly_file: data/interim/c3f8/c3f8_fifteen-degree_monthly.nc
   gas: c3f8
   gmnhsh_mean_annual_file: data/interim/c3f8/c3f8_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c3f8/c3f8_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c3f8/c3f8_half-degree_monthly.nc
   step_config_id: c3f8
 - fifteen_degree_monthly_file: data/interim/c4f10/c4f10_fifteen-degree_monthly.nc
   gas: c4f10
   gmnhsh_mean_annual_file: data/interim/c4f10/c4f10_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c4f10/c4f10_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c4f10/c4f10_half-degree_monthly.nc
   step_config_id: c4f10
 - fifteen_degree_monthly_file: data/interim/c5f12/c5f12_fifteen-degree_monthly.nc
   gas: c5f12
   gmnhsh_mean_annual_file: data/interim/c5f12/c5f12_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c5f12/c5f12_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c5f12/c5f12_half-degree_monthly.nc
   step_config_id: c5f12
 - fifteen_degree_monthly_file: data/interim/c6f14/c6f14_fifteen-degree_monthly.nc
   gas: c6f14
   gmnhsh_mean_annual_file: data/interim/c6f14/c6f14_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c6f14/c6f14_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c6f14/c6f14_half-degree_monthly.nc
   step_config_id: c6f14
 - fifteen_degree_monthly_file: data/interim/c7f16/c7f16_fifteen-degree_monthly.nc
   gas: c7f16
   gmnhsh_mean_annual_file: data/interim/c7f16/c7f16_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c7f16/c7f16_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c7f16/c7f16_half-degree_monthly.nc
   step_config_id: c7f16
 - fifteen_degree_monthly_file: data/interim/c8f18/c8f18_fifteen-degree_monthly.nc
   gas: c8f18
   gmnhsh_mean_annual_file: data/interim/c8f18/c8f18_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/c8f18/c8f18_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/c8f18/c8f18_half-degree_monthly.nc
   step_config_id: c8f18
 - fifteen_degree_monthly_file: data/interim/cc4f8/cc4f8_fifteen-degree_monthly.nc
   gas: cc4f8
   gmnhsh_mean_annual_file: data/interim/cc4f8/cc4f8_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cc4f8/cc4f8_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cc4f8/cc4f8_half-degree_monthly.nc
   step_config_id: cc4f8
 - fifteen_degree_monthly_file: data/interim/ccl4/ccl4_fifteen-degree_monthly.nc
   gas: ccl4
   gmnhsh_mean_annual_file: data/interim/ccl4/ccl4_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ccl4/ccl4_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ccl4/ccl4_half-degree_monthly.nc
   step_config_id: ccl4
 - fifteen_degree_monthly_file: data/interim/cf4/cf4_fifteen-degree_monthly.nc
   gas: cf4
   gmnhsh_mean_annual_file: data/interim/cf4/cf4_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cf4/cf4_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cf4/cf4_half-degree_monthly.nc
   step_config_id: cf4
 - fifteen_degree_monthly_file: data/interim/cfc11/cfc11_fifteen-degree_monthly.nc
   gas: cfc11
   gmnhsh_mean_annual_file: data/interim/cfc11/cfc11_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc11/cfc11_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc11/cfc11_half-degree_monthly.nc
   step_config_id: cfc11
 - fifteen_degree_monthly_file: data/interim/cfc113/cfc113_fifteen-degree_monthly.nc
   gas: cfc113
   gmnhsh_mean_annual_file: data/interim/cfc113/cfc113_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc113/cfc113_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc113/cfc113_half-degree_monthly.nc
   step_config_id: cfc113
 - fifteen_degree_monthly_file: data/interim/cfc114/cfc114_fifteen-degree_monthly.nc
   gas: cfc114
   gmnhsh_mean_annual_file: data/interim/cfc114/cfc114_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc114/cfc114_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc114/cfc114_half-degree_monthly.nc
   step_config_id: cfc114
 - fifteen_degree_monthly_file: data/interim/cfc115/cfc115_fifteen-degree_monthly.nc
   gas: cfc115
   gmnhsh_mean_annual_file: data/interim/cfc115/cfc115_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc115/cfc115_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc115/cfc115_half-degree_monthly.nc
   step_config_id: cfc115
 - fifteen_degree_monthly_file: data/interim/cfc12/cfc12_fifteen-degree_monthly.nc
   gas: cfc12
   gmnhsh_mean_annual_file: data/interim/cfc12/cfc12_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/cfc12/cfc12_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/cfc12/cfc12_half-degree_monthly.nc
   step_config_id: cfc12
 - fifteen_degree_monthly_file: data/interim/ch2cl2/ch2cl2_fifteen-degree_monthly.nc
   gas: ch2cl2
   gmnhsh_mean_annual_file: data/interim/ch2cl2/ch2cl2_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ch2cl2/ch2cl2_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ch2cl2/ch2cl2_half-degree_monthly.nc
   step_config_id: ch2cl2
 - fifteen_degree_monthly_file: data/interim/ch3br/ch3br_fifteen-degree_monthly.nc
   gas: ch3br
   gmnhsh_mean_annual_file: data/interim/ch3br/ch3br_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ch3br/ch3br_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ch3br/ch3br_half-degree_monthly.nc
   step_config_id: ch3br
 - fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_fifteen-degree_monthly.nc
   gas: ch3ccl3
   gmnhsh_mean_annual_file: data/interim/ch3ccl3/ch3ccl3_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ch3ccl3/ch3ccl3_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_half-degree_monthly.nc
   step_config_id: ch3ccl3
 - fifteen_degree_monthly_file: data/interim/ch3cl/ch3cl_fifteen-degree_monthly.nc
   gas: ch3cl
   gmnhsh_mean_annual_file: data/interim/ch3cl/ch3cl_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/ch3cl/ch3cl_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/ch3cl/ch3cl_half-degree_monthly.nc
   step_config_id: ch3cl
 - fifteen_degree_monthly_file: data/interim/chcl3/chcl3_fifteen-degree_monthly.nc
   gas: chcl3
   gmnhsh_mean_annual_file: data/interim/chcl3/chcl3_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/chcl3/chcl3_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/chcl3/chcl3_half-degree_monthly.nc
   step_config_id: chcl3
 - fifteen_degree_monthly_file: data/interim/halon1211/halon1211_fifteen-degree_monthly.nc
   gas: halon1211
   gmnhsh_mean_annual_file: data/interim/halon1211/halon1211_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/halon1211/halon1211_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/halon1211/halon1211_half-degree_monthly.nc
   step_config_id: halon1211
 - fifteen_degree_monthly_file: data/interim/halon1301/halon1301_fifteen-degree_monthly.nc
   gas: halon1301
   gmnhsh_mean_annual_file: data/interim/halon1301/halon1301_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/halon1301/halon1301_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/halon1301/halon1301_half-degree_monthly.nc
   step_config_id: halon1301
 - fifteen_degree_monthly_file: data/interim/halon2402/halon2402_fifteen-degree_monthly.nc
   gas: halon2402
   gmnhsh_mean_annual_file: data/interim/halon2402/halon2402_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/halon2402/halon2402_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/halon2402/halon2402_half-degree_monthly.nc
   step_config_id: halon2402
 - fifteen_degree_monthly_file: data/interim/hcfc141b/hcfc141b_fifteen-degree_monthly.nc
   gas: hcfc141b
   gmnhsh_mean_annual_file: data/interim/hcfc141b/hcfc141b_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hcfc141b/hcfc141b_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hcfc141b/hcfc141b_half-degree_monthly.nc
   step_config_id: hcfc141b
 - fifteen_degree_monthly_file: data/interim/hcfc142b/hcfc142b_fifteen-degree_monthly.nc
   gas: hcfc142b
   gmnhsh_mean_annual_file: data/interim/hcfc142b/hcfc142b_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hcfc142b/hcfc142b_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hcfc142b/hcfc142b_half-degree_monthly.nc
   step_config_id: hcfc142b
 - fifteen_degree_monthly_file: data/interim/hcfc22/hcfc22_fifteen-degree_monthly.nc
   gas: hcfc22
   gmnhsh_mean_annual_file: data/interim/hcfc22/hcfc22_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hcfc22/hcfc22_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hcfc22/hcfc22_half-degree_monthly.nc
   step_config_id: hcfc22
 - fifteen_degree_monthly_file: data/interim/hfc125/hfc125_fifteen-degree_monthly.nc
   gas: hfc125
   gmnhsh_mean_annual_file: data/interim/hfc125/hfc125_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc125/hfc125_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc125/hfc125_half-degree_monthly.nc
   step_config_id: hfc125
 - fifteen_degree_monthly_file: data/interim/hfc134a/hfc134a_fifteen-degree_monthly.nc
   gas: hfc134a
   gmnhsh_mean_annual_file: data/interim/hfc134a/hfc134a_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc134a/hfc134a_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc134a/hfc134a_half-degree_monthly.nc
   step_config_id: hfc134a
 - fifteen_degree_monthly_file: data/interim/hfc143a/hfc143a_fifteen-degree_monthly.nc
   gas: hfc143a
   gmnhsh_mean_annual_file: data/interim/hfc143a/hfc143a_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc143a/hfc143a_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc143a/hfc143a_half-degree_monthly.nc
   step_config_id: hfc143a
 - fifteen_degree_monthly_file: data/interim/hfc152a/hfc152a_fifteen-degree_monthly.nc
   gas: hfc152a
   gmnhsh_mean_annual_file: data/interim/hfc152a/hfc152a_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc152a/hfc152a_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc152a/hfc152a_half-degree_monthly.nc
   step_config_id: hfc152a
 - fifteen_degree_monthly_file: data/interim/hfc227ea/hfc227ea_fifteen-degree_monthly.nc
   gas: hfc227ea
   gmnhsh_mean_annual_file: data/interim/hfc227ea/hfc227ea_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc227ea/hfc227ea_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc227ea/hfc227ea_half-degree_monthly.nc
   step_config_id: hfc227ea
 - fifteen_degree_monthly_file: data/interim/hfc23/hfc23_fifteen-degree_monthly.nc
   gas: hfc23
   gmnhsh_mean_annual_file: data/interim/hfc23/hfc23_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc23/hfc23_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc23/hfc23_half-degree_monthly.nc
   step_config_id: hfc23
 - fifteen_degree_monthly_file: data/interim/hfc236fa/hfc236fa_fifteen-degree_monthly.nc
   gas: hfc236fa
   gmnhsh_mean_annual_file: data/interim/hfc236fa/hfc236fa_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc236fa/hfc236fa_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc236fa/hfc236fa_half-degree_monthly.nc
   step_config_id: hfc236fa
 - fifteen_degree_monthly_file: data/interim/hfc245fa/hfc245fa_fifteen-degree_monthly.nc
   gas: hfc245fa
   gmnhsh_mean_annual_file: data/interim/hfc245fa/hfc245fa_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc245fa/hfc245fa_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc245fa/hfc245fa_half-degree_monthly.nc
   step_config_id: hfc245fa
 - fifteen_degree_monthly_file: data/interim/hfc32/hfc32_fifteen-degree_monthly.nc
   gas: hfc32
   gmnhsh_mean_annual_file: data/interim/hfc32/hfc32_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc32/hfc32_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc32/hfc32_half-degree_monthly.nc
   step_config_id: hfc32
 - fifteen_degree_monthly_file: data/interim/hfc365mfc/hfc365mfc_fifteen-degree_monthly.nc
   gas: hfc365mfc
   gmnhsh_mean_annual_file: data/interim/hfc365mfc/hfc365mfc_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc365mfc/hfc365mfc_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc365mfc/hfc365mfc_half-degree_monthly.nc
   step_config_id: hfc365mfc
 - fifteen_degree_monthly_file: data/interim/hfc4310mee/hfc4310mee_fifteen-degree_monthly.nc
   gas: hfc4310mee
   gmnhsh_mean_annual_file: data/interim/hfc4310mee/hfc4310mee_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/hfc4310mee/hfc4310mee_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/hfc4310mee/hfc4310mee_half-degree_monthly.nc
   step_config_id: hfc4310mee
 - fifteen_degree_monthly_file: data/interim/nf3/nf3_fifteen-degree_monthly.nc
   gas: nf3
   gmnhsh_mean_annual_file: data/interim/nf3/nf3_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/nf3/nf3_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/nf3/nf3_half-degree_monthly.nc
   step_config_id: nf3
 - fifteen_degree_monthly_file: data/interim/sf6/sf6_fifteen-degree_monthly.nc
   gas: sf6
   gmnhsh_mean_annual_file: data/interim/sf6/sf6_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/sf6/sf6_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/sf6/sf6_half-degree_monthly.nc
   step_config_id: sf6
 - fifteen_degree_monthly_file: data/interim/so2f2/so2f2_fifteen-degree_monthly.nc
   gas: so2f2
   gmnhsh_mean_annual_file: data/interim/so2f2/so2f2_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/so2f2/so2f2_gmnhsh-mean_monthly.nc
-  half_degree_monthly_file: data/interim/so2f2/so2f2_half-degree_monthly.nc
   step_config_id: so2f2
 name: CI
 plot_input_data_overviews:

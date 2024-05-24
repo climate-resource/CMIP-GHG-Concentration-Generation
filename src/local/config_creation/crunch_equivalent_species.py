@@ -125,7 +125,7 @@ def create_crunch_equivalent_species_config(
                 equivalent_component_gases=EQUIVALENT_COMPONENTS[gas],
                 fifteen_degree_monthly_file=interim_dir
                 / f"{gas}_fifteen-degree_monthly.nc",
-                half_degree_monthly_file=interim_dir / f"{gas}_half-degree_monthly.nc",
+                # half_degree_monthly_file=interim_dir / f"{gas}_half-degree_monthly.nc",
                 gmnhsh_mean_monthly_file=interim_dir / f"{gas}_gmnhsh-mean_monthly.nc",
                 gmnhsh_mean_annual_file=interim_dir / f"{gas}_gmnhsh-mean_annual.nc",
             )

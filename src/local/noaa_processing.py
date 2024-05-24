@@ -650,7 +650,7 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     tmp = tmp.set_index([year_col, month_col])
     tmp.index.names = ["year", "month"]
 
-    if gas in ("ccl4",):
+    if gas in ("ccl4", "cfc11", "cfc12", "cfc113", "cfc114"):
         gas_end = HATS_GAS_NAME_MAPPING[gas]
     else:
         gas_end = gas.upper()

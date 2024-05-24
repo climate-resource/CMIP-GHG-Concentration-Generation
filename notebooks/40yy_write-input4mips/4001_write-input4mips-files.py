@@ -112,9 +112,9 @@ fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_crunch_grids.fifteen_degree_monthly_file
 ).pint.quantify()
 
-half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.half_degree_monthly_file
-).pint.quantify()
+# half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+#     config_crunch_grids.half_degree_monthly_file
+# ).pint.quantify()
 
 gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_crunch_grids.gmnhsh_mean_monthly_file
@@ -144,7 +144,7 @@ def chop_time_axis(inp: xr.DataArray) -> xr.DataArray:
 
 # %%
 fifteen_degree_data_raw_chopped = chop_time_axis(fifteen_degree_data_raw)
-half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
+# half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
 gmnhsh_data_raw_chopped = chop_time_axis(gmnhsh_data_raw)
 gmnhsh_annual_data_raw_chopped = chop_time_axis(gmnhsh_annual_data_raw)
 
@@ -177,9 +177,9 @@ day = 15
 fifteen_degree_data = local.xarray_time.convert_year_month_to_time(
     fifteen_degree_data_raw_chopped, day=day
 )
-half_degree_data = local.xarray_time.convert_year_month_to_time(
-    half_degree_data_raw_chopped, day=day
-)
+# half_degree_data = local.xarray_time.convert_year_month_to_time(
+#     half_degree_data_raw_chopped, day=day
+# )
 gmnhsh_data = local.xarray_time.convert_year_month_to_time(
     gmnhsh_data_raw_chopped, day=day
 )
@@ -288,7 +288,7 @@ time_dimension = "time"
 for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     [
         (fifteen_degree_data, "15_deg_lat", False),
-        (half_degree_data, "05_deg_lat", False),
+        # (half_degree_data, "05_deg_lat", False),
         (gmnhsh_data, "gmnhsh", False),
         (gmnhsh_annual_data, "gmnhsh", True),
     ],

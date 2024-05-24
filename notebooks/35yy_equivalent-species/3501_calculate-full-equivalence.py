@@ -150,7 +150,7 @@ RADIATIVE_EFFICIENCIES: dict[str, pint.UnitRegistry.Quantity] = {
 equivalents = {}
 for key, attr_to_grab in (
     ("fifteen_degree", "fifteen_degree_monthly_file"),
-    ("half_degree", "half_degree_monthly_file"),
+    # ("half_degree", "half_degree_monthly_file"),
     ("gmnhsh", "gmnhsh_mean_monthly_file"),
     ("gmnhsh_annual_mean", "gmnhsh_mean_annual_file"),
 ):
@@ -205,12 +205,12 @@ equivalents["fifteen_degree"].pint.dequantify().to_netcdf(
 )
 equivalents["fifteen_degree"]
 
-# %%
-config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["half_degree"].pint.dequantify().to_netcdf(
-    config_step.half_degree_monthly_file
-)
-equivalents["half_degree"]
+# # %%
+# config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+# equivalents["half_degree"].pint.dequantify().to_netcdf(
+#     config_step.half_degree_monthly_file
+# )
+# equivalents["half_degree"]
 
 # %%
 config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)

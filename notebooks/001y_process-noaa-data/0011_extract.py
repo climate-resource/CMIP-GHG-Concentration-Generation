@@ -48,7 +48,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc32_hats"  # config ID to select for this branch
+step_config_id: str = "cfc113_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
