@@ -112,10 +112,16 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
+global_annual_mean.values
+
+# %%
+global_annual_mean.year
+
+# %%
 global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
     global_annual_mean,
     # global_annual_mean.sel(year=range(2000, 2023)),
-    # degrees_freedom_scalar=1.1,
+    degrees_freedom_scalar=1.03,
     # rtol=1,
 )
 global_annual_mean_monthly

@@ -2095,6 +2095,29 @@ files = [
 ]
 
 [[package]]
+name = "mpsplines"
+version = "0.1.1"
+description = "Mean-preserving interpolation of time series with splines"
+optional = false
+python-versions = ">=3.6"
+files = []
+develop = false
+
+[package.dependencies]
+loguru = "*"
+numpy = "*"
+scipy = "*"
+
+[package.extras]
+doctest = ["matplotlib"]
+
+[package.source]
+type = "git"
+url = "https://github.com/jararias/mpsplines.git"
+reference = "HEAD"
+resolved_reference = "4967655fca8f4d0fc0685486c8ec2f1fe2f199d2"
+
+[[package]]
 name = "mypy"
 version = "1.10.0"
 description = "Optional static typing for Python"
@@ -4273,4 +4296,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "69b0642c0cf8e8276e05fefa65b76bc9cd62a802d73d36179ec27d48581532de"
+content-hash = "599840b15486f71ea975622a1c5e6c0f2558bef89e54127b8eef49b764ec3f38"
