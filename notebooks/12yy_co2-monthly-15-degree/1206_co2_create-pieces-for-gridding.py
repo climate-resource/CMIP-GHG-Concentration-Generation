@@ -112,15 +112,16 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-global_annual_mean_monthly = (
-    local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-        global_annual_mean
-    )
+global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+    global_annual_mean,
+    # global_annual_mean.sel(year=range(2000, 2023)),
+    # degrees_freedom_scalar=1.1,
+    # rtol=1,
 )
 global_annual_mean_monthly
 
 # %%
-fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+fig, axes = plt.subplots(ncols=4, figsize=(12, 4))
 
 local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
@@ -130,29 +131,43 @@ local.xarray_time.convert_year_to_time(
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][:10]),
     calendar="proleptic_gregorian",
 ).plot(
     ax=axes[1]
 )  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10]),
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][:10]),
     calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1890:1910]),
     calendar="proleptic_gregorian",
 ).plot(
     ax=axes[2]
 )  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][1890:1910]),
     calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
 
+local.xarray_time.convert_year_month_to_time(
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot(
+    ax=axes[3]
+)  # type: ignore
+local.xarray_time.convert_year_to_time(
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[3])
+
 plt.tight_layout()
 plt.show()
+
+# %%
+assert False, "Work out how to avoid wiggles in the above"
 
 # %% [markdown]
 # ### Calculate seasonality

@@ -68,10 +68,71 @@ def interpolate_annual_mean_to_monthly(
     # These are monthly timesteps, centred in the middle of each month
     N_MONTHS_PER_YEAR = 12
     # TODO: speak with Nicolai about how to boundary counditions better.
-    # The below is a hack to try and get slightly more sensible behaviour at the boundaries.
-    # It just does basic linear extrapolation at the boundaries.
-    X = np.hstack([2 * X[0] - X[1], X, 2 * X[-1] - X[-2]])
-    Y = np.hstack([2 * Y[0] - Y[1], Y, 2 * Y[-1] - Y[-2]])
+    # Attempt with basic linear extrapolation to lock end points
+    delta_x_0 = X[1] - X[0]
+    delta_x_end = X[-1] - X[-2]
+    X = np.hstack(
+        [
+            X[0] - delta_x_0 * 12,
+            X[0] - delta_x_0 * 11,
+            X[0] - delta_x_0 * 10,
+            X[0] - delta_x_0 * 9,
+            X[0] - delta_x_0 * 8,
+            X[0] - delta_x_0 * 7,
+            X[0] - delta_x_0 * 6,
+            X[0] - delta_x_0 * 5,
+            X[0] - delta_x_0 * 4,
+            X[0] - delta_x_0 * 3,
+            X[0] - delta_x_0 * 2,
+            X[0] - delta_x_0,
+            X,
+            X[-1] + delta_x_end,
+            X[-1] + delta_x_end * 2,
+            X[-1] + delta_x_end * 3,
+            X[-1] + delta_x_end * 4,
+            X[-1] + delta_x_end * 5,
+            X[-1] + delta_x_end * 6,
+            X[-1] + delta_x_end * 7,
+            X[-1] + delta_x_end * 8,
+            X[-1] + delta_x_end * 9,
+            X[-1] + delta_x_end * 10,
+            X[-1] + delta_x_end * 11,
+            X[-1] + delta_x_end * 12,
+        ]
+    )
+
+    grad_x_0 = (Y[1] - Y[0]) / delta_x_0
+    grad_x_end = (Y[-1] - Y[-2]) / delta_x_end
+    Y = np.hstack(
+        [
+            Y[0] - grad_x_0 * delta_x_0 * 12,
+            Y[0] - grad_x_0 * delta_x_0 * 11,
+            Y[0] - grad_x_0 * delta_x_0 * 10,
+            Y[0] - grad_x_0 * delta_x_0 * 9,
+            Y[0] - grad_x_0 * delta_x_0 * 8,
+            Y[0] - grad_x_0 * delta_x_0 * 7,
+            Y[0] - grad_x_0 * delta_x_0 * 6,
+            Y[0] - grad_x_0 * delta_x_0 * 5,
+            Y[0] - grad_x_0 * delta_x_0 * 4,
+            Y[0] - grad_x_0 * delta_x_0 * 3,
+            Y[0] - grad_x_0 * delta_x_0 * 2,
+            Y[0] - grad_x_0 * delta_x_0,
+            Y,
+            Y[-1] + grad_x_end * delta_x_end,
+            Y[-1] + grad_x_end * delta_x_end * 2,
+            Y[-1] + grad_x_end * delta_x_end * 3,
+            Y[-1] + grad_x_end * delta_x_end * 4,
+            Y[-1] + grad_x_end * delta_x_end * 5,
+            Y[-1] + grad_x_end * delta_x_end * 6,
+            Y[-1] + grad_x_end * delta_x_end * 7,
+            Y[-1] + grad_x_end * delta_x_end * 8,
+            Y[-1] + grad_x_end * delta_x_end * 9,
+            Y[-1] + grad_x_end * delta_x_end * 10,
+            Y[-1] + grad_x_end * delta_x_end * 11,
+            Y[-1] + grad_x_end * delta_x_end * 12,
+        ]
+    )
+
     x = (
         np.arange(np.floor(np.min(X)), np.ceil(np.max(X)) + 1, 1 / N_MONTHS_PER_YEAR)
         + 1 / N_MONTHS_PER_YEAR / 2
@@ -84,9 +145,6 @@ def interpolate_annual_mean_to_monthly(
         degrees_freedom_scalar=degrees_freedom_scalar,
     )
 
-    # Undo hack above
-    x = x[N_MONTHS_PER_YEAR:-N_MONTHS_PER_YEAR]
-
     def interpolator(
         xh: float | int | npt.NDArray[np.float64],
     ) -> pint.UnitRegistry.Quantity:
@@ -96,6 +154,8 @@ def interpolate_annual_mean_to_monthly(
             annual_mean.data.units,
         )
 
+    # Undo hack above
+    x = x[12 * N_MONTHS_PER_YEAR : -N_MONTHS_PER_YEAR * 12]
     y = interpolator(x)
 
     time = [
