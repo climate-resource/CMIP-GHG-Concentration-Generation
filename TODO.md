@@ -3,6 +3,8 @@
 File for keeping track of to-do's.
 As the to-do's become concrete, take them out and turn them into [issues](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues).
 
+- potentially interesting: https://arxiv.org/pdf/2309.09186, although my feeling is that this interpolation question is just difficult
+
 - rename the "**02_***_global-mean-latitudinal-gradient-seasonality.py" notebooks to
   "**02_***_obs-network-global-mean-latitudinal-gradient-seasonality.py"
   given that is what they actually do.
