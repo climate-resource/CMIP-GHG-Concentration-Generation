@@ -239,29 +239,23 @@ plt.show()
 
 # %%
 gmnhsh_l = []
-sector_str_l = []
-for id, sector, lat_sel in (
-    ("global-mean", 0, fifteen_degree_data["lat"]),
-    ("northern hemisphere-mean", 1, fifteen_degree_data["lat"] > 0),
-    ("southern hemisphere-mean", 2, fifteen_degree_data["lat"] < 0),
+for name, region_id, lat_sel in (
+    ("global-mean", "gm", fifteen_degree_data["lat"]),
+    ("northern hemisphere-mean", "nh", fifteen_degree_data["lat"] > 0),
+    ("southern hemisphere-mean", "sh", fifteen_degree_data["lat"] < 0),
 ):
     tmp = local.xarray_space.calculate_global_mean_from_lon_mean(
         fifteen_degree_data.sel(lat=lat_sel)
     )
-    tmp = tmp.assign_coords(sector=sector)
+    tmp = tmp.assign_coords(region=region_id)
     gmnhsh_l.append(tmp)
 
-    sector_str_l.append(f"{sector}: {id}")
-
-sector_str = ";".join(sector_str_l)
-print(sector_str)
-gmnhsh = xr.concat(gmnhsh_l, "sector")
-gmnhsh.attrs["sectors"] = sector_str
+gmnhsh = xr.concat(gmnhsh_l, "region")
 gmnhsh
 
 # %%
 print("Global-, hemispheric-means")
-local.xarray_time.convert_year_month_to_time(gmnhsh).plot(hue="sector")
+local.xarray_time.convert_year_month_to_time(gmnhsh).plot(hue="region")
 plt.show()
 
 # %% [markdown]
@@ -273,7 +267,7 @@ gmnhsh_annual_mean
 
 # %%
 print("Annual-, global-mean")
-gmnhsh_annual_mean.plot(hue="sector")
+gmnhsh_annual_mean.plot(hue="region")
 plt.show()
 
 # %% [markdown]
