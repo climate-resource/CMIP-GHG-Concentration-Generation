@@ -40,7 +40,6 @@ jobs:
           python-version: "${{ matrix.python-version }}"
           venv-id: "tests-${{ runner.os }}"
           poetry-dependency-install-flags: "--all-extras --only 'main,tests,coverage'"
-      # TODO: change this probably to capture coverage from non-regression tests, ok for now
       - name: Run regression tests relevant for coverage
         run: |
           poetry run python scripts/write-config.py
