@@ -1,6 +1,7 @@
 """
 Configuration file for pytest
 """
+
 from __future__ import annotations
 
 import os
@@ -26,6 +27,8 @@ def basic_workflow_output_info() -> dict[str, str | Path]:
             "doit",
             "run",
             "--verbosity=2",
+            "-n",
+            "6",
         ),
         cwd=REPO_ROOT_DIR,
         env={

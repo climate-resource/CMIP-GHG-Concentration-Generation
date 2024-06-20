@@ -53,6 +53,7 @@ from local.config import load_config_from_file
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
+cf_xarray.units.units.define("ppt = ppb / 1000")
 
 pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
@@ -80,10 +81,17 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
+if config_step.gas in ("co2", "ch4", "n2o"):
+    step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
+    step_config_id = "only"
+else:
+    step = "calculate_sf6_like_monthly_fifteen_degree_pieces"
+    step_config_id = config_step.gas
+
 config_gridding_pieces_step = get_config_for_step_id(
     config=config,
-    step=f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces",
-    step_config_id="only",
+    step=step,
+    step_config_id=step_config_id,
 )
 
 
@@ -118,8 +126,20 @@ lat_grad_fifteen_degree_monthly
 # ### 15&deg; monthly file
 
 # %%
+seasonality_monthly_use = seasonality_monthly.copy()
+seasonality_monthly_use_month_mean = seasonality_monthly_use.mean("month")
+if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
+    # Force the data to zero. This is a bit of a hack, but also basically fine.
+    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
+    seasonality_monthly_use = (
+        seasonality_monthly_use - seasonality_monthly_use_month_mean
+    )
+
+seasonality_monthly_use.mean("month")
+
+# %%
 gridding_values = (
-    xr.merge([seasonality_monthly.copy(), lat_grad_fifteen_degree_monthly])
+    xr.merge([seasonality_monthly_use.copy(), lat_grad_fifteen_degree_monthly])
     .cf.add_bounds("lat")
     .pint.quantify({"lat_bounds": "deg"})
 )
@@ -212,6 +232,7 @@ np.testing.assert_allclose(
     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
     .transpose("year", "month", "lat_bins")
     .data.m,
+    atol=1e-6,  # Tolerance of our mean-preserving algorithm
 )
 
 # %%

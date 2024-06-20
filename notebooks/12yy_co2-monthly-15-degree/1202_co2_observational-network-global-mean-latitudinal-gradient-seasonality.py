@@ -198,10 +198,13 @@ for year in latitudinal_anomaly_from_eofs["year"]:
 # ### Seasonality
 
 # %%
-seasonality, _ = local.seasonality.calculate_seasonality(
+seasonality, _, lon_mean_ym_monthly_anomalies = local.seasonality.calculate_seasonality(
     lon_mean=lon_mean,
     global_mean=global_mean,
 )
+
+# %%
+lon_mean_ym_monthly_anomalies.plot.line(hue="lat", col="year", col_wrap=3)
 
 # %%
 seasonality.plot.line(hue="lat")
@@ -218,81 +221,6 @@ local.xarray_time.convert_year_month_to_time(seasonality_anomalies).plot.line(
     col="lat", col_wrap=3
 )
 seasonality_anomalies
-
-# %%
-# seasonality_anomalies_stacked = seasonality_anomalies.stack({"lat-month": ["lat", "month"]})
-# svd_ready = seasonality_anomalies_stacked.transpose("year", "lat-month").pint.dequantify()
-
-# U, D, Vh = np.linalg.svd(
-#     svd_ready,
-#     full_matrices=False,
-# )
-# # If you take the full SVD, you get back the original matrix
-# if not np.allclose(
-#     svd_ready,
-#     U @ np.diag(D) @ Vh,
-# ):
-#     msg = "Something wrong with SVD"
-#     raise AssertionError(msg)
-
-# # Empirical orthogonal functions (each column is an EOF)
-# eofs = Vh.T
-
-# # Principal components are the scaling factors on the EOFs
-# principal_components = U @ np.diag(D)
-
-# # Similarly, if you use the full EOFs and principal components,
-# # you get back the original matrix
-# if not np.allclose(
-#     svd_ready,
-#     principal_components @ eofs.T,
-# ):
-#     msg = "Something wrong with PC and EOF breakdown"
-#     raise AssertionError(msg)
-
-# xr_principal_components_keep = xr.DataArray(
-#     name="principal-components",
-#     data=principal_components,
-#     dims=["year", "eof"],
-#     coords=dict(
-#         year=svd_ready["year"],
-#         eof=range(principal_components.shape[1]),
-#     ),
-#     attrs=dict(
-#         description="Principal components for the seasonality change EOFs",
-#         units="dimensionless",
-#     ),
-# ).pint.quantify()
-
-# xr_eofs_keep = xr.DataArray(
-#     name="eofs",
-#     data=eofs,
-#     dims=["lat-month", "eof"],
-#     coords={
-#         "lat-month": svd_ready["lat-month"],
-#         "eof": range(principal_components.shape[1]),
-#         "lat": svd_ready["lat"],
-#         "month": svd_ready["lat"],
-#     },
-#     attrs=dict(
-#         description="EOFs for the seasonality change",
-#         units=svd_ready.attrs["units"],
-#     ),
-# ).pint.quantify()
-
-# res = xr.merge([xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts")
-
-# # One final check
-# if not np.allclose(
-#     svd_ready,
-#     (res["principal-components"] @ res["eofs"]).pint.dequantify(),
-# ):
-#     msg = "Something wrong with saving as xarray"
-#     raise AssertionError(msg)
-
-# # res = res.unstack("lat-month")
-# seasonality_change_eof_pieces = res
-# seasonality_change_eof_pieces
 
 # %%
 n_eofs_to_show = 3
@@ -352,7 +280,7 @@ for year in seasonality_change_from_eofs["year"]:
     if year % 5:
         continue
 
-    for lat in [-37.5, 7.5, 52.5]:
+    for lat in [-37.5, 7.5, 52.5, 67.5]:
         fig, axes = plt.subplots(ncols=3, sharex=True, sharey=True)
 
         selected = seasonality_anomalies.sel(year=year, lat=lat)

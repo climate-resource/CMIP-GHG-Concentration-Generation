@@ -50,7 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "n2o_gc-md_monthly"  # config ID to select for this branch
+step_config_id: str = "cfc12_gc-md_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -77,17 +77,28 @@ if config_step.time_frequency == "monthly":
 else:
     raise NotImplementedError(config_step.time_frequency)
 
+# %%
+AGAGE_GAS_MAPPING = {"cfc11": "cfc-11", "cfc12": "cfc-12", "hfc134a": "hfc-134a"}
+AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
+
 
 # %%
 def is_relevant_file(f: Path) -> bool:
     """
     Check if a data file is relevant for this notebook
     """
-    if not (f.name.endswith(suffix) and f"_{config_step.gas}_" in f.name):
+    try:
+        gas_to_find = AGAGE_GAS_MAPPING[config_step.gas]
+
+    except KeyError:
+        gas_to_find = config_step.gas
+
+    if not (f.name.endswith(suffix) and f"_{gas_to_find}_" in f.name):
         return False
 
     if config_step.instrument == "gc-ms-medusa" and "GCMS-Medusa" not in f.name:
         return False
+
     elif config_step.instrument == "gc-ms":
         if "GCMS-Medusa" in f.name:
             return False
@@ -106,6 +117,8 @@ def is_relevant_file(f: Path) -> bool:
 
 # %%
 relevant_files = [f for f in list(config_step.raw_dir.glob("*")) if is_relevant_file(f)]
+if not relevant_files:
+    raise AssertionError()
 relevant_files
 
 
@@ -218,6 +231,24 @@ read_info = [read_agage_file(f) for f in tqdman.tqdm(relevant_files)]
 contacts = set([c for v in read_info for c in v[0]])
 print(f"{contacts=}")
 df_monthly = pd.concat([v[1] for v in read_info], axis=0)
+df_monthly
+
+# %%
+
+# %%
+for gas_file_option in df_monthly["gas"].unique():
+    if gas_file_option == config_step.gas:
+        continue
+
+    mapped_name = AGAGE_GAS_MAPPING_REVERSED[gas_file_option]
+    if mapped_name == config_step.gas:
+        print(f"Assuming {gas_file_option} is the same as {mapped_name}")
+        continue
+
+    raise NotImplementedError(gas_file_option)
+
+# Now we can re-name with confidence
+df_monthly["gas"] = config_step.gas
 df_monthly
 
 # %% [markdown]

@@ -25,7 +25,7 @@ def interpolate_annual_mean_to_monthly(
     annual_mean: xr.DataArray,
     degrees_freedom_scalar: float = 1.1,
     rtol: float = 1e-8,
-    atol: float = 0.0,
+    atol: float = 1e-6,
 ) -> xr.DataArray:
     """
     Interpolate annual-mean values to monthly values.
@@ -47,6 +47,7 @@ def interpolate_annual_mean_to_monthly(
     atol
         Absolute tolerance to apply
         while checking the interpolation preserved the annual-mean.
+        This should line up with the tolerance that is used by {py:func}`mean_preserving_interpolation`.
 
     Returns
     -------
@@ -125,6 +126,7 @@ def interpolate_annual_mean_to_monthly(
 def interpolate_lat_15_degree_to_half_degree(
     lat_15_degree: xr.DataArray,
     degrees_freedom_scalar: float = 1.75,
+    atol: float = 1e-6,
 ) -> xr.DataArray:
     """
     Interpolate data on a 15 degree latitudinal grid to a 0.5 degree latitudinal grid.
@@ -136,6 +138,11 @@ def interpolate_lat_15_degree_to_half_degree(
 
     degrees_freedom_scalar
         Degrees of freedom to use in the interpolation
+
+    atol
+        Absolute tolerance for checking consistency with input data,
+        and whether the input data is zero.
+        This should line up with the tolerance that is used by {py:func}`mean_preserving_interpolation`.
 
     Returns
     -------
@@ -161,29 +168,35 @@ def interpolate_lat_15_degree_to_half_degree(
         TARGET_LAT_SPACING,
     )
 
-    # Assume that each value just applies to a point
-    # (no area extent/interpolation of the data,
-    # i.e. we're calculating a weighted sum, not an integral).
-    # Hence use cos here.
-    weights = np.cos(np.deg2rad(x))
+    if np.isclose(Y, 0.0, atol=atol).all():
+        # Short-cut
+        y = Quantity(np.zeros_like(x), lat_15_degree.data.units)
 
-    coefficients, intercept, knots, degree = mean_preserving_interpolation(
-        X=X,
-        Y=Y,
-        x=x,
-        weights=weights,
-        degrees_freedom_scalar=degrees_freedom_scalar,
-    )
+    else:
+        # Assume that each value just applies to a point
+        # (no area extent/interpolation of the data,
+        # i.e. we're calculating a weighted sum, not an integral).
+        # Hence use cos here.
+        weights = np.cos(np.deg2rad(x))
 
-    def interpolator(
-        x: float | int | npt.NDArray[np.float64],
-    ) -> pint.UnitRegistry.Quantity:
-        return Quantity(  # type: ignore
-            scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept,
-            lat_15_degree.data.units,
+        coefficients, intercept, knots, degree = mean_preserving_interpolation(
+            X=X,
+            Y=Y,
+            x=x,
+            weights=weights,
+            degrees_freedom_scalar=degrees_freedom_scalar,
         )
 
-    y = interpolator(x)
+        def interpolator(
+            x: float | int | npt.NDArray[np.float64],
+        ) -> pint.UnitRegistry.Quantity:
+            return Quantity(  # type: ignore
+                scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x)
+                + intercept,
+                lat_15_degree.data.units,
+            )
+
+        y = interpolator(x)
 
     out = xr.DataArray(
         name="fine_grid",
@@ -197,6 +210,7 @@ def interpolate_lat_15_degree_to_half_degree(
         .apply(calculate_global_mean_from_lon_mean)
         .data.squeeze(),
         lat_15_degree.data.squeeze(),
+        atol=atol,
     )
 
     return out

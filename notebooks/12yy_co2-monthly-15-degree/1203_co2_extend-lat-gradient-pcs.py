@@ -16,8 +16,7 @@
 # # CO$_2$ - extend the latitudinal gradient principal components
 #
 # Extend the latitudinal gradient's principal components back in time.
-# For CO$_2$, we do this by using the values from the Law Dome ice core
-# and a regression against emissions.
+# For CO$_2$, we do this by using a regression against emissions.
 
 # %% [markdown]
 # ## Imports

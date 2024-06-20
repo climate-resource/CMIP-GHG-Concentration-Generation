@@ -75,11 +75,15 @@ def convert_year_month_to_time(
 
     **kwargs
         Passed to intialiser of :class:`cftime.datetime`
+        If not supplied, we use a calendar of "standard".
 
     Returns
     -------
         Data with time axis
     """
+    if not kwargs:
+        kwargs = dict(calendar="standard")
+
     return convert_to_time(
         inp,
         time_coords=("year", "month"),
@@ -110,12 +114,16 @@ def convert_year_to_time(
         Day of the month to assume in output
 
     **kwargs
-        Passed to intialiser of :class:`cftime.datetime`
+        Passed to intialiser of :class:`cftime.datetime`.
+        If not supplied, we use a calendar of "standard".
 
     Returns
     -------
         Data with time axis
     """
+    if not kwargs:
+        kwargs = dict(calendar="standard")
+
     return convert_to_time(
         inp,
         time_coords=("year",),

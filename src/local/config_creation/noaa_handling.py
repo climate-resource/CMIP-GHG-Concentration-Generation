@@ -16,9 +16,43 @@ from local.config.process_noaa_surface_flask_data import (
     ProcessNOAASurfaceFlaskDataConfig,
 )
 from local.config.retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from local.noaa_processing import HATS_GAS_NAME_MAPPING
 
 IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-situ/surface/{gas}_surface-insitu_ccgg_text.zip"
 SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
+
+
+def get_hats_url(gas: str) -> str:
+    """
+    Get URL for downloading from NOAA HATs
+
+    Parameters
+    ----------
+    gas
+        Gas for which to get the URL
+
+    Returns
+    -------
+        URL from which to download the combined data
+    """
+    if "cfc" in gas or "hfc" in gas:
+        if gas in HATS_GAS_NAME_MAPPING:
+            gas_hats = HATS_GAS_NAME_MAPPING[gas]
+        else:
+            gas_hats = gas
+
+        if "cfc" in gas:
+            res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+        elif "hfc" in gas:
+            res = f"https://gml.noaa.gov/aftp/data/hats/hfcs/{gas_hats.lower()}_GCMS_flask.txt"
+        else:
+            raise NotImplementedError(gas)
+
+    else:
+        res = f"https://gml.noaa.gov/aftp/data/hats/{gas.lower()}/combined/GML_global_{gas.upper()}.txt"
+
+    return res
+
 
 DOWNLOAD_URLS = {
     ("co2", "surface-flask"): [
@@ -30,13 +64,13 @@ DOWNLOAD_URLS = {
     ("co2", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="co2"),
-            known_hash="0a68c9716bb9ec29e23966a2394e312618ed9b822885876d1ce5517bdf70acbe",
+            known_hash="f06a7eb8f8e56f775e4843b889ba4388ad61557c95b0d8a764522893f2d90bc1",
         )
     ],
     ("ch4", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="ch4"),
-            known_hash="c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
+            known_hash="0ac02608ec33f6057e496463e2cf755970d40f4e653a6a5a7d6d14ec519b863e",
         )
     ],
     ("ch4", "surface-flask"): [
@@ -45,25 +79,49 @@ DOWNLOAD_URLS = {
             known_hash="e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087",
         )
     ],
+    ("n2o", "hats"): [
+        URLSource(
+            url=get_hats_url("n2o"),
+            known_hash="d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a",
+        )
+    ],
     ("n2o", "surface-flask"): [
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="n2o"),
             known_hash="6b7e09c37b7fa456ab170a4c7b825b3d4b9f6eafb0ff61a2a46554b0e63e84b1",
         )
     ],
-    ("n2o", "hats"): [
+    ("sf6", "hats"): [
         URLSource(
-            url="https://gml.noaa.gov/aftp/data/hats/n2o/combined/GML_global_N2O.txt",
-            known_hash="d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a",
+            url=get_hats_url("sf6"),
+            known_hash="822543e2558e9e22e943478d37dffe0c758091c35d1ff9bf2b2697507dd3b39d",
+        )
+    ],
+    ("sf6", "surface-flask"): [
+        URLSource(
+            url=SURFACE_FLASK_URL_BASE.format(gas="sf6"),
+            known_hash="376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
+        )
+    ],
+    ("cfc11", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc11"),
+            known_hash="c6067e98bf3896a45e21a248155bbf07815facce2c428bf015560602f31661f9",
+        )
+    ],
+    ("cfc12", "hats"): [
+        URLSource(
+            url=get_hats_url("cfc12"),
+            known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",
+        )
+    ],
+    ("hfc134a", "hats"): [
+        URLSource(
+            url=get_hats_url("hfc134a"),
+            known_hash="b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5",
         )
     ],
 }
-#     (
-#         "sf6",
-#         "surface-flask",
-#         "376c78456bba6844cca78ecd812b896eb2f10cc6b8a9bf6cad7a52dc39e31e9a",
-#     ),
-# )
 
 
 class NOAAHandlingPieces(TypedDict):

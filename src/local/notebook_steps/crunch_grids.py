@@ -51,10 +51,18 @@ def configure_notebooks(
         config=config, step=step_name, step_config_id=step_config_id
     )
 
+    if config_step.gas in ("co2", "ch4", "n2o"):
+        step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
+        step_config_id_gridding_pieces_step = "only"
+
+    else:
+        step = "calculate_sf6_like_monthly_fifteen_degree_pieces"
+        step_config_id_gridding_pieces_step = config_step.gas
+
     config_gridding_pieces_step = get_config_for_step_id(
         config=config,
-        step=f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces",
-        step_config_id="only",
+        step=step,
+        step_config_id=step_config_id_gridding_pieces_step,
     )
 
     configured_notebooks = [

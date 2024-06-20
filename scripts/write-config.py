@@ -2,6 +2,8 @@
 Write our configuration files
 """
 
+# Have to the pint registry before doing other imports, hence funny order
+# ruff: noqa: E402
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,11 +12,17 @@ import openscm_units
 import pint
 from pydoit_nb.config_handling import insert_path_prefix
 
+pint.set_application_registry(openscm_units.unit_registry)
+
+
 import local
 from local.config import Config, converter_yaml
 from local.config.plot_input_data_overviews import PlotInputDataOverviewsConfig
 from local.config_creation.agage_handling import create_agage_handling_config
 from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
+from local.config_creation.compile_historical_emissions import (
+    COMPILE_HISTORICAL_EMISSIONS_STEPS,
+)
 from local.config_creation.crunch_grids import create_crunch_grids_config
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
@@ -30,14 +38,13 @@ from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 from local.config_creation.write_input4mips import create_write_input4mips_config
 
-pint.set_application_registry(openscm_units.unit_registry)
-
 
 def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("co2", "ch4", "n2o")
+    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
+    # cfc11 next
     start_year = 1
     end_year = 2022
 
@@ -48,12 +55,32 @@ def create_dev_config() -> Config:
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
-            ("n2o", "surface-flask"),
+            # # Don't use N2O surface flask to avoid double counting
+            # ("n2o", "surface-flask"),
+            ("sf6", "hats"),
+            # # Don't use SF6 surface flask to avoid double counting
+            # ("sf6", "surface-flask"),
+            ("cfc11", "hats"),
+            ("cfc12", "hats"),
+            ("hfc134a", "hats"),
         )
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
+        data_sources=(
+            ("ch4", "gc-md", "monthly"),
+            ("n2o", "gc-md", "monthly"),
+            ("sf6", "gc-md", "monthly"),
+            ("sf6", "gc-ms-medusa", "monthly"),
+            ("cfc11", "gc-md", "monthly"),
+            ("cfc11", "gc-ms-medusa", "monthly"),
+            ("cfc11", "gc-ms", "monthly"),
+            ("cfc12", "gc-md", "monthly"),
+            ("cfc12", "gc-ms-medusa", "monthly"),
+            ("cfc12", "gc-ms", "monthly"),
+            ("hfc134a", "gc-ms-medusa", "monthly"),
+            ("hfc134a", "gc-ms", "monthly"),
+        )
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
@@ -79,6 +106,7 @@ def create_dev_config() -> Config:
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
+        compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
@@ -92,7 +120,8 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("co2", "ch4", "n2o")
+    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
+    # cfc11 next
     start_year = 1750
     end_year = 2022
 
@@ -103,12 +132,32 @@ def create_ci_config() -> Config:
             ("ch4", "in-situ"),
             ("ch4", "surface-flask"),
             ("n2o", "hats"),
-            ("n2o", "surface-flask"),
+            # # Don't use N2O surface flask to avoid double counting
+            # ("n2o", "surface-flask"),
+            ("sf6", "hats"),
+            # # Don't use SF6 surface flask to avoid double counting
+            # ("sf6", "surface-flask"),
+            ("cfc11", "hats"),
+            ("cfc12", "hats"),
+            ("hfc134a", "hats"),
         )
     )
 
     retrieve_and_extract_agage_data = create_agage_handling_config(
-        data_sources=(("ch4", "gc-md", "monthly"), ("n2o", "gc-md", "monthly"))
+        data_sources=(
+            ("ch4", "gc-md", "monthly"),
+            ("n2o", "gc-md", "monthly"),
+            ("sf6", "gc-md", "monthly"),
+            ("sf6", "gc-ms-medusa", "monthly"),
+            ("cfc11", "gc-md", "monthly"),
+            ("cfc11", "gc-ms-medusa", "monthly"),
+            ("cfc11", "gc-ms", "monthly"),
+            ("cfc12", "gc-md", "monthly"),
+            ("cfc12", "gc-ms-medusa", "monthly"),
+            ("cfc12", "gc-ms", "monthly"),
+            ("hfc134a", "gc-ms-medusa", "monthly"),
+            ("hfc134a", "gc-ms", "monthly"),
+        )
     )
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(
@@ -134,6 +183,7 @@ def create_ci_config() -> Config:
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
+        compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),

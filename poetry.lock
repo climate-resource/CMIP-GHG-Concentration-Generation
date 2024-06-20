@@ -1291,13 +1291,13 @@ files = [
 
 [[package]]
 name = "input4mips-validation"
-version = "0.3.1"
+version = "0.4.0"
 description = "Validation of input4MIPs data (checking file formats, metadata etc.)."
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "input4mips_validation-0.3.1-py3-none-any.whl", hash = "sha256:de93046a7196cd303c25d44fc409bb85adc6dfeb4f5c5da01b460108df93251e"},
-    {file = "input4mips_validation-0.3.1.tar.gz", hash = "sha256:05c7367159f04f60a8e817d3fefc30cde7abe3b07d71790bee804d0e87d81a2f"},
+    {file = "input4mips_validation-0.4.0-py3-none-any.whl", hash = "sha256:28374a33a42fafdd33ea6f9ae3c22c18e293686e061a8b10f5f5b1c2833564f1"},
+    {file = "input4mips_validation-0.4.0.tar.gz", hash = "sha256:0e4f38cb44dd3c3aef4f494b818ce8e07bd99e3249c393b11facd8c6cff64e9b"},
 ]
 
 [package.dependencies]
@@ -1306,7 +1306,7 @@ cf-xarray = ">=0.8"
 cftime = ">=1.6"
 loguru = ">=0.7"
 netcdf4 = ">=1.0"
-numpy = ">=1.23"
+numpy = ">=1.23,<2.0"
 pint-xarray = ">=0.3"
 pooch = ">=1.0"
 typer = ">=0.9.0,<0.10.0"
@@ -4273,4 +4273,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "cb9b5a32acdfff3e4ff2127c4a1ff0447c7058f5f6581345ffe1dd22b063313b"
+content-hash = "8d36bae15e1e801604d4f1a5221896e37ebe0da73d92f32bbe817b75d5cee293"

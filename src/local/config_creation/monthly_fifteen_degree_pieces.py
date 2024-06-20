@@ -6,6 +6,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pint
+
 from local.config.calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -15,11 +17,19 @@ from local.config.calculate_co2_monthly_15_degree import (
 from local.config.calculate_n2o_monthly_15_degree import (
     CalculateN2OMonthlyFifteenDegreePieces,
 )
+from local.config.calculate_sf6_like_monthly_15_degree import (
+    CalculateSF6LikeMonthlyFifteenDegreePieces,
+    SF6LikePreIndustrialConfig,
+)
+
+Q = pint.get_application_registry().Quantity  # type: ignore
+
 
 PieceCalculationOption = (
     CalculateCH4MonthlyFifteenDegreePieces
     | CalculateCO2MonthlyFifteenDegreePieces
     | CalculateN2OMonthlyFifteenDegreePieces
+    | CalculateSF6LikeMonthlyFifteenDegreePieces
 )
 
 
@@ -56,6 +66,14 @@ def create_monthly_fifteen_degree_pieces_configs(
             out["calculate_n2o_monthly_fifteen_degree_pieces"] = [
                 get_n2o_monthly_fifteen_degree_pieces_config()
             ]
+
+        elif gas in ("sf6", "cfc11", "cfc12", "hfc134a"):
+            if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
+                out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
+
+            out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
+                get_sf6_like_monthly_fifteen_degree_pieces_config(gas=gas)
+            )
 
         else:
             raise NotImplementedError(gas)
@@ -190,4 +208,81 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
         / "co2_seasonality_fifteen-degree_allyears-monthly.nc",
         latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
         / "co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
+    )
+
+
+PRE_INDUSTRIAL_VALUES_DEFAULT = {
+    "sf6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "cfc11": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "cfc12": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "hfc134a": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+}
+"""Default values to use for pre-industrial"""
+
+
+def get_sf6_like_monthly_fifteen_degree_pieces_config(
+    gas: str,
+    pre_industrial: SF6LikePreIndustrialConfig | None = None,
+    allow_poleward_extension: bool = True,
+) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+
+    Parameters
+    ----------
+    gas
+        Gas for which to create the config
+
+    pre_industrial
+        Pre-industrial value.
+        If not supplied, we use the value from {py:const}`PRE_INDUSTRIAL_VALUES_DEFAULT`
+        for ``gas``.
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+    """
+    interim_dir = Path(f"data/interim/{gas}")
+
+    if pre_industrial is None:
+        pre_industrial = PRE_INDUSTRIAL_VALUES_DEFAULT[gas]
+
+    return CalculateSF6LikeMonthlyFifteenDegreePieces(
+        step_config_id=gas,
+        gas=gas,
+        pre_industrial=pre_industrial,
+        processed_bin_averages_file=interim_dir
+        / f"{gas}_observational-network_bin-averages.csv",
+        processed_all_data_with_bins_file=interim_dir
+        / f"{gas}_observational-network_all-data-with-bin-information.csv",
+        allow_poleward_extension=allow_poleward_extension,
+        observational_network_interpolated_file=interim_dir
+        / f"{gas}_observational-network_interpolated.nc",
+        observational_network_global_annual_mean_file=interim_dir
+        / f"{gas}_observational-network_global-annual-mean.nc",
+        lat_gradient_n_eofs_to_use=1,
+        observational_network_latitudinal_gradient_eofs_file=interim_dir
+        / f"{gas}_observational-network_latitudinal-gradient-eofs.nc",
+        observational_network_seasonality_file=interim_dir
+        / f"{gas}_observational-network_seasonality.nc",
+        latitudinal_gradient_allyears_pcs_eofs_file=interim_dir
+        / f"{gas}_allyears-lat-gradient-eofs-pcs.nc",
+        latitudinal_gradient_pc0_total_emissions_regression_file=interim_dir
+        / f"{gas}_pc0-total-emissions-regression.yaml",
+        global_annual_mean_allyears_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears.nc",
+        global_annual_mean_allyears_monthly_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears-monthly.nc",
+        seasonality_allyears_fifteen_degree_monthly_file=interim_dir
+        / f"{gas}_seasonality_fifteen-degree_allyears-monthly.nc",
+        latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
+        / f"{gas}_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
     )
