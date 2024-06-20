@@ -53,7 +53,7 @@ for gas, source, download_hash in [
     (
         "ch4",
         "in-situ",
-        "c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
+        "0ac02608ec33f6057e496463e2cf755970d40f4e653a6a5a7d6d14ec519b863e",
     ),
     (
         "n2o",

@@ -64,13 +64,13 @@ DOWNLOAD_URLS = {
     ("co2", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="co2"),
-            known_hash="0a68c9716bb9ec29e23966a2394e312618ed9b822885876d1ce5517bdf70acbe",
+            known_hash="f06a7eb8f8e56f775e4843b889ba4388ad61557c95b0d8a764522893f2d90bc1",
         )
     ],
     ("ch4", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="ch4"),
-            known_hash="c8ad74288d860c63b6a027df4d7bf6742e772fc4e3f99a4052607a382d7fefb2",
+            known_hash="0ac02608ec33f6057e496463e2cf755970d40f4e653a6a5a7d6d14ec519b863e",
         )
     ],
     ("ch4", "surface-flask"): [
