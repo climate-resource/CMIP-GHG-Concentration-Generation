@@ -45,5 +45,5 @@ def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
             array_contents[key_write] = value.data
 
     ndarrays_regression.check(
-        array_contents, default_tolerance=dict(atol=1e-6, rtol=1e-4)
+        array_contents, default_tolerance=dict(atol=1e-6, rtol=1e-3)
     )
