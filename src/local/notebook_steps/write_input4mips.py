@@ -50,11 +50,20 @@ def configure_notebooks(
     config_step = get_config_for_step_id(
         config=config, step=step_name, step_config_id=step_config_id
     )
-    config_crunch_grids = get_config_for_step_id(
-        config=config,
-        step="crunch_grids",
-        step_config_id=config_step.gas,
-    )
+
+    if "eq" in config_step.gas:
+        config_crunch_grids = get_config_for_step_id(
+            config=config,
+            step="crunch_equivalent_species",
+            step_config_id=config_step.gas,
+        )
+
+    else:
+        config_crunch_grids = get_config_for_step_id(
+            config=config,
+            step="crunch_grids",
+            step_config_id=config_step.gas,
+        )
 
     configured_notebooks = [
         ConfiguredNotebook(

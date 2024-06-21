@@ -8,6 +8,9 @@ from pathlib import Path
 
 import pint
 
+from local.config.calculate_c4f10_like_monthly_fifteen_degree_pieces import (
+    CalculateC4F10LikeMonthlyFifteenDegreePieces,
+)
 from local.config.calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -30,11 +33,15 @@ PieceCalculationOption = (
     | CalculateCO2MonthlyFifteenDegreePieces
     | CalculateN2OMonthlyFifteenDegreePieces
     | CalculateSF6LikeMonthlyFifteenDegreePieces
+    | CalculateC4F10LikeMonthlyFifteenDegreePieces
 )
 
 
-def create_monthly_fifteen_degree_pieces_configs(
+def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     gases: tuple[str, ...],
+    gases_long_poleward_extension: tuple[str, ...] = (),
+    gases_drop_obs_data_years_before_inclusive: dict[str, int] | None = None,
+    gases_drop_obs_data_years_after_inclusive: dict[str, int] | None = None,
 ) -> dict[str, list[PieceCalculationOption],]:
     """
     Create configuration for calculating the monthly, 15 degree pieces for different gases
@@ -44,35 +51,123 @@ def create_monthly_fifteen_degree_pieces_configs(
     gases
         Gases for which to create the configuration
 
+    gases_long_poleward_extension
+        Gases for which we allow a long poleward extension of data.
+
+    gases_drop_obs_data_years_before_inclusive
+        Years before which to drop observational data (inclusive) for gases.
+        If a gas is not in the list, no drop year will be applied.
+
+    gases_drop_obs_data_years_after_inclusive
+        Years after which to drop observational data (inclusive) for gases.
+        If a gas is not in the list, no drop year will be applied.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for each gas
         in ``gases``
     """
-    out: dict[str, list[PieceCalculationOption]] = {}
+    if gases_drop_obs_data_years_before_inclusive is None:
+        gases_drop_obs_data_years_before_inclusive = {}
+
+    if gases_drop_obs_data_years_after_inclusive is None:
+        gases_drop_obs_data_years_after_inclusive = {}
+
+    out: dict[str, list[PieceCalculationOption]] = {
+        "calculate_co2_monthly_fifteen_degree_pieces": [],
+        "calculate_ch4_monthly_fifteen_degree_pieces": [],
+        "calculate_n2o_monthly_fifteen_degree_pieces": [],
+        "calculate_sf6_like_monthly_fifteen_degree_pieces": [],
+        "calculate_c4f10_like_monthly_fifteen_degree_pieces": [],
+    }
 
     for gas in gases:
         if gas == "co2":
-            out["calculate_co2_monthly_fifteen_degree_pieces"] = [
+            out["calculate_co2_monthly_fifteen_degree_pieces"].append(
                 get_co2_monthly_fifteen_degree_pieces_config()
-            ]
+            )
 
         elif gas == "ch4":
-            out["calculate_ch4_monthly_fifteen_degree_pieces"] = [
+            out["calculate_ch4_monthly_fifteen_degree_pieces"].append(
                 get_ch4_monthly_fifteen_degree_pieces_config()
-            ]
+            )
 
         elif gas == "n2o":
-            out["calculate_n2o_monthly_fifteen_degree_pieces"] = [
+            out["calculate_n2o_monthly_fifteen_degree_pieces"].append(
                 get_n2o_monthly_fifteen_degree_pieces_config()
-            ]
+            )
 
-        elif gas in ("sf6", "cfc11", "cfc12", "hfc134a"):
-            if "calculate_sf6_like_monthly_fifteen_degree_pieces" not in out:
-                out["calculate_sf6_like_monthly_fifteen_degree_pieces"] = []
+        elif gas in (
+            "c2f6",
+            "c3f8",
+            "cc4f8",
+            "ccl4",
+            "cf4",
+            "cfc11",
+            "cfc113",
+            "cfc114",
+            "cfc115",
+            "cfc12",
+            "ch2cl2",
+            "ch3br",
+            "ch3ccl3",
+            "ch3cl",
+            "chcl3",
+            "halon1211",
+            "halon1301",
+            "halon2402",
+            "hcfc141b",
+            "hcfc142b",
+            "hcfc22",
+            "hfc125",
+            "hfc134a",
+            "hfc143a",
+            "hfc152a",
+            "hfc227ea",
+            "hfc23",
+            "hfc236fa",
+            "hfc245fa",
+            "hfc32",
+            "hfc365mfc",
+            "hfc4310mee",
+            "nf3",
+            "sf6",
+            "so2f2",
+        ):
+            if gas in gases_drop_obs_data_years_before_inclusive:
+                year_drop_observational_data_before_and_including: int | None = (
+                    gases_drop_obs_data_years_before_inclusive[gas]
+                )
+            else:
+                year_drop_observational_data_before_and_including = None
+
+            if gas in gases_drop_obs_data_years_after_inclusive:
+                year_drop_observational_data_after_and_including: int | None = (
+                    gases_drop_obs_data_years_after_inclusive[gas]
+                )
+            else:
+                year_drop_observational_data_after_and_including = None
 
             out["calculate_sf6_like_monthly_fifteen_degree_pieces"].append(
-                get_sf6_like_monthly_fifteen_degree_pieces_config(gas=gas)
+                get_sf6_like_monthly_fifteen_degree_pieces_config(
+                    gas=gas,
+                    allow_long_poleward_extension=gas in gases_long_poleward_extension,
+                    year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+                    year_drop_observational_data_after_and_including=year_drop_observational_data_after_and_including,
+                )
+            )
+
+        elif gas in (
+            "c4f10",
+            "c5f12",
+            "c6f14",
+            "c7f16",
+            "c8f18",
+        ):
+            out["calculate_c4f10_like_monthly_fifteen_degree_pieces"].append(
+                get_c4f10_like_monthly_fifteen_degree_pieces_config(
+                    gas=gas,
+                )
             )
 
         else:
@@ -212,26 +307,122 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> (
 
 
 PRE_INDUSTRIAL_VALUES_DEFAULT = {
-    "sf6": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    "c2f6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1890, source="Guessing from reading M2017"
+    ),
+    "c3f8": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1890, source="Guessing from reading M2017"
+    ),
+    "cc4f8": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
+    ),
+    "ccl4": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1900, source="Guessing from reading M2017"
+    ),
+    "cf4": SF6LikePreIndustrialConfig(
+        value=Q(34.05, "ppt"), year=1910, source="Guessing from reading M2017"
     ),
     "cfc11": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
+    "cfc113": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1930, source="Guessing from reading M2017"
+    ),
+    "cfc114": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "cfc115": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
+    ),
     "cfc12": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1940, source="Guessing from reading M2017"
     ),
+    "ch2cl2": SF6LikePreIndustrialConfig(
+        value=Q(8.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "ch3br": SF6LikePreIndustrialConfig(
+        value=Q(5.5, "ppt"), year=1925, source="Guessing from reading M2017"
+    ),
+    "ch3ccl3": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1955, source="Guessing from reading M2017"
+    ),
+    "ch3cl": SF6LikePreIndustrialConfig(
+        value=Q(460.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "chcl3": SF6LikePreIndustrialConfig(
+        value=Q(6.0, "ppt"), year=1940, source="Guessing from reading M2017"
+    ),
+    "halon1211": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1965, source="Guessing from reading M2017"
+    ),
+    "halon1301": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1965, source="Guessing from reading M2017"
+    ),
+    "halon2402": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1965, source="Guessing from reading M2017"
+    ),
+    "hcfc141b": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+    "hcfc142b": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
+    ),
+    "hcfc22": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1955, source="Guessing from reading M2017"
+    ),
+    "hfc125": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
     "hfc134a": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+    "hfc143a": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1975, source="Guessing from reading M2017"
+    ),
+    "hfc152a": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1985, source="Guessing from reading M2017"
+    ),
+    "hfc227ea": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
+    ),
+    "hfc23": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "hfc236fa": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
+    ),
+    "hfc245fa": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=2000, source="Guessing from reading M2017"
+    ),
+    "hfc32": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+    ),
+    "hfc365mfc": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1980, source="Guessing from reading M2017"
+    ),
+    "hfc4310mee": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1985, source="Guessing from reading M2017"
+    ),
+    "nf3": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1975, source="Guessing from reading M2017"
+    ),
+    "sf6": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
+    ),
+    "so2f2": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"
     ),
 }
 """Default values to use for pre-industrial"""
 
 
-def get_sf6_like_monthly_fifteen_degree_pieces_config(
+def get_sf6_like_monthly_fifteen_degree_pieces_config(  # noqa: PLR0913
     gas: str,
     pre_industrial: SF6LikePreIndustrialConfig | None = None,
     allow_poleward_extension: bool = True,
+    allow_long_poleward_extension: bool = False,
+    year_drop_observational_data_before_and_including: int | None = None,
+    year_drop_observational_data_after_and_including: int | None = None,
 ) -> CalculateSF6LikeMonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
@@ -245,6 +436,20 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         Pre-industrial value.
         If not supplied, we use the value from {py:const}`PRE_INDUSTRIAL_VALUES_DEFAULT`
         for ``gas``.
+
+    allow_poleward_extension
+        Allow poleward extension of the data over one latitudinal bin.
+
+    allow_long_poleward_extension
+        Allow poleward extension of the data over multiple latitudinal bins.
+
+    year_drop_observational_data_before_and_including
+        Year (inclusive) before which to drop observational data.
+        This helps us deal with data gaps.
+
+    year_drop_observational_data_after_and_including
+        Year (inclusive) after which to drop observational data.
+        This helps us deal with data gaps.
 
     Returns
     -------
@@ -264,10 +469,13 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         processed_all_data_with_bins_file=interim_dir
         / f"{gas}_observational-network_all-data-with-bin-information.csv",
         allow_poleward_extension=allow_poleward_extension,
+        allow_long_poleward_extension=allow_long_poleward_extension,
         observational_network_interpolated_file=interim_dir
         / f"{gas}_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
         / f"{gas}_observational-network_global-annual-mean.nc",
+        year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+        year_drop_observational_data_after_and_including=year_drop_observational_data_after_and_including,
         lat_gradient_n_eofs_to_use=1,
         observational_network_latitudinal_gradient_eofs_file=interim_dir
         / f"{gas}_observational-network_latitudinal-gradient-eofs.nc",
@@ -279,6 +487,35 @@ def get_sf6_like_monthly_fifteen_degree_pieces_config(
         / f"{gas}_pc0-total-emissions-regression.yaml",
         global_annual_mean_allyears_file=interim_dir
         / f"{gas}_global-annual-mean_allyears.nc",
+        global_annual_mean_allyears_monthly_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears-monthly.nc",
+        seasonality_allyears_fifteen_degree_monthly_file=interim_dir
+        / f"{gas}_seasonality_fifteen-degree_allyears-monthly.nc",
+        latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
+        / f"{gas}_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
+    )
+
+
+def get_c4f10_like_monthly_fifteen_degree_pieces_config(
+    gas: str,
+) -> CalculateC4F10LikeMonthlyFifteenDegreePieces:
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like C4F10
+
+    Parameters
+    ----------
+    gas
+        Gas for which to create the config
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+    """
+    interim_dir = Path(f"data/interim/{gas}")
+
+    return CalculateC4F10LikeMonthlyFifteenDegreePieces(
+        step_config_id=gas,
+        gas=gas,
         global_annual_mean_allyears_monthly_file=interim_dir
         / f"{gas}_global-annual-mean_allyears-monthly.nc",
         seasonality_allyears_fifteen_degree_monthly_file=interim_dir

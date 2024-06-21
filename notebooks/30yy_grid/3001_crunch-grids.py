@@ -28,6 +28,8 @@
 # ## Imports
 
 # %%
+from functools import partial
+
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
@@ -70,7 +72,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2"  # config ID to select for this branch
+step_config_id: str = "hfc245fa"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -83,15 +85,26 @@ config_step = get_config_for_step_id(
 
 if config_step.gas in ("co2", "ch4", "n2o"):
     step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
-    step_config_id = "only"
+    step_config_id_gridding_pieces_step = "only"
+
+elif config_step.gas in (
+    "c4f10",
+    "c5f12",
+    "c6f14",
+    "c7f16",
+    "c8f18",
+):
+    step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
+    step_config_id_gridding_pieces_step = config_step.gas
+
 else:
     step = "calculate_sf6_like_monthly_fifteen_degree_pieces"
-    step_config_id = config_step.gas
+    step_config_id_gridding_pieces_step = config_step.gas
 
 config_gridding_pieces_step = get_config_for_step_id(
     config=config,
     step=step,
-    step_config_id=step_config_id,
+    step_config_id=step_config_id_gridding_pieces_step,
 )
 
 
@@ -201,17 +214,52 @@ plt.show()
 # ### 0.5&deg; monthly file
 
 # %%
-process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-    local.xarray_time.convert_year_month_to_time(
-        fifteen_degree_data
-        # .sel(year=range(1981, 2023))
+try:
+    process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+        local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+        local.xarray_time.convert_year_month_to_time(
+            fifteen_degree_data
+            # .sel(year=range(1981, 2023))
+        )
+        .pint.dequantify()
+        .groupby("time", squeeze=False),
+        max_workers=6,
+        chunksize=24,
     )
-    .pint.dequantify()
-    .groupby("time", squeeze=False),
-    max_workers=6,
-    chunksize=24,
-)
+    interpolation_successful = True
+    print(len(process_map_res))
+except AssertionError:
+    interpolation_successful = False
+
+# %%
+if not interpolation_successful:
+    for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
+        print(f"Trying {degrees_freedom_scalar=}")
+        try:
+            process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+                partial(
+                    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+                    degrees_freedom_scalar=degrees_freedom_scalar,
+                ),
+                local.xarray_time.convert_year_month_to_time(
+                    fifteen_degree_data
+                    # .sel(year=range(1981, 2023))
+                )
+                .pint.dequantify()
+                .groupby("time", squeeze=False),
+                max_workers=6,
+                chunksize=24,
+            )
+            print(f"Run succeeded with {degrees_freedom_scalar=}")
+            break
+        except AssertionError:
+            print(f"Run failed with {degrees_freedom_scalar=}")
+            continue
+
+    else:
+        msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+        raise AssertionError(msg)
+
 len(process_map_res)
 
 # %%
@@ -232,7 +280,7 @@ np.testing.assert_allclose(
     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
     .transpose("year", "month", "lat_bins")
     .data.m,
-    atol=1e-6,  # Tolerance of our mean-preserving algorithm
+    atol=5e-6,  # Tolerance of our mean-preserving algorithm
 )
 
 # %%

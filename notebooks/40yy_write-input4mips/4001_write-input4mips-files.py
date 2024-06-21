@@ -75,7 +75,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "cfc11eq"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -86,11 +86,19 @@ config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
 
-config_grid_crunching = get_config_for_step_id(
-    config=config,
-    step="crunch_grids",
-    step_config_id=config_step.gas,
-)
+if "eq" in config_step.gas:
+    config_crunch_grids = get_config_for_step_id(
+        config=config,
+        step="crunch_equivalent_species",
+        step_config_id=config_step.gas,
+    )
+
+else:
+    config_crunch_grids = get_config_for_step_id(
+        config=config,
+        step="crunch_grids",
+        step_config_id=config_step.gas,
+    )
 
 
 # %% [markdown]
@@ -101,19 +109,19 @@ config_grid_crunching = get_config_for_step_id(
 
 # %%
 fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.fifteen_degree_monthly_file
+    config_crunch_grids.fifteen_degree_monthly_file
 ).pint.quantify()
 
 half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.half_degree_monthly_file
+    config_crunch_grids.half_degree_monthly_file
 ).pint.quantify()
 
 gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.gmnhsh_mean_monthly_file
+    config_crunch_grids.gmnhsh_mean_monthly_file
 ).pint.quantify()
 
 gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_grid_crunching.gmnhsh_mean_annual_file
+    config_crunch_grids.gmnhsh_mean_annual_file
 ).pint.quantify()
 
 
@@ -225,10 +233,49 @@ gas_to_cmip_variable_renaming = {
     "co2": "mole_fraction_of_carbon_dioxide_in_air",
     "ch4": "mole_fraction_of_methane_in_air",
     "n2o": "mole_fraction_of_nitrous_oxide_in_air",
-    "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
+    "c2f6": "mole_fraction_of_pfc116_in_air",
+    "c3f8": "mole_fraction_of_pfc218_in_air",
+    "c4f10": "mole_fraction_of_pfc3110_in_air",
+    "c5f12": "mole_fraction_of_pfc4112_in_air",
+    "c6f14": "mole_fraction_of_pfc5114_in_air",
+    "c7f16": "mole_fraction_of_pfc6116_in_air",
+    "c8f18": "mole_fraction_of_pfc7118_in_air",
+    "cc4f8": "mole_fraction_of_pfc318_in_air",
+    "ccl4": "mole_fraction_of_carbon_tetrachloride_in_air",
+    "cf4": "mole_fraction_of_carbon_tetrafluoride_in_air",
     "cfc11": "mole_fraction_of_cfc11_in_air",
+    "cfc113": "mole_fraction_of_cfc113_in_air",
+    "cfc114": "mole_fraction_of_cfc114_in_air",
+    "cfc115": "mole_fraction_of_cfc115_in_air",
     "cfc12": "mole_fraction_of_cfc12_in_air",
+    "ch2cl2": "mole_fraction_of_dichloromethane_in_air",
+    "ch3br": "mole_fraction_of_methyl_bromide_in_air",
+    "ch3ccl3": "mole_fraction_of_hcc140a_in_air",
+    "ch3cl": "mole_fraction_of_methyl_chloride_in_air",
+    "chcl3": "mole_fraction_of_chloroform_in_air",
+    "halon1211": "mole_fraction_of_halon1211_in_air",
+    "halon1301": "mole_fraction_of_halon1301_in_air",
+    "halon2402": "mole_fraction_of_halon2402_in_air",
+    "hcfc141b": "mole_fraction_of_hcfc141b_in_air",
+    "hcfc142b": "mole_fraction_of_hcfc142b_in_air",
+    "hcfc22": "mole_fraction_of_hcfc22_in_air",
+    "hfc125": "mole_fraction_of_hfc125_in_air",
     "hfc134a": "mole_fraction_of_hfc134a_in_air",
+    "hfc143a": "mole_fraction_of_hfc143a_in_air",
+    "hfc152a": "mole_fraction_of_hfc152a_in_air",
+    "hfc227ea": "mole_fraction_of_hfc227ea_in_air",
+    "hfc23": "mole_fraction_of_hfc23_in_air",
+    "hfc236fa": "mole_fraction_of_hfc236fa_in_air",
+    "hfc245fa": "mole_fraction_of_hfc245fa_in_air",
+    "hfc32": "mole_fraction_of_hfc32_in_air",
+    "hfc365mfc": "mole_fraction_of_hfc365mfc_in_air",
+    "hfc4310mee": "mole_fraction_of_hfc4310mee_in_air",
+    "nf3": "mole_fraction_of_nitrogen_trifluoride_in_air",
+    "sf6": "mole_fraction_of_sulfur_hexafluoride_in_air",
+    "so2f2": "mole_fraction_of_sulfuryl_fluoride_in_air",
+    "cfc11eq": "mole_fraction_of_cfc11_eq_in_air",
+    "cfc12eq": "mole_fraction_of_cfc12_eq_in_air",
+    "hfc134aeq": "mole_fraction_of_hfc134a_eq_in_air",
 }
 
 # %% [markdown]

@@ -60,7 +60,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc134a"  # config ID to select for this branch
+step_config_id: str = "ch3ccl3"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -84,6 +84,21 @@ interpolated_spatial: xr.DataArray = xr.load_dataarray(  # type: ignore
 ).pint.quantify()
 interpolated_spatial
 
+# %%
+if config_step.year_drop_observational_data_before_and_including is not None:
+    interpolated_spatial = interpolated_spatial.sel(
+        time=interpolated_spatial["time"].dt.year
+        > config_step.year_drop_observational_data_before_and_including
+    )
+
+if config_step.year_drop_observational_data_after_and_including is not None:
+    interpolated_spatial = interpolated_spatial.sel(
+        time=interpolated_spatial["time"].dt.year
+        < config_step.year_drop_observational_data_after_and_including
+    )
+
+interpolated_spatial
+
 # %% [markdown]
 # ### Drop out any years that have nan
 #
@@ -98,7 +113,7 @@ if interpolated_spatial_no_year_with_nan["year"].shape[0] != (
     - interpolated_spatial_no_year_with_nan["year"].min()
     + 1
 ):
-    msg = "Missing years, this will not end well"
+    msg = f"Missing years, this will not end well {interpolated_spatial_no_year_with_nan['year'].values=}"
     raise AssertionError(msg)
 
 interpolated_spatial_no_year_with_nan

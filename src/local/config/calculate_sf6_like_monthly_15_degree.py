@@ -38,6 +38,9 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     allow_poleward_extension: bool
     """Whether to allow the data to be extended one latitude poleward to fill data gaps"""
 
+    allow_long_poleward_extension: bool
+    """Whether to allow the data to be extended multiple latitudes poleward to fill data gaps"""
+
     observational_network_interpolated_file: Path
     """Path in which to save the interpolated observational network data"""
 
@@ -82,6 +85,20 @@ class CalculateSF6LikeMonthlyFifteenDegreePieces:
     latitudinal_gradient_fifteen_degree_allyears_monthly_file: Path
     """
     Path for the latitudinal gradient on a 15 degree grid, interpolated to monthly steps for all years
+    """
+
+    year_drop_observational_data_before_and_including: int | None = None
+    """
+    If provided, year before which (inclusive) to drop observational data
+
+    This helps us deal with weird data gaps.
+    """
+
+    year_drop_observational_data_after_and_including: int | None = None
+    """
+    If provided, year after which (inclusive) to drop observational data
+
+    This helps us deal with weird data gaps.
     """
 
 

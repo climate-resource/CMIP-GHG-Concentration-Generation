@@ -50,7 +50,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc12_gc-md_monthly"  # config ID to select for this branch
+step_config_id: str = "c2f6_gc-ms-medusa_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -78,7 +78,33 @@ else:
     raise NotImplementedError(config_step.time_frequency)
 
 # %%
-AGAGE_GAS_MAPPING = {"cfc11": "cfc-11", "cfc12": "cfc-12", "hfc134a": "hfc-134a"}
+AGAGE_GAS_MAPPING = {
+    "c2f6": "pfc-116",
+    "c3f8": "pfc-218",
+    "cc4f8": "pfc-318",
+    "cfc11": "cfc-11",
+    "cfc113": "cfc-113",
+    "cfc114": "cfc-114",
+    "cfc115": "cfc-115",
+    "cfc12": "cfc-12",
+    "halon1211": "h-1211",
+    "halon1301": "h-1301",
+    "halon2402": "h-2402",
+    "hcfc141b": "hcfc-141b",
+    "hcfc142b": "hcfc-142b",
+    "hcfc22": "hcfc-22",
+    "hfc125": "hfc-125",
+    "hfc134a": "hfc-134a",
+    "hfc143a": "hfc-143a",
+    "hfc152a": "hfc-152a",
+    "hfc227ea": "hfc-227ea",
+    "hfc23": "hfc-23",
+    "hfc236fa": "hfc-236fa",
+    "hfc245fa": "hfc-245fa",
+    "hfc32": "hfc-32",
+    "hfc365mfc": "hfc-365mfc",
+    "hfc4310mee": "hfc-4310mee",
+}
 AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 
 
@@ -114,6 +140,9 @@ def is_relevant_file(f: Path) -> bool:
 
     return True
 
+
+# %%
+# [f for f in list(config_step.raw_dir.glob("*")) if "hcfc" in str(f)]
 
 # %%
 relevant_files = [f for f in list(config_step.raw_dir.glob("*")) if is_relevant_file(f)]
@@ -232,8 +261,6 @@ contacts = set([c for v in read_info for c in v[0]])
 print(f"{contacts=}")
 df_monthly = pd.concat([v[1] for v in read_info], axis=0)
 df_monthly
-
-# %%
 
 # %%
 for gas_file_option in df_monthly["gas"].unique():

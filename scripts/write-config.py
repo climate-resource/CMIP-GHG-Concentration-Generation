@@ -23,6 +23,9 @@ from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
 from local.config_creation.compile_historical_emissions import (
     COMPILE_HISTORICAL_EMISSIONS_STEPS,
 )
+from local.config_creation.crunch_equivalent_species import (
+    create_crunch_equivalent_species_config,
+)
 from local.config_creation.crunch_grids import create_crunch_grids_config
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
@@ -43,8 +46,86 @@ def create_dev_config() -> Config:
     """
     Create our (relative) dev config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
-    # cfc11 next
+    equivalent_species_to_write = ("cfc11eq", "cfc12eq", "hfc134aeq")
+
+    gases_to_write = (
+        "co2",
+        "ch4",
+        "n2o",
+        "c2f6",
+        "c3f8",
+        "c4f10",
+        "c5f12",
+        "c6f14",
+        "c7f16",
+        "c8f18",
+        "cc4f8",
+        "ccl4",
+        "cf4",
+        "cfc11",
+        "cfc113",
+        "cfc114",
+        "cfc115",
+        "cfc12",
+        "ch2cl2",
+        "ch3br",
+        "ch3ccl3",
+        "ch3cl",
+        "chcl3",
+        "halon1211",
+        "halon1301",
+        "halon2402",
+        "hcfc141b",
+        "hcfc142b",
+        "hcfc22",
+        "hfc125",
+        "hfc134a",
+        "hfc143a",
+        "hfc152a",
+        "hfc227ea",
+        "hfc23",
+        "hfc236fa",
+        "hfc245fa",
+        "hfc32",
+        "hfc365mfc",
+        "hfc4310mee",
+        "nf3",
+        "sf6",
+        "so2f2",
+    )
+    # TODO: add this to CI too
+    # TODO: there shouldn't be this many gasses in here
+    gases_long_poleward_extension = (
+        "c2f6",
+        "c3f8",
+        "cc4f8",
+        "cf4",
+        "cfc114",
+        "cfc115",
+        "ch3ccl3",
+        "chcl3",
+        "halon1301",
+        "hcfc141b",
+        "hfc125",
+        "hfc143a",
+        "hfc152a",
+        "hfc23",
+        "hfc236fa",
+        "hfc245fa",
+        "hfc32",
+        "hfc4310mee",
+        "nf3",
+        "so2f2",
+    )
+    gases_drop_obs_data_years_before_inclusive = {
+        "c2f6": 2007,
+        "cfc115": 2007,
+        "ch2cl2": 2013,
+        "halon2402": 2009,
+        "so2f2": 2007,
+    }
+    gases_drop_obs_data_years_after_inclusive = {}
+
     start_year = 1
     end_year = 2022
 
@@ -57,12 +138,35 @@ def create_dev_config() -> Config:
             ("n2o", "hats"),
             # # Don't use N2O surface flask to avoid double counting
             # ("n2o", "surface-flask"),
+            ("c2f6", "hats"),
+            ("ccl4", "hats"),
+            ("cf4", "hats"),
+            ("cfc11", "hats"),
+            ("cfc113", "hats"),
+            ("cfc12", "hats"),
+            ("ch2cl2", "hats"),
+            ("ch3br", "hats"),
+            ("ch3ccl3", "hats"),
+            ("ch3cl", "hats"),
+            ("halon1211", "hats"),
+            ("halon1301", "hats"),
+            ("halon2402", "hats"),
+            ("hcfc141b", "hats"),
+            ("hcfc142b", "hats"),
+            ("hcfc22", "hats"),
+            ("hfc125", "hats"),
+            ("hfc134a", "hats"),
+            ("hfc143a", "hats"),
+            ("hfc152a", "hats"),
+            ("hfc227ea", "hats"),
+            ("hfc236fa", "hats"),
+            ("hfc32", "hats"),
+            ("hfc365mfc", "hats"),
+            ("nf3", "hats"),
             ("sf6", "hats"),
             # # Don't use SF6 surface flask to avoid double counting
             # ("sf6", "surface-flask"),
-            ("cfc11", "hats"),
-            ("cfc12", "hats"),
-            ("hfc134a", "hats"),
+            ("so2f2", "hats"),
         )
     )
 
@@ -72,14 +176,73 @@ def create_dev_config() -> Config:
             ("n2o", "gc-md", "monthly"),
             ("sf6", "gc-md", "monthly"),
             ("sf6", "gc-ms-medusa", "monthly"),
+            ("c2f6", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms", "monthly"),
+            ("cc4f8", "gc-ms-medusa", "monthly"),
+            ("cc4f8", "gc-ms", "monthly"),
+            ("ccl4", "gc-md", "monthly"),
+            ("ccl4", "gc-ms-medusa", "monthly"),
+            ("ccl4", "gc-ms", "monthly"),
+            ("cf4", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-md", "monthly"),
             ("cfc11", "gc-ms-medusa", "monthly"),
             ("cfc11", "gc-ms", "monthly"),
+            ("cfc113", "gc-md", "monthly"),
+            ("cfc113", "gc-ms-medusa", "monthly"),
+            ("cfc114", "gc-ms", "monthly"),
+            ("cfc114", "gc-ms-medusa", "monthly"),
+            ("cfc115", "gc-ms", "monthly"),
+            ("cfc115", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-md", "monthly"),
             ("cfc12", "gc-ms-medusa", "monthly"),
             ("cfc12", "gc-ms", "monthly"),
+            ("ch2cl2", "gc-ms-medusa", "monthly"),
+            ("ch2cl2", "gc-ms", "monthly"),
+            ("ch3br", "gc-ms-medusa", "monthly"),
+            ("ch3br", "gc-ms", "monthly"),
+            ("ch3ccl3", "gc-md", "monthly"),
+            ("ch3ccl3", "gc-ms-medusa", "monthly"),
+            ("ch3ccl3", "gc-ms", "monthly"),
+            ("ch3cl", "gc-ms-medusa", "monthly"),
+            ("ch3cl", "gc-ms", "monthly"),
+            ("chcl3", "gc-md", "monthly"),
+            ("chcl3", "gc-ms-medusa", "monthly"),
+            ("chcl3", "gc-ms", "monthly"),
+            ("halon1211", "gc-ms-medusa", "monthly"),
+            ("halon1211", "gc-ms", "monthly"),
+            ("halon1301", "gc-ms-medusa", "monthly"),
+            ("halon1301", "gc-ms", "monthly"),
+            ("halon2402", "gc-ms-medusa", "monthly"),
+            ("hcfc141b", "gc-ms", "monthly"),
+            ("hcfc141b", "gc-ms-medusa", "monthly"),
+            ("hcfc142b", "gc-ms", "monthly"),
+            ("hcfc142b", "gc-ms-medusa", "monthly"),
+            ("hcfc22", "gc-ms", "monthly"),
+            ("hcfc22", "gc-ms-medusa", "monthly"),
+            ("hfc125", "gc-ms-medusa", "monthly"),
+            ("hfc125", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
+            ("hfc143a", "gc-ms-medusa", "monthly"),
+            ("hfc143a", "gc-ms", "monthly"),
+            ("hfc152a", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms", "monthly"),
+            ("hfc227ea", "gc-ms-medusa", "monthly"),
+            ("hfc227ea", "gc-ms", "monthly"),
+            ("hfc23", "gc-ms-medusa", "monthly"),
+            ("hfc236fa", "gc-ms-medusa", "monthly"),
+            ("hfc236fa", "gc-ms", "monthly"),
+            ("hfc245fa", "gc-ms-medusa", "monthly"),
+            ("hfc245fa", "gc-ms", "monthly"),
+            ("hfc32", "gc-ms-medusa", "monthly"),
+            ("hfc32", "gc-ms", "monthly"),
+            ("hfc365mfc", "gc-ms-medusa", "monthly"),
+            ("hfc365mfc", "gc-ms", "monthly"),
+            ("hfc4310mee", "gc-ms-medusa", "monthly"),
+            ("nf3", "gc-ms-medusa", "monthly"),
+            ("so2f2", "gc-ms-medusa", "monthly"),
+            ("so2f2", "gc-ms", "monthly"),
         )
     )
 
@@ -87,8 +250,11 @@ def create_dev_config() -> Config:
         gases=("co2", "ch4", "n2o"), n_draws=250
     )
 
-    monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+    monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
+        gases=gases_to_write,
+        gases_long_poleward_extension=gases_long_poleward_extension,
+        gases_drop_obs_data_years_before_inclusive=gases_drop_obs_data_years_before_inclusive,
+        gases_drop_obs_data_years_after_inclusive=gases_drop_obs_data_years_after_inclusive,
     )
 
     return Config(
@@ -110,8 +276,14 @@ def create_dev_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        crunch_equivalent_species=create_crunch_equivalent_species_config(
+            gases=equivalent_species_to_write
+        ),
         write_input4mips=create_write_input4mips_config(
-            gases=gases_to_write, start_year=start_year, end_year=end_year
+            # TODO: test the equivalent species in CI too somehow
+            gases=(*gases_to_write, *equivalent_species_to_write),
+            start_year=start_year,
+            end_year=end_year,
         ),
     )
 
@@ -187,6 +359,8 @@ def create_ci_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        # TODO: test this in CI
+        crunch_equivalent_species=[],
         write_input4mips=create_write_input4mips_config(
             gases=gases_to_write, start_year=start_year, end_year=end_year
         ),

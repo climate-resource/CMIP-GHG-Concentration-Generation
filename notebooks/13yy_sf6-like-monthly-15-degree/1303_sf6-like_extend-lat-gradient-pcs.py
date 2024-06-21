@@ -75,7 +75,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11"  # config ID to select for this branch
+step_config_id: str = "c2f6"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -279,8 +279,11 @@ historical_emissions_extended = historical_emissions_extended.pint.dequantify().
 )
 
 with axes_vertical_split() as axes:
+    SPLIT_YEAR = 1950
     historical_emissions_extended.plot(ax=axes[0])
-    historical_emissions_extended.sel(year=range(1950, 2023)).plot(ax=axes[1])
+    historical_emissions_extended.sel(
+        year=historical_emissions_extended["year"] >= SPLIT_YEAR
+    ).plot(ax=axes[1])
 
 historical_emissions_extended
 
@@ -344,7 +347,7 @@ out = xr.merge([allyears_pcs, lat_grad_eofs_obs_network["eofs"]])
 out
 
 # %%
-(out["principal-components"] @ out["eofs"]).sel(year=2022).plot()  # type: ignore
+(out["principal-components"] @ out["eofs"]).sel(year=out["year"].max()).plot()  # type: ignore
 
 # %%
 (out["principal-components"] @ out["eofs"]).sel(year=1980).plot()  # type: ignore

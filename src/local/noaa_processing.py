@@ -38,10 +38,46 @@ UNIT_MAP: dict[str, str] = {
 """Mapping from NOAA units to convention we use"""
 
 
-HATS_GAS_NAME_MAPPING: dict[str, str] = {"cfc11": "F11", "cfc12": "F12"}
+HATS_GAS_NAME_MAPPING: dict[str, str] = {
+    "c2f6": "PFC-116_C",
+    "ccl4": "CCl4",
+    "cf4": "CF4_C",
+    "cfc11": "F11",
+    "cfc12": "F12",
+    "cfc113": "F113",
+    "cfc114": "F114",
+    "ch2cl2": "CH2Cl2",
+    "ch3br": "CH3BR",
+    "ch3ccl3": "CH3CCl3",
+    "ch3cl": "CH3Cl",
+    "halon1211": "HAL1211",
+    "halon1301": "H-1301_C",
+    "halon2402": "Hal2402",
+    "hfc125": "HFC-125_C",
+    "hfc143a": "HFC-143a_C",
+    "hfc152a": "hf152a",
+    "hfc227ea": "F227_",
+    "hfc236fa": "HFC-236fa_C",
+    "hfc32": "HFC-32_C",
+    "hfc365mfc": "F365_",
+    "nf3": "NF3_C",
+    "so2f2": "SO2F2_C",
+}
 """Mapping from HATS names for gases to our names"""
 
 HATS_GAS_NAME_MAPPING_REVERSE = {v: k for k, v in HATS_GAS_NAME_MAPPING.items()}
+
+HATS_M2_PR1_FILE_MAPPING: dict[str, str] = {
+    "c2f6": "PFC-116",
+    "cf4": "CF4",
+    "halon1301": "H-1301",
+    "hfc125": "HFC-125",
+    "hfc143a": "HFC-143a",
+    "hfc236fa": "HFC-236fa",
+    "hfc32": "HFC-32",
+}
+HATS_M2_PR1_FILE_MAPPING_REVERSE = {v: k for k, v in HATS_M2_PR1_FILE_MAPPING.items()}
+
 HATS_ASSUMED_LOCATION: dict[str, dict[str, float]] = {
     "alt": {"latitude": 82.5, "longitude": -62.3},
     "sum": {"latitude": 72.6, "longitude": -38.4},
@@ -59,6 +95,7 @@ HATS_ASSUMED_LOCATION: dict[str, dict[str, float]] = {
     "spo": {"latitude": -90.0, "longitude": 0.0},
     "hfm": {"latitude": 42.5, "longitude": -72.2},
     "lef": {"latitude": 45.6, "longitude": -90.27},
+    "amy": {"latitude": 36.5389, "longitude": 126.3295},
 }
 
 
@@ -493,6 +530,9 @@ def read_noaa_hats(  # noqa: PLR0913
     if gas_file in HATS_GAS_NAME_MAPPING_REVERSE:
         gas_file_mapped = HATS_GAS_NAME_MAPPING_REVERSE[gas_file]
 
+    elif gas_file in ("HFC-227ea", "HFC-365mfc"):
+        gas_file_mapped = gas_file.lower().replace("-", "")
+
     else:
         gas_file_mapped = gas_file
 
@@ -505,7 +545,14 @@ def read_noaa_hats(  # noqa: PLR0913
     res = pd.read_csv(StringIO(file_content), skiprows=1, sep=sep)
     res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
     res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
-    res["value"] = res[gas]
+
+    if gas in ("ch3br", "ch3ccl3", "hcfc141b", "hcfc142b", "hcfc22"):
+        res["value"] = res[gas.upper()]
+    elif gas in ("ch3cl", "halon1211", "halon2402", "hfc152a", "hfc227ea", "hfc365mfc"):
+        res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
+    else:
+        res["value"] = res[gas]
+
     res["unit"] = unit_assumed
     res["gas"] = gas
     res["source"] = "hats"
@@ -603,12 +650,17 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     tmp = tmp.set_index([year_col, month_col])
     tmp.index.names = ["year", "month"]
 
+    if gas in ("ccl4", "cfc11", "cfc12", "cfc113", "cfc114"):
+        gas_end = HATS_GAS_NAME_MAPPING[gas]
+    else:
+        gas_end = gas.upper()
+
     res_l = []
     for c in tmp:
         c = cast(str, c)
         if (
             c.endswith("sd")
-            or not c.endswith(gas_file.upper())
+            or not c.endswith(gas_end)
             or any(v in c for v in ("NH", "SH", "Global"))
         ):
             continue
@@ -655,3 +707,100 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     res["unit"] = unit
 
     return res.reset_index()
+
+
+def read_noaa_hats_m2_and_pr1(  # noqa: PLR0913
+    infile: Path,
+    gas: str,
+    source: str,
+    sep: str = r"\s+",
+    comment: str = "#",
+    time_col_assumed: str = "yyyymmdd",
+) -> pd.DataFrame:
+    """
+    Read NOAA HATS data file that contains M2 and PR1 data
+
+    Parameters
+    ----------
+    infile
+        File to read
+
+    gas
+        Gas we assume is in the file
+
+    source
+        Source of the file
+
+    sep
+        Separator to assume when reading the file
+
+    comment
+        Indicator of comments in the file
+
+    Returns
+    -------
+        Read data
+    """
+    with open(infile) as fh:
+        file_content = fh.read()
+
+    gas_file = infile.stem.split("_")[0]
+
+    if gas_file in HATS_M2_PR1_FILE_MAPPING_REVERSE:
+        gas_file_mapped = HATS_M2_PR1_FILE_MAPPING_REVERSE[gas_file]
+
+    else:
+        gas_file_mapped = gas_file
+
+    gas_file_mapped = gas_file_mapped.lower()
+
+    if gas != gas_file_mapped:
+        msg = f"{gas=}, {gas_file=}, {gas_file_mapped=}"
+        raise AssertionError(msg)
+
+    try:
+        unit = re_search_and_retrieve_group(
+            r"Units: .*\((?P<unit>\S*)\)",
+            file_content,
+            "unit",
+        )
+    except ValueError:
+        print(f"Missing units for {infile=}")
+        raise
+
+    res = pd.read_csv(StringIO(file_content), comment=comment, sep=sep)
+    res["year"] = res[time_col_assumed].astype(str).apply(lambda x: x[:4]).astype(int)
+    res["month"] = res[time_col_assumed].astype(str).apply(lambda x: x[4:6]).astype(int)
+
+    res["value"] = res[HATS_GAS_NAME_MAPPING[gas]]
+
+    res["unit"] = unit
+    res["gas"] = gas
+    res["source"] = "hats"
+    res["latitude"] = res["site"].apply(
+        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["latitude"]
+    )
+    res["longitude"] = res["site"].apply(
+        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["longitude"]
+    )
+    res = res.rename({"site": "site_code"}, axis="columns")
+    res = res[
+        [
+            "year",
+            "month",
+            "value",
+            "site_code",
+            "latitude",
+            "longitude",
+            "gas",
+            "source",
+            "unit",
+        ]
+    ]
+
+    # Take average where there is more than one observation in a month.
+    # Bit annoying that NOAA doesn't have a monthly file, oh well.
+    all_except_value = list(set(res.columns) - {"value"})
+    res = res.groupby(all_except_value)["value"].mean().to_frame("value").reset_index()
+
+    return res

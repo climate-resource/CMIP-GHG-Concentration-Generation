@@ -30,6 +30,7 @@ from local.noaa_processing import (
     read_noaa_flask_zip,
     read_noaa_hats,
     read_noaa_hats_combined,
+    read_noaa_hats_m2_and_pr1,
     read_noaa_in_situ_zip,
 )
 
@@ -47,7 +48,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2_in-situ"  # config ID to select for this branch
+step_config_id: str = "cfc11_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -88,8 +89,23 @@ elif config_step.source == "in-situ":
     print(df_months)
 
 elif config_step.source == "hats":
-    if config_step.gas in ("n2o", "sf6", "cfc11", "cfc12"):
+    if config_step.gas in ("n2o", "ccl4", "cfc11", "cfc113", "cfc12", "sf6"):
         df_months = read_noaa_hats_combined(
+            zf, gas=config_step.gas, source=config_step.source
+        )
+
+    elif config_step.gas in (
+        "c2f6",
+        "cf4",
+        "halon1301",
+        "hfc125",
+        "hfc143a",
+        "hfc236fa",
+        "hfc32",
+        "nf3",
+        "so2f2",
+    ):
+        df_months = read_noaa_hats_m2_and_pr1(
             zf, gas=config_step.gas, source=config_step.source
         )
 
