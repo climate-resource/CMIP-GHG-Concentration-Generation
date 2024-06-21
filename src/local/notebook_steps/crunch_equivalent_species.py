@@ -66,7 +66,7 @@ def configure_notebooks(
             for crunch_gas_config in config_grid_crunching_included_gases
             for attr_to_grab in (
                 "fifteen_degree_monthly_file",
-                "half_degree_monthly_file",
+                # "half_degree_monthly_file",
                 "gmnhsh_mean_monthly_file",
                 "gmnhsh_mean_annual_file",
             )
@@ -82,7 +82,7 @@ def configure_notebooks(
             dependencies=dependencies,
             targets=(
                 config_step.fifteen_degree_monthly_file,
-                config_step.half_degree_monthly_file,
+                # config_step.half_degree_monthly_file,
                 config_step.gmnhsh_mean_monthly_file,
                 config_step.gmnhsh_mean_annual_file,
             ),

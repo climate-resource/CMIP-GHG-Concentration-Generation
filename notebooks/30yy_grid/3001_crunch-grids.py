@@ -28,19 +28,16 @@
 # ## Imports
 
 # %%
-from functools import partial
 
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
 import pint_xarray
-import tqdm.autonotebook as tqdman
 import xarray as xr
 from carpet_concentrations.gridders.latitude_seasonality_gridder import (
     LatitudeSeasonalityGridder,
 )
 from pydoit_nb.config_handling import get_config_for_step_id
-from tqdm.contrib.concurrent import process_map
 
 import local.binned_data_interpolation
 import local.binning
@@ -210,98 +207,98 @@ ax.view_init(15, -135, 0)  # type: ignore
 plt.tight_layout()
 plt.show()
 
-# %% [markdown]
-# ### 0.5&deg; monthly file
-
-# %%
-try:
-    process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-        local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-        local.xarray_time.convert_year_month_to_time(
-            fifteen_degree_data
-            # .sel(year=range(1981, 2023))
-        )
-        .pint.dequantify()
-        .groupby("time", squeeze=False),
-        max_workers=6,
-        chunksize=24,
-    )
-    interpolation_successful = True
-    print(len(process_map_res))
-except AssertionError:
-    interpolation_successful = False
-
-# %%
-if not interpolation_successful:
-    for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
-        print(f"Trying {degrees_freedom_scalar=}")
-        try:
-            process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-                partial(
-                    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-                    degrees_freedom_scalar=degrees_freedom_scalar,
-                ),
-                local.xarray_time.convert_year_month_to_time(
-                    fifteen_degree_data
-                    # .sel(year=range(1981, 2023))
-                )
-                .pint.dequantify()
-                .groupby("time", squeeze=False),
-                max_workers=6,
-                chunksize=24,
-            )
-            print(f"Run succeeded with {degrees_freedom_scalar=}")
-            break
-        except AssertionError:
-            print(f"Run failed with {degrees_freedom_scalar=}")
-            continue
-
-    else:
-        msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-        raise AssertionError(msg)
-
-len(process_map_res)
-
-# %%
-half_degree_data_l = []
-for map_res in tqdman.tqdm(process_map_res):
-    half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
-
-half_degree_data = local.xarray_time.convert_time_to_year_month(
-    xr.concat(half_degree_data_l, "time")
-)
-half_degree_data.name = fifteen_degree_data.name
-half_degree_data
-
-# %%
-np.testing.assert_allclose(
-    fifteen_degree_data.transpose("year", "month", "lat").data.m,
-    half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
-    .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
-    .transpose("year", "month", "lat_bins")
-    .data.m,
-    atol=5e-6,  # Tolerance of our mean-preserving algorithm
-)
-
-# %%
-print("Flying carpet")
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(projection="3d")
-tmp = local.xarray_time.convert_year_month_to_time(half_degree_data).copy()
-tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
-(
-    tmp.isel(time=range(-150, 0)).plot.surface(
-        x="time",
-        y="lat",
-        ax=ax,
-        cmap="rocket_r",
-        levels=30,
-        # alpha=0.7,
-    )
-)
-ax.view_init(15, -135, 0)  # type: ignore
-plt.tight_layout()
-plt.show()
+# # %% [markdown]
+# # ### 0.5&deg; monthly file
+#
+# # %%
+# try:
+#     process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+#         local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+#         local.xarray_time.convert_year_month_to_time(
+#             fifteen_degree_data
+#             # .sel(year=range(1981, 2023))
+#         )
+#         .pint.dequantify()
+#         .groupby("time", squeeze=False),
+#         max_workers=6,
+#         chunksize=24,
+#     )
+#     interpolation_successful = True
+#     print(len(process_map_res))
+# except AssertionError:
+#     interpolation_successful = False
+#
+# # %%
+# if not interpolation_successful:
+#     for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
+#         print(f"Trying {degrees_freedom_scalar=}")
+#         try:
+#             process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+#                 partial(
+#                     local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+#                     degrees_freedom_scalar=degrees_freedom_scalar,
+#                 ),
+#                 local.xarray_time.convert_year_month_to_time(
+#                     fifteen_degree_data
+#                     # .sel(year=range(1981, 2023))
+#                 )
+#                 .pint.dequantify()
+#                 .groupby("time", squeeze=False),
+#                 max_workers=6,
+#                 chunksize=24,
+#             )
+#             print(f"Run succeeded with {degrees_freedom_scalar=}")
+#             break
+#         except AssertionError:
+#             print(f"Run failed with {degrees_freedom_scalar=}")
+#             continue
+#
+#     else:
+#         msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+#         raise AssertionError(msg)
+#
+# len(process_map_res)
+#
+# # %%
+# half_degree_data_l = []
+# for map_res in tqdman.tqdm(process_map_res):
+#     half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
+#
+# half_degree_data = local.xarray_time.convert_time_to_year_month(
+#     xr.concat(half_degree_data_l, "time")
+# )
+# half_degree_data.name = fifteen_degree_data.name
+# half_degree_data
+#
+# # %%
+# np.testing.assert_allclose(
+#     fifteen_degree_data.transpose("year", "month", "lat").data.m,
+#     half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
+#     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
+#     .transpose("year", "month", "lat_bins")
+#     .data.m,
+#     atol=5e-6,  # Tolerance of our mean-preserving algorithm
+# )
+#
+# # %%
+# print("Flying carpet")
+# fig = plt.figure(figsize=(8, 6))
+# ax = fig.add_subplot(projection="3d")
+# tmp = local.xarray_time.convert_year_month_to_time(half_degree_data).copy()
+# tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
+# (
+#     tmp.isel(time=range(-150, 0)).plot.surface(
+#         x="time",
+#         y="lat",
+#         ax=ax,
+#         cmap="rocket_r",
+#         levels=30,
+#         # alpha=0.7,
+#     )
+# )
+# ax.view_init(15, -135, 0)  # type: ignore
+# plt.tight_layout()
+# plt.show()
 
 # %% [markdown]
 # ### Global-, northern-hemisphere- and southern-hemisphere-means
@@ -353,10 +350,10 @@ config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True
 fifteen_degree_data.pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
 fifteen_degree_data
 
-# %%
-config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
-half_degree_data
+# # %%
+# config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+# half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
+# half_degree_data
 
 # %%
 config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)

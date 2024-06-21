@@ -86,7 +86,7 @@ def configure_notebooks(
             ),
             targets=(
                 config_step.fifteen_degree_monthly_file,
-                config_step.half_degree_monthly_file,
+                # config_step.half_degree_monthly_file,
                 config_step.gmnhsh_mean_monthly_file,
                 config_step.gmnhsh_mean_annual_file,
             ),

@@ -52,7 +52,9 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6_gc-ms-medusa_monthly"  # config ID to select for this branch
+step_config_id: str = (
+    "hfc152a_gc-ms-medusa_monthly"  # config ID to select for this branch
+)
 
 # %% [markdown]
 # ## Load config

@@ -31,8 +31,8 @@ class EquivalentSpeciesCrunchingConfig:
     fifteen_degree_monthly_file: Path
     """Path in which to save the 15 degree, monthly gridded data"""
 
-    half_degree_monthly_file: Path
-    """Path in which to save the 0.5 degree, monthly gridded data"""
+    # half_degree_monthly_file: Path
+    # """Path in which to save the 0.5 degree, monthly gridded data"""
 
     gmnhsh_mean_monthly_file: Path
     """Path in which to save the global-, hemispher-mean, monthly data"""

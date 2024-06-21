@@ -73,7 +73,7 @@ def configure_notebooks(
             configuration=None,
             dependencies=(
                 config_crunch_grids.fifteen_degree_monthly_file,
-                config_crunch_grids.half_degree_monthly_file,
+                # config_crunch_grids.half_degree_monthly_file,
                 config_crunch_grids.gmnhsh_mean_monthly_file,
                 config_crunch_grids.gmnhsh_mean_annual_file,
             ),
