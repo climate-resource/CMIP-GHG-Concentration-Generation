@@ -1,52 +1,100 @@
-[tool.poetry]
-name = "local"
-version = "0.1.0"
-description = "Local code to support running the notebooks"
+[project]
 authors = [
-    "Zebedee Nicholls <zebedee.nicholls@climate-resource.com>",
-    "Jared Lewis <jared.lewis@climate-resource.com>",
+    { name = "Zebedee Nicholls", email = "zebedee.nicholls@climate-resource.com" },
+    { name = "Jared Lewis", email = "jared.lewis@climate-resource.com" }
 ]
+requires-python = ">=3.11, <3.12"
+# pip dependencies
+dependencies = [
+    "loguru-config", "openscm-units", "pydoit-nb", "scmdata", "carpet-concentrations",
+]
+name = "local"
+version = "0.3.0a1"
+description = "Local code to support running the notebooks"
 readme = "README.md"
-packages = [{ include = "local", from = "src" }]
-license = "BSD-3-Clause"
 
-[tool.poetry.dependencies]
-python = ">=3.11,<3.12"
-notebook = "7.1.0"
-pooch = "1.8.0"
-geopandas = "0.14.3"
-seaborn = "0.13.2"
-bokeh = "3.3.4"
-scmdata = "0.17.0"
-openpyxl = "3.1.2"
-scipy = "1.12.0"
-cf-xarray = "0.9.0"
-xarray = "2024.1.1"
-pint-xarray = "0.3"
-nc-time-axis = "1.4.1"
-netcdf4 = "1.6.5"
-input4mips-validation = "0.4.0"
-pydoit-nb = "0.3.4"
-carpet-concentrations = "0.5.1"
-beautifulsoup4 = "4.12.3"
-ipywidgets = "^8.1.2"
-primap2 = "^0.10.0"
+[project.license]
+text = "BSD-3-Clause"
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.5.0"
-mypy = "^1.7.0"
-pandas-stubs = "^2.1.1.230928"
-types-tqdm = "^4.66.0.5"
-towncrier = "^23.11.0"
-types-beautifulsoup4 = "^4.12.0.20240106"
+[tool.pixi.pypi-dependencies.local]
+path = "."
+editable = true
 
-[tool.poetry.group.tests.dependencies]
-pytest = "^7.4.3"
-pytest-regressions = {extras = ["dataframe"], version = "^2.5.0"}
+# conda dependencies
+[tool.pixi.dependencies]
+input4mips-validation = "==0.10.2"
+doit = ">=0.36.0,<0.37"
+jupyterlab = ">=1.0"
+pooch = ">=1.0"
+scipy = ">=1.0"
+geopandas = ">=1.0"
+nc-time-axis = ">=1.4.1,<1.5"
 
-[tool.poetry.group.coverage.dependencies]
-coverage = "^7.3.2"
-pytest-cov = "^4.1.0"
+# pip optional dependencies
+[project.optional-dependencies]
+dev = [
+    "pre-commit",
+    "mypy",
+    "pandas-stubs",
+    "tomli",
+    "towncrier",
+    "types-beautifulsoup4",
+    "types-tqdm",
+]
+tests = [
+    "pytest",
+    "pytest-regressions[dataframe]",
+    "coverage",
+    "pytest-cov",
+]
+
+[tool.pixi.environments.tests]
+features = [
+    "tests",
+]
+solve-group = "default"
+
+[tool.pixi.environments.all-dev]
+features = [
+    "dev",
+    "tests",
+]
+solve-group = "default"
+
+[tool.pixi.project]
+channels = [
+    "conda-forge",
+]
+platforms = [
+    "osx-64",
+    "osx-arm64",
+    "linux-64",
+    "linux-aarch64",
+]
+
+
+
+# [tool.poetry.dependencies]
+# python = ">=3.11,<3.12"
+# notebook = "7.1.0"
+# pooch = "1.8.0"
+# geopandas = "0.14.3"
+# seaborn = "0.13.2"
+# bokeh = "3.3.4"
+# scmdata = "0.17.0"
+# openpyxl = "3.1.2"
+# scipy = "1.12.0"
+# cf-xarray = "0.9.0"
+# xarray = "2024.1.1"
+# pint-xarray = "0.3"
+# nc-time-axis = "1.4.1"
+# netcdf4 = "1.6.5"
+# input4mips-validation = "0.4.0"
+# pydoit-nb = "0.3.4"
+# carpet-concentrations = "0.5.1"
+# beautifulsoup4 = "4.12.3"
+# ipywidgets = "^8.1.2"
+# primap2 = "^0.10.0"
 
 [tool.jupytext]
 formats = "ipynb,py:percent"
@@ -127,46 +175,61 @@ follow_imports = "normal"
 [tool.towncrier]
 package = "local"
 package_dir = "src"
-filename = "docs/source/changelog.md"
+filename = "docs/changelog.md"
 directory = "changelog/"
-title_format = "## CMIP Greenhouse Gas Concentration Generation {version} ({project_date})"
-underlines = ["", "", ""]
+title_format = "## CMIP GHG Concentration Generation {version} ({project_date})"
+underlines = [
+    "",
+    "",
+    "",
+]
 issue_format = "[#{issue}](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/{issue})"
+type = [
+    { directory = "breaking", name = "⚠️ Breaking Changes", showcontent = true },
+    { directory = "deprecation", name = "🗑️ Deprecations", showcontent = true },
+    { directory = "feature", name = "🆕 Features", showcontent = true },
+    { directory = "improvement", name = "🎉 Improvements", showcontent = true },
+    { directory = "fix", name = "🐛 Bug Fixes", showcontent = true },
+    { directory = "docs", name = "📚 Improved Documentation", showcontent = true },
+    { directory = "trivial", name = "🔧 Trivial/Internal Changes", showcontent = false },
+]
 
-  [[tool.towncrier.type]]
-  directory = "breaking"
-  name = "Breaking Changes"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "deprecation"
-  name = "Deprecations"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "feature"
-  name = "Features"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "improvement"
-  name = "Improvements"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "fix"
-  name = "Bug Fixes"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "docs"
-  name = "Improved Documentation"
-  showcontent = true
-
-  [[tool.towncrier.type]]
-  directory = "trivial"
-  name = "Trivial/Internal Changes"
-  showcontent = false
+[tool.liccheck]
+authorized_licenses = [
+    "bsd",
+    "bsd license",
+    "BSD 3-Clause",
+    "CC0",
+    "apache",
+    "apache 2.0",
+    "apache software",
+    "apache software license",
+    "Apache License, Version 2.0",
+    "Historical Permission Notice and Disclaimer (HPND)",
+    "isc license",
+    "isc license (iscl)",
+    "gnu lgpl",
+    "lgpl with exceptions or zpl",
+    "LGPLv2+",
+    "GNU Lesser General Public License v2 (LGPLv2)",
+    "GNU Lesser General Public License v2 or later (LGPLv2+)",
+    "mit",
+    "mit license",
+    "Mozilla Public License 2.0 (MPL 2.0)",
+    "python software foundation",
+    "python software foundation license",
+    "zpl 2.1",
+]
+unauthorized_licenses = [
+    "agpl",
+    "gnu agpl",
+    "gpl v3",
+    "gplv3",
+    "gpl v2",
+    "gplv2",
+    "gpl v1",
+    "gplv1",
+]
 
 [tool.coverage.report]
 fail_under = 80

@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -34,6 +34,10 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.raw_data_processing
 from local.config import load_config_from_file
+from local.config_creation.agage_handling import (
+    AGAGE_GAS_MAPPING,
+    AGAGE_GAS_MAPPING_REVERSED,
+)
 from local.regexp_helpers import re_search_and_retrieve_group
 
 # %%
@@ -76,36 +80,6 @@ if config_step.time_frequency == "monthly":
     suffix = "_mon.txt"
 else:
     raise NotImplementedError(config_step.time_frequency)
-
-# %%
-AGAGE_GAS_MAPPING = {
-    "c2f6": "pfc-116",
-    "c3f8": "pfc-218",
-    "cc4f8": "pfc-318",
-    "cfc11": "cfc-11",
-    "cfc113": "cfc-113",
-    "cfc114": "cfc-114",
-    "cfc115": "cfc-115",
-    "cfc12": "cfc-12",
-    "halon1211": "h-1211",
-    "halon1301": "h-1301",
-    "halon2402": "h-2402",
-    "hcfc141b": "hcfc-141b",
-    "hcfc142b": "hcfc-142b",
-    "hcfc22": "hcfc-22",
-    "hfc125": "hfc-125",
-    "hfc134a": "hfc-134a",
-    "hfc143a": "hfc-143a",
-    "hfc152a": "hfc-152a",
-    "hfc227ea": "hfc-227ea",
-    "hfc23": "hfc-23",
-    "hfc236fa": "hfc-236fa",
-    "hfc245fa": "hfc-245fa",
-    "hfc32": "hfc-32",
-    "hfc365mfc": "hfc-365mfc",
-    "hfc4310mee": "hfc-4310mee",
-}
-AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 
 
 # %%
@@ -157,7 +131,7 @@ relevant_files
 
 # %%
 def read_agage_file(
-    f: Path, skiprows: int = 32, sep: str = r"\s+"
+    f: Path, skiprows: int = 34, sep: str = r"\s+"
 ) -> tuple[tuple[str, ...], pd.DataFrame]:
     """
     Read a data file from the AGAGE experiment
@@ -242,7 +216,12 @@ def read_agage_file(
     )
     contacts = tuple(v.strip() for v in contact_points.split(";"))
 
-    res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep)
+    header_row = re_search_and_retrieve_group(
+        r"(?P<header_row>#    time.*)", file_content, "header_row"
+    )
+    columns = [v.strip() for v in header_row.split("  ") if v][1:]
+    res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep, header=None)
+    res.columns = columns
     res["gas"] = gas
     res["site_code"] = site_code
     res["instrument"] = config_step.instrument
@@ -303,9 +282,11 @@ colours = (
         "purple",
         "magenta",
         "blue",
+        "darkgreen",
+        "firered",
     ]
 )
-markers = (m for m in ["o", "x", ".", ",", "v", "+", "1", "2", "3", "4"])
+markers = (m for m in ["o", "x", ".", ",", "v", "+", "1", "2", "3", "4", "p", "P"])
 
 countries.plot(color="lightgray", ax=axes[0])
 

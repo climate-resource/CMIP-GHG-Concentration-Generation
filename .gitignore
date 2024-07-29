@@ -12,6 +12,9 @@ output-bundles*
 # the output bundle anyway)
 data
 
+# Pixi stuff
+.pixi
+
 # Notebooks (save in .py format for easier tracking, let jupytext do the rest)
 *.ipynb
 

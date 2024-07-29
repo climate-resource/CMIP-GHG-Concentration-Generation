@@ -17,9 +17,9 @@ pint.set_application_registry(openscm_units.unit_registry)
 from local.config import Config, converter_yaml
 
 if __name__ == "__main__":
-    RUN_NAME = "20240524"
-    VERSION = "0.1.0"
-    SEED = 20240524
+    RUN_NAME = "20240729"
+    VERSION = "0.2.0"
+    SEED = 20240729
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
@@ -35,6 +35,7 @@ if __name__ == "__main__":
     )
     RUN_FILE: Path = Path(f"{RUN_NAME}-config.yaml")
     with open(RUN_FILE, "w") as fh:
+        fh.write("# Generated with scripts/write-run-config.py\n")
         fh.write(converter_yaml.dumps(run_config))
 
     print(f"Wrote {RUN_FILE}")

@@ -1,4 +1,5 @@
-base_seed: 20240428
+# Generated with scripts/write-run-config.py
+base_seed: 20240729
 calculate_c4f10_like_monthly_fifteen_degree_pieces:
 - gas: c4f10
   global_annual_mean_allyears_monthly_file: data/interim/c4f10/c4f10_global-annual-mean_allyears-monthly.nc
@@ -1269,7 +1270,7 @@ crunch_grids:
   gmnhsh_mean_annual_file: data/interim/so2f2/so2f2_gmnhsh-mean_annual.nc
   gmnhsh_mean_monthly_file: data/interim/so2f2/so2f2_gmnhsh-mean_monthly.nc
   step_config_id: so2f2
-name: CI
+name: '20240729'
 plot_input_data_overviews:
 - step_config_id: only
 process_noaa_hats_data:
@@ -3366,7 +3367,7 @@ smooth_law_dome_data:
   smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
   step_config_id: n2o
-version: 0.3.0a1-dev
+version: 0.2.0
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
   end_year: 2022

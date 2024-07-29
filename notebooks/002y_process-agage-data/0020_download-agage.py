@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -36,7 +36,8 @@ from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.config_tools import URLSource
 
-from local.config import converter_yaml, load_config_from_file
+from local.config import load_config_from_file
+from local.config_creation.agage_handling import AGAGE_GAS_MAPPING
 
 # %%
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
@@ -72,7 +73,10 @@ config_step = get_config_for_step_id(
 # ### Find out which sources are available
 
 # %%
-start_url = f"https://agage2.eas.gatech.edu/data_archive/agage/{config_step.instrument}/{config_step.time_frequency}"
+time_frequency_map_url = {"monthly": "monthly_mean"}
+
+# %%
+start_url = f"https://agage2.eas.gatech.edu/data_archive/agage/{config_step.instrument}/{time_frequency_map_url[config_step.time_frequency]}"
 print(f"{start_url=}")
 soup_base = BeautifulSoup(
     urllib.request.urlopen(start_url).read(),  # noqa: S310
@@ -81,6 +85,13 @@ soup_base = BeautifulSoup(
 soup_base
 
 # %%
+gas_search = (
+    AGAGE_GAS_MAPPING[config_step.gas]
+    if config_step.gas in AGAGE_GAS_MAPPING
+    else config_step.gas
+)
+print(f"Searching for {gas_search} in URLs")
+
 url_sources = []
 for link in soup_base.find_all("a"):
     loc = link.get("href")
@@ -114,7 +125,7 @@ for link in soup_base.find_all("a"):
                 link.get("href")
                 for link in soup_loc_file_format.find_all("a")
                 if link.get("href").endswith(".txt")
-                and f"_{config_step.gas}_" in link.get("href")
+                and f"_{gas_search}_" in link.get("href")
             ]
             if config_step.gas == "h2":
                 # Weird, not sure what this file is meant for
@@ -126,7 +137,8 @@ for link in soup_base.find_all("a"):
 
             if len(soup_loc_gas_format_data_files) == 0:
                 print(
-                    f"No data available for {config_step.gas} from observing site {loc}"
+                    f"No data available for {config_step.gas} from observing site {loc}. "
+                    f"Looked for gas {gas_search!r} in URLs"
                 )
                 continue
 
@@ -165,9 +177,11 @@ if config_step.generate_hashes:
             hash = pooch.file_hash(tmp_file)
             url_sources[i] = evolve(source, known_hash=hash)
 
-    print("Here are your serialised URLSource's")
-    print("")
-    print(converter_yaml.dumps(url_sources))
+    print("Here are your URLSource's")
+    print(url_sources)
+    # print("Here are your serialised URLSource's")
+    # print("")
+    # print(converter_yaml.dumps(url_sources))
 
 # %% [markdown]
 # ### Make sure we're not missing any sources

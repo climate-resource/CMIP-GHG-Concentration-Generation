@@ -169,15 +169,13 @@ fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(
 # %%
 print("Colour mesh plot")
 fifteen_degree_data_time_axis.plot.pcolormesh(
-    x="time", y="lat", cmap="rocket_r", levels=100
+    x="time", y="lat", cmap="magma_r", levels=100
 )
 plt.show()
 
 # %%
 print("Contour plot fewer levels")
-fifteen_degree_data_time_axis.plot.contour(
-    x="time", y="lat", cmap="rocket_r", levels=30
-)
+fifteen_degree_data_time_axis.plot.contour(x="time", y="lat", cmap="magma_r", levels=30)
 plt.show()
 
 # %%
@@ -198,7 +196,7 @@ tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
         x="time",
         y="lat",
         ax=ax,
-        cmap="rocket_r",
+        cmap="magma_r",
         levels=30,
         # alpha=0.7,
     )
@@ -291,7 +289,7 @@ plt.show()
 #         x="time",
 #         y="lat",
 #         ax=ax,
-#         cmap="rocket_r",
+#         cmap="magma_r",
 #         levels=30,
 #         # alpha=0.7,
 #     )
