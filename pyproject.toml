@@ -9,7 +9,7 @@ dependencies = [
     "loguru-config", "openscm-units", "pydoit-nb", "scmdata", "carpet-concentrations",
 ]
 name = "local"
-version = "0.3.0a1"
+version = "0.2.1a1"
 description = "Local code to support running the notebooks"
 readme = "README.md"
 

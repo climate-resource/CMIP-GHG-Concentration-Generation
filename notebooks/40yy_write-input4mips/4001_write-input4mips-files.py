@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -36,10 +36,12 @@ import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
+from attrs import evolve
+from input4mips_validation.cvs.loading import load_cvs
+from input4mips_validation.cvs.loading_raw import get_raw_cvs_loader
 from input4mips_validation.dataset import Input4MIPsDataset
-from input4mips_validation.metadata import (
-    Input4MIPsMetadata,
-    Input4MIPsMetadataOptional,
+from input4mips_validation.dataset.metadata_data_producer_minimum import (
+    Input4MIPsDatasetMetadataDataProducerMinimum,
 )
 from input4mips_validation.xarray_helpers import add_time_bounds
 from pydoit_nb.checklist import generate_directory_checklist
@@ -200,30 +202,15 @@ get_displayable_dataarray(gmnhsh_annual_data)
 
 # %%
 version = config.version
+version.replace(".", "-")
 
-metadata_universal = dict(
-    activity_id="input4MIPs",
-    contact="zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com",
-    # institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
-    institution_id="CR",
-    mip_era="CMIP6Plus",
+metadata_minimum = Input4MIPsDatasetMetadataDataProducerMinimum(
+    grid_label="gn",
+    nominal_resolution="10000 km",
+    source_id=f"CR-CMIP-{version.replace('.', '-')}",
     target_mip="CMIP",
-    source_id=f"CR_hist-ghg-concs_{version}",
 )
-
-metadata_universal_optional: dict[str, str] = dict(
-    # product="derived",
-    # TODO: add support for this to input4mips-validation
-    # further_info_url="https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-    # # TODO: check if there is a more exact grant agreement to refer to
-    comment=(
-        "[TBC which grant] Data produced by Climate Resource supported by funding "
-        "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
-        "This is an interim dataset, do not use in production."
-    ),
-    # TODO: add support for this to input4mips-validation
-    # references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
-)
+metadata_minimum
 
 # %% [markdown]
 # ### Define variable renaming
@@ -279,6 +266,18 @@ gas_to_cmip_variable_renaming = {
 }
 
 # %% [markdown]
+# ## Load CVs
+
+# %%
+raw_cvs_loader = get_raw_cvs_loader(
+    "https://raw.githubusercontent.com/PCMDI/input4MIPs_CVs/main/CVs/"
+)
+
+# %%
+cvs = load_cvs(raw_cvs_loader)
+cvs.source_id_entries.source_ids
+
+# %% [markdown]
 # ### Write files
 
 # %%
@@ -301,52 +300,68 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
 
     variable_name_raw = str(dat_resolution.name)
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
-    da_to_write = dat_resolution.to_dataset().rename_vars(
+    ds_to_write = dat_resolution.to_dataset().rename_vars(
         {variable_name_raw: variable_name_output}
     )
-    da_to_write["time"].encoding = {
+
+    dimensions = tuple(str(v) for v in ds_to_write[variable_name_output].dims)
+    print(f"{tmp_grid_name=}")
+    print(f"{dimensions=}")
+
+    ds_to_write["time"].encoding = {
         "calendar": "proleptic_gregorian",
         "units": "days since 1850-01-01",
+        # Time has to be encoded as float
+        # to ensure that non-integer days etc. can be handled
+        # and the CF-checker doesn't complain.
+        "dtype": np.dtypes.Float32DType,
     }
-    # TODO: use inference again once I know how it is meant to work
-    # metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
-    #     da_to_write, scenario
-    # )
 
-    # metadata = Input4MIPsMetadata(
-    #     **metadata_universal,
-    #     **metadata_inferred,
-    # )
+    if "lat" in dimensions:
+        ds_to_write["lat"].encoding = {"dtype": np.dtypes.Float16DType}
 
-    # metadata_optional = Input4MIPsMetadataOptional(
-    #     **metadata_universal_optional,
-    #     **metadata_inferred_optional,
-    # )
+    if "sector" in dimensions:
+        ds_to_write["sector"].attrs["units"] = "1"
 
-    metadata = Input4MIPsMetadata(
-        **metadata_universal,
-        # Rules here make no sense to me,
-        # can this be inferred from the data or only checked against it?
-        grid_label=tmp_grid_name,
-    )
-    metadata_optional = Input4MIPsMetadataOptional(
-        **metadata_universal_optional,
-    )
-
-    dimensions = tuple(str(v) for v in da_to_write[variable_name_output].dims)
-
-    input4mips_ds = Input4MIPsDataset.from_raw_dataset(
-        da_to_write,
+    input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
+        data=ds_to_write,
+        metadata_minimum=metadata_minimum,
         dimensions=dimensions,
         time_dimension=time_dimension,
-        metadata=metadata,
-        metadata_optional=metadata_optional,
         add_time_bounds=partial(
             add_time_bounds,
             monthly_time_bounds=not yearly_time_bounds,
             yearly_time_bounds=yearly_time_bounds,
         ),
+        cvs=cvs,
+        standard_and_or_long_names={
+            variable_name_output: {"standard_name": variable_name_output},
+            "sector": {
+                "long_name": "ID for the region. This is legacy from CMIP6 and will be removed in future."
+            },
+        },
+        dataset_category="GHGConcentrations",
+        realm="atmos",
     )
+
+    metadata_evolved = evolve(
+        input4mips_ds.metadata,
+        product="derived",
+        comment=(
+            "[TBC which grant] Data produced by Climate Resource supported by funding "
+            "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
+            "This is an interim dataset, do not use in production."
+        ),
+    )
+    input4mips_ds = Input4MIPsDataset(
+        data=input4mips_ds.data,
+        metadata=metadata_evolved,
+        cvs=cvs,
+        non_input4mips_metadata=dict(
+            references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)"
+        ),
+    )
+
     print("Writing")
     written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
     print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
@@ -358,6 +373,15 @@ with open(config_step.complete_file, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 checklist_path
+
+# %% [markdown]
+# ## Validate the files
+
+# %%
+# !input4mips-validation --logging-level INFO_INDIVIDUAL_CHECK \
+#     validate-tree {config_step.input4mips_out_dir} \
+#     --cv-source "gh:main" \
+#     --rglob-input "**/*{variable_name_output.replace('_', '-')}*/**/*.nc"
 
 # %%
 config_step.input4mips_out_dir

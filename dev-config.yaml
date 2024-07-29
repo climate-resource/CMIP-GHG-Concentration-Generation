@@ -3366,7 +3366,7 @@ smooth_law_dome_data:
   smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
   step_config_id: n2o
-version: 0.3.0a1-dev
+version: 0.2.1a1-dev
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
   end_year: 2022
