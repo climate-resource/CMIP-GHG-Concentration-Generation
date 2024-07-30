@@ -41,24 +41,24 @@ AGAGE_GAS_MAPPING_REVERSED = {v: k for k, v in AGAGE_GAS_MAPPING.items()}
 DOWNLOAD_URLS = {
     ("ch4", "gc-md", "monthly"): [
         URLSource(
-            known_hash="e6c3955c0e9178333c5f2177088a9fe84ec27b557901364750a82241f3477300",
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ch4_mon.txt",
+            known_hash="6fe77860474731327b645ecf4ca0be7c280ccbb50da09ceb391c906b0c8db4da",
         ),
         URLSource(
-            known_hash="91cbef846e4158a880515b3b86b5b28d7510dcc6cf9494e3fec823e0c3f0678c",
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_ch4_mon.txt",
+            known_hash="d68408ec2c8433adc5bc2d084f4cc6323996e84440bf98c00843c0c26429e3f4",
         ),
         URLSource(
-            known_hash="3d295bad0b883b6099ed5171044ed7a46e5ae93e8646a2020058a72c648ed0a6",
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_ch4_mon.txt",
+            known_hash="d01a7d8a1bd2c277df936ce3c5ebedd5b633a70226dc4f26c32aece7e1a73b15",
         ),
         URLSource(
-            known_hash="e775e79fcf6cb833aa7d139c79725f25aefb81d4e90557616c4939d497f80719",
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch4_mon.txt",
+            known_hash="42f032c3766b85f0b9ff69d3c54a2e820ad27f81bca2733bb6682df8b4bf022f",
         ),
         URLSource(
-            known_hash="fceb3a14534ce94d550f24831c7fc1258700f24b1a917005b6c06a85843ce0e1",
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch4_mon.txt",
+            known_hash="1804b826f2b89e585367d3f3faa3a2ba06205b6d4248759ed4d3d8b162e54c5d",
         ),
     ],
     ("n2o", "gc-md", "monthly"): [
