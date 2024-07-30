@@ -108,7 +108,7 @@ def is_relevant_file(f: Path) -> bool:
 
     # Honestly, this SF6 exception, what is that?
     elif config_step.instrument == "gc-md" and not (
-        "-GCMD_" in f.name or ("sf6" in f.name and "-GC-ECD-SF6" in f.name)
+        "-GCMD_" in f.name or ("sf6" in f.name and "-GCECD_CGO_sf6" in f.name)
     ):
         return False
 
