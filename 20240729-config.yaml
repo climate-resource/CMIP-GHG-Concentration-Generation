@@ -1386,7 +1386,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 1804b826f2b89e585367d3f3faa3a2ba06205b6d4248759ed4d3d8b162e54c5d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch4_mon.txt
   gas: ch4
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch4_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1394,18 +1394,18 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/n2o_gc-md_monthly.complete
   download_urls:
-  - known_hash: 7ac04ee39e56544dc6d98e68d52be58ab30cde620f511d70192a005c95b85fc0
+  - known_hash: df73a74923e711531676f366523943eb8eb7aeaf7ef8285cb4d9372f56968e07
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_n2o_mon.txt
-  - known_hash: 7a0d7481d6d5492bf4501c107c57c6f6b0bb9991eb9ff23abb8c9c966fefa79c
+  - known_hash: da6c3cac355e965650fb69b2b9f6ec7fb09d6af9ad1fddedb992627e4a6119c3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_n2o_mon.txt
-  - known_hash: 849efb23da2bfad5e76e5abd7303bb3b74b3bd9f924daa4303bbc10d04cf67da
+  - known_hash: bad87f55b85f4303e8ea4a81783a62c6d5e258375e3eca8e5a6cbca0db2d6a6b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_n2o_mon.txt
-  - known_hash: 3739081cf7778e205dc1c77c74ffdb72d748baaf346858850fd39e41f16f42c3
+  - known_hash: 099b4a0f444b039c81f950209bdc3e332bda5bef336f5b9e4892a4a9ff8cb5e2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_n2o_mon.txt
-  - known_hash: e4cdc474f71d6f80ac63fe13b7fa61a86ce0361b7995874bf074a01c69facac3
+  - known_hash: eafbc5236fb684a533380d374503b9431ddd2047be336374d824336eabde196f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_n2o_mon.txt
   gas: n2o
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/n2o_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1416,7 +1416,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 9ec255bbd55447d8ac521a4683951e0b0aa682d8252a1072e5fa555b90af5aa1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim-sf6-ecd/ascii/AGAGE-GC-ECD-SF6_CGO_sf6_mon.txt
   gas: sf6
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/sf6_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1445,7 +1445,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 2de77c7f417510878c18d4ea452815ac4555ae17719e6786548b063ee471e5bf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_sf6_mon.txt
   gas: sf6
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/sf6_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1476,7 +1476,7 @@ retrieve_and_extract_agage_data:
   - known_hash: fc67b80979c6cefabe9e57b5a79ea85d07bec7c077c96e26f8e96ddd1f421a07
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_pfc-116_mon.txt
   gas: c2f6
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c2f6_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1505,7 +1505,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 74f7fac86c16e63b032534246696e8c3d805b7663c7e172d7c661808a9bd1429
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_pfc-218_mon.txt
   gas: c3f8
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1516,7 +1516,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 9942581e7dd37a137a30ea035efbf42a57c1613715b8c7dc0d446a606a7a4f0d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-218_mon.txt
   gas: c3f8
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1545,7 +1545,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 80e1801e38d9d8d5ffeea096ede18273a8bd2fb2eafb97adb42ca39fc71f1c48
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_pfc-318_mon.txt
   gas: cc4f8
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cc4f8_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1556,7 +1556,7 @@ retrieve_and_extract_agage_data:
   - known_hash: eabcca288178a582e2573f68f68d156ad0862ba7141383b06f106aaba98ffa6f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-318_mon.txt
   gas: cc4f8
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cc4f8_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1575,7 +1575,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 399de71b4419516f5afd3e307f67ed7751e0a13e3fa0afde4752709f819ca417
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ccl4_mon.txt
   gas: ccl4
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1590,7 +1590,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 2dc5f2d51f81a652d25d5df30634c16c56018e24faaceb71ffd31be17ff27c08
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ccl4_mon.txt
   gas: ccl4
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1601,7 +1601,7 @@ retrieve_and_extract_agage_data:
   - known_hash: f463d4bef26aeef76f3b2635a9f39e06f545015c60635dc864d6a609117a4011
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ccl4_mon.txt
   gas: ccl4
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1630,7 +1630,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 40d36dc6d96cd605a14a8cdb7ef2b46ceca19d51bf6e7909783fecabadd5986b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cf4_mon.txt
   gas: cf4
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cf4_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1649,7 +1649,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 9929b38d196ef1397615b51988631f1e790797d86c260f57b387074cb667ef56
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-11_mon.txt
   gas: cfc11
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1668,7 +1668,7 @@ retrieve_and_extract_agage_data:
   - known_hash: f1eb53ecfa4294ef3581b536804fccac36519dbc4ddafa856c4c4aeb9e7aa048
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-11_mon.txt
   gas: cfc11
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1679,7 +1679,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 3394d57cc17222ccc5de8f98edbe26131afc63e718ff9d4563727a098704aa93
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-11_mon.txt
   gas: cfc11
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1698,7 +1698,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 82043f237f083079c7f15f28449a1f2fe397416cce8f89a061ddd6e7c6405bce
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-113_mon.txt
   gas: cfc113
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc113_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1727,7 +1727,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 5b77bb90ed6cabf5e502ea5acd6fd5b5fda0015d51e116c835903ef0234a565a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-113_mon.txt
   gas: cfc113
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc113_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1738,7 +1738,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 8b0e85a59515871ae246d580e29f4876de3289cf9617a857fa3bcb045afb456a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-114_mon.txt
   gas: cfc114
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc114_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1767,7 +1767,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 4a2ddb57bb738ed4abf8c667caea31e61c78778a03de3a2a79aa5f9b658b91ca
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-114_mon.txt
   gas: cfc114
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc114_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1778,7 +1778,7 @@ retrieve_and_extract_agage_data:
   - known_hash: f33237c481f69babfe4f1dc848db048121d7ef7c8899da8efd9e7f88f116a448
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-115_mon.txt
   gas: cfc115
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc115_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1805,7 +1805,7 @@ retrieve_and_extract_agage_data:
   - known_hash: ee52cc6800e535186e1c49890ff12fe34169339538e38dbc6daa3ec09cd9e6a4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-115_mon.txt
   gas: cfc115
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc115_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1824,7 +1824,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 737e826ab87381fd98578363c5bd040d92c33356ede9af3aae802824a47887c9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-12_mon.txt
   gas: cfc12
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1843,7 +1843,7 @@ retrieve_and_extract_agage_data:
   - known_hash: d018493146fcee2f9750275dd561dd74ff827c207c28435727ba1bb9164e07d2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-12_mon.txt
   gas: cfc12
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1854,7 +1854,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 0325346db119008b4e8a7dd7b9641b8eb097b6b03e69e6af29f240155ace3a2e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-12_mon.txt
   gas: cfc12
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1883,7 +1883,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 640cf7b267af3925dc912f9e592a5d9c52e51c433fe3ecc25171e2512f89e0c1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch2cl2_mon.txt
   gas: ch2cl2
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch2cl2_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1902,7 +1902,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 5c5433c25666e266ee2992ee2be17f5631e830e4be4ddc2516b1b82aa53cb3ce
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch2cl2_mon.txt
   gas: ch2cl2
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch2cl2_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1931,7 +1931,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 4506b92e3fdca95df676253f8d657f06800e371f62aa74ac46413a32e7c41a91
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3br_mon.txt
   gas: ch3br
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3br_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1950,7 +1950,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 8290195bf18bcbf14c8170d4f9f600967aec875cfd1de2f479e143e9841608cb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3br_mon.txt
   gas: ch3br
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3br_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1969,7 +1969,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 7b38d734e18dc1e0470c484166bea75047f7b9c96f373d629a76a6a8f79bf548
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch3ccl3_mon.txt
   gas: ch3ccl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -1998,7 +1998,7 @@ retrieve_and_extract_agage_data:
   - known_hash: c3af151c3b3f1a80cd4e8ab27b9bf485cdc7424766d1172c6beb038fc8cc96a5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3ccl3_mon.txt
   gas: ch3ccl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2013,7 +2013,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 34916f3b8c2014aaeb2407e397c09879cd18759d44a054aa5ad6d4bb81af5d1d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3ccl3_mon.txt
   gas: ch3ccl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2042,7 +2042,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 30c93d13563a141a297ab377ddbb89d3b846518bc71336a4bb752646de064855
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3cl_mon.txt
   gas: ch3cl
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3cl_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2061,7 +2061,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 7994352bdeea6f4b40a8a9ed0f50fb53db2771bb6aa0e78efc557af0bc9cdd0b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3cl_mon.txt
   gas: ch3cl
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3cl_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2080,7 +2080,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 780fdb05642890096ecf71d04dbc2af8a72a4f9fde8ea3bf88477dbd8e84d148
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_chcl3_mon.txt
   gas: chcl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2109,7 +2109,7 @@ retrieve_and_extract_agage_data:
   - known_hash: fb61a067401147d7a657f01edc52cace9986b165753b8398db0cc3a180eedc5e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_chcl3_mon.txt
   gas: chcl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2128,7 +2128,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 407b5e4f8af379c09fe8dc825ee698b741f94f0eb66a0b3ff325a8acda89a8d7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_chcl3_mon.txt
   gas: chcl3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2157,7 +2157,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 616add0204d994d5ac22d98f66a198059a008f69d1dfbcaca89f91b6a3230929
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-1211_mon.txt
   gas: halon1211
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1211_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2176,7 +2176,7 @@ retrieve_and_extract_agage_data:
   - known_hash: f80f8008287671b0505f6be30c7fd0decd83959d8ecfd5772228b3075dcbb7a4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_h-1211_mon.txt
   gas: halon1211
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1211_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2205,7 +2205,7 @@ retrieve_and_extract_agage_data:
   - known_hash: abdc450bed2417717a96c7430cf5c40cacb7d258d9a3685804b53af029075ab7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-1301_mon.txt
   gas: halon1301
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1301_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2224,7 +2224,7 @@ retrieve_and_extract_agage_data:
   - known_hash: ad6bef10c76d4c305a07f8bfdb20fe1813fa9e6fb874ae542397d8782826fdc9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_h-1301_mon.txt
   gas: halon1301
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1301_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2253,7 +2253,7 @@ retrieve_and_extract_agage_data:
   - known_hash: c589eb633b9631fe197d1d4ea41d36680fd0eb1ec15d7aa798787fa6f694cd90
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-2402_mon.txt
   gas: halon2402
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon2402_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2272,7 +2272,7 @@ retrieve_and_extract_agage_data:
   - known_hash: ec2393d5934884b70a0d4b7d4e869905511d11965e6dc23eab4ae8dd682aa825
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-141b_mon.txt
   gas: hcfc141b
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc141b_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2301,7 +2301,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 62060fec4007bff9318fb70e479271e6760b5fa3d22d239cf15ef9b39f3adc83
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-141b_mon.txt
   gas: hcfc141b
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc141b_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2318,7 +2318,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 3fa9f1f89d032388a93c8372e131f5babaef0f8ca2742f6fddf4493f7f727203
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-142b_mon.txt
   gas: hcfc142b
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc142b_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2347,7 +2347,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 4e27a3af431401df4548d7276e2c02c7a9077b3af2a7f17a01ac910abd88398d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-142b_mon.txt
   gas: hcfc142b
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc142b_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2364,7 +2364,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 35bd22b1d0c8b79c326d5dcea0d7294e8ede64dabf5973bc78146576aa1e06b2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-22_mon.txt
   gas: hcfc22
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc22_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2393,7 +2393,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 8b7120a81a311f7aaeffa18acc268f1878246cc1fdc83ed5671ef367d2b9a27d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-22_mon.txt
   gas: hcfc22
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc22_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2422,7 +2422,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 91ce6230ea75973c06814a38612814b5c588cd60d943cd85bf246c060b216e7b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-125_mon.txt
   gas: hfc125
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc125_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2441,7 +2441,7 @@ retrieve_and_extract_agage_data:
   - known_hash: b8edac6023bac0f3caba58f8406df46748c1243556166749ef7dc4e0b1bc0acc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-125_mon.txt
   gas: hfc125
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc125_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2470,7 +2470,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 724b699558e9c26cccaff47ef18ce73812cc1a0b25fdb3a2e93d01893f0c564d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-134a_mon.txt
   gas: hfc134a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc134a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2489,7 +2489,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 2cce94a135d6a8f48dcfd487e9196265c8f290d1f29a0b98ef5020607d615516
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-134a_mon.txt
   gas: hfc134a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc134a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2518,7 +2518,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 3e1f9120b0ad426b69500b3ece868640de7b20eb9275a95e30ed7697aca80d9e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-143a_mon.txt
   gas: hfc143a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc143a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2529,7 +2529,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 07d4ac76fc3e5209539b7242dbaabb75e666e83413bdf5ddd4c0aa3674044194
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-143a_mon.txt
   gas: hfc143a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc143a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2558,7 +2558,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 4c6e9d5bbde94ef88788d1262f65933f5f2cdba7519c4f8b0a10f901ca5054ce
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-152a_mon.txt
   gas: hfc152a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2577,7 +2577,7 @@ retrieve_and_extract_agage_data:
   - known_hash: ef42c5e5ee878abdcae6dfa1f152657f129e2e53fb4fa343f3fbfe496512c0cb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-152a_mon.txt
   gas: hfc152a
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2604,7 +2604,7 @@ retrieve_and_extract_agage_data:
   - known_hash: fc3615db256f12095081d1dda78b8661541947836495fb60cce35bce83045058
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-227ea_mon.txt
   gas: hfc227ea
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc227ea_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2617,7 +2617,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 6ee7b4bab9f8387735e2f095ebabafdd0fd6073b29f18e33edaf9c623fd48948
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-227ea_mon.txt
   gas: hfc227ea
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc227ea_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2646,7 +2646,7 @@ retrieve_and_extract_agage_data:
   - known_hash: fa0394a6e8a0c9303e3a25badc99074c7372ec771613c7a2c6b9faef097696b2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-23_mon.txt
   gas: hfc23
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc23_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2673,7 +2673,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 0220d38fd6c4c49f6012d701f6e5af8b9db823e517a667effcdf223cd0d52dac
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-236fa_mon.txt
   gas: hfc236fa
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc236fa_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2684,7 +2684,7 @@ retrieve_and_extract_agage_data:
   - known_hash: bf52318d9c5cd1e9e47f953f6ec4f87672bca7566897c476a0a2f6db86ec3fef
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-236fa_mon.txt
   gas: hfc236fa
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc236fa_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2711,7 +2711,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 46a8dddcd72b3d009a4c6accde48cdf15e3ada72a7034539b3278f8405f0de1e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-245fa_mon.txt
   gas: hfc245fa
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc245fa_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2724,7 +2724,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 9f9983e6c32790841847a507a489a205025d4ed10928f752ead9eb0a963d7d4f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-245fa_mon.txt
   gas: hfc245fa
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc245fa_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2753,7 +2753,7 @@ retrieve_and_extract_agage_data:
   - known_hash: d50dd8b8ab3c45706e30cb02cd26011fac8d8550307dd9eed961841d6a41b42f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-32_mon.txt
   gas: hfc32
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc32_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2764,7 +2764,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 1ed5a7e3364238792d19884083ffbdf466d881e7c62214e3384870bb5ba2cc6e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-32_mon.txt
   gas: hfc32
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc32_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2791,7 +2791,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 4aaf98c1a16a157219d680ca4ba17999e2f1be2758a08b752bf1fa76b921fbd3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-365mfc_mon.txt
   gas: hfc365mfc
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc365mfc_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2810,7 +2810,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 62416a2b5100d112ab7554539a28241ee1e886d8b1a192b3c6187ed3eb0c1e75
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-365mfc_mon.txt
   gas: hfc365mfc
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc365mfc_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2837,7 +2837,7 @@ retrieve_and_extract_agage_data:
   - known_hash: aa70e7a1a01369cfac2d5d8e7841bd726dabc5ae15f43bdf5be0ec7cc843a680
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-4310mee_mon.txt
   gas: hfc4310mee
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc4310mee_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2862,7 +2862,7 @@ retrieve_and_extract_agage_data:
   - known_hash: b51133ecf420753fc213a818f54f8b371d592ce08e39aac9db9622bde455fb70
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_nf3_mon.txt
   gas: nf3
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/nf3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2891,7 +2891,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 3d2507bd9d02f6cfaa17eb69e4433f18e5419b65b5e5ddbe6b155af68fc2dabd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_so2f2_mon.txt
   gas: so2f2
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/so2f2_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
@@ -2902,7 +2902,7 @@ retrieve_and_extract_agage_data:
   - known_hash: 7cde90b1d37433fb50bdce1a711640eec1887bf85988aec8a981c27618c1e475
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_so2f2_mon.txt
   gas: so2f2
-  generate_hashes: false
+  generate_hashes: true
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/so2f2_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage

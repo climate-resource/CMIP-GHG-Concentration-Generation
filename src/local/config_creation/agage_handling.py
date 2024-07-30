@@ -64,23 +64,23 @@ DOWNLOAD_URLS = {
     ("n2o", "gc-md", "monthly"): [
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_n2o_mon.txt",
-            known_hash="7ac04ee39e56544dc6d98e68d52be58ab30cde620f511d70192a005c95b85fc0",
+            known_hash="df73a74923e711531676f366523943eb8eb7aeaf7ef8285cb4d9372f56968e07",
         ),
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_n2o_mon.txt",
-            known_hash="7a0d7481d6d5492bf4501c107c57c6f6b0bb9991eb9ff23abb8c9c966fefa79c",
+            known_hash="da6c3cac355e965650fb69b2b9f6ec7fb09d6af9ad1fddedb992627e4a6119c3",
         ),
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_n2o_mon.txt",
-            known_hash="849efb23da2bfad5e76e5abd7303bb3b74b3bd9f924daa4303bbc10d04cf67da",
+            known_hash="bad87f55b85f4303e8ea4a81783a62c6d5e258375e3eca8e5a6cbca0db2d6a6b",
         ),
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_n2o_mon.txt",
-            known_hash="3739081cf7778e205dc1c77c74ffdb72d748baaf346858850fd39e41f16f42c3",
+            known_hash="099b4a0f444b039c81f950209bdc3e332bda5bef336f5b9e4892a4a9ff8cb5e2",
         ),
         URLSource(
             url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_n2o_mon.txt",
-            known_hash="e4cdc474f71d6f80ac63fe13b7fa61a86ce0361b7995874bf074a01c69facac3",
+            known_hash="eafbc5236fb684a533380d374503b9431ddd2047be336374d824336eabde196f",
         ),
     ],
     ("c2f6", "gc-ms-medusa", "monthly"): [
@@ -2022,8 +2022,8 @@ def create_agage_handling_config(
                 / f"{gas}_{instrument}_{frequency}.complete",
                 processed_monthly_data_with_loc_file=interim_dir
                 / f"{gas}_{instrument}_{frequency}.csv",
-                generate_hashes=False,
-                # generate_hashes=True,
+                # generate_hashes=False,
+                generate_hashes=True,
                 download_urls=DOWNLOAD_URLS[(gas, instrument, frequency)],
             )
         )
