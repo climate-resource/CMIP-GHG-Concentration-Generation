@@ -9,8 +9,7 @@ pixi run python scripts/write-run-config.py
 if [ "$GAS" == "all" ]; then
 
 	DOIT_CONFIGURATION_FILE=$RUN_ID-config.yaml DOIT_RUN_ID="$RUN_ID" \
-		pixi run doit run --verbosity=2
-	# -n 4
+		pixi run doit run --verbosity=2 -n 8
 
 else
 

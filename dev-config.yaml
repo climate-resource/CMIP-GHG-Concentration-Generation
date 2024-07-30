@@ -1423,25 +1423,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/sf6_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 1611fb6ed6087b506af19ca8a08cdf750e2c185b136b2460ba013ace39b47714
+  - known_hash: 8c5d6042ad104087d2356d37761cf82feedb3c681112d9032efefa8720466258
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_sf6_mon.txt
-  - known_hash: d387ab096cc53fae4efa5026eaaba4f3df0ceec7a1afcfc1128687372e6505d3
+  - known_hash: 38e386caebb85332981b74df36855c6b341d83d235ecf4abd29c6c417bb97387
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_sf6_mon.txt
-  - known_hash: b556daf22abd2edf0874b875a60bd02f246315c4c5a9748273362cb210c7e077
+  - known_hash: 071b374014b006b5198007dee19e81d28aaa368c13adb2cdf9aa272ce3c5cfdf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_sf6_mon.txt
-  - known_hash: 030a37af25e2d806d8ac65be66f264f449923a1b8b077c92c647577d4efe3720
+  - known_hash: 9260488142fdef7475d7b68a43ff7d32b3ab49ca7609f9e474618d42584e0982
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_sf6_mon.txt
-  - known_hash: 42d1f57226972df7d16786310e95288db0b604033d8fac82b8b03630d36d908a
+  - known_hash: 3b786bc2e209a9f28b2351b39c74273efca4561a977192ab848045a202f99573
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_sf6_mon.txt
-  - known_hash: cb05383d875d6020a0017942551f909954354ed2701a12754da6bdb80e45612f
+  - known_hash: 5549f6961c8984802ee9841a704ccd212a8dbd84923d83c87b77a36ba3e772d7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_sf6_mon.txt
-  - known_hash: 95fa2ccc93fe2dfefcb64d1405e81e0bc556a1892e5b4818312003de92eaf23b
+  - known_hash: e9bf3ecca5bbb567100b048852cd7ff608d7367c0e6ef8f3857fba12fa3ffbb7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_sf6_mon.txt
-  - known_hash: 12270c0ab91decaaffc0f47710c27de9147a125938c3e98b1c10a98a2922f441
+  - known_hash: ec929185c16dd583c011a5efc4d3e603907583a0ab16b2df9f232f0e60d828f2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_sf6_mon.txt
-  - known_hash: da146fc89d0e2b2e87846c6e5fc5712820a5f7bff69f054d90ac0ce80a1cf2a7
+  - known_hash: 077314ba1a7b371101393001dc497e50adbc79aa417ae5b199f102981d7873d4
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_sf6_mon.txt
+  - known_hash: 2daf9f55e546c4b25df7b311dd476f28af06b2b18c5f3c29e7e6e04b247c8779
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_sf6_mon.txt
-  - known_hash: 2de77c7f417510878c18d4ea452815ac4555ae17719e6786548b063ee471e5bf
+  - known_hash: 9775608aaa31cf61b42f69ef75b609fb84e6cc517fbca3bc118a3fdc1c78c71b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_sf6_mon.txt
   gas: sf6
   generate_hashes: true
@@ -1483,25 +1485,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: f9edcae5a3aa6a8a8681852efb3c9dcd18ffaa8f93654c4d3e629724ad3edf66
+  - known_hash: b0d5d500e2554bdb286acbcda283773ee84c29cdb12579b3e41eae3bbf15d6b5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_pfc-218_mon.txt
-  - known_hash: e4ed4d9b69bd1c1f93d162fd42fd52d6ae554fc76a67e763ce4c2cdaee21f3dc
+  - known_hash: 84935cc3cf544ac6b06ba64c4fb1b5243ed864c44ff9f363b5f07fda5ecbeb3b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_pfc-218_mon.txt
-  - known_hash: 3114b83bbf370a235e72de29f88c2436d4861dfb0e8c3b1f4dd351fc31f9dc56
+  - known_hash: f08816d42bee909b0950e9a1f0b472e746528c66582d60c83ef97ebc01e2ffcb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_pfc-218_mon.txt
-  - known_hash: c9f9a8da467cf5142f9f2661b8a81172c5ee87123321c25e34e2042355457b92
+  - known_hash: f540d25ae4a92f442d6b5c60c959ae81f1a921198d688a1c04502e713db469bd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_pfc-218_mon.txt
-  - known_hash: 61d9d02cd147ed4d270d6da2b61bcbfb02ab4f41aca7f4df765a794251f321b5
+  - known_hash: 6d293bd22c4adb93984b13b993978525c5bb1399f57bc6942af76ecd7264e2a6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_pfc-218_mon.txt
-  - known_hash: de04b459e11b2aa38e9cd711646ad7f4fde16752cf7ed0e66008daa48ff2cd2a
+  - known_hash: ef93c8368b8ffe4b59c4004d4db61805594d7f300ee88ad4d2863480a70f1bfc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_pfc-218_mon.txt
-  - known_hash: 531b05df51886f5189ab8ce8ae28e8f214677dd41bead434367dbbbc7f1c0149
+  - known_hash: 16d49a2e558cc39ebddf8156bf24fe5005e5ebc34f1e21b7cafdbd8c7ad282e5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_pfc-218_mon.txt
-  - known_hash: d70616d73801d8a4c8871285fff7cbd376d69826903eb915bf08fd2155586640
+  - known_hash: fd3842dbbba95cd0dce6037261f09b7a6cd2a24ba28c8bba466b15ebbf94543e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_pfc-218_mon.txt
-  - known_hash: f81ab2903b8b95fa1e3b9618afe663e743a4ebf972d5bdb2fd1076b32e18b127
+  - known_hash: d743f23ba64885bba5d54ce13ce5c626974d3845b7c56de505e11d3dc94ebb9e
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_pfc-218_mon.txt
+  - known_hash: 867d474ce1d02fb11844e0e3b2215e2ca009552ecb4917ef18a372c8788a4618
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_pfc-218_mon.txt
-  - known_hash: 74f7fac86c16e63b032534246696e8c3d805b7663c7e172d7c661808a9bd1429
+  - known_hash: dc11b39d5c306228c52e91e80565f64c03d8bb436c81b4139f3e8d798de10c37
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_pfc-218_mon.txt
   gas: c3f8
   generate_hashes: true
@@ -1512,7 +1516,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 9942581e7dd37a137a30ea035efbf42a57c1613715b8c7dc0d446a606a7a4f0d
+  - known_hash: 46fea4d77d705d5d1b1f71e97ad97c0606a9084e7f56472d09fc16917167fc6a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-218_mon.txt
   gas: c3f8
   generate_hashes: true
@@ -1523,25 +1527,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 9cf4427949242eed9b1300f253a4440df11483e6dca2f75cad06fb315b945430
+  - known_hash: 91aec980da58cf5ad69aa8c174c9d3890d3de06db8da6195ebebc4b2dbf04f0d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_pfc-318_mon.txt
-  - known_hash: 1480d33edce770be5fedcfbe81f88a98bbb7a28bb53bb7066c02ce9b8ff5ccbe
+  - known_hash: 6fbe7c496d437aa53d865fff0ff816894680fecb17d45b94138bd6d45cd3323b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_pfc-318_mon.txt
-  - known_hash: 2b24af17f6f132a542ed3a7bdd66019b8275f4d6d9aced77150fe04bdcd839c3
+  - known_hash: 9011735ea654094c7ddd92f76702366aa9796481a6b441903e854ddea1704fae
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_pfc-318_mon.txt
-  - known_hash: 52024003bef029a83780ff02726d4e1717a93d0e7db462b1779c1dcfcd446ab9
+  - known_hash: fef745f144db4061f92a34a2d127ef31f8638866a9c67cb855e56f139266448e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_pfc-318_mon.txt
-  - known_hash: 3d577c0fc83a63de4e0b6bbe7f5aa2a85f63f3b4300fe87cfa8b3a317642499e
+  - known_hash: 4a05a63e4e3062de3b0ca1fe1b5c633dfb07d5b45ae9b1dfad2d6e5852ca6534
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_pfc-318_mon.txt
-  - known_hash: d21a1cf54f01d503b1eb72a229b4f0f54eb0d8b0d00a3658f44df70703c29222
+  - known_hash: 30aef6bdfababa7e63cf1adfb323c6b7a67333834c2dc03629d33874de28841f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_pfc-318_mon.txt
-  - known_hash: a76b694d8e9bbe3f5d61b1cb4adfdeb401741103d18776e66e168254d17f62ec
+  - known_hash: 73703ed82ca72b06b78fe7f597fc0fad3a2b44af788ad53292495e64cdbc36fe
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_pfc-318_mon.txt
-  - known_hash: 6eb4678fbfa7c86b188589c407fc063deeae1b3d9d12e8f936c5d24d13b0b206
+  - known_hash: ae8c2231c7440a8138f1dfac436c3c9eac26d3d11e5713f6840d93841301208a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_pfc-318_mon.txt
-  - known_hash: 284adf8b6d100ca17dee93a70acedad7b9657bec80162dc6983807a44c9b5a0f
+  - known_hash: d68c428aca68b00b197298ee17767d49f287d7ff4c0dad8a24da395a36afb7c2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_pfc-318_mon.txt
+  - known_hash: 532ea79d89c474eb6821e4e584993c9c714c193e9e56fcf6d74cd268f470fa15
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_pfc-318_mon.txt
-  - known_hash: 80e1801e38d9d8d5ffeea096ede18273a8bd2fb2eafb97adb42ca39fc71f1c48
+  - known_hash: df22cbd951400b210776eed4f9d714603872b7b5c47b180849a52d2140a4df7e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_pfc-318_mon.txt
   gas: cc4f8
   generate_hashes: true
@@ -1552,7 +1558,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms_monthly.complete
   download_urls:
-  - known_hash: eabcca288178a582e2573f68f68d156ad0862ba7141383b06f106aaba98ffa6f
+  - known_hash: 3dc1f3a3077453ab19e649840c1b5746e6c11f0a10c97fe47c6f086633fdfc11
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-318_mon.txt
   gas: cc4f8
   generate_hashes: true
@@ -1563,15 +1569,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
   download_urls:
-  - known_hash: e218c5e4f8aefb6077e55dc841733837159c2fbe8bbadad803a33b31322ac45c
+  - known_hash: db9a695c588b4acbd9c4575668a262b8d144e9bf6790f6c76b3a8fdccd9d7200
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ccl4_mon.txt
-  - known_hash: 4f54dc4c0fbaefca699d57676436358d0a46e32fda1a794cabc564bd190a32da
+  - known_hash: 59b67c34d64f2a6969c7cf6e828a4f978f90595171273474de282b43ed7319b9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_ccl4_mon.txt
-  - known_hash: 921a67ea36d570215b3b1ca115bf4c805b4e4df593bb3dc975ce7427d62fa52d
+  - known_hash: 420ede23ebc505f596fd88fe5d9364d97eb6f6c6647738943697f636c7368b98
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_ccl4_mon.txt
-  - known_hash: 33150a904cf5f1f172731eefa739625d300971a2510565e129d71f7cf50c9e8c
+  - known_hash: 72df7a6cf0d4cacbb511e92de278c110ee6387cf70c17f582e3e4239a096cf10
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ccl4_mon.txt
-  - known_hash: 399de71b4419516f5afd3e307f67ed7751e0a13e3fa0afde4752709f819ca417
+  - known_hash: 553220f117cf5f96dd7887861dd7b4e3d576ba18dbf206c774c02b81e7a04daa
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ccl4_mon.txt
   gas: ccl4
   generate_hashes: true
@@ -1582,12 +1588,14 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 4c3c3268144c6a42b1ce6ab458d7edec8519d4bd53fa23823bc3690ce5581549
+  - known_hash: c69f5aaa138dd758cb51e07024ac2d5e9a666051a0b2e642fceac0b5570003ea
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ccl4_mon.txt
-  - known_hash: e375bf0a6b7264131621f2df384f04e5f32d71dcf07a1e728e8ffb9111b3eb5e
+  - known_hash: ea413be410d0cb0b8deaad35cd5cdfa406e13fe72885d64c1bee016942cf6444
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ccl4_mon.txt
-  - known_hash: 2dc5f2d51f81a652d25d5df30634c16c56018e24faaceb71ffd31be17ff27c08
+  - known_hash: 962f2820dea390c624c6b7a41ff167084e4a250da2013818288e20454adc3956
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ccl4_mon.txt
+  - known_hash: b5ee6606bd2ba587496edf29ee5638947a1e352d83d072df95bc49f02ffe2927
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_ccl4_mon.txt
   gas: ccl4
   generate_hashes: true
   instrument: gc-ms-medusa
@@ -1597,7 +1605,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms_monthly.complete
   download_urls:
-  - known_hash: f463d4bef26aeef76f3b2635a9f39e06f545015c60635dc864d6a609117a4011
+  - known_hash: c80022ad273a3b89e6966ad77d23640ccc8a1a1c640205753371be25437c984d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ccl4_mon.txt
   gas: ccl4
   generate_hashes: true
@@ -1608,25 +1616,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cf4_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: a5784e3bdd71362fe9fe19e8b03b6e58c91505e91fa3073acdfabf0979d81dda
+  - known_hash: 10a140e865e27cfbff80ee63de564f8854f99a7e40dd765f3d0f1a0fc3fadb3b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cf4_mon.txt
-  - known_hash: 99157e354f4185dbb297948bf745a57ab8d47e02256c144f6ca152e4ef2ef0fd
+  - known_hash: c8fabc5d495218bb36f6b111bb20b7558bda99602ea9a9ea7f071c1be890469b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cf4_mon.txt
-  - known_hash: e2942b01e312b1ebc6ee739bf9e237c2d01ffe979f94183084856af51122a64c
+  - known_hash: 589f605b773bc0961a204fa0eb2775e8b3b380a15b4a83815a0b5fc59988c277
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cf4_mon.txt
-  - known_hash: b8834685ac6c2e32263a4176469ec9f10e27d010cfa02e856580520f42d10d02
+  - known_hash: d06006afcfeb3278a5f162ef9df552ffd1ac57b5a59eede4d69a2f936f96c11a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cf4_mon.txt
-  - known_hash: 6be2169ba8b2681b724b52a9608057a4a7b44f5f029c19fc8138654da432863b
+  - known_hash: 98bb8adea7733fd98394c71e84f12414d9efdb962bbfa04b21b147f30ef06dd9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cf4_mon.txt
-  - known_hash: 0a1fe151404b2e1d8d702ccb66b29a5e616d00952f640ab9c52dead70dcf6164
+  - known_hash: 61213ac13a58928c04a09aa7340c04c706c1f21249b71b3bf5a08e6bbf614838
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cf4_mon.txt
-  - known_hash: 54bfb3e76f28fbba4f9cc642fe3c244ec2228f578c679f85a871552f2c01f79e
+  - known_hash: 8510161506e4e6a77ea633d464eef88c8091ed450e4d83f1c0b9d7dd3c408ae6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cf4_mon.txt
-  - known_hash: 8afb59d25700a5edca8df4fd1651de8e0eabd89234ce206c4f158b8b81698da8
+  - known_hash: 0895617ba3b70974a55b6ed6f4ef7a2d071360ab8e46389c77116a64a8be731f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cf4_mon.txt
-  - known_hash: bf0790dc2b6716f000020eb87a342bb3921a6d84e9907a6f9274250b0912ef27
+  - known_hash: b8f84c9f2de70f8d1d45391bc282b6f71f0c3e052fce0f643b3a9fd227b6638d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cf4_mon.txt
-  - known_hash: 40d36dc6d96cd605a14a8cdb7ef2b46ceca19d51bf6e7909783fecabadd5986b
+  - known_hash: 56f39fc3e5e0624f0a8a91d283aa55584e0fc31644ab74dc2d2004cdcbcbf776
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cf4_mon.txt
   gas: cf4
   generate_hashes: true
@@ -1637,15 +1645,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-md_monthly.complete
   download_urls:
-  - known_hash: 7f52297786487e9ede8a785c89b1d793250c4198223bafaa265cdcc268bbc978
+  - known_hash: ce0705cfeb1cbc4f7cbd3790cad39a777faf7a18ded9fb436cec64a730a510ff
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-11_mon.txt
-  - known_hash: ebc838159a6ccc0bb98ac16203e927abea3371aa8aea801db572c816761074cd
+  - known_hash: f8634f5315a920e1dc403d9592417b61f3f343b08e1cb01fdb11bcc9c96b28f4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_cfc-11_mon.txt
-  - known_hash: aa6ef6875861e0d127fadc4697467b08ba8272d0fd3be91dd63713490de86645
+  - known_hash: c4d4e7d3445d158dfce331eb1365af403aa19c9a6c7ea7e338e5e269e000fc43
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_cfc-11_mon.txt
-  - known_hash: d1722aa15bf3a77415b97f0f9a1c1e58912e0ace054b00c8767e75666f877318
+  - known_hash: 431129b6807a71dc38ed3c290f6c6c7f3f1eb8d1ea417cb8d727e0274775a34a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_cfc-11_mon.txt
-  - known_hash: 9929b38d196ef1397615b51988631f1e790797d86c260f57b387074cb667ef56
+  - known_hash: c552981ce69553c68e7f83a69c9a5001660c19cbe090ac6359ee73f354ea6145
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-11_mon.txt
   gas: cfc11
   generate_hashes: true
@@ -1656,15 +1664,17 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 6d8b653daf80d3fd8c295c91e8842e8c81242c36a543da88b19964c1de7ef7ad
+  - known_hash: 12e8142ca30640a9e3c02ac5221658b3a5fed213a6b48174ecc5e9f4682ad5fd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-11_mon.txt
-  - known_hash: 1f2dd4650b49c7ee5d9e5a763e1be3daeb72f0243ea249ab3b9c9d586e71f8c4
+  - known_hash: b5f4a2283eb95a93f3303f810bf50bcc2b428f61c5170bbfab3972e9274afd2b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-11_mon.txt
-  - known_hash: 35231a8b2a6776e815c843ad7ba0f99378733dbbaa6c112f33d30d0558e66ad8
+  - known_hash: 79f40d519fa49eb52a8d249abfa70e699cf4036874982621e444bee7919befe1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-11_mon.txt
-  - known_hash: 33fbb30c985d2ae36a48f5a7e6e92e66ea84c83004db006ca2fb1de72f922112
+  - known_hash: 9ed2532f35cf0b675870d74c7101ea71866685d0d1c5d77995689429e31684ec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-11_mon.txt
-  - known_hash: f1eb53ecfa4294ef3581b536804fccac36519dbc4ddafa856c4c4aeb9e7aa048
+  - known_hash: 1cdf79be97418da9a0c87d58cc7008a8f953dd61d887518db3dfdad1ba29b0e1
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_cfc-11_mon.txt
+  - known_hash: 4b214ec0e0349838bc382473c1dd0999b4ba06dae46acf90c0736af7ffa3918a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-11_mon.txt
   gas: cfc11
   generate_hashes: true
@@ -1675,7 +1685,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 3394d57cc17222ccc5de8f98edbe26131afc63e718ff9d4563727a098704aa93
+  - known_hash: b14fef693504038f6566911c77e88c95a83bf9aa6efd948673811233266960d0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-11_mon.txt
   gas: cfc11
   generate_hashes: true
@@ -1686,15 +1696,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-md_monthly.complete
   download_urls:
-  - known_hash: 74610a0d9de3dbbbb58ff9d665f9bee799882d2b65648a6ccc36b964b145a12a
+  - known_hash: 3898a2510fcc12fa801281f49e72561dcd7059346a63760a35fba0d14e626878
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-113_mon.txt
-  - known_hash: 3572e7c19ca325751244a0072cf06f5cec97edea41f584bbc410b52a64b1aa2f
+  - known_hash: c934aa677bae5e0fd99bc83f3b4f719c669f6f794219a94064d92ef485565620
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_cfc-113_mon.txt
-  - known_hash: c1979c4b61673019ccbc6801b5c13b29fa867cd52ef64c4d964cf5ff1a21998d
+  - known_hash: fe18d54441762dee45ef1ef3ecd0fbfe015699b24690b7dbc1aad6e822932f9a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_cfc-113_mon.txt
-  - known_hash: 36bbd53c1d932742e8cfe0cd6d3e4cf31f141e23eb99bf14ee8e1f091db76c01
+  - known_hash: f46802df55b19c08cd2838d6d1fa44792092fa0a5faf590e36bd2d5d5fe539ea
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_cfc-113_mon.txt
-  - known_hash: 82043f237f083079c7f15f28449a1f2fe397416cce8f89a061ddd6e7c6405bce
+  - known_hash: 5eb4b743066324ac6a02471c6cf8c98741e7f96664ec354c17c142aef99a7404
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-113_mon.txt
   gas: cfc113
   generate_hashes: true
@@ -1705,25 +1715,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 98c7e141bf65b050cf4f9a6b2b602fba5bf2ca17eca5c80e51beb2ece26ac29a
+  - known_hash: dab478e1c0028b610ba1df71e1e3f354bc9b5327a1663389caf8feafd09991e0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-113_mon.txt
-  - known_hash: d8e071d1758cce17b6cbf85e81307b56559dba5bfc7cc2b2bda3f88886d724e9
+  - known_hash: 7f2b7b1c41ed3c01310f9c6dc6adc91a872c09871bcc85652a72425f0d6284dc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cfc-113_mon.txt
-  - known_hash: c45e5c75f7b3054412e34d1aee0f15200dccddabc42fb1a2ee09e5ff0690d0be
+  - known_hash: ac461bc0db7064fa9da809a2777f52299374437867daf42714031bed1fa0c463
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-113_mon.txt
-  - known_hash: 302c34bcdf5f5dbc65cd922499af65d66099249660b0444cdd79f8c2f7eb1ba5
+  - known_hash: 9da95c5160dd534b541ca331eb701097c99d97f94ebca968cfdce524b50aad8f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-113_mon.txt
-  - known_hash: 4a982d249b179c336be985f8610a394e661c4e3d278dbf986571fe71f6787499
+  - known_hash: c6a961a8d389227b3f43d5d472e812a6cf50e910c984486184a56eaa775429a5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cfc-113_mon.txt
-  - known_hash: 90379724f71bb19546c5f9bdc997d56b37af47fc302acc0882c3e00888bcca8f
+  - known_hash: d73a2b2a08c2422369e9d01546618fd842e2985c5cdb38c99ae74eb034507d9b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-113_mon.txt
-  - known_hash: 9edbd8c6789ec71deb553facf132e8d0eb99ec5c7d7fbf39827047a646c63148
+  - known_hash: 6c9db25b4cecd0d9b979061ad9d0d620613eff79b5b64d22400517ed644cee7d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cfc-113_mon.txt
-  - known_hash: 8cfae7483c4b3750eae1701d78bd6ce23ef5fc26ffb81ec1dd158118ca08acad
+  - known_hash: c53264271d43d6908cd122712366d3e8eee77684c50e7a670426672f0b683079
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-113_mon.txt
-  - known_hash: ee374631a4a9e76f633ff527da2abbe5ac2ea3f83c1c2f6dbd8351ae469ee06e
+  - known_hash: aec0afa50758303a87051f17ecc9f222a3c884107ce535e381a3fbca5404b4ce
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_cfc-113_mon.txt
+  - known_hash: 8f7a32dd11a34c1197cbb5a7c2d10cc427bc22c5beb375d8611fb913cb7418eb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cfc-113_mon.txt
-  - known_hash: 5b77bb90ed6cabf5e502ea5acd6fd5b5fda0015d51e116c835903ef0234a565a
+  - known_hash: a57988431d9f9f4424ae7d9fe3fc95c4ea65b990157af2b93c0f799592cc29ef
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-113_mon.txt
   gas: cfc113
   generate_hashes: true
@@ -1734,7 +1746,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 8b0e85a59515871ae246d580e29f4876de3289cf9617a857fa3bcb045afb456a
+  - known_hash: db0443235412d9f3a85d9c243f459a41adaab4eb55a3ee6c481c883ebad3541a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-114_mon.txt
   gas: cfc114
   generate_hashes: true
@@ -1745,25 +1757,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 10d38164cbc335b50cb090396077bf8f9b449f176fc770416b127eb682546d3f
+  - known_hash: ef1ce2731720ab1115b3d2de9677dd5b59136cd54a2aeda62e978c5e2e205394
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-114_mon.txt
-  - known_hash: b544530b8e0e42159b890761ec6e930401ef641176f4b10e30adf9254c5e4083
+  - known_hash: 187c6f9bd719b14463cdc241c38253eba4eaf83fbd5479f9ea91b64d67fff0b9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cfc-114_mon.txt
-  - known_hash: 4a5703f6b4318efff2a094fb7e8499ad46e250a8b9f25c8c5d4950fcf16ddf5a
+  - known_hash: fa1a583483eefa34ce4af9ca9746237577c02731a45c3932c3d98e096e0fef70
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-114_mon.txt
-  - known_hash: ec5ceaf9aa9c35161f3f58c380a3b28ecc7cce3ca2e3aab710b792b3008c6d1f
+  - known_hash: 56c37e5e98a22e10922dc6b448865b63bcecbd3fbc97b11e6d0cd71e2bf2c175
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-114_mon.txt
-  - known_hash: 5decb9819446deefcde82198c7f12b3588e2c3c20e9f25680335df1558e815e4
+  - known_hash: 0904a8b3fc26bebc54538118d72e07bc9a0822fcf4a007a4e27a090e45d81517
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cfc-114_mon.txt
-  - known_hash: 31efeb79fd9ae410414409d00038ea94d1a6c50829dbc5b699b49d4f7b1f2e7d
+  - known_hash: ec45b9c54ac028544d1eb666bc291c97d1db4410e00c198404396a8147b4b1d7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-114_mon.txt
-  - known_hash: 503e67b89d6464a8ad1e22b66fa943ec5d7be6f6a3f6d5699931cc2b2c93d4ec
+  - known_hash: 4b687d3fcdbcd098ece4691eca26dfc7f6c17d8978542a43655b63a87f461610
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cfc-114_mon.txt
-  - known_hash: 08124810bd93073048ae9bf0d62399fb5eba0932082c2821309146c32ecf14ec
+  - known_hash: f9c1e5dbb6849dcddc536402ce864e08c5d7b60e8f1ef059812823bb43c22c7b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-114_mon.txt
-  - known_hash: 39b531a6c52e78bd7ff7fd5ec097b54ed64044487a7b015075081098ee2e171f
+  - known_hash: e758ff12cb57f9c05c9317e108bc665769520042b02a5560ba06eae5bf0f026b
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_cfc-114_mon.txt
+  - known_hash: bc9e6a37dd39f18252bfc5541a958af3a87b353b42a4b89adcd540fc2dc58cf0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cfc-114_mon.txt
-  - known_hash: 4a2ddb57bb738ed4abf8c667caea31e61c78778a03de3a2a79aa5f9b658b91ca
+  - known_hash: 2c6562301de71e7d1c1abb53741d9648ca1920da3f5524a38692639e7e554c70
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-114_mon.txt
   gas: cfc114
   generate_hashes: true
@@ -1774,7 +1788,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms_monthly.complete
   download_urls:
-  - known_hash: f33237c481f69babfe4f1dc848db048121d7ef7c8899da8efd9e7f88f116a448
+  - known_hash: fe2ca2fd49154077411560d42e48c7cac60831f7e25e703cd63a44f0b16bcafc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-115_mon.txt
   gas: cfc115
   generate_hashes: true
@@ -1785,23 +1799,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: af8ad4291e67bbfb150aef9c9c654734c048df72e2bf3297bb1873a2c4b747ad
+  - known_hash: c7ff9c41885209882f43c9b57d66c7a747bdbb5d74ab33050c97380f73c10479
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-115_mon.txt
-  - known_hash: a5f686837b632436315c93591a476026a533a7a3932558c510731b4e159aa181
+  - known_hash: 945c2631a7d0bb6e3b5b41e10c6bce029c69abf85382282a81c9e0a62f5c0fdd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_cfc-115_mon.txt
-  - known_hash: f4d2b5470ef6dc044a8708a422676f688b80f9efa68ae8ccad6577ac41afb9ee
+  - known_hash: 6c271802c31c7446befc9ce7c19f8796d773a112d09ecce24aa11a6e433746db
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-115_mon.txt
-  - known_hash: 01ed606b0d6031d93164b958160a9f9a7bb0c673abc77b2357253fa5b7524c54
+  - known_hash: aeee180cb7d11b5603fbeffcf12e8fb0e3d89545af6f7d1674f30291bce919a4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-115_mon.txt
-  - known_hash: ed8e8830d92434172948da6855be95112e4741330209cf6e831afc14e7ccf0bc
+  - known_hash: 83c49dc568f411e10178a95a28be4ac258eb1184930f4495465d380f1abcee05
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_cfc-115_mon.txt
-  - known_hash: ba8306df96f687f5aad5b43d3016344e0ba9226229e6f6d12a8a0fc90acc74a8
+  - known_hash: 4a1e154553fe6d4525b92977896ead7a6ed4019cda5a59e81c8361b6d54f8e4f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-115_mon.txt
-  - known_hash: 1c1691c4c3e71f039b3bda4e3ab9b9f834f42c42a42e63a5f6997a9f2c00c511
+  - known_hash: 36b9785f286229f15bfb0c8d4be3aca9e151167c7d5f8379cd37748137553d1b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_cfc-115_mon.txt
-  - known_hash: 5c3a34be2dcc440c419e0cb8fa376c950a0379597c4354a3af05c3f959647c6f
+  - known_hash: 0357305cf5e561b490c6d68ee556166bb569867a48f2a1fba9a09d7a9bc936a3
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-115_mon.txt
+  - known_hash: 91dc6061aa7a2563ffa305bcdb7e7b2cf354001b2f4babd125b67008323dadc4
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_cfc-115_mon.txt
+  - known_hash: 7df3bbc5341a834858c4c5aacd213225f720ff0d3686576d041ebd74361ed07e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_cfc-115_mon.txt
-  - known_hash: ee52cc6800e535186e1c49890ff12fe34169339538e38dbc6daa3ec09cd9e6a4
+  - known_hash: 7902065bb84b195d05671d8e33fd00227ddb5ad7650d8816c3afc551e266d0be
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-115_mon.txt
   gas: cfc115
   generate_hashes: true
@@ -1812,15 +1830,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-md_monthly.complete
   download_urls:
-  - known_hash: 504f4d3db1bea293392d3efaf151bfad7e5f2277224cc765877e00e69fd02be0
+  - known_hash: 347fc6965b7150b623e17e72e274e4f72542f16fec0df91b98685fd260745942
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-12_mon.txt
-  - known_hash: 01b70bb4ba8abd98c02f07259c27ce8a105d4208e7bf423f406e4b8da6b480f3
+  - known_hash: 74afcdd3a820da71ae3cd6aca1d63ef0b6b9bcaff44d0cac9c45fe250874aafa
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_cfc-12_mon.txt
-  - known_hash: 400e82052314190309650b596a1e2e8bb6ed06e1bff67d831df8b5e1d5738d1b
+  - known_hash: fb63e30a1655109180d9c375905a8aa09c742aa0d807933bed0a6d5a59981758
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_cfc-12_mon.txt
-  - known_hash: 28823f27e07f83db07b2507f038cf046bf51697bca8cc19e7b50414e1aea2775
+  - known_hash: 3d6f767f24feb03d439d8d73d971a06db7b426a4db92fab8cca70f76cecfd6c4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_cfc-12_mon.txt
-  - known_hash: 737e826ab87381fd98578363c5bd040d92c33356ede9af3aae802824a47887c9
+  - known_hash: f3f3a4511c8c84752c0a1709fbc06e0d58150622a6c5744ce8a0f07d089ed5a8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_cfc-12_mon.txt
   gas: cfc12
   generate_hashes: true
@@ -1831,15 +1849,17 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 50344532103b093e6442f8f329a4bdb41c578a72f1be77836bb3170b20abab57
+  - known_hash: cb5ffb6375a1b8aa38c35d462f1dd76dd2e7cd8ce5dcb45db8ebba41837761bf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-12_mon.txt
-  - known_hash: fa7ac9be9f3d650d4cbd5840b7905968f28a6a6a88a8f5e43ea06fa0f1f29ac2
+  - known_hash: c6ca8c27d35fb8ba1f721f1933992e417b192e543c910fb0eb67471ba61812cf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_cfc-12_mon.txt
-  - known_hash: f46822e1c50c6b51db99066ffa671548709d6455fcb6b3989f75643383b49bab
+  - known_hash: 7fcf21a2af6d8ad08ef99cd56997156836afd6369a157dc453875e8a8ee9c8e4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_cfc-12_mon.txt
-  - known_hash: 5db4ff4ce96cc261c386a62d9d1b59a8458d8db2edc2db7c5b62f6e686ba2989
+  - known_hash: 92541815e744d33f2c64de37da5e1adcb0eccb466c1f4e14c3bee389654c7674
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_cfc-12_mon.txt
-  - known_hash: d018493146fcee2f9750275dd561dd74ff827c207c28435727ba1bb9164e07d2
+  - known_hash: 3656759d695253683b0db397292a7743840a8bf90f5f5991a83b77b6901ea4a8
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_cfc-12_mon.txt
+  - known_hash: e1a8fa00b5ff66dfb27270059b91dd0c3d23fe71ffcf96dcb3d376557171ce91
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_cfc-12_mon.txt
   gas: cfc12
   generate_hashes: true
@@ -1850,7 +1870,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 0325346db119008b4e8a7dd7b9641b8eb097b6b03e69e6af29f240155ace3a2e
+  - known_hash: 1fd934be3040df2319d557e44fe554240cc1d5fa3c9b4bd06d411b2270d1fd83
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-12_mon.txt
   gas: cfc12
   generate_hashes: true
@@ -1861,25 +1881,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 59810385019e5e959037ea7aa760c4ab676162b8b0dbc562c016a65d94121d64
+  - known_hash: 322ffc42ebb9a4eb2baba383ac07532fe159c5d67aa204e62d0cbb9ea8d4b5c0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch2cl2_mon.txt
-  - known_hash: 7bf38ab80ff3802c9180da0d3e3ee531c8104696d2ad090d21aa83d74d88ea42
+  - known_hash: a9f5ab1c794fe3da62bac9b9dfeeba41cb6080f1aed937ffb9771653714f028a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_ch2cl2_mon.txt
-  - known_hash: af9c257b7d994839968ae84af893c15090fa9191f40c7f54961b417d8b8fe538
+  - known_hash: 55ccc83a9f1da052d56f313f57846bb23959c07cd0edd2c35ea9c029c097eeec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ch2cl2_mon.txt
-  - known_hash: f8dfe808bc625d52a1b6c2eca26e6a86b60492c32c7b0221d7bdd20e6ccb944b
+  - known_hash: f42c39d0c4f091e2ed27b11b5c6829530a28b6edfcbd36184a2556cbd7dcf465
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ch2cl2_mon.txt
-  - known_hash: 1b6368523ea1de206d00446b0b55d685b447b6eeb65930d0219d4983d1796a21
+  - known_hash: 26ef2aef0fa7235a1effb2a0f7c459d68c0b0164255cb0c7b625b532b155aa1e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_ch2cl2_mon.txt
-  - known_hash: d44a0a926741d96514266620bf25be3a738bbc3dc2915ca87c93ce8df00fff02
+  - known_hash: 362ccfcc75bf3dd472af3405ec6941e2372b4050c9bf513ccfc510a4cb3ec454
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_ch2cl2_mon.txt
-  - known_hash: 450764ffa7057f162a8a7204359d8bbd7c59c6d9b8f727092465f7c01101be11
+  - known_hash: 8e7c79ff5f9ad161e627a0a6fd4c3d8f94a1f121db4142e5903a736822a9bd73
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_ch2cl2_mon.txt
-  - known_hash: 8598743c2a1ce6b0b0beebd30b5959d7bf46104bd962c3326e5137d41b47cd97
+  - known_hash: 3036509a413c25b342c253eff34cbfe4fcdbd866379e4f5b5e9b5cef6d69cfba
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ch2cl2_mon.txt
-  - known_hash: 16c93d3985d6369de2f02265b707f475a51c7dbe2c4bd9de95ca991e501b6f90
+  - known_hash: 0070b3c62f74f9ff1554df83f0940a6ae9a3a73b9068bb09e4dc888e1da34a14
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_ch2cl2_mon.txt
+  - known_hash: 9210aa5521a50bba7a6de4de06e46e231bf9a59be76183259de51c915fc3da33
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_ch2cl2_mon.txt
-  - known_hash: 640cf7b267af3925dc912f9e592a5d9c52e51c433fe3ecc25171e2512f89e0c1
+  - known_hash: 7d8a4e5f45f7bb804c552cf888e0ba92b65b39e17cf2b47749deabf49190076b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch2cl2_mon.txt
   gas: ch2cl2
   generate_hashes: true
@@ -1890,15 +1912,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 9aa458b1b1d175e646a411d23a4499ec8bcc78945d2729adcc1d5758c389142c
+  - known_hash: 7c5fcf6fec72a5c2c5794b5aeefebc02f6a06137549a9cdee89ceb461a33c306
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch2cl2_mon.txt
-  - known_hash: 2ced9bf1c4eee47f251e83166055a51fd3fb8870cecf69fcfcb6c21bc37132cf
+  - known_hash: a5420e1f026462211e687cbea9272c0300f215c28bf7eecbd37e6448f1ac4db1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch2cl2_mon.txt
-  - known_hash: 4b0e27ed9a40b1fd7bc1d25f5906ac1bf8e27f9be1ecd7cd4c91a418d8437c3d
+  - known_hash: 341f03a25437056e5ca40128ae4edb7a9a2201afb87d4acccd3ba89ca9034f28
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_ch2cl2_mon.txt
-  - known_hash: e8afe5118c2e619c7da121694e2c47da2e3014784d7b9467c61085441c96eb90
+  - known_hash: e0637e86ecab98a90c4ccbc1e8902bb54fbd2114b2ea2933e271e88b43c3bb4b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ch2cl2_mon.txt
-  - known_hash: 5c5433c25666e266ee2992ee2be17f5631e830e4be4ddc2516b1b82aa53cb3ce
+  - known_hash: fd438cd07ac5b093fa4ceee4a69a1db4b8b69229843e0503d0ec9fe00c82f2f0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch2cl2_mon.txt
   gas: ch2cl2
   generate_hashes: true
@@ -1909,25 +1931,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: d8c62c539781ce23824e6c56f59bc0996d6c37d86a581d29c36280e8a51ca882
+  - known_hash: 5a0341bd369262195192bd57dc6d37cf0b0b67f57ed9f69444fb5635e9a70937
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3br_mon.txt
-  - known_hash: e33359a846c26239f7109550b4b37eff48dbda43d5a061c6dd967098b5d33edc
+  - known_hash: bcd4bedea6ea1f8208b7aff5fc79215a6b054405d24aeb583abd8a744024384f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_ch3br_mon.txt
-  - known_hash: ed9e38ae0ded46f3b7c7581001ea2483d4749c1ea3c4a68e17b5b1fedaaf21c6
+  - known_hash: 44ba7bd534ae4c12c887c0e995e986b8dac1d4ab7821492df2c24a8370a03ec3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ch3br_mon.txt
-  - known_hash: 898696e16c6758e6b9566d7524a0d635749a50d4f7bcc36c841f56e60447edcc
+  - known_hash: 9da8cedf4f1fb1da89665618c06d89916878027f8f85fb73327efbebc40f5e88
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ch3br_mon.txt
-  - known_hash: 31fe11e739c58c01f92c25e395a0ca310d51f0227faaabf29741c6905312d80f
+  - known_hash: fa70febd8236f66fe1e4bb6f06f4d207062fa0ea1d9740cda8dc435c891befac
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_ch3br_mon.txt
-  - known_hash: 551d59b98ec59960cea12e3e79ba90a87b4ca65c67caae31f5f8740d1972df0b
+  - known_hash: be20f9334568f8e136162e16e63629f854e007bb8feb38abae272c8fc5037afd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_ch3br_mon.txt
-  - known_hash: 43f8a6dfb334614687e16152099dfcb3eb9b1a2f63aa6f2de73ca97d0ab17dfd
+  - known_hash: 7b828cb8ac5d544a1c884cf0b7d73b661fa7fd3570df07a6f255fa93c762952d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_ch3br_mon.txt
-  - known_hash: 29e985caf1f92278389d5561208648c9a46bd1f1feeedcfc9f4911d0214b0d92
+  - known_hash: 5421f6fa7caf7e1cc6dfbcec5c8d72107edb0af9b6b418b7f9c23afe4cb95099
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ch3br_mon.txt
-  - known_hash: ee0c0cbb449ebdade08bc02810b9807c0fb81dd95a2290efbe2b9f2ce9815143
+  - known_hash: df76435648becaac2b9ffaba6d5d96024afa6abeaa69f56f7bd7b9d193a1f185
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_ch3br_mon.txt
+  - known_hash: a5ee8deb12f355b7eef73f91957dd0382b7b23ab7bfeb859335cda99530b69a2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_ch3br_mon.txt
-  - known_hash: 4506b92e3fdca95df676253f8d657f06800e371f62aa74ac46413a32e7c41a91
+  - known_hash: e7748e5f26e684386db8d4fe78f556d8e762dae0ffb46d4b884db53dbff0c923
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3br_mon.txt
   gas: ch3br
   generate_hashes: true
@@ -1938,15 +1962,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 198a73e276650cbcd72dbe6f96ee6be297b2444c244b694c65602d90d2fccd51
+  - known_hash: a90a882bd2e8f1ef69071b66150e55e502f5f143d4d922b151d1fb04b8e0b400
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch3br_mon.txt
-  - known_hash: c4d2c32e57d13d6e82062cae4f50fc436c2d04e6082a2efcea9278dbaffdbdb6
+  - known_hash: 9cecaeefa3b1d1d97a051791ab9772953e33e73815d1d25838300e52f79e47c2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch3br_mon.txt
-  - known_hash: acc5ca19b6f6fa890089fb0f0f202ca99ddde6bdae3b9c674ecb4fdf1b666a9b
+  - known_hash: 610689b99f8825bfc18b41975e9a538ef37d689533e9bd51a6282d44823ad1ab
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_ch3br_mon.txt
-  - known_hash: 6766c0b356ad5552ccf237eb25a4463b3ae556452654f1a9ce2faef867537dcf
+  - known_hash: 2ad78952f19284f2944f7e9df0b0f3a7104bc479bf2f0774d08ec0840c72ebb5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ch3br_mon.txt
-  - known_hash: 8290195bf18bcbf14c8170d4f9f600967aec875cfd1de2f479e143e9841608cb
+  - known_hash: 76510de31c22bf1160ef8fe6fbbfcd048a0281e052155c9f270a384b9efd2825
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3br_mon.txt
   gas: ch3br
   generate_hashes: true
@@ -1957,15 +1981,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-md_monthly.complete
   download_urls:
-  - known_hash: c2dc8cbc8793e4a3d8e073d4f40d92039f8c64baa3f26b58609377083785262f
+  - known_hash: ae526a46d3c14dd835c8b118b6c52b54925fb27223585d1af65ab3884f44d6c7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ch3ccl3_mon.txt
-  - known_hash: f790f7e16aab600b1ff9b25c3d8138e1e7992c85022aebc3dcb93d82e6c4bbba
+  - known_hash: 86071d7d2d1536d71c522510e4f47646cbcf91c2b626c388f160083349632cc2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_ch3ccl3_mon.txt
-  - known_hash: 629a8d16b2f3da8cdecfa8edf17c7a4d0502622f149a47930ef16d5f08a89012
+  - known_hash: 8b09f8df9596ce71a4360d02abe61e14eebce6e7d76c32269a37569dc9583238
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_ch3ccl3_mon.txt
-  - known_hash: 08e22bc995b9577648841c0924174315e6fb7d8be83317c2daf88dadf02b30f5
+  - known_hash: f74a8e0ebe73a779661de224d615f86e6754e227de708ce889775f4d8dfaa61c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch3ccl3_mon.txt
-  - known_hash: 7b38d734e18dc1e0470c484166bea75047f7b9c96f373d629a76a6a8f79bf548
+  - known_hash: 35bbf40869bc6106a315d8706237e6394ac6e275ac641907053752d59cb522ec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch3ccl3_mon.txt
   gas: ch3ccl3
   generate_hashes: true
@@ -1976,25 +2000,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 624ed68f4338edff110389e92c9c547a8c541e19f01d1edd2555b780c2bfd414
+  - known_hash: 71879a6dc3c8932e3f40e78a4c9f6fe0eba2f055a63b73e0630da1ac60b68fd7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3ccl3_mon.txt
-  - known_hash: 08dee4f94851818c728bff56d3da25f642b6d72260adfe270459cedd4cfdb53c
+  - known_hash: 3d25d1a8bc130060710704d2d69d6f1c026fbf5c77f4ac48c41ca85b0db834f1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_ch3ccl3_mon.txt
-  - known_hash: 9b4621d6be05f5acf9bd4542a4ac0724d9c5b29f8a10af73d9e50bdbb6879702
+  - known_hash: 7a7cb1515928dd96a0496b7feb2e552f84cda3199a7004baf3d9333872bfc019
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ch3ccl3_mon.txt
-  - known_hash: 050ee15a20fe727cf6fa243da1cb033bdad7e280937877b595d2a7435fb2eb56
+  - known_hash: 3cdaa4000215ca36663bec30e0a52c8ddf7c508c373373ad4b1da3666dee6d94
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ch3ccl3_mon.txt
-  - known_hash: e277f71c39d3a7e50fb43f899fa99e4f9b3ea72cd30fc475e9748ff36cc21d4b
+  - known_hash: bcce77f78b87981293f1d3ae8c4d6c03c9d397c3c1505c0a8835340cf4cfdb26
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_ch3ccl3_mon.txt
-  - known_hash: 7d1f5044074529955fce252940cec60aecb7317164b1dce278879d3954169dc0
+  - known_hash: f43ea263d52f24c985591ccdcd4dd82f8271b8fc6891dca27e7cac951ddcac4e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_ch3ccl3_mon.txt
-  - known_hash: 9ef76db3305cf03a8fc94ea80c6946dcfcc026318b3029647d041687b91fff8d
+  - known_hash: 5937b4369f8297ceb8cab07dcaf3ac35d67d806d2d10331b12b65a15a6c058d6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_ch3ccl3_mon.txt
-  - known_hash: 490e838a4f75c6ff7a45d2131127ecbccd7b206d875a3c5ce0662c5d8844ed1f
+  - known_hash: 992578bf1fc059713b629c6f8d47755b8a99c1b671be441b89a139cfcdb5a56f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ch3ccl3_mon.txt
-  - known_hash: 41d8c5ba4e542b8b28dd255647b210d7c04bef9790e9821ccb7f1d73a054c792
+  - known_hash: 8266ccfcb8398e108d3ca64c25cfdb798e6d206a51dbab8c5cc0a94371460205
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_ch3ccl3_mon.txt
+  - known_hash: 2ca6e2d8448377c8b6c2168e0c5f443eb67a424071af62f9d7d58db8a1ea9bfa
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_ch3ccl3_mon.txt
-  - known_hash: c3af151c3b3f1a80cd4e8ab27b9bf485cdc7424766d1172c6beb038fc8cc96a5
+  - known_hash: e940ea0bb31d1c085c8942540e7b29297ecaa7acbb27760d144ad9c63f02684a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3ccl3_mon.txt
   gas: ch3ccl3
   generate_hashes: true
@@ -2005,11 +2031,11 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms_monthly.complete
   download_urls:
-  - known_hash: ce89d7e0cdb59302527c50487b2f18f385ad0a256d97780ab9525dcc213afefe
+  - known_hash: 4fb2b3cb9bc51ac45a9343409018bddc53a8b95315d433a966cdb70e2164f915
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch3ccl3_mon.txt
-  - known_hash: a12bde6724455c7d42ee93f8de0f1ad3a40e9c1c34449a62121367c56f2a63ab
+  - known_hash: a1ab1930cab655080ea4420358738189763fcd5cc4292681bdaad35818e48b79
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ch3ccl3_mon.txt
-  - known_hash: 34916f3b8c2014aaeb2407e397c09879cd18759d44a054aa5ad6d4bb81af5d1d
+  - known_hash: 7da3a55643806acb3814e5262533ca2fa099379cbda997f02e2288e9e4a677a9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3ccl3_mon.txt
   gas: ch3ccl3
   generate_hashes: true
@@ -2020,25 +2046,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 27dbaed0dd65f48922ac0097cf48d46ea565b820974c04c939a9d395085c4536
+  - known_hash: b9ebe8ec99f99201fbd8ac79fc5d15d2bdbeab7de87dbb0693403f4affdf54c6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3cl_mon.txt
-  - known_hash: 8b6bd2b156cffbebe986dc4a3c82bf9ecd0e8c9fa55b50db378ac4388d6371cb
+  - known_hash: 601720235074d301a69a60cbaa7730bde9fba88861225902621b0696e080f7be
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_ch3cl_mon.txt
-  - known_hash: d9960b14c9c7c11149b55a81eb44f48407e15fe354d1843701bee511d1715ae6
+  - known_hash: 82ac3facde7f45b90a50146dd2a9fd03c2d19cb6d839ff413fd3653f000ceeb9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ch3cl_mon.txt
-  - known_hash: d33002423f15b72db0d01d233151d9abd778f1bff724c836b57fa58b8a1afe15
+  - known_hash: 127c074ac03ed4d7d2311f2d03fb1bd6ae5a0b5766ca0a1348333f685d58f5ea
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_ch3cl_mon.txt
-  - known_hash: 2c1e610e245c0e2692bd2aafbe5ce44941fdf8de052cb9c1064825cb92fd1e78
+  - known_hash: db96759a58bd81f17d0d27e7bd3df7646e89458151dc1c32ab0c8f2882dc9cf0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_ch3cl_mon.txt
-  - known_hash: 085b3f916d2fe7fcc21ac8d5e7258a603d2a498d44c1eaa74f61e4fb512c99fc
+  - known_hash: e6235860101167d1ebe71ed241963eed8b07dbff5c0e8c7daac66e3ccf65ad06
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_ch3cl_mon.txt
-  - known_hash: b6996d654b86e08932d4a330bcb2e9a8c6e9c89ea46a0f09ad87e226cdc2291e
+  - known_hash: 191499b425295b123ba49c07797e92837de0064bdfa38578ab3f8248ee383a4b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_ch3cl_mon.txt
-  - known_hash: e9953f13380d17c34296cc442bf3a678cc29d5d0765758bbcad525e128683f48
+  - known_hash: c2e185e18cddbb5bd451232aec6567f053d1525710fd21ae0403e98bae4e07cd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_ch3cl_mon.txt
-  - known_hash: 2f86c6f37c0c215a8eac83f108dee64953a7392ab134a31f3c3db0c9b584675a
+  - known_hash: 0c2c18b88e8d0fcc398f3b1eb6fe6f96396e82b5754dfcb917f09c899413723a
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_ch3cl_mon.txt
+  - known_hash: 90683845d37260742de4f6993533d8667df4aa9c2fda78e5f8be514a7a2432df
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_ch3cl_mon.txt
-  - known_hash: 30c93d13563a141a297ab377ddbb89d3b846518bc71336a4bb752646de064855
+  - known_hash: 62965349537ec1b5135c282e281d1c7e3aaebb35d7bfed325c48048105d0f455
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_ch3cl_mon.txt
   gas: ch3cl
   generate_hashes: true
@@ -2049,15 +2077,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 440c8114200870cff9386cd2052ddd13b43870ba90259737231ac93c452b061d
+  - known_hash: 5840e18c208e88a2303b90299804c7e4a4a79b3e47ad7819114801cc5e9f341a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch3cl_mon.txt
-  - known_hash: 7d7ada83aa2da277feb74cbfbac374fbb2ca40ee1ede27301170aeeab5b2f081
+  - known_hash: 136ba0013c9145af0c94dad5534a16e665cf455be3508345859f49e582fad1ac
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch3cl_mon.txt
-  - known_hash: 2b748968e4442f19a4c3851bceac51de36746b6dd4d6a8380ca50e015f9784a7
+  - known_hash: 8bf6648f39a49457c24935c9d64ac454556f7daec436f042ae31a510f4cbeada
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_ch3cl_mon.txt
-  - known_hash: e1475ee42b414ea1b692d5199a920b9f35893d542fcea6e3e1adccaf3cc7182e
+  - known_hash: 1e8187379236cbce37b5357ca155fc97f122f936af3fa086e90c3074ee74969b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ch3cl_mon.txt
-  - known_hash: 7994352bdeea6f4b40a8a9ed0f50fb53db2771bb6aa0e78efc557af0bc9cdd0b
+  - known_hash: 5baa434534f1fe5a58e90456387b38f563c6695f9850b9df91a102c3903b8dd9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_ch3cl_mon.txt
   gas: ch3cl
   generate_hashes: true
@@ -2068,15 +2096,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-md_monthly.complete
   download_urls:
-  - known_hash: 0330ee5f31e11c8541effa3cbe628fd326db1b3b86432ac80f93b8ac340c3eff
+  - known_hash: 6454a3d80187630a9f07d99fdd23fc17d69fe75396046866ca477a648746017b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_chcl3_mon.txt
-  - known_hash: b7c86131eb0fbfc14133589910b98d2ead69a872fef47d3c53743e3458c2936c
+  - known_hash: 52fa4eaa55dc779d095817457601ae7b6f7bcdf3aa68d3dec7233bf4ceaae923
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim/ascii/AGAGE-GCMD_CGO_chcl3_mon.txt
-  - known_hash: 2e2f5eea532547ebde6acebba54c313dac9cf94bd746d93af406229f1edd4a30
+  - known_hash: 6ef8a061995fcec7d4eba3b0f19baf83de4e16235c384804f9d77ccc2c0aa5af
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_chcl3_mon.txt
-  - known_hash: f34bc0c0b13ebceee1d0573fd34935c040c288629a649ec15be34097c26864c5
+  - known_hash: 7ce6ddd735ff13d2ff05ba1c0f1bb05b1cfdfc29526d3837340a05e41a91c2fd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_chcl3_mon.txt
-  - known_hash: 780fdb05642890096ecf71d04dbc2af8a72a4f9fde8ea3bf88477dbd8e84d148
+  - known_hash: b42338bece3b9c893d838f71fc75aa24b772632da70b21f743917e12da5804b4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_chcl3_mon.txt
   gas: chcl3
   generate_hashes: true
@@ -2087,25 +2115,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 733ef0bb2fea44ab93379644e74036078b2a553924c8dc2ff108e8f2a9aa67a8
+  - known_hash: 5649b3cdc2f12b3a1518b5914f6858578ea55dddee73e58a800681d3e25558dc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_chcl3_mon.txt
-  - known_hash: 0fe46a06863b9c4b6bf6056109ae3430ae23fc99c64431e19a85b8cc9192687c
+  - known_hash: a30573e8a269ac5dc172b4219e46d99adab27d8cd68b30352192e67db91467bf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_chcl3_mon.txt
-  - known_hash: 1f4bb8145e07986a3eb4f1d340b5831144f5321350188d091355910d3c480785
+  - known_hash: d75d2801d42c59fe950ee1c8f4dbcda63a2b7f34fb4c2470eb9bf7ca39b50985
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_chcl3_mon.txt
-  - known_hash: 15c60fd9fae47b4aab646f756bb53e38ed80f05c6ea7f73b3143c7da5a6e7790
+  - known_hash: a024bd6197a25fcbdb45ed7bea17c27e8f13d063b5131924c67884736f3df5b9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_chcl3_mon.txt
-  - known_hash: f6fb93d1309a8d07f7ed516082460527bddf6898a018b45356865507956cbbdf
+  - known_hash: 24a0f11ca0e2c4b49e7551edd1a2af3d7b03d62988987e20bfe4fddd7e4ec11c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_chcl3_mon.txt
-  - known_hash: 42a975ba5996ecd8b2850e8aafc54dc9e57ac5398feafa372c1093fd95e53482
+  - known_hash: 923aeba94899333393618508c745448a5ac2e2764be629bff84606e7b58646ae
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_chcl3_mon.txt
-  - known_hash: 9beff28b32d9c3fbdff291d8f4c67731ce058e5bd5b1b0388e3aff173aa3bf8a
+  - known_hash: 83fea4991f4cf08ca3062d24e1fcd02b823fac87db9a2063c3add626e71be63a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_chcl3_mon.txt
-  - known_hash: 60c793b143d40f6a76670bf6789104b622d774e7f5afdf48ddcac82527433349
+  - known_hash: 81f7d0399c3480a45d2d203ea00abacde99430ea2c2827d1962686766de905c5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_chcl3_mon.txt
-  - known_hash: 5b943d4140b4194621675972e16dc6af9635bf751d85e09af0741ae42af72b1e
+  - known_hash: 749be7c16515a47fcaa2e4eeed9c54499559dec5ffdfe23796cfb4acb58a70d4
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_chcl3_mon.txt
+  - known_hash: 751d26ac92b0ce048711c3cb4d8a811c6c06724eb6f56f7f7fc68012f030dc31
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_chcl3_mon.txt
-  - known_hash: fb61a067401147d7a657f01edc52cace9986b165753b8398db0cc3a180eedc5e
+  - known_hash: 20854b3022434bd9ba9fbf9d3d70e2a5b19680596a85279b33640ff6d259a586
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_chcl3_mon.txt
   gas: chcl3
   generate_hashes: true
@@ -2116,15 +2146,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 9fd56a7a6daf9cf9c4c383e6a80987ffa15d7f2649ab10fd8bcae4ecf1524ef5
+  - known_hash: c363c581254d6d8e60818a3c03ad252dff2a750f4f083c9dbcbc512ddbfb2452
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_chcl3_mon.txt
-  - known_hash: 84e72a2a01dc8e746b19e5c34d723a8ce190b4f31f8ced4e162d176c78122c31
+  - known_hash: b51e0bbbe2e31735d0f6fe162f9464d27f19c87885db693783509fa79fc51489
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_chcl3_mon.txt
-  - known_hash: d3a29bc7c0b39a34eaf0ef2b947ae96f9252116ce0449cb6fb9bd8712efae3d0
+  - known_hash: c97582d6e321fa671f02947901e1e4f8565625a650df61c4f90b83a1543c8b6b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_chcl3_mon.txt
-  - known_hash: 655f89b8c87a5e8079c6204d9af6a2b799a1426ccf20e401cd2f060832aa8b6e
+  - known_hash: a962f746ff40c597526a2d2405c5d1bc4a6d4a2bb80eb4d0a5ab7625baf47d88
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_chcl3_mon.txt
-  - known_hash: 407b5e4f8af379c09fe8dc825ee698b741f94f0eb66a0b3ff325a8acda89a8d7
+  - known_hash: a34e289adec6a38438292a23ffc580d2adb9e9830542baf3ea0b9b0f22dbc692
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_chcl3_mon.txt
   gas: chcl3
   generate_hashes: true
@@ -2135,25 +2165,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 517231d2afbedc4d3734b46df01acacb890a3deefa1b355f04c5f12fd2510400
+  - known_hash: 5e9605d3ae249ce054fb2e48ecca0e8c252a9709b44bb9c0a461ad3afa92b1fd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-1211_mon.txt
-  - known_hash: cfa54c824b6542368c222d041f85ef40591e872b37e8df3983ed23f448ff9465
+  - known_hash: 08c498249d83014e630f96c56ce35cc48cb90a3453efae2b2c0f3c9027985033
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_h-1211_mon.txt
-  - known_hash: 90a6adf5078fe2dd1e508429846ec453cfd30d4515599033104f4ce00bc07fd0
+  - known_hash: 740426dbb06e7d2a945e9529fb5bbd4114755da58ba1248cd28a2ccdc49f3b4c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_h-1211_mon.txt
-  - known_hash: 8f602004fbaa67aa362cf6f58c477895cb4965573240b9432770ffd21373be9e
+  - known_hash: bd808ce02a75914085119f85c7a097a0db7c3a73f8fc230facd6e1a43aeda9ed
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_h-1211_mon.txt
-  - known_hash: d67edd4f7a61563565a41115e8b97bf8cc1e3dfe43665b215dc8f69497d33d21
+  - known_hash: 144b8c691efea0c3481f3fa371a6a95a5bfd09f5bb90627dea7b89b7f5877fb6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_h-1211_mon.txt
-  - known_hash: 1627207e85ea177fc81951f28f01ccbfe4857bbdb12acc08ee92d8554b7254f2
+  - known_hash: 6f6a4620b3a9c80673b0865ecf096ded1e63e91e0dfedd4295de1291cbf0779c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_h-1211_mon.txt
-  - known_hash: 0e82283541ed0c4b57106fdcfcfd42107d6c9d7646279b18cce77ce257d4cea7
+  - known_hash: 2fe0a5a2e43b470260c1e47e775a765722649594b0631b708ae81cf1037f5899
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_h-1211_mon.txt
-  - known_hash: 8bfca520cef8fc30c3639777806eda4f02cd516f5d035a60554648db6afbabb8
+  - known_hash: e85e71c742203117275bd73bfc5318df2ca7b33a7a68994fa7a0447a63aae139
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_h-1211_mon.txt
-  - known_hash: e2add329a58a47385ff65819e052e4edb7a840b6e6e63268a28399b3e74c155b
+  - known_hash: 7fcd0020f6c53d719c13c4499c8db2e3f4caa616cb0486ad70113e20d6981711
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_h-1211_mon.txt
+  - known_hash: 9218f9e6271ce310f72c1cfc3bc3a17dc55341885396ca27e555b6acce8f1181
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_h-1211_mon.txt
-  - known_hash: 616add0204d994d5ac22d98f66a198059a008f69d1dfbcaca89f91b6a3230929
+  - known_hash: b8e37c42b7a76c9e1ffd6cbb91378163de16a3b27f068cf3fd4d922350450d36
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-1211_mon.txt
   gas: halon1211
   generate_hashes: true
@@ -2164,15 +2196,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms_monthly.complete
   download_urls:
-  - known_hash: efa527307d025bfefbc846a68dbbe452a27e23e589d53ce3df617f852471c13b
+  - known_hash: 54f0988eee7875464d92525d1283ecb467b5c0dc6bdcd2689788a3d5ede82bd9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_h-1211_mon.txt
-  - known_hash: ed01bf5c31d19460a9eac4a13d95d6c076b89385096cb3004f96f064d928759b
+  - known_hash: 6f01f46d0d8151c973dfa66ad0ce4edee402e1f284abf895cf0fdd45e9dfbb09
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_h-1211_mon.txt
-  - known_hash: 713e1fbdd77da05a3f73a8cdec1874fdc0f8b71a065723f4b321033796a57598
+  - known_hash: f638763ab88a35681a19cb46b428bfdf35f2c7f37bda1baf1473fd8ae2daae05
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_h-1211_mon.txt
-  - known_hash: 18f36caaa36a9f4b071a97e2247af39d4bf8d4bcf3e990a6c1e3f72bc0ba2a1a
+  - known_hash: b7dc88b95face295c2d6c8a247302bebff468ad4cadd64491bfe1057fa1cb203
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_h-1211_mon.txt
-  - known_hash: f80f8008287671b0505f6be30c7fd0decd83959d8ecfd5772228b3075dcbb7a4
+  - known_hash: 89d28a0f643a1799c777b474650943c32454b1198ec88d6edf22178aaee27d73
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_h-1211_mon.txt
   gas: halon1211
   generate_hashes: true
@@ -2183,25 +2215,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 4a34755431cbda049a7913af6290f2d97b3e659f08aac418b9ea91f61936b1ec
+  - known_hash: 3a3a39b4910afd5fe45fe51a7ccc896f410b93ca8d3a3e067f06149ae44cb5db
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-1301_mon.txt
-  - known_hash: c8b4947fc0985b0fac19097d8f4ea8d25958603fdec59da75b677c13c591c0b0
+  - known_hash: 9f8edd0389bce5a5fbf72773d7cf0b09a6c8b7879ed651e218edec6b7d1bfd0c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_h-1301_mon.txt
-  - known_hash: b806b001ffa1ef8aa130b846bc451b18f4b8b600ea974c33f9f83e84c1884ee7
+  - known_hash: 20467dba01abfc186c6a71341310bb9d608ca333a65bd7b7bf1ab3f1f7371384
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_h-1301_mon.txt
-  - known_hash: 687b6d972a08169483059c2a7248b858517db2cfbd85260559804539b8f5b751
+  - known_hash: 4415377467eb7a981362d3bab0685bb1c7c9d9df72a4a77c575668f4672b2956
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_h-1301_mon.txt
-  - known_hash: 16947f98062c83615c2ba3ae219adb1b059174d892c0a30407b64fe798cce0fd
+  - known_hash: b35481ceb9abf216b7c371755ced6b198613ef0d734c00f3d5ee2f35e57e53c8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_h-1301_mon.txt
-  - known_hash: 77d53984de80771e6349550a988be261c66ae05c3f35e8ab88875e71955f2618
+  - known_hash: fc8793d326e2808e610636a9f9e5b7da7b258be214ade8f5aea9a62758539551
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_h-1301_mon.txt
-  - known_hash: 2f0ab614a74225c18ca215fa065341cf941651a451d62f6e5873a7b7d825d56a
+  - known_hash: 4fce43679ddc217ad3bd2ba4c6babc6e43c5d2f32cdd055b12589ed0893580b5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_h-1301_mon.txt
-  - known_hash: 4fb883c51dc9a2a0080972a00e595834abee2c9d5bade3772827714ede43ef54
+  - known_hash: e7b1b40afa5b120060c984eac403ffb6cc9e66528121bb7aa0b0055cb6af87fb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_h-1301_mon.txt
-  - known_hash: dfe2c73086d314a654c957ca535aee7292798eaacf8e2d6fc124d9bab843817d
+  - known_hash: b120ae2152a4393b582fb22379b8c75783059cda0076c8106a6f70bb7c989940
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_h-1301_mon.txt
+  - known_hash: 40aa098600a196a4e71e4e3fb2b4e32e33c62c748f2050ddc6d678cb663f0835
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_h-1301_mon.txt
-  - known_hash: abdc450bed2417717a96c7430cf5c40cacb7d258d9a3685804b53af029075ab7
+  - known_hash: a7f2d9ce4bd13ff2285d7aee168ef969c05524b8cabd2a6ef26c67e2eb3074cd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-1301_mon.txt
   gas: halon1301
   generate_hashes: true
@@ -2212,15 +2246,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 672296a5c8134866c87b9b04fd7fef5623dd03605a92e4d5e5e2e4a2965eb2d3
+  - known_hash: 80470cda483049be44ded0a59ab23bed1614d044aa35bb732366db38f74a5715
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_h-1301_mon.txt
-  - known_hash: 5329714c5da59f0ebbc9d2b80b3aad5f5954343f06391ebc25cc78ee9a75ebd6
+  - known_hash: d6bec4b13f64718c7f1774d1aae37f430c399650961341addd8fbbb97ede8c8e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_h-1301_mon.txt
-  - known_hash: a3c82ce49fbd44e9223f0113fa447384b44943848e9dabe77de418d4645e37e3
+  - known_hash: 4d1929d4424bf14672ad55c7c2dcd9f61fdc11b7b453b339786fc27ee2f05fe2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_h-1301_mon.txt
-  - known_hash: c321082212aaf722bb445bbf67fef7fce278db81da6afc5042095054e55e4a5b
+  - known_hash: 55980208404599e25d1c742f0150d0caec6d7b2b83cdb7204654baccb21a3664
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_h-1301_mon.txt
-  - known_hash: ad6bef10c76d4c305a07f8bfdb20fe1813fa9e6fb874ae542397d8782826fdc9
+  - known_hash: a0267943ebd9d4c73743890152efce9306b378934d61b29054ca3662d75909dd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_h-1301_mon.txt
   gas: halon1301
   generate_hashes: true
@@ -2231,25 +2265,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon2402_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: f2c33d05e90afef78357f59f4a769c744f0fad3b2d21f79f001970f64b2938cc
+  - known_hash: 1ca3eb09fa9a87d6a40838d073f740288c4861423c877dde18b1a7f3b6205ba5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-2402_mon.txt
-  - known_hash: fbabddadba0c39ff7099c163d0bd9aa22246250aff272910d0e4157986f33306
+  - known_hash: 4807e9f8d809e4acb3c6936d7468ea46e677408a96237467667bcfca69836f12
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_h-2402_mon.txt
-  - known_hash: 26f6cff536d2a4faefc44a3c1ff6a58f6df8a7884c453e52268cee47a8ed7597
+  - known_hash: 24cd16f8624b52cfe13abb2790581ab0b70ae66f72732fbfc54912e44236347b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_h-2402_mon.txt
-  - known_hash: adc18d2605b3ce3be288b424ac5d1bdec6297e6fe4c9ff2a6607e106f81ccf1e
+  - known_hash: d184b59360419334ed5fcaa48e73749387362e4c636c5109c339af9916ed8a1d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_h-2402_mon.txt
-  - known_hash: 982ca6c22964b2ee547c5990b7845d3a42a3a20c12b7efabf3ec83b9ba2153f4
+  - known_hash: ee347d08cef9638debe2edbac73494b4b15481d8d699fe386705df01f518c6a6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_h-2402_mon.txt
-  - known_hash: 5a75b4fa2925858914e8903ae82bc7dffa92419f30de715eb138dc3226f6d837
+  - known_hash: a25061c76dce62c7aeed818fa6d68351bce7be76c98f5e379e8fdc39174612f9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_h-2402_mon.txt
-  - known_hash: 7925fb9765afca2e792e42a0f785a6f1d39f9b82c37d324c0acf472382799c08
+  - known_hash: bf29b1c94e3303f89587e13d4ab6d5d1f782d8110f5fd6b8b099350b61f5b5dd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_h-2402_mon.txt
-  - known_hash: 62bca22e3885675e1ef0cd94640542d8489acc7dc93b229e0faa89394da3a1d1
+  - known_hash: c116addb9233c61ce1a22dcc13b64a0ac2a06ab84b6a6ea0e6f6dff98691adfd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_h-2402_mon.txt
-  - known_hash: 3de35a86a2d6fa37a79b6d76d549f1918b3f0f933b881ba5d3d3ca7866aaa1fb
+  - known_hash: 91c5e45852d7906bf51b295450dff297f3f3360e7b9bd51e877ddaa2fd69cf13
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_h-2402_mon.txt
+  - known_hash: ca5f79a58a13ca3d5d2820b725a3d85269a3d1965c0c24dc323b632bcc22b7ce
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_h-2402_mon.txt
-  - known_hash: c589eb633b9631fe197d1d4ea41d36680fd0eb1ec15d7aa798787fa6f694cd90
+  - known_hash: 3b6530845fb48e037be377401d5c1047eb0710f3d5a12bec395fc28040372e0f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_h-2402_mon.txt
   gas: halon2402
   generate_hashes: true
@@ -2260,15 +2296,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 780d01fef4056e770a8eb46ac40104a517f8ea30185abfc764f459d648d2c352
+  - known_hash: f490137e260c495d963d7dc286f72372fc6005a8f4cd06a39028a6bcc94c9b22
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-141b_mon.txt
-  - known_hash: 5a2baf1b0a4714fc07ca22537f72ffbf2d7f1a150576c8c7a7e0b21541e5b5b1
+  - known_hash: b2ed65725efa8cebb1780a2352b158aada9cda385e59d990ac355eb4e5c8021a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hcfc-141b_mon.txt
-  - known_hash: 796ad2c8f2d73b95678cbcc5b2793ee66b26327b015a2eebc714b14f561b455d
+  - known_hash: a9baad6aa04cfdfb1b9d01c3bfaa990f53b66668c996e15d17aecdf917c99a38
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hcfc-141b_mon.txt
-  - known_hash: 6c3d44a9fa3b380b2779017e8b54c2bb393b2f97623295e5f534da92d787fb89
+  - known_hash: 5043defaaee5809e573e2124d0417428e9e0d6c99bdeca41d7d10a21dd06c1a7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hcfc-141b_mon.txt
-  - known_hash: ec2393d5934884b70a0d4b7d4e869905511d11965e6dc23eab4ae8dd682aa825
+  - known_hash: 26736cb229fcea3a0eebbdcfb99294a1a2ea8f78bdcec756b912c56af522fa53
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-141b_mon.txt
   gas: hcfc141b
   generate_hashes: true
@@ -2279,25 +2315,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: e62cd9e664cb2591650f94032c9ee66640aaa1841e0c190229c078288b8df28a
+  - known_hash: 4061d3fae82f5c81bb92688e1d1398d2e37aff66afb3d4d27a205168031ecfaf
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-141b_mon.txt
-  - known_hash: d65700b2033672631539865645a8c877fce35f881608831db1ed1cd35c632706
+  - known_hash: d5a9d3a22d5f543263419868cb7ee8a71da996ce7f8c4a136c9e69b84580c142
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hcfc-141b_mon.txt
-  - known_hash: 57dfde7ea85e4891a681822d700d04ae03d856aa5688fd550706227f48d547a7
+  - known_hash: 41dea78408e73b850372130d55500c67bc499adc7f8ef6682cbdfcfc3ba16db9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hcfc-141b_mon.txt
-  - known_hash: 478f9ed79b1005cc5ab63b3ff154a521392c4822d01ffbb7adb94bce10d7c537
+  - known_hash: 61d474c3799ff10b60e405c91c7cc8bda61bdfed6e38056b24ac4a39fddb2f93
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hcfc-141b_mon.txt
-  - known_hash: b1fb4cef736af04780c6117f1b4b2b7b7b445a97a5962b48e1a1c45f32be0113
+  - known_hash: 6076ef0609d0bcc13cae79448594ba2be8757012b2d91baeb88bf367139759e4
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hcfc-141b_mon.txt
-  - known_hash: 29945d794fd1d45044c3cff2e3e5eef7bf641b2325b62a20cd1974eef07cf685
+  - known_hash: a279f7b762009e01d20792552dd678d3c76456ae4f4a2ca68359746aea4dccc5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hcfc-141b_mon.txt
-  - known_hash: e4011e7a4c29599dd78364f4558da0a375b4e8e98471a78d9766b1a8b38f1b9f
+  - known_hash: b0d8ed69ce919ea2f45b481f3bea74d3fb11d109558cbdb96c401ffad177593e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hcfc-141b_mon.txt
-  - known_hash: 575cfcb4d108025bcb03a78f8fe976cfbae466418006a751515b6db5b16a7d2f
+  - known_hash: 30d2a42b8b23f07f064ad3bf53cd986f481a497da036ae2959994a20a276d3a8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hcfc-141b_mon.txt
-  - known_hash: 6814236c37b72cae1fe762a6fa7ad33224c2f2ec71e5079fb9a752241a54ab0b
+  - known_hash: c4363f9a16c4ad5822c2d12e723d699bb515a3c97ee77c22d3f8d61bbaa49788
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hcfc-141b_mon.txt
+  - known_hash: 85487456ebb7717294faa6a6082cbd0d7332e8aed77ee4db4c533fdcc8067bfe
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hcfc-141b_mon.txt
-  - known_hash: 62060fec4007bff9318fb70e479271e6760b5fa3d22d239cf15ef9b39f3adc83
+  - known_hash: d2254e22037dda3e4a7bd546c6d31a6dbdc05803d0fb5a746079a66ecf0d8721
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-141b_mon.txt
   gas: hcfc141b
   generate_hashes: true
@@ -2308,13 +2346,13 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms_monthly.complete
   download_urls:
-  - known_hash: f3ff11f0dbfd9d0854a2bf14ae73fd1b98bd23db6ae7396253683cb1044c8cd5
+  - known_hash: e7c21618112db7a9b6fce11f47801e56d7b7e248a941ef77b6ad48f72932ab69
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-142b_mon.txt
-  - known_hash: 86a54cbac773c7479242c703f6457924eb78f876e913ec61ccc4746b99e167ab
+  - known_hash: b66b6bb92fe2e47976ccd55fd46cc0fa1603aba95d3212ef845adc446c23354f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hcfc-142b_mon.txt
-  - known_hash: 1f625d3b46c8ac83297eccb1f254b10fab2d446fd0e689f2b985a14e27a77fef
+  - known_hash: 562b270012e96689f91d0afe40c079abc780ac91e834b637fc4555cb0e20b59e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hcfc-142b_mon.txt
-  - known_hash: 3fa9f1f89d032388a93c8372e131f5babaef0f8ca2742f6fddf4493f7f727203
+  - known_hash: 456f95446bfb9ff623c5b7ffe2e0885dff84c47944e3690708665de2ca73aff7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-142b_mon.txt
   gas: hcfc142b
   generate_hashes: true
@@ -2325,25 +2363,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 19f39b1f7083f7ca895b9cf8790b6443fd320cc629b0ded12729aaf77aa001c6
+  - known_hash: 3ca8a9f1a3e0e1ab29c4e87a1c7c0d949691d5aff34982bb0a165c8189cbd8f8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-142b_mon.txt
-  - known_hash: 49cf1e04bc1d9d4c2db2e62aaed56e4680cd7fd80b67ebffcc0abfff7af0238a
+  - known_hash: aef3199258ff6bf5e5b4d2ced9568af1832ab0bc960df06233dfe11ac6e02e74
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hcfc-142b_mon.txt
-  - known_hash: e08addeb18de71f5a65b44d98c97781354205e34e5dc7cd8945d35aaa6b690e7
+  - known_hash: 39a58d6504fcf8779dbe2ddff042da2b00a2a52a99c912286160cd073d50dfee
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hcfc-142b_mon.txt
-  - known_hash: 881c90d69b8527103706deb6b99d833cd9c125f32541788f92f39ad21192389a
+  - known_hash: f13ad2297e444df552ff07340dc6fa0d5735cd6dd52494c9a47409ff470b66fd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hcfc-142b_mon.txt
-  - known_hash: 7571cdabc6bf1310b7ca692788208197f80b619af1203f2f49e2c797b7371d2c
+  - known_hash: 2d681ccc90eb3fbd284e8219c975a489f3550146bfb05892b861ff9be04cf245
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hcfc-142b_mon.txt
-  - known_hash: 2b48d5b9e30cb9c75df063cdf76d4715436dfed8f633141a496adad25e216464
+  - known_hash: d314d9749297cf2d96f9956e519056059c4c71c89e7ae8bb287aede5352d42b6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hcfc-142b_mon.txt
-  - known_hash: a0468de6f396206dc06f6519fb2606739d0bba825f75ffb7fd19935fce0d7a2a
+  - known_hash: 28505fa6196f3f7c3a8ffd5990aa8dd20018b836daae7ce6bad26b39345d79fb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hcfc-142b_mon.txt
-  - known_hash: d20a94af2323780af18e991e3d79234b0039745df27ecac5ab08a50aad2d9f98
+  - known_hash: 021831c6fd3881759980d2bcb848ae13a7d2d0669c3ee38d5332160b2a640afc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hcfc-142b_mon.txt
-  - known_hash: d4ad55721d9b47aaa08f6e11e7328e29a16e8e15072d784913ddb40102b4c065
+  - known_hash: 0fd87985358c9a63f4e42c2a28dde8708d85fd78d166a4f581dc49346a5ad95a
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hcfc-142b_mon.txt
+  - known_hash: 788729a5ff3e6fb661f37813da310015c8eec663b45b46d5fba1aea7f4470be2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hcfc-142b_mon.txt
-  - known_hash: 4e27a3af431401df4548d7276e2c02c7a9077b3af2a7f17a01ac910abd88398d
+  - known_hash: 3caaa235b61f3d6b2414e714cacc0d48b9167f158513019922772dd248d8e5b6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-142b_mon.txt
   gas: hcfc142b
   generate_hashes: true
@@ -2354,13 +2394,13 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 52d5c6aa05962c066faac176fbbd4e36675f15c693a61e56735c4f917ea48104
+  - known_hash: cab4556dd0cd0cdf4637ce7071c86e9f0041399d06fa3fdaa01970ddeb0660fa
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-22_mon.txt
-  - known_hash: 036740fc8aa10154b75336d64ce9c7e79a8186594b088eca47a941d0ed57d2b2
+  - known_hash: d15e6c74d86033969d517bcfb0bef28102d7a179decd21bbec140e597bd8a579
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hcfc-22_mon.txt
-  - known_hash: 4489aac95440520f69697fba0946a13902f97f3f2e06d790e01fbb7c4f1131f4
+  - known_hash: b8b2c1cc7be5d9af2c8b07f1f1c2ab6a24471a01ad1961c28cbc576d69e387ee
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hcfc-22_mon.txt
-  - known_hash: 35bd22b1d0c8b79c326d5dcea0d7294e8ede64dabf5973bc78146576aa1e06b2
+  - known_hash: 6a789378fc85d7e907ffe3f39b0ac6ad7ccf606813d2f42e6f529f95ac945e79
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hcfc-22_mon.txt
   gas: hcfc22
   generate_hashes: true
@@ -2371,25 +2411,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 7dc2fc289b4f30e949a606f89890d33643de557985200f6c646ca888e275fdb0
+  - known_hash: bd50bfb78dba527dc49c1e4fce79378f2ee3df88ed3bcdd9fb933e17c6e3501b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-22_mon.txt
-  - known_hash: bb28a00315b3bbaa53926994e01f6b2d9ced3f33b93f06785b18f6016a677e4b
+  - known_hash: 591164815d2f45eba7cc5c57a12c7f347a6ac2b787db5ec7180e04c554bfddd6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hcfc-22_mon.txt
-  - known_hash: d06728a8e4c3e12178a54960dfe55f86521335c63176e3b7f01b20ea211ab1e1
+  - known_hash: d5e83ec0be08184fa0659215a6ab9931f22f8590615d3f0bb229c73e554f9cc6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hcfc-22_mon.txt
-  - known_hash: 0aa9347a21d063f39f93339aaefb7132e0e1308e29916253ec5360b792c31fd7
+  - known_hash: d1ed730fcd02d5808684be50b780c1a8e882845d4daf4590d24a84aca0c6ffee
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hcfc-22_mon.txt
-  - known_hash: 8380dfa54e654b1a2883058739e250b07c847eb4bb7de42ff40746960a830029
+  - known_hash: 71a297da2d79380b103495962298ed1a2f47ba46786062914d17d12657885064
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hcfc-22_mon.txt
-  - known_hash: 9e0f4361d06ed32e32659395d3558b262e09624d621b0882fdc5f8b25e2d2f71
+  - known_hash: 372d6d9024fccf41cb504602dd50feb0fd3e9e434c1ddb47d3e9a4a9194e5137
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hcfc-22_mon.txt
-  - known_hash: 115e4c4bebef83f6f9717203e22b932342e9a9ef767bebbd3b4248fa7726a65d
+  - known_hash: d28d0f20498c4e2c5426cde740002989592957c5d145392c1de72cac4ad03b7b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hcfc-22_mon.txt
-  - known_hash: 0d66ef59557b48f9d89edc812824cdf8f7a86945bc121b974d85c0a25188e724
+  - known_hash: 361e506a79cea6df1bb21ca9174cf52a825e9494fba17aeba5810aa13d19b016
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hcfc-22_mon.txt
-  - known_hash: 3378d34fdb90267fb351ab1a7ecde5e3a13ac0aafe74a21a4bb581beb4951ae8
+  - known_hash: 8c027b87ebca7458f9ba1a71f1e0170e0e4508a16a0dd96667b436b9f2ab5e1f
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hcfc-22_mon.txt
+  - known_hash: e942fee534c7314f937b5d4946f2f4438faee9a6718fdb6dcd612fd5f8c63b13
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hcfc-22_mon.txt
-  - known_hash: 8b7120a81a311f7aaeffa18acc268f1878246cc1fdc83ed5671ef367d2b9a27d
+  - known_hash: b659ef501fc6fe2f03e2ac8da9d0e51acfe5825394d2529340beb3401fc9871c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hcfc-22_mon.txt
   gas: hcfc22
   generate_hashes: true
@@ -2400,25 +2442,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 0058dedc419d739ffba9892fa408377c761ada064475325d49532f1b8c08f75e
+  - known_hash: d4c6cbaa1c582f55ad94128b383104e575b49adff86a5bbce03b82e16eb3dd91
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-125_mon.txt
-  - known_hash: 330dee5140454483ce31b2b82ce68da95f6dcf5fe189c6a17aa69abecedaaf5d
+  - known_hash: a9e726fccdff85448c055b80641ff2e6a8d627352fc25a2d497fab2c8228d55b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-125_mon.txt
-  - known_hash: d176d9b2bb0772e5d27302ab41c2aac2fc8f3a1978eb8f8ab011aabec7ef0d50
+  - known_hash: 413dbb4b961f0d25e6b6e3e58ad155130837e6a12981f0117e6a5cf7b1238c1a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-125_mon.txt
-  - known_hash: 81697d430a2217205b4480c051f39207bd3ca2c8801f92fef5af761ae0b46bad
+  - known_hash: e5500f38c0a684a059e631c94404208998cf49a8f408b75e7e47910959c5ef8a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-125_mon.txt
-  - known_hash: f15f9d4245ad7236a0186cbdea427004e4cbcebcfc556eed6ee14d5b4fa7ea44
+  - known_hash: b9c7db318876b2ae8356a9a1bd6ae1e9d5a734617818a577a1a44c0d4c6783d0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-125_mon.txt
-  - known_hash: 189644e86be7219afd7f0706da788b509465bafe7276425c393df7ca9a09c0c2
+  - known_hash: 33b65118aee4adffab1736072f5f5558b11f1c663055f7ba88a20f1011f8db46
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-125_mon.txt
-  - known_hash: 35076e5aa4f94d24be68a371b283c0882b3be12dd31c1af2cf0096f552756ebd
+  - known_hash: 13afd54295c99bd58d5fdcf69d560dff0d218eb27489f2f8915b788064429445
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-125_mon.txt
-  - known_hash: 6aa253ac4f3fa859a6046d0a6072c569c2cf2564c5bb5a39a9099184c02c4cf7
+  - known_hash: 289a84a3245af6b47b98471c84222d92ea7caaa078abef19255ede9bfe3d7518
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-125_mon.txt
-  - known_hash: 78f4e09c5157e52fbc1ce32ecf47f65a5bbbe9c245931c85e3b5b59100a041c5
+  - known_hash: b5ed8331959401319ca20182b56bf29095ba523329b97376bc7a6256f00878be
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-125_mon.txt
+  - known_hash: f21cadede2a21ec77328c11dd95ea15ceb3e42d0c134d953f1e183cb1954b002
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-125_mon.txt
-  - known_hash: 91ce6230ea75973c06814a38612814b5c588cd60d943cd85bf246c060b216e7b
+  - known_hash: 4c26af212e855b48d509b59a3eb05da982c2c9f9d7a77f195ac5559a0e40973d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-125_mon.txt
   gas: hfc125
   generate_hashes: true
@@ -2429,15 +2473,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 0897119e6968e8b18751fe259533bc37ce2e0e44cce5d5d09d42bff24249473b
+  - known_hash: 42d96a33d9cb3de781b11ed166d3b28b24da8b001863f1e2bfa348949398dee8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-125_mon.txt
-  - known_hash: 40fe1f5a19bf74a24d745fef1e5257ae966320b4f71cb7a655f77741df915f7e
+  - known_hash: 2e3925fdb2466af518eaaf3430fd282bb52c399bc70fd57abe9720b19cd3c4f7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-125_mon.txt
-  - known_hash: b33342c0b3b6b80ef482d6f1ec424165a3f1d86f2c9c9de28166280f25843222
+  - known_hash: 9b600a325f24278d4f5c65c791bb671d3645753553e50e8a00c93097025428ec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hfc-125_mon.txt
-  - known_hash: c547bb5926b0c7d899309ee1b974976612560ff3d3d8638d3209daf3c7072553
+  - known_hash: ce6817d9b1aa6e6ad967d081bc42bb063aadfb224878fbfb8281d44f8feb2f4e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-125_mon.txt
-  - known_hash: b8edac6023bac0f3caba58f8406df46748c1243556166749ef7dc4e0b1bc0acc
+  - known_hash: e53dd8c9fa6f3f0d0751e07304cfd687dba69061420bc5c941708d7bb12a3f0a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-125_mon.txt
   gas: hfc125
   generate_hashes: true
@@ -2448,25 +2492,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: d2f39aa42e4ae6182084d595bb51d7a928913819ec30dedc5fab2b09ebce50fa
+  - known_hash: 79fe7e57428f981c5c8854ae94c5c6af61958612e4f9aa5ddf055212aeceb367
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-134a_mon.txt
-  - known_hash: 289fd88e1f6e8aa0fce15dadc1e9c1d246108d9a9d615327c4e242dbbbf8095c
+  - known_hash: b2cfd56cfb54d25cf895f9baf393e7873b0c7b8cbf2e336ea0a1b30d78004d3b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-134a_mon.txt
-  - known_hash: bfdb55db913a285192ac5cdb9456d452cf75d190f5df2d7ad58b10b91bb5211b
+  - known_hash: 7674ee27bc0cb9fc7a7cb6d2e51e8e75afbd94dc80df8fa27e584f30e2155b9f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-134a_mon.txt
-  - known_hash: 7078f3636bbd582f09f9706c4a36bd07a3ea2194800d4dc485a01ac6cefbd3be
+  - known_hash: 100b9359619c7ed048fd35867461685e5e90221bfb1ce06a1e26da644bf3c321
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-134a_mon.txt
-  - known_hash: b30dc3b0829d52cda6554a63558f20e2e23713562e6d08cc28beeecb770b9dbe
+  - known_hash: 631a9a2aed20622c0d4a0226d17343199d43bfe73239ae299739240cc7665a97
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-134a_mon.txt
-  - known_hash: 67bcdb81b91af3a417cf60a7b3fad1c3feb7e6b1ba53ba509c75da9c67754d03
+  - known_hash: b47bd1a17d330ea93f728e0fae73127631e45de13ade799b4bdcee96d3d15bd8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-134a_mon.txt
-  - known_hash: 3aefaadbb40df63585397d3fe8ef4f5ce9980264bd68d2f281d7f3e40177267a
+  - known_hash: 8be3ab3d6af4dfdbc3f244874f053303baf11617e90bd7c72767cd803ecb04f7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-134a_mon.txt
-  - known_hash: 31c4b1d2c15cfe77869a72ee60f6e749fbb775dc5a62451637e72097c3cd0d21
+  - known_hash: 5ea3e4cf927bcd590d6098e11128fc93428859dd5a9fbff34b16570c0fff844c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-134a_mon.txt
-  - known_hash: b61be1912adf36961a37127f78daa42f903b044e796493c7a46ae180c036aa72
+  - known_hash: 92158fc1cac7e3be836d2e446156b8cbe834b070b353d2ead239f9a5b2ca3520
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-134a_mon.txt
+  - known_hash: 0d9ebf4c089768870182ff76a3a01ca00c400dfa3f51944456441e21825c65d9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-134a_mon.txt
-  - known_hash: 724b699558e9c26cccaff47ef18ce73812cc1a0b25fdb3a2e93d01893f0c564d
+  - known_hash: 76c86897274d9f365d33797716ecc60ad507cf763b0c6c905eb5334ff904ef7f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-134a_mon.txt
   gas: hfc134a
   generate_hashes: true
@@ -2477,15 +2523,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 8c6405431ea194670ac50816bf7a01556bf240d95110098c6f8203a27c73eefd
+  - known_hash: 53150cf3c96e349753e901f6dfa40a49fde000f0a47e1cde97f5fe8802ab7f2f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-134a_mon.txt
-  - known_hash: 7b0a36cc62629440de2d4ed11c4a52744d38bdac0dc096ee35144bced8ebb032
+  - known_hash: 10e826040e9d6544740a08584cf1735a6eceaffe58cb0faca1feb028aa400b95
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-134a_mon.txt
-  - known_hash: 8ffe2a817fe60d8427a88fdad07937d1103d70cf7780cfac409fe20676bdc4b4
+  - known_hash: bbf0a845cb388826ed137483c7d645931aa4aa11fb832f07dd3eac8590ed085b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hfc-134a_mon.txt
-  - known_hash: e69c58e0a4f96d9782645d837e8189582e8471ff4ad22b3f9230bd038ccb4600
+  - known_hash: 155867779bef4699da368d9c60692210fe406c5c5b0ec4ba99aa0d01844e4d1a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-134a_mon.txt
-  - known_hash: 2cce94a135d6a8f48dcfd487e9196265c8f290d1f29a0b98ef5020607d615516
+  - known_hash: 43b30d98d60f1287561716ff5ebe153e35a69c08e8eb07db928d0e70eefa83d9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-134a_mon.txt
   gas: hfc134a
   generate_hashes: true
@@ -2496,25 +2542,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: d7885a7122fdf00a4de0d182ecc5071f87a929c1556c6bcfc7b8fbbb70bc2c2f
+  - known_hash: 0cf47326e9e944a3dab006fea00fc07f88c2373dec7b73c27803a633a4603536
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-143a_mon.txt
-  - known_hash: ad1c31c48fcb97c3316d8dd8db845a4e5268fd5528e96a83615a4ce757541968
+  - known_hash: 576f480551fb0736e838945fe6955e9e0bf94b9aecf63419dd929371e301c6f5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-143a_mon.txt
-  - known_hash: c9f541a0540bb4190cc18a2d9711ac205b389bb0e179def454ec56dae4061ec0
+  - known_hash: ecb4d9d38beaaf167ce0f7eeb8f861af3fe295ce1916bceee82fa7105d5a0843
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-143a_mon.txt
-  - known_hash: 83c697cabf563a199a2616ef6b3d8a3c10849c51944e510f2ba2f816ccd54e34
+  - known_hash: 071f2a5e9c574b75c42c8a7671a74dca424c3a35c0d002480c7d292427f03bf7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-143a_mon.txt
-  - known_hash: 2d33963a7391919b6dda6ae64ada18953e829c6b425ac8faeefa52e0db83abff
+  - known_hash: 5cb4d06d6e3485d75c9361d1ab678eed12976cd0a6832abc82980a53e4cdf3d6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-143a_mon.txt
-  - known_hash: c4ddbe37826656c21b26c98f50bb2c802227842132d2de78b70bca848721cc8a
+  - known_hash: fa2d4e0dfdd2339ca6ef9d6388ecab1cf6c6213b2e1bcfb9936c83deff59a343
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-143a_mon.txt
-  - known_hash: 1445649ee36c5fa252974a3822fdd36a7b05660850bf11e79999d7e8785a35a7
+  - known_hash: 3312d78aa95c10f8925449275bda30b78686501ba764009f7d663b5932049d47
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-143a_mon.txt
-  - known_hash: 7f8fe80f8a646e688bcd234198429fef6705d279a2eb93afd40f490ae827aeb8
+  - known_hash: f5b6e8c416a43c99c538d59c127fea78ce10c11ba8b163c23878dff16ee02e29
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-143a_mon.txt
-  - known_hash: 1079f4544a0afafa21b6e2f2f4d85338cdc311621008b7948edd5e7d1fa8ecdb
+  - known_hash: 31a13998fd963fb82838315620e6bc65c77ac529551059c82292812d63a3a968
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-143a_mon.txt
+  - known_hash: de68a1c3a54efc86c22e915bcb5229b9bea3b0bb68122078aa08dd0f65937ebc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-143a_mon.txt
-  - known_hash: 3e1f9120b0ad426b69500b3ece868640de7b20eb9275a95e30ed7697aca80d9e
+  - known_hash: 186f68fa49da71d2b5cd71c795dd1eea71df89b7c277d7b2a9671d7d72e75bb2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-143a_mon.txt
   gas: hfc143a
   generate_hashes: true
@@ -2525,7 +2573,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 07d4ac76fc3e5209539b7242dbaabb75e666e83413bdf5ddd4c0aa3674044194
+  - known_hash: 5acd40fce8ec6b9aa883bf4d27759718fc19aeb0f453b05235d4bbe231b6769f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-143a_mon.txt
   gas: hfc143a
   generate_hashes: true
@@ -2536,25 +2584,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 5abdd8db5b7f499be2fceef98c496a7ede5667d1e8550cdba21f7b106c052be0
+  - known_hash: c366e58f47fde3fc02e78ed474e16c438f2c395548ebd584f87551fa73c11ca6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-152a_mon.txt
-  - known_hash: d35f799b2fe749ff3a4a64a951f6a5c8eca0bd386c404ed112d0cd9df566eba0
+  - known_hash: 0bd44b35e87a256f96c50fa817e7580cadc01b84020a668d3b0fc280209a9f4c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-152a_mon.txt
-  - known_hash: 6d251829e55a456b1712872ca53f9bdaee649ad0508865298b18f12e7b15cede
+  - known_hash: 9a5a0498318eb06ae57713d489aea91964437d46d610644c07c143adb6ab36a8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-152a_mon.txt
-  - known_hash: 551beb72606f6d4279048b30a87a5664646cc598a44c59c3a64556002198ac95
+  - known_hash: 47dd37a147e45f64a96b63984e54887e141b1932a0d74faceda5ee0ab87207a9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-152a_mon.txt
-  - known_hash: ba25891b22de90a0e7b4e2902db0d0049e87e07960dd7c34ab17efffa5f0acd3
+  - known_hash: 39000e600f6a1b0897df635248487af8132acfc94369f2120140c82ca3cb7fb3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-152a_mon.txt
-  - known_hash: 56b89aab80540c09175ed4606d8778279abdb56bda41c64ba98a15b9374bf962
+  - known_hash: e2c90811aab9dbb719190bebf03e5bd2a8a33ea6858846577c15de4477d9f68d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-152a_mon.txt
-  - known_hash: 8078154028f1c538545568c57bc4e029ec4045adb50ffa2317d06273d03de68e
+  - known_hash: b8e3447b36271412591a23b057afbc5b3944b4e11d60a708689f1b2cdd5c4386
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-152a_mon.txt
-  - known_hash: 5ea11fc1368ee76cd61fbcc9618ce8936148da012d9ed172306f2734d4ccb883
+  - known_hash: 488c4fdc902416926973469a1302e8d420dd98f2149f09728775663f2ad1fa81
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-152a_mon.txt
-  - known_hash: 426f9c9648e247bfa7927cfc2b21f8aacc26e40d2bec46b06ac9f06dd4c0fadb
+  - known_hash: 57f7aa8bb14ea9c646895c67032a8f3c64769e3dded3eb3ec3226e3015a77f6b
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-152a_mon.txt
+  - known_hash: a3fc4b5cbba3ee402a0c05f93f62238d676cf4c4ab107ee104cbb293f20bd091
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-152a_mon.txt
-  - known_hash: 4c6e9d5bbde94ef88788d1262f65933f5f2cdba7519c4f8b0a10f901ca5054ce
+  - known_hash: 6be3f7777a4fbb1398ffb4e466ce6d2c74d334b82274d1af288ddad01e6fa381
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-152a_mon.txt
   gas: hfc152a
   generate_hashes: true
@@ -2565,15 +2615,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms_monthly.complete
   download_urls:
-  - known_hash: bee3cbcdeb1673188ff3539cec9392ff9bdfb3b7c2cf491a7804064ce89f1886
+  - known_hash: 8e85a45c24f9f536d3536bd405e16982809c14adff5faf04dda0563f840e7374
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-152a_mon.txt
-  - known_hash: 4329dfca02240c128966dba4526400b445c4aff83f88bee071ae76734bf225cb
+  - known_hash: a2ddf728ce5fde96c8d6c1626cf694374b191664d8a3f38c65a79224e3f14959
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-152a_mon.txt
-  - known_hash: 58410b685f13ad4b4766c88186d25f5689b4a2e7142aa2c7bcdab34efc1ca2e4
+  - known_hash: d539619e949348c39aca9080375e1c097e1b2c3361a6bb444278c9a8dd3438ad
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hfc-152a_mon.txt
-  - known_hash: 45d36540ebcec1a42673f43a302da8b20d7824cd4e0c29a5cd25cb8f0cb14953
+  - known_hash: 40c813324e9d891cb53d6dae124df63935f119dc432cc7ea4f7e9b77609b77ab
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-152a_mon.txt
-  - known_hash: ef42c5e5ee878abdcae6dfa1f152657f129e2e53fb4fa343f3fbfe496512c0cb
+  - known_hash: 9f5014dc258a147f5365f82bcc200377b7a5b9aa692d144b5b417d66c037fc3b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-152a_mon.txt
   gas: hfc152a
   generate_hashes: true
@@ -2584,23 +2634,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: e30969c1f89b24b774b4d4ee74f3934cacd9ed35de19b85a9d95914a33c9486c
+  - known_hash: afa844b11aae545e5de471d27b9cd98f0f727809a70a289a4dc7de11944dc104
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-227ea_mon.txt
-  - known_hash: fc7681e15548688ec7886eba6c6676820531a063f352c3d8d84d7bf8ccf2d359
+  - known_hash: 7c46a47800181b355bceb74e351a41b6044dd3d87cbc2a249a1e2f3322fde192
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-227ea_mon.txt
-  - known_hash: f98378c5a5825aafdd15834ef445609a13ae42986a2e7dde2ac5fb84a254d2ca
+  - known_hash: d95e66c2a18abd0bbb2a7be8eac024b79434eeb19c5b87ed063746c45620ada1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-227ea_mon.txt
-  - known_hash: 8e29e5087c762e61fc395a3752dfafe106933f0a14a947e97dba95a30d54294d
+  - known_hash: e8c2d4bb4c75fad5efda64dc29ababda4c6bfdf6e419ddd55b72904c26905fe0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-227ea_mon.txt
-  - known_hash: f031ea5286dc9fd9461117afcf3c6b43b710a6b3692ac6513cd4b86489d03d5f
+  - known_hash: 99e1ba7caba5560a28da9126d428dfd967be71d0c463978806c1d5efae368c3e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-227ea_mon.txt
-  - known_hash: 4853b791f332009d2c0e48b15ce94b7ce729f6eb8ccacfce8f30df18d587850e
+  - known_hash: b2d09b41458c65ee844acf975900ba0b500614ac04b20ea18e56641f7e0fb680
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-227ea_mon.txt
-  - known_hash: aea7f2fc01aa276ea50f3ae20c28bc6d9ee69540acd6171db4b3d5661bbe5166
+  - known_hash: 8f1d1d11243b0157d11563cf2ea5386b35145d42b204da563a2525191227c4c3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-227ea_mon.txt
-  - known_hash: daf655cdd719b4d83d30cab58cc2715e65489d904b6f579cff51282cdece3128
+  - known_hash: 885b8e00a875ca9d6d30931357cc80498aec2d21f3fdff9c9931acf0d327b74f
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-227ea_mon.txt
+  - known_hash: 0b5ea62a85cf3294cb1d9517c598874efebc2d0f73c6dfff95378258f6085722
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-227ea_mon.txt
-  - known_hash: fc3615db256f12095081d1dda78b8661541947836495fb60cce35bce83045058
+  - known_hash: 0ab48b5ae8cefe4b1f2697dda0c773d2f560f55ba114e0c10d12210a7e9b55f3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-227ea_mon.txt
   gas: hfc227ea
   generate_hashes: true
@@ -2611,9 +2663,9 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 04cc0fe4903b4a0b271828e9209cabc9b345f4f342e463abccc3ed84f325b58d
+  - known_hash: d3b4948158a297d451ab842d121bc46f7aa3871bec49a0bb50227347a288adc6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-227ea_mon.txt
-  - known_hash: 6ee7b4bab9f8387735e2f095ebabafdd0fd6073b29f18e33edaf9c623fd48948
+  - known_hash: f0e5f7baa15ace097dc07d60e97a09ee38c0ee335976e4a6e29fa8dd775a3501
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-227ea_mon.txt
   gas: hfc227ea
   generate_hashes: true
@@ -2624,25 +2676,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc23_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 31a648218f83e2f934662c7733c628a4b6a1f6341abadcc41b8c878e14d68e19
+  - known_hash: 59ae12cf07147c4d6966caa82340f7ecd0771bdb26761860bc5d26275d7f06a6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-23_mon.txt
-  - known_hash: 2529943aeb1263e93739159f64011c25307f13cec390b333d89e496a1479a92b
+  - known_hash: c4ad91a3c0e5508f882c2694a96b8a476e2a4597a9b4f12f7cdbb76cb3ca31ef
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-23_mon.txt
-  - known_hash: 1d2a3ece3b74d02c8f5fec093b661a6c105e1f347ec0c46ad67d02166e6eb6d5
+  - known_hash: cde637586deff8c499d492d66c1e21d819a56dbf8227188f5586a44305053281
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-23_mon.txt
-  - known_hash: 8f98b1864a23130067e46aa2b1d1b8e4f9bad4a2fb90b36b7a2bdf3042b6d46c
+  - known_hash: de8fa0f5a88b49eebca752da8940f8e082a6df7d05908b2686e55aaf9652bc21
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-23_mon.txt
-  - known_hash: bfd0e359d225c055de6796e9596a66a2ef5fc856a0783f2858becee95148da69
+  - known_hash: b5902e6f900736b4e9d62cdb728a71a59f35b2c03c3847c7e57caf42d9da4358
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-23_mon.txt
-  - known_hash: af0a24619b50836d0b931dde8f6ced0ab22c9639a25cc6274d581c73bb3c0a26
+  - known_hash: 89fc71bc2551a6d7869568ff021de0bb2113d3fe91d370339216fabfd6f4b355
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-23_mon.txt
-  - known_hash: 94a7ad2ffbd7f9498be45348fbe1b8ea912f7f6840e0ff70488b63b0af2d1230
+  - known_hash: 95501e3630ac44d467d83e8e22e7264050929b2a212e4d6789b448ffefd9df31
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-23_mon.txt
-  - known_hash: 9ca957e95aed8a09c4dba0f5985f1b846ee0f4b87045dec31aed4c314ccf7306
+  - known_hash: 780f959585b5739311bb34bd6e050edb4250fdc176bd6f449dbe5f9d7c8ccde9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-23_mon.txt
-  - known_hash: 986322470a16993075bcbbebfff0f233088fccaa8d2e6bdaecf1c811b214ab11
+  - known_hash: 4ecfb540be8ed187106564d8f18fddc9a75ee2c2a4bc18566cce7008b29f211b
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-23_mon.txt
+  - known_hash: 22acfbb647c934ff9fcb2647a29fff1433f0c16d9b7d11a6e61639c9680a0d42
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-23_mon.txt
-  - known_hash: fa0394a6e8a0c9303e3a25badc99074c7372ec771613c7a2c6b9faef097696b2
+  - known_hash: c3d808d576bb22ac9206b494bc44be6a4e3d278f1f232cdbb04706ffbe6b9064
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-23_mon.txt
   gas: hfc23
   generate_hashes: true
@@ -2653,23 +2707,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 4b938649c8b0e4882c2f464e11897ef86e693e2826ecf42ebcf6942c0ffd2676
+  - known_hash: f8ce0e4aad281a47f057fe5df3988a2eba1627391e3b9b67efc2b7e22a18df5d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-236fa_mon.txt
-  - known_hash: 8e5fd6b86f5cb1e6642c064acd0559fb152a10db7849ebdb1458f2d3b6eeef07
+  - known_hash: 6eb392b5471e55fa6e3398c7e2c331b8b5751881e12b5be5be5bb66fc2c725f8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-236fa_mon.txt
-  - known_hash: 48f4807184d68ce676ec8b61dcd298a7dc9fef01e4e3405af8cb7be27e4d7836
+  - known_hash: 8baf9fe73a6d0013b0ca260af10cb87e05cdd33d63434c2060018a35528ec7a2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-236fa_mon.txt
-  - known_hash: a281e85dffc0d7715e65b4fbccd949bfa8f78aadf0fb57851e1b9bd55578835a
+  - known_hash: bca3726bed229102ce57b7ea56ef321f60f4bead772fbe9c3a8c01ea8598bfdc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-236fa_mon.txt
-  - known_hash: f0e45134cb0016b42740598965b59091b4cf31c13db28c4df8a063eed3f56201
+  - known_hash: 92502f9e3302ac1e0d3e3a4ff82cbf74491ebb38dd97d58605220d29555f624f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-236fa_mon.txt
-  - known_hash: dd919a3cca72cec54bb96e0b8c458a4f1429d5b8d0f4d35beed85909f6172fe5
+  - known_hash: 4194f0218e0f1959c707906e0a3c700bcc63689548669429bc7d9c97bc5e9ecd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-236fa_mon.txt
-  - known_hash: 9be00909a621ab38f6bc31b11c6ff9242ab8b096c1599b9d81f569872cd28a24
+  - known_hash: 4daee3e47ba2c2072bfa8d75ed1cb93eeafa03b5ceecd53b662494e2182bf269
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-236fa_mon.txt
-  - known_hash: cb4621303502272d722613b9c17c5683e93f7997a29fb2af83864ec345d504c6
+  - known_hash: 212c3a9f4ef8e49efcf662f1c0d7157b4e95482022fd7f0fc07178c8b4139a8f
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-236fa_mon.txt
+  - known_hash: f4c5ee305ea89a7d037fd27906b6bce6edcd5a7742cbce71f5cf3946eeea167e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-236fa_mon.txt
-  - known_hash: 0220d38fd6c4c49f6012d701f6e5af8b9db823e517a667effcdf223cd0d52dac
+  - known_hash: cd4aff24d1cf969a614d8dd50d8fe8ef2f92e02442b1e5e1203546ac9914d508
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-236fa_mon.txt
   gas: hfc236fa
   generate_hashes: true
@@ -2680,7 +2736,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms_monthly.complete
   download_urls:
-  - known_hash: bf52318d9c5cd1e9e47f953f6ec4f87672bca7566897c476a0a2f6db86ec3fef
+  - known_hash: 7bda464de23ea36b5f314a38dc54694239da6a9f3c7336a482e6a3f98f056c65
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-236fa_mon.txt
   gas: hfc236fa
   generate_hashes: true
@@ -2691,23 +2747,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 66063af6f1b8561118ba888cf1ce95bb6a79c21744d7b7eab3753897ed951996
+  - known_hash: ce99676599690ef24b9b3affcc22a95b079a949ff86662ba71a8a5a1b6054971
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-245fa_mon.txt
-  - known_hash: 867247ea42094791dc6bd68da90a3fb316d8ec8ae40e945b1f676c6bd8c86591
+  - known_hash: c80af77d26ef6a6c0e086713be03dce38331721d58d2be7709219e525a767986
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-245fa_mon.txt
-  - known_hash: f98f11bf634283cac3650689ed2b15f30de3d77631327a73e746ab4e81bfdf6c
+  - known_hash: 720990214ad2cf76c0c179ac0a8c1bffcbb72451e6edd63d7cc34ec5e58816c2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-245fa_mon.txt
-  - known_hash: 60183aa2c071a83bb8defa816d49f7b243b4a81014b1902e2b6784d3dc3cf5f6
+  - known_hash: 099fde0858ff641e096066b442f68248b439db5f559d3ff9e403ca091246d3bd
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-245fa_mon.txt
-  - known_hash: 65080aa103b5dac241de80ad7086549a167bcbcfb3010a5845bc42b4b0b7c117
+  - known_hash: ba8050900541e1e27e1f070d6bacd8f72d3789a6bcb72bb7cc80b2b5cb286844
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-245fa_mon.txt
-  - known_hash: 3add98c58fe17ba7be2516aee0aba074ba56de671f6afa47dcdb7a69dac93275
+  - known_hash: 571632a977583d176a4527b9d87b650ee8fe504d271401a6b14cdddedba26760
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-245fa_mon.txt
-  - known_hash: a0190ee45923d4d0d9ffdf25cd7dede0ef6588c857d10afa882e20a2dcfabead
+  - known_hash: f75acb37a1cf9b1a969a4b4436d03144ddda4249ea4ffb9903b8bbdb7f460d6d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-245fa_mon.txt
-  - known_hash: d1c0d193f0fde0ae42462f2783a9ddc6866fafc5670d973f8b398888e3b4eb7c
+  - known_hash: 3b76fe28267c7609cc7788e8e03eb8b478f18bb53e80e709b1277963d1f62004
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-245fa_mon.txt
+  - known_hash: 5ed4bda9c85def551b6dfc3a0d8c50be4adb95c540ed5e49201f6097b4d39020
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-245fa_mon.txt
-  - known_hash: 46a8dddcd72b3d009a4c6accde48cdf15e3ada72a7034539b3278f8405f0de1e
+  - known_hash: 5f779238157ae74d60514681f86596caba903de9444e1f69bb6b88ca57167292
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-245fa_mon.txt
   gas: hfc245fa
   generate_hashes: true
@@ -2718,9 +2776,9 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms_monthly.complete
   download_urls:
-  - known_hash: bdfe95c5115b6cfdf82039028198a8396ee62111c5103b3e59aa9c3225f29889
+  - known_hash: 23d70fdf30cddfdcef52f44e6e048c7ce405a8f9ceea292cc3f1a4335cabacfb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-245fa_mon.txt
-  - known_hash: 9f9983e6c32790841847a507a489a205025d4ed10928f752ead9eb0a963d7d4f
+  - known_hash: c37ea52177693403cbda09a3755cb89ec69949aa7a94a936d0a9b60f340d297b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-245fa_mon.txt
   gas: hfc245fa
   generate_hashes: true
@@ -2731,25 +2789,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: edb318558ee802a6a768d75cc0ab9606598175f2b8f958f824c5e66a9f216686
+  - known_hash: d992433d786af96a1b0eeafb6c43ad5db36af3ce842f5a6b14997b5f6c631186
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-32_mon.txt
-  - known_hash: 6158bb104a16c145046c51b5fea261f8908529a30f33589bc1e1dc2b83aceefc
+  - known_hash: 8cd995bb4fffcc7b35ad0a12d7eddb61884f030ee37c6c0296483cf726b859e8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-32_mon.txt
-  - known_hash: 4bea1225a672ee3658cbb61516939950724528d9500e0a49554578e95bbafa12
+  - known_hash: b3230e333ba2a07d909479abd0f6c46746cfefd9d40f24464d3fc71563b1304a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_hfc-32_mon.txt
-  - known_hash: 715824369ee94d9014a54989f21d02c7edbdc4d618a83ebe196c9a2865d791ba
+  - known_hash: a63285e983abb2cc27664b8ca14efb6dc83f423f940668ce74f0704889165af3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-32_mon.txt
-  - known_hash: 21d54e6251c26550960b397d1f598a26cba7f35c57e5b0c9a80e74f537db4043
+  - known_hash: b9c439d2e6d5da8cfb6b8350d24cf66a900f50d2af2d73fb185aaa7f4289b717
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-32_mon.txt
-  - known_hash: f6f6936a3567239c93bf657062a88630792620d40d1fc3fa419c6c6a2e90cf19
+  - known_hash: f2fb83e4db70077260aba4f2ca621db1d92c89268f2f924af9f99b89e2d5c981
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-32_mon.txt
-  - known_hash: ade282c4875f320646755d645b1f30de6c59c660622dccd2986789f7c054153e
+  - known_hash: b54eb35ef9991218e445645afbdf2bd36607e571e9a1c842e9623a7dec4481e3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-32_mon.txt
-  - known_hash: 6f0be9ebed1b77630d1704c8db3ae9ac37be13287341b51cc262c08bd43221bb
+  - known_hash: 682bebfd3089fd4c01f020211f3a7ce5ee55ca68bf9d16eea54161a715be88ec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-32_mon.txt
-  - known_hash: e7f86415177e61ed17cee6bee493d36d65877200ff76f10e37ff0cc0b8ac8e18
+  - known_hash: 64a0e8b6cb11742b66afe40b74ef6aaaddaf54333c1d40252df9b6ab8a1b8658
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-32_mon.txt
+  - known_hash: 49237f9985256f59681f51db602c2eb795d33baefe88a8225d00eb52b68f3124
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-32_mon.txt
-  - known_hash: d50dd8b8ab3c45706e30cb02cd26011fac8d8550307dd9eed961841d6a41b42f
+  - known_hash: 76193a56ebdef5fc2b3389ed00aecdb1b0a4534b911a334c0fba39fb176f34a1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-32_mon.txt
   gas: hfc32
   generate_hashes: true
@@ -2760,7 +2820,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 1ed5a7e3364238792d19884083ffbdf466d881e7c62214e3384870bb5ba2cc6e
+  - known_hash: 3a149df3df4bdde9ff20aaa1563c3cb739c4f097aa21ef476586bde52d36ab5e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-32_mon.txt
   gas: hfc32
   generate_hashes: true
@@ -2771,23 +2831,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 1d6375785605cbede7d8c4dcb35cc0dbafd6ff6601be8bd494c357b03158e983
+  - known_hash: 919fe34aea067155ae30866d2f0962ff23459576ea820bd83bdb4b2121f76ccc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-365mfc_mon.txt
-  - known_hash: fe359bb440fa8cfff375cbcf2d4fd05132982921960b9363cb2e62ad210a25e9
+  - known_hash: c5c5a1df280cb9cca838e6eceb4ab8c56e5edafdde2d7c24322b66f4a42fb658
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-365mfc_mon.txt
-  - known_hash: abc49e007b01bcf80868db0aad4140f750f1854b218bc1bbde193d8ad87d9e0e
+  - known_hash: d2003e54c05db4c189fcec134ca50733d3e44caf076f975af5e3eb7dbdc21fe0
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-365mfc_mon.txt
-  - known_hash: a55c85b1533f12fe13cc764046cfdc900974bdf09b0f0b327c18e48c8353229b
+  - known_hash: 41f764426ba638b2e83cccced1354daedb5a8607717d251886e47a544b0f08ba
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-365mfc_mon.txt
-  - known_hash: ba1f6d1cc4e6070fc1c50813fd827ba8fe04c7a11cdfee58346ea490e067327d
+  - known_hash: 8e2768ef66ef4efa1527c7ea04dc03c96d263476cd3c9e2a28f3abb6d0b2e6e3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-365mfc_mon.txt
-  - known_hash: 12fd29879a5b3c164da760c7b6bc95fd10b54eaf154d61308e602467407e0ecf
+  - known_hash: 599ae6b5e6b6e87fb07fd16d7a6d2fcb19fe6f3ad008db892e3d3c8b83a2bc3f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-365mfc_mon.txt
-  - known_hash: f32443714d2d0726e52f13d441ccff0f7abb3637fbe625696b5ecec681bcbd5c
+  - known_hash: 84b5550aaff1febdb255d4e44f42900840f50bcdc0acd6978358a0a58f10f089
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-365mfc_mon.txt
-  - known_hash: 4c46efed8711c597948d17061f6ead6a4c53d326b76579d966bf9444faa877f7
+  - known_hash: a559683f44d61b6bc791baeeccda8b5a823cc12761b2693bca3d6fd145762adf
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-365mfc_mon.txt
+  - known_hash: adaa6e1dfbec19178533a05fc22976c520496bfa5c3cb0db28dd6167422a6c70
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-365mfc_mon.txt
-  - known_hash: 4aaf98c1a16a157219d680ca4ba17999e2f1be2758a08b752bf1fa76b921fbd3
+  - known_hash: efb1a16eef0614d28388a18b780b9dca3715edd7206ab2ccfe9b3187146f3ad3
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-365mfc_mon.txt
   gas: hfc365mfc
   generate_hashes: true
@@ -2798,15 +2860,15 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms_monthly.complete
   download_urls:
-  - known_hash: d877aa5a75e1a9fc38440735d7a8a02fb90d66b9e0a44cfca05faa7bde05f5b2
+  - known_hash: f690cbd9b686d5d2749081af8494d7e23e59c8d018f798042ca659afbdd85687
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-365mfc_mon.txt
-  - known_hash: 17f46322daa1e2666ed4a5225d35c4d43523e48411de42eb75b88e4dc54afa79
+  - known_hash: b7404aadaf33dbfac087477e66987fcb905cd0231200ea87e5c0ed53f7314a46
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-365mfc_mon.txt
-  - known_hash: 45f55f449c63232ecbe539d29da519d532c7e477ef9115a53261e29e2e0a0977
+  - known_hash: e2f06f97a0b3af355bb667ae1d1ddc54ce1976209a24d2076d11c60220c77f07
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/macehead/ascii/AGAGE-GCMS-ADS_MHD_hfc-365mfc_mon.txt
-  - known_hash: 9540ee0e63d667eb202d189305aef336b24927d2d9c15f7d7b9ded5252488981
+  - known_hash: 3ca308d7d55092252e1ff136e8a1de78e4b415930a493cc23ab6c96c06bba4d7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-365mfc_mon.txt
-  - known_hash: 62416a2b5100d112ab7554539a28241ee1e886d8b1a192b3c6187ed3eb0c1e75
+  - known_hash: d3de5ef09fedf8336817afede9005cefc0a432ecdc08582ecbfa3ee348d4844e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/zeppelin/ascii/AGAGE-GCMS-ADS_ZEP_hfc-365mfc_mon.txt
   gas: hfc365mfc
   generate_hashes: true
@@ -2817,23 +2879,25 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc4310mee_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 377207ab134feb0d420539a86b05672b87fba5c3bd3a51c34b592b65d487f2d9
+  - known_hash: 808b965d11cd2afe373a6bea0b43759f76f8dbafd5c7bd246388aa6da402bde1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-4310mee_mon.txt
-  - known_hash: 9f96d2c8d5474f258d7b3ea67877fb9af53e426d355f0d51cdf6acfb4fed6fc8
+  - known_hash: dd1728b681493507511ebf610f6f6e94db0f8cb45f20b0790b32381edf6e0934
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_hfc-4310mee_mon.txt
-  - known_hash: 8ec21ebcf4587da1249ed7ddfc295ab25958d421d2af0d548fc1f40f461b2a67
+  - known_hash: 92ccb1f8bfc3fa9267c94406e31e75d142c9aae79548001a802a6b2433855b9e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_hfc-4310mee_mon.txt
-  - known_hash: 3e801c397ad23e7b82cbd246bbea9111a84a9580cbe4214ccbfb1146b99f98dc
+  - known_hash: d1a1dcef32f9636f8f0c67fa55878e8a811580f6e5ef92249a96236c0c9ba805
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_hfc-4310mee_mon.txt
-  - known_hash: d579995a02bf0e020a021d761f8d696110f126c6b3d48fde6134260e7a64306c
+  - known_hash: a1d92f785191c18fd89a6143f6397777ee25237de0e6d9c2073e611df6221bf9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_hfc-4310mee_mon.txt
-  - known_hash: 0e07ebb9a40d2a3913e26cb151d4c0ff462ee8e54653eddab36f4cb0ae35b6b0
+  - known_hash: 85f21b814882210638ff713a468ca5d7874954effc49e43b2ddff2d2923e8028
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_hfc-4310mee_mon.txt
-  - known_hash: 2bb3c60259701157fcaabd8976a81796d690f750e227250aceddb0aaf6beea63
+  - known_hash: 0dbf601039fbbcdbeba35dbd3a68c22800ac03a8f5a2e1f9804891f2a2c2416b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_hfc-4310mee_mon.txt
-  - known_hash: 75943263485d5a4b47d9175a1eedf33e47ef94071020d65665f68eb1c220fa9e
+  - known_hash: f915d19d7fd101d75b808f77449997e211cd6fd01182c3377e2b1dd0d56dad44
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_hfc-4310mee_mon.txt
+  - known_hash: 75d00cd46e0474dc545c4f1c430af51fa0c1baa84f9588ce04d5ef70ce5d30c8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_hfc-4310mee_mon.txt
-  - known_hash: aa70e7a1a01369cfac2d5d8e7841bd726dabc5ae15f43bdf5be0ec7cc843a680
+  - known_hash: a18a9254e4eeec4159af6f3458b5994a18353cb685ba2c365c9ef8a7dde38011
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_hfc-4310mee_mon.txt
   gas: hfc4310mee
   generate_hashes: true
@@ -2844,21 +2908,23 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/nf3_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 44100e2639b9c130bf1ddb20c583e350bd0d0c294ab748d358e47ee9f9bb10ef
+  - known_hash: 0b1523a84614e9f754e1df4f6877bcfe2f44dadb221e35b53410aead2551cf46
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_nf3_mon.txt
-  - known_hash: 0996e0ad93068af7b2975e91b0059d99f0314365bc97db6831a9382928c49677
+  - known_hash: f6a867b3c5d3e2b8e59bb3324847bf2a19e127612cf42b7be81b78a63b8e9a36
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_nf3_mon.txt
-  - known_hash: 35fd7d146597f462d5e83e86c877a351f82c80d90b155aa1b6e44370bcc5d66e
+  - known_hash: 6fec689820f8a91f37dd0d84af2034df4d499bdc4d5c62d9f441cfcc700de154
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_nf3_mon.txt
-  - known_hash: 94dd48477df906e75a039dd956c32121700a194adb24eae404f8608d640f292d
+  - known_hash: f32883845caa5cab533e0214c46c0bb1de14a718cfaf170ce38686117230a610
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_nf3_mon.txt
-  - known_hash: ff5f6fc118d8bbe6bccd536fdda25985c642061e04b2e3e20bb6ae639ce7b973
+  - known_hash: f8a41a23cbaf5a60e0a827963bbcfc6d6d29a7e93b80148f470bc4bc3126cba1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_nf3_mon.txt
-  - known_hash: 0a963f1776d44fe2076486edea0e3fde78891bfeb848c8e8148ef8d79800861b
+  - known_hash: 6bb29af254e7486ea5a1359b3067efc0ba1a0f84d8e8cd88dbaaecc7eb7f958c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_nf3_mon.txt
-  - known_hash: 3504c2d61f3daf83e102dc1ce0945e99b1c532201a9ba2d1fb8761a8f8c57920
+  - known_hash: 14ba79f7c1e7c3bed5342e694432892e6f03cd04a39ffdfa239071c4509777a2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_nf3_mon.txt
+  - known_hash: 5e04c394f34bec5863f45f28f5ff0bb9aa87bc853ce4e52e73a1cc30f8eb3f70
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_nf3_mon.txt
-  - known_hash: b51133ecf420753fc213a818f54f8b371d592ce08e39aac9db9622bde455fb70
+  - known_hash: d7c3640d20c41a6b465ff149d7bdb5d7a5b81dec92a06ae237d52e4821333f5f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_nf3_mon.txt
   gas: nf3
   generate_hashes: true
@@ -2869,25 +2935,27 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms-medusa_monthly.complete
   download_urls:
-  - known_hash: 5675f9de6d91a6828fed15ae2eb6bfece31864e15ec27bb8c698110057a8057e
+  - known_hash: e51790c928cfef47db21fb8574e688912f0aa6020f4fe1904607749f1a69fe57
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_so2f2_mon.txt
-  - known_hash: fd5df59637e062996355c80a67487ec8bb5e63cc27282a0b5dcb8e876a586bf4
+  - known_hash: fa36ca406957abfb5e34d4e72d36a037b03a2036baa37b178ee27e500c9f1f72
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/capegrim/ascii/AGAGE-GCMS-Medusa_CGO_so2f2_mon.txt
-  - known_hash: c8ac0c6c1f167dd51c48fa9a43daff96d80ca3ffc6c36f30389703c15cf0a040
+  - known_hash: de50cc6d9a7a98216eea0f7995dbf3bd80f215bb100150ba9ff51265d36d2638
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_so2f2_mon.txt
-  - known_hash: 0e776bf6e69686a6cdd292436545e9b6b7fcd868a52700ab5965dc6970e908c5
+  - known_hash: 390e192f3e77058465d70adb9b31695671ed3ddcbac1f46f1b549da674c9667b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-Medusa_JFJ_so2f2_mon.txt
-  - known_hash: 64ef1902b8d26573cd56a801058873c0c0577e22ac33ce1c852af60726b92bd0
+  - known_hash: 29bf5a480d3b25d43882d092230e95bbb9625b754cfbb00c96e120d0626ef116
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/macehead/ascii/AGAGE-GCMS-Medusa_MHD_so2f2_mon.txt
-  - known_hash: e5022d76f5a1defec4d0e94388e8f3b2d89393a45018b53dc60d0cc07325bd2c
+  - known_hash: c88d8e7345cca593dd3b9c8d00bea35b5e01d7852790a35cb23075328296fab7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/mtecimone/ascii/AGAGE-GCMS-Medusa_CMN_so2f2_mon.txt
-  - known_hash: 85a4ad08344f611a50de739e492286e11d62af91f9cc59823c194dab36540820
+  - known_hash: d6ce7d2eb8f8399bd378592b95d128344467bfbd307fa04e90382ae70a64d7b1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/samoa/ascii/AGAGE-GCMS-Medusa_SMO_so2f2_mon.txt
-  - known_hash: 5d78e18b698cc2456b749b0608f505814ec8bfa95001234f724d922c0bc2b508
+  - known_hash: efcd8a1491b166bac0675aa2da31c575762da18e1bef20f93a9b6787da03433f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/tacolneston/ascii/AGAGE-GCMS-Medusa_TAC_so2f2_mon.txt
-  - known_hash: b3a08d1b6db48f4680d08a510a8ac5710294dffc6e7ad2548682c1f8355914ff
+  - known_hash: 292e97fe2c098c24563dabe6c52a3656a6710237e89414b920899f1c5e08b529
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/taunus/ascii/AGAGE-GCMS-Medusa_TOB_so2f2_mon.txt
+  - known_hash: 779b96346f5f91b663f53538f1c436f4685ee70f389a69ae8ad0500318e90287
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/trinidad/ascii/AGAGE-GCMS-Medusa_THD_so2f2_mon.txt
-  - known_hash: 3d2507bd9d02f6cfaa17eb69e4433f18e5419b65b5e5ddbe6b155af68fc2dabd
+  - known_hash: c17a056ad2b059205eea7fe6f7e46f4eecaf7dee747540cdb76a1129147c439e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/zeppelin/ascii/AGAGE-GCMS-Medusa_ZEP_so2f2_mon.txt
   gas: so2f2
   generate_hashes: true
@@ -2898,7 +2966,7 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms_monthly.complete
   download_urls:
-  - known_hash: 7cde90b1d37433fb50bdce1a711640eec1887bf85988aec8a981c27618c1e475
+  - known_hash: 0ece054a975bf429737ad3716df5ceb1026334c8824576ae0aa4590652975f26
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_so2f2_mon.txt
   gas: so2f2
   generate_hashes: true
