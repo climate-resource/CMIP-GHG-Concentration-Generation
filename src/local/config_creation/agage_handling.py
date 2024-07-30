@@ -1888,8 +1888,8 @@ DOWNLOAD_URLS = {
     ],
     ("sf6", "gc-md", "monthly"): [
         URLSource(
-            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim-sf6-ecd/ascii/AGAGE-GC-ECD-SF6_CGO_sf6_mon.txt",
-            known_hash="9ec255bbd55447d8ac521a4683951e0b0aa682d8252a1072e5fa555b90af5aa1",
+            url="https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim-sf6-ecd/ascii/AGAGE-GCECD_CGO_sf6_mon.txt",
+            known_hash="47c3f334f4114ac20c0f5884574eba95505cf6b46c6a84078e2055f3d1541dd0",
         )
     ],
     ("sf6", "gc-ms-medusa", "monthly"): [
