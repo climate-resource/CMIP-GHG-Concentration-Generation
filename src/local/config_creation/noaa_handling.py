@@ -151,7 +151,7 @@ DOWNLOAD_URLS = {
     ("co2", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="co2"),
-            known_hash="f06a7eb8f8e56f775e4843b889ba4388ad61557c95b0d8a764522893f2d90bc1",
+            known_hash="49ab01e2457f3fe74b09dd8f3a984d4580e0a80370982e7c6d2257150d78acee",
         )
     ],
     ("ch4", "in-situ"): [

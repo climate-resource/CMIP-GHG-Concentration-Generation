@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -228,9 +228,9 @@ with axes_vertical_split() as axes:
     pc0_obs_network.plot(ax=axes[1])
 
 # %%
-x = QuantityOSCM(primap_regression_data.data, str(primap_regression_data.data.units))
+x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
 A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(pc0_obs_network.data, str(pc0_obs_network.data.units))
+y = QuantityOSCM(pc0_obs_network.data.m, str(pc0_obs_network.data.units))
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m, c = res[0]

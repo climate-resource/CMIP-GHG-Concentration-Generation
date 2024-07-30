@@ -6,7 +6,7 @@ authors = [
 requires-python = ">=3.11, <3.12"
 # pip dependencies
 dependencies = [
-    "loguru-config", "openscm-units", "pydoit-nb", "scmdata", "carpet-concentrations",
+    "loguru-config", "openscm-units", "pydoit-nb", "scmdata", "carpet-concentrations", "primap2",
 ]
 name = "local"
 version = "0.2.1a1"
@@ -29,6 +29,7 @@ pooch = ">=1.0"
 scipy = ">=1.0"
 geopandas = ">=1.0"
 nc-time-axis = ">=1.4.1,<1.5"
+openpyxl = ">=3.1"
 
 # pip optional dependencies
 [project.optional-dependencies]

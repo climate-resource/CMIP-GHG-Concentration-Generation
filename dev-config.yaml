@@ -2942,7 +2942,7 @@ retrieve_and_extract_gage_data:
 retrieve_and_extract_noaa_data:
 - download_complete_file: data/raw/noaa/co2_in-situ.complete
   download_urls:
-  - known_hash: f06a7eb8f8e56f775e4843b889ba4388ad61557c95b0d8a764522893f2d90bc1
+  - known_hash: 49ab01e2457f3fe74b09dd8f3a984d4580e0a80370982e7c6d2257150d78acee
     url: https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/in-situ/surface/co2_surface-insitu_ccgg_text.zip
   gas: co2
   interim_files:
@@ -3287,7 +3287,7 @@ retrieve_and_process_scripps_data: []
 retrieve_misc_data:
 - hadcrut5:
     download_url:
-      known_hash: c1e6b0b6b372a428adea4fac109eca0278acf857ace4da0f43221fd0379ea353
+      known_hash: 0c72779427b0c1030a8d01639be111f4699ac58a0fac7cda9d929fbd830c808a
       url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
     raw_dir: data/raw/hadcrut5
   natural_earth:
