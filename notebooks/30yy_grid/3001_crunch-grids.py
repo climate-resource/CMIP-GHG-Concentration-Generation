@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -90,6 +90,7 @@ elif config_step.gas in (
     "c6f14",
     "c7f16",
     "c8f18",
+    "cfc114",
 ):
     step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
     step_config_id_gridding_pieces_step = config_step.gas

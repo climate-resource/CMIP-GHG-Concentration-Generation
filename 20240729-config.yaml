@@ -26,6 +26,11 @@ calculate_c4f10_like_monthly_fifteen_degree_pieces:
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c8f18/c8f18_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c8f18/c8f18_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c8f18
+- gas: cfc114
+  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
+  step_config_id: cfc114
 calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
@@ -200,7 +205,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cf4/cf4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: cf4
   year_drop_observational_data_after_and_including: null
-  year_drop_observational_data_before_and_including: null
+  year_drop_observational_data_before_and_including: 2007
 - allow_long_poleward_extension: false
   allow_poleward_extension: true
   gas: cfc11
@@ -249,31 +254,6 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   processed_bin_averages_file: data/interim/cfc113/cfc113_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc113/cfc113_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: cfc113
-  year_drop_observational_data_after_and_including: null
-  year_drop_observational_data_before_and_including: null
-- allow_long_poleward_extension: true
-  allow_poleward_extension: true
-  gas: cfc114
-  global_annual_mean_allyears_file: data/interim/cfc114/cfc114_global-annual-mean_allyears.nc
-  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
-  lat_gradient_n_eofs_to_use: 1
-  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/cfc114/cfc114_allyears-lat-gradient-eofs-pcs.nc
-  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
-  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/cfc114/cfc114_pc0-total-emissions-regression.yaml
-  observational_network_global_annual_mean_file: data/interim/cfc114/cfc114_observational-network_global-annual-mean.nc
-  observational_network_interpolated_file: data/interim/cfc114/cfc114_observational-network_interpolated.nc
-  observational_network_latitudinal_gradient_eofs_file: data/interim/cfc114/cfc114_observational-network_latitudinal-gradient-eofs.nc
-  observational_network_seasonality_file: data/interim/cfc114/cfc114_observational-network_seasonality.nc
-  pre_industrial:
-    source: Guessing from reading M2017
-    value:
-    - 0.0
-    - ppt
-    year: 1940
-  processed_all_data_with_bins_file: data/interim/cfc114/cfc114_observational-network_all-data-with-bin-information.csv
-  processed_bin_averages_file: data/interim/cfc114/cfc114_observational-network_bin-averages.csv
-  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
-  step_config_id: cfc114
   year_drop_observational_data_after_and_including: null
   year_drop_observational_data_before_and_including: null
 - allow_long_poleward_extension: true

@@ -105,7 +105,6 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "cf4",
             "cfc11",
             "cfc113",
-            "cfc114",
             "cfc115",
             "cfc12",
             "ch2cl2",
@@ -163,6 +162,15 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "c6f14",
             "c7f16",
             "c8f18",
+            # Looks like everyone has pulled their data post-2018.
+            # AGAGE, for example, has this notice in some files:
+            #
+            # > Since there are indications
+            # > that the interference from the growing CFC-114a abundance
+            # > (Western et al., Nature Geosci., 16(4), 309-313, 10.1038/s41561-023-01147-w, 2023)
+            # > is increasingly affecting CFC-114 measurements,
+            # > AGAGE CFC-114 data will be withheld from 2018 onward until further notice.
+            "cfc114",
         ):
             out["calculate_c4f10_like_monthly_fifteen_degree_pieces"].append(
                 get_c4f10_like_monthly_fifteen_degree_pieces_config(

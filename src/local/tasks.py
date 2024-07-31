@@ -153,4 +153,9 @@ def gen_all_tasks(
         config_file_raw=config_file_raw,
         copy_file=copy_no_output,
         copy_tree=copy_tree_no_output,
+        other_files_to_copy=(
+            "dodo.py",
+            "pixi.lock",
+            "pyproject.toml",
+        ),
     )

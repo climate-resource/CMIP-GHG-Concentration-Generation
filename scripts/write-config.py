@@ -118,6 +118,7 @@ def create_dev_config() -> Config:
         "so2f2",
     )
     gases_drop_obs_data_years_before_inclusive = {
+        "cf4": 2007,
         "c2f6": 2007,
         "cfc115": 2007,
         "ch2cl2": 2013,

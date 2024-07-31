@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -123,6 +123,7 @@ station_colours = {
     "GSN": "magenta",  # ?
     "JFJ": "tab:orange",  # Jungfrauchjoch, Austria
     "TAC": "red",  # ?
+    "TOB": "darkblue",  # ? Germany somewhere I think
     "ZEP": "magenta",  # Zeppelin
 }
 source_markers = {
