@@ -17,9 +17,9 @@ pint.set_application_registry(openscm_units.unit_registry)
 from local.config import Config, converter_yaml
 
 if __name__ == "__main__":
-    RUN_NAME = "20240729"
-    VERSION = "0.2.0"
-    SEED = 20240729
+    RUN_NAME = "v0.3.0"
+    VERSION = "0.3.0"
+    SEED = 20240731
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
