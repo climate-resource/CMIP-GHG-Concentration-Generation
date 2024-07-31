@@ -163,7 +163,7 @@ DOWNLOAD_URLS = {
     ("ch4", "surface-flask"): [
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="ch4"),
-            known_hash="e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087",
+            known_hash="ea5fc01c59a67d1349ef2fdffd21ceb14ff0fb0d8518f1517d3972cac71df0e5",
         )
     ],
     ("n2o", "hats"): [

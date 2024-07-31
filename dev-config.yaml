@@ -3113,7 +3113,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch4_in-situ
 - download_complete_file: data/raw/noaa/ch4_surface-flask.complete
   download_urls:
-  - known_hash: e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087
+  - known_hash: ea5fc01c59a67d1349ef2fdffd21ceb14ff0fb0d8518f1517d3972cac71df0e5
     url: https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
   gas: ch4
   interim_files:
