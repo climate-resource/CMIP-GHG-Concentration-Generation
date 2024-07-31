@@ -69,7 +69,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc245fa"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -300,45 +300,55 @@ plt.show()
 # plt.show()
 
 # %% [markdown]
-# ### Global-, northern-hemisphere- and southern-hemisphere-means
+# ### Global-mean
 
 # %%
-gmnhsh_l = []
-sector_str_l = []
-for id, sector, lat_sel in (
-    ("global-mean", 0, fifteen_degree_data["lat"]),
-    ("northern hemisphere-mean", 1, fifteen_degree_data["lat"] > 0),
-    ("southern hemisphere-mean", 2, fifteen_degree_data["lat"] < 0),
+global_mean_monthly = local.xarray_space.calculate_global_mean_from_lon_mean(
+    fifteen_degree_data
+)
+global_mean_monthly
+
+# %%
+print("Global-mean")
+local.xarray_time.convert_year_month_to_time(global_mean_monthly).plot()
+plt.show()
+
+# %% [markdown]
+# ### Hemispheric-means
+
+# %%
+hemispheric_means_l = []
+for lat_use, lat_sel in (
+    (-45.0, fifteen_degree_data["lat"] < 0),
+    (45.0, fifteen_degree_data["lat"] > 0),
 ):
     tmp = local.xarray_space.calculate_global_mean_from_lon_mean(
         fifteen_degree_data.sel(lat=lat_sel)
     )
-    tmp = tmp.assign_coords(sector=sector)
-    gmnhsh_l.append(tmp)
+    tmp = tmp.assign_coords(lat=lat_use)
+    hemispheric_means_l.append(tmp)
 
-    sector_str_l.append(f"{sector}: {id}")
-
-sector_str = ";".join(sector_str_l)
-print(sector_str)
-gmnhsh = xr.concat(gmnhsh_l, "sector")
-gmnhsh.attrs["sectors"] = sector_str
-gmnhsh
+hemispheric_means_monthly = xr.concat(hemispheric_means_l, "lat")
+hemispheric_means_monthly
 
 # %%
-print("Global-, hemispheric-means")
-local.xarray_time.convert_year_month_to_time(gmnhsh).plot(hue="sector")
+print("Global-mean")
+local.xarray_time.convert_year_month_to_time(hemispheric_means_monthly).plot(hue="lat")
 plt.show()
 
 # %% [markdown]
-# ### Global-, northern-hemisphere- and southern-hemisphere-means, annual-means
+# ### Global-, hemispheric-means, annual-means
 
 # %%
-gmnhsh_annual_mean = gmnhsh.mean("month")
-gmnhsh_annual_mean
+global_mean_annual_mean = global_mean_monthly.mean("month")
+hemispheric_means_annual_mean = hemispheric_means_monthly.mean("month")
 
 # %%
 print("Annual-, global-mean")
-gmnhsh_annual_mean.plot(hue="sector")
+global_mean_annual_mean.plot()
+plt.show()
+
+hemispheric_means_annual_mean.plot()
 plt.show()
 
 # %% [markdown]
@@ -355,11 +365,27 @@ fifteen_degree_data
 # half_degree_data
 
 # %%
-config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-gmnhsh.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_monthly_file)
-gmnhsh
+config_step.global_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+global_mean_monthly.pint.dequantify().to_netcdf(config_step.global_mean_monthly_file)
+global_mean_monthly
 
 # %%
-config_step.gmnhsh_mean_annual_file.parent.mkdir(exist_ok=True, parents=True)
-gmnhsh_annual_mean.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_annual_file)
-gmnhsh_annual_mean
+config_step.hemispheric_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+hemispheric_means_monthly.pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_monthly_file
+)
+hemispheric_means_monthly
+
+# %%
+config_step.global_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+global_mean_annual_mean.pint.dequantify().to_netcdf(
+    config_step.global_mean_annual_mean_file
+)
+global_mean_annual_mean
+
+# %%
+config_step.hemispheric_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+hemispheric_means_annual_mean.pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_annual_mean_file
+)
+hemispheric_means_annual_mean

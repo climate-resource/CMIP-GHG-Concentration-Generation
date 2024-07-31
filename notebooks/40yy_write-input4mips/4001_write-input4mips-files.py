@@ -15,13 +15,15 @@
 # %% [markdown]
 # # Write input4MIPs files
 #
-# Here we write our input4MIPs files for our four
+# Here we write our input4MIPs files for our six
 # different gridded data products:
 #
 # - 15&deg; latitudinal, monthly
 # - 0.5&deg; latitudinal, monthly
-# - global-, northern hemisphere-mean, southern-hemisphere mean, monthly
-# - global-, northern hemisphere-mean, southern-hemisphere mean, annual-mean
+# - global-mean, monthly
+# - northern hemisphere-mean, southern-hemisphere mean, monthly
+# - global-mean, annual-mean
+# - northern hemisphere-mean, southern-hemisphere mean, annual-mean
 
 # %% [markdown]
 # ## Imports
@@ -77,7 +79,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11eq"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -118,12 +120,20 @@ fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
 #     config_crunch_grids.half_degree_monthly_file
 # ).pint.quantify()
 
-gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.gmnhsh_mean_monthly_file
+global_mean_monthly_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.global_mean_monthly_file
 ).pint.quantify()
 
-gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.gmnhsh_mean_annual_file
+hemispheric_mean_monthly_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.hemispheric_mean_monthly_file
+).pint.quantify()
+
+global_mean_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.global_mean_annual_mean_file
+).pint.quantify()
+
+hemispheric_mean_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.hemispheric_mean_annual_mean_file
 ).pint.quantify()
 
 
@@ -147,8 +157,14 @@ def chop_time_axis(inp: xr.DataArray) -> xr.DataArray:
 # %%
 fifteen_degree_data_raw_chopped = chop_time_axis(fifteen_degree_data_raw)
 # half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
-gmnhsh_data_raw_chopped = chop_time_axis(gmnhsh_data_raw)
-gmnhsh_annual_data_raw_chopped = chop_time_axis(gmnhsh_annual_data_raw)
+global_mean_monthly_data_raw_chopped = chop_time_axis(global_mean_monthly_data_raw)
+hemispheric_mean_monthly_data_raw_chopped = chop_time_axis(
+    hemispheric_mean_monthly_data_raw
+)
+global_mean_annual_data_raw_chopped = chop_time_axis(global_mean_annual_data_raw)
+hemispheric_mean_annual_data_raw_chopped = chop_time_axis(
+    hemispheric_mean_annual_data_raw
+)
 
 
 # %% [markdown]
@@ -182,20 +198,30 @@ fifteen_degree_data = local.xarray_time.convert_year_month_to_time(
 # half_degree_data = local.xarray_time.convert_year_month_to_time(
 #     half_degree_data_raw_chopped, day=day
 # )
-gmnhsh_data = local.xarray_time.convert_year_month_to_time(
-    gmnhsh_data_raw_chopped, day=day
+global_mean_monthly_data = local.xarray_time.convert_year_month_to_time(
+    global_mean_monthly_data_raw_chopped, day=day
+)
+hemispheric_mean_monthly_data = local.xarray_time.convert_year_month_to_time(
+    hemispheric_mean_monthly_data_raw_chopped, day=day
 )
 get_displayable_dataarray(fifteen_degree_data)
 
 # %%
-gmnhsh_annual_data = local.xarray_time.convert_year_to_time(
-    gmnhsh_annual_data_raw_chopped,
+global_mean_annual_data = local.xarray_time.convert_year_to_time(
+    global_mean_annual_data_raw_chopped,
     month=7,
     day=2,
     hour=12,
     calendar="proleptic_gregorian",
 )
-get_displayable_dataarray(gmnhsh_annual_data)
+hemispheric_mean_annual_data = local.xarray_time.convert_year_to_time(
+    hemispheric_mean_annual_data_raw_chopped,
+    month=7,
+    day=2,
+    hour=12,
+    calendar="proleptic_gregorian",
+)
+get_displayable_dataarray(global_mean_annual_data)
 
 # %% [markdown]
 # ### Set common metadata
@@ -204,13 +230,11 @@ get_displayable_dataarray(gmnhsh_annual_data)
 version = config.version
 version.replace(".", "-")
 
-metadata_minimum = Input4MIPsDatasetMetadataDataProducerMinimum(
-    grid_label="gn",
-    nominal_resolution="10000 km",
+metadata_minimum_common = dict(
     source_id=f"CR-CMIP-{version.replace('.', '-')}",
     target_mip="CMIP",
 )
-metadata_minimum
+metadata_minimum_common
 
 # %% [markdown]
 # ### Define variable renaming
@@ -270,7 +294,7 @@ gas_to_cmip_variable_renaming = {
 
 # %%
 raw_cvs_loader = get_raw_cvs_loader(
-    "https://raw.githubusercontent.com/PCMDI/input4MIPs_CVs/main/CVs/"
+    "https://raw.githubusercontent.com/PCMDI/input4MIPs_CVs/cr-cmip-0-3-0/CVs/"
 )
 
 # %%
@@ -284,15 +308,18 @@ cvs.source_id_entries.source_ids
 config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
 
 time_dimension = "time"
-for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
+for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman.tqdm(
     [
-        (fifteen_degree_data, "15_deg_lat", False),
+        (fifteen_degree_data, "gnz", "2500 km", False),
         # (half_degree_data, "05_deg_lat", False),
-        (gmnhsh_data, "gmnhsh", False),
-        (gmnhsh_annual_data, "gmnhsh", True),
+        (global_mean_monthly_data, "gm", "10000 km", False),
+        (global_mean_annual_data, "gm", "10000 km", True),
+        (hemispheric_mean_monthly_data, "gr1z", "10000 km", False),
+        (hemispheric_mean_annual_data, "gr1z", "10000 km", True),
     ],
     desc="Resolutions",
 ):
+    # TODO: calculate nominal resolution rather than guessing
     grid_info = " x ".join(
         [f"{dat_resolution[v].size} ({v})" for v in dat_resolution.dims]
     )
@@ -305,7 +332,7 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     )
 
     dimensions = tuple(str(v) for v in ds_to_write[variable_name_output].dims)
-    print(f"{tmp_grid_name=}")
+    print(f"{grid_label=}")
     print(f"{dimensions=}")
 
     ds_to_write["time"].encoding = {
@@ -320,8 +347,11 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
     if "lat" in dimensions:
         ds_to_write["lat"].encoding = {"dtype": np.dtypes.Float16DType}
 
-    if "sector" in dimensions:
-        ds_to_write["sector"].attrs["units"] = "1"
+    metadata_minimum = Input4MIPsDatasetMetadataDataProducerMinimum(
+        grid_label=grid_label,
+        nominal_resolution=nominal_resolution,
+        **metadata_minimum_common,
+    )
 
     input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
         data=ds_to_write,
@@ -336,9 +366,6 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
         cvs=cvs,
         standard_and_or_long_names={
             variable_name_output: {"standard_name": variable_name_output},
-            "sector": {
-                "long_name": "ID for the region. This is legacy from CMIP6 and will be removed in future."
-            },
         },
         dataset_category="GHGConcentrations",
         realm="atmos",
@@ -353,12 +380,15 @@ for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
             "This is an interim dataset, do not use in production."
         ),
     )
+
+    ds = input4mips_ds.data
+    ds[variable_name_output].attrs["cell_methods"] = "area: time: mean"
     input4mips_ds = Input4MIPsDataset(
-        data=input4mips_ds.data,
+        data=ds,
         metadata=metadata_evolved,
         cvs=cvs,
         non_input4mips_metadata=dict(
-            references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)"
+            references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
         ),
     )
 
