@@ -455,28 +455,28 @@ primap_fossil_ch4_emissions = (
 
 primap_fossil_ch4_emissions
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 regression_years = np.intersect1d(
     lat_grad_eofs_obs_network["year"], primap_fossil_ch4_emissions["year"]
 )
 regression_years
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 primap_regression_data = primap_fossil_ch4_emissions.sel(year=regression_years)
 primap_regression_data
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 pc0_obs_network_regression = lat_grad_eofs_obs_network["principal-components"].sel(
     eof=0, year=regression_years
 )
 pc0_obs_network_regression
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 with axes_vertical_split() as axes:
     primap_regression_data.plot(ax=axes[0])
     pc0_obs_network_regression.plot(ax=axes[1])
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
 A = np.vstack([x.m, np.ones(x.size)]).T
 y = QuantityOSCM(
@@ -499,7 +499,7 @@ ax.set_ylabel("PC0")
 ax.set_xlabel("PRIMAP emissions")
 ax.legend()
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 years_to_fill_with_regression = np.setdiff1d(
     primap_fossil_ch4_emissions["year"],
     pc0_optimised_years_to_optimise_back_to_year_one["year"],

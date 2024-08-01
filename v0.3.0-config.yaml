@@ -3093,7 +3093,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: co2_in-situ
 - download_complete_file: data/raw/noaa/co2_surface-flask.complete
   download_urls:
-  - known_hash: 92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17
+  - known_hash: 7e53e3aa7f43ec8300a080d9ae06dd64aa3cee526092e80e3a3d4989600f52ec
     url: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/co2_surface-flask_ccgg_text.zip
   gas: co2
   interim_files:

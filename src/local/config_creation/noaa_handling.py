@@ -145,7 +145,7 @@ DOWNLOAD_URLS = {
     ("co2", "surface-flask"): [
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="co2"),
-            known_hash="92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17",
+            known_hash="7e53e3aa7f43ec8300a080d9ae06dd64aa3cee526092e80e3a3d4989600f52ec",
         )
     ],
     ("co2", "in-situ"): [
