@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -230,12 +230,23 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     if flip_lons:
         # put lons in range 0-360 rather than -180 to 180 which will cause issues for averaging
         site_events_df.loc[site_events_df["longitude"] < 0, "longitude"] += 360
+
         # assert we are now away from annoying boundaries
-        danger_lon_max = 250
-        danger_lon_min = 50
-        assert not (
-            (site_events_df["longitude"] >= danger_lon_max).any()
-            and (site_events_df["longitude"] < danger_lon_min).any()
+        def check_no_crossover_for_month(
+            space_info_for_month, danger_lon_max=250, danger_lon_min=50
+        ):
+            """
+            Check that there is no crossover of awkward longitudes
+
+            This check is assumed to be applied to each individual month bin.
+            """
+            assert not (
+                (space_info_for_month["longitude"] >= danger_lon_max).any()
+                and (space_info_for_month["longitude"] < danger_lon_min).any()
+            ), space_info_for_month
+
+        site_events_df.groupby(loc_calc_cols)[spatial_cols].apply(
+            check_no_crossover_for_month
         )
 
     locs_means = site_events_df.groupby(loc_calc_cols)[spatial_cols].mean()
