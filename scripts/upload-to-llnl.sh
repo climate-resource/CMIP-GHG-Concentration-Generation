@@ -1,11 +1,11 @@
 #!/bin/bash
 
-OUTPUT_BUNDLE_DIR="20240729"
+OUTPUT_BUNDLE_DIR="v0.3.0"
 for variable_dir in output-bundles/"${OUTPUT_BUNDLE_DIR}"/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-0-2-0/atmos/yr/*; do
 	echo "Uploading ${variable_dir}"
 	pixi run input4mips-validation --logging-level INFO \
 		upload-ftp \
-		--ftp-dir-rel-to-root cr-testing-201 \
+		--ftp-dir-rel-to-root cr-cmip-0-3-0 \
 		--password zebedee.nicholls@climate-resource.com \
 		--n-threads 6 \
 		--cv-source "gh:cr-cmip-0-3-0" \
@@ -16,7 +16,7 @@ for variable_dir in output-bundles/"${OUTPUT_BUNDLE_DIR}"/data/processed/esgf-re
 	echo "$variable_dir"
 	pixi run input4mips-validation --logging-level INFO \
 		upload-ftp \
-		--ftp-dir-rel-to-root cr-testing-201 \
+		--ftp-dir-rel-to-root cr-cmip-0-3-0 \
 		--password zebedee.nicholls@climate-resource.com \
 		--n-threads 6 \
 		--cv-source "gh:cr-cmip-0-3-0" \
