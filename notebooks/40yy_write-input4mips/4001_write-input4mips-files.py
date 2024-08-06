@@ -39,7 +39,7 @@ import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
 from attrs import evolve
-from input4mips_validation.cvs.loading import load_cvs
+from input4mips_validation.cvs.loading import load_cvs_known_loader
 from input4mips_validation.cvs.loading_raw import get_raw_cvs_loader
 from input4mips_validation.dataset import Input4MIPsDataset
 from input4mips_validation.dataset.metadata_data_producer_minimum import (
@@ -240,7 +240,7 @@ metadata_minimum_common
 # ### Define variable renaming
 
 # %%
-gas_to_cmip_variable_renaming = {
+gas_to_standard_name_renaming = {
     "co2": "mole_fraction_of_carbon_dioxide_in_air",
     "ch4": "mole_fraction_of_methane_in_air",
     "n2o": "mole_fraction_of_nitrous_oxide_in_air",
@@ -289,6 +289,56 @@ gas_to_cmip_variable_renaming = {
     "hfc134aeq": "mole_fraction_of_hfc134a_eq_in_air",
 }
 
+# %%
+gas_to_cmip_variable_renaming = {
+    "co2": "co2",
+    "ch4": "ch4",
+    "n2o": "n2o",
+    "c2f6": "pfc116",
+    "c3f8": "pfc218",
+    "c4f10": "pfc3110",
+    "c5f12": "pfc4112",
+    "c6f14": "pfc5114",
+    "c7f16": "pfc6116",
+    "c8f18": "pfc7118",
+    "cc4f8": "pfc318",
+    "ccl4": "ccl4",
+    "cf4": "cf4",
+    "cfc11": "cfc11",
+    "cfc113": "cfc113",
+    "cfc114": "cfc114",
+    "cfc115": "cfc115",
+    "cfc12": "cfc12",
+    "ch2cl2": "ch2cl2",
+    "ch3br": "ch3br",
+    "ch3ccl3": "hcc140a",
+    "ch3cl": "ch3cl",
+    "chcl3": "chcl3",
+    "halon1211": "halon1211",
+    "halon1301": "halon1301",
+    "halon2402": "halon2402",
+    "hcfc141b": "hcfc141b",
+    "hcfc142b": "hcfc142b",
+    "hcfc22": "hcfc22",
+    "hfc125": "hfc125",
+    "hfc134a": "hfc134a",
+    "hfc143a": "hfc143a",
+    "hfc152a": "hfc152a",
+    "hfc227ea": "hfc227ea",
+    "hfc23": "hfc23",
+    "hfc236fa": "hfc236fa",
+    "hfc245fa": "hfc245fa",
+    "hfc32": "hfc32",
+    "hfc365mfc": "hfc365mfc",
+    "hfc4310mee": "hfc4310mee",
+    "nf3": "nf3",
+    "sf6": "sf6",
+    "so2f2": "so2f2",
+    "cfc11eq": "cfc11eq",
+    "cfc12eq": "cfc12eq",
+    "hfc134aeq": "hfc134aeq",
+}
+
 # %% [markdown]
 # ## Load CVs
 
@@ -298,7 +348,7 @@ raw_cvs_loader = get_raw_cvs_loader(
 )
 
 # %%
-cvs = load_cvs(raw_cvs_loader)
+cvs = load_cvs_known_loader(raw_cvs_loader)
 cvs.source_id_entries.source_ids
 
 # %% [markdown]
@@ -326,6 +376,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
     print(f"Processing {grid_info} grid")
 
     variable_name_raw = str(dat_resolution.name)
+
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
     ds_to_write = dat_resolution.to_dataset().rename_vars(
         {variable_name_raw: variable_name_output}
@@ -365,7 +416,9 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         ),
         cvs=cvs,
         standard_and_or_long_names={
-            variable_name_output: {"standard_name": variable_name_output},
+            variable_name_output: {
+                "standard_name": gas_to_standard_name_renaming[variable_name_raw]
+            },
         },
         dataset_category="GHGConcentrations",
         realm="atmos",
