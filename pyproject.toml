@@ -22,7 +22,7 @@ editable = true
 
 # conda dependencies
 [tool.pixi.dependencies]
-input4mips-validation = "==0.10.2"
+input4mips-validation = "0.11.3"
 doit = ">=0.36.0,<0.37"
 jupyterlab = ">=1.0"
 pooch = ">=1.0"
