@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -21,6 +21,8 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import openscm_units
 import pint
 from pydoit_nb.config_handling import get_config_for_step_id
@@ -48,13 +50,13 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11_hats"  # config ID to select for this branch
+step_config_id: str = "co2_in-situ"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )

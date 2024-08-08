@@ -12,14 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: ./.github/actions/setup
         with:
-          python-version: "3.11"
-          venv-id: "docs"
-          poetry-dependency-install-flags: "--all-extras --only 'main,dev'"
+          pixi-environments: "all-dev"
       - name: mypy
-        run: MYPYPATH=stubs poetry run mypy src
+        run: MYPYPATH=stubs pixi run --frozen -e all-dev mypy src
+
 
   # Can add non-regression tests in here somewhere too if needed.
   # Run those even if the pull request is a draft.
@@ -37,18 +36,16 @@ jobs:
         uses: actions/checkout@v3
       - uses: ./.github/actions/setup
         with:
-          python-version: "${{ matrix.python-version }}"
-          venv-id: "tests-${{ runner.os }}"
-          poetry-dependency-install-flags: "--all-extras --only 'main,tests,coverage'"
+          pixi-environments: "tests"
       - name: Run regression tests relevant for coverage
         run: |
-          poetry run python scripts/write-config.py
-          poetry run pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
-          poetry run coverage report
+          pixi run -e tests python scripts/write-config.py
+          pixi run -e tests pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
+          pixi run -e tests coverage report
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       - name: Run tests that break coverage
         run: |
-          poetry run pytest -s -r a -v tests -m coverage_breaker
+          pixi run -e tests pytest -s -r a -v tests -m coverage_breaker

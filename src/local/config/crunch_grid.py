@@ -28,11 +28,17 @@ class GridCrunchingConfig:
     fifteen_degree_monthly_file: Path
     """Path in which to save the 15 degree, monthly gridded data"""
 
-    half_degree_monthly_file: Path
-    """Path in which to save the 0.5 degree, monthly gridded data"""
+    # half_degree_monthly_file: Path
+    # """Path in which to save the 0.5 degree, monthly gridded data"""
 
-    gmnhsh_mean_monthly_file: Path
-    """Path in which to save the global-, hemispher-mean, monthly data"""
+    global_mean_monthly_file: Path
+    """Path in which to save the global-mean, monthly data"""
 
-    gmnhsh_mean_annual_file: Path
-    """Path in which to save the global-, hemispher-mean, annual-mean data"""
+    hemispheric_mean_monthly_file: Path
+    """Path in which to save the hemispheric-mean, monthly data"""
+
+    global_mean_annual_mean_file: Path
+    """Path in which to save the global-mean, annual-mean data"""
+
+    hemispheric_mean_annual_mean_file: Path
+    """Path in which to save the hemispheric-mean, annual-mean data"""

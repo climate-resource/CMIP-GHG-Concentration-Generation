@@ -3,6 +3,11 @@ ci:
   autofix_prs: false
   autoupdate_schedule: quarterly
   autoupdate_branch: pre-commit-autoupdate
+  # Skip steps that won't run on pre-commit CI for various reasons,
+  # mostly because they rely on local things.
+  skip: [
+    pixi-install,
+  ]
 
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
@@ -10,6 +15,7 @@ repos:
     rev: 'v4.4.0'
     hooks:
       - id: check-added-large-files
+        exclude: pixi.lock
       - id: check-ast
       - id: check-case-conflict
       - id: check-json
@@ -44,7 +50,18 @@ repos:
     rev: v0.3.8
     hooks:
       - id: blackdoc
-  - repo: https://github.com/python-poetry/poetry
-    rev: '1.4.2'
+  - repo: local
     hooks:
-      - id: poetry-check
+      # pixi doesn't have a lock/check command yet,
+      # so we just have to run install each time.
+      # Ok for now
+      - id: pixi-install
+        name: pixi-install
+        entry: pixi install
+        # Don't use this, we want pixi to run
+        # and update pixi.lock automatically if it is not up to date,
+        # rather than just failing and exiting.
+        # args: ["--locked"]
+        language: system
+        require_serial: true
+        pass_filenames: false

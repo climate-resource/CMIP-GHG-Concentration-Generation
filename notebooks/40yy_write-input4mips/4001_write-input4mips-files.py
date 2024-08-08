@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -15,13 +15,15 @@
 # %% [markdown]
 # # Write input4MIPs files
 #
-# Here we write our input4MIPs files for our four
+# Here we write our input4MIPs files for our six
 # different gridded data products:
 #
 # - 15&deg; latitudinal, monthly
 # - 0.5&deg; latitudinal, monthly
-# - global-, northern hemisphere-mean, southern-hemisphere mean, monthly
-# - global-, northern hemisphere-mean, southern-hemisphere mean, annual-mean
+# - global-mean, monthly
+# - northern hemisphere-mean, southern-hemisphere mean, monthly
+# - global-mean, annual-mean
+# - northern hemisphere-mean, southern-hemisphere mean, annual-mean
 
 # %% [markdown]
 # ## Imports
@@ -29,6 +31,7 @@
 # %%
 import datetime
 from functools import partial
+from pathlib import Path
 
 import cf_xarray.units
 import cftime
@@ -36,10 +39,12 @@ import numpy as np
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
+from attrs import evolve
+from input4mips_validation.cvs.loading import load_cvs_known_loader
+from input4mips_validation.cvs.loading_raw import get_raw_cvs_loader
 from input4mips_validation.dataset import Input4MIPsDataset
-from input4mips_validation.metadata import (
-    Input4MIPsMetadata,
-    Input4MIPsMetadataOptional,
+from input4mips_validation.dataset.metadata_data_producer_minimum import (
+    Input4MIPsDatasetMetadataDataProducerMinimum,
 )
 from input4mips_validation.xarray_helpers import add_time_bounds
 from pydoit_nb.checklist import generate_directory_checklist
@@ -75,13 +80,13 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11eq"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -112,16 +117,24 @@ fifteen_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
     config_crunch_grids.fifteen_degree_monthly_file
 ).pint.quantify()
 
-half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.half_degree_monthly_file
+# half_degree_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+#     config_crunch_grids.half_degree_monthly_file
+# ).pint.quantify()
+
+global_mean_monthly_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.global_mean_monthly_file
 ).pint.quantify()
 
-gmnhsh_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.gmnhsh_mean_monthly_file
+hemispheric_mean_monthly_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.hemispheric_mean_monthly_file
 ).pint.quantify()
 
-gmnhsh_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_crunch_grids.gmnhsh_mean_annual_file
+global_mean_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.global_mean_annual_mean_file
+).pint.quantify()
+
+hemispheric_mean_annual_data_raw: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_crunch_grids.hemispheric_mean_annual_mean_file
 ).pint.quantify()
 
 
@@ -144,9 +157,15 @@ def chop_time_axis(inp: xr.DataArray) -> xr.DataArray:
 
 # %%
 fifteen_degree_data_raw_chopped = chop_time_axis(fifteen_degree_data_raw)
-half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
-gmnhsh_data_raw_chopped = chop_time_axis(gmnhsh_data_raw)
-gmnhsh_annual_data_raw_chopped = chop_time_axis(gmnhsh_annual_data_raw)
+# half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
+global_mean_monthly_data_raw_chopped = chop_time_axis(global_mean_monthly_data_raw)
+hemispheric_mean_monthly_data_raw_chopped = chop_time_axis(
+    hemispheric_mean_monthly_data_raw
+)
+global_mean_annual_data_raw_chopped = chop_time_axis(global_mean_annual_data_raw)
+hemispheric_mean_annual_data_raw_chopped = chop_time_axis(
+    hemispheric_mean_annual_data_raw
+)
 
 
 # %% [markdown]
@@ -177,59 +196,52 @@ day = 15
 fifteen_degree_data = local.xarray_time.convert_year_month_to_time(
     fifteen_degree_data_raw_chopped, day=day
 )
-half_degree_data = local.xarray_time.convert_year_month_to_time(
-    half_degree_data_raw_chopped, day=day
+# half_degree_data = local.xarray_time.convert_year_month_to_time(
+#     half_degree_data_raw_chopped, day=day
+# )
+global_mean_monthly_data = local.xarray_time.convert_year_month_to_time(
+    global_mean_monthly_data_raw_chopped, day=day
 )
-gmnhsh_data = local.xarray_time.convert_year_month_to_time(
-    gmnhsh_data_raw_chopped, day=day
+hemispheric_mean_monthly_data = local.xarray_time.convert_year_month_to_time(
+    hemispheric_mean_monthly_data_raw_chopped, day=day
 )
 get_displayable_dataarray(fifteen_degree_data)
 
 # %%
-gmnhsh_annual_data = local.xarray_time.convert_year_to_time(
-    gmnhsh_annual_data_raw_chopped,
+global_mean_annual_data = local.xarray_time.convert_year_to_time(
+    global_mean_annual_data_raw_chopped,
     month=7,
     day=2,
     hour=12,
     calendar="proleptic_gregorian",
 )
-get_displayable_dataarray(gmnhsh_annual_data)
+hemispheric_mean_annual_data = local.xarray_time.convert_year_to_time(
+    hemispheric_mean_annual_data_raw_chopped,
+    month=7,
+    day=2,
+    hour=12,
+    calendar="proleptic_gregorian",
+)
+get_displayable_dataarray(global_mean_annual_data)
 
 # %% [markdown]
 # ### Set common metadata
 
 # %%
 version = config.version
+version.replace(".", "-")
 
-metadata_universal = dict(
-    activity_id="input4MIPs",
-    contact="zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com",
-    # institution="Climate Resource, Fitzroy, Victoria 3065, Australia",
-    institution_id="CR",
-    mip_era="CMIP6Plus",
+metadata_minimum_common = dict(
+    source_id=config_step.input4mips_cvs_source_id,
     target_mip="CMIP",
-    source_id=f"CR_hist-ghg-concs_{version}",
 )
-
-metadata_universal_optional: dict[str, str] = dict(
-    # product="derived",
-    # TODO: add support for this to input4mips-validation
-    # further_info_url="https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-    # # TODO: check if there is a more exact grant agreement to refer to
-    comment=(
-        "[TBC which grant] Data produced by Climate Resource supported by funding "
-        "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
-        "This is an interim dataset, do not use in production."
-    ),
-    # TODO: add support for this to input4mips-validation
-    # references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
-)
+metadata_minimum_common
 
 # %% [markdown]
 # ### Define variable renaming
 
 # %%
-gas_to_cmip_variable_renaming = {
+gas_to_standard_name_renaming = {
     "co2": "mole_fraction_of_carbon_dioxide_in_air",
     "ch4": "mole_fraction_of_methane_in_air",
     "n2o": "mole_fraction_of_nitrous_oxide_in_air",
@@ -278,6 +290,66 @@ gas_to_cmip_variable_renaming = {
     "hfc134aeq": "mole_fraction_of_hfc134a_eq_in_air",
 }
 
+# %%
+gas_to_cmip_variable_renaming = {
+    "co2": "co2",
+    "ch4": "ch4",
+    "n2o": "n2o",
+    "c2f6": "pfc116",
+    "c3f8": "pfc218",
+    "c4f10": "pfc3110",
+    "c5f12": "pfc4112",
+    "c6f14": "pfc5114",
+    "c7f16": "pfc6116",
+    "c8f18": "pfc7118",
+    "cc4f8": "pfc318",
+    "ccl4": "ccl4",
+    "cf4": "cf4",
+    "cfc11": "cfc11",
+    "cfc113": "cfc113",
+    "cfc114": "cfc114",
+    "cfc115": "cfc115",
+    "cfc12": "cfc12",
+    "ch2cl2": "ch2cl2",
+    "ch3br": "ch3br",
+    "ch3ccl3": "hcc140a",
+    "ch3cl": "ch3cl",
+    "chcl3": "chcl3",
+    "halon1211": "halon1211",
+    "halon1301": "halon1301",
+    "halon2402": "halon2402",
+    "hcfc141b": "hcfc141b",
+    "hcfc142b": "hcfc142b",
+    "hcfc22": "hcfc22",
+    "hfc125": "hfc125",
+    "hfc134a": "hfc134a",
+    "hfc143a": "hfc143a",
+    "hfc152a": "hfc152a",
+    "hfc227ea": "hfc227ea",
+    "hfc23": "hfc23",
+    "hfc236fa": "hfc236fa",
+    "hfc245fa": "hfc245fa",
+    "hfc32": "hfc32",
+    "hfc365mfc": "hfc365mfc",
+    "hfc4310mee": "hfc4310mee",
+    "nf3": "nf3",
+    "sf6": "sf6",
+    "so2f2": "so2f2",
+    "cfc11eq": "cfc11eq",
+    "cfc12eq": "cfc12eq",
+    "hfc134aeq": "hfc134aeq",
+}
+
+# %% [markdown]
+# ## Load CVs
+
+# %%
+raw_cvs_loader = get_raw_cvs_loader(config_step.input4mips_cvs_cv_source)
+
+# %%
+cvs = load_cvs_known_loader(raw_cvs_loader)
+cvs.source_id_entries.source_ids
+
 # %% [markdown]
 # ### Write files
 
@@ -285,68 +357,93 @@ gas_to_cmip_variable_renaming = {
 config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
 
 time_dimension = "time"
-for dat_resolution, tmp_grid_name, yearly_time_bounds in tqdman.tqdm(
+for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman.tqdm(
     [
-        (fifteen_degree_data, "15_deg_lat", False),
-        (half_degree_data, "05_deg_lat", False),
-        (gmnhsh_data, "gmnhsh", False),
-        (gmnhsh_annual_data, "gmnhsh", True),
+        (fifteen_degree_data, "gnz", "2500 km", False),
+        # (half_degree_data, "05_deg_lat", False),
+        (global_mean_monthly_data, "gm", "10000 km", False),
+        (global_mean_annual_data, "gm", "10000 km", True),
+        (hemispheric_mean_monthly_data, "gr1z", "10000 km", False),
+        (hemispheric_mean_annual_data, "gr1z", "10000 km", True),
     ],
     desc="Resolutions",
 ):
+    # TODO: calculate nominal resolution rather than guessing
     grid_info = " x ".join(
         [f"{dat_resolution[v].size} ({v})" for v in dat_resolution.dims]
     )
     print(f"Processing {grid_info} grid")
 
     variable_name_raw = str(dat_resolution.name)
+
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
-    da_to_write = dat_resolution.to_dataset().rename_vars(
+    ds_to_write = dat_resolution.to_dataset().rename_vars(
         {variable_name_raw: variable_name_output}
     )
-    da_to_write["time"].encoding = {
+
+    dimensions = tuple(str(v) for v in ds_to_write[variable_name_output].dims)
+    print(f"{grid_label=}")
+    print(f"{dimensions=}")
+
+    ds_to_write["time"].encoding = {
         "calendar": "proleptic_gregorian",
         "units": "days since 1850-01-01",
+        # Time has to be encoded as float
+        # to ensure that non-integer days etc. can be handled
+        # and the CF-checker doesn't complain.
+        "dtype": np.dtypes.Float32DType,
     }
-    # TODO: use inference again once I know how it is meant to work
-    # metadata_inferred, metadata_inferred_optional = infer_metadata_from_dataset(
-    #     da_to_write, scenario
-    # )
 
-    # metadata = Input4MIPsMetadata(
-    #     **metadata_universal,
-    #     **metadata_inferred,
-    # )
+    if "lat" in dimensions:
+        ds_to_write["lat"].encoding = {"dtype": np.dtypes.Float16DType}
 
-    # metadata_optional = Input4MIPsMetadataOptional(
-    #     **metadata_universal_optional,
-    #     **metadata_inferred_optional,
-    # )
-
-    metadata = Input4MIPsMetadata(
-        **metadata_universal,
-        # Rules here make no sense to me,
-        # can this be inferred from the data or only checked against it?
-        grid_label=tmp_grid_name,
-    )
-    metadata_optional = Input4MIPsMetadataOptional(
-        **metadata_universal_optional,
+    metadata_minimum = Input4MIPsDatasetMetadataDataProducerMinimum(
+        grid_label=grid_label,
+        nominal_resolution=nominal_resolution,
+        **metadata_minimum_common,
     )
 
-    dimensions = tuple(str(v) for v in da_to_write[variable_name_output].dims)
-
-    input4mips_ds = Input4MIPsDataset.from_raw_dataset(
-        da_to_write,
+    input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
+        data=ds_to_write,
+        metadata_minimum=metadata_minimum,
         dimensions=dimensions,
         time_dimension=time_dimension,
-        metadata=metadata,
-        metadata_optional=metadata_optional,
         add_time_bounds=partial(
             add_time_bounds,
             monthly_time_bounds=not yearly_time_bounds,
             yearly_time_bounds=yearly_time_bounds,
         ),
+        cvs=cvs,
+        standard_and_or_long_names={
+            variable_name_output: {
+                "standard_name": gas_to_standard_name_renaming[variable_name_raw]
+            },
+        },
+        dataset_category="GHGConcentrations",
+        realm="atmos",
     )
+
+    metadata_evolved = evolve(
+        input4mips_ds.metadata,
+        product="derived",
+        comment=(
+            "[TBC which grant] Data produced by Climate Resource supported by funding "
+            "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
+            "This is an interim dataset, do not use in production."
+        ),
+    )
+
+    ds = input4mips_ds.data
+    ds[variable_name_output].attrs["cell_methods"] = "area: time: mean"
+    input4mips_ds = Input4MIPsDataset(
+        data=ds,
+        metadata=metadata_evolved,
+        cvs=cvs,
+        non_input4mips_metadata=dict(
+            references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
+        ),
+    )
+
     print("Writing")
     written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
     print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
@@ -358,6 +455,15 @@ with open(config_step.complete_file, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
 checklist_path
+
+# %% [markdown]
+# ## Validate the files
+
+# %%
+# !input4mips-validation --logging-level INFO_INDIVIDUAL_CHECK \
+#     validate-tree {config_step.input4mips_out_dir} \
+#     --cv-source "gh:main" \
+#     --rglob-input "**/*{variable_name_output.replace('_', '-')}*/**/*.nc"
 
 # %%
 config_step.input4mips_out_dir

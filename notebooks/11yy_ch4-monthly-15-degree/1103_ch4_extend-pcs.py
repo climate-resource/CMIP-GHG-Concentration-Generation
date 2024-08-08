@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -26,6 +26,7 @@
 from collections.abc import Iterator
 from contextlib import contextmanager
 from functools import partial
+from pathlib import Path
 from typing import cast
 
 import cf_xarray.units
@@ -70,21 +71,21 @@ QuantityOSCM = openscm_units.unit_registry.Quantity
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% editable=true
 step: str = "calculate_ch4_monthly_fifteen_degree_pieces"
 
 # %% [markdown]
 # ## Parameters
 
-# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+# %% editable=true tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "only"  # config ID to select for this branch
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown] editable=true
 # ## Load config
 
-# %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+# %% editable=true
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -126,7 +127,12 @@ def axes_vertical_split(
 ) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=ncols)
-    yield axes
+
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
+
+    yield (axes[0], axes[1])
+
     plt.tight_layout()
     plt.show()
 
@@ -455,25 +461,33 @@ primap_fossil_ch4_emissions = (
 
 primap_fossil_ch4_emissions
 
-# %%
-primap_regression_data = primap_fossil_ch4_emissions.sel(
-    year=lat_grad_eofs_obs_network["year"]
+# %% editable=true slideshow={"slide_type": ""}
+regression_years = np.intersect1d(
+    lat_grad_eofs_obs_network["year"], primap_fossil_ch4_emissions["year"]
 )
+regression_years
+
+# %% editable=true slideshow={"slide_type": ""}
+primap_regression_data = primap_fossil_ch4_emissions.sel(year=regression_years)
 primap_regression_data
 
-# %%
-pc0_obs_network = lat_grad_eofs_obs_network["principal-components"].sel(eof=0)
-pc0_obs_network
+# %% editable=true slideshow={"slide_type": ""}
+pc0_obs_network_regression = lat_grad_eofs_obs_network["principal-components"].sel(
+    eof=0, year=regression_years
+)
+pc0_obs_network_regression
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 with axes_vertical_split() as axes:
     primap_regression_data.plot(ax=axes[0])
-    pc0_obs_network.plot(ax=axes[1])
+    pc0_obs_network_regression.plot(ax=axes[1])
 
-# %%
-x = QuantityOSCM(primap_regression_data.data, str(primap_regression_data.data.units))
+# %% editable=true slideshow={"slide_type": ""}
+x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
 A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(pc0_obs_network.data, str(pc0_obs_network.data.units))
+y = QuantityOSCM(
+    pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
+)
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m, c = res[0]
@@ -491,13 +505,13 @@ ax.set_ylabel("PC0")
 ax.set_xlabel("PRIMAP emissions")
 ax.legend()
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 years_to_fill_with_regression = np.setdiff1d(
     primap_fossil_ch4_emissions["year"],
     pc0_optimised_years_to_optimise_back_to_year_one["year"],
 )
 years_to_fill_with_regression = np.setdiff1d(
-    years_to_fill_with_regression, pc0_obs_network["year"]
+    years_to_fill_with_regression, pc0_obs_network_regression["year"]
 )
 
 years_to_fill_with_regression
@@ -514,7 +528,7 @@ pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # #### Concatenate the pieces of PC0
 #
 # Join:
@@ -523,12 +537,23 @@ pc0_emissions_extended
 # - extended based on regression with emissions
 # - raw values derived from the observational network
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+pc0_obs_network_raw_years = np.setdiff1d(
+    lat_grad_eofs_obs_network["principal-components"].sel(
+        eof=0,
+    )["year"],
+    pc0_obs_network_regression["year"],
+)
+
+# %% editable=true slideshow={"slide_type": ""}
 allyears_pc0 = xr.concat(
     [
         pc0_optimised_years_to_optimise_back_to_year_one,
         pc0_emissions_extended,
-        pc0_obs_network,
+        pc0_obs_network_regression,
+        lat_grad_eofs_obs_network["principal-components"].sel(
+            eof=0, year=pc0_obs_network_raw_years
+        ),
     ],
     "year",
 )
@@ -542,7 +567,7 @@ with axes_vertical_split() as axes:
         )
     ).plot(ax=axes[1])
     pc0_emissions_extended.plot(ax=axes[1])
-    pc0_obs_network.plot(ax=axes[1])
+    pc0_obs_network_regression.plot(ax=axes[1])
 
 allyears_pc0
 
@@ -568,11 +593,11 @@ out
 
 # %%
 xr.testing.assert_allclose(
-    (out["principal-components"] @ out["eofs"]).sel(
-        year=lat_grad_eofs_obs_network["year"]
-    ),
-    lat_grad_eofs_obs_network["principal-components"]
-    @ lat_grad_eofs_obs_network["eofs"],
+    (out["principal-components"] @ out["eofs"]).sel(year=regression_years),
+    (
+        lat_grad_eofs_obs_network["principal-components"]
+        @ lat_grad_eofs_obs_network["eofs"]
+    ).sel(year=regression_years),
 )
 
 # %% [markdown]

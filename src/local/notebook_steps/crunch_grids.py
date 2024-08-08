@@ -61,6 +61,7 @@ def configure_notebooks(
         "c6f14",
         "c7f16",
         "c8f18",
+        "cfc114",
     ):
         step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
         step_config_id_gridding_pieces_step = config_step.gas
@@ -86,9 +87,11 @@ def configure_notebooks(
             ),
             targets=(
                 config_step.fifteen_degree_monthly_file,
-                config_step.half_degree_monthly_file,
-                config_step.gmnhsh_mean_monthly_file,
-                config_step.gmnhsh_mean_annual_file,
+                # config_step.half_degree_monthly_file,
+                config_step.global_mean_monthly_file,
+                config_step.hemispheric_mean_monthly_file,
+                config_step.global_mean_annual_mean_file,
+                config_step.hemispheric_mean_annual_mean_file,
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,

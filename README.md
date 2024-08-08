@@ -22,15 +22,19 @@ The key characteristics of the outputs are:
 
 ## Status
 
-Status: Prototype, we can now produce files in the right format and are moving onto actually crunching the data
+Status: Work in progress.
+
+We are now producing iterations of the greenhouse gas concentrations.
+See the issues for the updates that are being made
+and `changelog` for the updates that have been made.
 
 ## Installation
 
-For all of our dependency management we use [poetry](https://python-poetry.org/).
-Assuming you have poetry, you can then install the project using
+For all of our dependency management we use [pixi](https://pixi.sh/latest/).
+Assuming you have pixi, you can then install the project using
 
 ```sh
-poetry install --only main
+pixi install
 ```
 
 ## Creating the outputs
@@ -38,7 +42,7 @@ poetry install --only main
 To create all the outputs, after having installed the project, simply run
 
 ```sh
-poetry run doit run --verbosity=2
+pixi run doit run --verbosity=2
 ```
 
 ## Development

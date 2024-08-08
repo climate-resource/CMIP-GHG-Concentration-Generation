@@ -21,6 +21,7 @@
 # ## Imports
 
 # %%
+from pathlib import Path
 
 import cf_xarray.units
 import pint
@@ -47,7 +48,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Q = pint.get_application_registry().Quantity
+Q = pint.get_application_registry().Quantity  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -66,7 +67,7 @@ step_config_id: str = "cfc11eq"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -89,14 +90,14 @@ config_grid_crunching_included_gases = [
 # ### Load comparison data
 
 # %%
-raw_gmnhsh = xr.load_dataarray(
+raw_global_mean_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
     get_config_for_step_id(
         config=config,
         step="crunch_grids",
         step_config_id=gas_raw,
-    ).gmnhsh_mean_monthly_file
+    ).global_mean_monthly_file
 ).pint.quantify()
-raw_gmnhsh
+raw_global_mean_monthly
 
 # %% [markdown]
 # ### Calculate equivalents
@@ -150,12 +151,14 @@ RADIATIVE_EFFICIENCIES: dict[str, pint.UnitRegistry.Quantity] = {
 equivalents = {}
 for key, attr_to_grab in (
     ("fifteen_degree", "fifteen_degree_monthly_file"),
-    ("half_degree", "half_degree_monthly_file"),
-    ("gmnhsh", "gmnhsh_mean_monthly_file"),
-    ("gmnhsh_annual_mean", "gmnhsh_mean_annual_file"),
+    # ("half_degree", "half_degree_monthly_file"),
+    ("global_mean_monthly", "global_mean_monthly_file"),
+    ("hemispheric_mean_monthly", "hemispheric_mean_monthly_file"),
+    ("global_mean_annual_mean", "global_mean_annual_mean_file"),
+    ("hemispheric_mean_annual_mean", "hemispheric_mean_annual_mean_file"),
 ):
     print(f"Crunching {key}")
-    total_erf = None
+    total_erf_set = False
     included_species = []
 
     for crunch_gas_config in config_grid_crunching_included_gases:
@@ -173,12 +176,15 @@ for key, attr_to_grab in (
         print(f"Adding {loaded.name}")
         included_species.append(loaded.name)
 
-        if total_erf is None:
+        if not total_erf_set:
+            total_erf_set = True
             total_erf = loaded_erf
         else:
             total_erf += loaded_erf.sel(year=total_erf["year"])
 
-    total = (total_erf / RADIATIVE_EFFICIENCIES[gas_raw]).pint.to(raw_gmnhsh.data.units)
+    total = (total_erf / RADIATIVE_EFFICIENCIES[gas_raw]).pint.to(
+        raw_global_mean_monthly.data.units
+    )
     total.name = config_step.gas
     total.attrs[
         "commment"
@@ -189,11 +195,11 @@ for key, attr_to_grab in (
 
 # %%
 local.xarray_time.convert_year_month_to_time(
-    equivalents["gmnhsh"], calendar="proleptic_gregorian"
-).sel(sector=0).plot.line()
+    equivalents["global_mean_monthly"], calendar="proleptic_gregorian"
+).plot.line()
 local.xarray_time.convert_year_month_to_time(
-    raw_gmnhsh, calendar="proleptic_gregorian"
-).sel(sector=0).plot.line()
+    raw_global_mean_monthly, calendar="proleptic_gregorian"
+).plot.line()
 
 # %% [markdown]
 # ### Save
@@ -205,21 +211,37 @@ equivalents["fifteen_degree"].pint.dequantify().to_netcdf(
 )
 equivalents["fifteen_degree"]
 
-# %%
-config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["half_degree"].pint.dequantify().to_netcdf(
-    config_step.half_degree_monthly_file
-)
-equivalents["half_degree"]
+# # %%
+# config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+# equivalents["half_degree"].pint.dequantify().to_netcdf(
+#     config_step.half_degree_monthly_file
+# )
+# equivalents["half_degree"]
 
 # %%
-config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["gmnhsh"].pint.dequantify().to_netcdf(config_step.gmnhsh_mean_monthly_file)
-equivalents["gmnhsh"]
+config_step.global_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+equivalents["global_mean_monthly"].pint.dequantify().to_netcdf(
+    config_step.global_mean_monthly_file
+)
+equivalents["global_mean_monthly"]
 
 # %%
-config_step.gmnhsh_mean_annual_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["gmnhsh_annual_mean"].pint.dequantify().to_netcdf(
-    config_step.gmnhsh_mean_annual_file
+config_step.hemispheric_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+equivalents["hemispheric_mean_monthly"].pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_monthly_file
 )
-equivalents["gmnhsh_annual_mean"]
+equivalents["hemispheric_mean_monthly"]
+
+# %%
+config_step.global_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+equivalents["global_mean_annual_mean"].pint.dequantify().to_netcdf(
+    config_step.global_mean_annual_mean_file
+)
+equivalents["global_mean_annual_mean"]
+
+# %%
+config_step.hemispheric_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+equivalents["hemispheric_mean_annual_mean"].pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_annual_mean_file
+)
+equivalents["hemispheric_mean_annual_mean"]

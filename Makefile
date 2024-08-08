@@ -29,28 +29,28 @@ help:  ## print short description of each target
 
 all:  ## compile all outputs
 	# High verbosity for now, may split out `all` and `all-verbose` targets if verbosity is too annoying
-	poetry run doit run --verbosity=2
+	pixi run doit run --verbosity=2
 
 doit-list:  ## list all the doit tasks
-	poetry run doit list --all --status
+	pixi run doit list --all --status
 
 all-ci: $(CI_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the CI run-id
-	DOIT_CONFIGURATION_FILE=$(CI_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID="CI"  DOIT_DB_FILE=".doit_ci" poetry run doit run --verbosity=2
+	DOIT_CONFIGURATION_FILE=$(CI_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID="CI"  DOIT_DB_FILE=".doit_ci" pixi run doit run --verbosity=2
 
 all-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --verbosity=2
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) pixi run doit run --verbosity=2
 
 all-dev-parallel: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --verbosity=2 -n 6
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) pixi run doit run --verbosity=2 -n 6
 
 all-debug-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## compile all outputs using the dev run-id, falling to debugger on failure
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit run --pdb
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) pixi run doit run --pdb
 
 clean-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## clean all the dev outputs (add --dry-run for dry run)
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit clean
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) pixi run doit clean
 
 doit-list-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## list all the doit tasks using the dev run-id
-	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) poetry run doit list --all --status
+	DOIT_CONFIGURATION_FILE=$(DEV_CONFIG_ABSOLUTE_YAML) DOIT_RUN_ID=$(DEV_RUN_ID) DOIT_DB_BACKEND=$(DEV_BACKEND) DOIT_DB_FILE=$(DEV_BACKEND_FILE) pixi run doit list --all --status
 
 # To add:
 # - doit status for status of individual tasks
@@ -58,24 +58,21 @@ doit-list-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## list all the doit tasks using the
 # - doit forget --all for resetting the database
 
 test: $(CI_CONFIG_YAML)  ## run the tests
-	poetry run pytest -r a -v src tests --doctest-modules
+	pixi run -e tests pytest -r a -v src tests --doctest-modules
 
 $(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-ci-config-absolute.py
-	poetry run python scripts/write-config.py
+	pixi run python scripts/write-config.py
 
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase
-	@echo "=== pre-commit ==="; poetry run pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \
-		echo "=== mypy ==="; MYPYPATH=stubs poetry run mypy src notebooks || echo "--- mypy failed ---" >&2; \
+	@echo "=== pre-commit ==="; pixi run -e all-dev pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \
+		echo "=== mypy ==="; MYPYPATH=stubs pixi run -e all-dev mypy src notebooks || echo "--- mypy failed ---" >&2; \
 		echo "======"
 
 .PHONY: changelog-draft
 changelog-draft:  ## compile a draft of the next changelog
-	poetry run towncrier build --draft
+	pixi run -e all-dev towncrier build --draft
 
 virtual-environment: pyproject.toml  ## update virtual environment, create a new one if it doesn't already exist
-	# Put virtual environments in the project
-	poetry config virtualenvs.in-project true
-	poetry lock --no-update
-	poetry install --all-extras
-	poetry run pre-commit install
+	pixi install
+	pixi run -e all-dev pre-commit install

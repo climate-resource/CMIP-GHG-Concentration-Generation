@@ -24,7 +24,10 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import cf_xarray.units
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import pint_xarray
 import xarray as xr
@@ -64,7 +67,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -176,6 +179,8 @@ for year in latitudinal_anomaly_from_eofs["year"]:
         continue
 
     fig, axes = plt.subplots(nrows=3, sharex=True, sharey=True)
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
 
     selected = lat_residuals_annual_mean.sel(year=year)
     axes[0].plot(selected.data.m, lat_residuals_annual_mean.lat)
@@ -282,6 +287,8 @@ for year in seasonality_change_from_eofs["year"]:
 
     for lat in [-37.5, 7.5, 52.5, 67.5]:
         fig, axes = plt.subplots(ncols=3, sharex=True, sharey=True)
+        if isinstance(axes, matplotlib.axes.Axes):
+            raise TypeError(type(axes))
 
         selected = seasonality_anomalies.sel(year=year, lat=lat)
         axes[0].plot(selected.data.m)

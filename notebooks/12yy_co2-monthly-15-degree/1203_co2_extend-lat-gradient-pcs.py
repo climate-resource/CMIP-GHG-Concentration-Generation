@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -18,12 +18,13 @@
 # Extend the latitudinal gradient's principal components back in time.
 # For CO$_2$, we do this by using a regression against emissions.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
 # %%
 from collections.abc import Iterator
 from contextlib import contextmanager
+from pathlib import Path
 
 import cf_xarray.units
 import matplotlib.axes
@@ -78,7 +79,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -102,7 +103,11 @@ def axes_vertical_split(
 ) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=ncols)
-    yield axes
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
+
+    yield (axes[0], axes[1])
+
     plt.tight_layout()
     plt.show()
 
@@ -189,7 +194,7 @@ allyears_pc1
 # and the optimised ice core period.
 # We fill this using a regression against emissions.
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 primap_full = primap2.open_dataset(
     config_retrieve_misc.primap.raw_dir
     / config_retrieve_misc.primap.download_url.url.split("/")[-1]
@@ -212,25 +217,33 @@ primap_fossil_co2_emissions = (
 
 primap_fossil_co2_emissions
 
-# %%
-primap_regression_data = primap_fossil_co2_emissions.sel(
-    year=lat_grad_eofs_obs_network["year"]
+# %% editable=true slideshow={"slide_type": ""}
+regression_years = np.intersect1d(
+    lat_grad_eofs_obs_network["year"], primap_fossil_co2_emissions["year"]
 )
+regression_years
+
+# %% editable=true slideshow={"slide_type": ""}
+primap_regression_data = primap_fossil_co2_emissions.sel(year=regression_years)
 primap_regression_data
 
-# %%
-pc0_obs_network = lat_grad_eofs_obs_network["principal-components"].sel(eof=0)
-pc0_obs_network
+# %% editable=true slideshow={"slide_type": ""}
+pc0_obs_network_regression = lat_grad_eofs_obs_network["principal-components"].sel(
+    eof=0, year=regression_years
+)
+pc0_obs_network_regression
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 with axes_vertical_split() as axes:
     primap_regression_data.plot(ax=axes[0])
-    pc0_obs_network.plot(ax=axes[1])
+    pc0_obs_network_regression.plot(ax=axes[1])
 
-# %%
-x = QuantityOSCM(primap_regression_data.data, str(primap_regression_data.data.units))
+# %% editable=true slideshow={"slide_type": ""}
+x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
 A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(pc0_obs_network.data, str(pc0_obs_network.data.units))
+y = QuantityOSCM(
+    pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
+)
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m, c = res[0]
@@ -257,14 +270,24 @@ ax.legend()
 # %% [markdown]
 # Extend PRIMAP emissions back to year 1, assuming constant before 1750.
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 primap_fossil_co2_emissions_extension_years = np.union1d(
-    np.setdiff1d(out_years, pc0_obs_network["year"]),
+    np.setdiff1d(out_years, pc0_obs_network_regression["year"]),
     primap_fossil_co2_emissions["year"],
 )
+# Ensure we only extend backwards
+primap_fossil_co2_emissions_extension_years = (
+    primap_fossil_co2_emissions_extension_years[
+        np.where(
+            primap_fossil_co2_emissions_extension_years
+            <= primap_fossil_co2_emissions["year"].max().values
+        )
+    ]
+)
+
 primap_fossil_co2_emissions_extension_years
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 primap_fossil_co2_emissions_extended = primap_fossil_co2_emissions.copy()
 primap_fossil_co2_emissions_extended = (
     primap_fossil_co2_emissions_extended.pint.dequantify().interp(
@@ -279,10 +302,10 @@ with axes_vertical_split() as axes:
 
 primap_fossil_co2_emissions_extended
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 years_to_fill_with_regression = np.setdiff1d(
     primap_fossil_co2_emissions_extended["year"],
-    pc0_obs_network["year"],
+    pc0_obs_network_regression["year"],
 )
 
 years_to_fill_with_regression
@@ -299,7 +322,7 @@ pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
 pc0_emissions_extended
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # #### Concatenate the pieces of PC0
 #
 # Join:
@@ -307,11 +330,22 @@ pc0_emissions_extended
 # - extended based on regression with emissions
 # - raw values derived from the observational network
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+pc0_obs_network_raw_years = np.setdiff1d(
+    lat_grad_eofs_obs_network["principal-components"].sel(
+        eof=0,
+    )["year"],
+    pc0_obs_network_regression["year"],
+)
+
+# %% editable=true slideshow={"slide_type": ""}
 allyears_pc0 = xr.concat(
     [
         pc0_emissions_extended,
-        pc0_obs_network,
+        pc0_obs_network_regression,
+        lat_grad_eofs_obs_network["principal-components"].sel(
+            eof=0, year=pc0_obs_network_raw_years
+        ),
     ],
     "year",
 )
@@ -320,7 +354,7 @@ with axes_vertical_split() as axes:
     allyears_pc0.plot(ax=axes[0])
 
     pc0_emissions_extended.plot(ax=axes[1])
-    pc0_obs_network.plot(ax=axes[1])
+    pc0_obs_network_regression.plot(ax=axes[1])
 
 allyears_pc0
 
@@ -372,7 +406,7 @@ config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(
 out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eofs_file)
 out
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file.parent.mkdir(
     exist_ok=True, parents=True
 )

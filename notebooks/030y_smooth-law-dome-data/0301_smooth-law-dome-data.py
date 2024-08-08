@@ -24,7 +24,9 @@
 
 # %%
 import string
+from pathlib import Path
 
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -61,7 +63,7 @@ step_config_id: str = "n2o"  # config ID to select for this branch
 # ## Load config
 
 # %%
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -151,6 +153,8 @@ x_plus_noise, y_plus_noise = noise_adder.add_noise(
 
 # %%
 fig, axes = plt.subplots(ncols=3, nrows=2, figsize=(8, 6))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 x_units = [x_raw.units, x_plus_noise.units]
 assert len(set(x_units)) == 1, set(x_units)
@@ -194,6 +198,8 @@ plt.tight_layout()
 plt.show()
 
 fig, axes = plt.subplots(nrows=2)
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 for i, (xlim, ylim) in enumerate(((None, None), ((1500, 1750), (260, 300)))):
     axes[i].scatter(x_raw_m, y_raw_m)
@@ -270,8 +276,8 @@ for yr, xlim_width in plt_yrs_width:
         color="tab:gray",
         label="Within window",
     )
-    ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
-    ax.set_ylim([0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m])
+    ax.set_xlim((target_year.m - xlim_width, target_year.m + xlim_width))
+    ax.set_ylim((0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m))
     ax.legend()
 
     plt.show()
@@ -402,8 +408,8 @@ for yr, xlim_width in plt_yrs_width:
     )
 
     ax.axvline(target_year.m, color="tab:gray", linestyle="--", alpha=0.3)
-    ax.set_xlim([target_year.m - xlim_width, target_year.m + xlim_width])
-    ax.set_ylim([0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m])
+    ax.set_xlim((target_year.m - xlim_width, target_year.m + xlim_width))
+    ax.set_ylim((0.9 * selected_points[1].min().m, 1.1 * selected_points[1].max().m))
     ax.legend()
 
     plt.show()
@@ -478,6 +484,8 @@ smoothed_all_samples_median
 
 # %%
 fig, axes = plt.subplots(nrows=2)
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 axes[0].scatter(
     x_raw.m,

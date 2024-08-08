@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -21,7 +21,13 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -53,7 +59,7 @@ step_config_id: str = "sf6"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -167,6 +173,8 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         ].copy()
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
 
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])
@@ -230,13 +238,24 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     if flip_lons:
         # put lons in range 0-360 rather than -180 to 180 which will cause issues for averaging
         site_events_df.loc[site_events_df["longitude"] < 0, "longitude"] += 360
+
         # assert we are now away from annoying boundaries
-        danger_lon_max = 250
-        danger_lon_min = 50
-        assert not (
-            (site_events_df["longitude"] >= danger_lon_max).any()
-            and (site_events_df["longitude"] < danger_lon_min).any()
-        )
+        def check_no_crossover_for_month(
+            space_info_for_month: pd.Series[Any],
+            danger_lon_max: int = 250,
+            danger_lon_min: int = 50,
+        ) -> None:
+            """
+            Check that there is no crossover of awkward longitudes
+
+            This check is assumed to be applied to each individual month bin.
+            """
+            assert not (
+                (space_info_for_month["longitude"] >= danger_lon_max).any()
+                and (space_info_for_month["longitude"] < danger_lon_min).any()
+            ), space_info_for_month
+
+        site_events_df.groupby(loc_calc_cols)[spatial_cols].apply(check_no_crossover_for_month)  # type: ignore
 
     locs_means = site_events_df.groupby(loc_calc_cols)[spatial_cols].mean()
     locs_stds = site_events_df.groupby(loc_calc_cols)[spatial_cols].std()
@@ -342,6 +361,8 @@ for station in tqdman.tqdm(
     site_events_df = df_events_sc_g[station]
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
 
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])

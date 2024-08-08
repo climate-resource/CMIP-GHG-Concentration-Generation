@@ -145,25 +145,25 @@ DOWNLOAD_URLS = {
     ("co2", "surface-flask"): [
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="co2"),
-            known_hash="92d8a6a6c59d936f1b338c0bf781009cd25348bf9a2c8dd9dde3cbf21e8dfe17",
+            known_hash="7e53e3aa7f43ec8300a080d9ae06dd64aa3cee526092e80e3a3d4989600f52ec",
         )
     ],
     ("co2", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="co2"),
-            known_hash="f06a7eb8f8e56f775e4843b889ba4388ad61557c95b0d8a764522893f2d90bc1",
+            known_hash="49ab01e2457f3fe74b09dd8f3a984d4580e0a80370982e7c6d2257150d78acee",
         )
     ],
     ("ch4", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="ch4"),
-            known_hash="0ac02608ec33f6057e496463e2cf755970d40f4e653a6a5a7d6d14ec519b863e",
+            known_hash="f01fe94e957802ebea83f48ec477633d1462d440b3a79c61b32cccea70706870",
         )
     ],
     ("ch4", "surface-flask"): [
         URLSource(
             url=SURFACE_FLASK_URL_BASE.format(gas="ch4"),
-            known_hash="e541578315328857f01eb7432b5949e39beabab2017c09e46727ac49ec728087",
+            known_hash="ea5fc01c59a67d1349ef2fdffd21ceb14ff0fb0d8518f1517d3972cac71df0e5",
         )
     ],
     ("n2o", "hats"): [

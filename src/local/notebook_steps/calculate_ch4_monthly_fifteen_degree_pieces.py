@@ -56,6 +56,11 @@ def configure_notebooks(
         step="process_noaa_surface_flask_data",
         step_config_id=config_step.gas,
     )
+    config_process_noaa_in_situ_data = get_config_for_step_id(
+        config=config,
+        step="process_noaa_in_situ_data",
+        step_config_id=config_step.gas,
+    )
     config_process_agage_data_gc_md = get_config_for_step_id(
         config=config,
         step="retrieve_and_extract_agage_data",
@@ -90,6 +95,7 @@ def configure_notebooks(
             configuration=(),
             dependencies=(
                 config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+                config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
                 config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
                 config_process_ale_data.processed_monthly_data_with_loc_file,
                 config_process_gage_data.processed_monthly_data_with_loc_file,

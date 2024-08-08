@@ -34,6 +34,8 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from pathlib import Path
+
 import openscm_units
 import pint
 from doit.dependency import get_file_md5
@@ -62,7 +64,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )

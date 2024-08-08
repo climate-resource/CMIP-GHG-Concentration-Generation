@@ -57,7 +57,7 @@ def configure_notebooks(
     config_retrieve_noaa = get_config_for_step_id(
         config=config,
         step="retrieve_and_extract_noaa_data",
-        step_config_id=f"{config_step.gas}_surface-flask",
+        step_config_id=f"{config_step.gas}_in-situ",
     )
 
     configured_notebooks = [

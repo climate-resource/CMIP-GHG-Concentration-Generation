@@ -1,6 +1,7 @@
 """
 Tests of the output bundle
 """
+
 from __future__ import annotations
 
 import copy
@@ -22,46 +23,31 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
     run_id = "bundle-run"
 
     env_here = copy.deepcopy(os.environ)
-    env_here.pop("VIRTUAL_ENV")
+    env_here.pop("CONDA_PREFIX")
+    env_here.pop("PIXI_PROJECT_MANIFEST")
 
-    # Handy in case you need to debug
-    subprocess.run(
+    subprocess.check_output(
         (  # noqa: S603 # inputs come from us
-            "poetry",
-            "config",
-            "virtualenvs.in-project",
-            "true",
-        ),
-        cwd=copied_output_dir / basic_workflow_output_info["run_id"],
-        env=env_here,
-        check=True,
-    )
-
-    subprocess.run(
-        (  # noqa: S603 # inputs come from us
-            "poetry",
+            "pixi",
             "install",
-            "--only",
-            "main",
+            "-e",
+            "default",
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
-        check=True,
     )
 
-    venv_check = subprocess.run(
+    venv_check = subprocess.check_output(
         (  # noqa: S603 # inputs come from us
-            "poetry",
+            "pixi",
             "run",
             "which",
             "doit",
         ),
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env=env_here,
-        stdout=subprocess.PIPE,
-        check=True,
     )
-    assert str(copied_output_dir) in venv_check.stdout.decode(), "venv incorrectly set"
+    assert str(copied_output_dir) in venv_check.decode(), "venv incorrectly set"
 
     # Check that the instructions in the README are correct too and use them for
     # the run
@@ -72,19 +58,20 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
 
     expected_readme_line = (
         f"DOIT_CONFIGURATION_FILE={assumed_raw_config_file} "
-        "poetry run doit run --verbosity=2"
+        "pixi run doit run --verbosity=2"
     )
     assert expected_readme_line in readme_contents
 
-    subprocess.run(
-        expected_readme_line.split(" ")[1:],  # noqa: S603 # inputs come from us
+    command_to_run_base = expected_readme_line.split(" ")[1:]
+    subprocess.check_output(
+        [*command_to_run_base, "-n", "6"],  # noqa: S603 # inputs come from us
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env={
             "DOIT_CONFIGURATION_FILE": assumed_raw_config_file,
             "DOIT_RUN_ID": run_id,
-            **os.environ,
+            **env_here,
         },
-        check=True,
+        stderr=subprocess.PIPE,
     )
 
     for compare_file in (

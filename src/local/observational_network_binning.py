@@ -38,8 +38,8 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     if gas in ("cfc113",):
         return get_input_files_cfc113_like(gas=gas, config=config)
 
-    if gas in ("cfc114", "cfc115", "hfc245fa", "c3f8", "cc4f8"):
-        return get_input_files_cfc114_like(gas=gas, config=config)
+    if gas in ("cfc115", "hfc245fa", "c3f8", "cc4f8"):
+        return get_input_files_cfc115_like(gas=gas, config=config)
 
     if gas in (
         "hfc134a",
@@ -190,7 +190,7 @@ def get_input_files_hfc134a_like(gas: str, config: Config) -> list[Path]:
     ]
 
 
-def get_input_files_cfc114_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_cfc115_like(gas: str, config: Config) -> list[Path]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-114
     """

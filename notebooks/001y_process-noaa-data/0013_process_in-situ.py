@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -25,7 +25,10 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -57,7 +60,7 @@ step_config_id: str = "co2"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -87,38 +90,6 @@ df_months
 
 # %%
 monthly_dfs_with_loc = df_months[PROCESSED_DATA_COLUMNS]
-
-# %%
-if config_step.step_config_id in ["co2", "ch4"]:
-    # There is one month where there is duplicate data for MKO,
-    # presumably from moving because of the fires.
-    # We deal with this here becuase it is such an edge case.
-    edge_case_year_month = (2023, 7)
-    edge_case_rows_select = (
-        (monthly_dfs_with_loc["year"] == edge_case_year_month[0])
-        & (monthly_dfs_with_loc["month"] == edge_case_year_month[1])
-        & (monthly_dfs_with_loc["site_code_filename"] == "mko")
-    )
-    edge_case_rows = monthly_dfs_with_loc[edge_case_rows_select]
-    exp_n_edge_case_rows = 2
-    assert edge_case_rows.shape[0] == exp_n_edge_case_rows
-
-    # Assume that a mean is fine, it seems justifiable in overall noise
-    # and not sure what else to do...
-    edge_case_row_new = (
-        edge_case_rows.groupby(list(set(edge_case_rows.columns) - {"value"}))
-        .mean()
-        .reset_index()
-    )
-
-    monthly_dfs_with_loc = pd.concat(
-        [monthly_dfs_with_loc[~edge_case_rows_select], edge_case_row_new]
-    )
-    monthly_dfs_with_loc[
-        (monthly_dfs_with_loc["year"] == edge_case_year_month[0])
-        & (monthly_dfs_with_loc["month"] == edge_case_year_month[1])
-        & (monthly_dfs_with_loc["site_code_filename"] == "mko")
-    ]
 
 # %% editable=true slideshow={"slide_type": ""}
 duplicate_entries = monthly_dfs_with_loc[
@@ -155,6 +126,9 @@ for station, station_df in tqdman.tqdm(
     print(station_df)
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
+
     colour = next(colours)
     marker = next(markers)
 
@@ -196,6 +170,9 @@ for station, station_df in tqdman.tqdm(
 
 # %%
 fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
 colours = (c for c in ["tab:blue", "tab:green", "tab:red", "tab:pink", "tab:brown"])
 markers = (m for m in ["o", "x", ".", ",", "v"])
 

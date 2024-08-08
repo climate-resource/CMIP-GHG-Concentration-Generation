@@ -73,9 +73,11 @@ def configure_notebooks(
             configuration=None,
             dependencies=(
                 config_crunch_grids.fifteen_degree_monthly_file,
-                config_crunch_grids.half_degree_monthly_file,
-                config_crunch_grids.gmnhsh_mean_monthly_file,
-                config_crunch_grids.gmnhsh_mean_annual_file,
+                # config_crunch_grids.half_degree_monthly_file,
+                config_crunch_grids.global_mean_monthly_file,
+                config_crunch_grids.hemispheric_mean_monthly_file,
+                config_crunch_grids.global_mean_annual_mean_file,
+                config_crunch_grids.hemispheric_mean_annual_mean_file,
             ),
             targets=(
                 # get_checklist_file(config_step.input4mips_out_dir),

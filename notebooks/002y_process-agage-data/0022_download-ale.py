@@ -23,6 +23,7 @@
 # ## Imports
 
 # %%
+from pathlib import Path
 
 import openscm_units
 import pint
@@ -52,7 +53,7 @@ step_config_id: str = "monthly"  # config ID to select for this branch
 # ## Load config
 
 # %%
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )

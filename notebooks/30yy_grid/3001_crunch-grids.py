@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.3
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -28,19 +28,17 @@
 # ## Imports
 
 # %%
-from functools import partial
+from pathlib import Path
 
 import cf_xarray.units
 import matplotlib.pyplot as plt
 import numpy as np
 import pint_xarray
-import tqdm.autonotebook as tqdman
 import xarray as xr
 from carpet_concentrations.gridders.latitude_seasonality_gridder import (
     LatitudeSeasonalityGridder,
 )
 from pydoit_nb.config_handling import get_config_for_step_id
-from tqdm.contrib.concurrent import process_map
 
 import local.binned_data_interpolation
 import local.binning
@@ -72,13 +70,13 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc245fa"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -93,6 +91,7 @@ elif config_step.gas in (
     "c6f14",
     "c7f16",
     "c8f18",
+    "cfc114",
 ):
     step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
     step_config_id_gridding_pieces_step = config_step.gas
@@ -172,15 +171,13 @@ fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(
 # %%
 print("Colour mesh plot")
 fifteen_degree_data_time_axis.plot.pcolormesh(
-    x="time", y="lat", cmap="rocket_r", levels=100
+    x="time", y="lat", cmap="magma_r", levels=100
 )
 plt.show()
 
 # %%
 print("Contour plot fewer levels")
-fifteen_degree_data_time_axis.plot.contour(
-    x="time", y="lat", cmap="rocket_r", levels=30
-)
+fifteen_degree_data_time_axis.plot.contour(x="time", y="lat", cmap="magma_r", levels=30)
 plt.show()
 
 # %%
@@ -201,7 +198,7 @@ tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
         x="time",
         y="lat",
         ax=ax,
-        cmap="rocket_r",
+        cmap="magma_r",
         levels=30,
         # alpha=0.7,
     )
@@ -210,139 +207,149 @@ ax.view_init(15, -135, 0)  # type: ignore
 plt.tight_layout()
 plt.show()
 
+# # %% [markdown]
+# # ### 0.5&deg; monthly file
+#
+# # %%
+# try:
+#     process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+#         local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+#         local.xarray_time.convert_year_month_to_time(
+#             fifteen_degree_data
+#             # .sel(year=range(1981, 2023))
+#         )
+#         .pint.dequantify()
+#         .groupby("time", squeeze=False),
+#         max_workers=6,
+#         chunksize=24,
+#     )
+#     interpolation_successful = True
+#     print(len(process_map_res))
+# except AssertionError:
+#     interpolation_successful = False
+#
+# # %%
+# if not interpolation_successful:
+#     for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
+#         print(f"Trying {degrees_freedom_scalar=}")
+#         try:
+#             process_map_res: list[xr.DataArray] = process_map(  # type: ignore
+#                 partial(
+#                     local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
+#                     degrees_freedom_scalar=degrees_freedom_scalar,
+#                 ),
+#                 local.xarray_time.convert_year_month_to_time(
+#                     fifteen_degree_data
+#                     # .sel(year=range(1981, 2023))
+#                 )
+#                 .pint.dequantify()
+#                 .groupby("time", squeeze=False),
+#                 max_workers=6,
+#                 chunksize=24,
+#             )
+#             print(f"Run succeeded with {degrees_freedom_scalar=}")
+#             break
+#         except AssertionError:
+#             print(f"Run failed with {degrees_freedom_scalar=}")
+#             continue
+#
+#     else:
+#         msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+#         raise AssertionError(msg)
+#
+# len(process_map_res)
+#
+# # %%
+# half_degree_data_l = []
+# for map_res in tqdman.tqdm(process_map_res):
+#     half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
+#
+# half_degree_data = local.xarray_time.convert_time_to_year_month(
+#     xr.concat(half_degree_data_l, "time")
+# )
+# half_degree_data.name = fifteen_degree_data.name
+# half_degree_data
+#
+# # %%
+# np.testing.assert_allclose(
+#     fifteen_degree_data.transpose("year", "month", "lat").data.m,
+#     half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
+#     .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
+#     .transpose("year", "month", "lat_bins")
+#     .data.m,
+#     atol=5e-6,  # Tolerance of our mean-preserving algorithm
+# )
+#
+# # %%
+# print("Flying carpet")
+# fig = plt.figure(figsize=(8, 6))
+# ax = fig.add_subplot(projection="3d")
+# tmp = local.xarray_time.convert_year_month_to_time(half_degree_data).copy()
+# tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
+# (
+#     tmp.isel(time=range(-150, 0)).plot.surface(
+#         x="time",
+#         y="lat",
+#         ax=ax,
+#         cmap="magma_r",
+#         levels=30,
+#         # alpha=0.7,
+#     )
+# )
+# ax.view_init(15, -135, 0)  # type: ignore
+# plt.tight_layout()
+# plt.show()
+
 # %% [markdown]
-# ### 0.5&deg; monthly file
+# ### Global-mean
 
 # %%
-try:
-    process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-        local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-        local.xarray_time.convert_year_month_to_time(
-            fifteen_degree_data
-            # .sel(year=range(1981, 2023))
-        )
-        .pint.dequantify()
-        .groupby("time", squeeze=False),
-        max_workers=6,
-        chunksize=24,
-    )
-    interpolation_successful = True
-    print(len(process_map_res))
-except AssertionError:
-    interpolation_successful = False
-
-# %%
-if not interpolation_successful:
-    for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
-        print(f"Trying {degrees_freedom_scalar=}")
-        try:
-            process_map_res: list[xr.DataArray] = process_map(  # type: ignore
-                partial(
-                    local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
-                    degrees_freedom_scalar=degrees_freedom_scalar,
-                ),
-                local.xarray_time.convert_year_month_to_time(
-                    fifteen_degree_data
-                    # .sel(year=range(1981, 2023))
-                )
-                .pint.dequantify()
-                .groupby("time", squeeze=False),
-                max_workers=6,
-                chunksize=24,
-            )
-            print(f"Run succeeded with {degrees_freedom_scalar=}")
-            break
-        except AssertionError:
-            print(f"Run failed with {degrees_freedom_scalar=}")
-            continue
-
-    else:
-        msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-        raise AssertionError(msg)
-
-len(process_map_res)
-
-# %%
-half_degree_data_l = []
-for map_res in tqdman.tqdm(process_map_res):
-    half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
-
-half_degree_data = local.xarray_time.convert_time_to_year_month(
-    xr.concat(half_degree_data_l, "time")
+global_mean_monthly = local.xarray_space.calculate_global_mean_from_lon_mean(
+    fifteen_degree_data
 )
-half_degree_data.name = fifteen_degree_data.name
-half_degree_data
+global_mean_monthly
 
 # %%
-np.testing.assert_allclose(
-    fifteen_degree_data.transpose("year", "month", "lat").data.m,
-    half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
-    .apply(local.xarray_space.calculate_global_mean_from_lon_mean)
-    .transpose("year", "month", "lat_bins")
-    .data.m,
-    atol=5e-6,  # Tolerance of our mean-preserving algorithm
-)
-
-# %%
-print("Flying carpet")
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(projection="3d")
-tmp = local.xarray_time.convert_year_month_to_time(half_degree_data).copy()
-tmp = tmp.assign_coords(time=tmp["time"].dt.year + tmp["time"].dt.month / 12)
-(
-    tmp.isel(time=range(-150, 0)).plot.surface(
-        x="time",
-        y="lat",
-        ax=ax,
-        cmap="rocket_r",
-        levels=30,
-        # alpha=0.7,
-    )
-)
-ax.view_init(15, -135, 0)  # type: ignore
-plt.tight_layout()
+print("Global-mean")
+local.xarray_time.convert_year_month_to_time(global_mean_monthly).plot()  # type: ignore
 plt.show()
 
 # %% [markdown]
-# ### Global-, northern-hemisphere- and southern-hemisphere-means
+# ### Hemispheric-means
 
 # %%
-gmnhsh_l = []
-sector_str_l = []
-for id, sector, lat_sel in (
-    ("global-mean", 0, fifteen_degree_data["lat"]),
-    ("northern hemisphere-mean", 1, fifteen_degree_data["lat"] > 0),
-    ("southern hemisphere-mean", 2, fifteen_degree_data["lat"] < 0),
+hemispheric_means_l = []
+for lat_use, lat_sel in (
+    (-45.0, fifteen_degree_data["lat"] < 0),
+    (45.0, fifteen_degree_data["lat"] > 0),
 ):
     tmp = local.xarray_space.calculate_global_mean_from_lon_mean(
         fifteen_degree_data.sel(lat=lat_sel)
     )
-    tmp = tmp.assign_coords(sector=sector)
-    gmnhsh_l.append(tmp)
+    tmp = tmp.assign_coords(lat=lat_use)
+    hemispheric_means_l.append(tmp)
 
-    sector_str_l.append(f"{sector}: {id}")
-
-sector_str = ";".join(sector_str_l)
-print(sector_str)
-gmnhsh = xr.concat(gmnhsh_l, "sector")
-gmnhsh.attrs["sectors"] = sector_str
-gmnhsh
+hemispheric_means_monthly = xr.concat(hemispheric_means_l, "lat")
+hemispheric_means_monthly
 
 # %%
-print("Global-, hemispheric-means")
-local.xarray_time.convert_year_month_to_time(gmnhsh).plot(hue="sector")
+print("Global-mean")
+local.xarray_time.convert_year_month_to_time(hemispheric_means_monthly).plot(hue="lat")
 plt.show()
 
 # %% [markdown]
-# ### Global-, northern-hemisphere- and southern-hemisphere-means, annual-means
+# ### Global-, hemispheric-means, annual-means
 
 # %%
-gmnhsh_annual_mean = gmnhsh.mean("month")
-gmnhsh_annual_mean
+global_mean_annual_mean = global_mean_monthly.mean("month")
+hemispheric_means_annual_mean = hemispheric_means_monthly.mean("month")
 
 # %%
 print("Annual-, global-mean")
-gmnhsh_annual_mean.plot(hue="sector")
+global_mean_annual_mean.plot()  # type: ignore
+plt.show()
+
+hemispheric_means_annual_mean.plot()
 plt.show()
 
 # %% [markdown]
@@ -353,17 +360,33 @@ config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True
 fifteen_degree_data.pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
 fifteen_degree_data
 
-# %%
-config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
-half_degree_data
+# # %%
+# config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+# half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
+# half_degree_data
 
 # %%
-config_step.gmnhsh_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-gmnhsh.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_monthly_file)
-gmnhsh
+config_step.global_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+global_mean_monthly.pint.dequantify().to_netcdf(config_step.global_mean_monthly_file)
+global_mean_monthly
 
 # %%
-config_step.gmnhsh_mean_annual_file.parent.mkdir(exist_ok=True, parents=True)
-gmnhsh_annual_mean.pint.dequantify().to_netcdf(config_step.gmnhsh_mean_annual_file)
-gmnhsh_annual_mean
+config_step.hemispheric_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+hemispheric_means_monthly.pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_monthly_file
+)
+hemispheric_means_monthly
+
+# %%
+config_step.global_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+global_mean_annual_mean.pint.dequantify().to_netcdf(
+    config_step.global_mean_annual_mean_file
+)
+global_mean_annual_mean
+
+# %%
+config_step.hemispheric_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+hemispheric_means_annual_mean.pint.dequantify().to_netcdf(
+    config_step.hemispheric_mean_annual_mean_file
+)
+hemispheric_means_annual_mean

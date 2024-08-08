@@ -21,7 +21,10 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -52,7 +55,7 @@ step_config_id: str = "hfc134a"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -148,6 +151,9 @@ for i, (station, station_df) in tqdman.tqdm(
     print(station_df)
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
+
     colour = colours[i % len(colours)]
     marker = markers[i % len(colours)]
 
@@ -189,6 +195,9 @@ for i, (station, station_df) in tqdman.tqdm(
 
 # %%
 fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
 colours = tuple(
     c
     for c in [

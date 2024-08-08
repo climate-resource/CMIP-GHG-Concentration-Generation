@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import re
 
-import xarray as xr
+import iris
 
 
 def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
@@ -29,20 +29,24 @@ def test_basic_workflow(basic_workflow_output_info, ndarrays_regression):
         / "esgf-ready"
         / "input4MIPs"
     ).rglob("*.nc"):
-        ds = xr.open_dataset(input4mips_file)
-        for key, value in ds.data_vars.items():
-            filepath_write = re.sub(
-                r"v\d{8}",
-                "vYYYYMMDD",
-                str(
-                    input4mips_file.relative_to(
-                        basic_workflow_output_info["root_dir_output"]
-                    )
-                ),
-            )
+        cubes = iris.load(input4mips_file)
+        if len(cubes) > 1:
+            raise NotImplementedError
 
-            key_write = f"{filepath_write}__{key}"
-            array_contents[key_write] = value.data
+        cube = cubes[0]
+        key = cube.name()
+        filepath_write = re.sub(
+            r"v\d{8}",
+            "vYYYYMMDD",
+            str(
+                input4mips_file.relative_to(
+                    basic_workflow_output_info["root_dir_output"]
+                )
+            ),
+        )
+
+        key_write = f"{filepath_write}__{key}"
+        array_contents[key_write] = cube.data
 
     ndarrays_regression.check(
         array_contents, default_tolerance=dict(atol=1e-6, rtol=1e-3)

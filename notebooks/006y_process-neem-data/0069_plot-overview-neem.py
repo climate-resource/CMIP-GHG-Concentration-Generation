@@ -21,7 +21,10 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from pathlib import Path
+
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -50,7 +53,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -78,6 +81,8 @@ countries = gpd.read_file(
 
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 countries.plot(color="lightgray", ax=axes[0])
 
