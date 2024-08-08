@@ -65,13 +65,13 @@ $(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_
 
 .PHONY: checks
 checks:  ## run all the linting checks of the codebase
-	@echo "=== pre-commit ==="; pixi run pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \
-		echo "=== mypy ==="; MYPYPATH=stubs pixi run mypy src notebooks || echo "--- mypy failed ---" >&2; \
+	@echo "=== pre-commit ==="; pixi run -e all-dev pre-commit run --all-files || echo "--- pre-commit failed ---" >&2; \
+		echo "=== mypy ==="; MYPYPATH=stubs pixi run -e all-dev mypy src notebooks || echo "--- mypy failed ---" >&2; \
 		echo "======"
 
 .PHONY: changelog-draft
 changelog-draft:  ## compile a draft of the next changelog
-	pixi run towncrier build --draft
+	pixi run -e all-dev towncrier build --draft
 
 virtual-environment: pyproject.toml  ## update virtual environment, create a new one if it doesn't already exist
 	pixi install
