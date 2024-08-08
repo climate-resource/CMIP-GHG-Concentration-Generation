@@ -21,7 +21,11 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from pathlib import Path
+from typing import Any
+
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -53,7 +57,7 @@ step_config_id: str = "sf6"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -167,6 +171,8 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
         ].copy()
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
 
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])
@@ -233,8 +239,10 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
 
         # assert we are now away from annoying boundaries
         def check_no_crossover_for_month(
-            space_info_for_month, danger_lon_max=250, danger_lon_min=50
-        ):
+            space_info_for_month: pd.Series[Any],
+            danger_lon_max: int = 250,
+            danger_lon_min: int = 50,
+        ) -> None:
             """
             Check that there is no crossover of awkward longitudes
 
@@ -245,9 +253,7 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
                 and (space_info_for_month["longitude"] < danger_lon_min).any()
             ), space_info_for_month
 
-        site_events_df.groupby(loc_calc_cols)[spatial_cols].apply(
-            check_no_crossover_for_month
-        )
+        site_events_df.groupby(loc_calc_cols)[spatial_cols].apply(check_no_crossover_for_month)  # type: ignore
 
     locs_means = site_events_df.groupby(loc_calc_cols)[spatial_cols].mean()
     locs_stds = site_events_df.groupby(loc_calc_cols)[spatial_cols].std()
@@ -353,6 +359,8 @@ for station in tqdman.tqdm(
     site_events_df = df_events_sc_g[station]
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
 
     colours = {"surface": "tab:orange", "shipboard": "tab:blue"}
     countries.plot(color="lightgray", ax=axes[0])

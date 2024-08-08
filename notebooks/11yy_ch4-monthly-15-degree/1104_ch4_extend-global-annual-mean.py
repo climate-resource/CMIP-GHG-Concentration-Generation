@@ -25,6 +25,7 @@
 # %%
 from collections.abc import Iterator
 from contextlib import contextmanager
+from pathlib import Path
 from typing import cast
 
 import cf_xarray.units
@@ -79,7 +80,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -121,7 +122,11 @@ def axes_vertical_split(
 ) -> Iterator[tuple[matplotlib.axes.Axes, matplotlib.axes.Axes]]:
     """Get two split axes, formatting after exiting the context"""
     fig, axes = plt.subplots(ncols=2)
-    yield axes
+    if isinstance(axes, matplotlib.axes.Axes):
+        raise TypeError(type(axes))
+
+    yield (axes[0], axes[1])
+
     plt.tight_layout()
     plt.show()
 

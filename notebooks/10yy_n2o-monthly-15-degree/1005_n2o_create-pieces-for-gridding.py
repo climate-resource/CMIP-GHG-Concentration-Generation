@@ -27,7 +27,10 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import cf_xarray.units
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import pint
@@ -72,7 +75,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -115,6 +118,8 @@ global_annual_mean_monthly
 
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
@@ -159,6 +164,9 @@ np.testing.assert_allclose(
 
 # %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
 local.xarray_time.convert_year_month_to_time(
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
@@ -203,6 +211,9 @@ pcs_monthly
 pcs_annual = lat_gradient_eofs_pcs["principal-components"]
 
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
 
 local.xarray_time.convert_year_month_to_time(
     pcs_monthly, calendar="proleptic_gregorian"

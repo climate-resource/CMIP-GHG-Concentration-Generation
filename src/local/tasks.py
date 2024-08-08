@@ -85,7 +85,9 @@ def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
     )
 
 
-def copy_readme_h(*args: Any, **kwargs: Any) -> None:
+def copy_readme_h(
+    in_path: Path, out_path: Path, run_id: str, config_file_raw: Path, **kwargs: Any
+) -> None:
     """
     Copy README
 
@@ -93,15 +95,35 @@ def copy_readme_h(*args: Any, **kwargs: Any) -> None:
 
     Parameters
     ----------
-    *args
-        Passed to `copy_readme_default`
+    in_path
+        Path to the raw README file (normally in the repository's root
+        directory)
+
+    out_path
+        Path in which to write the README file (normally in the output bundle)
+
+    run_id
+        ID of the run. This is injected into the written README as part of the
+        footer.
+
+    config_file_raw
+        Path to the raw configuration file, relative to the root output
+        directory
+
+    raw_run_instruction
+        Instructions for how to run the workflow as they appear in the README.
+        These are included to check that the instructions for running in the
+        bundle are (likely) correct.
 
     **kwargs
         Passed to `copy_readme_default`
     """
     # Ah, parallelism
     copy_readme_default(
-        *args,
+        in_path=in_path,
+        out_path=out_path,
+        run_id=run_id,
+        config_file_raw=config_file_raw,
         raw_run_instruction="pixi run doit run --verbosity=2",
         **kwargs,
     )

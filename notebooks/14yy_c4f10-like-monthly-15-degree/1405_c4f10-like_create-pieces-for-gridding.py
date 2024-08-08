@@ -27,7 +27,10 @@
 # ## Imports
 
 # %%
+from pathlib import Path
+
 import cf_xarray.units
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import pint
@@ -75,7 +78,7 @@ step_config_id: str = "c4f10"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -101,16 +104,16 @@ rcmip_concs = scmdata.ScmRun(rcmip_concentrations_fname, lowercase_cols=True)
 rcmip_concs
 
 # %%
-rcmip_concs_to_use = rcmip_concs.filter(
+rcmip_concs_to_use_run = rcmip_concs.filter(
     region="World", scenario="ssp245", year=range(1, 2022 + 1)
 )
-rcmip_concs_to_use["variable"] = rcmip_concs_to_use["variable"].str.lower()
+rcmip_concs_to_use_run["variable"] = rcmip_concs_to_use_run["variable"].str.lower()
 # rcmip_concs_to_use = rcmip_concs_to_use.filter(variable=f"*{config_step.gas}")
-rcmip_concs_to_use = rcmip_concs_to_use.filter(variable="*c4f10")
-if rcmip_concs_to_use.shape[0] != 1:
+rcmip_concs_to_use_run = rcmip_concs_to_use_run.filter(variable="*c4f10")
+if rcmip_concs_to_use_run.shape[0] != 1:
     raise AssertionError
 
-rcmip_concs_to_use = rcmip_concs_to_use.timeseries(time_axis="year")
+rcmip_concs_to_use = rcmip_concs_to_use_run.timeseries(time_axis="year")
 unit = rcmip_concs_to_use.index.get_level_values("unit")[0]
 rcmip_concs_to_use
 
@@ -158,6 +161,8 @@ global_annual_mean_monthly
 
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
@@ -206,7 +211,7 @@ obs_network_seasonality = xr.DataArray(
 obs_network_seasonality
 
 # %%
-obs_network_seasonality.plot()  # type: ignore
+obs_network_seasonality.plot()
 
 # %%
 seasonality_full = global_annual_mean * obs_network_seasonality
@@ -218,25 +223,28 @@ np.testing.assert_allclose(
 
 # %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
-local.xarray_time.convert_year_month_to_time(  # type: ignore
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
+local.xarray_time.convert_year_month_to_time(
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
 
-local.xarray_time.convert_year_month_to_time(  # type: ignore
+local.xarray_time.convert_year_month_to_time(
     seasonality_full.sel(year=range(1984, 1986))
 ).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
 
 plt.tight_layout()
 
 # %%
-local.xarray_time.convert_year_month_to_time(  # type: ignore
+local.xarray_time.convert_year_month_to_time(
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
-local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="proleptic_gregorian").plot(  # type: ignore
-    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
-)
+local.xarray_time.convert_year_month_to_time(
+    seasonality_full, calendar="proleptic_gregorian"
+).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %% [markdown]
 # ### Latitudinal gradient, monthly

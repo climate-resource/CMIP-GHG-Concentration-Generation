@@ -19,5 +19,5 @@ converter_yaml = pydoit_nb.serialization.converter_yaml
 load_config_from_file = partial(
     pydoit_nb.serialization.load_config_from_file,
     target=Config,
-    converter=converter_yaml,
+    converter=converter_yaml,  # type: ignore
 )

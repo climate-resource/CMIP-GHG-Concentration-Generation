@@ -28,6 +28,7 @@
 # ## Imports
 
 # %%
+from pathlib import Path
 
 import cf_xarray.units
 import matplotlib.pyplot as plt
@@ -75,7 +76,7 @@ step_config_id: str = "cfc114"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -310,7 +311,7 @@ global_mean_monthly
 
 # %%
 print("Global-mean")
-local.xarray_time.convert_year_month_to_time(global_mean_monthly).plot()
+local.xarray_time.convert_year_month_to_time(global_mean_monthly).plot()  # type: ignore
 plt.show()
 
 # %% [markdown]
@@ -345,7 +346,7 @@ hemispheric_means_annual_mean = hemispheric_means_monthly.mean("month")
 
 # %%
 print("Annual-, global-mean")
-global_mean_annual_mean.plot()
+global_mean_annual_mean.plot()  # type: ignore
 plt.show()
 
 hemispheric_means_annual_mean.plot()

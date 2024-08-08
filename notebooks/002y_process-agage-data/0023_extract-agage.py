@@ -25,6 +25,7 @@ from io import StringIO
 from pathlib import Path
 
 import geopandas as gpd
+import matplotlib.axes
 import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
@@ -60,7 +61,7 @@ step_config_id: str = "c2f6_gc-ms-medusa_monthly"  # config ID to select for thi
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -221,7 +222,7 @@ def read_agage_file(
     )
     columns = [v.strip() for v in header_row.split("  ") if v][1:]
     res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep, header=None)
-    res.columns = columns
+    res.columns = columns  # type: ignore
     res["gas"] = gas
     res["site_code"] = site_code
     res["instrument"] = config_step.instrument
@@ -269,6 +270,9 @@ countries = gpd.read_file(
 
 # %%
 fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
 colours = (
     c
     for c in [

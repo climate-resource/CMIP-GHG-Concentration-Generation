@@ -21,6 +21,7 @@
 # ## Imports
 
 # %%
+from pathlib import Path
 
 import cf_xarray.units
 import pint
@@ -47,7 +48,7 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
     cf_xarray.units.units
 )
 
-Q = pint.get_application_registry().Quantity
+Q = pint.get_application_registry().Quantity  # type: ignore
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -66,7 +67,7 @@ step_config_id: str = "cfc11eq"  # config ID to select for this branch
 # ## Load config
 
 # %% editable=true slideshow={"slide_type": ""}
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
@@ -89,7 +90,7 @@ config_grid_crunching_included_gases = [
 # ### Load comparison data
 
 # %%
-raw_global_mean_monthly = xr.load_dataarray(
+raw_global_mean_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
     get_config_for_step_id(
         config=config,
         step="crunch_grids",
@@ -157,7 +158,7 @@ for key, attr_to_grab in (
     ("hemispheric_mean_annual_mean", "hemispheric_mean_annual_mean_file"),
 ):
     print(f"Crunching {key}")
-    total_erf = None
+    total_erf_set = False
     included_species = []
 
     for crunch_gas_config in config_grid_crunching_included_gases:
@@ -175,7 +176,8 @@ for key, attr_to_grab in (
         print(f"Adding {loaded.name}")
         included_species.append(loaded.name)
 
-        if total_erf is None:
+        if not total_erf_set:
+            total_erf_set = True
             total_erf = loaded_erf
         else:
             total_erf += loaded_erf.sel(year=total_erf["year"])

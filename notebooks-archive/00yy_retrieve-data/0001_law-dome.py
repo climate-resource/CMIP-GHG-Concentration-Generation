@@ -21,6 +21,8 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from pathlib import Path
+
 from doit.dependency import get_file_md5
 from pydoit_nb.checklist import generate_directory_checklist
 from pydoit_nb.config_handling import get_config_for_step_id
@@ -44,7 +46,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 # ## Load config
 
 # %%
-config = load_config_from_file(config_file)
+config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(
     config=config, step=step, step_config_id=step_config_id
 )
