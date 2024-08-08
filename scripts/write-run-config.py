@@ -17,9 +17,9 @@ pint.set_application_registry(openscm_units.unit_registry)
 from local.config import Config, converter_yaml
 
 if __name__ == "__main__":
-    RUN_NAME = "v0.3.0"
-    VERSION = "0.3.0"
-    SEED = 20240731
+    RUN_NAME = "v0.3.1"
+    VERSION = "0.3.1"
+    SEED = 20240808
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
@@ -27,11 +27,21 @@ if __name__ == "__main__":
     with open(DEV_FILE) as fh:
         dev_config = converter_yaml.loads(fh, Config)
 
+    write_input4mips_old = dev_config.write_input4mips
+    write_input4mips_new = [
+        evolve(
+            v,
+            input4mips_cvs_source_id=f"CR-CMIP-{VERSION.replace('.', '-')}",
+            input4mips_cvs_cv_source="gh:v6.5.18",
+        )
+        for v in write_input4mips_old
+    ]
     run_config = evolve(
         dev_config,
         name=RUN_NAME,
         version=VERSION,
         base_seed=SEED,
+        write_input4mips=write_input4mips_new,
     )
     RUN_FILE: Path = Path(f"{RUN_NAME}-config.yaml")
     with open(RUN_FILE, "w") as fh:

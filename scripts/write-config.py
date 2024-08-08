@@ -285,6 +285,8 @@ def create_dev_config() -> Config:
             gases=(*gases_to_write, *equivalent_species_to_write),
             start_year=start_year,
             end_year=end_year,
+            input4mips_cvs_source_id="CR-CMIP-testing",
+            input4mips_cvs_cv_source="https://github.com/znichollscr/input4MIPs_CVs/tree/cr-cmip-testing",
         ),
     )
 
@@ -363,7 +365,11 @@ def create_ci_config() -> Config:
         # TODO: test this in CI
         crunch_equivalent_species=[],
         write_input4mips=create_write_input4mips_config(
-            gases=gases_to_write, start_year=start_year, end_year=end_year
+            gases=gases_to_write,
+            start_year=start_year,
+            end_year=end_year,
+            input4mips_cvs_source_id="CR-CMIP-testing",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/",
         ),
     )
 

@@ -58,7 +58,7 @@ doit-list-dev: $(DEV_CONFIG_ABSOLUTE_YAML)  ## list all the doit tasks using the
 # - doit forget --all for resetting the database
 
 test: $(CI_CONFIG_YAML)  ## run the tests
-	pixi run pytest -r a -v src tests --doctest-modules
+	pixi run -e tests pytest -r a -v src tests --doctest-modules
 
 $(DEV_CONFIG_ABSOLUTE_YAML) $(CI_CONFIG_YAML) $(CI_CONFIG_ABSOLUTE_YAML): $(DEV_CONFIG_YAML) scripts/create-dev-ci-config-absolute.py
 	pixi run python scripts/write-config.py

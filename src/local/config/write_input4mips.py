@@ -43,6 +43,12 @@ class WriteInput4MIPsConfig:
     Also allows us to ensure that all data covers the same time axis.
     """
 
+    input4mips_cvs_source_id: str
+    """Source ID to use to write the input4MIPs files"""
+
+    input4mips_cvs_cv_source: str
+    """Source from which to retrieve the input4MIPs CVs"""
+
     input4mips_out_dir: Path
     """Path in which to save the processed input4MIPs-ready data"""
 

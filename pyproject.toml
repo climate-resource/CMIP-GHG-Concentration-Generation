@@ -6,7 +6,11 @@ authors = [
 requires-python = ">=3.11, <3.12"
 # pip dependencies
 dependencies = [
-    "loguru-config", "openscm-units", "pydoit-nb", "scmdata", "carpet-concentrations", "primap2",
+    "primap2>=0.11.1",
+    "openscm-units>=0.6.1",
+    "pydoit-nb>=0.3.4",
+    "carpet-concentrations>=0.5.1",
+    "scmdata>=0.17.0",
 ]
 name = "local"
 version = "0.2.1a1"
@@ -22,9 +26,10 @@ editable = true
 
 # conda dependencies
 [tool.pixi.dependencies]
-input4mips-validation = "0.11.3"
+input4mips-validation-locked = "0.11.3"
 doit = ">=0.36.0,<0.37"
 jupyterlab = ">=1.0"
+loguru-config = ">=0.1.0"
 pooch = ">=1.0"
 scipy = ">=1.0"
 geopandas = ">=1.0"

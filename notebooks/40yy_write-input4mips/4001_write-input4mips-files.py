@@ -231,7 +231,7 @@ version = config.version
 version.replace(".", "-")
 
 metadata_minimum_common = dict(
-    source_id=f"CR-CMIP-{version.replace('.', '-')}",
+    source_id=config_step.input4mips_cvs_source_id,
     target_mip="CMIP",
 )
 metadata_minimum_common
@@ -343,9 +343,7 @@ gas_to_cmip_variable_renaming = {
 # ## Load CVs
 
 # %%
-raw_cvs_loader = get_raw_cvs_loader(
-    "https://raw.githubusercontent.com/PCMDI/input4MIPs_CVs/cr-cmip-0-3-0/CVs/"
-)
+raw_cvs_loader = get_raw_cvs_loader(config_step.input4mips_cvs_cv_source)
 
 # %%
 cvs = load_cvs_known_loader(raw_cvs_loader)
