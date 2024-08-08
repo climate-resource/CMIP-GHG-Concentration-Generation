@@ -7,8 +7,12 @@ from __future__ import annotations
 import shutil
 from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
-from pydoit_nb.tasks_copy_source import gen_copy_source_into_output_tasks
+from pydoit_nb.tasks_copy_source import (
+    copy_readme_default,
+    gen_copy_source_into_output_tasks,
+)
 from pydoit_nb.typing import DoitTaskSpec
 
 from .config import converter_yaml
@@ -78,6 +82,28 @@ def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
         dst=out_path,
         ignore=shutil.ignore_patterns("*.pyc", "__pycache__"),
         dirs_exist_ok=True,
+    )
+
+
+def copy_readme_h(*args: Any, **kwargs: Any) -> None:
+    """
+    Copy README
+
+    We have to define this function because `partial` doesn't play nice with parallel running
+
+    Parameters
+    ----------
+    *args
+        Passed to `copy_readme_default`
+
+    **kwargs
+        Passed to `copy_readme_default`
+    """
+    # Ah, parallelism
+    copy_readme_default(
+        *args,
+        raw_run_instruction="pixi run doit run --verbosity=2",
+        **kwargs,
     )
 
 
@@ -153,6 +179,7 @@ def gen_all_tasks(
         config_file_raw=config_file_raw,
         copy_file=copy_no_output,
         copy_tree=copy_tree_no_output,
+        copy_readme=copy_readme_h,
         other_files_to_copy=(
             "dodo.py",
             "pixi.lock",
