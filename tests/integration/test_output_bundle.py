@@ -69,7 +69,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         env={
             "DOIT_CONFIGURATION_FILE": assumed_raw_config_file,
             "DOIT_RUN_ID": run_id,
-            **os.environ,
+            **env_here,
         },
         stderr=subprocess.PIPE,
     )
