@@ -21,6 +21,8 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+from __future__ import annotations
+
 from pathlib import Path
 from typing import Any
 
