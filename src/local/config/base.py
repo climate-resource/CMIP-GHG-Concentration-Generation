@@ -44,6 +44,7 @@ from .retrieve_and_process_scripps_data import RetrieveProcessScrippsConfig
 from .retrieve_misc_data import RetrieveMiscDataConfig
 from .smooth_law_dome_data import SmoothLawDomeDataConfig
 from .write_input4mips import WriteInput4MIPsConfig
+from .zenodo import CreateZenodoDepositionConfig
 
 
 @frozen
@@ -286,6 +287,15 @@ class Config:
         ]
     )
     """Configurations to use with the equivalent species crunching step"""
+
+    create_zenodo_deposition: list[CreateZenodoDepositionConfig] = field(
+        validator=[
+            make_attrs_validator_compatible_single_input(
+                assert_step_config_ids_are_unique
+            )
+        ]
+    )
+    """Configurations to use with the Zenodo deposition creation step"""
 
     write_input4mips: list[WriteInput4MIPsConfig] = field(
         validator=[

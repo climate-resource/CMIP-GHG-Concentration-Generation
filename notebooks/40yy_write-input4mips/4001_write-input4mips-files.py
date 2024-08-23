@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -105,9 +105,24 @@ else:
         step_config_id=config_step.gas,
     )
 
+config_create_zenodo_deposition = get_config_for_step_id(
+    config=config,
+    step="create_zenodo_deposition",
+    step_config_id="only",
+)
+
 
 # %% [markdown]
 # ## Action
+
+# %% [markdown]
+# ### Load DOI
+
+# %%
+with open(config_create_zenodo_deposition.reserved_zenodo_doi_file) as fh:
+    doi = fh.read().strip()
+
+doi
 
 # %% [markdown]
 # ### Load data
@@ -440,6 +455,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         metadata=metadata_evolved,
         cvs=cvs,
         non_input4mips_metadata=dict(
+            doi=doi,
             references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
         ),
     )

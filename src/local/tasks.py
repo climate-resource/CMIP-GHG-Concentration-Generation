@@ -24,6 +24,7 @@ from .notebook_steps import (
     calculate_n2o_monthly_fifteen_degree_pieces,
     calculate_sf6_like_monthly_fifteen_degree_pieces,
     compile_historical_emissions,
+    create_zenodo_deposition,
     crunch_equivalent_species,
     crunch_grids,
     plot_input_data_overviews,
@@ -182,6 +183,7 @@ def gen_all_tasks(
         calculate_c4f10_like_monthly_fifteen_degree_pieces,
         crunch_grids,
         crunch_equivalent_species,
+        create_zenodo_deposition,
         write_input4mips,
     ]:
         for task in step_module.step.gen_notebook_tasks(

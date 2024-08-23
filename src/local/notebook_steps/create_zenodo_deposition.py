@@ -1,5 +1,5 @@
 """
-Write files in input4MIPs format notebook steps
+Create zenodo deposition notebook steps
 """
 
 from __future__ import annotations
@@ -51,45 +51,15 @@ def configure_notebooks(
         config=config, step=step_name, step_config_id=step_config_id
     )
 
-    if "eq" in config_step.gas:
-        config_crunch_grids = get_config_for_step_id(
-            config=config,
-            step="crunch_equivalent_species",
-            step_config_id=config_step.gas,
-        )
-
-    else:
-        config_crunch_grids = get_config_for_step_id(
-            config=config,
-            step="crunch_grids",
-            step_config_id=config_step.gas,
-        )
-
-    config_create_zenodo_deposition = get_config_for_step_id(
-        config=config,
-        step="create_zenodo_deposition",
-        step_config_id="only",
-    )
-
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("40yy_write-input4mips") / "4001_write-input4mips-files"
+                Path("39yy_create-zenodo-deposition")
+                / "3901_create-draft-zenodo-deposit.py"
             ],
-            configuration=None,
-            dependencies=(
-                config_crunch_grids.fifteen_degree_monthly_file,
-                # config_crunch_grids.half_degree_monthly_file,
-                config_crunch_grids.global_mean_monthly_file,
-                config_crunch_grids.hemispheric_mean_monthly_file,
-                config_crunch_grids.global_mean_annual_mean_file,
-                config_crunch_grids.hemispheric_mean_annual_mean_file,
-                config_create_zenodo_deposition.reserved_zenodo_doi_file,
-            ),
-            targets=(
-                # get_checklist_file(config_step.input4mips_out_dir),
-                config_step.complete_file,
-            ),
+            configuration=(config_step.any_deposition_id,),
+            dependencies=(),
+            targets=(config_step.reserved_zenodo_doi_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -101,13 +71,14 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[
     Config, ConfigBundle
 ] = UnconfiguredNotebookBasedStep(
-    step_name="write_input4mips",
+    step_name="create_zenodo_deposition",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("40yy_write-input4mips") / "4001_write-input4mips-files",
+            notebook_path=Path("39yy_create-zenodo-deposition")
+            / "3901_create-draft-zenodo-deposit.py",
             raw_notebook_ext=".py",
-            summary="write input4MIPs - write all files",
-            doc="Write input4MIPs files for our four data products",
+            summary="zenodo - Create zenodo deposition",
+            doc="Create a zenodo deposition to which we can upload files.",
         ),
     ],
     configure_notebooks=configure_notebooks,

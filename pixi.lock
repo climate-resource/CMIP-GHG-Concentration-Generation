@@ -396,6 +396,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -407,6 +408,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a4/f7/22d6b620ed895a05d40802d8281eff924dc6190f682d933d4efff60db3b5/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -417,6 +419,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/3d/93/c2a9ecb06a2740b59342eaa51099b4f56c398196f99b826586ab0febc31b/types_beautifulsoup4-4.12.0.20240511-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d9/df/ee52df5c2cb7f40f6b9d45fc11cc9256d3e237e04d57e2d797b448815fc7/types_html5lib-1.1.11.20240806-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e8/8d/f5dc5239d59bb4a7b58e2b6d0dc6f2c2ba797b110f83cdda8479508c63dd/types_pytz-2024.1.0.20240417-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/30/4d/cbed87a6912fbd9259ce23a5d4aa1de9816edf75eec6ed9a757c00906c8e/types_requests-2.32.0.20240712-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d7/dd/39a411628bfdeeac54587aa013a83a446a2ecf8e7e324744b9ba3bf076f3/types_tqdm-4.66.0.20240417-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/03/08/f819421002e85a71d58368f7bffbe0b1921325e0e8ca7857cb5fb0e1f7c1/virtualenv-20.4.7-py2.py3-none-any.whl
       - pypi: .
@@ -809,6 +812,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -820,6 +824,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/e4/0d19d65e340f93df1c47f323d95fa4b256bb28320290f5fddef90837853a/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_24_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -830,6 +835,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/3d/93/c2a9ecb06a2740b59342eaa51099b4f56c398196f99b826586ab0febc31b/types_beautifulsoup4-4.12.0.20240511-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d9/df/ee52df5c2cb7f40f6b9d45fc11cc9256d3e237e04d57e2d797b448815fc7/types_html5lib-1.1.11.20240806-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e8/8d/f5dc5239d59bb4a7b58e2b6d0dc6f2c2ba797b110f83cdda8479508c63dd/types_pytz-2024.1.0.20240417-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/30/4d/cbed87a6912fbd9259ce23a5d4aa1de9816edf75eec6ed9a757c00906c8e/types_requests-2.32.0.20240712-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d7/dd/39a411628bfdeeac54587aa013a83a446a2ecf8e7e324744b9ba3bf076f3/types_tqdm-4.66.0.20240417-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/03/08/f819421002e85a71d58368f7bffbe0b1921325e0e8ca7857cb5fb0e1f7c1/virtualenv-20.4.7-py2.py3-none-any.whl
       - pypi: .
@@ -1209,6 +1215,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -1220,6 +1227,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/15/971b385c098e8d0d170893f5ba558452bb7b776a0c90658b8f4dd0e3382b/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -1230,6 +1238,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/3d/93/c2a9ecb06a2740b59342eaa51099b4f56c398196f99b826586ab0febc31b/types_beautifulsoup4-4.12.0.20240511-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d9/df/ee52df5c2cb7f40f6b9d45fc11cc9256d3e237e04d57e2d797b448815fc7/types_html5lib-1.1.11.20240806-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e8/8d/f5dc5239d59bb4a7b58e2b6d0dc6f2c2ba797b110f83cdda8479508c63dd/types_pytz-2024.1.0.20240417-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/30/4d/cbed87a6912fbd9259ce23a5d4aa1de9816edf75eec6ed9a757c00906c8e/types_requests-2.32.0.20240712-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d7/dd/39a411628bfdeeac54587aa013a83a446a2ecf8e7e324744b9ba3bf076f3/types_tqdm-4.66.0.20240417-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/03/08/f819421002e85a71d58368f7bffbe0b1921325e0e8ca7857cb5fb0e1f7c1/virtualenv-20.4.7-py2.py3-none-any.whl
       - pypi: .
@@ -1609,6 +1618,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -1620,6 +1630,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/01/b0/4ddef56e9f703d7909febc3a421d709a3482cda25826816ec595b73e3847/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -1630,6 +1641,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/3d/93/c2a9ecb06a2740b59342eaa51099b4f56c398196f99b826586ab0febc31b/types_beautifulsoup4-4.12.0.20240511-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d9/df/ee52df5c2cb7f40f6b9d45fc11cc9256d3e237e04d57e2d797b448815fc7/types_html5lib-1.1.11.20240806-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e8/8d/f5dc5239d59bb4a7b58e2b6d0dc6f2c2ba797b110f83cdda8479508c63dd/types_pytz-2024.1.0.20240417-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/30/4d/cbed87a6912fbd9259ce23a5d4aa1de9816edf75eec6ed9a757c00906c8e/types_requests-2.32.0.20240712-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d7/dd/39a411628bfdeeac54587aa013a83a446a2ecf8e7e324744b9ba3bf076f3/types_tqdm-4.66.0.20240417-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/03/08/f819421002e85a71d58368f7bffbe0b1921325e0e8ca7857cb5fb0e1f7c1/virtualenv-20.4.7-py2.py3-none-any.whl
       - pypi: .
@@ -2020,10 +2032,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/47/f0e512178ae8dfbe5d3f9b519ff46c52234fc6ba13b40c37c13528adc3b8/pydoit_nb-0.3.4-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a4/f7/22d6b620ed895a05d40802d8281eff924dc6190f682d933d4efff60db3b5/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -2410,10 +2424,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/47/f0e512178ae8dfbe5d3f9b519ff46c52234fc6ba13b40c37c13528adc3b8/pydoit_nb-0.3.4-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/e4/0d19d65e340f93df1c47f323d95fa4b256bb28320290f5fddef90837853a/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_24_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -2787,10 +2803,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/47/f0e512178ae8dfbe5d3f9b519ff46c52234fc6ba13b40c37c13528adc3b8/pydoit_nb-0.3.4-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/15/971b385c098e8d0d170893f5ba558452bb7b776a0c90658b8f4dd0e3382b/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -3164,10 +3182,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/47/f0e512178ae8dfbe5d3f9b519ff46c52234fc6ba13b40c37c13528adc3b8/pydoit_nb-0.3.4-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/01/b0/4ddef56e9f703d7909febc3a421d709a3482cda25826816ec595b73e3847/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -3563,6 +3583,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -3572,6 +3593,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a4/f7/22d6b620ed895a05d40802d8281eff924dc6190f682d933d4efff60db3b5/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -3960,6 +3982,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -3969,6 +3992,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/e4/0d19d65e340f93df1c47f323d95fa4b256bb28320290f5fddef90837853a/ruamel.yaml.clib-0.2.8-cp311-cp311-manylinux_2_24_aarch64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -4344,6 +4368,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -4353,6 +4378,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/15/971b385c098e8d0d170893f5ba558452bb7b776a0c90658b8f4dd0e3382b/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_10_9_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -4728,6 +4754,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -4737,6 +4764,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/78/3a/af5b4fa5961d9a1e6237b530eb87dd04aea6eb83da09d2a4073d81b54ccf/pytest_cov-5.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/7c/90/96b9474cddda5ef9e10e6f1871c0fadfa153b605e0e749ba30437bfb62a0/pytest_datadir-1.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0c/93/086651842707118284e93387355efc5cbbce28bace9265b450d67be55fd8/pytest_regressions-2.5.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/01/b0/4ddef56e9f703d7909febc3a421d709a3482cda25826816ec595b73e3847/ruamel.yaml.clib-0.2.8-cp311-cp311-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/d3/cd/2e032e7bb1dcd389da2a803df2e41cce7b202686f5871f0ba9b1b2c01d86/scmdata-0.17.0-py3-none-any.whl
@@ -16749,19 +16777,22 @@ packages:
   name: local
   version: 0.2.1a1
   path: .
-  sha256: 027f08f382845f42800cbbe43bb4f2500d0f5ec146cba1ea4a223ffd6c1355bc
+  sha256: 83bd84187e790d4e14ccdfe616d2a2d342698f215106cfb3588b6f1fda22be55
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1
   - pydoit-nb>=0.3.4
   - carpet-concentrations>=0.5.1
   - scmdata>=0.17.0
+  - openscm-zenodo>=0.2.6,<0.3
+  - python-dotenv>=1.0.1,<2
   - pre-commit ; extra == 'dev'
   - mypy ; extra == 'dev'
   - pandas-stubs ; extra == 'dev'
   - tomli ; extra == 'dev'
   - towncrier ; extra == 'dev'
   - types-beautifulsoup4 ; extra == 'dev'
+  - types-requests ; extra == 'dev'
   - types-tqdm ; extra == 'dev'
   - pytest ; extra == 'tests'
   - pytest-regressions[dataframe] ; extra == 'tests'
@@ -18374,6 +18405,323 @@ packages:
   - pint
   - seaborn>=0.13.0,<0.14.0 ; extra == 'notebooks'
   requires_python: '>=3.9,<4.0'
+- kind: pypi
+  name: openscm-zenodo
+  version: 0.2.6
+  url: https://files.pythonhosted.org/packages/c2/be/018c13e34da9f25dd9d4c7182329d7146c6f4ebfa241c555352e5bfe0807/openscm_zenodo-0.2.6-py3-none-any.whl
+  sha256: 33d5fcb96218d556b1018ce7d9655b430ee332625eb9bd4be72ec39cf70feb8b
+  requires_dist:
+  - requests
+  - tqdm
+  - typer
+  - loguru
+  - attrs
+  - mypy>=1.11.1 ; extra == 'dev'
+  - pre-commit>=3.8.0 ; extra == 'dev'
+  - types-tqdm>=4.66.0.20240417 ; extra == 'dev'
+  - types-requests>=2.32.0.20240712 ; extra == 'dev'
+  - towncrier<24,>=23.11.0 ; extra == 'dev'
+  - liccheck>=0.9.2 ; extra == 'dev'
+  - pip>=24.2 ; extra == 'dev'
+  - websocket-client>=1.8.0 ; extra == 'dev'
+  - mkdocs>=1.6.0 ; extra == 'docs'
+  - mkdocs-material>=9.5.32 ; extra == 'docs'
+  - mkdocstrings[python]>=0.25.2 ; extra == 'docs'
+  - mkdocs-gen-files>=0.5.0 ; extra == 'docs'
+  - mkdocs-literate-nav>=0.6.1 ; extra == 'docs'
+  - mkdocs-section-index>=0.3.9 ; extra == 'docs'
+  - mkdocs-autorefs>=1.0.1 ; extra == 'docs'
+  - mkdocs-jupyter>=0.24.8 ; extra == 'docs'
+  - jupyterlab>=4.2.4 ; extra == 'docs'
+  - jupytext>=1.16.4 ; extra == 'docs'
+  - jupyterlab>=4.2.4 ; extra == 'notebooks'
+  - pytest>=8.3.2 ; extra == 'tests'
+  - coverage>=7.6.1 ; extra == 'tests'
+  - pytest-cov>=5.0.0 ; extra == 'tests'
+  - attrs==24.2.0 ; extra == 'locked'
+  - certifi==2024.7.4 ; extra == 'locked'
+  - charset-normalizer==3.3.2 ; extra == 'locked'
+  - click==8.1.7 ; extra == 'locked'
+  - colorama==0.4.6 ; extra == 'locked'
+  - idna==3.7 ; extra == 'locked'
+  - loguru==0.7.2 ; extra == 'locked'
+  - markdown-it-py==3.0.0 ; extra == 'locked'
+  - mdurl==0.1.2 ; extra == 'locked'
+  - pygments==2.18.0 ; extra == 'locked'
+  - requests==2.32.3 ; extra == 'locked'
+  - rich==13.7.1 ; extra == 'locked'
+  - shellingham==1.5.4 ; extra == 'locked'
+  - tqdm==4.66.5 ; extra == 'locked'
+  - typer==0.12.4 ; extra == 'locked'
+  - typing-extensions==4.12.2 ; extra == 'locked'
+  - urllib3==2.2.2 ; extra == 'locked'
+  - win32-setctime==1.1.0 ; sys_platform == 'win32' and extra == 'locked'
+  - cfgv==3.4.0 ; extra == 'dev-locked'
+  - click==8.1.7 ; extra == 'dev-locked'
+  - colorama==0.4.6 ; extra == 'dev-locked'
+  - distlib==0.3.8 ; extra == 'dev-locked'
+  - filelock==3.15.4 ; extra == 'dev-locked'
+  - identify==2.6.0 ; extra == 'dev-locked'
+  - importlib-resources==6.4.3 ; python_version < '3.10' and extra == 'dev-locked'
+  - incremental==24.7.2 ; extra == 'dev-locked'
+  - jinja2==3.1.4 ; extra == 'dev-locked'
+  - liccheck==0.9.2 ; extra == 'dev-locked'
+  - markupsafe==2.1.5 ; extra == 'dev-locked'
+  - mypy==1.11.1 ; extra == 'dev-locked'
+  - mypy-extensions==1.0.0 ; extra == 'dev-locked'
+  - nodeenv==1.9.1 ; extra == 'dev-locked'
+  - pip==24.2 ; extra == 'dev-locked'
+  - platformdirs==4.2.2 ; extra == 'dev-locked'
+  - pre-commit==3.8.0 ; extra == 'dev-locked'
+  - pyyaml==6.0.2 ; extra == 'dev-locked'
+  - semantic-version==2.10.0 ; extra == 'dev-locked'
+  - setuptools==73.0.1 ; extra == 'dev-locked'
+  - toml==0.10.2 ; extra == 'dev-locked'
+  - tomli==2.0.1 ; python_version < '3.11' and extra == 'dev-locked'
+  - towncrier==23.11.0 ; extra == 'dev-locked'
+  - types-requests==2.32.0.20240712 ; extra == 'dev-locked'
+  - types-tqdm==4.66.0.20240417 ; extra == 'dev-locked'
+  - typing-extensions==4.12.2 ; extra == 'dev-locked'
+  - urllib3==2.2.2 ; extra == 'dev-locked'
+  - virtualenv==20.26.3 ; extra == 'dev-locked'
+  - websocket-client==1.8.0 ; extra == 'dev-locked'
+  - zipp==3.20.0 ; python_version < '3.10' and extra == 'dev-locked'
+  - anyio==4.4.0 ; extra == 'docs-locked'
+  - appnope==0.1.4 ; platform_system == 'Darwin' and extra == 'docs-locked'
+  - argon2-cffi==23.1.0 ; extra == 'docs-locked'
+  - argon2-cffi-bindings==21.2.0 ; extra == 'docs-locked'
+  - arrow==1.3.0 ; extra == 'docs-locked'
+  - asttokens==2.4.1 ; extra == 'docs-locked'
+  - async-lru==2.0.4 ; extra == 'docs-locked'
+  - attrs==24.2.0 ; extra == 'docs-locked'
+  - babel==2.16.0 ; extra == 'docs-locked'
+  - beautifulsoup4==4.12.3 ; extra == 'docs-locked'
+  - bleach==6.1.0 ; extra == 'docs-locked'
+  - certifi==2024.7.4 ; extra == 'docs-locked'
+  - cffi==1.17.0 ; extra == 'docs-locked'
+  - charset-normalizer==3.3.2 ; extra == 'docs-locked'
+  - click==8.1.7 ; extra == 'docs-locked'
+  - colorama==0.4.6 ; extra == 'docs-locked'
+  - comm==0.2.2 ; extra == 'docs-locked'
+  - debugpy==1.8.5 ; extra == 'docs-locked'
+  - decorator==5.1.1 ; extra == 'docs-locked'
+  - defusedxml==0.7.1 ; extra == 'docs-locked'
+  - exceptiongroup==1.2.2 ; python_version < '3.11' and extra == 'docs-locked'
+  - executing==2.0.1 ; extra == 'docs-locked'
+  - fastjsonschema==2.20.0 ; extra == 'docs-locked'
+  - fqdn==1.5.1 ; extra == 'docs-locked'
+  - ghp-import==2.1.0 ; extra == 'docs-locked'
+  - griffe==1.1.1 ; extra == 'docs-locked'
+  - h11==0.14.0 ; extra == 'docs-locked'
+  - httpcore==1.0.5 ; extra == 'docs-locked'
+  - httpx==0.27.0 ; extra == 'docs-locked'
+  - idna==3.7 ; extra == 'docs-locked'
+  - importlib-metadata==8.4.0 ; python_version < '3.10' and extra == 'docs-locked'
+  - ipykernel==6.29.5 ; extra == 'docs-locked'
+  - ipython==8.18.1 ; extra == 'docs-locked'
+  - isoduration==20.11.0 ; extra == 'docs-locked'
+  - jedi==0.19.1 ; extra == 'docs-locked'
+  - jinja2==3.1.4 ; extra == 'docs-locked'
+  - json5==0.9.25 ; extra == 'docs-locked'
+  - jsonpointer==3.0.0 ; extra == 'docs-locked'
+  - jsonschema==4.23.0 ; extra == 'docs-locked'
+  - jsonschema-specifications==2023.12.1 ; extra == 'docs-locked'
+  - jsonschema[format-nongpl]==4.23.0 ; extra == 'docs-locked'
+  - jupyter-client==8.6.2 ; extra == 'docs-locked'
+  - jupyter-core==5.7.2 ; extra == 'docs-locked'
+  - jupyter-events==0.10.0 ; extra == 'docs-locked'
+  - jupyter-lsp==2.2.5 ; extra == 'docs-locked'
+  - jupyter-server==2.14.2 ; extra == 'docs-locked'
+  - jupyter-server-terminals==0.5.3 ; extra == 'docs-locked'
+  - jupyterlab==4.2.4 ; extra == 'docs-locked'
+  - jupyterlab-pygments==0.3.0 ; extra == 'docs-locked'
+  - jupyterlab-server==2.27.3 ; extra == 'docs-locked'
+  - jupytext==1.16.4 ; extra == 'docs-locked'
+  - markdown==3.7 ; extra == 'docs-locked'
+  - markdown-it-py==3.0.0 ; extra == 'docs-locked'
+  - markupsafe==2.1.5 ; extra == 'docs-locked'
+  - matplotlib-inline==0.1.7 ; extra == 'docs-locked'
+  - mdit-py-plugins==0.4.1 ; extra == 'docs-locked'
+  - mdurl==0.1.2 ; extra == 'docs-locked'
+  - mergedeep==1.3.4 ; extra == 'docs-locked'
+  - mistune==3.0.2 ; extra == 'docs-locked'
+  - mkdocs==1.6.0 ; extra == 'docs-locked'
+  - mkdocs-autorefs==1.1.0 ; extra == 'docs-locked'
+  - mkdocs-gen-files==0.5.0 ; extra == 'docs-locked'
+  - mkdocs-get-deps==0.2.0 ; extra == 'docs-locked'
+  - mkdocs-jupyter==0.24.8 ; extra == 'docs-locked'
+  - mkdocs-literate-nav==0.6.1 ; extra == 'docs-locked'
+  - mkdocs-material==9.5.32 ; extra == 'docs-locked'
+  - mkdocs-material-extensions==1.3.1 ; extra == 'docs-locked'
+  - mkdocs-section-index==0.3.9 ; extra == 'docs-locked'
+  - mkdocstrings==0.25.2 ; extra == 'docs-locked'
+  - mkdocstrings-python==1.10.8 ; extra == 'docs-locked'
+  - mkdocstrings[python]==0.25.2 ; extra == 'docs-locked'
+  - nbclient==0.10.0 ; extra == 'docs-locked'
+  - nbconvert==7.16.4 ; extra == 'docs-locked'
+  - nbformat==5.10.4 ; extra == 'docs-locked'
+  - nest-asyncio==1.6.0 ; extra == 'docs-locked'
+  - notebook-shim==0.2.4 ; extra == 'docs-locked'
+  - overrides==7.7.0 ; extra == 'docs-locked'
+  - packaging==24.1 ; extra == 'docs-locked'
+  - paginate==0.5.6 ; extra == 'docs-locked'
+  - pandocfilters==1.5.1 ; extra == 'docs-locked'
+  - parso==0.8.4 ; extra == 'docs-locked'
+  - pathspec==0.12.1 ; extra == 'docs-locked'
+  - pexpect==4.9.0 ; sys_platform != 'win32' and extra == 'docs-locked'
+  - platformdirs==4.2.2 ; extra == 'docs-locked'
+  - prometheus-client==0.20.0 ; extra == 'docs-locked'
+  - prompt-toolkit==3.0.47 ; extra == 'docs-locked'
+  - psutil==6.0.0 ; extra == 'docs-locked'
+  - ptyprocess==0.7.0 ; (os_name != 'nt' or sys_platform != 'win32') and extra == 'docs-locked'
+  - pure-eval==0.2.3 ; extra == 'docs-locked'
+  - pycparser==2.22 ; extra == 'docs-locked'
+  - pygments==2.18.0 ; extra == 'docs-locked'
+  - pymdown-extensions==10.9 ; extra == 'docs-locked'
+  - python-dateutil==2.9.0.post0 ; extra == 'docs-locked'
+  - python-json-logger==2.0.7 ; extra == 'docs-locked'
+  - pywin32==306 ; sys_platform == 'win32' and platform_python_implementation != 'PyPy' and extra == 'docs-locked'
+  - pywinpty==2.0.13 ; os_name == 'nt' and extra == 'docs-locked'
+  - pyyaml==6.0.2 ; extra == 'docs-locked'
+  - pyyaml-env-tag==0.1 ; extra == 'docs-locked'
+  - pyzmq==26.1.1 ; extra == 'docs-locked'
+  - referencing==0.35.1 ; extra == 'docs-locked'
+  - regex==2024.7.24 ; extra == 'docs-locked'
+  - requests==2.32.3 ; extra == 'docs-locked'
+  - rfc3339-validator==0.1.4 ; extra == 'docs-locked'
+  - rfc3986-validator==0.1.1 ; extra == 'docs-locked'
+  - rpds-py==0.20.0 ; extra == 'docs-locked'
+  - send2trash==1.8.3 ; extra == 'docs-locked'
+  - setuptools==73.0.1 ; extra == 'docs-locked'
+  - six==1.16.0 ; extra == 'docs-locked'
+  - sniffio==1.3.1 ; extra == 'docs-locked'
+  - soupsieve==2.6 ; extra == 'docs-locked'
+  - stack-data==0.6.3 ; extra == 'docs-locked'
+  - terminado==0.18.1 ; extra == 'docs-locked'
+  - tinycss2==1.3.0 ; extra == 'docs-locked'
+  - tomli==2.0.1 ; python_version < '3.11' and extra == 'docs-locked'
+  - tornado==6.4.1 ; extra == 'docs-locked'
+  - traitlets==5.14.3 ; extra == 'docs-locked'
+  - types-python-dateutil==2.9.0.20240821 ; extra == 'docs-locked'
+  - typing-extensions==4.12.2 ; extra == 'docs-locked'
+  - uri-template==1.3.0 ; extra == 'docs-locked'
+  - urllib3==2.2.2 ; extra == 'docs-locked'
+  - watchdog==4.0.2 ; extra == 'docs-locked'
+  - wcwidth==0.2.13 ; extra == 'docs-locked'
+  - webcolors==24.8.0 ; extra == 'docs-locked'
+  - webencodings==0.5.1 ; extra == 'docs-locked'
+  - websocket-client==1.8.0 ; extra == 'docs-locked'
+  - zipp==3.20.0 ; python_version < '3.10' and extra == 'docs-locked'
+  - anyio==4.4.0 ; extra == 'notebooks-locked'
+  - appnope==0.1.4 ; platform_system == 'Darwin' and extra == 'notebooks-locked'
+  - argon2-cffi==23.1.0 ; extra == 'notebooks-locked'
+  - argon2-cffi-bindings==21.2.0 ; extra == 'notebooks-locked'
+  - arrow==1.3.0 ; extra == 'notebooks-locked'
+  - asttokens==2.4.1 ; extra == 'notebooks-locked'
+  - async-lru==2.0.4 ; extra == 'notebooks-locked'
+  - attrs==24.2.0 ; extra == 'notebooks-locked'
+  - babel==2.16.0 ; extra == 'notebooks-locked'
+  - beautifulsoup4==4.12.3 ; extra == 'notebooks-locked'
+  - bleach==6.1.0 ; extra == 'notebooks-locked'
+  - certifi==2024.7.4 ; extra == 'notebooks-locked'
+  - cffi==1.17.0 ; extra == 'notebooks-locked'
+  - charset-normalizer==3.3.2 ; extra == 'notebooks-locked'
+  - colorama==0.4.6 ; extra == 'notebooks-locked'
+  - comm==0.2.2 ; extra == 'notebooks-locked'
+  - debugpy==1.8.5 ; extra == 'notebooks-locked'
+  - decorator==5.1.1 ; extra == 'notebooks-locked'
+  - defusedxml==0.7.1 ; extra == 'notebooks-locked'
+  - exceptiongroup==1.2.2 ; python_version < '3.11' and extra == 'notebooks-locked'
+  - executing==2.0.1 ; extra == 'notebooks-locked'
+  - fastjsonschema==2.20.0 ; extra == 'notebooks-locked'
+  - fqdn==1.5.1 ; extra == 'notebooks-locked'
+  - h11==0.14.0 ; extra == 'notebooks-locked'
+  - httpcore==1.0.5 ; extra == 'notebooks-locked'
+  - httpx==0.27.0 ; extra == 'notebooks-locked'
+  - idna==3.7 ; extra == 'notebooks-locked'
+  - importlib-metadata==8.4.0 ; python_version < '3.10' and extra == 'notebooks-locked'
+  - ipykernel==6.29.5 ; extra == 'notebooks-locked'
+  - ipython==8.18.1 ; extra == 'notebooks-locked'
+  - isoduration==20.11.0 ; extra == 'notebooks-locked'
+  - jedi==0.19.1 ; extra == 'notebooks-locked'
+  - jinja2==3.1.4 ; extra == 'notebooks-locked'
+  - json5==0.9.25 ; extra == 'notebooks-locked'
+  - jsonpointer==3.0.0 ; extra == 'notebooks-locked'
+  - jsonschema==4.23.0 ; extra == 'notebooks-locked'
+  - jsonschema-specifications==2023.12.1 ; extra == 'notebooks-locked'
+  - jsonschema[format-nongpl]==4.23.0 ; extra == 'notebooks-locked'
+  - jupyter-client==8.6.2 ; extra == 'notebooks-locked'
+  - jupyter-core==5.7.2 ; extra == 'notebooks-locked'
+  - jupyter-events==0.10.0 ; extra == 'notebooks-locked'
+  - jupyter-lsp==2.2.5 ; extra == 'notebooks-locked'
+  - jupyter-server==2.14.2 ; extra == 'notebooks-locked'
+  - jupyter-server-terminals==0.5.3 ; extra == 'notebooks-locked'
+  - jupyterlab==4.2.4 ; extra == 'notebooks-locked'
+  - jupyterlab-pygments==0.3.0 ; extra == 'notebooks-locked'
+  - jupyterlab-server==2.27.3 ; extra == 'notebooks-locked'
+  - markupsafe==2.1.5 ; extra == 'notebooks-locked'
+  - matplotlib-inline==0.1.7 ; extra == 'notebooks-locked'
+  - mistune==3.0.2 ; extra == 'notebooks-locked'
+  - nbclient==0.10.0 ; extra == 'notebooks-locked'
+  - nbconvert==7.16.4 ; extra == 'notebooks-locked'
+  - nbformat==5.10.4 ; extra == 'notebooks-locked'
+  - nest-asyncio==1.6.0 ; extra == 'notebooks-locked'
+  - notebook-shim==0.2.4 ; extra == 'notebooks-locked'
+  - overrides==7.7.0 ; extra == 'notebooks-locked'
+  - packaging==24.1 ; extra == 'notebooks-locked'
+  - pandocfilters==1.5.1 ; extra == 'notebooks-locked'
+  - parso==0.8.4 ; extra == 'notebooks-locked'
+  - pexpect==4.9.0 ; sys_platform != 'win32' and extra == 'notebooks-locked'
+  - platformdirs==4.2.2 ; extra == 'notebooks-locked'
+  - prometheus-client==0.20.0 ; extra == 'notebooks-locked'
+  - prompt-toolkit==3.0.47 ; extra == 'notebooks-locked'
+  - psutil==6.0.0 ; extra == 'notebooks-locked'
+  - ptyprocess==0.7.0 ; (os_name != 'nt' or sys_platform != 'win32') and extra == 'notebooks-locked'
+  - pure-eval==0.2.3 ; extra == 'notebooks-locked'
+  - pycparser==2.22 ; extra == 'notebooks-locked'
+  - pygments==2.18.0 ; extra == 'notebooks-locked'
+  - python-dateutil==2.9.0.post0 ; extra == 'notebooks-locked'
+  - python-json-logger==2.0.7 ; extra == 'notebooks-locked'
+  - pywin32==306 ; sys_platform == 'win32' and platform_python_implementation != 'PyPy' and extra == 'notebooks-locked'
+  - pywinpty==2.0.13 ; os_name == 'nt' and extra == 'notebooks-locked'
+  - pyyaml==6.0.2 ; extra == 'notebooks-locked'
+  - pyzmq==26.1.1 ; extra == 'notebooks-locked'
+  - referencing==0.35.1 ; extra == 'notebooks-locked'
+  - requests==2.32.3 ; extra == 'notebooks-locked'
+  - rfc3339-validator==0.1.4 ; extra == 'notebooks-locked'
+  - rfc3986-validator==0.1.1 ; extra == 'notebooks-locked'
+  - rpds-py==0.20.0 ; extra == 'notebooks-locked'
+  - send2trash==1.8.3 ; extra == 'notebooks-locked'
+  - setuptools==73.0.1 ; extra == 'notebooks-locked'
+  - six==1.16.0 ; extra == 'notebooks-locked'
+  - sniffio==1.3.1 ; extra == 'notebooks-locked'
+  - soupsieve==2.6 ; extra == 'notebooks-locked'
+  - stack-data==0.6.3 ; extra == 'notebooks-locked'
+  - terminado==0.18.1 ; extra == 'notebooks-locked'
+  - tinycss2==1.3.0 ; extra == 'notebooks-locked'
+  - tomli==2.0.1 ; python_version < '3.11' and extra == 'notebooks-locked'
+  - tornado==6.4.1 ; extra == 'notebooks-locked'
+  - traitlets==5.14.3 ; extra == 'notebooks-locked'
+  - types-python-dateutil==2.9.0.20240821 ; extra == 'notebooks-locked'
+  - typing-extensions==4.12.2 ; extra == 'notebooks-locked'
+  - uri-template==1.3.0 ; extra == 'notebooks-locked'
+  - urllib3==2.2.2 ; extra == 'notebooks-locked'
+  - wcwidth==0.2.13 ; extra == 'notebooks-locked'
+  - webcolors==24.8.0 ; extra == 'notebooks-locked'
+  - webencodings==0.5.1 ; extra == 'notebooks-locked'
+  - websocket-client==1.8.0 ; extra == 'notebooks-locked'
+  - zipp==3.20.0 ; python_version < '3.10' and extra == 'notebooks-locked'
+  - colorama==0.4.6 ; extra == 'tests-locked'
+  - coverage==7.6.1 ; extra == 'tests-locked'
+  - coverage[toml]==7.6.1 ; extra == 'tests-locked'
+  - exceptiongroup==1.2.2 ; python_version < '3.11' and extra == 'tests-locked'
+  - iniconfig==2.0.0 ; extra == 'tests-locked'
+  - packaging==24.1 ; extra == 'tests-locked'
+  - pluggy==1.5.0 ; extra == 'tests-locked'
+  - pytest==8.3.2 ; extra == 'tests-locked'
+  - pytest-cov==5.0.0 ; extra == 'tests-locked'
+  - tomli==2.0.1 ; python_version < '3.11' and extra == 'tests-locked'
+  requires_python: '>=3.9'
 - kind: conda
   name: openssl
   version: 3.3.1
@@ -20615,6 +20963,14 @@ packages:
   - pkg:pypi/python-dateutil
   size: 222742
   timestamp: 1709299922152
+- kind: pypi
+  name: python-dotenv
+  version: 1.0.1
+  url: https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl
+  sha256: f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a
+  requires_dist:
+  - click>=5.0 ; extra == 'cli'
+  requires_python: '>=3.8'
 - kind: conda
   name: python-fastjsonschema
   version: 2.20.0
@@ -22705,6 +23061,14 @@ packages:
   version: 2024.1.0.20240417
   url: https://files.pythonhosted.org/packages/e8/8d/f5dc5239d59bb4a7b58e2b6d0dc6f2c2ba797b110f83cdda8479508c63dd/types_pytz-2024.1.0.20240417-py3-none-any.whl
   sha256: 8335d443310e2db7b74e007414e74c4f53b67452c0cb0d228ca359ccfba59659
+  requires_python: '>=3.8'
+- kind: pypi
+  name: types-requests
+  version: 2.32.0.20240712
+  url: https://files.pythonhosted.org/packages/30/4d/cbed87a6912fbd9259ce23a5d4aa1de9816edf75eec6ed9a757c00906c8e/types_requests-2.32.0.20240712-py3-none-any.whl
+  sha256: f754283e152c752e46e70942fa2a146b5bc70393522257bb85bd1ef7e019dcc3
+  requires_dist:
+  - urllib3>=2
   requires_python: '>=3.8'
 - kind: pypi
   name: types-tqdm

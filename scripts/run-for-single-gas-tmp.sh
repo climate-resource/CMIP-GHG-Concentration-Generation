@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RUN_ID=v0.3.0
+RUN_ID=v0.4.0
 echo "${GAS}"
 
 rm -f dev-config-absolute.yaml && make dev-config-absolute.yaml
