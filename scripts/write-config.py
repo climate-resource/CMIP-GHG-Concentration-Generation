@@ -40,6 +40,7 @@ from local.config_creation.neem_handling import RETRIEVE_AND_PROCESS_NEEM_STEPS
 from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 from local.config_creation.write_input4mips import create_write_input4mips_config
+from local.config_creation.zenodo import create_create_zenodo_deposition_config
 
 
 def create_dev_config() -> Config:
@@ -280,6 +281,7 @@ def create_dev_config() -> Config:
         crunch_equivalent_species=create_crunch_equivalent_species_config(
             gases=equivalent_species_to_write
         ),
+        create_zenodo_deposition=create_create_zenodo_deposition_config(),
         write_input4mips=create_write_input4mips_config(
             # TODO: test the equivalent species in CI too somehow
             gases=(*gases_to_write, *equivalent_species_to_write),
@@ -364,6 +366,7 @@ def create_ci_config() -> Config:
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         # TODO: test this in CI
         crunch_equivalent_species=[],
+        create_zenodo_deposition=create_create_zenodo_deposition_config(),
         write_input4mips=create_write_input4mips_config(
             gases=gases_to_write,
             start_year=start_year,
