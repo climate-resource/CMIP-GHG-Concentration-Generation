@@ -10,7 +10,7 @@ dependencies = [
     "openscm-units>=0.6.1",
     "pydoit-nb>=0.3.4",
     "carpet-concentrations>=0.5.1",
-    "scmdata>=0.17.0", "openscm-zenodo>=0.2.6,<0.3", "python-dotenv>=1.0.1,<2",
+    "scmdata>=0.17.0", "openscm-zenodo>=0.2.6,<0.3", "python-dotenv>=1.0.1,<2", "doit-graph>=0.3.0,<0.4",
 ]
 name = "local"
 version = "0.2.1a1"
@@ -35,6 +35,8 @@ scipy = ">=1.0"
 geopandas = ">=1.0"
 nc-time-axis = ">=1.4.1,<1.5"
 openpyxl = ">=3.1"
+pygraphviz = ">=1.14,<2"
+pyproj = ">=3.6.1,<4"
 
 # pip optional dependencies
 [project.optional-dependencies]
