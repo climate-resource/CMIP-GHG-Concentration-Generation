@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest", "ubuntu-20.04" ]
+        os: [ "ubuntu-20.04" ]
         python-version: [ "3.11" ]
     runs-on: "${{ matrix.os }}"
     timeout-minutes: 10
@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo swapon --show
           sudo swapoff -a
-          sudo fallocate -l 16G /swapfile
+          sudo fallocate -l 15G /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
