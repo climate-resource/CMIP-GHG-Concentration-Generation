@@ -1,12 +1,12 @@
 name: Nightly regression tests
 
 on:
- # # Uncomment these two lines for debugging, but leave them commented on 'main'
- # pull_request:
- #   branches: [ main ]
- # push:
- #   branches: [ main ]
- #   tags: ['v*']
+ # Uncomment these two lines for debugging, but leave them commented on 'main'
+ pull_request:
+   branches: [ main ]
+ push:
+   branches: [ main ]
+   tags: ['v*']
  schedule:
  # 05:00 UTC = 06:00 CET = 07:00 CEST
  - cron: "0 5 * * *"
@@ -25,9 +25,10 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           pixi-environments: "tests"
-      - name: Run regression tests relevant for coverage
+      - name: Run tests relevant for coverage
         run: |
           pixi run -e tests python scripts/write-config.py
+          DOIT_CONFIGURATION_FILE="ci-nightly-config.yaml" DOIT_ROOT_DIR_OUTPUT="output-bundles-tests" DOIT_RUN_ID="test-nightly-workflow" pixi run -e tests doit run --verbosity=2 -n 2
           pixi run -e tests pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
           pixi run -e tests coverage report
       - name: Upload coverage reports to Codecov
