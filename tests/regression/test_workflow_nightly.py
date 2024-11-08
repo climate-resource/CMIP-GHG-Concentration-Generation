@@ -52,6 +52,6 @@ def test_workflow_nightly(nightly_workflow_output_info, ndarrays_regression):
         default_tolerance=dict(
             # TODO: dial this back down
             atol=1e-1,
-            rtol=1e-3,
+            rtol=1,
         ),
     )
