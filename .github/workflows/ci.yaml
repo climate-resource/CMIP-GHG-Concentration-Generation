@@ -41,4 +41,5 @@ jobs:
       - name: Run tests (except nightly)
         run: |
           pixi run -e tests python scripts/write-config.py
+          DOIT_CONFIGURATION_FILE="ci-config.yaml" DOIT_ROOT_DIR_OUTPUT="output-bundles-tests" DOIT_RUN_ID="test-basic-workflow" pixi run -e tests doit run --verbosity=2 -n 2
           pixi run -e tests pytest -s -r a -v src tests --doctest-modules -m "not nightly"
