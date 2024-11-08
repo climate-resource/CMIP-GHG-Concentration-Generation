@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -72,7 +72,7 @@ step: str = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c4f10"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -117,6 +117,10 @@ unit = rcmip_concs_to_use.index.get_level_values("unit")[0]
 rcmip_concs_to_use
 
 # %%
+# Try freeing up some memory
+del rcmip_concs_to_use_run
+
+# %%
 global_annual_mean = (
     xr.DataArray(
         rcmip_concs_to_use.values.squeeze(),
@@ -144,7 +148,7 @@ for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
         global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
             global_annual_mean,
             degrees_freedom_scalar=degrees_freedom_scalar,
-            atol=1e-6,  # avoid inifite relative error for things which are close to zero
+            atol=1e-4,  # avoid inifite relative error for things which are close to zero
         )
         print(f"Run succeeded with {degrees_freedom_scalar=}")
         break
@@ -301,7 +305,7 @@ seasonality_full.pint.dequantify().to_netcdf(
 )
 seasonality_full
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file.parent.mkdir(
     exist_ok=True, parents=True
 )

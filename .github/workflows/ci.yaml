@@ -31,7 +31,7 @@ jobs:
         os: [ "ubuntu-latest", "ubuntu-20.04" ]
         python-version: [ "3.11" ]
     runs-on: "${{ matrix.os }}"
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
       - name: Increase swapfile
         run: |
