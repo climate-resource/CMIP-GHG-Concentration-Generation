@@ -65,57 +65,27 @@ def interpolate_annual_mean_to_monthly(
         msg = f"Squeezed Y must be 1D, received {Y.shape=}"
         raise AssertionError(msg)
 
-    # TODO: apply this trick for spatial interpolation too
-    # (although really, just need a better algorithm)
-    y0 = Y[0]
-    approx_flat = np.isclose(Y, y0, rtol=rtol, atol=atol)
-
-    if np.where(approx_flat)[0].shape[0] <= 1:
-        # No flat parts
-        X_not_flat = X
-        X_flat = None
-        Y_not_flat = Y
-
-    else:
-        X_not_flat = X[np.where(~approx_flat)]
-        X_flat = X[np.where(approx_flat)]
-        Y_not_flat = Y[np.where(~approx_flat)]
-
     # These are monthly timesteps, centred in the middle of each month
     N_MONTHS_PER_YEAR = 12
     # TODO: speak with Nicolai about how to boundary counditions better.
     # The below is a hack to try and get slightly more sensible behaviour at the boundaries.
     # It just does basic linear extrapolation at the boundaries.
-    X_int = np.hstack(
-        [
-            2 * X_not_flat[0] - X_not_flat[1],
-            X_not_flat,
-            2 * X_not_flat[-1] - X_not_flat[-2],
-        ]
-    )
-    Y_int = np.hstack(
-        [
-            2 * Y_not_flat[0] - Y_not_flat[1],
-            Y_not_flat,
-            2 * Y_not_flat[-1] - Y_not_flat[-2],
-        ]
-    )
-    x_not_flat = (
-        np.arange(
-            np.floor(np.min(X_int)), np.ceil(np.max(X_int)) + 1, 1 / N_MONTHS_PER_YEAR
-        )
+    X = np.hstack([2 * X[0] - X[1], X, 2 * X[-1] - X[-2]])
+    Y = np.hstack([2 * Y[0] - Y[1], Y, 2 * Y[-1] - Y[-2]])
+    x = (
+        np.arange(np.floor(np.min(X)), np.ceil(np.max(X)) + 1, 1 / N_MONTHS_PER_YEAR)
         + 1 / N_MONTHS_PER_YEAR / 2
     )
 
     coefficients, intercept, knots, degree = mean_preserving_interpolation(
-        X=X_int,
-        Y=Y_int,
-        x=x_not_flat,
+        X=X,
+        Y=Y,
+        x=x,
         degrees_freedom_scalar=degrees_freedom_scalar,
     )
 
-    # Undo boundary conditions hack above
-    x_not_flat = x_not_flat[N_MONTHS_PER_YEAR:-N_MONTHS_PER_YEAR]
+    # Undo hack above
+    x = x[N_MONTHS_PER_YEAR:-N_MONTHS_PER_YEAR]
 
     def interpolator(
         xh: float | int | npt.NDArray[np.float64],
@@ -126,25 +96,7 @@ def interpolate_annual_mean_to_monthly(
             annual_mean.data.units,
         )
 
-    y_not_flat = interpolator(x_not_flat)
-
-    if X_flat is not None:
-        x_flat = (
-            np.arange(
-                np.floor(np.min(X_flat)),
-                np.ceil(np.max(X_flat)) + 1,
-                1 / N_MONTHS_PER_YEAR,
-            )
-            + 1 / N_MONTHS_PER_YEAR / 2
-        )
-        y_flat = Quantity(y0 * np.ones_like(x_flat), annual_mean.data.units)
-
-        x = np.concatenate([x_flat, x_not_flat])
-        y = np.concatenate([y_flat, y_not_flat])
-
-    else:
-        x = x_not_flat
-        y = y_not_flat
+    y = interpolator(x)
 
     time = [
         cftime.datetime(
@@ -162,8 +114,8 @@ def interpolate_annual_mean_to_monthly(
     )
 
     pint.testing.assert_allclose(
-        out.groupby("time.year").mean().data.m,
-        annual_mean.squeeze().pint.to(out.data.u).data.m,
+        out.groupby("time.year").mean().data,
+        annual_mean.squeeze().data,
         rtol=rtol,
         atol=atol,
     )
