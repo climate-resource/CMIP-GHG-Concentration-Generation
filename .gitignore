@@ -8,6 +8,10 @@ ci-nightly-config-absolute.yaml
 output-bundles*
 *.tar.gz
 
+# Visualisations of the workflow
+*.pdf.dot
+*.pdf
+
 # Data (generally recommended as it will bloat your repository and is captured in
 # the output bundle anyway)
 data
