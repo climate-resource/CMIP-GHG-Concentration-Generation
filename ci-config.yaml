@@ -258,7 +258,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch4_surface-flask
 - download_complete_file: data/raw/noaa/hfc152a_hats.complete
   download_urls:
-  - known_hash: 13dc702e71a4f661ff18df23fd6ddb0dfd630289ab23f0c4356cb93e3ff02556
+  - known_hash: 87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
   gas: hfc152a
   interim_files:
@@ -333,7 +333,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: ch4
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -341,7 +341,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/cfc114_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: cfc114
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -349,7 +349,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: hfc152a
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750

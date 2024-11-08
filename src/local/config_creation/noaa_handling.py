@@ -301,7 +301,7 @@ DOWNLOAD_URLS = {
     ("hfc152a", "hats"): [
         URLSource(
             url=get_hats_url("hfc152a"),
-            known_hash="13dc702e71a4f661ff18df23fd6ddb0dfd630289ab23f0c4356cb93e3ff02556",
+            known_hash="87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764",
         )
     ],
     ("hfc227ea", "hats"): [

@@ -705,7 +705,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: co2
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -713,7 +713,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: ch4
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -721,7 +721,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: n2o
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -729,7 +729,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/sf6_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: sf6
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -737,7 +737,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/cfc11_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: cfc11
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -745,7 +745,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/cfc12_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: cfc12
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750
@@ -753,7 +753,7 @@ write_input4mips:
 - complete_file: data/processed/esgf-ready/hfc134a_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: hfc134a
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/
+  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1750

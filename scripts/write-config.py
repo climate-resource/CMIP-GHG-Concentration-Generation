@@ -259,7 +259,7 @@ def create_dev_config() -> Config:
     )
 
     return Config(
-        name="CI",
+        name="dev",
         version=f"{local.__version__}-dev",
         base_seed=20240428,
         ci=False,
@@ -286,7 +286,7 @@ def create_dev_config() -> Config:
             start_year=start_year,
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
-            input4mips_cvs_cv_source="https://github.com/znichollscr/input4MIPs_CVs/tree/cr-cmip-testing",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
         ),
     )
 
@@ -351,7 +351,7 @@ def create_ci_config() -> Config:
             start_year=start_year,
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
-            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
         ),
     )
 
@@ -435,7 +435,7 @@ def create_ci_nightly_config() -> Config:
             start_year=start_year,
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
-            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
         ),
     )
 

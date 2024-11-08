@@ -60,13 +60,9 @@ config_step = get_config_for_step_id(
 
 if config.ci:
     to_show: tuple[tuple[str, str, str], ...] = (
-        ("co2", "in-situ", "process_noaa_in_situ_data"),
-        ("co2", "surface-flask", "process_noaa_surface_flask_data"),
         ("ch4", "in-situ", "process_noaa_in_situ_data"),
         ("ch4", "surface-flask", "process_noaa_surface_flask_data"),
-        ("n2o", "hats", "process_noaa_hats_data"),
-        ("sf6", "hats", "process_noaa_hats_data"),
-        ("cfc11", "hats", "process_noaa_hats_data"),
+        ("hfc152a", "hats", "process_noaa_hats_data"),
     )
 else:
     to_show = (
