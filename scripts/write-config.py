@@ -93,7 +93,6 @@ def create_dev_config() -> Config:
         "sf6",
         "so2f2",
     )
-    # TODO: add this to CI too
     # TODO: there shouldn't be this many gasses in here
     gases_long_poleward_extension = (
         "c2f6",
@@ -117,6 +116,7 @@ def create_dev_config() -> Config:
         "nf3",
         "so2f2",
     )
+    # TODO: add this to CI too
     gases_drop_obs_data_years_before_inclusive = {
         "cf4": 2007,
         "c2f6": 2007,
@@ -297,6 +297,11 @@ def create_ci_config() -> Config:
     """
     gases_to_write = ("ch4", "cfc114", "hfc152a")
 
+    gases_long_poleward_extension = (
+        "cfc114",
+        "hfc152a",
+    )
+
     start_year = 1750
     end_year = 2022
 
@@ -323,7 +328,10 @@ def create_ci_config() -> Config:
     )
 
     monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+        create_monthly_fifteen_degree_pieces_configs(
+            gases=gases_to_write,
+            gases_long_poleward_extension=gases_long_poleward_extension,
+        )
     )
 
     return Config(

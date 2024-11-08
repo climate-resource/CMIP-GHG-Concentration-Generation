@@ -108,8 +108,7 @@ rcmip_concs_to_use_run = rcmip_concs.filter(
     region="World", scenario="ssp245", year=range(1, 2022 + 1)
 )
 rcmip_concs_to_use_run["variable"] = rcmip_concs_to_use_run["variable"].str.lower()
-# rcmip_concs_to_use = rcmip_concs_to_use.filter(variable=f"*{config_step.gas}")
-rcmip_concs_to_use_run = rcmip_concs_to_use_run.filter(variable="*c4f10")
+rcmip_concs_to_use_run = rcmip_concs_to_use_run.filter(variable=f"*{config_step.gas}")
 if rcmip_concs_to_use_run.shape[0] != 1:
     raise AssertionError
 

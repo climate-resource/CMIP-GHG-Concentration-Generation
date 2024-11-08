@@ -23,7 +23,7 @@ calculate_ch4_monthly_fifteen_degree_pieces:
 calculate_co2_monthly_fifteen_degree_pieces: []
 calculate_n2o_monthly_fifteen_degree_pieces: []
 calculate_sf6_like_monthly_fifteen_degree_pieces:
-- allow_long_poleward_extension: false
+- allow_long_poleward_extension: true
   allow_poleward_extension: true
   gas: hfc152a
   global_annual_mean_allyears_file: data/interim/hfc152a/hfc152a_global-annual-mean_allyears.nc
