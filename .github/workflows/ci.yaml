@@ -33,6 +33,15 @@ jobs:
     runs-on: "${{ matrix.os }}"
     timeout-minutes: 10
     steps:
+      - name: Increase swapfile
+        run: |
+          sudo swapon --show
+          sudo swapoff -a
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          sudo swapon --show
       - name: Check out repository
         uses: actions/checkout@v4
       - uses: ./.github/actions/setup
