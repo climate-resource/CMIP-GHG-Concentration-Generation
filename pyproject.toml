@@ -78,37 +78,14 @@ platforms = [
     "linux-aarch64",
 ]
 
-
-
-# [tool.poetry.dependencies]
-# python = ">=3.11,<3.12"
-# notebook = "7.1.0"
-# pooch = "1.8.0"
-# geopandas = "0.14.3"
-# seaborn = "0.13.2"
-# bokeh = "3.3.4"
-# scmdata = "0.17.0"
-# openpyxl = "3.1.2"
-# scipy = "1.12.0"
-# cf-xarray = "0.9.0"
-# xarray = "2024.1.1"
-# pint-xarray = "0.3"
-# nc-time-axis = "1.4.1"
-# netcdf4 = "1.6.5"
-# input4mips-validation = "0.4.0"
-# pydoit-nb = "0.3.4"
-# carpet-concentrations = "0.5.1"
-# beautifulsoup4 = "4.12.3"
-# ipywidgets = "^8.1.2"
-# primap2 = "^0.10.0"
-
 [tool.jupytext]
 formats = "ipynb,py:percent"
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers"
 markers = [
-    "coverage_breaker: marks tests as a coverage breaker (normally because running the test installs things in other venvs which confuses pytest-cov as far as we can tell)"
+    "coverage_breaker: marks tests as a coverage breaker (normally because running the test installs things in other venvs which confuses pytest-cov as far as we can tell)",
+    "nightly: marks tests as being part of the nightly CI",
 ]
 
 [tool.ruff]

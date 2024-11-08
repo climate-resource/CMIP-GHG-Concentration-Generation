@@ -7967,7 +7967,7 @@ packages:
   url: https://files.pythonhosted.org/packages/1b/03/a5140e4f336f0b71023435d7e1564da8e2ff5552e91dfd3ec26424b72c47/coverage-7.6.0-cp311-cp311-macosx_10_9_x86_64.whl
   sha256: c7b525ab52ce18c57ae232ba6f7010297a87ced82a2383b1afd238849c1ff933
   requires_dist:
-  - tomli ; python_full_version <= '3.11.0a6' and extra == 'toml'
+  - tomli ; python_full_version <= '3.11' and extra == 'toml'
   requires_python: '>=3.8'
 - kind: pypi
   name: coverage
@@ -7975,7 +7975,7 @@ packages:
   url: https://files.pythonhosted.org/packages/39/33/da23d8bfdfdc5c221d2c9a2f169f63a4e04b9a0327c1c67777157155e4d6/coverage-7.6.0-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl
   sha256: 03cafe82c1b32b770a29fd6de923625ccac3185a54a5e66606da26d105f37dac
   requires_dist:
-  - tomli ; python_full_version <= '3.11.0a6' and extra == 'toml'
+  - tomli ; python_full_version <= '3.11' and extra == 'toml'
   requires_python: '>=3.8'
 - kind: pypi
   name: coverage
@@ -7983,7 +7983,7 @@ packages:
   url: https://files.pythonhosted.org/packages/a2/d3/1f839af6d6cbaee2c50a0bf2d51964b56272e8b94a6504b6ab7c7ecd66c9/coverage-7.6.0-cp311-cp311-macosx_11_0_arm64.whl
   sha256: 4bea27c4269234e06f621f3fac3925f56ff34bc14521484b8f66a580aacc2e7d
   requires_dist:
-  - tomli ; python_full_version <= '3.11.0a6' and extra == 'toml'
+  - tomli ; python_full_version <= '3.11' and extra == 'toml'
   requires_python: '>=3.8'
 - kind: pypi
   name: coverage
@@ -7991,7 +7991,7 @@ packages:
   url: https://files.pythonhosted.org/packages/f9/cf/77b3fb7e132cbae1f112458399157f67f69d5264a9e5a6eae3b91e580b79/coverage-7.6.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
   sha256: ed8d1d1821ba5fc88d4a4f45387b65de52382fa3ef1f0115a4f7a20cdfab0e94
   requires_dist:
-  - tomli ; python_full_version <= '3.11.0a6' and extra == 'toml'
+  - tomli ; python_full_version <= '3.11' and extra == 'toml'
   requires_python: '>=3.8'
 - kind: conda
   name: cycler
@@ -8482,7 +8482,7 @@ packages:
   - pytest-timeout>=2.2 ; extra == 'testing'
   - pytest>=7.4.3 ; extra == 'testing'
   - virtualenv>=20.26.2 ; extra == 'testing'
-  - typing-extensions>=4.8 ; python_version < '3.11' and extra == 'typing'
+  - typing-extensions>=4.8 ; python_full_version < '3.11' and extra == 'typing'
   requires_python: '>=3.8'
 - kind: conda
   name: flexcache
@@ -10772,7 +10772,7 @@ packages:
   - nbformat
   - packaging
   - pyyaml
-  - tomli ; python_version < '3.11'
+  - tomli ; python_full_version < '3.11'
   - autopep8 ; extra == 'dev'
   - black ; extra == 'dev'
   - flake8 ; extra == 'dev'
@@ -16749,7 +16749,7 @@ packages:
   name: local
   version: 0.2.1a1
   path: .
-  sha256: 027f08f382845f42800cbbe43bb4f2500d0f5ec146cba1ea4a223ffd6c1355bc
+  sha256: 2be2091ac0657f8d45319a052b2da6b79553102c77ae037e0156d7b4c7c940e0
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1
@@ -17583,7 +17583,7 @@ packages:
   requires_dist:
   - typing-extensions>=4.6.0
   - mypy-extensions>=1.0.0
-  - tomli>=1.1.0 ; python_version < '3.11'
+  - tomli>=1.1.0 ; python_full_version < '3.11'
   - psutil>=4.0 ; extra == 'dmypy'
   - pip ; extra == 'install-types'
   - setuptools>=50 ; extra == 'mypyc'
@@ -17597,7 +17597,7 @@ packages:
   requires_dist:
   - typing-extensions>=4.6.0
   - mypy-extensions>=1.0.0
-  - tomli>=1.1.0 ; python_version < '3.11'
+  - tomli>=1.1.0 ; python_full_version < '3.11'
   - psutil>=4.0 ; extra == 'dmypy'
   - pip ; extra == 'install-types'
   - setuptools>=50 ; extra == 'mypyc'
@@ -17611,7 +17611,7 @@ packages:
   requires_dist:
   - typing-extensions>=4.6.0
   - mypy-extensions>=1.0.0
-  - tomli>=1.1.0 ; python_version < '3.11'
+  - tomli>=1.1.0 ; python_full_version < '3.11'
   - psutil>=4.0 ; extra == 'dmypy'
   - pip ; extra == 'install-types'
   - setuptools>=50 ; extra == 'mypyc'
@@ -17625,7 +17625,7 @@ packages:
   requires_dist:
   - typing-extensions>=4.6.0
   - mypy-extensions>=1.0.0
-  - tomli>=1.1.0 ; python_version < '3.11'
+  - tomli>=1.1.0 ; python_full_version < '3.11'
   - psutil>=4.0 ; extra == 'dmypy'
   - pip ; extra == 'install-types'
   - setuptools>=50 ; extra == 'mypyc'
@@ -18682,8 +18682,8 @@ packages:
   url: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
   sha256: e08ce7f602a4da2bff5a67475ba881c39f2a4d4f7fccc1cba57c6f35a379c6c0
   requires_dist:
-  - numpy>=1.23.5 ; python_version >= '3.9' and python_version < '3.12'
-  - numpy>=1.26.0 ; python_version >= '3.12' and python_version < '3.13'
+  - numpy>=1.23.5 ; python_full_version >= '3.9' and python_full_version < '3.12'
+  - numpy>=1.26.0 ; python_full_version == '3.12.*'
   - types-pytz>=2022.1.1
   requires_python: '>=3.9'
 - kind: conda
@@ -18718,7 +18718,7 @@ packages:
   - entrypoints
   - tenacity>=5.0.2
   - ansicolors
-  - aiohttp>=3.9.0 ; python_version == '3.12'
+  - aiohttp>=3.9.0 ; python_full_version == '3.12.*'
   - boto3 ; extra == 'all'
   - azure-datalake-store>=0.0.30 ; extra == 'all'
   - azure-storage-blob>=12.1.0 ; extra == 'all'
@@ -19489,7 +19489,7 @@ packages:
   - pyyaml>=5.1
   - toml
   - virtualenv>=20.0.8
-  - importlib-metadata ; python_version < '3.8'
+  - importlib-metadata ; python_full_version < '3.8'
   requires_python: '>=3.7'
 - kind: pypi
   name: primap2
@@ -20423,8 +20423,8 @@ packages:
   - iniconfig
   - packaging
   - pluggy<2,>=1.5
-  - exceptiongroup>=1.0.0rc8 ; python_version < '3.11'
-  - tomli>=1 ; python_version < '3.11'
+  - exceptiongroup>=1.0.0rc8 ; python_full_version < '3.11'
+  - tomli>=1 ; python_full_version < '3.11'
   - colorama ; sys_platform == 'win32'
   - argcomplete ; extra == 'dev'
   - attrs>=19.2 ; extra == 'dev'
@@ -21363,7 +21363,7 @@ packages:
   url: https://files.pythonhosted.org/packages/73/67/8ece580cc363331d9a53055130f86b096bf16e38156e33b1d3014fffda6b/ruamel.yaml-0.18.6-py3-none-any.whl
   sha256: 57b53ba33def16c4f3d807c0ccbc00f8a6081827e81ba2491691b76882d0c636
   requires_dist:
-  - ruamel-yaml-clib>=0.2.7 ; platform_python_implementation == 'CPython' and python_version < '3.13'
+  - ruamel-yaml-clib>=0.2.7 ; python_full_version < '3.13' and platform_python_implementation == 'CPython'
   - ryd ; extra == 'docs'
   - mercurial>5.7 ; extra == 'docs'
   - ruamel-yaml-jinja2>=0.2 ; extra == 'jinja2'
@@ -22567,10 +22567,10 @@ packages:
   sha256: 685e2a94335b5dc47537b4d3b449a25b18571ea85b07dcf6e8df31ba40f692dd
   requires_dist:
   - click
-  - importlib-metadata>=4.6 ; python_version < '3.10'
-  - importlib-resources>=5 ; python_version < '3.10'
+  - importlib-metadata>=4.6 ; python_full_version < '3.10'
+  - importlib-resources>=5 ; python_full_version < '3.10'
   - jinja2
-  - tomli ; python_version < '3.11'
+  - tomli ; python_full_version < '3.11'
   - furo>=2024.5.6 ; extra == 'dev'
   - nox ; extra == 'dev'
   - packaging ; extra == 'dev'
@@ -23028,9 +23028,9 @@ packages:
   - distlib<1,>=0.3.1
   - filelock<4,>=3.0.0
   - six<2,>=1.9.0
-  - pathlib2<3,>=2.3.3 ; python_version < '3.4' and sys_platform != 'win32'
-  - importlib-resources>=1.0 ; python_version < '3.7'
-  - importlib-metadata>=0.12 ; python_version < '3.8'
+  - pathlib2<3,>=2.3.3 ; python_full_version < '3.4' and sys_platform != 'win32'
+  - importlib-resources>=1.0 ; python_full_version < '3.7'
+  - importlib-metadata>=0.12 ; python_full_version < '3.8'
   - proselint>=0.10.2 ; extra == 'docs'
   - sphinx>=3 ; extra == 'docs'
   - sphinx-argparse>=0.2.5 ; extra == 'docs'
@@ -23045,8 +23045,8 @@ packages:
   - pytest-mock>=2 ; extra == 'testing'
   - pytest-randomly>=1 ; extra == 'testing'
   - pytest-timeout>=1 ; extra == 'testing'
-  - packaging>=20.0 ; python_version > '3.4' and extra == 'testing'
-  - xonsh>=0.9.16 ; (python_version > '3.4' and python_version != '3.9') and extra == 'testing'
+  - packaging>=20.0 ; python_full_version >= '3.5' and extra == 'testing'
+  - xonsh>=0.9.16 ; (python_full_version >= '3.5' and python_full_version < '3.9' and extra == 'testing') or (python_full_version >= '3.10' and extra == 'testing')
   requires_python: '!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7'
 - kind: conda
   name: wcwidth

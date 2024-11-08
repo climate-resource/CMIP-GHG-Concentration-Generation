@@ -1,0 +1,39 @@
+name: Nightly regression tests
+
+on:
+ # Uncomment these two lines for debugging, but leave them commented on 'main'
+ pull_request:
+   branches: [ main ]
+ push:
+   branches: [ main ]
+ schedule:
+ # 05:00 UTC = 06:00 CET = 07:00 CEST
+ - cron: "0 5 * * *"
+
+jobs:
+  tests-regression:
+    if: ${{ !github.event.pull_request.draft }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ "ubuntu-latest" ]
+        python-version: [ "3.11" ]
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/setup
+        with:
+          pixi-environments: "tests"
+      - name: Run regression tests relevant for coverage
+        run: |
+          pixi run -e tests python scripts/write-config.py
+          pixi run -e tests pytest -s -r a -v src tests --doctest-modules -m "not coverage_breaker" --cov=src --cov-report=term-missing --cov-report=xml
+          pixi run -e tests coverage report
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run tests that break coverage
+        run: |
+          pixi run -e tests pytest -s -r a -v tests -m coverage_breaker
