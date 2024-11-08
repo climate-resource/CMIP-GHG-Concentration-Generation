@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -54,7 +54,7 @@ step: str = "process_noaa_in_situ_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2"  # config ID to select for this branch
+step_config_id: str = "ch4"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -91,13 +91,39 @@ df_months
 # %%
 monthly_dfs_with_loc = df_months[PROCESSED_DATA_COLUMNS]
 
+# %% [markdown]
+# Hack around duplicate entries for 2023 MKO.
+
+# %%
+potential_dups_locator = (
+    (monthly_dfs_with_loc["year"] == 2023)  # noqa: PLR2004
+    & (monthly_dfs_with_loc["month"] == 7)  # noqa: PLR2004
+    & (monthly_dfs_with_loc["site_code_filename"] == "mko")
+)
+potential_dups = monthly_dfs_with_loc[potential_dups_locator]
+if potential_dups.shape[0] > 1:
+    print("Removing dups by simply averaging. Not perfect. Better solution TBD")
+    averaged = (
+        potential_dups.groupby(list(set(potential_dups.columns) - {"value"}))
+        .mean()
+        .reset_index()
+    )
+    if averaged.shape[0] > 1:
+        msg = "Still a problem after averaging"
+        raise AssertionError(msg)
+
+    monthly_dfs_with_loc = pd.concat(
+        [monthly_dfs_with_loc[~potential_dups_locator], averaged]
+    ).reset_index(drop=True)
+
 # %% editable=true slideshow={"slide_type": ""}
-duplicate_entries = monthly_dfs_with_loc[
-    ["gas", "year", "month", "site_code_filename"]
-][monthly_dfs_with_loc[["gas", "year", "month", "site_code_filename"]].duplicated()]
+duplicate_cols = ["gas", "year", "month", "site_code_filename"]
+duplicate_entries = monthly_dfs_with_loc[duplicate_cols][
+    monthly_dfs_with_loc[duplicate_cols].duplicated(keep=False)
+]
 assert (
     duplicate_entries.shape[0] == 0
-), f"Duplicate entries for a station in a month {duplicate_entries}"
+), f"Duplicate entries for a station in a month\n{monthly_dfs_with_loc[monthly_dfs_with_loc[duplicate_cols].duplicated(keep=False)]}"
 monthly_dfs_with_loc
 
 # %% editable=true slideshow={"slide_type": ""}

@@ -237,7 +237,7 @@ retrieve_and_extract_gage_data:
 retrieve_and_extract_noaa_data:
 - download_complete_file: data/raw/noaa/ch4_in-situ.complete
   download_urls:
-  - known_hash: f01fe94e957802ebea83f48ec477633d1462d440b3a79c61b32cccea70706870
+  - known_hash: 9eb2e865f79e6ca2fc5cd0963a52c90e0a8fd2f346b5d28d5e9989bd519d60cc
     url: https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
   gas: ch4
   interim_files:
@@ -291,7 +291,7 @@ retrieve_and_process_scripps_data: []
 retrieve_misc_data:
 - hadcrut5:
     download_url:
-      known_hash: 0c72779427b0c1030a8d01639be111f4699ac58a0fac7cda9d929fbd830c808a
+      known_hash: 35ec055febd2107277e7ab965baec13ee2e0a36416e18220c8d9cbb5d509867c
       url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
     raw_dir: data/raw/hadcrut5
   natural_earth:
