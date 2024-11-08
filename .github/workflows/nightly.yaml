@@ -1,12 +1,12 @@
 name: Nightly regression tests
 
 on:
- # Uncomment these two lines for debugging, but leave them commented on 'main'
- pull_request:
-   branches: [ main ]
- push:
-   branches: [ main ]
-   tags: ['v*']
+ # # Uncomment these two lines for debugging, but leave them commented on 'main'
+ # pull_request:
+ #   branches: [ main ]
+ # push:
+ #   branches: [ main ]
+ #   tags: ['v*']
  schedule:
  # 05:00 UTC = 06:00 CET = 07:00 CEST
  - cron: "0 5 * * *"
