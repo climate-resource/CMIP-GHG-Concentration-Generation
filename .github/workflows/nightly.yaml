@@ -13,11 +13,10 @@ on:
 
 jobs:
   tests-regression:
-    if: ${{ !github.event.pull_request.draft }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest" ]
+        os: [ "ubuntu-latest", "ubuntu-20.04" ]
         python-version: [ "3.11" ]
     runs-on: "${{ matrix.os }}"
     steps:
