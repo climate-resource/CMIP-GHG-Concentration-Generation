@@ -368,9 +368,36 @@ def create_ci_nightly_config() -> Config:
     """
     Create our (relative) nightly CI config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
-    # cfc11 next
-    # At least one equivalent species thereafter
+    gases_to_write = (
+        "co2",
+        "ch4",
+        "n2o",
+        "sf6",
+        "cfc11",
+        "cfc12",
+        "hfc134a",
+        "hfc152a",
+    )
+
+    gases_long_poleward_extension = ("hfc152a",)
+    # Add cfc12eq next, which will require adding all its equivalents
+    # - cfc11
+    # - cfc113
+    # - cfc114
+    # - cfc115
+    # - cfc12
+    # - ccl4
+    # - ch2cl2
+    # - ch3br
+    # - ch3ccl3
+    # - ch3cl
+    # - chcl3
+    # - halon1211
+    # - halon1301
+    # - halon2402
+    # - hcfc141b
+    # - hcfc142b
+    # - hcfc22
     start_year = 1750
     end_year = 2022
 
@@ -389,6 +416,7 @@ def create_ci_nightly_config() -> Config:
             ("cfc11", "hats"),
             ("cfc12", "hats"),
             ("hfc134a", "hats"),
+            ("hfc152a", "hats"),
         )
     )
 
@@ -406,6 +434,8 @@ def create_ci_nightly_config() -> Config:
             ("cfc12", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
+            ("hfc152a", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms", "monthly"),
         )
     )
 
@@ -414,7 +444,10 @@ def create_ci_nightly_config() -> Config:
     )
 
     monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+        create_monthly_fifteen_degree_pieces_configs(
+            gases=gases_to_write,
+            gases_long_poleward_extension=gases_long_poleward_extension,
+        )
     )
 
     return Config(
