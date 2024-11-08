@@ -43,7 +43,7 @@ def get_workflow_results(
             "run",
             "--verbosity=2",
             "-n",
-            "2",
+            "1",
         ),
         cwd=REPO_ROOT_DIR,
         env={
