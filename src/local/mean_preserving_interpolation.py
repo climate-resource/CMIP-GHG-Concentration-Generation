@@ -78,7 +78,7 @@ def interpolate_annual_mean_to_monthly(
         + 1 / N_MONTHS_PER_YEAR / 2
     )
 
-    interpolator_raw = mean_preserving_interpolation(  # type: ignore
+    interpolator_raw = mean_preserving_interpolation(
         X=X,
         Y=Y,
         x=x,
@@ -89,7 +89,7 @@ def interpolate_annual_mean_to_monthly(
         xh: float | int | npt.NDArray[np.float64],
     ) -> pint.UnitRegistry.Quantity:
         return Quantity(  # type: ignore
-            interpolator_raw(xh),
+            interpolator_raw(xh),  # type: ignore
             annual_mean.data.units,
         )
 
@@ -195,7 +195,7 @@ def interpolate_lat_15_degree_to_half_degree(
         # Hence use cos here.
         # weights = np.cos(np.deg2rad(x))
 
-        interpolator_raw = mean_preserving_interpolation(  # type: ignore
+        interpolator_raw = mean_preserving_interpolation(
             X=X,
             Y=Y,
             x=x,
@@ -206,7 +206,7 @@ def interpolate_lat_15_degree_to_half_degree(
             xh: float | int | npt.NDArray[np.float64],
         ) -> pint.UnitRegistry.Quantity:
             return Quantity(  # type: ignore
-                interpolator_raw(xh),
+                interpolator_raw(xh),  # type: ignore
                 lat_15_degree.data.units,
             )
 
@@ -287,7 +287,7 @@ def mean_preserving_interpolation(  # noqa: PLR0913
         ``scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept``.
     """
     # TODO: turn this back into mean-preserving interpolation
-    return scipy.interpolate.interp1d(X, Y, kind="cubic", fill_value="extrapolate")
+    return scipy.interpolate.interp1d(X, Y, kind="cubic", fill_value="extrapolate")  # type: ignore
     #
     # if weights is None:
     #     weights = np.ones_like(x)
