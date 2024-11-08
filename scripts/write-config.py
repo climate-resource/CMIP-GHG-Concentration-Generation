@@ -295,7 +295,7 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4", "cfc114", "hfc152a")
+    gases_to_write = ("cfc114", "hfc152a")
 
     gases_long_poleward_extension = (
         "cfc114",

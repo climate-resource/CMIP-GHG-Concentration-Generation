@@ -5,21 +5,7 @@ calculate_c4f10_like_monthly_fifteen_degree_pieces:
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: cfc114
-calculate_ch4_monthly_fifteen_degree_pieces:
-- gas: ch4
-  global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
-  global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
-  lat_gradient_n_eofs_to_use: 2
-  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch4/ch4_allyears-lat-gradient-eofs-pcs.nc
-  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
-  latitudinal_gradient_pc0_ch4_fossil_emissions_regression_file: data/interim/ch4/ch4_pc0-ch4-fossil-emissions-regression.yaml
-  observational_network_global_annual_mean_file: data/interim/ch4/ch4_observational-network_global-annual-mean.nc
-  observational_network_interpolated_file: data/interim/ch4/ch4_observational-network_interpolated.nc
-  observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
-  observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
-  processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
-  seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
-  step_config_id: only
+calculate_ch4_monthly_fifteen_degree_pieces: []
 calculate_co2_monthly_fifteen_degree_pieces: []
 calculate_n2o_monthly_fifteen_degree_pieces: []
 calculate_sf6_like_monthly_fifteen_degree_pieces:
@@ -54,13 +40,6 @@ compile_historical_emissions:
   step_config_id: only
 crunch_equivalent_species: []
 crunch_grids:
-- fifteen_degree_monthly_file: data/interim/ch4/ch4_fifteen-degree_monthly.nc
-  gas: ch4
-  global_mean_annual_mean_file: data/interim/ch4/ch4_global-mean_annual-mean.nc
-  global_mean_monthly_file: data/interim/ch4/ch4_global-mean_monthly.nc
-  hemispheric_mean_annual_mean_file: data/interim/ch4/ch4_hemispheric-mean_annual-mean.nc
-  hemispheric_mean_monthly_file: data/interim/ch4/ch4_hemispheric-mean_monthly.nc
-  step_config_id: ch4
 - fifteen_degree_monthly_file: data/interim/cfc114/cfc114_fifteen-degree_monthly.nc
   gas: cfc114
   global_mean_annual_mean_file: data/interim/cfc114/cfc114_global-mean_annual-mean.nc
@@ -330,14 +309,6 @@ smooth_law_dome_data:
   step_config_id: ch4
 version: 0.2.1a1-ci
 write_input4mips:
-- complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
-  end_year: 2022
-  gas: ch4
-  input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
-  input4mips_cvs_source_id: CR-CMIP-testing
-  input4mips_out_dir: data/processed/esgf-ready
-  start_year: 1750
-  step_config_id: ch4
 - complete_file: data/processed/esgf-ready/cfc114_input4MIPs_esgf-ready.complete
   end_year: 2022
   gas: cfc114
