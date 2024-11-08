@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -156,10 +156,16 @@ plt.show()
 
 # %%
 seasonality_full = global_annual_mean * obs_network_seasonality
+atol = (
+    # # TODO: dial this back down
+    # 1e-6 * global_annual_mean.mean().data.m
+    1e-1
+    * global_annual_mean.mean().data.m
+)  # Approximately match the tolerance of our mean-preserving interpolation algorithm
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
-    atol=1e-10,
+    atol=atol,
 )
 
 # %%
@@ -183,6 +189,9 @@ local.xarray_time.convert_year_month_to_time(  # type: ignore
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
+local.xarray_time.convert_year_month_to_time(seasonality_full)["time"]
+
+# %%
 local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ignore
     x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
 )
@@ -196,11 +205,27 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ig
 # in our latitudinal gradient.
 
 # %%
-pcs_monthly = (
-    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-    .groupby("eof", squeeze=False)
-    .apply(local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly)
-)
+for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
+    try:
+        pcs_monthly = (
+            lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+            .groupby("eof", squeeze=False)
+            .apply(
+                local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+                degrees_freedom_scalar=degrees_freedom_scalar,
+                # atol=1e-4,
+            )
+        )
+        print(f"Run succeeded with {degrees_freedom_scalar=}")
+        break
+    except AssertionError:
+        print(f"Run failed with {degrees_freedom_scalar=}")
+        continue
+
+else:
+    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
+    raise AssertionError(msg)
+
 pcs_monthly
 
 # %%

@@ -1,12 +1,16 @@
 # Dev config with absolute paths
 dev-config-absolute.yaml
 # CI configs (created with scripts)
-ci-config.yaml
 ci-config-absolute.yaml
+ci-nightly-config-absolute.yaml
 
 # Output
 output-bundles*
 *.tar.gz
+
+# Visualisations of the workflow
+*.pdf.dot
+*.pdf
 
 # Data (generally recommended as it will bloat your repository and is captured in
 # the output bundle anyway)

@@ -15,7 +15,12 @@ repos:
     rev: 'v4.4.0'
     hooks:
       - id: check-added-large-files
-        exclude: pixi.lock
+        exclude: |
+          (?x)(
+            ^pixi.lock/|
+            ^tests/regression/test_workflow/test_workflow_basic.npz/|
+            ^tests/regression/test_workflow_nightly/test_workflow_nightly.npz
+          )
       - id: check-ast
       - id: check-case-conflict
       - id: check-json

@@ -151,13 +151,13 @@ DOWNLOAD_URLS = {
     ("co2", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="co2"),
-            known_hash="49ab01e2457f3fe74b09dd8f3a984d4580e0a80370982e7c6d2257150d78acee",
+            known_hash="3653b8b66e504da98edf256af23f827a0bf8e5e9a1422d979b38e65ad61499ae",
         )
     ],
     ("ch4", "in-situ"): [
         URLSource(
             url=IN_SITU_URL_BASE.format(gas="ch4"),
-            known_hash="f01fe94e957802ebea83f48ec477633d1462d440b3a79c61b32cccea70706870",
+            known_hash="9eb2e865f79e6ca2fc5cd0963a52c90e0a8fd2f346b5d28d5e9989bd519d60cc",
         )
     ],
     ("ch4", "surface-flask"): [
@@ -199,7 +199,7 @@ DOWNLOAD_URLS = {
     ("cfc11", "hats"): [
         URLSource(
             url=get_hats_url("cfc11"),
-            known_hash="c6067e98bf3896a45e21a248155bbf07815facce2c428bf015560602f31661f9",
+            known_hash="24412046f661bfe5b2463141ada01c114c353b19db01d8e452ec538f9596fcec",
         )
     ],
     ("cfc113", "hats"): [
@@ -217,7 +217,7 @@ DOWNLOAD_URLS = {
     ("cfc12", "hats"): [
         URLSource(
             url=get_hats_url("cfc12"),
-            known_hash="2537e02a6c4fc880c15db6ddf7ff0037add7e3f55fb227523e24ca16363128e0",
+            known_hash="f3fe61be2b5f307da795568931d84399a34ecdde795d64ce1eeb8720df97bd89",
         )
     ],
     ("ch2cl2", "hats"): [
@@ -289,7 +289,7 @@ DOWNLOAD_URLS = {
     ("hfc134a", "hats"): [
         URLSource(
             url=get_hats_url("hfc134a"),
-            known_hash="b4d7c2b760d13e2fe9f720b063dfec2b00f6ece65094d4a2e970bd53280a55a5",
+            known_hash="e5a346ecbaf3a96b84a95a13a7339d34528f1d333054a5077aeb78f0cc10a7ec",
         )
     ],
     ("hfc143a", "hats"): [
@@ -301,7 +301,7 @@ DOWNLOAD_URLS = {
     ("hfc152a", "hats"): [
         URLSource(
             url=get_hats_url("hfc152a"),
-            known_hash="13dc702e71a4f661ff18df23fd6ddb0dfd630289ab23f0c4356cb93e3ff02556",
+            known_hash="87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764",
         )
     ],
     ("hfc227ea", "hats"): [

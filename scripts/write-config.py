@@ -93,7 +93,6 @@ def create_dev_config() -> Config:
         "sf6",
         "so2f2",
     )
-    # TODO: add this to CI too
     # TODO: there shouldn't be this many gasses in here
     gases_long_poleward_extension = (
         "c2f6",
@@ -117,6 +116,7 @@ def create_dev_config() -> Config:
         "nf3",
         "so2f2",
     )
+    # TODO: add this to CI too
     gases_drop_obs_data_years_before_inclusive = {
         "cf4": 2007,
         "c2f6": 2007,
@@ -259,7 +259,7 @@ def create_dev_config() -> Config:
     )
 
     return Config(
-        name="CI",
+        name="dev",
         version=f"{local.__version__}-dev",
         base_seed=20240428,
         ci=False,
@@ -286,7 +286,7 @@ def create_dev_config() -> Config:
             start_year=start_year,
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
-            input4mips_cvs_cv_source="https://github.com/znichollscr/input4MIPs_CVs/tree/cr-cmip-testing",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
         ),
     )
 
@@ -295,8 +295,109 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("co2", "ch4", "n2o", "sf6", "cfc11", "cfc12", "hfc134a")
-    # cfc11 next
+    gases_to_write = ("ch4", "cfc114", "hfc152a")
+
+    gases_long_poleward_extension = (
+        "cfc114",
+        "hfc152a",
+    )
+
+    start_year = 1750
+    end_year = 2022
+
+    noaa_handling_steps = create_noaa_handling_config(
+        data_sources=(
+            ("ch4", "in-situ"),
+            ("ch4", "surface-flask"),
+            ("hfc152a", "hats"),
+        )
+    )
+
+    retrieve_and_extract_agage_data = create_agage_handling_config(
+        data_sources=(
+            ("ch4", "gc-md", "monthly"),
+            ("cfc114", "gc-ms", "monthly"),
+            ("cfc114", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms", "monthly"),
+        )
+    )
+
+    smooth_law_dome_data = create_smooth_law_dome_data_config(
+        gases=("ch4",), n_draws=10
+    )
+
+    monthly_fifteen_degree_pieces_configs = (
+        create_monthly_fifteen_degree_pieces_configs(
+            gases=gases_to_write,
+            gases_long_poleward_extension=gases_long_poleward_extension,
+        )
+    )
+
+    return Config(
+        name="CI",
+        version=f"{local.__version__}-ci",
+        base_seed=20241108,
+        ci=True,
+        retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
+        **noaa_handling_steps,
+        retrieve_and_extract_agage_data=retrieve_and_extract_agage_data,
+        retrieve_and_extract_gage_data=RETRIEVE_AND_EXTRACT_GAGE_STEPS,
+        retrieve_and_extract_ale_data=RETRIEVE_AND_EXTRACT_ALE_STEPS,
+        retrieve_and_process_law_dome_data=RETRIEVE_AND_PROCESS_LAW_DOME_STEPS,
+        retrieve_and_process_scripps_data=[],
+        retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
+        retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
+        plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
+        compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
+        smooth_law_dome_data=smooth_law_dome_data,
+        **monthly_fifteen_degree_pieces_configs,
+        crunch_grids=create_crunch_grids_config(gases=gases_to_write),
+        crunch_equivalent_species=[],
+        write_input4mips=create_write_input4mips_config(
+            gases=gases_to_write,
+            start_year=start_year,
+            end_year=end_year,
+            input4mips_cvs_source_id="CR-CMIP-testing",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
+        ),
+    )
+
+
+def create_ci_nightly_config() -> Config:
+    """
+    Create our (relative) nightly CI config
+    """
+    gases_to_write = (
+        "co2",
+        "ch4",
+        "n2o",
+        "sf6",
+        "cfc11",
+        "cfc12",
+        "hfc134a",
+        "hfc152a",
+    )
+
+    gases_long_poleward_extension = ("hfc152a",)
+    # Add cfc12eq next, which will require adding all its equivalents
+    # - cfc11
+    # - cfc113
+    # - cfc114
+    # - cfc115
+    # - cfc12
+    # - ccl4
+    # - ch2cl2
+    # - ch3br
+    # - ch3ccl3
+    # - ch3cl
+    # - chcl3
+    # - halon1211
+    # - halon1301
+    # - halon2402
+    # - hcfc141b
+    # - hcfc142b
+    # - hcfc22
     start_year = 1750
     end_year = 2022
 
@@ -315,6 +416,7 @@ def create_ci_config() -> Config:
             ("cfc11", "hats"),
             ("cfc12", "hats"),
             ("hfc134a", "hats"),
+            ("hfc152a", "hats"),
         )
     )
 
@@ -332,6 +434,8 @@ def create_ci_config() -> Config:
             ("cfc12", "gc-ms", "monthly"),
             ("hfc134a", "gc-ms-medusa", "monthly"),
             ("hfc134a", "gc-ms", "monthly"),
+            ("hfc152a", "gc-ms-medusa", "monthly"),
+            ("hfc152a", "gc-ms", "monthly"),
         )
     )
 
@@ -340,13 +444,16 @@ def create_ci_config() -> Config:
     )
 
     monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(gases=gases_to_write)
+        create_monthly_fifteen_degree_pieces_configs(
+            gases=gases_to_write,
+            gases_long_poleward_extension=gases_long_poleward_extension,
+        )
     )
 
     return Config(
-        name="CI",
-        version=f"{local.__version__}-ci",
-        base_seed=20240427,
+        name="CI nightly",
+        version=f"{local.__version__}-ci-nightly",
+        base_seed=20241109,
         ci=True,
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
         **noaa_handling_steps,
@@ -369,51 +476,63 @@ def create_ci_config() -> Config:
             start_year=start_year,
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
-            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/cr-cmip-testing/CVs/",
+            input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
         ),
     )
+
+
+def write_config_files(
+    run_id: str,
+    config_rel: Config,
+    file_rel: Path,
+    file_absolute: Path,
+    root_dir_output: Path,
+) -> None:
+    """
+    Write config files for a specific target
+    """
+    with open(file_rel, "w") as fh:
+        fh.write(converter_yaml.dumps(config_rel))
+
+    print(f"Updated {file_rel}")
+
+    config_absolute = insert_path_prefix(
+        config=config_rel,
+        prefix=root_dir_output / run_id,
+    )
+
+    with open(file_absolute, "w") as fh:
+        fh.write(converter_yaml.dumps(config_absolute))
+
+    print(f"Updated {file_absolute}")
 
 
 if __name__ == "__main__":
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
     ### Dev config
-    DEV_FILE: Path = Path("dev-config.yaml")
-    dev_config = create_dev_config()
-    with open(DEV_FILE, "w") as fh:
-        fh.write(converter_yaml.dumps(dev_config))
-
-    print(f"Updated {DEV_FILE}")
-
-    ### Dev config absolute
-    DEV_ABSOLUTE_FILE: Path = Path("dev-config-absolute.yaml")
-    DEV_RUN_ID: str = "dev-test-run"
-    dev_config_absolute = insert_path_prefix(
-        config=dev_config,
-        prefix=ROOT_DIR_OUTPUT / DEV_RUN_ID,
+    write_config_files(
+        run_id="dev-test-run",
+        config_rel=create_dev_config(),
+        file_rel=Path("dev-config.yaml"),
+        file_absolute=Path("dev-config-absolute.yaml"),
+        root_dir_output=ROOT_DIR_OUTPUT,
     )
-    with open(DEV_ABSOLUTE_FILE, "w") as fh:
-        fh.write(converter_yaml.dumps(dev_config_absolute))
-
-    print(f"Updated {DEV_ABSOLUTE_FILE}")
 
     ### Config CI
-    CI_FILE: Path = Path("ci-config.yaml")
-    ci_config = create_ci_config()
-    with open(CI_FILE, "w") as fh:
-        fh.write(converter_yaml.dumps(ci_config))
-
-    print(f"Updated {CI_FILE}")
-
-    ### Config CI absolute
-    CI_ABSOLUTE_FILE: Path = Path("ci-config-absolute.yaml")
-    CI_RUN_ID: str = "CI"
-
-    ci_config_absolute = insert_path_prefix(
-        config=ci_config,
-        prefix=ROOT_DIR_OUTPUT / CI_RUN_ID,
+    write_config_files(
+        run_id="ci",
+        config_rel=create_ci_config(),
+        file_rel=Path("ci-config.yaml"),
+        file_absolute=Path("ci-config-absolute.yaml"),
+        root_dir_output=ROOT_DIR_OUTPUT,
     )
-    with open(CI_ABSOLUTE_FILE, "w") as fh:
-        fh.write(converter_yaml.dumps(ci_config_absolute))
 
-    print(f"Updated {CI_ABSOLUTE_FILE}")
+    ### Config nightly CI
+    write_config_files(
+        run_id="ci-nightly",
+        config_rel=create_ci_nightly_config(),
+        file_rel=Path("ci-nightly-config.yaml"),
+        file_absolute=Path("ci-nightly-config-absolute.yaml"),
+        root_dir_output=ROOT_DIR_OUTPUT,
+    )
