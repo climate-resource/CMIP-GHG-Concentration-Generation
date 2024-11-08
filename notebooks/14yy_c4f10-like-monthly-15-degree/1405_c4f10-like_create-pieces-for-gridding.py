@@ -143,6 +143,7 @@ global_annual_mean
 # ### Calculate global-, annual-mean monthly
 
 # %%
+# This is the problem cell
 for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
     try:
         global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(

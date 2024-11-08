@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -181,6 +181,9 @@ plt.tight_layout()
 local.xarray_time.convert_year_month_to_time(  # type: ignore
     seasonality_full.sel(year=seasonality_full["year"][-6:])
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
+
+# %%
+local.xarray_time.convert_year_month_to_time(seasonality_full)["time"]
 
 # %%
 local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ignore

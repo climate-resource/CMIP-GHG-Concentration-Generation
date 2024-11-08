@@ -46,6 +46,7 @@ dev = [
     "towncrier",
     "types-beautifulsoup4",
     "types-tqdm",
+    "jupyter-resource-usage",
 ]
 tests = [
     "pytest",

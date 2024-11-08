@@ -390,6 +390,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/af/26/f231ee425c8df93c1abbead3d90ea4a5ff3d6aa49e0edfd3b4c017e74844/h5py-3.11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/24/6c/a4f39abe7f19600b74528d0c717b52fff0b300bb0161081510d39c53cb00/identify-2.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/a6/62565a6e1cf69e10f5727360368e451d4b7f58beeac6173dc9db836a5b46/iniconfig-2.0.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/fc/b1/943b42f0dc7b7e720acd25f6918377e142985d8d8df0e6e965b98d149e0d/jupyter_resource_usage-0.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/4d/7f/77feb389d91603f55b3c4e3e16ccf8752bce007ed73ca921e42c9a5dff12/mypy-1.11.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl
@@ -803,6 +804,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/52/8f/e557819155a282da36fb21f8de4730cfd10a964b52b3ae8d20157ac1c668/h5py-3.11.0.tar.gz
       - pypi: https://files.pythonhosted.org/packages/24/6c/a4f39abe7f19600b74528d0c717b52fff0b300bb0161081510d39c53cb00/identify-2.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/a6/62565a6e1cf69e10f5727360368e451d4b7f58beeac6173dc9db836a5b46/iniconfig-2.0.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/fc/b1/943b42f0dc7b7e720acd25f6918377e142985d8d8df0e6e965b98d149e0d/jupyter_resource_usage-0.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f8/d4/4960d0df55f30a7625d9c3c9414dfd42f779caabae137ef73ffaed0c97b9/mypy-1.11.1-py3-none-any.whl
@@ -1203,6 +1205,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/a0/52/38bb74cc4362738cc7ef819503fc54d70f0c3a7378519ccb0ac309389122/h5py-3.11.0-cp311-cp311-macosx_10_9_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/24/6c/a4f39abe7f19600b74528d0c717b52fff0b300bb0161081510d39c53cb00/identify-2.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/a6/62565a6e1cf69e10f5727360368e451d4b7f58beeac6173dc9db836a5b46/iniconfig-2.0.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/fc/b1/943b42f0dc7b7e720acd25f6918377e142985d8d8df0e6e965b98d149e0d/jupyter_resource_usage-0.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/0b/b1/62d8ce619493a5364dda4f410912aa12c27126926e8fb8393edca0664640/mypy-1.11.1-cp311-cp311-macosx_10_9_x86_64.whl
@@ -1603,6 +1606,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/f0/af/dfbea0c69fe725e9e77259d42f4e14eb582eb094200aaf697feb36f513d8/h5py-3.11.0-cp311-cp311-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/24/6c/a4f39abe7f19600b74528d0c717b52fff0b300bb0161081510d39c53cb00/identify-2.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/a6/62565a6e1cf69e10f5727360368e451d4b7f58beeac6173dc9db836a5b46/iniconfig-2.0.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/fc/b1/943b42f0dc7b7e720acd25f6918377e142985d8d8df0e6e965b98d149e0d/jupyter_resource_usage-0.6.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/fe/aa/2ad15a318bc6a17b7f23e1641a624603949904f6131e09681f40340fb875/mypy-1.11.1-cp311-cp311-macosx_11_0_arm64.whl
@@ -10502,6 +10506,21 @@ packages:
   - pkg:pypi/jupyter-lsp
   size: 55539
   timestamp: 1712707521811
+- kind: pypi
+  name: jupyter-resource-usage
+  version: 0.6.0
+  url: https://files.pythonhosted.org/packages/fc/b1/943b42f0dc7b7e720acd25f6918377e142985d8d8df0e6e965b98d149e0d/jupyter_resource_usage-0.6.0-py2.py3-none-any.whl
+  sha256: 298b308a7dea1b90b308f43aee3e3ed8a1f117a0786d0daccf6539ffbbfadbcb
+  requires_dist:
+  - jupyter-server>=1.0.0
+  - prometheus-client
+  - psutil>=5.6.0
+  - autopep8 ; extra == 'dev'
+  - black ; extra == 'dev'
+  - pytest ; extra == 'dev'
+  - flake8 ; extra == 'dev'
+  - pytest-cov>=2.6.1 ; extra == 'dev'
+  - mock ; extra == 'dev'
 - kind: conda
   name: jupyter_client
   version: 8.6.2
@@ -16749,7 +16768,7 @@ packages:
   name: local
   version: 0.2.1a1
   path: .
-  sha256: 2be2091ac0657f8d45319a052b2da6b79553102c77ae037e0156d7b4c7c940e0
+  sha256: d005525b22c9401eb9c34ed8c323d21e1e69b4230355c3f187e547e20d08523e
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1
@@ -16763,6 +16782,7 @@ packages:
   - towncrier ; extra == 'dev'
   - types-beautifulsoup4 ; extra == 'dev'
   - types-tqdm ; extra == 'dev'
+  - jupyter-resource-usage ; extra == 'dev'
   - pytest ; extra == 'tests'
   - pytest-regressions[dataframe] ; extra == 'tests'
   - coverage ; extra == 'tests'
