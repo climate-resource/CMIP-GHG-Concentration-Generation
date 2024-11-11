@@ -64,7 +64,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
 
     command_to_run_base = expected_readme_line.split(" ")[1:]
     subprocess.check_output(
-        [*command_to_run_base, "-n", "6"],  # noqa: S603 # inputs come from us
+        [*command_to_run_base, "-n", "2"],  # noqa: S603 # inputs come from us
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env={
             "DOIT_CONFIGURATION_FILE": assumed_raw_config_file,
