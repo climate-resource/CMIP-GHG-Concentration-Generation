@@ -62,6 +62,11 @@ class Config:
     """Version ID for this configuration"""
     # TODO: add validation that this matches semantic versioning
 
+    doi: str
+    """
+    DOI to write into each ESGF-ready file
+    """
+
     base_seed: int
     """
     Base value to use for setting random seeds

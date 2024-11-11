@@ -23,6 +23,12 @@ if __name__ == "__main__":
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
+    # zenodo_doi = get_zenodo_doi("13365838")
+    assert (  # noqa: S101
+        False
+    ), "Zenodo DOI is hard-coded while we don't have any published versions"
+    zenodo_doi = "10.5281/zenodo.13365838"
+
     DEV_FILE: Path = Path("dev-config.yaml")
     with open(DEV_FILE) as fh:
         dev_config = converter_yaml.loads(fh, Config)
@@ -32,7 +38,7 @@ if __name__ == "__main__":
         evolve(
             v,
             input4mips_cvs_source_id=f"CR-CMIP-{VERSION.replace('.', '-')}",
-            input4mips_cvs_cv_source="gh:v6.5.23",
+            input4mips_cvs_cv_source="gh:cr-cmip-0-4-0",
         )
         for v in write_input4mips_old
     ]
@@ -40,6 +46,7 @@ if __name__ == "__main__":
         dev_config,
         name=RUN_NAME,
         version=VERSION,
+        doi=zenodo_doi,
         base_seed=SEED,
         write_input4mips=write_input4mips_new,
     )

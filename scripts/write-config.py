@@ -261,6 +261,7 @@ def create_dev_config() -> Config:
     return Config(
         name="dev",
         version=f"{local.__version__}-dev",
+        doi="dev-run-hence-no-valid-doi",
         base_seed=20240428,
         ci=False,
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
@@ -337,6 +338,7 @@ def create_ci_config() -> Config:
     return Config(
         name="CI",
         version=f"{local.__version__}-ci",
+        doi="ci-hence-no-valid-doi",
         base_seed=20241108,
         ci=True,
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
@@ -453,6 +455,7 @@ def create_ci_nightly_config() -> Config:
     return Config(
         name="CI nightly",
         version=f"{local.__version__}-ci-nightly",
+        doi="ci-hence-no-valid-doi",
         base_seed=20241109,
         ci=True,
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
