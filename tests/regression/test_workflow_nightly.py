@@ -10,11 +10,13 @@ from __future__ import annotations
 
 import pytest
 
-from local.testing import get_ndarrays_regression_array_contents
+from local.testing import get_regression_values
 
 
 @pytest.mark.nightly
-def test_workflow_nightly(nightly_workflow_output_info, ndarrays_regression):
+def test_workflow_nightly(
+    nightly_workflow_output_info, data_regression, ndarrays_regression
+):
     """
     Test the nightly workflow
     """
@@ -29,13 +31,15 @@ def test_workflow_nightly(nightly_workflow_output_info, ndarrays_regression):
         ).rglob("*.nc")
     )
 
-    array_contents = get_ndarrays_regression_array_contents(
+    metadata_check, array_check = get_regression_values(
         files_to_include=files_to_include,
         root_dir_output=nightly_workflow_output_info["root_dir_output"],
     )
 
+    data_regression.check(metadata_check)
+
     ndarrays_regression.check(
-        array_contents,
+        array_check,
         default_tolerance=dict(
             # TODO: dial this back down
             atol=1e-1,

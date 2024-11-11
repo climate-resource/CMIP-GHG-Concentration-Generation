@@ -1,0 +1,480 @@
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc114/gm/vYYYYMMDD/cfc114_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_cfc114_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: cfc114
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc114/gnz/vYYYYMMDD/cfc114_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_cfc114_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gnz
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 2500 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: cfc114
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc114/gr1z/vYYYYMMDD/cfc114_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_cfc114_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: cfc114
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gm/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_methane_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: ch4
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gnz/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_methane_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gnz
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 2500 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: ch4
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gr1z/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_methane_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: ch4
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gm/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_hfc152a_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: hfc152a
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gnz/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_hfc152a_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gnz
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 2500 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: hfc152a
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gr1z/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_hfc152a_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: mon
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: hfc152a
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc114/gm/vYYYYMMDD/cfc114_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_cfc114_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: cfc114
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc114/gr1z/vYYYYMMDD/cfc114_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_cfc114_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: cfc114
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/ch4/gm/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_methane_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: ch4
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/ch4/gr1z/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_methane_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: ch4
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc152a/gm/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_hfc152a_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gm
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: hfc152a
+? test-basic-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc152a/gr1z/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_hfc152a_in_air
+: Conventions: CF-1.7
+  activity_id: input4MIPs
+  comment: '[TBC which grant] Data produced by Climate Resource supported by funding
+    from the CMIP IPO (Coupled Model Intercomparison Project International Project
+    Office). This is an interim dataset, do not use in production.'
+  contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
+  creation_date: creation_date
+  dataset_category: GHGConcentrations
+  frequency: yr
+  further_info_url: http://www.tbd.invalid
+  grid_label: gr1z
+  institution_id: CR
+  license: The input4MIPs data linked to this entry is licensed under a Creative Commons
+    Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
+    Consult https://pcmdi.llnl.gov/CMIP6/TermsOfUse for terms of use governing CMIP6Plus
+    output, including citation requirements and proper acknowledgment. The data producers
+    and data providers make no warranty, either express or implied, including, but
+    not limited to, warranties of merchantability and fitness for a particular purpose.
+    All liabilities arising from the supply of the information (including any liability
+    arising in negligence) are excluded to the fullest extent permitted by law.
+  license_id: CC BY 4.0
+  mip_era: CMIP6Plus
+  nominal_resolution: 10000 km
+  product: derived
+  realm: atmos
+  references: Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)
+  source_id: CR-CMIP-testing
+  source_version: testing
+  target_mip: CMIP
+  tracking_id: tracking_id
+  variable_id: hfc152a

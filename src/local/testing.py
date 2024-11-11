@@ -13,18 +13,19 @@ import iris
 from numpy.typing import NDArray
 
 
-def get_ndarrays_regression_array_contents(
+def get_regression_values(
     files_to_include: Iterable[Path],
     root_dir_output: Path,
+    metadata_keys_to_overwrite: tuple[str, ...] = ("creation_date", "tracking_id"),
     re_substitutions: tuple[tuple[str, str], ...] = (
         (
             r"v\d{8}",
             "vYYYYMMDD",
         ),
     ),
-) -> dict[str, NDArray[Any]]:
+) -> tuple[dict[str, dict[str, str]], dict[str, NDArray[Any]]]:
     """
-    Get content for `pytest-regression`'s ndarrays_regression fixture
+    Get value for `pytest-regression`-based tests
 
     Parameters
     ----------
@@ -34,15 +35,19 @@ def get_ndarrays_regression_array_contents(
     root_dir_output
         Root directory of the path(s) in which the file(s) were written
 
+    metadata_keys_to_overwrite
+        Metadata keys to overwrite with their names because the values are unstable.
+
     re_substitutions
         Regular expression substitutions to apply to the filenames
 
     Returns
     -------
     :
-        Content which can be used with `ndarrays_regression`.
+        Values which can be used with `data_regression` and `ndarrays_regression`.
     """
-    out = {}
+    out_data_regression = {}
+    out_ndarrays_regression = {}
     for input4mips_file in files_to_include:
         cubes = iris.load(input4mips_file)
         if len(cubes) > 1:
@@ -59,6 +64,13 @@ def get_ndarrays_regression_array_contents(
             )
 
         key_write = f"{filepath_write}__{key}"
-        out[key_write] = cube.data
 
-    return out
+        metadata_to_check = {
+            k: v if k not in metadata_keys_to_overwrite else k
+            for k, v in cube.attributes.items()
+        }
+        out_data_regression[key_write] = metadata_to_check
+
+        out_ndarrays_regression[key_write] = cube.data
+
+    return out_data_regression, out_ndarrays_regression
