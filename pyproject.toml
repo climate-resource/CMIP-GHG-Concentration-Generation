@@ -10,7 +10,7 @@ dependencies = [
     "openscm-units>=0.6.1",
     "pydoit-nb>=0.3.4",
     "carpet-concentrations>=0.5.1",
-    "scmdata>=0.17.0",
+    "scmdata>=0.17.0", "openscm-zenodo>=0.3.1,<0.4", "python-dotenv>=1.0.1,<2",
 ]
 name = "local"
 version = "0.2.1a1"
