@@ -64,7 +64,7 @@ class Config:
 
     doi: str
     """
-    DOI to write into each written file
+    DOI to write into each ESGF-ready file
     """
 
     base_seed: int

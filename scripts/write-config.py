@@ -261,7 +261,7 @@ def create_dev_config() -> Config:
     return Config(
         name="dev",
         version=f"{local.__version__}-dev",
-        doi="ci-hence-no-valid-doi",
+        doi="dev-run-hence-no-valid-doi",
         base_seed=20240428,
         ci=False,
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
