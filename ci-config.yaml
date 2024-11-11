@@ -75,6 +75,7 @@ crunch_grids:
   hemispheric_mean_annual_mean_file: data/interim/hfc152a/hfc152a_hemispheric-mean_annual-mean.nc
   hemispheric_mean_monthly_file: data/interim/hfc152a/hfc152a_hemispheric-mean_monthly.nc
   step_config_id: hfc152a
+doi: ci-hence-no-valid-doi
 name: CI
 plot_input_data_overviews:
 - step_config_id: only

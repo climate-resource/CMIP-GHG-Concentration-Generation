@@ -440,6 +440,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         metadata=metadata_evolved,
         cvs=cvs,
         non_input4mips_metadata=dict(
+            doi=config.doi,
             references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
         ),
     )
