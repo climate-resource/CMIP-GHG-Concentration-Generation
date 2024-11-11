@@ -50,6 +50,7 @@ dev = [
     "types-tqdm",
     "jupyter-resource-usage",
     "types-requests>=2.32.0.20241016",
+    "doit-graph>=0.3.0,<0.4",
 ]
 tests = [
     "pytest",
@@ -81,6 +82,10 @@ platforms = [
     "linux-64",
     "linux-aarch64",
 ]
+
+[tool.pixi.feature.dev.dependencies]
+pygraphviz = ">=1.14,<2"
+pyproj = ">=3.6.1,<4"
 
 [tool.jupytext]
 formats = "ipynb,py:percent"
