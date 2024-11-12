@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -24,6 +24,7 @@
 from pathlib import Path
 
 import cf_xarray.units
+import numpy as np
 import pint
 import pint_xarray
 import xarray as xr
@@ -61,7 +62,7 @@ step: str = "crunch_equivalent_species"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11eq"  # config ID to select for this branch
+step_config_id: str = "cfc12eq"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -180,7 +181,10 @@ for key, attr_to_grab in (
             total_erf_set = True
             total_erf = loaded_erf
         else:
-            total_erf += loaded_erf.sel(year=total_erf["year"])
+            common_years = np.intersect1d(total_erf["year"], loaded_erf["year"])
+            total_erf = total_erf.sel(year=common_years) + loaded_erf.sel(
+                year=common_years
+            )
 
     total = (total_erf / RADIATIVE_EFFICIENCIES[gas_raw]).pint.to(
         raw_global_mean_monthly.data.units

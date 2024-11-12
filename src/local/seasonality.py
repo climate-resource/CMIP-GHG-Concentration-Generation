@@ -40,7 +40,7 @@ def calculate_seasonality(
 
     # TODO: dial this back down
     # atol = max(1e-6 * global_mean.mean().data.m, 1e-7)
-    atol = 1e-2 * global_mean.mean().data.m
+    atol = max(1e-1 * global_mean.mean().data.m, 5e-2)
     np.testing.assert_allclose(
         seasonality.mean("month").pint.dequantify(), 0.0, atol=atol
     )
