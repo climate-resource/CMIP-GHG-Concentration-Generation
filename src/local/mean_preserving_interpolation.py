@@ -75,7 +75,10 @@ def interpolate_annual_mean_to_monthly(
     # X = np.hstack([2 * X[0] - X[1], X, 2 * X[-1] - X[-2]])
     # Y = np.hstack([2 * Y[0] - Y[1], Y, 2 * Y[-1] - Y[-2]])
 
-    x = np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / N_MONTHS_PER_YEAR) + 1 / N_MONTHS_PER_YEAR / 2
+    x = (
+        np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / N_MONTHS_PER_YEAR)
+        + 1 / N_MONTHS_PER_YEAR / 2
+    )
 
     interpolator_raw = mean_preserving_interpolation(
         X=X,
@@ -169,7 +172,9 @@ def interpolate_lat_15_degree_to_half_degree(
     TARGET_LAT_SPACING = 0.5
 
     ASSUMED_LAT_BINS = np.arange(-90, 91, ASSUMED_INPUT_LAT_SPACING)
-    ASSUMED_INPUT_LAT_CENTRES = np.mean(np.vstack([ASSUMED_LAT_BINS[1:], ASSUMED_LAT_BINS[:-1]]), axis=0)
+    ASSUMED_INPUT_LAT_CENTRES = np.mean(
+        np.vstack([ASSUMED_LAT_BINS[1:], ASSUMED_LAT_BINS[:-1]]), axis=0
+    )
     np.testing.assert_allclose(lat_15_degree["lat"].data, ASSUMED_INPUT_LAT_CENTRES)
 
     X = lat_15_degree["lat"].data
@@ -340,7 +345,9 @@ def mean_preserving_interpolation(
     # The boundary values are what they (confusingly) call x_i.
     # Whereas they don't have the concept of x in their paper.
     # We abstract around this, but it does make mapping from this code to their paper trickier.
-    interval_boundaries = np.hstack([x_in_m - x_in_m_diff / 2, x_in_m[-1] + x_in_m_diff / 2])
+    interval_boundaries = np.hstack(
+        [x_in_m - x_in_m_diff / 2, x_in_m[-1] + x_in_m_diff / 2]
+    )
 
     # Area under the curve in each interval
     A = (interval_boundaries[1:] - interval_boundaries[:-1]) * y_in_m
@@ -385,8 +392,12 @@ def mean_preserving_interpolation(
     )
     beta = np.array(
         [
-            hermite_quartic[0][0](1) - 0.5 * hermite_quartic[1][0](1) - 0.5 * hermite_quartic[1][1](1),
-            hermite_quartic[0][1](1) + 0.5 * hermite_quartic[1][0](1) + 0.5 * hermite_quartic[1][1](1),
+            hermite_quartic[0][0](1)
+            - 0.5 * hermite_quartic[1][0](1)
+            - 0.5 * hermite_quartic[1][1](1),
+            hermite_quartic[0][1](1)
+            + 0.5 * hermite_quartic[1][0](1)
+            + 0.5 * hermite_quartic[1][1](1),
         ]
     )
 
@@ -395,8 +406,17 @@ def mean_preserving_interpolation(
 
     # b-vector
     b = np.zeros_like(y_in_m)
-    b[0] = 2 * A[0] - beta[0] * control_points_wall[0] - beta[1] * control_points_wall[1] - a[0] * y_extrap[0]
-    b[1:-1] = 2 * A[1:-1] - beta[0] * control_points_wall[1:-2] - beta[1] * control_points_wall[2:-1]
+    b[0] = (
+        2 * A[0]
+        - beta[0] * control_points_wall[0]
+        - beta[1] * control_points_wall[1]
+        - a[0] * y_extrap[0]
+    )
+    b[1:-1] = (
+        2 * A[1:-1]
+        - beta[0] * control_points_wall[1:-2]
+        - beta[1] * control_points_wall[2:-1]
+    )
     b[-1] = (
         2 * A[-1]
         - beta[0] * control_points_wall[-2]
@@ -501,7 +521,9 @@ def interpolate_time_slice_parallel_helper(
     cf_xarray.units.units.define("ppb = ppm / 1000")
     cf_xarray.units.units.define("ppt = ppb / 1000")
 
-    pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
+    pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
+        cf_xarray.units.units
+    )
     pint.set_application_registry(pint_xarray.accessors.default_registry)  # type: ignore
 
     return time, interpolate_lat_15_degree_to_half_degree(
