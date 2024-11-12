@@ -4,6 +4,7 @@ Mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
+from enum import StrEnum
 from typing import TypeVar
 
 import cftime
@@ -73,10 +74,7 @@ def interpolate_annual_mean_to_monthly(
     # X = np.hstack([2 * X[0] - X[1], X, 2 * X[-1] - X[-2]])
     # Y = np.hstack([2 * Y[0] - Y[1], Y, 2 * Y[-1] - Y[-2]])
 
-    x = (
-        np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / N_MONTHS_PER_YEAR)
-        + 1 / N_MONTHS_PER_YEAR / 2
-    )
+    x = np.arange(np.floor(np.min(X)), np.ceil(np.max(X)), 1 / N_MONTHS_PER_YEAR) + 1 / N_MONTHS_PER_YEAR / 2
 
     interpolator_raw = mean_preserving_interpolation(
         X=X,
@@ -170,9 +168,7 @@ def interpolate_lat_15_degree_to_half_degree(
     TARGET_LAT_SPACING = 0.5
 
     ASSUMED_LAT_BINS = np.arange(-90, 91, ASSUMED_INPUT_LAT_SPACING)
-    ASSUMED_INPUT_LAT_CENTRES = np.mean(
-        np.vstack([ASSUMED_LAT_BINS[1:], ASSUMED_LAT_BINS[:-1]]), axis=0
-    )
+    ASSUMED_INPUT_LAT_CENTRES = np.mean(np.vstack([ASSUMED_LAT_BINS[1:], ASSUMED_LAT_BINS[:-1]]), axis=0)
     np.testing.assert_allclose(lat_15_degree["lat"].data, ASSUMED_INPUT_LAT_CENTRES)
 
     X = lat_15_degree["lat"].data
@@ -247,47 +243,144 @@ def interpolate_lat_15_degree_to_half_degree(
     return out
 
 
-def mean_preserving_interpolation(  # noqa: PLR0913
-    X: npt.NDArray[np.float64],
-    Y: npt.NDArray[np.float64],
-    x: npt.NDArray[np.float64],
-    degrees_freedom_scalar: float,
-    degree: int = 3,
-    weights: npt.NDArray[np.float64] | None = None,
-) -> tuple[npt.NDArray[np.float64], np.float64, npt.NDArray[np.float64], int]:
+class MPIBoundaryHandling(StrEnum):
+    CONSTANT = "constant"
+    CUBIC_EXTRAPOLATION = "cubic_extrapolation"
+
+
+def mean_preserving_interpolation(
+    x_in: pint.UnitRegistry.Quantity,
+    y_in: pint.UnitRegistry.Quantity,
+    x_out: pint.UnitRegistry.Quantity,
+    boundary_handling_left: MPIBoundaryHandling = MPIBoundaryHandling.CONSTANT,
+    boundary_handling_right: MPIBoundaryHandling = MPIBoundaryHandling.CUBIC_EXTRAPOLATION,
+) -> pint.UnitRegistry.Quantity:
     """
     Perform a mean-preserving interpolation
 
     Parameters
     ----------
-    X
+    x_in
         x-values of the input
 
-    Y
+    y_in
         y-values of the input
 
-    x
+    x_out
         x-values of the target x-grid
 
-    degrees_freedom_scalar
-        Degrees of freedom to use when creating our interpolating spline
+    boundary_handling_left
+        Boundary handling to use on the left-hand end of the interval.
 
-    degree
-        Degree of the interpolating spline (3, the default, is a cubic spline)
+        If `MPIBoundaryHandling.CONSTANT`, we use a constant extrapolation
+        of `y_in` to get a value one step to the left of the provided values.
 
-    weights
-        Weights to apply to each point in x when calculating the mean.
+        If `MPIBoundaryHandling.CUBIC_EXTRAPOLATION`, we fit a cubic spline
+        to `x_in` and `y_in`, then use this to determine the value for `y_in`
+        one step to the left of the provided values.
 
+    boundary_handling_right
+        Same as `boundary_handling_left`, but for the right-hand end of the interval.
 
     Returns
     -------
-    :
-        The coeffecients, intercept, knots and degree of the interpolating B-spline.
-        This can be turned into an interpolating function using
-        ``scipy.interpolate.BSpline(t=knots, c=coefficients, k=degree)(x) + intercept``.
+    y_out :
+        Interpolated values for y, on the grid defined by `x_out`.
     """
-    # TODO: turn this back into mean-preserving interpolation
-    return scipy.interpolate.interp1d(X, Y, kind="cubic", fill_value="extrapolate")  # type: ignore
+    # Switch to raw arrays (could do this with pint too...)
+    x_in_m = x_in.m
+    y_in_m = y_in.m
+    x_out_m = x_out.to(x_in.units).m
+
+    x_in_m_diffs = x_in_m[1:] - x_in_m[:-1]
+    x_in_m_diff = x_in_m_diffs[0]
+    if not np.equal(x_in_m_diffs, x_in_m_diff).all():
+        msg = "Non-uniform spacing in x"
+        raise NotImplementedError(msg)
+
+    if boundary_handling_left not in MPIBoundaryHandling:
+        raise NotImplementedError(boundary_handling_left)
+
+    if boundary_handling_right not in MPIBoundaryHandling:
+        raise NotImplementedError(boundary_handling_right)
+
+    x_extrap = np.hstack([x_in_m[0] - x_in_m_diff, x_in_m, x_in_m[-1] + x_in_m_diff])
+    y_extrap = np.hstack([0, y_in_m, 0])
+
+    boundary_handling = (boundary_handling_left, boundary_handling_right)
+    if any(bh == MPIBoundaryHandling.CONSTANT for bh in boundary_handling):
+        if boundary_handling_left == MPIBoundaryHandling.CONSTANT:
+            y_extrap[0] = y_in_m[0]
+
+        if boundary_handling_right == MPIBoundaryHandling.CONSTANT:
+            y_extrap[-1] = y_in_m[-1]
+
+    if any(bh == MPIBoundaryHandling.CUBIC_EXTRAPOLATION for bh in boundary_handling):
+        cubic_interpolator = scipy.interpolate.interp1d(
+            x_in_m, y_in_m, kind="cubic", fill_value="extrapolate"
+        )
+
+        if boundary_handling_left == MPIBoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_extrap[0] = cubic_interpolator(x_extrap[0])
+
+        if boundary_handling_right == MPIBoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_extrap[-1] = cubic_interpolator(x_extrap[-1])
+
+    # TODO: move into a notebook
+    # import matplotlib.pyplot as plt
+    #
+    # plt.plot(x_in_m, y_in_m)
+    # plt.scatter(x0, y0)
+    # plt.scatter(xn_plus_one, yn_plus_one)
+    # x_fine = np.arange(x0, xn_plus_one, x_in_m_diffs[0] / 20)
+    # plt.show()
+
+    # Look at Lai and Kaplan (https://journals.ametsoc.org/view/journals/atot/39/4/JTECH-D-21-0154.1.xml)
+    # The boundary values are what they (confusingly) call x_i.
+    # Whereas they don't have the concept of x in their paper.
+    # We abstract around this, but it does make mapping from this code to their paper trickier.
+    interval_boundaries = np.hstack([x_in_m - x_in_m_diff / 2, x_in_m[-1] + x_in_m_diff / 2])
+
+    # Area under the curve in each interval
+    A = (interval_boundaries[1:] - interval_boundaries[:-1]) * y_in_m
+
+    control_points_wall = (y_extrap[:-1] + y_extrap[1:]) / 2
+
+    # Cubic Hermite functions
+    # TODO: split these out
+    H_00 = lambda x: 2 * x**3 - 3 * x**2 + 1  # noqa: E371
+    H_10 = lambda x: x**3 - 2 * x**2 + x  # noqa: E371
+    H_01 = lambda x: -2 * x**3 + 3 * x**2  # noqa: E371
+    H_11 = lambda x: x**3 - x**2  # noqa: E371
+
+    # Quartic Hermite functions
+    # TODO: split these out
+    G_00 = lambda x: x**4 / 2 - x**3 + x  # noqa: E371
+    G_10 = lambda x: x**4 / 4 - 2 * x**3 / 3 + x**2 / 2  # noqa: E371
+    G_01 = lambda x: x**4 / 2 + x**3  # noqa: E371
+    G_11 = lambda x: x**4 / 4 - x**3 / 3  # noqa: E371
+
+    beta = np.array(
+        [
+            G_00(1) - 0.5 * G_10(1) - 0.5 * G_11(1),
+            G_01(1) + 0.5 * G_10(1) + 0.5 * G_11(1),
+        ]
+    )
+    # TODO: skip all the above and just use beta = [0.5, 1.5]
+
+    # b-vector
+    b = np.zeros_like(y_in_m)
+    breakpoint()
+    assert False, "Up to here"
+    b[0] = 2 * A[0] - beta[0] * control_points_wall[0] - beta[1] * control_points_wall[1] - a[0] * y_extrap[0]
+    bn = (
+        2 * A[-1]
+        - beta_one * control_points_wall[-2]
+        - beta_two * control_points_wall[-1]
+        - a_three * y_n_plus_one
+    )
+    breakpoint()
+    breakpoint()
     #
     # if weights is None:
     #     weights = np.ones_like(x)
@@ -386,9 +479,7 @@ def interpolate_time_slice_parallel_helper(
     cf_xarray.units.units.define("ppb = ppm / 1000")
     cf_xarray.units.units.define("ppt = ppb / 1000")
 
-    pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-        cf_xarray.units.units
-    )
+    pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
     pint.set_application_registry(pint_xarray.accessors.default_registry)  # type: ignore
 
     return time, interpolate_lat_15_degree_to_half_degree(
