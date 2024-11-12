@@ -15,6 +15,7 @@ import pint.testing
 import scipy.interpolate  # type: ignore
 import scipy.optimize  # type: ignore
 import xarray as xr
+from numpy.polynomial import Polynomial
 
 from local.xarray_time import convert_time_to_year_month
 
@@ -347,40 +348,61 @@ def mean_preserving_interpolation(
     control_points_wall = (y_extrap[:-1] + y_extrap[1:]) / 2
 
     # Cubic Hermite functions
-    # TODO: split these out
-    H_00 = lambda x: 2 * x**3 - 3 * x**2 + 1  # noqa: E371
-    H_10 = lambda x: x**3 - 2 * x**2 + x  # noqa: E371
-    H_01 = lambda x: -2 * x**3 + 3 * x**2  # noqa: E371
-    H_11 = lambda x: x**3 - x**2  # noqa: E371
+    hermite_cubic = [
+        [
+            Polynomial((1, 0, -3, 2)),
+            Polynomial((0, 0, 3, -2)),
+        ],
+        [
+            Polynomial((0, 1, -2, 1)),
+            Polynomial((0, 0, -1, 1)),
+        ],
+    ]
 
     # Quartic Hermite functions
-    # TODO: split these out
-    G_00 = lambda x: x**4 / 2 - x**3 + x  # noqa: E371
-    G_10 = lambda x: x**4 / 4 - 2 * x**3 / 3 + x**2 / 2  # noqa: E371
-    G_01 = lambda x: x**4 / 2 + x**3  # noqa: E371
-    G_11 = lambda x: x**4 / 4 - x**3 / 3  # noqa: E371
-
-    beta = np.array(
+    hermite_quartic = [
         [
-            G_00(1) - 0.5 * G_10(1) - 0.5 * G_11(1),
-            G_01(1) + 0.5 * G_10(1) + 0.5 * G_11(1),
+            hermite_cubic[0][0].integ(),
+            hermite_cubic[0][1].integ(),
+        ],
+        [
+            hermite_cubic[1][0].integ(),
+            hermite_cubic[1][1].integ(),
+        ],
+    ]
+
+    a = np.array(
+        [
+            -0.5 * hermite_quartic[1][0](1),
+            (
+                hermite_quartic[0][0](1)
+                + hermite_quartic[0][1](1)
+                + 0.5 * hermite_quartic[1][0](1)
+                - 0.5 * hermite_quartic[1][1](1)
+            ),
+            0.5 * hermite_quartic[1][1](1),
         ]
     )
-    # TODO: skip all the above and just use beta = [0.5, 1.5]
+    beta = np.array(
+        [
+            hermite_quartic[0][0](1) - 0.5 * hermite_quartic[1][0](1) - 0.5 * hermite_quartic[1][1](1),
+            hermite_quartic[0][1](1) + 0.5 * hermite_quartic[1][0](1) + 0.5 * hermite_quartic[1][1](1),
+        ]
+    )
+
+    # a-matrix
+    assert False, "Up to here"
 
     # b-vector
     b = np.zeros_like(y_in_m)
-    breakpoint()
-    assert False, "Up to here"
     b[0] = 2 * A[0] - beta[0] * control_points_wall[0] - beta[1] * control_points_wall[1] - a[0] * y_extrap[0]
-    bn = (
+    b[1:-1] = 2 * A[1:-1] - beta[0] * control_points_wall[1:-2] - beta[1] * control_points_wall[2:-1]
+    b[-1] = (
         2 * A[-1]
-        - beta_one * control_points_wall[-2]
-        - beta_two * control_points_wall[-1]
-        - a_three * y_n_plus_one
+        - beta[0] * control_points_wall[-2]
+        - beta[1] * control_points_wall[-1]
+        - a[2] * y_extrap[-1]
     )
-    breakpoint()
-    breakpoint()
     #
     # if weights is None:
     #     weights = np.ones_like(x)
