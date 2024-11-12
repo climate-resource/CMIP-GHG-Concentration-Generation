@@ -24,7 +24,6 @@ EQUIVALENT_COMPONENTS: dict[str, tuple[str, ...]] = {
         "cfc113",
         "cfc114",
         "cfc115",
-        "cfc12",
         "ch2cl2",
         "ch3br",
         "ch3ccl3",
