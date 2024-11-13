@@ -4,9 +4,11 @@ Mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from enum import StrEnum
-from typing import TypeVar
+from typing import Generic, TypeVar
 
+import attrs.validators
 import cftime
 import numpy as np
 import numpy.typing as npt
@@ -15,7 +17,9 @@ import pint.testing
 import scipy.interpolate  # type: ignore
 import scipy.optimize  # type: ignore
 import xarray as xr
+from attrs import define, field
 from numpy.polynomial import Polynomial
+from numpy.typing import NDArray
 
 from local.xarray_time import convert_time_to_year_month
 
@@ -249,6 +253,72 @@ def interpolate_lat_15_degree_to_half_degree(
     return out
 
 
+# Paper reference: https://journals.ametsoc.org/view/journals/atot/39/4/JTECH-D-21-0154.1.xml#fig1
+@define
+class LaiKaplanArray(Generic[T]):
+    """
+    Thin wrapper around numpy arrays to support using indexing like in the paper
+    """
+
+    min: float | int
+    """Minimum index"""
+
+    stride: float = field(validator=attrs.validators.in_((0.5, 1.0, 1)))
+    """Size of stride"""
+
+    data: NDArray[T]
+    """Actual data array"""
+
+    @property
+    def max_allowed_lai_kaplan_index(self):
+        return (self.data.size - 1) * self.stride + self.min
+
+    def to_data_index(
+        self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False
+    ) -> int | None:
+        if idx_lai_kaplan is None:
+            return None
+
+        if idx_lai_kaplan < self.min:
+            msg = f"{idx_lai_kaplan=} is less than {self.min=}"
+            raise IndexError(msg)
+
+        idx_data_float = (idx_lai_kaplan - self.min) / self.stride
+        if idx_data_float % 1.0:
+            msg = f"{idx_lai_kaplan=} leads to {idx_data_float=}, which is not an int. {self=}"
+            raise IndexError(msg)
+
+        idx_data = int(idx_data_float)
+
+        if is_slice_idx:
+            max_idx = self.data.size
+        else:
+            max_idx = self.data.size - 1
+
+        if idx_data > max_idx:
+            msg = (
+                f"{idx_lai_kaplan=} leads to {idx_data=}, "
+                f"which is outside the bounds of `self.data` ({self.data.size=}). "
+                f"{self.max_allowed_lai_kaplan_index=}, {self=}"
+            )
+            raise IndexError(msg)
+
+        return idx_data
+
+    def __getitem__(self, idx_lai_kaplan: int | float | slice) -> T | NDArray[T]:
+        if isinstance(idx_lai_kaplan, slice):
+            idx_data = slice(
+                self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
+                self.to_data_index(idx_lai_kaplan.stop, is_slice_idx=True),
+                self.to_data_index(idx_lai_kaplan.step, is_slice_idx=True),
+            )
+
+        else:
+            idx_data = self.to_data_index(idx_lai_kaplan)
+
+        return self.data[idx_data]
+
+
 class MPIBoundaryHandling(StrEnum):
     CONSTANT = "constant"
     CUBIC_EXTRAPOLATION = "cubic_extrapolation"
@@ -345,6 +415,7 @@ def mean_preserving_interpolation(
     # The boundary values are what they (confusingly) call x_i.
     # Whereas they don't have the concept of x in their paper.
     # We abstract around this, but it does make mapping from this code to their paper trickier.
+    # TODO: update so the function takes in boundaries
     interval_boundaries = np.hstack(
         [x_in_m - x_in_m_diff / 2, x_in_m[-1] + x_in_m_diff / 2]
     )
@@ -402,7 +473,11 @@ def mean_preserving_interpolation(
     )
 
     # a-matrix
-    assert False, "Up to here"
+    A_mat = np.zeros((x_in_m.size, x_in_m.size))
+    rows, cols = np.diag_indices_from(A_mat)
+    A_mat[rows[1:], cols[:-1]] = a[0]
+    A_mat[rows, cols] = a[1]
+    A_mat[rows[:-1], cols[1:]] = a[2]
 
     # b-vector
     b = np.zeros_like(y_in_m)
@@ -423,7 +498,79 @@ def mean_preserving_interpolation(
         - beta[1] * control_points_wall[-1]
         - a[2] * y_extrap[-1]
     )
-    #
+
+    control_points_mid = np.linalg.solve(A_mat, b)
+    control_points = np.empty(
+        control_points_wall.size + control_points_mid.size,
+        dtype=control_points_wall.dtype,
+    )
+    control_points[0::2] = control_points_wall
+    control_points[1::2] = control_points_mid
+
+    # Now that we have all the control points, we can do the gradients
+    gradients_at_control_points = control_points[2:] - control_points[:-2]
+
+    x_in_half_intervals = np.empty(
+        2 * interval_boundaries.size - 1, dtype=interval_boundaries.dtype
+    )
+    x_in_half_intervals[0::2] = interval_boundaries
+    x_in_half_intervals[1::2] = (interval_boundaries[1:] + interval_boundaries[:-1]) / 2
+
+    # Delta is half the interval width
+    delta = x_in_m_diff / 2.0
+
+    def get_filling_function(interval_idx: int) -> Callable[[float], float]:
+        def filling_function(u: float) -> float:
+            # TODO: change this to be use partial instead of higher-order function
+            return (
+                control_points[interval_idx] * hermite_cubic[0][0](u)
+                + delta
+                * gradients_at_control_points[interval_idx]
+                * hermite_cubic[1][0](u)
+                + control_points[interval_idx + 1] * hermite_cubic[0][1](u)
+                + delta
+                * gradients_at_control_points[interval_idx + 1]
+                * hermite_cubic[1][1](u)
+            )
+
+        return filling_function
+
+    interval_idx = 0
+    filling_function = get_filling_function(interval_idx)
+
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots()
+    ax.step(x_in_m, y_in_m)
+    for i in range(x_in_half_intervals.size - 1):
+        x_l = x_in_half_intervals[i]
+        x_u = x_in_half_intervals[i + 1]
+        x_fine = np.linspace(x_l, x_u, 100)
+        breakpoint()
+        # idx = i + 1
+        # filling_function = get_filling_function(i + 1)
+        #
+        # np.testing.assert_allclose(filling_function(0), control_points[idx])
+        #
+        # ax.plot(x_fine, filling_function(x_fine), label=i)
+        # breakpoint()
+
+    plt.show()
+    breakpoint()
+
+    for x_out_i in x_out_m:
+        if x_out_i > x_in_half_intervals[interval_idx + 1]:
+            interval_idx += 1
+            filling_function = get_filling_function(interval_idx)
+
+        elif x_out_i > x_in_half_intervals[interval_idx + 1]:
+            raise NotImplementedError
+
+        u = (x_out_i - x_in_half_intervals[interval_idx]) / delta
+        # TODO: consider whether to simplify this.
+        # If you're doing constant spacing, it can be less complex...
+        breakpoint()
+
     # if weights is None:
     #     weights = np.ones_like(x)
     #
