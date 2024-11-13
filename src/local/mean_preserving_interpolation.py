@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from enum import StrEnum
+from functools import partial
 from typing import Generic, TypeVar
 
 import attrs.validators
@@ -15,8 +16,10 @@ import pint
 import pint.testing
 import scipy.interpolate  # type: ignore
 import scipy.optimize  # type: ignore
+import xarray as xr
 from attrs import define, field
 from numpy.polynomial import Polynomial
+
 
 T = TypeVar("T")
 
@@ -42,9 +45,7 @@ class LaiKaplanArray(Generic[T]):
     def max_allowed_lai_kaplan_index(self):
         return (self.data.size - 1) * self.lai_kaplan_stride + self.lai_kaplan_idx_min
 
-    def to_data_index(
-        self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False
-    ) -> int | None:
+    def to_data_index(self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False) -> int | None:
         if idx_lai_kaplan is None:
             return None
 
@@ -52,9 +53,7 @@ class LaiKaplanArray(Generic[T]):
             msg = f"{idx_lai_kaplan=} is less than {self.lai_kaplan_idx_min=}"
             raise IndexError(msg)
 
-        idx_data_float = (
-            idx_lai_kaplan - self.lai_kaplan_idx_min
-        ) / self.lai_kaplan_stride
+        idx_data_float = (idx_lai_kaplan - self.lai_kaplan_idx_min) / self.lai_kaplan_stride
         if idx_data_float % 1.0:
             msg = f"{idx_lai_kaplan=} leads to {idx_data_float=}, which is not an int. {self=}"
             raise IndexError(msg)
@@ -102,9 +101,7 @@ class LaiKaplanArray(Generic[T]):
 
         return self.data[idx_data]
 
-    def __setitem__(
-        self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]
-    ) -> None:
+    def __setitem__(self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]) -> None:
         if isinstance(idx_lai_kaplan, slice):
             idx_data = slice(
                 self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
@@ -183,9 +180,7 @@ def mean_preserving_interpolation(
         dtype=np.float64,
     )
     control_points_x_d[1 : control_points_x_d.size - 1 : 2] = x_bounds_in_m
-    control_points_x_d[0 : control_points_x_d.size - 2 : 2] = x_bounds_in_m - (
-        x_bounds_m_diff / 2
-    )
+    control_points_x_d[0 : control_points_x_d.size - 2 : 2] = x_bounds_in_m - (x_bounds_m_diff / 2)
     control_points_x_d[-1] = x_bounds_in_m[-1] + x_bounds_m_diff / 2
     control_points_x = LaiKaplanArray(
         lai_kaplan_idx_min=1 / 2,
@@ -211,14 +206,17 @@ def mean_preserving_interpolation(
 
     if any(bh == MPIBoundaryHandling.CUBIC_EXTRAPOLATION for bh in boundary_handling):
         x_bounds_mid_points = (x_bounds_in_m[1:] + x_bounds_in_m[:-1]) / 2.0
-        cubic_interpolator = scipy.interpolate.interp1d(
-            x_bounds_mid_points, y_in_m, kind="cubic", fill_value="extrapolate"
-        )
 
         if boundary_handling_left == MPIBoundaryHandling.CUBIC_EXTRAPOLATION:
+            cubic_interpolator = scipy.interpolate.interp1d(
+                x_bounds_mid_points[:4], y_in_m[:4], kind="cubic", fill_value="extrapolate"
+            )
             y_extrap_d[0] = cubic_interpolator(control_points_x_d[0])
 
         if boundary_handling_right == MPIBoundaryHandling.CUBIC_EXTRAPOLATION:
+            cubic_interpolator = scipy.interpolate.interp1d(
+                x_bounds_mid_points[-4:], y_in_m[-4:], kind="cubic", fill_value="extrapolate"
+            )
             y_extrap_d[-1] = cubic_interpolator(control_points_x_d[-1])
 
     # # TODO: move into a notebook
@@ -243,14 +241,10 @@ def mean_preserving_interpolation(
         y=LaiKaplanArray(lai_kaplan_idx_min=1, lai_kaplan_stride=1, data=y_in_m),
         y_extrap=y_extrap,
         control_points_x=control_points_x,
+        x_bounds_out=x_bounds_out.to(x_bounds_in.u).m,
     )
 
     assert False
-
-    # Switch to raw arrays (could do this with pint too...)
-    x_bounds_in_m = x_in.m
-    y_in_m = y_in.m
-    x_out_m = x_out.to(x_in.units).m
 
 
 HERMITE_CUBICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = (
@@ -270,9 +264,9 @@ Allows for the same notation as
 [Lai and Kaplan, J. Atmos. Oceanic Technol. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1).
 """
 
-HERMITE_QUARTICS: tuple[
-    tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]
-] = tuple(tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS)
+HERMITE_QUARTICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = tuple(
+    tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS
+)
 """
 Hermite quartic polynomials
 
@@ -281,23 +275,52 @@ Allows for the same notation as
 """
 
 
-def mean_preserving_interpolation_lai_kaplan(
+def lai_kaplan_f(  # noqa: PLR0913
+    x: T,
+    x_i: T,
+    s_i: T,
+    s_i_plus_half: T,
+    m_i: T,
+    m_i_plus_half: T,
+    delta: T,
+) -> T:
+    u = (x - x_i) / delta
+    res = (
+        s_i * HERMITE_CUBICS[0][0](u)
+        + delta * m_i * HERMITE_CUBICS[1][0](u)
+        + s_i_plus_half * HERMITE_CUBICS[0][1](u)
+        + delta * m_i_plus_half * HERMITE_CUBICS[1][1](u)
+    )
+
+    return res
+
+
+def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     lai_kaplan_n: int,
     x: LaiKaplanArray[npt.NDArray[np.float64]],
     y: LaiKaplanArray[npt.NDArray[T]],
     y_extrap: LaiKaplanArray[npt.NDArray[T]],
     control_points_x: LaiKaplanArray[npt.NDArray[np.float64]],
+    x_bounds_out: npt.NDArray[np.float64],
 ) -> npt.NDArray[T]:
+    x_steps = x.data[1:] - x.data[:-1]
+    x_step = x_steps[0]
+    if not np.equal(x_steps, x_step).all():
+        msg = "Non-uniform spacing in x"
+        raise NotImplementedError(msg)
+
+    delta = x_step / 2.0
+
     a_d = np.array(
         [
-            -0.5 * HERMITE_QUARTICS[1][0](1),
+            -2 * delta * HERMITE_QUARTICS[1][0](1),
             (
                 HERMITE_QUARTICS[0][0](1)
                 + HERMITE_QUARTICS[0][1](1)
-                + 0.5 * HERMITE_QUARTICS[1][0](1)
-                - 0.5 * HERMITE_QUARTICS[1][1](1)
+                + 2 * delta * HERMITE_QUARTICS[1][0](1)
+                - 2 * delta * HERMITE_QUARTICS[1][1](1)
             ),
-            0.5 * HERMITE_QUARTICS[1][1](1),
+            2 * delta * HERMITE_QUARTICS[1][1](1),
         ]
     )
     a = LaiKaplanArray(
@@ -308,17 +331,21 @@ def mean_preserving_interpolation_lai_kaplan(
 
     # Area under the curve in each interval
     A_d = (x.data[1:] - x.data[:-1]) * y[:]
-    A = LaiKaplanArray(1, 1, A_d)
+    A = LaiKaplanArray(lai_kaplan_idx_min=1, lai_kaplan_stride=1, data=A_d)
 
     # beta array
     beta_d = np.array(
         [
-            HERMITE_QUARTICS[0][0](1)
-            - 0.5 * HERMITE_QUARTICS[1][0](1)
-            - 0.5 * HERMITE_QUARTICS[1][1](1),
-            HERMITE_QUARTICS[0][1](1)
-            + 0.5 * HERMITE_QUARTICS[1][0](1)
-            + 0.5 * HERMITE_QUARTICS[1][1](1),
+            (
+                HERMITE_QUARTICS[0][0](1)
+                - 2 * delta * HERMITE_QUARTICS[1][0](1)
+                - 2 * delta * HERMITE_QUARTICS[1][1](1)
+            ),
+            (
+                HERMITE_QUARTICS[0][1](1)
+                + 2 * delta * HERMITE_QUARTICS[1][0](1)
+                + 2 * delta * HERMITE_QUARTICS[1][1](1)
+            ),
         ]
     )
     beta = LaiKaplanArray(1, 1, beta_d)
@@ -327,110 +354,133 @@ def mean_preserving_interpolation_lai_kaplan(
     # (Not indexed in the paper, hence not done with Lai Kaplan indexing)
     A_mat = np.zeros((lai_kaplan_n, lai_kaplan_n))
     rows, cols = np.diag_indices_from(A_mat)
-    A_mat[rows[1:], cols[:-1]] = a[0]
-    A_mat[rows, cols] = a[1]
-    A_mat[rows[:-1], cols[1:]] = a[2]
+    A_mat[rows[1:], cols[:-1]] = a[1]
+    A_mat[rows, cols] = a[2]
+    A_mat[rows[:-1], cols[1:]] = a[3]
 
     # b-vector
+    # Give the user the change to change this
     control_points_wall_y_d = (
         y_extrap[0 : lai_kaplan_n + 1 : 1] + y_extrap[1 : lai_kaplan_n + 1 + 1 : 1]
     ) / 2
+    first_increase = np.argmax(~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:]))
+    if first_increase > 0:
+        control_points_wall_y_d[first_increase + 1] = control_points_wall_y_d[0]
+
     control_points_wall_y = LaiKaplanArray(
         lai_kaplan_idx_min=1,
         lai_kaplan_stride=1,
         data=control_points_wall_y_d,
     )
-    breakpoint()
 
-    b = np.zeros_like(y.data)
-    b[0] = (
-        2 * A[0]
-        - beta[0] * control_points_wall[0]
-        - beta[1] * control_points_wall[1]
-        - a[0] * y_extrap[0]
+    b = LaiKaplanArray(
+        lai_kaplan_idx_min=1,
+        lai_kaplan_stride=1,
+        data=np.zeros_like(y.data),
     )
-    b[1:-1] = (
-        2 * A[1:-1]
-        - beta[0] * control_points_wall[1:-2]
-        - beta[1] * control_points_wall[2:-1]
+    b[1] = (
+        2 * A[1]
+        - beta[1] * control_points_wall_y[1]
+        - beta[2] * control_points_wall_y[2]
+        - a[1] * y_extrap[0]
     )
-    b[-1] = (
-        2 * A[-1]
-        - beta[0] * control_points_wall[-2]
-        - beta[1] * control_points_wall[-1]
-        - a[2] * y_extrap[-1]
+    middle_slice = slice(2, lai_kaplan_n)
+    middle_slice_plus_one = slice(3, lai_kaplan_n + 1)
+    b[middle_slice] = (
+        2 * A[middle_slice]
+        - beta[1] * control_points_wall_y[middle_slice]
+        - beta[2] * control_points_wall_y[middle_slice_plus_one]
+    )
+    b[lai_kaplan_n] = (
+        2 * A[lai_kaplan_n]
+        - beta[1] * control_points_wall_y[lai_kaplan_n]
+        - beta[2] * control_points_wall_y[lai_kaplan_n + 1]
+        - a[3] * y_extrap[lai_kaplan_n + 1]
     )
 
-    breakpoint()
+    control_points_mid_y_d = np.linalg.solve(A_mat, b.data)
 
-    control_points_mid = np.linalg.solve(A_mat, b)
-    control_points = np.empty(
-        control_points_wall_y.size + control_points_mid.size,
-        dtype=control_points_wall_y.dtype,
+    control_points_y = LaiKaplanArray(
+        lai_kaplan_idx_min=1 / 2,
+        lai_kaplan_stride=1 / 2,
+        data=np.zeros_like(control_points_x.data),
     )
-    control_points[0::2] = control_points_wall_y
-    control_points[1::2] = control_points_mid
+
+    control_points_y[1 / 2] = y_extrap[0]
+    control_points_y[1 : lai_kaplan_n + 1 + 1 : 1] = control_points_wall_y[:]
+    control_points_y[3 / 2 : lai_kaplan_n + 1 / 2 + 1 / 2 : 1] = control_points_mid_y_d
+    control_points_y[lai_kaplan_n + 3 / 2] = y_extrap[lai_kaplan_n + 1]
 
     # Now that we have all the control points, we can do the gradients
-    gradients_at_control_points = control_points[2:] - control_points[:-2]
-
-    x_in_half_intervals = np.empty(
-        2 * interval_boundaries.size - 1, dtype=interval_boundaries.dtype
+    gradients_at_control_points = LaiKaplanArray(
+        lai_kaplan_idx_min=1, lai_kaplan_stride=1 / 2, data=np.zeros(2 * lai_kaplan_n + 1)
     )
-    x_in_half_intervals[0::2] = interval_boundaries
-    x_in_half_intervals[1::2] = (interval_boundaries[1:] + interval_boundaries[:-1]) / 2
+    gradients_at_control_points[:] = (
+        control_points_y[3 / 2 : lai_kaplan_n + 1 + 1] - control_points_y[1 / 2 : lai_kaplan_n + 1]
+    )
 
-    # Delta is half the interval width
-    delta = x_in_m_diff / 2.0
+    # assert False, "Add check that array is sorted"
 
-    def get_filling_function(interval_idx: int) -> Callable[[float], float]:
-        def filling_function(u: float) -> float:
-            # TODO: change this to be use partial instead of higher-order function
-            return (
-                control_points[interval_idx] * HERMITE_CUBICS[0][0](u)
-                + delta
-                * gradients_at_control_points[interval_idx]
-                * HERMITE_CUBICS[1][0](u)
-                + control_points[interval_idx + 1] * HERMITE_CUBICS[0][1](u)
-                + delta
-                * gradients_at_control_points[interval_idx + 1]
-                * HERMITE_CUBICS[1][1](u)
+    interval_idx = 1
+    x_i = x[interval_idx]
+    filling_function = partial(
+        lai_kaplan_f,
+        s_i=control_points_y[interval_idx],
+        s_i_plus_half=control_points_y[interval_idx + 1 / 2],
+        m_i=gradients_at_control_points[interval_idx],
+        m_i_plus_half=gradients_at_control_points[interval_idx + 1 / 2],
+        delta=delta,
+        x_i=x_i,
+    )
+    np.testing.assert_allclose(control_points_y[interval_idx], filling_function(x_i))
+    np.testing.assert_allclose(control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta))
+
+    # TODO: in notebook
+    plot = False
+    if plot:
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots()
+        ax.step([*x.data[:-1], x.data[-1]], [*y[:], y[:][-1]], linewidth=2, where="post")
+        x_fine = np.linspace(x_i, x_i + delta, 100)
+
+        ax.plot(x_fine, filling_function(x_fine), label=interval_idx)
+        ax.scatter(control_points_x[:], control_points_y[:], zorder=3, label="CPs")
+
+    for i in range(x_bounds_out.size - 1):
+        if x_bounds_out[i] >= control_points_x[interval_idx + 1 / 2]:
+            interval_idx += 1 / 2
+            in_middle_of_bound = interval_idx % 1.0 == 0.5  # noqa: PLR2004
+            if in_middle_of_bound:
+                x_i = x_i + delta
+
+            else:
+                x_i = x[interval_idx]
+
+            filling_function = partial(
+                lai_kaplan_f,
+                s_i=control_points_y[interval_idx],
+                s_i_plus_half=control_points_y[interval_idx + 1 / 2],
+                m_i=gradients_at_control_points[interval_idx],
+                m_i_plus_half=gradients_at_control_points[interval_idx + 1 / 2],
+                delta=delta,
+                x_i=x_i,
             )
 
-        return filling_function
+            np.testing.assert_allclose(control_points_y[interval_idx], filling_function(x_i))
+            np.testing.assert_allclose(control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta))
 
-    interval_idx = 0
-    filling_function = get_filling_function(interval_idx)
+            if plot:
+                x_fine = np.linspace(x_i, x_i + delta, 100)
+                integral = scipy.integrate.quad(filling_function, x_fine[0], x_fine[-1])[0]
+                ax.plot(x_fine, filling_function(x_fine), label=f"{interval_idx}: {integral=:.2f}")
 
-    import matplotlib.pyplot as plt
+    if plot:
+        ax.legend()
+        ax.grid()
+        plt.show()
 
-    fig, ax = plt.subplots()
-    ax.step(x_in_m, y_in_m)
-    for i in range(x_in_half_intervals.size - 1):
-        x_l = x_in_half_intervals[i]
-        x_u = x_in_half_intervals[i + 1]
-        x_fine = np.linspace(x_l, x_u, 100)
-        breakpoint()
-        # idx = i + 1
-        # filling_function = get_filling_function(i + 1)
-        #
-        # np.testing.assert_allclose(filling_function(0), control_points[idx])
-        #
-        # ax.plot(x_fine, filling_function(x_fine), label=i)
-        # breakpoint()
-
-    plt.show()
     breakpoint()
 
-    for x_out_i in x_out_m:
-        if x_out_i > x_in_half_intervals[interval_idx + 1]:
-            interval_idx += 1
-            filling_function = get_filling_function(interval_idx)
-
-        elif x_out_i > x_in_half_intervals[interval_idx + 1]:
-            raise NotImplementedError
-
-        u = (x_out_i - x_in_half_intervals[interval_idx]) / delta
-        # TODO: consider whether to simplify this.
-        # If you're doing constant spacing, it can be less complex...
-        breakpoint()
+    print("hi")
+    assert False
