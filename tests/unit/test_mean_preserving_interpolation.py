@@ -5,9 +5,13 @@ Tests of mean preserving interpolation
 from __future__ import annotations
 
 import numpy as np
+import pint
 import pytest
 
-from local.mean_preserving_interpolation import LaiKaplanArray
+from local.mean_preserving_interpolation import (
+    LaiKaplanArray,
+    mean_preserving_interpolation,
+)
 
 lai_kaplan_array_n_elements = pytest.mark.parametrize("n", [3, 4, 5, 10, 15])
 
@@ -22,7 +26,7 @@ def test_lai_kaplan_array_x_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     with pytest.raises(IndexError):
         lkarr[0]
@@ -33,10 +37,22 @@ def test_lai_kaplan_array_x_like(n):
     with pytest.raises(IndexError):
         lkarr[n + 2]
 
+    # Don't allow negative indexes, too confusing
+    with pytest.raises(IndexError):
+        lkarr[-1]
+
     np.testing.assert_equal(lkarr[:], raw[:])
     np.testing.assert_equal(lkarr[1:], raw[:])
     np.testing.assert_equal(lkarr[: n + 2], raw[:])
     np.testing.assert_equal(lkarr[1 : n + 2], raw[:])
+
+    with pytest.raises(AssertionError):
+        # Make sure we're not starting with this value already set
+        np.testing.assert_equal(lkarr[min], 2.0)
+
+    lkarr[min] = 2.0
+    np.testing.assert_equal(lkarr[min], 2.0)
+    np.testing.assert_equal(lkarr.data[0], 2.0)
 
 
 @lai_kaplan_array_n_elements
@@ -49,7 +65,7 @@ def test_lai_kaplan_array_x_extrap_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     with pytest.raises(IndexError):
         lkarr[n + 2.5]
@@ -74,7 +90,7 @@ def test_lai_kaplan_array_y_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     np.testing.assert_equal(lkarr[:], raw[:])
     np.testing.assert_equal(lkarr[1:], raw[:])
@@ -92,7 +108,7 @@ def test_lai_kaplan_array_y_extrap_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     np.testing.assert_equal(lkarr[:], raw[:])
     np.testing.assert_equal(lkarr[0:], raw[:])
@@ -110,7 +126,7 @@ def test_lai_kaplan_array_control_points_x_y_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     with pytest.raises(IndexError):
         lkarr[0]
@@ -124,6 +140,7 @@ def test_lai_kaplan_array_control_points_x_y_like(n):
     np.testing.assert_equal(lkarr[1:2], raw[1:3])
 
     np.testing.assert_equal(lkarr[:], raw[:])
+    np.testing.assert_equal(lkarr[::1], raw[::2])
     np.testing.assert_equal(lkarr[1 / 2 :], raw[:])
     np.testing.assert_equal(lkarr[: n + 2], raw[:])
     np.testing.assert_equal(lkarr[1 / 2 : n + 2], raw[:])
@@ -139,7 +156,7 @@ def test_lai_kaplan_array_control_point_gradients_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     assert lkarr[1] == raw[0]
     assert lkarr[3 / 2] == raw[1]
@@ -165,7 +182,7 @@ def test_lai_kaplan_array_delta_like(n):
 
     raw = np.arange(n_elements)
 
-    lkarr = LaiKaplanArray(min=min, stride=stride, data=raw)
+    lkarr = LaiKaplanArray(lai_kaplan_idx_min=min, lai_kaplan_stride=stride, data=raw)
 
     assert lkarr[1] == raw[0]
     assert lkarr[3 / 2] == raw[1]
@@ -180,37 +197,40 @@ def test_lai_kaplan_array_delta_like(n):
     np.testing.assert_equal(lkarr[1 : n + 1], raw[:])
 
 
-#
-#
-# # Test with uneven x-axis?
-# #    just raise NotImplementedError for now
-#
-#
-# # Test yearly interpolation
-# # Test latitudinal gradient interpolation
-# # The method we're using will mean we need a different bottom layer for each.
-# # That's fine, a general solution is super computationally expensive (as we have found out).
-# # Or just use Rymes-Myers for the spatial interpolation
-# def test_mean_preserving_interpolation():
-#     Q = pint.get_application_registry().Quantity
-#
-#     y_start = Q([0, 0, 0, 1, 4, 9], "kg")
-#     # Put the +0.5 in the layer above the bottom layer for yearly interpolation
-#     # Test with different x spacing
-#     x_start = Q(np.arange(y_start.size) + 0.5, "yr")
-#
-#     # Put the + 1 / 24 in the layer above the bottom layer for yearly interpolation
-#     x_out = Q(np.arange(0, y_start.size, 1 / 12) + 1 / 24, "yr")
-#
-#     y_out = mean_preserving_interpolation(
-#         x_in=x_start,
-#         y_in=y_start,
-#         x_out=x_out,
-#     )
-#     breakpoint()
-#
-#     assert False, "Add test of mean-preserving"
-#     assert False, "Add regression test of units and magnitude"
+# Test with uneven x-axis?
+#    just raise NotImplementedError for now
+
+
+# Test yearly interpolation
+# Test latitudinal gradient interpolation
+# The method we're using will mean we need a different bottom layer for each.
+# That's fine, a general solution is super computationally expensive (as we have found out).
+# Or just use Rymes-Myers for the spatial interpolation
+
+
+def test_mean_preserving_interpolation():
+    Q = pint.get_application_registry().Quantity
+
+    y_in = Q([0, 0, 0, 1, 4, 9], "kg")
+    # Test with different x spacing
+    x_bounds_in = Q(
+        np.arange(y_in.size + 1) + 2000,
+        "yr",
+    )
+
+    x_bounds_out = Q(np.arange(1, y_in.size + 1 + 1 / 12, 1 / 12), "yr")
+
+    y_out = mean_preserving_interpolation(
+        x_bounds_in=x_bounds_in,
+        y_in=y_in,
+        x_bounds_out=x_bounds_out,
+    )
+    breakpoint()
+
+    assert False, "Add test of mean-preserving"
+    assert False, "Add regression test of units and magnitude"
+
+
 #
 #
 # def test_mean_preserving_interpolation_unit_handling():
