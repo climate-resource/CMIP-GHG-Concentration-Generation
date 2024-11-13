@@ -209,6 +209,8 @@ def test_mean_preserving_interpolation():
     Q = pint.get_application_registry().Quantity
 
     y_in = Q([0, 0, 1, 3, 5, 7, 9.0], "kg")
+    y_in = Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg")
+    y_in = Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg")
     # Test with different x spacing
     x_bounds_in = Q(
         np.arange(y_in.size + 1) + 2000,

@@ -435,19 +435,21 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     np.testing.assert_allclose(control_points_y[interval_idx], filling_function(x_i))
     np.testing.assert_allclose(control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta))
 
-    # TODO: in notebook
-    plot = False
+    # TODO: move to notebook
+    plot = True
+    # plot = False
     if plot:
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots()
-        ax.step([*x.data[:-1], x.data[-1]], [*y[:], y[:][-1]], linewidth=2, where="post")
+        ax.step(x.data, [*y[:], y[:][-1]], linewidth=4, where="post", zorder=1)
         x_fine = np.linspace(x_i, x_i + delta, 100)
 
         ax.plot(x_fine, filling_function(x_fine), label=interval_idx)
         ax.scatter(control_points_x[:], control_points_y[:], zorder=3, label="CPs")
 
-    for i in range(x_bounds_out.size - 1):
+    y_out = np.zeros(x_bounds_out.size - 1)
+    for i in range(y_out.size):
         if x_bounds_out[i] >= control_points_x[interval_idx + 1 / 2]:
             interval_idx += 1 / 2
             in_middle_of_bound = interval_idx % 1.0 == 0.5  # noqa: PLR2004
@@ -475,12 +477,92 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
                 integral = scipy.integrate.quad(filling_function, x_fine[0], x_fine[-1])[0]
                 ax.plot(x_fine, filling_function(x_fine), label=f"{interval_idx}: {integral=:.2f}")
 
+        integration_res = scipy.integrate.quad(filling_function, x_bounds_out[i], x_bounds_out[i + 1])
+        y_out[i] = integration_res[0] / (x_bounds_out[i + 1] - x_bounds_out[i])
+
+    def group_average(inarr, n):
+        cumulative = np.cumsum(inarr)
+
+        res = np.hstack([cumulative[n - 1], cumulative[2 * n - 1 :: n] - cumulative[n - 1 : -n : n]]) / n
+
+        return res
+
+    # TODO: figure out how to infer spacing rather than hard-coding
+    res_increase = 12
+    # TODO: should vary by gas, this should be the pre-industrial value
+    # Might have to think about only making this apply over a certain time period too
+    min_val = 0.0
+
+    below_min = y_out < min_val
+    below_min_group = group_average(below_min, 12)
+
+    for below_min_interval in np.where(below_min_group > min_val)[0]:
+        lai_kaplan_interval = below_min_interval + 1
+        interval_vals_new = min_val * np.ones(res_increase)
+        interval_vals_new[0] = control_points_y[lai_kaplan_interval]
+        interval_vals_new[-1] = control_points_y[lai_kaplan_interval + 1]
+
+        max_it = int(1e3)
+        for _ in range(max_it):
+            if np.isclose(np.sum(interval_vals_new) / res_increase, y[lai_kaplan_interval]):
+                break
+
+            raise NotImplementedError
+
+        else:
+            msg = "Ran out of iterations"
+            raise AssertionError(msg)
+
+        y_out[below_min_interval * res_increase : (below_min_interval + 1) * res_increase] = interval_vals_new
+
+    needs_refinement = ~np.isclose(y.data, group_average(y_out, res_increase))
+
+    adjust_mat = np.zeros((res_increase, res_increase))
+    rows, cols = np.diag_indices_from(adjust_mat)
+    adjust_mat[rows[1:], cols[:-1]] = 1 / 3
+    adjust_mat[rows, cols] = 1 / 3
+    adjust_mat[rows[:-1], cols[1:]] = 1 / 3
+
+    for refine_interval in np.where(needs_refinement)[0]:
+        lai_kaplan_interval = refine_interval + 1
+        interval_vals_new = y_out[refine_interval * res_increase : (refine_interval + 1) * res_increase]
+
+        max_it = int(1e3)
+        for _ in range(max_it):
+            interval_vals_new = interval_vals_new @ adjust_mat
+            interval_vals_new[0] += control_points_y[lai_kaplan_interval] / 3
+            interval_vals_new[-1] += control_points_y[lai_kaplan_interval + 1] / 3
+
+            interval_mean = np.sum(interval_vals_new) / res_increase
+            if np.isclose(interval_mean, y[lai_kaplan_interval]):
+                break
+
+            diff = y[lai_kaplan_interval] - interval_mean
+            print(f"{y[lai_kaplan_interval]=}")
+            print(f"{interval_mean=}")
+            interval_vals_new += diff
+            # # Helpful for debugging
+            # print(f"{diff=}")
+            # print(f"{interval_vals_new=}")
+            # print(f"{interval_mean=}")
+
+        else:
+            assert False, "Add check for stability earlier, if stable, just apply the diff and break"
+            interval_mean = np.sum(interval_vals_new) / res_increase
+            if not np.isclose(interval_mean, y[lai_kaplan_interval]):
+                raise AssertionError
+
+            msg = f"Ran out of iterations for {refine_interval=}, check for kinks"
+            print(msg)
+
+        y_out[refine_interval * res_increase : (refine_interval + 1) * res_increase] = interval_vals_new
+
+    if not np.isclose(group_average(y_out, res_increase), y.data).all():
+        msg = "Should be close now"
+        raise AssertionError(msg)
+
     if plot:
+        ax.step(x_bounds_out, [*y_out, y_out[-1]], linewidth=2, where="post")
         ax.legend()
         ax.grid()
         plt.show()
-
-    breakpoint()
-
-    print("hi")
-    assert False
