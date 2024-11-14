@@ -219,8 +219,7 @@ RNG = np.random.default_rng(seed=4234)
     "y_in, x_0, x_in_spacing, res_increase",
     (
         (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, 12),
-        # (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, 12),
-        # (Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg"), 2000.0, 1.0, 12),
+        (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, 12),
         (Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 2000.0, 1.0, 12),
         (Q(np.arange(50.0) / 20.0 + RNG.random(50), "kg"), 2000.0, 1.0, 12),
         (Q(np.arange(2022) / 1000.0 + RNG.random(2022), "kg"), 2000.0, 1.0, 12),
@@ -237,10 +236,14 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
     x_bounds_out = Q(
         x_bounds_in.m[0]
         + np.arange(
-            0.0, x_bounds_in.size - 1 + 1 / (2 * res_increase), 1 / res_increase
+            0.0,
+            x_in_spacing * y_in.size + 1 / (2 * res_increase),
+            x_in_spacing / res_increase,
         ),
         "yr",
     )
+
+    assert x_bounds_out.size == (x_bounds_in.size - 1) * res_increase + 1
     print()
     print(f"{y_in=}")
     print(f"{x_bounds_in=}")

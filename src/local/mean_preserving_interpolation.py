@@ -461,15 +461,11 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         int_l = scipy.integrate.quad(ff_l, x.data[i], x.data[i] + delta)[0]
         int_u = scipy.integrate.quad(ff_u, x.data[i] + delta, x.data[i] + 2 * delta)[0]
 
-        if A[interval_idx] == 0.0:
-            pass
-
-        else:
-            atol = 1e-10
-            np.testing.assert_allclose(int_l + int_u, A[interval_idx], atol=atol)
-            np.testing.assert_allclose(
-                int_l + int_u, 2 * delta * y[interval_idx], atol=atol
-            )
+        atol = 1e-10
+        np.testing.assert_allclose(int_l + int_u, A[interval_idx], atol=atol)
+        np.testing.assert_allclose(
+            int_l + int_u, 2 * delta * y[interval_idx], atol=atol
+        )
 
     interval_idx = 1
     x_i = x[interval_idx]
@@ -563,7 +559,7 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
 
         return res
 
-    # TODO: figure out how to infer spacing rather than hard-coding
+    # assert False, "figure out how to infer resolution increase"
     res_increase = 12
     # TODO: should vary by gas, this should be the pre-industrial value
     # Might have to think about only making this apply over a certain time period too
@@ -573,6 +569,8 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     below_min_in_group = group_average(below_min, 12)
     below_min_vals = below_min_in_group > 0
     needs_refinement = ~np.isclose(y.data, group_average(y_out, res_increase))
+    if needs_refinement[0]:
+        breakpoint()
     # TODO: put in a check that nothing needs refinement and remove the refinement logic below
 
     intervals_to_polish = set(
