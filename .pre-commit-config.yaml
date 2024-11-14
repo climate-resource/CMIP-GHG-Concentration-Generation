@@ -18,6 +18,7 @@ repos:
         exclude: |
           (?x)(
             ^pixi.lock/|
+            ^tests/unit/test_mean_preserving_interpolation/test_mean_preserving_interpolation_y_in3_2000_0_1_0_12_.csv/|
             ^tests/regression/test_workflow/test_workflow_basic.npz/|
             ^tests/regression/test_workflow_nightly/test_workflow_nightly.npz
           )

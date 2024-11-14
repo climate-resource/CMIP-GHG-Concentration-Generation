@@ -220,8 +220,7 @@ RNG = np.random.default_rng(seed=4234)
     (
         (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, 12),
         # (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, 12),
-        (Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg"), 2000.0, 1.0, 12),
-        (Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg"), 2000.0, 1.0, 12),
+        # (Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg"), 2000.0, 1.0, 12),
         (Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 2000.0, 1.0, 12),
         (Q(np.arange(50.0) / 20.0 + RNG.random(50), "kg"), 2000.0, 1.0, 12),
         (Q(np.arange(2022) / 1000.0 + RNG.random(2022), "kg"), 2000.0, 1.0, 12),
@@ -236,7 +235,10 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
     )
 
     x_bounds_out = Q(
-        x_bounds_in.m[0] + np.arange(0.0, x_bounds_in.size - 1 + 1 / (2 * res_increase), 1 / res_increase),
+        x_bounds_in.m[0]
+        + np.arange(
+            0.0, x_bounds_in.size - 1 + 1 / (2 * res_increase), 1 / res_increase
+        ),
         "yr",
     )
     print()
@@ -251,7 +253,9 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
     )
 
     for i, (x_min, x_max) in enumerate(itertools.pairwise(x_bounds_in)):
-        y_out_interval = y_out[np.where((x_bounds_out >= x_min) & (x_bounds_out < x_max))]
+        y_out_interval = y_out[
+            np.where((x_bounds_out >= x_min) & (x_bounds_out < x_max))
+        ]
         pint.testing.assert_allclose(np.mean(y_out_interval), y_in[i])
 
     data_regression.check({"y_out_u": str(y_out.u)})

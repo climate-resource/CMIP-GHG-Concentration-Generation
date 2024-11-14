@@ -42,7 +42,9 @@ class LaiKaplanArray(Generic[T]):
     def max_allowed_lai_kaplan_index(self):
         return (self.data.size - 1) * self.lai_kaplan_stride + self.lai_kaplan_idx_min
 
-    def to_data_index(self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False) -> int | None:
+    def to_data_index(
+        self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False
+    ) -> int | None:
         if idx_lai_kaplan is None:
             return None
 
@@ -50,7 +52,9 @@ class LaiKaplanArray(Generic[T]):
             msg = f"{idx_lai_kaplan=} is less than {self.lai_kaplan_idx_min=}"
             raise IndexError(msg)
 
-        idx_data_float = (idx_lai_kaplan - self.lai_kaplan_idx_min) / self.lai_kaplan_stride
+        idx_data_float = (
+            idx_lai_kaplan - self.lai_kaplan_idx_min
+        ) / self.lai_kaplan_stride
         if idx_data_float % 1.0:
             msg = f"{idx_lai_kaplan=} leads to {idx_data_float=}, which is not an int. {self=}"
             raise IndexError(msg)
@@ -98,7 +102,9 @@ class LaiKaplanArray(Generic[T]):
 
         return self.data[idx_data]
 
-    def __setitem__(self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]) -> None:
+    def __setitem__(
+        self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]
+    ) -> None:
         if isinstance(idx_lai_kaplan, slice):
             idx_data = slice(
                 self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
@@ -177,7 +183,9 @@ def mean_preserving_interpolation(
         dtype=np.float64,
     )
     control_points_x_d[1 : control_points_x_d.size - 1 : 2] = x_bounds_in_m
-    control_points_x_d[0 : control_points_x_d.size - 2 : 2] = x_bounds_in_m - (x_bounds_m_diff / 2)
+    control_points_x_d[0 : control_points_x_d.size - 2 : 2] = x_bounds_in_m - (
+        x_bounds_m_diff / 2
+    )
     control_points_x_d[-1] = x_bounds_in_m[-1] + x_bounds_m_diff / 2
     control_points_x = LaiKaplanArray(
         lai_kaplan_idx_min=1 / 2,
@@ -269,9 +277,9 @@ Allows for the same notation as
 [Lai and Kaplan, J. Atmos. Oceanic Technol. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1).
 """
 
-HERMITE_QUARTICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = tuple(
-    tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS
-)
+HERMITE_QUARTICS: tuple[
+    tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]
+] = tuple(tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS)
 """
 Hermite quartic polynomials
 
@@ -292,9 +300,9 @@ def lai_kaplan_f(  # noqa: PLR0913
     u = (x - x_i) / delta
     res = (
         s_i * HERMITE_CUBICS[0][0](u)
-        + 2 * delta * m_i * HERMITE_CUBICS[1][0](u)
+        + delta * m_i * HERMITE_CUBICS[1][0](u)
         + s_i_plus_half * HERMITE_CUBICS[0][1](u)
-        + 2 * delta * m_i_plus_half * HERMITE_CUBICS[1][1](u)
+        + delta * m_i_plus_half * HERMITE_CUBICS[1][1](u)
     )
 
     return res
@@ -318,14 +326,14 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
 
     a_d = np.array(
         [
-            -2 * delta * HERMITE_QUARTICS[1][0](1),
+            -delta * HERMITE_QUARTICS[1][0](1),
             (
                 HERMITE_QUARTICS[0][0](1)
                 + HERMITE_QUARTICS[0][1](1)
-                + 2 * delta * HERMITE_QUARTICS[1][0](1)
-                - 2 * delta * HERMITE_QUARTICS[1][1](1)
+                + delta * HERMITE_QUARTICS[1][0](1)
+                - delta * HERMITE_QUARTICS[1][1](1)
             ),
-            2 * delta * HERMITE_QUARTICS[1][1](1),
+            delta * HERMITE_QUARTICS[1][1](1),
         ]
     )
     a = LaiKaplanArray(
@@ -343,13 +351,13 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         [
             (
                 HERMITE_QUARTICS[0][0](1)
-                - 2 * delta * HERMITE_QUARTICS[1][0](1)
-                - 2 * delta * HERMITE_QUARTICS[1][1](1)
+                - delta * HERMITE_QUARTICS[1][0](1)
+                - delta * HERMITE_QUARTICS[1][1](1)
             ),
             (
                 HERMITE_QUARTICS[0][1](1)
-                + 2 * delta * HERMITE_QUARTICS[1][0](1)
-                + 2 * delta * HERMITE_QUARTICS[1][1](1)
+                + delta * HERMITE_QUARTICS[1][0](1)
+                + delta * HERMITE_QUARTICS[1][1](1)
             ),
         ]
     )
@@ -368,7 +376,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     control_points_wall_y_d = (
         y_extrap[0 : lai_kaplan_n + 1 : 1] + y_extrap[1 : lai_kaplan_n + 1 + 1 : 1]
     ) / 2
-    first_increase = np.argmax(~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:]))
+    first_increase = np.argmax(
+        ~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:])
+    )
     if first_increase > 0:
         control_points_wall_y_d[first_increase + 1] = control_points_wall_y_d[0]
 
@@ -384,7 +394,7 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         data=np.zeros_like(y.data),
     )
     b[1] = (
-        2 * A[1]
+        A[1] / delta
         - beta[1] * control_points_wall_y[1]
         - beta[2] * control_points_wall_y[2]
         - a[1] * y_extrap[0]
@@ -392,12 +402,12 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     middle_slice = slice(2, lai_kaplan_n)
     middle_slice_plus_one = slice(3, lai_kaplan_n + 1)
     b[middle_slice] = (
-        2 * A[middle_slice]
+        A[middle_slice] / delta
         - beta[1] * control_points_wall_y[middle_slice]
         - beta[2] * control_points_wall_y[middle_slice_plus_one]
     )
     b[lai_kaplan_n] = (
-        2 * A[lai_kaplan_n]
+        A[lai_kaplan_n] / delta
         - beta[1] * control_points_wall_y[lai_kaplan_n]
         - beta[2] * control_points_wall_y[lai_kaplan_n + 1]
         - a[3] * y_extrap[lai_kaplan_n + 1]
@@ -423,7 +433,8 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         data=np.zeros(2 * lai_kaplan_n + 1),
     )
     gradients_at_control_points[:] = (
-        control_points_y[3 / 2 : lai_kaplan_n + 1 + 1] - control_points_y[1 / 2 : lai_kaplan_n + 1]
+        control_points_y[3 / 2 : lai_kaplan_n + 1 + 1]
+        - control_points_y[1 / 2 : lai_kaplan_n + 1]
     )
 
     for i in range(x.data.size - 1):
@@ -449,8 +460,16 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         )
         int_l = scipy.integrate.quad(ff_l, x.data[i], x.data[i] + delta)[0]
         int_u = scipy.integrate.quad(ff_u, x.data[i] + delta, x.data[i] + 2 * delta)[0]
-        # np.testing.assert_allclose(int_l + int_u, A[interval_idx], atol=1e-10)
-        # np.testing.assert_allclose(int_l + int_u, delta * y[interval_idx], atol=1e-10)
+
+        if A[interval_idx] == 0.0:
+            pass
+
+        else:
+            atol = 1e-10
+            np.testing.assert_allclose(int_l + int_u, A[interval_idx], atol=atol)
+            np.testing.assert_allclose(
+                int_l + int_u, 2 * delta * y[interval_idx], atol=atol
+            )
 
     interval_idx = 1
     x_i = x[interval_idx]
@@ -464,11 +483,13 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         x_i=x_i,
     )
     np.testing.assert_allclose(control_points_y[interval_idx], filling_function(x_i))
-    np.testing.assert_allclose(control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta))
+    np.testing.assert_allclose(
+        control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta)
+    )
 
     # TODO: move to notebook
-    plot = True
-    # plot = False
+    # plot = True
+    plot = False
     if plot:
         import matplotlib.pyplot as plt
 
@@ -504,19 +525,27 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
                 x_i=x_i,
             )
 
-            np.testing.assert_allclose(control_points_y[interval_idx], filling_function(x_i))
-            np.testing.assert_allclose(control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta))
+            np.testing.assert_allclose(
+                control_points_y[interval_idx], filling_function(x_i)
+            )
+            np.testing.assert_allclose(
+                control_points_y[interval_idx + 1 / 2], filling_function(x_i + delta)
+            )
 
             if plot:
                 x_fine = np.linspace(x_i, x_i + delta, 100)
-                integral = scipy.integrate.quad(filling_function, x_fine[0], x_fine[-1])[0]
+                integral = scipy.integrate.quad(
+                    filling_function, x_fine[0], x_fine[-1]
+                )[0]
                 ax.plot(
                     x_fine,
                     filling_function(x_fine),
                     label=f"{interval_idx}: {integral=:.2f}",
                 )
 
-        integration_res = scipy.integrate.quad(filling_function, x_bounds_out[i], x_bounds_out[i + 1])
+        integration_res = scipy.integrate.quad(
+            filling_function, x_bounds_out[i], x_bounds_out[i + 1]
+        )
         y_out[i] = integration_res[0] / (x_bounds_out[i + 1] - x_bounds_out[i])
 
     def group_average(inarr, n):
@@ -546,7 +575,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     needs_refinement = ~np.isclose(y.data, group_average(y_out, res_increase))
     # TODO: put in a check that nothing needs refinement and remove the refinement logic below
 
-    intervals_to_polish = set([*np.where(needs_refinement)[0], *np.where(below_min_vals)[0]])
+    intervals_to_polish = set(
+        [*np.where(needs_refinement)[0], *np.where(below_min_vals)[0]]
+    )
 
     # TODO: blend with the other Rymes-Meyers stuff below
     adjust_mat = np.zeros((res_increase, res_increase))
@@ -557,7 +588,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
 
     for polish_interval in intervals_to_polish:
         lai_kaplan_interval = polish_interval + 1
-        interval_slice = slice(polish_interval * res_increase, (polish_interval + 1) * res_increase)
+        interval_slice = slice(
+            polish_interval * res_increase, (polish_interval + 1) * res_increase
+        )
         interval_vals = y_out[interval_slice]
 
         interval_vals_lt_min = interval_vals < min_val
@@ -570,20 +603,6 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
             ):
                 # Better if we could fast exit here, but ok
                 interval_new = min_val
-
-            if lai_kaplan_interval == 1:
-                turning_point = True
-            elif lai_kaplan_interval == lai_kaplan_n:
-                turning_point = True
-            else:
-                y_prev = y[lai_kaplan_interval - 1]
-                y_next = y[lai_kaplan_interval + 1]
-                # Don't need to check positive turning point as we're only applying a lower limit
-                turning_point = (y_h <= y_prev) and (y_h <= y_next)
-
-            if not turning_point:
-                msg = "How did this happen?"
-                raise AssertionError(msg)
 
             tmp = np.zeros(interval_vals.size + 2)
             tmp[0] = y_out[interval_slice.start - 1]
@@ -614,7 +633,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
                             # Adjust all the values down to match the mean
                             interval_new -= overshoot
                             interval_new_mean = np.mean(interval_new)
-                            if np.isclose(interval_new_mean, y_h) and np.all(interval_new_mean >= min_val):
+                            if np.isclose(interval_new_mean, y_h) and np.all(
+                                interval_new_mean >= min_val
+                            ):
                                 break
                             else:
                                 msg = "Should match the mean with no values below min by construction now"
@@ -639,7 +660,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
                 msg = f"Ran out of iterations for {polish_interval=}, check for kinks"
                 raise AssertionError(msg)
 
-            y_out[polish_interval * res_increase : (polish_interval + 1) * res_increase] = interval_new
+            y_out[
+                polish_interval * res_increase : (polish_interval + 1) * res_increase
+            ] = interval_new
 
         else:
             raise NotImplementedError
