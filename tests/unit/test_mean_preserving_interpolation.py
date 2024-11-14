@@ -216,6 +216,7 @@ RNG = np.random.default_rng(seed=4234)
 
 @pytest.mark.parametrize(
     # TODO: add min_val in here too
+    # TODO: add different resolutions in here too
     "y_in, x_0, x_in_spacing, res_increase",
     (
         pytest.param(Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, 12, id="basic"),
