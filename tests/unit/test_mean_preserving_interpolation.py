@@ -218,11 +218,25 @@ RNG = np.random.default_rng(seed=4234)
     # TODO: add min_val in here too
     "y_in, x_0, x_in_spacing, res_increase",
     (
-        (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, 12),
-        (Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, 12),
-        (Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 2000.0, 1.0, 12),
-        (Q(np.arange(50.0) / 20.0 + RNG.random(50), "kg"), 2000.0, 1.0, 12),
-        (Q(np.arange(2022) / 1000.0 + RNG.random(2022), "kg"), 2000.0, 1.0, 12),
+        pytest.param(Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, 12, id="basic"),
+        pytest.param(
+            Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, 12, id="double_spacing"
+        ),
+        pytest.param(Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 1.0, 1.0, 12, id="x_0_one"),
+        pytest.param(
+            Q(np.arange(50.0) / 20.0 + RNG.random(50), "kg"),
+            0.0,
+            1.0,
+            12,
+            id="x_0_zero",
+        ),
+        pytest.param(
+            Q(np.arange(2022) / 1000.0 + RNG.random(2022), "kg"),
+            2000.0,
+            1.0,
+            12,
+            id="large",
+        ),
     ),
 )
 def test_mean_preserving_interpolation(  # noqa: PLR0913
