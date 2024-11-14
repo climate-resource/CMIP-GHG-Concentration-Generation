@@ -8,7 +8,10 @@ import numpy as np
 import pint
 import pytest
 
-from local.mean_preserving_interpolation import LaiKaplanArray, mean_preserving_interpolation
+from local.mean_preserving_interpolation import (
+    LaiKaplanArray,
+    mean_preserving_interpolation,
+)
 
 lai_kaplan_array_n_elements = pytest.mark.parametrize("n", [3, 4, 5, 10, 15])
 
@@ -211,16 +214,23 @@ def test_mean_preserving_interpolation():
     y_in = Q([0, 0, 1, 3, 5, 7, 9.0], "kg")
     y_in = Q([0, 0, 1, 7, 19, 37, 5**3 - 4**3], "kg")
     y_in = Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg")
+    rng = np.random.default_rng(seed=4234)
+    y_in = Q(np.arange(50.0) / 20.0 + rng.random(50), "kg")
+    # y_in = Q(np.arange(2022) / 1000.0 + np.random.random(2022), "kg")
     # Test with different x spacing
     x_bounds_in = Q(
-        np.arange(y_in.size + 1) + 2000,
+        np.arange(y_in.size + 1) + 1.0,
+        "yr",
+    )
+
+    x_bounds_out = Q(
+        np.arange(0.0, x_bounds_in.size + 1 / 12 / 2 - 1, 1 / 12) + x_bounds_in.m[0],
         "yr",
     )
     print()
     print(f"{y_in=}")
     print(f"{x_bounds_in=}")
-
-    x_bounds_out = Q(np.arange(0, y_in.size + 1 / 12, 1 / 12) + x_bounds_in.m[0], "yr")
+    print(f"{x_bounds_out=}")
 
     y_out = mean_preserving_interpolation(
         x_bounds_in=x_bounds_in,
