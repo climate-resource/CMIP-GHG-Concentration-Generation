@@ -298,9 +298,9 @@ def lai_kaplan_f(  # noqa: PLR0913
     u = (x - x_i) / delta
     res = (
         s_i * HERMITE_CUBICS[0][0](u)
-        + delta * m_i * HERMITE_CUBICS[1][0](u)
+        + 2 * delta * m_i * HERMITE_CUBICS[1][0](u)
         + s_i_plus_half * HERMITE_CUBICS[0][1](u)
-        + delta * m_i_plus_half * HERMITE_CUBICS[1][1](u)
+        + 2 * delta * m_i_plus_half * HERMITE_CUBICS[1][1](u)
     )
 
     return res
@@ -370,7 +370,7 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     A_mat[rows[:-1], cols[1:]] = a[3]
 
     # b-vector
-    # Give the user the change to change this
+    # Give the user the ability to change this
     control_points_wall_y_d = (
         y_extrap[0 : lai_kaplan_n + 1 : 1] + y_extrap[1 : lai_kaplan_n + 1 + 1 : 1]
     ) / 2
@@ -435,7 +435,30 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
         - control_points_y[1 / 2 : lai_kaplan_n + 1]
     )
 
-    # assert False, "Add check that array is sorted"
+    for i in range(x.data.size - 1):
+        interval_idx = i + 1
+
+        ff_l = partial(
+            lai_kaplan_f,
+            s_i=control_points_y[interval_idx],
+            s_i_plus_half=control_points_y[interval_idx + 1 / 2],
+            m_i=gradients_at_control_points[interval_idx],
+            m_i_plus_half=gradients_at_control_points[interval_idx + 1 / 2],
+            delta=delta,
+            x_i=x.data[i],
+        )
+        ff_u = partial(
+            lai_kaplan_f,
+            s_i=control_points_y[interval_idx + 1 / 2],
+            s_i_plus_half=control_points_y[interval_idx + 1],
+            m_i=gradients_at_control_points[interval_idx + 1 / 2],
+            m_i_plus_half=gradients_at_control_points[interval_idx + 1],
+            delta=delta,
+            x_i=x.data[i] + delta,
+        )
+        int_l = scipy.integrate.quad(ff_l, x.data[i], x.data[i] + delta)[0]
+        int_u = scipy.integrate.quad(ff_u, x.data[i] + delta, x.data[i] + 2 * delta)[0]
+        np.testing.assert_allclose(int_l + int_u, y[interval_idx])
 
     interval_idx = 1
     x_i = x[interval_idx]
@@ -465,6 +488,10 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
 
         ax.plot(x_fine, filling_function(x_fine), label=interval_idx)
         ax.scatter(control_points_x[:], control_points_y[:], zorder=3, label="CPs")
+
+    if not np.all(x_bounds_out[:-1] <= x_bounds_out[1:]):
+        msg = f"x_bounds_out must be sorted for this to work {x_bounds_out=}"
+        raise AssertionError(msg)
 
     y_out = np.zeros(x_bounds_out.size - 1)
     for i in range(y_out.size):
@@ -534,11 +561,11 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     below_min = y_out < min_val
     below_min_in_group = group_average(below_min, 12)
     below_min_vals = below_min_in_group > 0
-    if not below_min_vals.any():
-        assert False
     needs_refinement = ~np.isclose(y.data, group_average(y_out, res_increase))
 
-    intervals_to_polish = [*np.where(needs_refinement), *np.where(below_min_vals)]
+    intervals_to_polish = set(
+        [*np.where(needs_refinement)[0], *np.where(below_min_vals)[0]]
+    )
 
     # TODO: blend with the other Rymes-Meyers stuff below
     adjust_mat = np.zeros((res_increase, res_increase))
@@ -548,7 +575,67 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     adjust_mat[rows[:-1], cols[1:]] = 1 / 3
 
     for polish_interval in intervals_to_polish:
-        breakpoint()
+        lai_kaplan_interval = polish_interval + 1
+        interval_vals = y_out[
+            polish_interval * res_increase : (polish_interval + 1) * res_increase
+        ]
+        interval_mean = np.mean(interval_vals)
+
+        max_it = int(1e3)
+        for i in range(max_it):
+            interval_vals_new = adjust_mat @ interval_vals
+            interval_vals_new[0] += control_points_y[lai_kaplan_interval] / 3
+            interval_vals_new[-1] += control_points_y[lai_kaplan_interval + 1] / 3
+
+            interval_mean_new = np.sum(interval_vals_new) / res_increase
+            if np.isclose(interval_mean_new, y[lai_kaplan_interval]):
+                break
+
+            # Correction factors
+            diff = y[lai_kaplan_interval] - interval_mean_new
+            interval_vals_new = interval_vals_new + diff
+
+            # TODO: think about the stability
+            # if np.isclose(interval_vals_new, interval_vals).all():
+            #     # Going nowhere, where we end up is same as where we started
+            #     print(f"{interval_vals_new=}")
+            #     print(f"{interval_vals=}")
+            #     print(f"{np.mean(interval_vals_new)=}")
+            #     print(f"Assuming we have hit stability {polish_interval=} {i=}")
+            #     break
+
+            interval_vals_new_lt_min = interval_vals_new < min_val
+            if interval_vals_new_lt_min.any():
+                interval_vals_new[np.where(interval_vals_new_lt_min)] = min_val
+
+                interval_mean_new = np.sum(interval_vals_new) / res_increase
+                if np.isclose(interval_mean_new, y[lai_kaplan_interval]):
+                    break
+
+                correction = np.sum(
+                    interval_vals_new - y[lai_kaplan_interval]
+                ) / np.sum(interval_vals_new - min_val)
+                corr_term = correction * (interval_mean_new - y[lai_kaplan_interval])
+                interval_vals_new = interval_vals_new - corr_term
+                interval_vals_new[np.where(interval_vals_new < min_val)] = min_val
+                if np.isclose(interval_mean_new, y[lai_kaplan_interval]):
+                    break
+
+            interval_vals = interval_vals_new
+
+        else:
+            # If we get to this point, we have taken the answer
+            # that is forced to have the correct mean.
+            # We double check that below.
+            # This is ok, but it does mean we can end up with kinks.
+            interval_mean = np.sum(interval_vals) / res_increase
+            if not np.isclose(interval_mean, y[lai_kaplan_interval]):
+                msg = "still not close after polishing interations"
+                raise AssertionError(msg)
+
+            msg = f"Ran out of iterations for {polish_interval=}, check for kinks"
+            print(msg)
+
     # for below_min_interval in np.where(below_min_in_group > 0)[0]:
     #     lai_kaplan_interval = below_min_interval + 1
     #     interval_vals = y_out[below_min_interval * res_increase : (below_min_interval + 1) * res_increase]
@@ -642,9 +729,9 @@ def mean_preserving_interpolation_lai_kaplan(  # noqa: PLR0913
     #
     #     y_out[refine_interval * res_increase : (refine_interval + 1) * res_increase] = interval_vals
     #
-    # if not np.isclose(group_average(y_out, res_increase), y.data).all():
-    #     msg = "Should be close now"
-    #     raise AssertionError(msg)
+    if not np.isclose(group_average(y_out, res_increase), y.data).all():
+        msg = "Should be close now"
+        raise AssertionError(msg)
 
     if plot:
         ax.step(x_bounds_out, [*y_out, y_out[-1]], linewidth=2, where="post")
