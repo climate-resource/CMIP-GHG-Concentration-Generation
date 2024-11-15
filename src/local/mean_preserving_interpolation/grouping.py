@@ -169,7 +169,9 @@ def get_group_integrals(
 
     res = cast(
         pint.UnitRegistry.Quantity,
-        np.hstack([cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)]),
+        np.hstack(
+            [cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)]
+        ),
     )
 
     return res

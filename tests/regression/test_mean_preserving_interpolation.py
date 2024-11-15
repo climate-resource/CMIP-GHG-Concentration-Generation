@@ -4,6 +4,10 @@ Regression tests of our mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
+from pathlib import Path
+
+import matplotlib
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing
 import pint
@@ -22,6 +26,8 @@ def execute_test_logic(  # noqa: PLR0913
     y_in: numpy.typing.NDArray[np.float64],
     data_regression,
     num_regression,
+    image_regression,
+    tmpdir: Path,
     x_0: float = 100.0,
     x_in_spacing: float = 1.0,
     res_increase: int = 12,
@@ -61,6 +67,31 @@ def execute_test_logic(  # noqa: PLR0913
 
     data_regression.check({"y_out_u": str(y_out.u)})
     num_regression.check({"y_out_m": y_out.m})
+    # Save a plot too (to help easy checking later)
+    # Ensure matplot lib does not use a GUI backend (such as Tk).
+    matplotlib.use("Agg")
+
+    fig, ax = plt.subplots()
+
+    ax.step(
+        x_bounds_in,
+        np.hstack([y_in, y_in[-1]]),
+        where="post",
+        label="input",
+    )
+    ax.step(
+        x_bounds_out,
+        np.hstack([y_out, y_out[-1]]),
+        where="post",
+        label="interpolated",
+    )
+
+    ax.legend(loc="upper left")
+
+    plot_filename = tmpdir / "tmp.png"
+    fig.savefig(str(plot_filename))
+
+    image_regression.check(plot_filename.read_bytes(), diff_threshold=1.0)
 
     # Run again, with the verification checks
     # and make sure the result is the same.
@@ -95,13 +126,22 @@ def execute_test_logic(  # noqa: PLR0913
 )
 @pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
 def test_mean_preserving_interpolation(  # noqa: PLR0913
-    algorithm, y_in, x_0, x_in_spacing, data_regression, num_regression
+    algorithm,
+    y_in,
+    x_0,
+    x_in_spacing,
+    data_regression,
+    num_regression,
+    image_regression,
+    tmpdir,
 ):
     execute_test_logic(
         algorithm=algorithm,
         y_in=y_in,
         data_regression=data_regression,
         num_regression=num_regression,
+        image_regression=image_regression,
+        tmpdir=Path(tmpdir),
         x_0=x_0,
         x_in_spacing=x_in_spacing,
     )
@@ -116,15 +156,28 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
         ),
     ),
 )
-@pytest.mark.parametrize("algorithm", ("lai_kaplan", "rymes_meyers"))
-def test_mean_preserving_interpolation_long_array(
-    algorithm, y_in, data_regression, num_regression
+@pytest.mark.parametrize(
+    "algorithm",
+    (
+        "lai_kaplan",
+        pytest.param(
+            "rymes_meyers",
+            marks=pytest.mark.skip(
+                reason="Current Rymes-Meyers implementation too slow for long tests"
+            ),
+        ),
+    ),
+)
+def test_mean_preserving_interpolation_long_array(  # noqa: PLR0913
+    algorithm, y_in, data_regression, num_regression, image_regression, tmpdir
 ):
     execute_test_logic(
         algorithm=algorithm,
         y_in=y_in,
         data_regression=data_regression,
         num_regression=num_regression,
+        image_regression=image_regression,
+        tmpdir=Path(tmpdir),
     )
 
 

@@ -71,7 +71,10 @@ class LazyLinearInterpolator:
             )
             raise NotImplementedError(msg)
 
-        raw_interp = cast(pint.UnitRegistry.Quantity, np.interp(x_mid_points_out, x_mid_points_in, y_in))
+        raw_interp = cast(
+            pint.UnitRegistry.Quantity,
+            np.interp(x_mid_points_out, x_mid_points_in, y_in),
+        )
 
         raw_means = get_group_averages(
             integrand_x_bounds=x_bounds_out,
@@ -83,7 +86,10 @@ class LazyLinearInterpolator:
         # Can use simple repeat
         # because we checked that there are the same number of elements in each group.
         # (If you remove that check, you need to change this too.)
-        adjustments = np.repeat(diff_from_input.m, n_out_elements_per_in_group) * diff_from_input.u
+        adjustments = (
+            np.repeat(diff_from_input.m, n_out_elements_per_in_group)
+            * diff_from_input.u
+        )
 
         res = cast(pint.UnitRegistry.Quantity, raw_interp + adjustments)
 
