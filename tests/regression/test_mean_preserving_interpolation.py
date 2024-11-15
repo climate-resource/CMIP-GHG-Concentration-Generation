@@ -148,6 +148,36 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
 
 
 @pytest.mark.parametrize(
+    "res_increase, x_in_spacing",
+    (
+        (2, 2),
+        (10, 1),
+        (10, 5),
+    ),
+)
+@pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
+def test_mean_preserving_interpolation_res_increase(  # noqa: PLR0913
+    algorithm,
+    res_increase,
+    x_in_spacing,
+    data_regression,
+    num_regression,
+    image_regression,
+    tmpdir,
+):
+    execute_test_logic(
+        algorithm=algorithm,
+        y_in=Q(np.sin(2 * np.pi * np.arange(20) / 8.0), "m"),
+        data_regression=data_regression,
+        num_regression=num_regression,
+        image_regression=image_regression,
+        tmpdir=Path(tmpdir),
+        x_in_spacing=x_in_spacing,
+        res_increase=res_increase,
+    )
+
+
+@pytest.mark.parametrize(
     "y_in",
     (
         pytest.param(
@@ -183,5 +213,3 @@ def test_mean_preserving_interpolation_long_array(  # noqa: PLR0913
 
 # To write:
 # - tests that include setting a minimum value for outputs
-# - tests that include interpolating
-#   with different numbers of points per interval (not just 12)
