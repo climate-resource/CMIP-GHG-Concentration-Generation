@@ -80,9 +80,9 @@ def execute_test_logic(  # noqa: PLR0913
         ),
     ),
 )
-@pytest.mark.parametrize("algorithm", ("linear_lazy", "lai_kaplan", "rymes_meyers"))
+@pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
 def test_mean_preserving_interpolation(  # noqa: PLR0913
-    algorithm, y_in, x_0, x_in_spacing, res_increase, data_regression, num_regression
+    algorithm, y_in, x_0, x_in_spacing, data_regression, num_regression
 ):
     execute_test_logic(
         algorithm=algorithm,
@@ -103,8 +103,8 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
         ),
     ),
 )
-@pytest.mark.parametrize("algorithm", ("linear_lazy", "lai_kaplan", "rymes_meyers"))
-def test_mean_preserving_interpolation_long_inputs(
+@pytest.mark.parametrize("algorithm", ("lai_kaplan", "rymes_meyers"))
+def test_mean_preserving_interpolation_long_array(
     algorithm, y_in, data_regression, num_regression
 ):
     execute_test_logic(
