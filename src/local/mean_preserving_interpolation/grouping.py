@@ -4,6 +4,8 @@ Grouping and associated tools
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import numpy.typing as npt
 import pint
@@ -22,7 +24,7 @@ class NonIntersectingBoundsError(IndexError):
         self,
         x_bounds: pint.UnitRegistry.Quantity,
         group_bounds: pint.UnitRegistry.Quantity,
-        not_in_integrand_x_bounds: npt.NDArray[bool],
+        not_in_integrand_x_bounds: npt.NDArray[np.bool_],
     ) -> None:
         """
         Initialise the error
@@ -57,7 +59,7 @@ class NonIntersectingBoundsError(IndexError):
 def get_group_boundary_indexes(
     x_bounds: pint.UnitRegistry.Quantity,
     group_bounds: pint.UnitRegistry.Quantity,
-) -> npt.NDArray[int]:
+) -> tuple[npt.NDArray[np.int_], ...]:
     """
     Get the indexes of the elements in `x_bounds` which line up with a given bounds definition
 
@@ -93,7 +95,7 @@ def get_group_boundary_indexes(
 def get_number_elements_per_group(
     x_bounds: pint.UnitRegistry.Quantity,
     group_bounds: pint.UnitRegistry.Quantity,
-) -> npt.NDArray[int]:
+) -> npt.NDArray[np.int_]:
     """
     Get the number of elements in an array for a given specification of the group bounds
 
@@ -111,7 +113,9 @@ def get_number_elements_per_group(
         The number of elements in `x_bounds` which fall into each group
         defined by `group_bounds`.
     """
-    pass
+    group_boundaries = get_group_boundary_indexes(x_bounds, group_bounds)
+
+    return np.diff(group_boundaries[0])
 
 
 def get_group_integrals(
@@ -163,7 +167,10 @@ def get_group_integrals(
     cumulative_integrals = np.cumsum(integrals)
     cumulative_integrals_groups = cumulative_integrals[cumulative_integrals_group_idxs]
 
-    res = np.hstack([cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)])
+    res = cast(
+        pint.UnitRegistry.Quantity,
+        np.hstack([cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)]),
+    )
 
     return res
 
@@ -202,6 +209,6 @@ def get_group_averages(
     )
     group_steps = group_bounds[1:] - group_bounds[:-1]
 
-    averages = group_integrals / group_steps
+    averages = cast(pint.UnitRegistry.Quantity, group_integrals / group_steps)
 
     return averages

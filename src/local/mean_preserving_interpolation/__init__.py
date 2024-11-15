@@ -10,7 +10,9 @@ from __future__ import annotations
 from typing import Protocol
 
 import pint
+import pint.testing
 
+from local.mean_preserving_interpolation.grouping import get_group_averages
 from local.mean_preserving_interpolation.lazy_linear import LazyLinearInterpolator
 
 
@@ -46,12 +48,14 @@ class MeanPreservingInterpolationAlgorithmLike(Protocol):
         """
 
 
-def mean_preserving_interpolation(
+def mean_preserving_interpolation(  # noqa: PLR0913
     x_bounds_in: pint.UnitRegistry.Quantity,
     y_in: pint.UnitRegistry.Quantity,
     x_bounds_out: pint.UnitRegistry.Quantity,
     algorithm: str | MeanPreservingInterpolationAlgorithmLike = "lai_kaplan",
     verify_output_is_mean_preserving: bool = True,
+    rtol: float = 1e-10,
+    atol: float = 1e-10,
 ) -> pint.UnitRegistry.Quantity:
     """
     Perform mean-preserving interpolation
@@ -91,6 +95,14 @@ def mean_preserving_interpolation(
         If you are confident in your algorithm's behaviour,
         this can be disabled to increase performance.
 
+    rtol
+        If `verify_output_is_mean_preserving` is `True`,
+        the relative tolerance to apply during the verification.
+
+    atol
+        If `verify_output_is_mean_preserving` is `True`,
+        the absolute tolerance to apply during the verification.
+
     Returns
     -------
     :
@@ -125,7 +137,7 @@ def mean_preserving_interpolation(
             raise NotImplementedError(msg)
 
     else:
-        msg = f"Not supported: {algorithm=}"
+        msg = f"Not supported: {algorithm=}"  # type: ignore[unreachable] # free to include and just in case
         raise NotImplementedError(msg)
 
     res = algorithm_func(
@@ -135,6 +147,11 @@ def mean_preserving_interpolation(
     )
 
     if verify_output_is_mean_preserving:
-        raise NotImplementedError
+        res_group_averages = get_group_averages(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=res,
+            group_bounds=x_bounds_in,
+        )
+        pint.testing.assert_allclose(y_in, res_group_averages, atol=atol, rtol=rtol)
 
     return res

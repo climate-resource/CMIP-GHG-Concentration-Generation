@@ -4,11 +4,16 @@ Lazy linear mean-preserving interpolator
 
 from __future__ import annotations
 
+from typing import cast
+
 import numpy as np
 import pint
 from attrs import define
 
-from local.mean_preserving_interpolation.grouping import get_group_averages
+from local.mean_preserving_interpolation.grouping import (
+    get_group_averages,
+    get_number_elements_per_group,
+)
 
 
 @define
@@ -58,17 +63,28 @@ class LazyLinearInterpolator:
             x_bounds=x_bounds_out, group_bounds=x_bounds_in
         )
 
-        raw_interp = np.interp(x_mid_points_out, x_mid_points_in, y_in)
+        if not (n_out_elements_per_in_group == n_out_elements_per_in_group[0]).all():
+            msg = (
+                "This function currently only supports interpolation "
+                "where each interval in in the input is interpolated to the same "
+                "number of elements in the output"
+            )
+            raise NotImplementedError(msg)
+
+        raw_interp = cast(pint.UnitRegistry.Quantity, np.interp(x_mid_points_out, x_mid_points_in, y_in))
 
         raw_means = get_group_averages(
             integrand_x_bounds=x_bounds_out,
             integrand_y=raw_interp,
             group_bounds=x_bounds_in,
         )
-        breakpoint()
-        diff_from_input = y_in - raw_means
-        adjustments = np.repeat(diff_from_input, n_out_elements_per_in_group)
 
-        res = raw_means + adjustments
+        diff_from_input = y_in - raw_means
+        # Can use simple repeat
+        # because we checked that there are the same number of elements in each group.
+        # (If you remove that check, you need to change this too.)
+        adjustments = np.repeat(diff_from_input.m, n_out_elements_per_in_group) * diff_from_input.u
+
+        res = cast(pint.UnitRegistry.Quantity, raw_interp + adjustments)
 
         return res

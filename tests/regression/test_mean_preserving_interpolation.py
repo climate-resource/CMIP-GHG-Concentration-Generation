@@ -4,14 +4,14 @@ Regression tests of our mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
-import itertools
-
 import numpy as np
 import numpy.typing
 import pint
+import pint.testing
 import pytest
 
 from local.mean_preserving_interpolation import mean_preserving_interpolation
+from local.mean_preserving_interpolation.grouping import get_group_averages
 
 Q = pint.get_application_registry().Quantity
 RNG = np.random.default_rng(seed=4234)
@@ -52,12 +52,12 @@ def execute_test_logic(  # noqa: PLR0913
     )
 
     # Check that the output means are correct
-    for i, (x_min, x_max) in enumerate(itertools.pairwise(x_bounds_in)):
-        y_out_interval = y_out[
-            np.where((x_bounds_out >= x_min) & (x_bounds_out < x_max))
-        ]
-        assert False, "Use product of y and x intervals here rather than np.mean"
-        pint.testing.assert_allclose(np.mean(y_out_interval), y_in[i])
+    y_out_group_averages = get_group_averages(
+        integrand_x_bounds=x_bounds_out,
+        integrand_y=y_out,
+        group_bounds=x_bounds_in,
+    )
+    pint.testing.assert_allclose(y_in, y_out_group_averages, atol=1e-10)
 
     data_regression.check({"y_out_u": str(y_out.u)})
     num_regression.check({"y_out_m": y_out.m})
