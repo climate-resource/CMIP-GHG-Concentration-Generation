@@ -48,6 +48,7 @@ def execute_test_logic(  # noqa: PLR0913
         y_in=y_in,
         x_bounds_out=x_bounds_out,
         algorithm=algorithm,
+        verify_output_is_mean_preserving=False,
     )
 
     # Check that the output means are correct
@@ -60,6 +61,18 @@ def execute_test_logic(  # noqa: PLR0913
 
     data_regression.check({"y_out_u": str(y_out.u)})
     num_regression.check({"y_out_m": y_out.m})
+
+    # Run again, with the verification checks
+    # and make sure the result is the same.
+    y_out_verify = mean_preserving_interpolation(
+        x_bounds_in=x_bounds_in,
+        y_in=y_in,
+        x_bounds_out=x_bounds_out,
+        algorithm=algorithm,
+        verify_output_is_mean_preserving=True,
+    )
+
+    pint.testing.assert_equal(y_out, y_out_verify)
 
 
 @pytest.mark.parametrize(

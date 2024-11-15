@@ -7,22 +7,43 @@ Hence, this module is surprisingly large.
 
 from __future__ import annotations
 
-from collections.abc import Callable
-from typing import TypeAlias
+from typing import Protocol
 
 import pint
 
-MeanPreservingInterpolationAlgorithmLike: TypeAlias = Callable[
-    [
-        pint.UnitRegistry.Quantity,
-        pint.UnitRegistry.Quantity,
-        pint.UnitRegistry.Quantity,
-    ],
-    pint.UnitRegistry.Quantity,
-]
-"""
-Callable that supports being used as a mean-preserving interpolation algorithm
-"""
+from local.mean_preserving_interpolation.lazy_linear import LazyLinearInterpolator
+
+
+class MeanPreservingInterpolationAlgorithmLike(Protocol):
+    """
+    Class that supports being used as a mean-preserving interpolation algorithm
+    """
+
+    def __call__(
+        self,
+        x_bounds_in: pint.UnitRegistry.Quantity,
+        y_in: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Perform mean-preserving interpolation
+
+        Parameters
+        ----------
+        x_bounds_in
+            Bounds of the x-range to which each value in `y_in` applies.
+
+        y_in
+            y-values for each interval in `x_bounds_in`.
+
+        x_bounds_out
+            Bounds of the x-values onto which to interpolate `y_in`.
+
+        Returns
+        -------
+        :
+            Interpolated, mean-preserving values
+        """
 
 
 def mean_preserving_interpolation(
@@ -30,6 +51,7 @@ def mean_preserving_interpolation(
     y_in: pint.UnitRegistry.Quantity,
     x_bounds_out: pint.UnitRegistry.Quantity,
     algorithm: str | MeanPreservingInterpolationAlgorithmLike = "lai_kaplan",
+    verify_output_is_mean_preserving: bool = True,
 ) -> pint.UnitRegistry.Quantity:
     """
     Perform mean-preserving interpolation
@@ -62,6 +84,12 @@ def mean_preserving_interpolation(
         A callable may also be passed in.
         For example, your own interpolator, created how you would like it
         (rather than using the default initialisation defined in this function).
+
+    verify_output_is_mean_preserving
+        Verify that the output is in fact mean-preserving.
+
+        If you are confident in your algorithm's behaviour,
+        this can be disabled to increase performance.
 
     Returns
     -------
@@ -100,8 +128,13 @@ def mean_preserving_interpolation(
         msg = f"Not supported: {algorithm=}"
         raise NotImplementedError(msg)
 
-    return algorithm_func(
-        x_bounds_in,
-        y_in,
-        x_bounds_out,
+    res = algorithm_func(
+        x_bounds_in=x_bounds_in,
+        y_in=y_in,
+        x_bounds_out=x_bounds_out,
     )
+
+    if verify_output_is_mean_preserving:
+        raise NotImplementedError
+
+    return res
