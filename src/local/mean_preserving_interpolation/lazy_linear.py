@@ -4,6 +4,7 @@ Lazy linear mean-preserving interpolator
 
 from __future__ import annotations
 
+import numpy as np
 import pint
 from attrs import define
 
@@ -30,4 +31,43 @@ class LazyLinearInterpolator:
         y_in: pint.UnitRegistry.Quantity,
         x_bounds_out: pint.UnitRegistry.Quantity,
     ) -> pint.UnitRegistry.Quantity:
-        pass
+        """
+        Perform mean-preserving interpolation
+
+        Parameters
+        ----------
+        x_bounds_in
+            Bounds of the x-range to which each value in `y_in` applies.
+
+        y_in
+            y-values for each interval in `x_bounds_in`.
+
+        x_bounds_out
+            Bounds of the x-values onto which to interpolate `y_in`.
+
+        Returns
+        -------
+        :
+            Interpolated, mean-preserving values
+        """
+        x_mid_points_in = (x_bounds_in[1:] + x_bounds_in[:-1]) / 2.0
+        x_mid_points_out = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
+
+        raw_interp = np.interp(x_mid_points_out, x_mid_points_in, y_in)
+
+        raw_means = integrate_groups(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=raw_interp,
+            group_bounds=x_bounds_in,
+        )
+        # breakpoint()
+        x_out_size = x_bounds_out[1:] - x_bounds_out[:-1]
+        x_in_size = x_bounds_in[1:] = x_bounds_in[:-1]
+
+        res_increase = (x_bounds_out.size - 1) / (x_bounds_in.size - 1)
+        res_increase = int(res_increase)
+
+        x_out_integrals = x_out_size * raw_interp
+        tmp = np.cumsum(x_out_integrals)[::res_increase]
+
+        np.repeat(x_in_size.m, res_increase) * x_in_size.u
