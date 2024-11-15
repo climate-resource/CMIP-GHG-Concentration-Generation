@@ -8,6 +8,8 @@ import numpy as np
 import pint
 from attrs import define
 
+from local.mean_preserving_interpolation.grouping import get_group_averages
+
 
 @define
 class LazyLinearInterpolator:
@@ -52,22 +54,21 @@ class LazyLinearInterpolator:
         """
         x_mid_points_in = (x_bounds_in[1:] + x_bounds_in[:-1]) / 2.0
         x_mid_points_out = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
+        n_out_elements_per_in_group = get_number_elements_per_group(
+            x_bounds=x_bounds_out, group_bounds=x_bounds_in
+        )
 
         raw_interp = np.interp(x_mid_points_out, x_mid_points_in, y_in)
 
-        raw_means = integrate_groups(
+        raw_means = get_group_averages(
             integrand_x_bounds=x_bounds_out,
             integrand_y=raw_interp,
             group_bounds=x_bounds_in,
         )
-        # breakpoint()
-        x_out_size = x_bounds_out[1:] - x_bounds_out[:-1]
-        x_in_size = x_bounds_in[1:] = x_bounds_in[:-1]
+        breakpoint()
+        diff_from_input = y_in - raw_means
+        adjustments = np.repeat(diff_from_input, n_out_elements_per_in_group)
 
-        res_increase = (x_bounds_out.size - 1) / (x_bounds_in.size - 1)
-        res_increase = int(res_increase)
+        res = raw_means + adjustments
 
-        x_out_integrals = x_out_size * raw_interp
-        tmp = np.cumsum(x_out_integrals)[::res_increase]
-
-        np.repeat(x_in_size.m, res_increase) * x_in_size.u
+        return res

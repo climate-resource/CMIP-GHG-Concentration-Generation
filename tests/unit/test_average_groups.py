@@ -9,7 +9,7 @@ import pint
 import pint.testing
 import pytest
 
-from local.mean_preserving_interpolation.group_averages import (
+from local.mean_preserving_interpolation.grouping import (
     NonIntersectingBoundsError,
     get_group_averages,
 )
@@ -28,6 +28,13 @@ Q = pint.get_application_registry().Quantity
             id="basic",
         ),
         pytest.param(
+            Q(np.arange(13), "yr"),
+            Q(np.arange(12), "m"),
+            Q(np.arange(0, 13 * 12, 3 * 12), "months"),
+            Q([3, 12, 21, 30], "yr m") / Q(3, "yr"),
+            id="x_bounds_in_different_units",
+        ),
+        pytest.param(
             Q([0, 4, 10, 20, 25], "yr"),
             Q([1, 2, 3, -1], "m"),
             Q([0, 10, 25], "yr"),
@@ -39,7 +46,7 @@ Q = pint.get_application_registry().Quantity
 def test_get_group_averages(x_bounds, y, group_bounds, exp):
     res = get_group_averages(x_bounds, y, group_bounds)
 
-    pint.testing.assert_equal(res, exp)
+    pint.testing.assert_allclose(res, exp)
 
 
 def test_get_group_averages_x_bounds_dont_intersect_error():

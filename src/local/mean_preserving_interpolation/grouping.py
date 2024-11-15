@@ -1,5 +1,5 @@
 """
-Calculation of averages for groups within an array
+Grouping and associated tools
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ class NonIntersectingBoundsError(IndexError):
 
     def __init__(
         self,
-        integrand_x_bounds: pint.UnitRegistry.Quantity,
+        x_bounds: pint.UnitRegistry.Quantity,
         group_bounds: pint.UnitRegistry.Quantity,
         not_in_integrand_x_bounds: npt.NDArray[bool],
     ) -> None:
@@ -29,17 +29,17 @@ class NonIntersectingBoundsError(IndexError):
 
         Parameters
         ----------
-        integrand_x_bounds
+        x_bounds
             x-bounds of the input.
 
         group_bounds
-            The bounds of the groups for which we are calculating averages/integrals.
+            The bounds of the groups we wish to apply.
 
         not_in_integrand_x_bounds
             Array of boolean values.
 
             We assume that `True` values indicate values in `group_bounds`
-            that aren't in `integrand_x_bounds`.
+            that aren't in `x_bounds`.
         """
         not_in_integrand_x_bounds_values = group_bounds[not_in_integrand_x_bounds]
 
@@ -48,10 +48,70 @@ class NonIntersectingBoundsError(IndexError):
             "line up exactly with the x-boundaries. "
             "The following group boundaries "
             f"are not in the integrand's x-boundary values: {not_in_integrand_x_bounds_values}. "
-            f"{group_bounds=} {integrand_x_bounds=}"
+            f"{group_bounds=} {x_bounds=}"
         )
 
         super().__init__(error_msg)
+
+
+def get_group_boundary_indexes(
+    x_bounds: pint.UnitRegistry.Quantity,
+    group_bounds: pint.UnitRegistry.Quantity,
+) -> npt.NDArray[int]:
+    """
+    Get the indexes of the elements in `x_bounds` which line up with a given bounds definition
+
+    Parameters
+    ----------
+    x_bounds
+        The x-bounds of the array we wish to group
+
+    group_bounds
+        The bounds of the groups we want to apply to `x_bounds`
+
+    Returns
+    -------
+    :
+        The indexes of the elements in `x_bounds` which line up with the bounds defined by `group_bounds`.
+    """
+    xb_m = x_bounds.m
+    gb_m = group_bounds.to(x_bounds.u).m
+
+    not_in_integrand_x_bounds = ~np.in1d(gb_m, xb_m)
+    if not_in_integrand_x_bounds.any():
+        raise NonIntersectingBoundsError(
+            x_bounds=x_bounds,
+            group_bounds=group_bounds,
+            not_in_integrand_x_bounds=not_in_integrand_x_bounds,
+        )
+
+    group_boundaries = np.where(np.in1d(xb_m, gb_m))
+
+    return group_boundaries
+
+
+def get_number_elements_per_group(
+    x_bounds: pint.UnitRegistry.Quantity,
+    group_bounds: pint.UnitRegistry.Quantity,
+) -> npt.NDArray[int]:
+    """
+    Get the number of elements in an array for a given specification of the group bounds
+
+    Parameters
+    ----------
+    x_bounds
+        The x-bounds of the array we wish to group
+
+    group_bounds
+        The bounds of the groups we want to apply to `x_bounds`
+
+    Returns
+    -------
+    :
+        The number of elements in `x_bounds` which fall into each group
+        defined by `group_bounds`.
+    """
+    pass
 
 
 def get_group_integrals(
@@ -81,19 +141,7 @@ def get_group_integrals(
     :
         Integrals of the values in `integrand_y` for the groups defined by `group_bounds`.
     """
-    not_in_integrand_x_bounds = ~np.in1d(
-        group_bounds.m, integrand_x_bounds.to(group_bounds.u).m
-    )
-    if not_in_integrand_x_bounds.any():
-        raise NonIntersectingBoundsError(
-            integrand_x_bounds=integrand_x_bounds,
-            group_bounds=group_bounds,
-            not_in_integrand_x_bounds=not_in_integrand_x_bounds,
-        )
-
-    group_boundaries = np.where(
-        np.in1d(integrand_x_bounds.m, group_bounds.to(integrand_x_bounds.u).m)
-    )
+    group_boundaries = get_group_boundary_indexes(integrand_x_bounds, group_bounds)
 
     # The minus one is required to ensure we get the correct integral value.
     # (If the boundary occurs at an index of n
@@ -115,9 +163,7 @@ def get_group_integrals(
     cumulative_integrals = np.cumsum(integrals)
     cumulative_integrals_groups = cumulative_integrals[cumulative_integrals_group_idxs]
 
-    res = np.hstack(
-        [cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)]
-    )
+    res = np.hstack([cumulative_integrals_groups[0], np.diff(cumulative_integrals_groups)])
 
     return res
 
