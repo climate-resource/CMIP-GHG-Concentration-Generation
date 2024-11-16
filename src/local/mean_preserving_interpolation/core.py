@@ -12,6 +12,7 @@ import pint
 import pint.testing
 
 from local.mean_preserving_interpolation.grouping import get_group_averages
+from local.mean_preserving_interpolation.lai_kaplan import LaiKaplanInterpolator
 from local.mean_preserving_interpolation.lazy_linear import LazyLinearInterpolator
 from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 

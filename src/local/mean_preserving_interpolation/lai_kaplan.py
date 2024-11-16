@@ -14,6 +14,7 @@ import numpy as np
 import numpy.typing as npt
 import pint
 from attrs import define, field
+from numpy.polynomial import Polynomial
 
 from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
@@ -21,11 +22,6 @@ from local.mean_preserving_interpolation.boundary_handling import (
 )
 from local.mean_preserving_interpolation.boundary_handling import (
     get_y_at_boundaries as get_y_at_boundaries_default,
-)
-from local.mean_preserving_interpolation.grouping import (
-    get_group_averages,
-    get_group_indexes,
-    get_group_integrals,
 )
 from local.optional_dependencies import get_optional_dependency
 
@@ -177,6 +173,154 @@ class LaiKaplanArray(Generic[T]):
         self.data[idx_data] = val
 
 
+HERMITE_CUBICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = (
+    (
+        Polynomial((1, 0, -3, 2), domain=[0, 1], window=[0, 1]),
+        Polynomial((0, 0, 3, -2), domain=[0, 1], window=[0, 1]),
+    ),
+    (
+        Polynomial((0, 1, -2, 1), domain=[0, 1], window=[0, 1]),
+        Polynomial((0, 0, -1, 1), domain=[0, 1], window=[0, 1]),
+    ),
+)
+"""
+Hermite cubic polynomials
+
+Allows for the same notation as the paper.
+"""
+
+HERMITE_QUARTICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = tuple(
+    tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS
+)
+"""
+Hermite quartic polynomials
+
+Allows for the same notation as the paper.
+"""
+
+
+@define
+class LaiKaplanF:
+    """
+    Lai-Kaplan interpolating function
+    """
+
+    x_i: pint.UnitRegistry.Quantity
+    """Start of the interval over which this function applies"""
+
+    delta: pint.UnitRegistry.Quantity
+    """Size of the domain over which this function applies"""
+
+    s_i: pint.UnitRegistry.Quantity
+    """Value at the left-hand edge of the domain (`x = x_i`)"""
+
+    s_i_plus_half: pint.UnitRegistry.Quantity
+    """Value at the right-hand edge of the domain (`x = x_i + delta`)"""
+
+    m_i: pint.UnitRegistry.Quantity
+    """Gradient at the left-hand edge of the domain (`x = x_i`)"""
+
+    m_i_plus_half: pint.UnitRegistry.Quantity
+    """Gradient at the right-hand edge of the domain (`x = x_i + delta`)"""
+
+    def calculate(
+        self,
+        x: pint.UnitRegistry.Quantity,
+        check_domain: bool = True,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Calculate Lai-Kaplan interpolating function value
+
+        Parameters
+        ----------
+        x
+            Value for which we want to calculate the value of the function
+
+        check_domain
+            Whether to check that is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Function value at `x`, given the other parameters
+        """
+        if check_domain:
+            if (x < self.x_i) or (x > self.x_i + self.delta):
+                msg = f"x is outside the supported domain. {x=} {self.x_i=} {self.x_i + self.delta=}"
+                raise ValueError(msg)
+
+        u = (x - self.x_i) / self.delta
+
+        return self.calculate_u(u, check_domain=False)
+
+    def calculate_no_output_units(
+        self,
+        x: pint.UnitRegistry.Quantity,
+        assumed_units: pint.UnitRegistry.UnitsContainer,
+        check_domain: bool = True,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Calculate Lai-Kaplan interpolating function value
+
+        Return the value without units.
+        This is helpful for integrating the function with scipy.
+
+        Parameters
+        ----------
+        x
+            Value for which we want to calculate the value of the function
+
+        assumed_units
+            Assumed units to apply to x before doing the calculation
+
+        check_domain
+            Whether to check that is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Function value at `x`, given the other parameters
+        """
+        return self.calculate(x * assumed_units, check_domain=check_domain).m
+
+    def calculate_u(
+        self,
+        u: float | pint.UnitRegistry.Quantity,
+        check_domain: bool = True,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Calculate Lai-Kaplan interpolating function value
+
+        Parameters
+        ----------
+        u
+            Value for which we want to calculate the value of the function.
+
+            This should have been normalised first i.e. this is in 'u-space', not 'x-space'.
+
+        check_domain
+            Whether to check that is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Function value at `u`, given the other parameters
+        """
+        if check_domain:
+            if (u < 0) or (u > 1):
+                msg = f"u is outside the supported domain. {u=}"
+                raise ValueError(msg)
+
+        res = (
+            self.s_i * HERMITE_CUBICS[0][0](u)
+            + self.delta * self.m_i * HERMITE_CUBICS[1][0](u)
+            + self.s_i_plus_half * HERMITE_CUBICS[0][1](u)
+            + self.delta * self.m_i_plus_half * HERMITE_CUBICS[1][1](u)
+        )
+
+        return res
+
+
 @define
 class LaiKaplanInterpolator:
     """
@@ -219,11 +363,6 @@ class LaiKaplanInterpolator:
     # """
     # Maximum number of iterations to perform
     # """
-    #
-    # progress_bar: bool = True
-    # """
-    # Whether to show a progress bar for the iterations or not
-    # """
 
     atol: float = 1e-10
     """
@@ -233,6 +372,11 @@ class LaiKaplanInterpolator:
     rtol: float = 1e-7
     """
     Relative tolerance for deciding whether the output value means are close to the input means
+    """
+
+    progress_bar: bool = True
+    """
+    Whether to show a progress bar while filling the output array or not
     """
 
     def __call__(
@@ -260,126 +404,305 @@ class LaiKaplanInterpolator:
         :
             Interpolated, mean-preserving values
         """
-        y_at_boundaries = self.get_y_at_boundaries(x_bounds=x_bounds_in, y_in=y_in)
-
-        raise NotImplementedError
-
-        x_out_mids = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
-        y_starting_values = np.interp(x_out_mids, x_bounds_in, y_at_boundaries)
-
-        # Run the algorithm
-        current_vals = y_starting_values
-        current_vals_group_indexes = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
-
-        adjust_mat = np.zeros((y_starting_values.size, y_starting_values.size))
-        rows, cols = np.diag_indices_from(adjust_mat)
-        adjust_mat[rows[1:], cols[:-1]] = 1 / 3
-        adjust_mat[rows, cols] = 1 / 3
-        adjust_mat[rows[:-1], cols[1:]] = 1 / 3
-
-        iterh = range(self.max_it)
-        if self.progress_bar:
-            tqdman = get_optional_dependency("tqdm.autonotebook")
-            iterh = tqdman.tqdm(iterh)
-
-        for i in iterh:
-            group_averages = get_group_averages(
-                integrand_x_bounds=x_bounds_out,
-                integrand_y=current_vals,
-                group_bounds=x_bounds_in,
-            )
-
-            if (i >= min_it) and self.solution_is_close(
-                group_averages=group_averages,
-                target=y_in,
-            ):
-                break
-
-            current_vals = adjust_mat @ current_vals
-            current_vals[0] += y_at_boundaries[0] / 3
-            current_vals[-1] += y_at_boundaries[-1] / 3
-
-            group_averages = get_group_averages(
-                integrand_x_bounds=x_bounds_out,
-                integrand_y=current_vals,
-                group_bounds=x_bounds_in,
-            )
-            corrections = y_in - group_averages
-            current_vals = current_vals + corrections[(current_vals_group_indexes,)]
-
-            if self.min_val is not None and (current_vals < self.min_val).any():
-                current_vals[np.where(current_vals < self.min_val)] = self.min_val
-
-                group_averages = get_group_averages(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals,
-                    group_bounds=x_bounds_in,
-                )
-
-                # Rymes-Meyers lower-bound "f" correction function
-                rm_lb_f_numerator = get_group_integrals(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals - y_in[(current_vals_group_indexes,)],
-                    group_bounds=x_bounds_in,
-                )
-                rm_lb_f_denominator = get_group_integrals(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals - self.min_val,
-                    group_bounds=x_bounds_in,
-                )
-
-                rm_lb_f = rm_lb_f_numerator / rm_lb_f_denominator
-
-                if np.isnan(rm_lb_f).any():
-                    # If the numerator is also zeor, set to zero and move on
-                    rm_lb_f[np.where(rm_lb_f_numerator == 0.0)] = 0.0 * rm_lb_f.u
-
-                    if np.isnan(rm_lb_f).any():
-                        # If still nans, raise
-                        raise AssertionError()
-
-                group_delta = group_averages - y_in
-
-                rm_lb_correction = rm_lb_f[(current_vals_group_indexes,)] * (current_vals - self.min_val)
-                # Only apply deltas where we have overshot
-                rm_lb_correction[np.where(group_delta <= 0.0)] = 0.0 * group_averages.u
-
-                current_vals = current_vals - rm_lb_correction
-
-                current_vals[np.where(current_vals < self.min_val)] = self.min_val
-
-        else:
-            msg = f"Ran out of iterations ({self.max_it=})"
+        if not np.all(x_bounds_out[:-1] <= x_bounds_out[1:]):
+            msg = f"x_bounds_out must be sorted for this to work {x_bounds_out=}"
             raise AssertionError(msg)
 
-        return current_vals
+        x_steps = x_bounds_in[1:] - x_bounds_in[:-1]
+        x_step = x_steps[0]
+        if not np.equal(x_steps, x_step).all():
+            msg = f"Non-uniform spacing in x {x_steps=}"
+            raise NotImplementedError(msg)
 
-    def solution_is_close(
-        self,
-        group_averages: pint.UnitRegistry.Quantity,
-        target: pint.UnitRegistry.Quantity,
-    ) -> bool:
-        """
-        Determine whether a solution is close to the target or not
+        delta = x_step / 2.0
+        intervals_internal_x = (x_bounds_in[1:] + x_bounds_in[:-1]) / 2.0
+        walls_x = x_bounds_in
+        external_intervals_x = np.hstack([x_bounds_in[0] - x_step / 2.0, x_bounds_in[-1] + x_step / 2.0])
+        intervals_x = np.hstack(
+            [
+                external_intervals_x[0],
+                intervals_internal_x,
+                external_intervals_x[-1],
+            ]
+        )
 
-        Parameters
-        ----------
-        group_averages
-            The group averages of the proposed solution
+        n_lai_kaplan = y_in.size
 
-        target
-            The target group averages
+        # TODO: consider whether to make control points derivation injectable
+        control_points_x_d = (
+            np.zeros(
+                2 * x_bounds_in.size + 1,
+                # Has to be float so we can handle half steps even if input x array is integer
+                dtype=np.float64,
+            )
+            * x_bounds_in.u
+        )
+        # Control points on the walls
+        control_points_x_d[1::2] = walls_x
+        # Control points in the intervals
+        control_points_x_d[::2] = intervals_x
 
-        Returns
-        -------
-        :
-            `True` if `group_averages` is close to `target`, otherwise `False`
-        """
-        try:
-            pint.testing.assert_allclose(group_averages, target, atol=self.atol, rtol=self.rtol)
-        except AssertionError:
-            # Not close
-            return False
+        control_points_x = LaiKaplanArray(
+            lai_kaplan_idx_min=1 / 2,
+            lai_kaplan_stride=1 / 2,
+            data=control_points_x_d,
+        )
 
-        # No error i.e. all close
-        return True
+        external_intervals_y = extrapolate_y_interval_values(
+            x_in=control_points_x[1.5 : n_lai_kaplan + 1 : 1],
+            y_in=y_in,
+            x_out=np.hstack([control_points_x_d[0], control_points_x_d[-1]]),
+            # TODO: make this injectable
+            # left=,
+            # right=,
+        )
+        intervals_y = LaiKaplanArray(
+            lai_kaplan_idx_min=0.0,
+            lai_kaplan_stride=1.0,
+            data=np.hstack([external_intervals_y[0], y_in, external_intervals_y[-1]]),
+        )
+
+        # Control point values at the walls
+        control_points_wall_y_d = (
+            intervals_y[0 : n_lai_kaplan + 1 : 1] + intervals_y[1 : n_lai_kaplan + 1 + 1 : 1]
+        ) / 2
+        # If the values start out flat, keep them flat right until the end of the flat intervals.
+        # TODO: allow the user to control this.
+        first_increase = np.argmax(~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:]))
+        if first_increase > 0:
+            control_points_wall_y_d[first_increase + 1] = control_points_wall_y_d[0]
+
+        control_points_wall_y = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1,
+            data=control_points_wall_y_d,
+        )
+
+        a_d = np.array(
+            [
+                -HERMITE_QUARTICS[1][0](1) / 2.0,
+                (
+                    HERMITE_QUARTICS[0][0](1)
+                    + HERMITE_QUARTICS[0][1](1)
+                    + HERMITE_QUARTICS[1][0](1) / 2.0
+                    - HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+                HERMITE_QUARTICS[1][1](1) / 2.0,
+            ]
+        )
+        a = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1,
+            data=a_d,
+        )
+
+        # A-matrix
+        # (Not indexed in the paper, hence not done with Lai Kaplan indexing)
+        A_mat = np.zeros((n_lai_kaplan, n_lai_kaplan))
+        rows, cols = np.diag_indices_from(A_mat)
+        A_mat[rows[1:], cols[:-1]] = a[1]
+        A_mat[rows, cols] = a[2]
+        A_mat[rows[:-1], cols[1:]] = a[3]
+
+        # Area under the curve in each interval
+        A_d = x_step * y_in
+        A = LaiKaplanArray(lai_kaplan_idx_min=1, lai_kaplan_stride=1, data=A_d)
+
+        # beta array
+        beta_d = np.array(
+            [
+                (
+                    HERMITE_QUARTICS[0][0](1)
+                    - HERMITE_QUARTICS[1][0](1) / 2.0
+                    - HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+                (
+                    HERMITE_QUARTICS[0][1](1)
+                    + HERMITE_QUARTICS[1][0](1) / 2.0
+                    + HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+            ]
+        )
+        beta = LaiKaplanArray(1, 1, beta_d)
+
+        b = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1,
+            data=np.zeros_like(y_in.data) * y_in.u,
+        )
+        b[1] = (
+            A[1] / delta
+            - beta[1] * control_points_wall_y[1]
+            - beta[2] * control_points_wall_y[2]
+            - a[1] * intervals_y[0]
+        )
+        middle_slice = slice(2, n_lai_kaplan)
+        middle_slice_plus_one = slice(3, n_lai_kaplan + 1)
+        b[middle_slice] = (
+            A[middle_slice] / delta
+            - beta[1] * control_points_wall_y[middle_slice]
+            - beta[2] * control_points_wall_y[middle_slice_plus_one]
+        )
+        b[n_lai_kaplan] = (
+            A[n_lai_kaplan] / delta
+            - beta[1] * control_points_wall_y[n_lai_kaplan]
+            - beta[2] * control_points_wall_y[n_lai_kaplan + 1]
+            - a[3] * intervals_y[n_lai_kaplan + 1]
+        )
+
+        control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
+
+        control_points_y = LaiKaplanArray(
+            lai_kaplan_idx_min=1 / 2,
+            lai_kaplan_stride=1 / 2,
+            data=np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
+        )
+        control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
+        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
+        # Pre-calculated external interval values
+        control_points_y[1 / 2] = external_intervals_y[0]
+        control_points_y[n_lai_kaplan + 3 / 2] = external_intervals_y[-1]
+
+        # Now that we have all the control points, we can do the gradients
+        gradients_at_control_points = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1 / 2,
+            data=np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
+        )
+        gradients_at_control_points[:] = (
+            control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
+        ) / (2 * delta)
+
+        lai_kaplan_interval_idx = 1
+        x_i = control_points_x[lai_kaplan_interval_idx]
+        lai_kaplan_f = LaiKaplanF(
+            x_i=x_i,
+            delta=delta,
+            s_i=control_points_y[lai_kaplan_interval_idx],
+            s_i_plus_half=control_points_y[lai_kaplan_interval_idx + 1 / 2],
+            m_i=gradients_at_control_points[lai_kaplan_interval_idx],
+            m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
+        )
+
+        y_out = np.zeros(x_bounds_out.size - 1) * y_in.u
+        # TODO: Can't see how to do this with vectors, maybe someone smarter can.
+        iterh = range(y_out.size)
+        if self.progress_bar:
+            tqdman = get_optional_dependency("tqdm.autonotebook")
+            iterh = tqdman.tqdm(iterh, desc="Calculating output values")
+
+        scipy_integrate = get_optional_dependency("scipy.integrate")
+        for out_index in iterh:
+            if x_bounds_out[out_index] >= control_points_x[lai_kaplan_interval_idx + 1 / 2]:
+                lai_kaplan_interval_idx += 1 / 2
+
+                x_i = control_points_x[lai_kaplan_interval_idx]
+                lai_kaplan_f = LaiKaplanF(
+                    x_i=x_i,
+                    delta=delta,
+                    s_i=control_points_y[lai_kaplan_interval_idx],
+                    s_i_plus_half=control_points_y[lai_kaplan_interval_idx + 1 / 2],
+                    m_i=gradients_at_control_points[lai_kaplan_interval_idx],
+                    m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
+                )
+
+                np.testing.assert_allclose(
+                    control_points_y[lai_kaplan_interval_idx], lai_kaplan_f.calculate(x_i)
+                )
+                np.testing.assert_allclose(
+                    control_points_y[lai_kaplan_interval_idx + 1 / 2], lai_kaplan_f.calculate(x_i + delta)
+                )
+
+            integration_res = (
+                scipy_integrate.quad(
+                    partial(lai_kaplan_f.calculate_no_output_units, assumed_units=x_bounds_out.u),
+                    x_bounds_out[out_index].m,
+                    x_bounds_out[out_index + 1].m,
+                )
+                * control_points_y[lai_kaplan_interval_idx].u
+                * x_bounds_out.u
+            )
+            y_out[out_index] = integration_res[0] / (x_bounds_out[out_index + 1] - x_bounds_out[out_index])
+
+        if self.min_val is not None and (y_out < self.min_val).any():
+            raise NotImplementedError
+            # below_min = y_out < self.min_val
+            # below_min_in_group = get_group_integrals(
+            #     integrand_x_bounds=x_bounds_out,
+            #     integrand_y=below_min,
+            #     group_bounds=x_bounds_in,
+            # )
+            # below_min_vals = below_min_in_group > 0
+            breakpoint()
+
+        return y_out
+
+
+def extrapolate_y_interval_values(
+    x_in: pint.UnitRegistry.Quantity,
+    y_in: pint.UnitRegistry.Quantity,
+    x_out: pint.UnitRegistry.Quantity,
+    left: BoundaryHandling = BoundaryHandling.CONSTANT,
+    right: BoundaryHandling = BoundaryHandling.CUBIC_EXTRAPOLATION,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Extrapolate our y-interval values to get an extra value either side of the input domain
+
+    Parameters
+    ----------
+    x_in
+        x-values of the input array
+
+    y_in
+        y-values of the input array
+
+    x_out
+        x-values to extrapolate
+
+        There should be two: the x-value to the left of `x_in`
+        and the x-value to the right of `x_in`.
+
+    left
+        The extrapolation method to use for the left-hand value.
+
+    right
+        The extrapolation method to use for the right-hand value.
+
+    Returns
+    -------
+    :
+        The extrapolated values at `x_out`.
+    """
+    expected_out_size = 2
+
+    if x_out.size != expected_out_size:
+        raise NotImplementedError
+    y_out = np.zeros(expected_out_size) * y_in.u
+
+    if any(bh == BoundaryHandling.CUBIC_EXTRAPOLATION for bh in (left, right)):
+        scipy_inter = get_optional_dependency("scipy.interpolate")
+
+        cubic_interpolator = scipy_inter.interp1d(
+            x_in.m,
+            y_in.m,
+            kind="cubic",
+            fill_value="extrapolate",
+        )
+        if left == BoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_out[0] = cubic_interpolator(x_out[0].m) * y_in.u
+
+        if right == BoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_out[-1] = cubic_interpolator(x_out[-1].m) * y_in.u
+
+    else:
+        if left == BoundaryHandling.CONSTANT:
+            y_out[0] = y_in[0]
+        else:
+            raise NotImplementedError(left)
+
+        if right == BoundaryHandling.CONSTANT:
+            y_out[-1] = y_in[-1]
+        else:
+            raise NotImplementedError(right)
+
+    return np.hstack(y_out)
