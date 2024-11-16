@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     # Don't use as already in HATS data
     # config_process_noaa_surface_flask_data = get_config_for_step_id(
@@ -85,8 +83,7 @@ def configure_notebooks(
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree")
-                / "1000_n2o_bin-observational-network"
+                Path("10yy_n2o-monthly-15-degree") / "1000_n2o_bin-observational-network"
             ],
             configuration=(),
             dependencies=(
@@ -101,8 +98,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree")
-                / "1001_n2o_interpolate-observational-network"
+                Path("10yy_n2o-monthly-15-degree") / "1001_n2o_interpolate-observational-network"
             ],
             configuration=(),
             dependencies=(config_step.processed_bin_averages_file,),
@@ -112,8 +108,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree")
-                / "1002_n2o_global-mean-latitudinal-gradient-seasonality"
+                Path("10yy_n2o-monthly-15-degree") / "1002_n2o_global-mean-latitudinal-gradient-seasonality"
             ],
             configuration=(),
             dependencies=(config_step.observational_network_interpolated_file,),
@@ -126,9 +121,7 @@ def configure_notebooks(
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree") / "1003_n2o_extend-pcs"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("10yy_n2o-monthly-15-degree") / "1003_n2o_extend-pcs"],
             configuration=(),
             dependencies=(
                 config_step.observational_network_global_annual_mean_file,
@@ -145,8 +138,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree")
-                / "1004_n2o_extend-global-annual-mean"
+                Path("10yy_n2o-monthly-15-degree") / "1004_n2o_extend-global-annual-mean"
             ],
             configuration=(),
             dependencies=(
@@ -160,8 +152,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("10yy_n2o-monthly-15-degree")
-                / "1005_n2o_create-pieces-for-gridding"
+                Path("10yy_n2o-monthly-15-degree") / "1005_n2o_create-pieces-for-gridding"
             ],
             configuration=(),
             dependencies=(
@@ -182,21 +173,17 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="calculate_n2o_monthly_fifteen_degree_pieces",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("10yy_n2o-monthly-15-degree")
-            / "1000_n2o_bin-observational-network",
+            notebook_path=Path("10yy_n2o-monthly-15-degree") / "1000_n2o_bin-observational-network",
             raw_notebook_ext=".py",
             summary="N2O pieces - Bin observational data",
             doc="Bin the observational data for N2O.",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("10yy_n2o-monthly-15-degree")
-            / "1001_n2o_interpolate-observational-network",
+            notebook_path=Path("10yy_n2o-monthly-15-degree") / "1001_n2o_interpolate-observational-network",
             raw_notebook_ext=".py",
             summary="N2O pieces - Interpolate observational network onto our 15 degree x 60 degree grid",
             doc="Interpolate the observational data for N2O.",
@@ -215,8 +202,7 @@ step: UnconfiguredNotebookBasedStep[
             doc="Extend the principal components (PCs) over the entire time period of interest",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("10yy_n2o-monthly-15-degree")
-            / "1004_n2o_extend-global-annual-mean",
+            notebook_path=Path("10yy_n2o-monthly-15-degree") / "1004_n2o_extend-global-annual-mean",
             raw_notebook_ext=".py",
             summary="N2O pieces - Extend global, annual-mean over the entire time period",
             doc=(
@@ -225,8 +211,7 @@ step: UnconfiguredNotebookBasedStep[
             ),
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("10yy_n2o-monthly-15-degree")
-            / "1005_n2o_create-pieces-for-gridding",
+            notebook_path=Path("10yy_n2o-monthly-15-degree") / "1005_n2o_create-pieces-for-gridding",
             raw_notebook_ext=".py",
             summary="N2O pieces - Finalise the pieces for gridding",
             doc="Finalise the pieces required for creating gridded files",

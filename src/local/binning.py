@@ -146,25 +146,19 @@ def get_network_summary(source_df: pd.DataFrame, max_show_all_stations: int = 6)
     """
     out = ["Collating data from:"]
 
-    for (network, measurement_method), nmmdf in source_df.groupby(
-        ["network", "measurement_method"]
-    ):
+    for (network, measurement_method), nmmdf in source_df.groupby(["network", "measurement_method"]):
         stations = sorted(nmmdf["station"].unique())
         if len(stations) < max_show_all_stations:
             station_list = ", ".join(stations)
         else:
             station_list = f"{', '.join(stations[:4])} ... {', '.join(stations[-4:])}"
 
-        out.append(
-            f"- {network} {measurement_method} ({len(stations)} stations: {station_list})"
-        )
+        out.append(f"- {network} {measurement_method} ({len(stations)} stations: {station_list})")
 
     return "\n".join(out)
 
 
-def verbose_groupby_mean(
-    inseries: pd.Series[float], groupby: list[str]
-) -> pd.Series[float]:
+def verbose_groupby_mean(inseries: pd.Series[float], groupby: list[str]) -> pd.Series[float]:
     """
     Verbose version of groupby-mean.
 
@@ -225,9 +219,7 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
 
     # Reset the index so we can see that this mean is actually doing something
     station_monthly_averages = station_monthly_averages.reset_index()
-    all_cols_except_value = [
-        c for c in station_monthly_averages.columns if c != VALUE_COLUMN
-    ]
+    all_cols_except_value = [c for c in station_monthly_averages.columns if c != VALUE_COLUMN]
     equal_weight_monthly_averages = verbose_groupby_mean(
         (station_monthly_averages.set_index(all_cols_except_value)[VALUE_COLUMN]),
         EQUALLY_WEIGHTED_GROUP_COLS,

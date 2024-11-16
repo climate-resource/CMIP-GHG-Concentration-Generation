@@ -51,14 +51,11 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
 
     # Check that the instructions in the README are correct too and use them for
     # the run
-    with open(
-        copied_output_dir / basic_workflow_output_info["run_id"] / "README.md"
-    ) as fh:
+    with open(copied_output_dir / basic_workflow_output_info["run_id"] / "README.md") as fh:
         readme_contents = fh.read()
 
     expected_readme_line = (
-        f"DOIT_CONFIGURATION_FILE={assumed_raw_config_file} "
-        "pixi run doit run --verbosity=2"
+        f"DOIT_CONFIGURATION_FILE={assumed_raw_config_file} " "pixi run doit run --verbosity=2"
     )
     assert expected_readme_line in readme_contents
 
@@ -82,8 +79,7 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         / "input4MIPs"
     ).rglob("*.nc"):
         bundle_res = xr.open_dataset(
-            copied_output_dir
-            / compare_file.relative_to(basic_workflow_output_info["root_dir_output"])
+            copied_output_dir / compare_file.relative_to(basic_workflow_output_info["root_dir_output"])
         )
 
         test_res = xr.open_dataset(compare_file)

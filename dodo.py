@@ -114,20 +114,14 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
     -------
         Tasks which can be handled by :mod:`pydoit`
     """
-    configuration_file = Path(
-        os.environ.get("DOIT_CONFIGURATION_FILE", "dev-config.yaml")
-    ).absolute()
+    configuration_file = Path(os.environ.get("DOIT_CONFIGURATION_FILE", "dev-config.yaml")).absolute()
     # Has to be retrieved earlier so we can set DOIT_CONFIG. I don't love this
     # as we have two patterns, retrieve environment variable into global
     # variable and retrieve environment variable within this function. However,
     # I don't know which way is better so haven't made a choice.
     run_id = RUN_ID
-    root_dir_output = Path(
-        os.environ.get("DOIT_ROOT_DIR_OUTPUT", "output-bundles")
-    ).absolute()
-    root_dir_raw_notebooks = Path(
-        os.environ.get("DOIT_ROOT_DIR_RAW_NOTEBOOKS", "notebooks")
-    ).absolute()
+    root_dir_output = Path(os.environ.get("DOIT_ROOT_DIR_OUTPUT", "output-bundles")).absolute()
+    root_dir_raw_notebooks = Path(os.environ.get("DOIT_ROOT_DIR_RAW_NOTEBOOKS", "notebooks")).absolute()
 
     # TODO: consider giving the user more control over this or not
     root_dir_output_run = root_dir_output / run_id
@@ -170,9 +164,7 @@ def task_generate_workflow_tasks() -> Iterable[DoitTaskSpec]:
         root_dir_output=root_dir_output,
         root_dir_output_run=root_dir_output_run,
     )
-    write_config_in_config_bundle_to_disk(
-        config_bundle=config_bundle, converter=converter_yaml
-    )
+    write_config_in_config_bundle_to_disk(config_bundle=config_bundle, converter=converter_yaml)
 
     yield {
         "basename": "generate_workflow_tasks",

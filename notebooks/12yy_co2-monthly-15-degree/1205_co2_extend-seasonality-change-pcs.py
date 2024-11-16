@@ -54,9 +54,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -82,13 +80,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -125,8 +119,7 @@ global_annual_mean
 
 # %%
 hadcrut_temperatures = xr.load_dataset(
-    config_retrieve_misc.hadcrut5.raw_dir
-    / config_retrieve_misc.hadcrut5.download_url.url.split("/")[-1]
+    config_retrieve_misc.hadcrut5.raw_dir / config_retrieve_misc.hadcrut5.download_url.url.split("/")[-1]
 )["tas_mean"].pint.quantify()
 hadcrut_temperatures = (
     local.xarray_time.convert_time_to_year_month(hadcrut_temperatures)
@@ -196,9 +189,7 @@ pc0_obs_network = seasonality_change_eofs_obs_network["principal-components"].se
 pc0_obs_network
 
 # %%
-regression_timeseries_same_years = regression_timeseries.sel(
-    year=pc0_obs_network["year"]
-)
+regression_timeseries_same_years = regression_timeseries.sel(year=pc0_obs_network["year"])
 regression_timeseries_same_years
 
 # %%
@@ -219,9 +210,7 @@ m, c = res[0]
 m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(c, y.units)
 
-latitudinal_gradient_pc0_composite_regression = local.regressors.LinearRegressionResult(
-    m=m, c=c
-)
+latitudinal_gradient_pc0_composite_regression = local.regressors.LinearRegressionResult(m=m, c=c)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -231,9 +220,7 @@ ax.set_xlabel("Composite timeseries")
 ax.legend()
 
 # %%
-regressor_incl_result = evolve(
-    regressor, regression_result=latitudinal_gradient_pc0_composite_regression
-)
+regressor_incl_result = evolve(regressor, regression_result=latitudinal_gradient_pc0_composite_regression)
 regressor_incl_result
 
 # %% [markdown]
@@ -248,11 +235,9 @@ composite_extension_years
 
 # %%
 regression_timeseries_extended = regression_timeseries.copy()
-regression_timeseries_extended = (
-    regression_timeseries_extended.pint.dequantify().interp(
-        year=composite_extension_years,
-        kwargs={"fill_value": regression_timeseries.data[0].m},
-    )
+regression_timeseries_extended = regression_timeseries_extended.pint.dequantify().interp(
+    year=composite_extension_years,
+    kwargs={"fill_value": regression_timeseries.data[0].m},
 )
 
 with axes_vertical_split() as axes:
@@ -272,9 +257,9 @@ years_to_fill_with_regression
 # %%
 pc0_regression_extended = (
     m
-    * regression_timeseries_extended.sel(
-        year=years_to_fill_with_regression
-    ).pint.quantify(unit_registry=opscm_reg)
+    * regression_timeseries_extended.sel(year=years_to_fill_with_regression).pint.quantify(
+        unit_registry=opscm_reg
+    )
     + c
 )
 pc0_regression_extended = pc0_regression_extended.assign_coords(eof=0)
@@ -339,30 +324,21 @@ out
 
 # %%
 xr.testing.assert_allclose(
-    (out["principal-components"] @ out["eofs"]).sel(
-        year=seasonality_change_eofs_obs_network["year"]
-    ),
-    seasonality_change_eofs_obs_network["principal-components"]
-    @ seasonality_change_eofs_obs_network["eofs"],
+    (out["principal-components"] @ out["eofs"]).sel(year=seasonality_change_eofs_obs_network["year"]),
+    seasonality_change_eofs_obs_network["principal-components"] @ seasonality_change_eofs_obs_network["eofs"],
 )
 
 # %% [markdown]
 # ## Save
 
 # %%
-config_step.seasonality_change_allyears_pcs_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.seasonality_change_allyears_pcs_eofs_file.parent.mkdir(exist_ok=True, parents=True)
 out.pint.dequantify().to_netcdf(config_step.seasonality_change_allyears_pcs_eofs_file)
 out
 
 # %%
-config_step.seasonality_change_temperature_co2_conc_regression_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-with open(
-    config_step.seasonality_change_temperature_co2_conc_regression_file, "w"
-) as fh:
+config_step.seasonality_change_temperature_co2_conc_regression_file.parent.mkdir(exist_ok=True, parents=True)
+with open(config_step.seasonality_change_temperature_co2_conc_regression_file, "w") as fh:
     fh.write(local.config.converter_yaml.dumps(regressor_incl_result))
 
 regressor_incl_result

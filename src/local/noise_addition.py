@@ -72,17 +72,13 @@ class NoiseAdderPercentageXNoise:
         # with zero being now rather than minimum value in input array.
 
         rng_x = np.random.default_rng(seed=seed)
-        x_plus_noise = x + (
-            self.x_ref - x
-        ) * self.x_relative_random_error * rng_x.uniform(
+        x_plus_noise = x + (self.x_ref - x) * self.x_relative_random_error * rng_x.uniform(
             low=-0.5, high=0.5, size=x.shape
         )
 
         # Increment seed to avoid spurious correlations in draws
         rng_y = np.random.default_rng(seed=seed + 13781)
-        y_plus_noise = y + self.y_random_error * rng_y.uniform(
-            low=-0.5, high=0.5, size=y.shape
-        )
+        y_plus_noise = y + self.y_random_error * rng_y.uniform(low=-0.5, high=0.5, size=y.shape)
 
         out: tuple[pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity] = (
             x_plus_noise,

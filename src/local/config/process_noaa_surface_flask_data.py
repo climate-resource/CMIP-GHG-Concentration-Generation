@@ -1,6 +1,7 @@
 """
 Config for processing NOAA surface flask data
 """
+
 from __future__ import annotations
 
 from pathlib import Path

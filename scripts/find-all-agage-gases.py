@@ -1,6 +1,7 @@
 """
 Find the data available from AGAGE without so much clicking
 """
+
 import urllib.request
 from pathlib import Path
 
@@ -52,8 +53,7 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                         soup_loc_file_formats = [
                             link.get("href")
                             for link in soup_loc.find_all("a")
-                            if link.get("href").endswith("/")
-                            and not link.get("href").startswith("/")
+                            if link.get("href").endswith("/") and not link.get("href").startswith("/")
                         ]
                         if soup_loc_file_formats != ["ascii/"]:
                             raise AssertionError(  # noqa: TRY003
@@ -75,9 +75,7 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                                 for link in soup_loc_file_format.find_all("a")
                                 if link.get("href").endswith(".txt")
                             ]
-                            gases = [
-                                f.split("_")[2] for f in soup_loc_gas_format_data_files
-                            ]
+                            gases = [f.split("_")[2] for f in soup_loc_gas_format_data_files]
 
                             for file in soup_loc_gas_format_data_files:
                                 gas = file.split("_")[2]
@@ -92,16 +90,12 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                                     progressbar=True,
                                 )
                                 if isinstance(tmp_file, list):
-                                    raise NotImplementedError(
-                                        "More than one file: tmp_file"
-                                    )
+                                    raise NotImplementedError("More than one file: tmp_file")
 
                                 hash = pooch.file_hash(tmp_file)
                                 if gas not in download_urls:
                                     download_urls[gas] = []
-                                download_urls[gas].append(
-                                    URLSource(url=url, known_hash=hash)
-                                )
+                                download_urls[gas].append(URLSource(url=url, known_hash=hash))
 
                             print("--------------")
                             print(f"{instrument=}")
@@ -112,9 +106,7 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
 
                 for gas, urls in download_urls.items():
                     # TODO: introduce gas_clean here
-                    step_config_id = (
-                        f"{gas}_{instrument.replace('/', '')}_{time_frequency}"
-                    )
+                    step_config_id = f"{gas}_{instrument.replace('/', '')}_{time_frequency}"
                     raw_dir = Path("data") / "raw" / "agage" / "agage"
                     interim_dir = Path("data") / "interim" / "agage" / "agage"
                     step_conf = RetrieveExtractAGAGEDataConfig(
@@ -125,8 +117,7 @@ def find_agage_gases(base_url, time_frequency="monthly"):  # noqa: PLR0915
                         download_urls=urls,
                         raw_dir=raw_dir,
                         download_complete_file=raw_dir / f"{step_config_id}.complete",
-                        processed_monthly_data_with_loc_file=interim_dir
-                        / f"{step_config_id}.csv",
+                        processed_monthly_data_with_loc_file=interim_dir / f"{step_config_id}.csv",
                         generate_hashes=False,
                     )
                     print(f"{step_conf},")

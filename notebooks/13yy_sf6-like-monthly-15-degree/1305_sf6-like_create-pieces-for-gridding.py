@@ -53,9 +53,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -77,9 +75,7 @@ step_config_id: str = "ch3cl"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -137,16 +133,14 @@ if isinstance(axes, matplotlib.axes.Axes):
 local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
 )
-local.xarray_time.convert_year_to_time(
-    global_annual_mean, calendar="proleptic_gregorian"
-).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0])
+local.xarray_time.convert_year_to_time(global_annual_mean, calendar="proleptic_gregorian").plot.scatter(
+    x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
+)
 
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
     calendar="proleptic_gregorian",
-).plot(
-    ax=axes[1]
-)  # type: ignore
+).plot(ax=axes[1])  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10]),
     calendar="proleptic_gregorian",
@@ -155,9 +149,7 @@ local.xarray_time.convert_year_to_time(
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
     calendar="proleptic_gregorian",
-).plot(
-    ax=axes[2]
-)  # type: ignore
+).plot(ax=axes[2])  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
     calendar="proleptic_gregorian",
@@ -180,8 +172,7 @@ atol = max(
     (
         # # TODO: dial this back down
         # 1e-6 * global_annual_mean.mean().data.m
-        1e-1
-        * global_annual_mean.mean().data.m
+        1e-1 * global_annual_mean.mean().data.m
     ),  # Approximately match the tolerance of our mean-preserving interpolation algorithm
     5e-1,
 )
@@ -256,12 +247,12 @@ if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
 
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly, calendar="proleptic_gregorian"
-).plot(ax=axes[0], hue="eof")
-local.xarray_time.convert_year_to_time(
-    pcs_annual, calendar="proleptic_gregorian"
-).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0])
+local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(
+    ax=axes[0], hue="eof"
+)
+local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
+    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0]
+)
 
 local.xarray_time.convert_year_month_to_time(
     pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
@@ -303,21 +294,13 @@ local.xarray_time.convert_year_month_to_time(
 # ### Save
 
 # %%
-config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-global_annual_mean_monthly.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_monthly_file
-)
+config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean_monthly.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_monthly_file)
 global_annual_mean_monthly
 
 # %%
-config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-seasonality_full.pint.dequantify().to_netcdf(
-    config_step.seasonality_allyears_fifteen_degree_monthly_file
-)
+config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_allyears_fifteen_degree_monthly_file)
 seasonality_full
 
 # %%

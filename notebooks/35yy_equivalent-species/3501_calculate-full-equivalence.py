@@ -45,9 +45,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Q = pint.get_application_registry().Quantity  # type: ignore
 
@@ -69,9 +67,7 @@ step_config_id: str = "cfc12eq"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 gas_raw = config_step.gas.replace("eq", "")
 
 config_grid_crunching_included_gases = [
@@ -170,9 +166,7 @@ for key, attr_to_grab in (
         if loaded.name != crunch_gas_config.gas:
             raise AssertionError
 
-        loaded_erf = (loaded * RADIATIVE_EFFICIENCIES[crunch_gas_config.gas]).pint.to(
-            "W / m^2"
-        )
+        loaded_erf = (loaded * RADIATIVE_EFFICIENCIES[crunch_gas_config.gas]).pint.to("W / m^2")
 
         print(f"Adding {loaded.name}")
         included_species.append(loaded.name)
@@ -182,17 +176,11 @@ for key, attr_to_grab in (
             total_erf = loaded_erf
         else:
             common_years = np.intersect1d(total_erf["year"], loaded_erf["year"])
-            total_erf = total_erf.sel(year=common_years) + loaded_erf.sel(
-                year=common_years
-            )
+            total_erf = total_erf.sel(year=common_years) + loaded_erf.sel(year=common_years)
 
-    total = (total_erf / RADIATIVE_EFFICIENCIES[gas_raw]).pint.to(
-        raw_global_mean_monthly.data.units
-    )
+    total = (total_erf / RADIATIVE_EFFICIENCIES[gas_raw]).pint.to(raw_global_mean_monthly.data.units)
     total.name = config_step.gas
-    total.attrs[
-        "commment"
-    ] = f"{config_step.gas} is the equivalent of {', '.join(included_species)}"
+    total.attrs["commment"] = f"{config_step.gas} is the equivalent of {', '.join(included_species)}"
     equivalents[key] = total
     # Set metadata about components etc. here
     print()
@@ -210,9 +198,7 @@ local.xarray_time.convert_year_month_to_time(
 
 # %%
 config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["fifteen_degree"].pint.dequantify().to_netcdf(
-    config_step.fifteen_degree_monthly_file
-)
+equivalents["fifteen_degree"].pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
 equivalents["fifteen_degree"]
 
 # # %%
@@ -224,23 +210,17 @@ equivalents["fifteen_degree"]
 
 # %%
 config_step.global_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["global_mean_monthly"].pint.dequantify().to_netcdf(
-    config_step.global_mean_monthly_file
-)
+equivalents["global_mean_monthly"].pint.dequantify().to_netcdf(config_step.global_mean_monthly_file)
 equivalents["global_mean_monthly"]
 
 # %%
 config_step.hemispheric_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["hemispheric_mean_monthly"].pint.dequantify().to_netcdf(
-    config_step.hemispheric_mean_monthly_file
-)
+equivalents["hemispheric_mean_monthly"].pint.dequantify().to_netcdf(config_step.hemispheric_mean_monthly_file)
 equivalents["hemispheric_mean_monthly"]
 
 # %%
 config_step.global_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
-equivalents["global_mean_annual_mean"].pint.dequantify().to_netcdf(
-    config_step.global_mean_annual_mean_file
-)
+equivalents["global_mean_annual_mean"].pint.dequantify().to_netcdf(config_step.global_mean_annual_mean_file)
 equivalents["global_mean_annual_mean"]
 
 # %%

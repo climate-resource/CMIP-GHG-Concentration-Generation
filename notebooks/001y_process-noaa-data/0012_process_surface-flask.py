@@ -60,13 +60,9 @@ step_config_id: str = "sf6"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
     step="retrieve_and_extract_noaa_data",
@@ -102,9 +98,7 @@ def get_site_code_grouped_dict(indf: pd.DataFrame) -> dict[str, pd.DataFrame]:
         Dictionary where keys are site codes and values are :obj:`pd.DataFrame`
         for that site code
     """
-    return {
-        str(site_code): scdf for site_code, scdf in indf.groupby("site_code_filename")
-    }
+    return {str(site_code): scdf for site_code, scdf in indf.groupby("site_code_filename")}
 
 
 df_events_sc_g = get_site_code_grouped_dict(df_events)
@@ -112,8 +106,7 @@ df_months_sc_g = get_site_code_grouped_dict(df_months)
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 
@@ -132,9 +125,7 @@ for large deviations.
 
 
 monthly_dfs_with_loc_l = []
-for site_code_filename, site_monthly_df in tqdman.tqdm(
-    df_months_sc_g.items(), desc="Monthly sites"
-):
+for site_code_filename, site_monthly_df in tqdman.tqdm(df_months_sc_g.items(), desc="Monthly sites"):
     no_lat_site_code_length = 3
     if len(site_code_filename) == no_lat_site_code_length:
         site_events_df = df_events_sc_g[site_code_filename]
@@ -168,8 +159,7 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
 
         site_events_df = df_events_sc_g[site_code_indicator]
         site_events_df = site_events_df[
-            (site_events_df["latitude"] >= lat_band[0])
-            & (site_events_df["latitude"] <= lat_band[1])
+            (site_events_df["latitude"] >= lat_band[0]) & (site_events_df["latitude"] <= lat_band[1])
         ].copy()
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
@@ -228,9 +218,7 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     lon_min = site_events_df.groupby(loc_calc_cols)["longitude"].min()
 
     # Have longitudes going across the 180 line, need to flip before averaging
-    flip_lons = (site_events_df["longitude"] >= 0).any() and (
-        site_events_df["longitude"] < 0
-    ).any()
+    flip_lons = (site_events_df["longitude"] >= 0).any() and (site_events_df["longitude"] < 0).any()
 
     lat_max = site_events_df.groupby(loc_calc_cols)["latitude"].max()
     lat_min = site_events_df.groupby(loc_calc_cols)["latitude"].min()
@@ -261,17 +249,13 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     locs_stds = site_events_df.groupby(loc_calc_cols)[spatial_cols].std()
 
     if locs_stds.max().max() > stationary_site_movement_tolerance:
-        print(
-            f"Large move in location of station {site_code_filename}:\n{locs_stds.max()}"
-        )
+        print(f"Large move in location of station {site_code_filename}:\n{locs_stds.max()}")
 
     if flip_lons:
         # undo the operation (longitudes that are greater than 180 are returned back to being negative)
         locs_means["longitude"][locs_means["longitude"] > 180] -= 360  # noqa: PLR2004
 
-    lat_big_deviation_threshold = (
-        10  # above this, probably a sign of a processing problem
-    )
+    lat_big_deviation_threshold = 10  # above this, probably a sign of a processing problem
     if (lat_max - lat_min >= lat_big_deviation_threshold).any():
         raise NotImplementedError()
 
@@ -320,16 +304,12 @@ for site_code_filename, site_monthly_df in tqdman.tqdm(
     # > mean directory because sparse data or a short record does not allow a
     # > reasonable curve fit.  Also, if there are 3 or more consecutive months
     # > without data, monthly means are not calculated for these months.
-    site_monthly_with_loc[spatial_cols] = site_monthly_with_loc[
-        spatial_cols
-    ].interpolate()
+    site_monthly_with_loc[spatial_cols] = site_monthly_with_loc[spatial_cols].interpolate()
     assert not site_monthly_with_loc.isna().any().any()
 
     monthly_dfs_with_loc_l.append(site_monthly_with_loc)
 
-monthly_dfs_with_loc = (
-    pd.concat(monthly_dfs_with_loc_l).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
-)
+monthly_dfs_with_loc = pd.concat(monthly_dfs_with_loc_l).sort_index().reset_index()[PROCESSED_DATA_COLUMNS]
 
 # %%
 # Handy check to see if all months have at least some data
@@ -343,17 +323,13 @@ pd.MultiIndex.from_product([range(1967, 2022 + 1), range(1, 13)]).difference(  #
 # %%
 only_events_stations = set(df_events_sc_g.keys()) - set(df_months_sc_g.keys())
 
-for station in tqdman.tqdm(
-    sorted(only_events_stations), desc="Stations with only events data"
-):
+for station in tqdman.tqdm(sorted(only_events_stations), desc="Stations with only events data"):
     header = f"Examining {station}"
     print("=" * len(header))
     print(header)
     monthly_same_start = [k for k in df_months_sc_g.keys() if k.startswith(station)]
     if monthly_same_start:
-        print(
-            f"Assuming that {station} is captured in monthly summaries: {monthly_same_start}"
-        )
+        print(f"Assuming that {station} is captured in monthly summaries: {monthly_same_start}")
         print("=" * len(header))
         print()
         continue

@@ -49,17 +49,13 @@ def check_data_columns_for_binned_data_interpolation(indf: pd.DataFrame) -> None
     AssertionError
         Required columns are missing
     """
-    missing = set(indf.columns).difference(
-        {"gas", "lat_bin", "lon_bin", "month", "unit", "value", "year"}
-    )
+    missing = set(indf.columns).difference({"gas", "lat_bin", "lon_bin", "month", "unit", "value", "year"})
     if missing:
         msg = f"Missing required columns: {missing=}"
         raise AssertionError(msg)
 
 
-def get_round_the_world_grid(
-    inv: npt.NDArray[np.float64], is_lon: bool = False
-) -> npt.NDArray[np.float64]:
+def get_round_the_world_grid(inv: npt.NDArray[np.float64], is_lon: bool = False) -> npt.NDArray[np.float64]:
     """
     Get the grid required for 'round the world' interpolation
 
@@ -84,9 +80,7 @@ def get_round_the_world_grid(
     return out
 
 
-def interpolate(
-    ymdf: pd.DataFrame, value_column: str = "value"
-) -> npt.NDArray[np.float64]:
+def interpolate(ymdf: pd.DataFrame, value_column: str = "value") -> npt.NDArray[np.float64]:
     """
     Interpolate binned values
 

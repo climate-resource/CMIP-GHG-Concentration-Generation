@@ -118,13 +118,7 @@ class PointSelector:
             )
 
             selected_x.append(selected)
-            selected_y.append(
-                y_pool[
-                    np.searchsorted(
-                        x_pool.to(selected.units).m, selected.m, side="left"
-                    )
-                ]
-            )
+            selected_y.append(y_pool[np.searchsorted(x_pool.to(selected.units).m, selected.m, side="left")])
 
         selected_x_stacked: pint.UnitRegistry.Quantity = np.hstack(selected_x)  # type: ignore
         selected_y_stacked: pint.UnitRegistry.Quantity = np.hstack(selected_y)  # type: ignore

@@ -37,9 +37,7 @@ def check_processed_data_columns_for_spatial_binning(indf: pd.DataFrame) -> None
     AssertionError
         Required columns are missing.
     """
-    missing_latitudinal_mean_cols = set(COLUMNS_REQUIRED_FOR_BINNING) - set(
-        indf.columns
-    )
+    missing_latitudinal_mean_cols = set(COLUMNS_REQUIRED_FOR_BINNING) - set(indf.columns)
     if missing_latitudinal_mean_cols:
         msg = f"{missing_latitudinal_mean_cols=}"
         raise AssertionError(msg)

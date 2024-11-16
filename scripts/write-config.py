@@ -247,9 +247,7 @@ def create_dev_config() -> Config:
         )
     )
 
-    smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("co2", "ch4", "n2o"), n_draws=250
-    )
+    smooth_law_dome_data = create_smooth_law_dome_data_config(gases=("co2", "ch4", "n2o"), n_draws=250)
 
     monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
         gases=gases_to_write,
@@ -278,9 +276,7 @@ def create_dev_config() -> Config:
         smooth_law_dome_data=smooth_law_dome_data,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
-        crunch_equivalent_species=create_crunch_equivalent_species_config(
-            gases=equivalent_species_to_write
-        ),
+        crunch_equivalent_species=create_crunch_equivalent_species_config(gases=equivalent_species_to_write),
         write_input4mips=create_write_input4mips_config(
             # TODO: test the equivalent species in CI too somehow
             gases=(*gases_to_write, *equivalent_species_to_write),
@@ -324,15 +320,11 @@ def create_ci_config() -> Config:
         )
     )
 
-    smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("ch4",), n_draws=10
-    )
+    smooth_law_dome_data = create_smooth_law_dome_data_config(gases=("ch4",), n_draws=10)
 
-    monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(
-            gases=gases_to_write,
-            gases_long_poleward_extension=gases_long_poleward_extension,
-        )
+    monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
+        gases=gases_to_write,
+        gases_long_poleward_extension=gases_long_poleward_extension,
     )
 
     return Config(
@@ -441,15 +433,11 @@ def create_ci_nightly_config() -> Config:
         )
     )
 
-    smooth_law_dome_data = create_smooth_law_dome_data_config(
-        gases=("co2", "ch4", "n2o"), n_draws=10
-    )
+    smooth_law_dome_data = create_smooth_law_dome_data_config(gases=("co2", "ch4", "n2o"), n_draws=10)
 
-    monthly_fifteen_degree_pieces_configs = (
-        create_monthly_fifteen_degree_pieces_configs(
-            gases=gases_to_write,
-            gases_long_poleward_extension=gases_long_poleward_extension,
-        )
+    monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
+        gases=gases_to_write,
+        gases_long_poleward_extension=gases_long_poleward_extension,
     )
 
     return Config(

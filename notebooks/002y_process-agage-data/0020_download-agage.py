@@ -53,18 +53,14 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = (
-    "hfc152a_gc-ms-medusa_monthly"  # config ID to select for this branch
-)
+step_config_id: str = "hfc152a_gc-ms-medusa_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
 
 # %%
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown]
 # ## Action
@@ -85,11 +81,7 @@ soup_base = BeautifulSoup(
 soup_base
 
 # %%
-gas_search = (
-    AGAGE_GAS_MAPPING[config_step.gas]
-    if config_step.gas in AGAGE_GAS_MAPPING
-    else config_step.gas
-)
+gas_search = AGAGE_GAS_MAPPING[config_step.gas] if config_step.gas in AGAGE_GAS_MAPPING else config_step.gas
 print(f"Searching for {gas_search} in URLs")
 
 url_sources = []
@@ -124,15 +116,12 @@ for link in soup_base.find_all("a"):
             soup_loc_gas_format_data_files = [
                 link.get("href")
                 for link in soup_loc_file_format.find_all("a")
-                if link.get("href").endswith(".txt")
-                and f"_{gas_search}_" in link.get("href")
+                if link.get("href").endswith(".txt") and f"_{gas_search}_" in link.get("href")
             ]
             if config_step.gas == "h2":
                 # Weird, not sure what this file is meant for
                 soup_loc_gas_format_data_files = [
-                    file
-                    for file in soup_loc_gas_format_data_files
-                    if "h2_pdd" not in file
+                    file for file in soup_loc_gas_format_data_files if "h2_pdd" not in file
                 ]
 
             if len(soup_loc_gas_format_data_files) == 0:
@@ -149,9 +138,7 @@ for link in soup_base.find_all("a"):
 
             soup_loc_gas_format_data_file = soup_loc_gas_format_data_files[0]
 
-            data_file_url = (
-                f"{start_url}/{loc}{file_format}{soup_loc_gas_format_data_file}"
-            )
+            data_file_url = f"{start_url}/{loc}{file_format}{soup_loc_gas_format_data_file}"
             print(f"{data_file_url=}")
             url_sources.append(URLSource(url=data_file_url, known_hash="placeholder"))
 
@@ -187,9 +174,7 @@ if config_step.generate_hashes:
 # ### Make sure we're not missing any sources
 
 # %%
-missing_urls = set(v.url for v in url_sources) - set(
-    v.url for v in config_step.download_urls
-)
+missing_urls = set(v.url for v in url_sources) - set(v.url for v in config_step.download_urls)
 if missing_urls:
     raise AssertionError(  # noqa: TRY003
         f"You are missing download urls for: {missing_urls}"

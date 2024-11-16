@@ -58,9 +58,7 @@ step_config_id: str = "chcl3"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -113,19 +111,15 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
     if np.isnan(interpolated_ym).any():
         if config_step.allow_long_poleward_extension:
             all_data_with_bins_ym = all_data_with_bins[
-                (all_data_with_bins["year"] == year)
-                & (all_data_with_bins["month"] == month)
+                (all_data_with_bins["year"] == year) & (all_data_with_bins["month"] == month)
             ]
 
             # TODO: change this so that it just sets the value at the pole,
             # then tries to interpolate again.
-            furthest_south_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[
-                0
-            ].min()
+            furthest_south_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[0].min()
             if furthest_south_idx > 0:
                 south_input = all_data_with_bins_ym[
-                    all_data_with_bins_ym["latitude"]
-                    == all_data_with_bins_ym["latitude"].min()
+                    all_data_with_bins_ym["latitude"] == all_data_with_bins_ym["latitude"].min()
                 ]
                 south_pole_value = south_input["value"].mean()
                 interpolated_ym[:, :furthest_south_idx] = south_pole_value
@@ -133,13 +127,10 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
                 msg = f"Fixed South Pole with poleward extension of {south_pole_value}"
                 print(msg)
 
-            furthest_north_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[
-                0
-            ].max()
+            furthest_north_idx = np.where(~np.isnan(interpolated_ym.T).all(axis=1))[0].max()
             if furthest_north_idx < interpolated_ym.T.shape[0] - 1:
                 north_input = all_data_with_bins_ym[
-                    all_data_with_bins_ym["latitude"]
-                    == all_data_with_bins_ym["latitude"].max()
+                    all_data_with_bins_ym["latitude"] == all_data_with_bins_ym["latitude"].max()
                 ]
                 north_pole_value = north_input["value"].mean()
                 interpolated_ym[:, furthest_north_idx:] = north_pole_value
@@ -159,8 +150,7 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 
             else:
                 all_data_with_bins_ym = all_data_with_bins[
-                    (all_data_with_bins["year"] == year)
-                    & (all_data_with_bins["month"] == month)
+                    (all_data_with_bins["year"] == year) & (all_data_with_bins["month"] == month)
                 ]
 
                 north_pole_has_nan = np.isnan(interpolated_ym.T[-1, :]).any()
@@ -168,8 +158,7 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 
                 if north_pole_has_nan:
                     north_input = all_data_with_bins_ym[
-                        all_data_with_bins_ym["latitude"]
-                        == all_data_with_bins_ym["latitude"].max()
+                        all_data_with_bins_ym["latitude"] == all_data_with_bins_ym["latitude"].max()
                     ]
                     north_pole_value = north_input["value"].mean()
                     interpolated_ym[:, -1] = north_pole_value
@@ -179,8 +168,7 @@ for (year, month), ymdf in tqdman.tqdm(bin_averages.groupby(["year", "month"])):
 
                 if south_pole_has_nan:
                     south_input = all_data_with_bins_ym[
-                        all_data_with_bins_ym["latitude"]
-                        == all_data_with_bins_ym["latitude"].min()
+                        all_data_with_bins_ym["latitude"] == all_data_with_bins_ym["latitude"].min()
                     ]
                     south_pole_value = south_input["value"].mean()
                     interpolated_ym[:, 0] = south_pole_value
@@ -240,8 +228,6 @@ out
 # ### Save
 
 # %%
-config_step.observational_network_interpolated_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.observational_network_interpolated_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_netcdf(config_step.observational_network_interpolated_file)
 out

@@ -20,21 +20,15 @@ RETRIEVE_AND_PROCESS_LAW_DOME_STEPS = [
         step_config_id="only",
         doi="https://doi.org/10.25919/5bfe29ff807fb",
         raw_dir=Path("data/raw/law_dome"),
-        processed_data_with_loc_file=Path(
-            "data/interim/law_dome/law_dome_with_location.csv"
-        ),
+        processed_data_with_loc_file=Path("data/interim/law_dome/law_dome_with_location.csv"),
         files_md5_sum={
-            Path(
-                "data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx"
-            ): "f7dd24e36565b2e213b20f90c88c990e"
+            Path("data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx"): "f7dd24e36565b2e213b20f90c88c990e"
         },
     )
 ]
 
 
-def create_smooth_law_dome_data_config(
-    gases: tuple[str, ...], n_draws: int
-) -> list[SmoothLawDomeDataConfig]:
+def create_smooth_law_dome_data_config(gases: tuple[str, ...], n_draws: int) -> list[SmoothLawDomeDataConfig]:
     """
     Create configuration for smoothing Law Dome data
 
@@ -63,10 +57,8 @@ def create_smooth_law_dome_data_config(
                     step_config_id=gas,
                     gas=gas,
                     n_draws=n_draws,
-                    smoothed_draws_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_all-draws.csv",
-                    smoothed_median_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_median.csv",
+                    smoothed_draws_file=interim_dir / f"law-dome_{gas}_smoothed_all-draws.csv",
+                    smoothed_median_file=interim_dir / f"law-dome_{gas}_smoothed_median.csv",
                     noise_adder=NoiseAdderPercentageXNoise(
                         x_ref=Q(2024, "yr"),
                         x_relative_random_error=Q(50, "yr") / Q(2000, "yr"),
@@ -86,10 +78,8 @@ def create_smooth_law_dome_data_config(
                     step_config_id=gas,
                     gas=gas,
                     n_draws=n_draws,
-                    smoothed_draws_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_all-draws.csv",
-                    smoothed_median_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_median.csv",
+                    smoothed_draws_file=interim_dir / f"law-dome_{gas}_smoothed_all-draws.csv",
+                    smoothed_median_file=interim_dir / f"law-dome_{gas}_smoothed_median.csv",
                     noise_adder=NoiseAdderPercentageXNoise(
                         x_ref=Q(2024, "yr"),
                         x_relative_random_error=Q(60, "yr") / Q(2000, "yr"),
@@ -109,10 +99,8 @@ def create_smooth_law_dome_data_config(
                     step_config_id=gas,
                     gas=gas,
                     n_draws=n_draws,
-                    smoothed_draws_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_all-draws.csv",
-                    smoothed_median_file=interim_dir
-                    / f"law-dome_{gas}_smoothed_median.csv",
+                    smoothed_draws_file=interim_dir / f"law-dome_{gas}_smoothed_all-draws.csv",
+                    smoothed_median_file=interim_dir / f"law-dome_{gas}_smoothed_median.csv",
                     noise_adder=NoiseAdderPercentageXNoise(
                         x_ref=Q(2024, "yr"),
                         x_relative_random_error=Q(90, "yr") / Q(2000, "yr"),

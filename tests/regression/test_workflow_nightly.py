@@ -14,9 +14,7 @@ from local.testing import get_regression_values
 
 
 @pytest.mark.nightly
-def test_workflow_nightly(
-    nightly_workflow_output_info, data_regression, ndarrays_regression
-):
+def test_workflow_nightly(nightly_workflow_output_info, data_regression, ndarrays_regression):
     """
     Test the nightly workflow
     """

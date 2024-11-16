@@ -54,9 +54,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %%
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown]
 # ## Action
@@ -81,9 +79,7 @@ import xarray as xr
 
 comment = xr.load_dataset(
     config_step.hadcrut5.raw_dir / config_step.hadcrut5.download_url.url.split("/")[-1]
-).attrs[
-    "comment"
-]  # ["tas_mean"].plot.line()
+).attrs["comment"]  # ["tas_mean"].plot.line()
 if "1961-1990 climatology" in comment:
     ref_start_year = 1961
     ref_end_year = 1990

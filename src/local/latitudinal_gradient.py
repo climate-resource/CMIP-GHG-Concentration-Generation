@@ -79,9 +79,7 @@ def calculate_eofs_pcs(
         ),
     ).pint.quantify()
 
-    res = xr.merge(
-        [xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts"
-    )
+    res = xr.merge([xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts")
 
     # One final check
     if not np.allclose(

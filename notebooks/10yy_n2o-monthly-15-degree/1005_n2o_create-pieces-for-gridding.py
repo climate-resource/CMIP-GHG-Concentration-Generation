@@ -52,9 +52,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -76,9 +74,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -109,10 +105,8 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-global_annual_mean_monthly = (
-    local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-        global_annual_mean
-    )
+global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+    global_annual_mean
 )
 global_annual_mean_monthly
 
@@ -124,9 +118,9 @@ if isinstance(axes, matplotlib.axes.Axes):
 local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
     ax=axes[0]
 )
-local.xarray_time.convert_year_to_time(
-    global_annual_mean, calendar="proleptic_gregorian"
-).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0])
+local.xarray_time.convert_year_to_time(global_annual_mean, calendar="proleptic_gregorian").plot.scatter(
+    x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
+)
 
 local.xarray_time.convert_year_month_to_time(  # type: ignore
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
@@ -159,8 +153,7 @@ seasonality_full = global_annual_mean * obs_network_seasonality
 atol = (
     # # TODO: dial this back down
     # 1e-6 * global_annual_mean.mean().data.m
-    1e-4
-    * global_annual_mean.mean().data.m
+    1e-4 * global_annual_mean.mean().data.m
 )  # Approximately match the tolerance of our mean-preserving interpolation algorithm
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
@@ -173,13 +166,13 @@ fig, axes = plt.subplots(ncols=2, sharey=True)
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
-local.xarray_time.convert_year_month_to_time(
-    seasonality_full.sel(year=seasonality_full["year"][-6:])
-).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
+local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=seasonality_full["year"][-6:])).sel(
+    lat=[-82.5, 7.5, 82.5]
+).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
 
-local.xarray_time.convert_year_month_to_time(
-    seasonality_full.sel(year=range(1984, 1986))
-).sel(lat=[-82.5, 7.5, 82.5]).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
+local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=range(1984, 1986))).sel(
+    lat=[-82.5, 7.5, 82.5]
+).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
 
 plt.tight_layout()
 
@@ -190,9 +183,9 @@ local.xarray_time.convert_year_month_to_time(
 ).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
 
 # %%
-local.xarray_time.convert_year_month_to_time(
-    seasonality_full, calendar="proleptic_gregorian"
-).plot(x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True)
+local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="proleptic_gregorian").plot(
+    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
+)
 
 # %% [markdown]
 # ### Latitudinal gradient, monthly
@@ -221,12 +214,12 @@ if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
 
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly, calendar="proleptic_gregorian"
-).plot(ax=axes[0], hue="eof")
-local.xarray_time.convert_year_to_time(
-    pcs_annual, calendar="proleptic_gregorian"
-).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0])
+local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(
+    ax=axes[0], hue="eof"
+)
+local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
+    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0]
+)
 
 local.xarray_time.convert_year_month_to_time(
     pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
@@ -268,21 +261,13 @@ local.xarray_time.convert_year_month_to_time(
 # ### Save
 
 # %%
-config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-global_annual_mean_monthly.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_monthly_file
-)
+config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean_monthly.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_monthly_file)
 global_annual_mean_monthly
 
 # %%
-config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-seasonality_full.pint.dequantify().to_netcdf(
-    config_step.seasonality_allyears_fifteen_degree_monthly_file
-)
+config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_allyears_fifteen_degree_monthly_file)
 seasonality_full
 
 # %%

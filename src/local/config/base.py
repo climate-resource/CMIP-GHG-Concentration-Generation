@@ -85,219 +85,117 @@ class Config:
     """
 
     retrieve_misc_data: list[RetrieveMiscDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the retrieve step"""
 
     retrieve_and_extract_noaa_data: list[RetrieveExtractNOAADataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting NOAA data"""
 
     process_noaa_surface_flask_data: list[ProcessNOAASurfaceFlaskDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA surface flask data"""
 
     process_noaa_in_situ_data: list[ProcessNOAAInSituDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA in-situ data"""
 
     process_noaa_hats_data: list[ProcessNOAAHATSDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA HATS data"""
 
     retrieve_and_extract_agage_data: list[RetrieveExtractAGAGEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting AGAGE data"""
 
     retrieve_and_extract_gage_data: list[RetrieveExtractGAGEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting GAGE data"""
 
     retrieve_and_extract_ale_data: list[RetrieveExtractALEDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and extracting ALE data"""
 
     retrieve_and_process_law_dome_data: list[RetrieveProcessLawDomeConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing Law Dome data"""
 
     retrieve_and_process_scripps_data: list[RetrieveProcessScrippsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing Scripps data"""
 
     retrieve_and_process_epica_data: list[RetrieveProcessEPICAConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing EPICA data"""
 
     retrieve_and_process_neem_data: list[RetrieveProcessNEEMConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing NEEM data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for the plotting step"""
 
     compile_historical_emissions: list[CompileHistoricalEmissionsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for the compilation of historical emissions data"""
 
     smooth_law_dome_data: list[SmoothLawDomeDataConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for the smoothing of Law Dome data step"""
 
-    calculate_co2_monthly_fifteen_degree_pieces: list[
-        CalculateCO2MonthlyFifteenDegreePieces
-    ] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+    calculate_co2_monthly_fifteen_degree_pieces: list[CalculateCO2MonthlyFifteenDegreePieces] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for calculating the 15 degree, monthly data for CO2"""
 
-    calculate_ch4_monthly_fifteen_degree_pieces: list[
-        CalculateCH4MonthlyFifteenDegreePieces
-    ] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+    calculate_ch4_monthly_fifteen_degree_pieces: list[CalculateCH4MonthlyFifteenDegreePieces] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for calculating the 15 degree, monthly data for CH4"""
 
-    calculate_n2o_monthly_fifteen_degree_pieces: list[
-        CalculateN2OMonthlyFifteenDegreePieces
-    ] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+    calculate_n2o_monthly_fifteen_degree_pieces: list[CalculateN2OMonthlyFifteenDegreePieces] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for calculating the 15 degree, monthly data for N2O"""
 
-    calculate_sf6_like_monthly_fifteen_degree_pieces: list[
-        CalculateSF6LikeMonthlyFifteenDegreePieces
-    ] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+    calculate_sf6_like_monthly_fifteen_degree_pieces: list[CalculateSF6LikeMonthlyFifteenDegreePieces] = (
+        field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
     )
     """Configurations to use for calculating the 15 degree, monthly data for gases we handle like SF6"""
 
-    calculate_c4f10_like_monthly_fifteen_degree_pieces: list[
-        CalculateC4F10LikeMonthlyFifteenDegreePieces
-    ] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+    calculate_c4f10_like_monthly_fifteen_degree_pieces: list[CalculateC4F10LikeMonthlyFifteenDegreePieces] = (
+        field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
     )
     """Configurations to use for calculating the 15 degree, monthly data for gases we handle like C4F10"""
 
     crunch_grids: list[GridCrunchingConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the grid crunching step"""
 
     crunch_equivalent_species: list[EquivalentSpeciesCrunchingConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the equivalent species crunching step"""
 
     write_input4mips: list[WriteInput4MIPsConfig] = field(
-        validator=[
-            make_attrs_validator_compatible_single_input(
-                assert_step_config_ids_are_unique
-            )
-        ]
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use with the write input4MIPs step"""
 

@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     if config_step.gas in ("co2", "ch4", "n2o"):
         step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
@@ -101,9 +99,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="crunch_grids",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

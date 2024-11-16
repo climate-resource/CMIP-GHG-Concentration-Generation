@@ -65,9 +65,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -87,9 +85,7 @@ step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 if "eq" in config_step.gas:
     config_crunch_grids = get_config_for_step_id(
@@ -159,13 +155,9 @@ def chop_time_axis(inp: xr.DataArray) -> xr.DataArray:
 fifteen_degree_data_raw_chopped = chop_time_axis(fifteen_degree_data_raw)
 # half_degree_data_raw_chopped = chop_time_axis(half_degree_data_raw)
 global_mean_monthly_data_raw_chopped = chop_time_axis(global_mean_monthly_data_raw)
-hemispheric_mean_monthly_data_raw_chopped = chop_time_axis(
-    hemispheric_mean_monthly_data_raw
-)
+hemispheric_mean_monthly_data_raw_chopped = chop_time_axis(hemispheric_mean_monthly_data_raw)
 global_mean_annual_data_raw_chopped = chop_time_axis(global_mean_annual_data_raw)
-hemispheric_mean_annual_data_raw_chopped = chop_time_axis(
-    hemispheric_mean_annual_data_raw
-)
+hemispheric_mean_annual_data_raw_chopped = chop_time_axis(hemispheric_mean_annual_data_raw)
 
 
 # %% [markdown]
@@ -182,10 +174,7 @@ def get_displayable_dataarray(inp: xr.DataArray) -> xr.DataArray:
     """
     res = inp.copy()
     res["time"] = np.array(
-        [
-            cftime.datetime(v.year, v.month, v.day, v.hour, calendar="standard")
-            for v in inp["time"].values
-        ]
+        [cftime.datetime(v.year, v.month, v.day, v.hour, calendar="standard") for v in inp["time"].values]
     )
 
     return res
@@ -193,9 +182,7 @@ def get_displayable_dataarray(inp: xr.DataArray) -> xr.DataArray:
 
 # %%
 day = 15
-fifteen_degree_data = local.xarray_time.convert_year_month_to_time(
-    fifteen_degree_data_raw_chopped, day=day
-)
+fifteen_degree_data = local.xarray_time.convert_year_month_to_time(fifteen_degree_data_raw_chopped, day=day)
 # half_degree_data = local.xarray_time.convert_year_month_to_time(
 #     half_degree_data_raw_chopped, day=day
 # )
@@ -369,17 +356,13 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
     desc="Resolutions",
 ):
     # TODO: calculate nominal resolution rather than guessing
-    grid_info = " x ".join(
-        [f"{dat_resolution[v].size} ({v})" for v in dat_resolution.dims]
-    )
+    grid_info = " x ".join([f"{dat_resolution[v].size} ({v})" for v in dat_resolution.dims])
     print(f"Processing {grid_info} grid")
 
     variable_name_raw = str(dat_resolution.name)
 
     variable_name_output = gas_to_cmip_variable_renaming[variable_name_raw]
-    ds_to_write = dat_resolution.to_dataset().rename_vars(
-        {variable_name_raw: variable_name_output}
-    )
+    ds_to_write = dat_resolution.to_dataset().rename_vars({variable_name_raw: variable_name_output})
 
     dimensions = tuple(str(v) for v in ds_to_write[variable_name_output].dims)
     print(f"{grid_label=}")
@@ -415,9 +398,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         ),
         cvs=cvs,
         standard_and_or_long_names={
-            variable_name_output: {
-                "standard_name": gas_to_standard_name_renaming[variable_name_raw]
-            },
+            variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
         },
         dataset_category="GHGConcentrations",
         realm="atmos",

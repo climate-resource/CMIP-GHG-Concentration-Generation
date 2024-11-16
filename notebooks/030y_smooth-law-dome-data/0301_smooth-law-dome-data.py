@@ -64,9 +64,7 @@ step_config_id: str = "n2o"  # config ID to select for this branch
 
 # %%
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 config_process_law_dome = get_config_for_step_id(
     config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
@@ -448,9 +446,7 @@ for i in tqdman.tqdm(range(config_step.n_draws)):
         selected_points_x = selected_points[0]
         selected_points_y = selected_points[1]
 
-        weights = get_weights(
-            selected_points_x, target_year, window_width=point_selector.window_width
-        )
+        weights = get_weights(selected_points_x, target_year, window_width=point_selector.window_width)
 
         regression_result = weighted_quantile_regressor.fit(
             x=selected_points_x,
@@ -603,12 +599,8 @@ smoothed_draws_df
 
 # %%
 pdt.assert_series_equal(
-    smoothed_draws_df.groupby(["year", "unit", "gas", "latitude", "longitude"])[
-        "value"
-    ].median(),
-    smoothed_median_df.set_index(["year", "unit", "gas", "latitude", "longitude"])[
-        "value"
-    ],
+    smoothed_draws_df.groupby(["year", "unit", "gas", "latitude", "longitude"])["value"].median(),
+    smoothed_median_df.set_index(["year", "unit", "gas", "latitude", "longitude"])["value"],
 )
 
 # %%

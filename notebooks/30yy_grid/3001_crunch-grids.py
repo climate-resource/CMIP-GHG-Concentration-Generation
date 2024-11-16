@@ -55,9 +55,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -77,9 +75,7 @@ step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 if config_step.gas in ("co2", "ch4", "n2o"):
     step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
@@ -143,16 +139,12 @@ seasonality_monthly_use_month_mean = seasonality_monthly_use.mean("month")
 if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
     # Force the data to zero. This is a bit of a hack, but also basically fine.
     print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
-    seasonality_monthly_use = (
-        seasonality_monthly_use - seasonality_monthly_use_month_mean
-    )
+    seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
 
 else:
     print("TODO: raise an error here instead rather than forcing a shift")
     print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
-    seasonality_monthly_use = (
-        seasonality_monthly_use - seasonality_monthly_use_month_mean
-    )
+    seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
 
 
 seasonality_monthly_use.mean("month")
@@ -172,15 +164,11 @@ fifteen_degree_data = LatitudeSeasonalityGridder(gridding_values).calculate(
 fifteen_degree_data
 
 # %%
-fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(
-    fifteen_degree_data
-)
+fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(fifteen_degree_data)
 
 # %%
 print("Colour mesh plot")
-fifteen_degree_data_time_axis.plot.pcolormesh(
-    x="time", y="lat", cmap="magma_r", levels=100
-)
+fifteen_degree_data_time_axis.plot.pcolormesh(x="time", y="lat", cmap="magma_r", levels=100)
 plt.show()
 
 # %%
@@ -190,9 +178,7 @@ plt.show()
 
 # %%
 print("Concs at different latitudes")
-fifteen_degree_data_time_axis.sel(lat=[-87.5, 0, 87.5], method="nearest").plot.line(
-    hue="lat", alpha=0.4
-)
+fifteen_degree_data_time_axis.sel(lat=[-87.5, 0, 87.5], method="nearest").plot.line(hue="lat", alpha=0.4)
 plt.show()
 
 # %%
@@ -312,9 +298,7 @@ plt.show()
 # ### Global-mean
 
 # %%
-global_mean_monthly = local.xarray_space.calculate_global_mean_from_lon_mean(
-    fifteen_degree_data
-)
+global_mean_monthly = local.xarray_space.calculate_global_mean_from_lon_mean(fifteen_degree_data)
 global_mean_monthly
 
 # %%
@@ -331,9 +315,7 @@ for lat_use, lat_sel in (
     (-45.0, fifteen_degree_data["lat"] < 0),
     (45.0, fifteen_degree_data["lat"] > 0),
 ):
-    tmp = local.xarray_space.calculate_global_mean_from_lon_mean(
-        fifteen_degree_data.sel(lat=lat_sel)
-    )
+    tmp = local.xarray_space.calculate_global_mean_from_lon_mean(fifteen_degree_data.sel(lat=lat_sel))
     tmp = tmp.assign_coords(lat=lat_use)
     hemispheric_means_l.append(tmp)
 
@@ -380,21 +362,15 @@ global_mean_monthly
 
 # %%
 config_step.hemispheric_mean_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-hemispheric_means_monthly.pint.dequantify().to_netcdf(
-    config_step.hemispheric_mean_monthly_file
-)
+hemispheric_means_monthly.pint.dequantify().to_netcdf(config_step.hemispheric_mean_monthly_file)
 hemispheric_means_monthly
 
 # %%
 config_step.global_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
-global_mean_annual_mean.pint.dequantify().to_netcdf(
-    config_step.global_mean_annual_mean_file
-)
+global_mean_annual_mean.pint.dequantify().to_netcdf(config_step.global_mean_annual_mean_file)
 global_mean_annual_mean
 
 # %%
 config_step.hemispheric_mean_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
-hemispheric_means_annual_mean.pint.dequantify().to_netcdf(
-    config_step.hemispheric_mean_annual_mean_file
-)
+hemispheric_means_annual_mean.pint.dequantify().to_netcdf(config_step.hemispheric_mean_annual_mean_file)
 hemispheric_means_annual_mean

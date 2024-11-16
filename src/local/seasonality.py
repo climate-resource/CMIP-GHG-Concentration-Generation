@@ -31,9 +31,7 @@ def calculate_seasonality(
     )
     lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean_monthly
 
-    lon_mean_ym_monthly_anomalies_year_average = lon_mean_ym_monthly_anomalies.mean(
-        "year"
-    )
+    lon_mean_ym_monthly_anomalies_year_average = lon_mean_ym_monthly_anomalies.mean("year")
 
     seasonality = lon_mean_ym_monthly_anomalies_year_average
     relative_seasonality = seasonality / global_mean.mean("time")
@@ -41,12 +39,8 @@ def calculate_seasonality(
     # TODO: dial this back down
     # atol = max(1e-6 * global_mean.mean().data.m, 1e-7)
     atol = max(1e-1 * global_mean.mean().data.m, 5e-2)
-    np.testing.assert_allclose(
-        seasonality.mean("month").pint.dequantify(), 0.0, atol=atol
-    )
-    np.testing.assert_allclose(
-        relative_seasonality.sum("month").pint.dequantify(), 0.0, atol=atol
-    )
+    np.testing.assert_allclose(seasonality.mean("month").pint.dequantify(), 0.0, atol=atol)
+    np.testing.assert_allclose(relative_seasonality.sum("month").pint.dequantify(), 0.0, atol=atol)
 
     return seasonality, relative_seasonality, lon_mean_ym_monthly_anomalies
 
@@ -66,12 +60,8 @@ def calculate_seasonality_change_eofs_pcs(
 
     seasonality_anomalies = lon_mean_ym_monthly_anomalies - seasonality
 
-    seasonality_anomalies_stacked = seasonality_anomalies.stack(
-        {"lat-month": ["lat", "month"]}
-    )
-    svd_ready = seasonality_anomalies_stacked.transpose(
-        "year", "lat-month"
-    ).pint.dequantify()
+    seasonality_anomalies_stacked = seasonality_anomalies.stack({"lat-month": ["lat", "month"]})
+    svd_ready = seasonality_anomalies_stacked.transpose("year", "lat-month").pint.dequantify()
 
     U, D, Vh = np.linalg.svd(
         svd_ready,
@@ -130,9 +120,7 @@ def calculate_seasonality_change_eofs_pcs(
         ),
     ).pint.quantify()
 
-    res = xr.merge(
-        [xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts"
-    )
+    res = xr.merge([xr_eofs_keep, xr_principal_components_keep], combine_attrs="drop_conflicts")
 
     # One final check
     if not np.allclose(
@@ -187,16 +175,10 @@ class CO2SeasonalityChangeRegression:
         -------
             Normed timeseries according to self's attributes.
         """
-        ts_ref_period_mean = ts.sel(
-            year=range(self.ref_period_start, self.ref_period_end + 1)
-        ).mean()
-        ts_norm_period_mean = ts.sel(
-            year=range(self.norm_period_start, self.norm_period_end + 1)
-        ).mean()
+        ts_ref_period_mean = ts.sel(year=range(self.ref_period_start, self.ref_period_end + 1)).mean()
+        ts_norm_period_mean = ts.sel(year=range(self.norm_period_start, self.norm_period_end + 1)).mean()
 
-        ts_normed = (ts - ts_ref_period_mean) / (
-            ts_norm_period_mean - ts_ref_period_mean
-        )
+        ts_normed = (ts - ts_ref_period_mean) / (ts_norm_period_mean - ts_ref_period_mean)
 
         np.testing.assert_allclose(
             1.0,
@@ -207,9 +189,7 @@ class CO2SeasonalityChangeRegression:
 
         return ts_normed
 
-    def get_composite(
-        self, temperatures: xr.DataArray, concentrations: xr.DataArray
-    ) -> xr.DataArray:
+    def get_composite(self, temperatures: xr.DataArray, concentrations: xr.DataArray) -> xr.DataArray:
         """
         Get composite timeseries
 

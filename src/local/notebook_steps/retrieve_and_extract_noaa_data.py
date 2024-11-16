@@ -1,6 +1,7 @@
 """
 Retrieve and extract NOAA data notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -46,15 +47,11 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("001y_process-noaa-data") / "0010_download"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("001y_process-noaa-data") / "0010_download"],
             configuration=(
                 config_step.download_urls,
                 config_step.raw_dir,
@@ -65,9 +62,7 @@ def configure_notebooks(
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("001y_process-noaa-data") / "0011_extract"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("001y_process-noaa-data") / "0011_extract"],
             configuration=(),
             dependencies=(config_step.download_complete_file,),
             targets=tuple(config_step.interim_files.values()),
@@ -79,9 +74,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="retrieve_and_extract_noaa_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

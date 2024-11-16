@@ -4,6 +4,7 @@ A useful sandbox for figuring out type issues without stuff being everywhere
 Not currently used, but may be a helpful example for others. If it is very
 confusing, can also be deleted.
 """
+
 # ruff: noqa
 from __future__ import annotations
 
@@ -14,16 +15,14 @@ from attrs import define
 
 class ConfigLike(Protocol):
     @property
-    def name(self) -> str:
-        ...
+    def name(self) -> str: ...
 
 
 T = TypeVar("T", bound=ConfigLike, contravariant=True)
 
 
 class SupportsProcessing(Protocol[T]):
-    def __call__(self, config: T) -> None:
-        ...
+    def __call__(self, config: T) -> None: ...
 
 
 @define

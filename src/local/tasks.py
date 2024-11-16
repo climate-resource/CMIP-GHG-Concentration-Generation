@@ -85,9 +85,7 @@ def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
     )
 
 
-def copy_readme_h(
-    in_path: Path, out_path: Path, run_id: str, config_file_raw: Path, **kwargs: Any
-) -> None:
+def copy_readme_h(in_path: Path, out_path: Path, run_id: str, config_file_raw: Path, **kwargs: Any) -> None:
     """
     Copy README
 

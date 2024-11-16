@@ -13,9 +13,7 @@ from __future__ import annotations
 from local.testing import get_regression_values
 
 
-def test_workflow_basic(
-    basic_workflow_output_info, data_regression, ndarrays_regression
-):
+def test_workflow_basic(basic_workflow_output_info, data_regression, ndarrays_regression):
     """
     Test the basic workflow
     """

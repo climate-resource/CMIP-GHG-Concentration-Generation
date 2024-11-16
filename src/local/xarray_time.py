@@ -30,9 +30,7 @@ class NonUniqueYearMonths(ValueError):
     not unique
     """
 
-    def __init__(
-        self, unique_vals: Iterable[tuple[int, int]], counts: Iterable[int]
-    ) -> None:
+    def __init__(self, unique_vals: Iterable[tuple[int, int]], counts: Iterable[int]) -> None:
         """
         Initialise the error
 
@@ -48,10 +46,7 @@ class NonUniqueYearMonths(ValueError):
         """
         non_unique = list((v, c) for v, c in zip(unique_vals, counts) if c > 1)
 
-        error_msg = (
-            "Your year-month axis is not unique. "
-            f"Year-month values with a count > 1: {non_unique}"
-        )
+        error_msg = "Your year-month axis is not unique. " f"Year-month values with a count > 1: {non_unique}"
         super().__init__(error_msg)
 
 
@@ -150,8 +145,7 @@ def convert_to_time(
     inp: xr.Dataset,
     time_coords: tuple[str, ...],
     cftime_converter: CftimeConverter,
-) -> xr.Dataset:
-    ...
+) -> xr.Dataset: ...
 
 
 @overload
@@ -159,8 +153,7 @@ def convert_to_time(
     inp: xr.DataArray,
     time_coords: tuple[str, ...],
     cftime_converter: CftimeConverter,
-) -> xr.DataArray:
-    ...
+) -> xr.DataArray: ...
 
 
 def convert_to_time(
@@ -190,9 +183,7 @@ def convert_to_time(
     inp = inp.stack(time=time_coords)
     times = inp["time"].to_numpy()
 
-    inp = inp.drop_vars(("time", *time_coords)).assign_coords(
-        {"time": [cftime_converter(*t) for t in times]}
-    )
+    inp = inp.drop_vars(("time", *time_coords)).assign_coords({"time": [cftime_converter(*t) for t in times]})
 
     return inp
 
@@ -201,16 +192,14 @@ def convert_to_time(
 def split_time_to_year_month(
     inp: xr.Dataset,
     time_axis: str = "time",
-) -> xr.Dataset:
-    ...
+) -> xr.Dataset: ...
 
 
 @overload
 def split_time_to_year_month(
     inp: xr.DataArray,
     time_axis: str = "time",
-) -> xr.DataArray:
-    ...
+) -> xr.DataArray: ...
 
 
 def split_time_to_year_month(

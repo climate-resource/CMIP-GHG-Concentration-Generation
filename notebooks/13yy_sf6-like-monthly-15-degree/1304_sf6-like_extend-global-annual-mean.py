@@ -55,9 +55,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -82,9 +80,7 @@ step_config_id: str = "sf6"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -124,10 +120,8 @@ def axes_vertical_split(
 # ### Load data
 
 # %%
-global_mean_supplement_files = (
-    local.global_mean_extension.get_global_mean_supplement_files(
-        gas=config_step.gas, config=config
-    )
+global_mean_supplement_files = local.global_mean_extension.get_global_mean_supplement_files(
+    gas=config_step.gas, config=config
 )
 global_mean_supplement_files
 
@@ -254,9 +248,7 @@ if (global_annual_mean_composite["year"] <= pre_ind_year).any():
     pre_ind_years = global_annual_mean_composite["year"][
         np.where(global_annual_mean_composite["year"] <= pre_ind_year)
     ]
-    msg = (
-        f"You have data before your pre-industrial year, please check. {pre_ind_years=}"
-    )
+    msg = f"You have data before your pre-industrial year, please check. {pre_ind_years=}"
     raise AssertionError(msg)
 
 # %%
@@ -264,26 +256,20 @@ pre_ind_part = (
     global_annual_mean_composite.pint.dequantify()
     .interp(
         year=out_years[np.where(out_years <= pre_ind_year)],
-        kwargs={
-            "fill_value": pre_ind_value.to(global_annual_mean_composite.data.units).m
-        },
+        kwargs={"fill_value": pre_ind_value.to(global_annual_mean_composite.data.units).m},
     )
     .pint.quantify()
 )
 
 # %%
-global_annual_mean_composite = xr.concat(
-    [pre_ind_part, global_annual_mean_composite], "year"
-)
+global_annual_mean_composite = xr.concat([pre_ind_part, global_annual_mean_composite], "year")
 global_annual_mean_composite
 
 # %%
 SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
-    global_annual_mean_composite.plot.scatter(
-        ax=axes[0], alpha=1.0, color="tab:orange", marker="x"
-    )
+    global_annual_mean_composite.plot.scatter(ax=axes[0], alpha=1.0, color="tab:orange", marker="x")
 
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
@@ -301,9 +287,7 @@ with axes_vertical_split() as axes:
 
 # %%
 global_annual_mean_composite = (
-    global_annual_mean_composite.pint.dequantify()
-    .interp(year=out_years, method="cubic")
-    .pint.quantify()
+    global_annual_mean_composite.pint.dequantify().interp(year=out_years, method="cubic").pint.quantify()
 )
 global_annual_mean_composite
 
@@ -311,9 +295,7 @@ global_annual_mean_composite
 SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
-    global_annual_mean_composite.plot.scatter(
-        ax=axes[0], alpha=1.0, color="tab:orange", marker="x"
-    )
+    global_annual_mean_composite.plot.scatter(ax=axes[0], alpha=1.0, color="tab:orange", marker="x")
 
     global_annual_mean_composite.sel(
         year=global_annual_mean_composite["year"][
@@ -357,9 +339,7 @@ obs_network_full_field
 # %%
 tmp = allyears_full_field.copy()
 tmp.name = "allyears_global_annual_mean"
-allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
-    tmp
-)
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
 allyears_global_annual_mean
 
 # %% [markdown]
@@ -384,7 +364,5 @@ np.testing.assert_allclose(
 
 # %%
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
-allyears_global_annual_mean.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_file
-)
+allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean

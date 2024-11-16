@@ -54,9 +54,7 @@ cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -83,16 +81,12 @@ step_config_id: str = "c2f6"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 config_historical_emissions = get_config_for_step_id(
     config=config, step="compile_historical_emissions", step_config_id="only"
 )
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -134,9 +128,7 @@ lat_grad_eofs_obs_network = xr.load_dataset(
 lat_grad_eofs_obs_network
 
 # %%
-historical_emissions = pd.read_csv(
-    config_historical_emissions.complete_historical_emissions_file
-)
+historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
 historical_emissions = historical_emissions[
     historical_emissions["variable"] == f"Emissions|{config_step.gas}"
 ]
@@ -190,9 +182,7 @@ historical_emissions = historical_emissions.rename({"time": "year"}, axis="colum
 historical_emissions
 
 # %%
-regression_years = np.intersect1d(
-    lat_grad_eofs_obs_network["year"], historical_emissions["year"]
-)
+regression_years = np.intersect1d(lat_grad_eofs_obs_network["year"], historical_emissions["year"])
 regression_years
 
 # %%
@@ -214,9 +204,7 @@ historical_emissions_xr = historical_emissions_xr.sel(
 historical_emissions_xr
 
 # %%
-historical_emissions_regression_data = historical_emissions_xr.sel(
-    year=regression_years
-)
+historical_emissions_regression_data = historical_emissions_xr.sel(year=regression_years)
 
 historical_emissions_regression_data
 
@@ -240,18 +228,14 @@ x = QuantityOSCM(
     str(historical_emissions_regression_data.data.units),
 )
 A = x.m[:, np.newaxis]
-y = QuantityOSCM(
-    pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
-)
+y = QuantityOSCM(pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units))
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m = res[0]
 m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(0.0, y.units)
 
-latitudinal_gradient_pc0_total_emissions_regression = (
-    local.regressors.LinearRegressionResult(m=m, c=c)
-)
+latitudinal_gradient_pc0_total_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -286,9 +270,9 @@ historical_emissions_extended = historical_emissions_extended.pint.dequantify().
 with axes_vertical_split() as axes:
     SPLIT_YEAR = 1950
     historical_emissions_extended.plot(ax=axes[0])
-    historical_emissions_extended.sel(
-        year=historical_emissions_extended["year"] >= SPLIT_YEAR
-    ).plot(ax=axes[1])
+    historical_emissions_extended.sel(year=historical_emissions_extended["year"] >= SPLIT_YEAR).plot(
+        ax=axes[1]
+    )
 
 historical_emissions_extended
 
@@ -303,9 +287,9 @@ years_to_fill_with_regression
 # %%
 pc0_emissions_extended = (
     m
-    * historical_emissions_extended.sel(
-        year=years_to_fill_with_regression
-    ).pint.quantify(unit_registry=openscm_units.unit_registry)
+    * historical_emissions_extended.sel(year=years_to_fill_with_regression).pint.quantify(
+        unit_registry=openscm_units.unit_registry
+    )
     + c
 )
 pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
@@ -365,34 +349,21 @@ out
 
 # %%
 xr.testing.assert_allclose(
-    (out["principal-components"] @ out["eofs"]).sel(
-        year=lat_grad_eofs_obs_network["year"]
-    ),
-    lat_grad_eofs_obs_network["principal-components"]
-    @ lat_grad_eofs_obs_network["eofs"],
+    (out["principal-components"] @ out["eofs"]).sel(year=lat_grad_eofs_obs_network["year"]),
+    lat_grad_eofs_obs_network["principal-components"] @ lat_grad_eofs_obs_network["eofs"],
 )
 
 # %% [markdown]
 # ## Save
 
 # %%
-config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(exist_ok=True, parents=True)
 out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eofs_file)
 out
 
 # %%
-config_step.latitudinal_gradient_pc0_total_emissions_regression_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-with open(
-    config_step.latitudinal_gradient_pc0_total_emissions_regression_file, "w"
-) as fh:
-    fh.write(
-        local.config.converter_yaml.dumps(
-            latitudinal_gradient_pc0_total_emissions_regression
-        )
-    )
+config_step.latitudinal_gradient_pc0_total_emissions_regression_file.parent.mkdir(exist_ok=True, parents=True)
+with open(config_step.latitudinal_gradient_pc0_total_emissions_regression_file, "w") as fh:
+    fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_total_emissions_regression))
 
 latitudinal_gradient_pc0_total_emissions_regression
