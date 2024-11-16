@@ -5,7 +5,7 @@ Grouping and associated tools
 from __future__ import annotations
 
 import itertools
-from typing import cast
+from typing import Any, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -151,6 +151,48 @@ def get_group_indexes(
     # In general, we should only be doing this once so ok price to pay.
     for i, (start, stop) in enumerate(itertools.pairwise(group_boundaries[0])):
         res[start:stop] = int(i)
+
+    return res
+
+
+def get_group_sums(
+    x_bounds: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
+    vals: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
+    group_bounds: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
+) -> npt.NDArray[Any] | pint.UnitRegistry.Quantity:
+    """
+    Get sums for groups of values within an array
+
+    Parameters
+    ----------
+    x_bounds
+        The x-bounds of the input
+
+    vals
+        The values for each interval defined by `x_bounds`
+
+    group_bounds
+        The bounds of the groups for which we want the sums.
+
+    Returns
+    -------
+    :
+        Sums of the values in `vals` for the groups defined by `group_bounds`.
+    """
+    group_boundaries = get_group_boundary_indexes(x_bounds, group_bounds)
+
+    # The minus one is required to ensure we get the correct integral value.
+    # (If the boundary occurs at an index of n
+    # we want all the values before that boundary,
+    # but not the cumulative value actually on the boundary).
+    sum_group_idxs = group_boundaries[0] - 1
+    # Drop out any places where the substraction above leads to non-sensical results.
+    sum_group_idxs = sum_group_idxs[np.where(sum_group_idxs >= 0)]
+
+    cumulative_sum = np.cumsum(vals)
+    res = cumulative_sum[sum_group_idxs]
+
+    res = np.hstack([res[0], np.diff(res)])
 
     return res
 

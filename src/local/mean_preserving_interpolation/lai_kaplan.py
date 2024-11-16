@@ -20,6 +20,7 @@ from numpy.polynomial import Polynomial
 from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
 )
+from local.mean_preserving_interpolation.grouping import get_group_sums
 from local.optional_dependencies import get_optional_dependency
 
 T = TypeVar("T")
@@ -696,14 +697,14 @@ class LaiKaplanInterpolator:
             y_out[out_index] = integration_res[0] / (x_bounds_out[out_index + 1] - x_bounds_out[out_index])
 
         if self.min_val is not None and (y_out < self.min_val).any():
-            raise NotImplementedError
-            # below_min = y_out < self.min_val
-            # below_min_in_group = get_group_integrals(
-            #     integrand_x_bounds=x_bounds_out,
-            #     integrand_y=below_min,
-            #     group_bounds=x_bounds_in,
-            # )
-            # below_min_vals = below_min_in_group > 0
+            below_min = y_out < self.min_val
+            below_min_in_group = get_group_sums(
+                x_bounds=x_bounds_out,
+                vals=below_min,
+                group_bounds=x_bounds_in,
+            )
             breakpoint()
+            below_min_vals = below_min_in_group > 0
+            raise NotImplementedError
 
         return y_out
