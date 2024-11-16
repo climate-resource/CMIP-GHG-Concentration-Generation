@@ -9,6 +9,7 @@ from __future__ import annotations
 from functools import partial
 
 import numpy as np
+import numpy.typing as npt
 import pint
 from attrs import define
 
@@ -143,58 +144,29 @@ class RymesMeyersInterpolator:
             ):
                 break
 
-            current_vals = adjust_mat @ current_vals
-            current_vals[0] += y_at_boundaries[0] / 3
-            current_vals[-1] += y_at_boundaries[-1] / 3
-
-            group_averages = get_group_averages(
-                integrand_x_bounds=x_bounds_out,
-                integrand_y=current_vals,
-                group_bounds=x_bounds_in,
+            current_vals = self.do_core_iteration(
+                current_vals=current_vals,
+                current_vals_group_indexes=current_vals_group_indexes,
+                adjust_mat=adjust_mat,
+                left_bound_val=y_at_boundaries[0],
+                right_bound_val=y_at_boundaries[-1],
+                x_bounds_target=x_bounds_in,
+                target=y_in,
+                x_bounds_out=x_bounds_out,
             )
-            corrections = y_in - group_averages
-            current_vals = current_vals + corrections[(current_vals_group_indexes,)]
 
             if self.min_val is not None and (current_vals < self.min_val).any():
-                current_vals[np.where(current_vals < self.min_val)] = self.min_val
-
-                group_averages = get_group_averages(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals,
-                    group_bounds=x_bounds_in,
+                current_vals = self.lower_bound_adjustment(
+                    min_val=self.min_val,
+                    current_vals=current_vals,
+                    current_vals_group_indexes=current_vals_group_indexes,
+                    adjust_mat=adjust_mat,
+                    left_bound_val=y_at_boundaries[0],
+                    right_bound_val=y_at_boundaries[-1],
+                    x_bounds_target=x_bounds_in,
+                    target=y_in,
+                    x_bounds_out=x_bounds_out,
                 )
-
-                # Rymes-Meyers lower-bound "f" correction function
-                rm_lb_f_numerator = get_group_integrals(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals - y_in[(current_vals_group_indexes,)],
-                    group_bounds=x_bounds_in,
-                )
-                rm_lb_f_denominator = get_group_integrals(
-                    integrand_x_bounds=x_bounds_out,
-                    integrand_y=current_vals - self.min_val,
-                    group_bounds=x_bounds_in,
-                )
-
-                rm_lb_f = rm_lb_f_numerator / rm_lb_f_denominator
-
-                if np.isnan(rm_lb_f).any():
-                    # If the numerator is also zeor, set to zero and move on
-                    rm_lb_f[np.where(rm_lb_f_numerator == 0.0)] = 0.0 * rm_lb_f.u
-
-                    if np.isnan(rm_lb_f).any():
-                        # If still nans, raise
-                        raise AssertionError()
-
-                group_delta = group_averages - y_in
-
-                rm_lb_correction = rm_lb_f[(current_vals_group_indexes,)] * (current_vals - self.min_val)
-                # Only apply deltas where we have overshot
-                rm_lb_correction[np.where(group_delta <= 0.0)] = 0.0 * group_averages.u
-
-                current_vals = current_vals - rm_lb_correction
-
-                current_vals[np.where(current_vals < self.min_val)] = self.min_val
 
         else:
             msg = f"Ran out of iterations ({self.max_it=})"
@@ -232,28 +204,152 @@ class RymesMeyersInterpolator:
         # No error i.e. all close
         return True
 
-    # def do_core_iteration(
-    #     self,
-    #     current_vals: pint.UnitRegistry.Quantity,
-    #     current_vals_group_indexes: npt.NDArray[np.int_],
-    #     adjust_mat: npt.NDArray[np.float64],
-    #     left_bound_val: float,
-    #     right_bound_val: float,
-    #     x_bounds_in: pint.UnitRegistry.Quantity,
-    #     y_in: pint.UnitRegistry.Quantity,
-    #     x_bounds_out: pint.UnitRegistry.Quantity,
-    # ):
-    #     current_vals = adjust_mat @ current_vals
-    #     current_vals[0] += left_bound_val / 3
-    #     current_vals[-1] += right_bound_val / 3
-    #
-    #     group_averages = get_group_averages(
-    #         integrand_x_bounds=x_bounds_out,
-    #         integrand_y=current_vals,
-    #         group_bounds=x_bounds_in,
-    #     )
-    #     corrections = y_in - group_averages
-    #     corrections_rep = corrections[(current_vals_group_indexes,)]
-    #     current_vals = current_vals + corrections_rep
-    #
-    #     return current_vals
+    @staticmethod
+    def do_core_iteration(  # noqa: PLR0913
+        current_vals: pint.UnitRegistry.Quantity,
+        current_vals_group_indexes: npt.NDArray[np.int_],
+        adjust_mat: npt.NDArray[np.float64],
+        left_bound_val: float,
+        right_bound_val: float,
+        x_bounds_target: pint.UnitRegistry.Quantity,
+        target: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Perform a core iteration
+
+        Parameters
+        ----------
+        current_vals
+            Current values of the solution
+
+        current_vals_group_indexes
+            For each value in `current_vals`, the index of the group in `target` it belongs to.
+
+        adjust_mat
+            Matrix for adjusting the values
+
+        left_bound_val
+            Value to use as the left-bound during the adjustments
+
+        right_bound_val
+            Value to use as the right-bound during the adjustments
+
+        x_bounds_target
+            The x-bounds of the target
+
+        target
+            The target values
+
+        x_bounds_out
+            The x-bounds onto which we are interpolating
+
+        Returns
+        -------
+        :
+            The updated solution values based on this iteration
+        """
+        current_vals = adjust_mat @ current_vals
+        current_vals[0] += left_bound_val / 3
+        current_vals[-1] += right_bound_val / 3
+
+        group_averages = get_group_averages(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=current_vals,
+            group_bounds=x_bounds_target,
+        )
+        corrections = target - group_averages
+        current_vals = current_vals + corrections[(current_vals_group_indexes,)]
+
+        return current_vals
+
+    @staticmethod
+    def lower_bound_adjustment(  # noqa: PLR0913
+        min_val: pint.UnitRegistry.Quantity,
+        current_vals: pint.UnitRegistry.Quantity,
+        current_vals_group_indexes: npt.NDArray[np.int_],
+        adjust_mat: npt.NDArray[np.float64],
+        left_bound_val: float,
+        right_bound_val: float,
+        x_bounds_target: pint.UnitRegistry.Quantity,
+        target: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Adjust the solution to account for the fact that some values are below a specified minimum
+
+        Parameters
+        ----------
+        min_val
+            Minimum value which is allowed in the solution
+
+        current_vals
+            Current values of the solution
+
+        current_vals_group_indexes
+            For each value in `current_vals`, the index of the group in `target` it belongs to.
+
+        adjust_mat
+            Matrix for adjusting the values
+
+        left_bound_val
+            Value to use as the left-bound during the adjustments
+
+        right_bound_val
+            Value to use as the right-bound during the adjustments
+
+        x_bounds_target
+            The x-bounds of the target
+
+        target
+            The target values
+
+        x_bounds_out
+            The x-bounds onto which we are interpolating
+
+        Returns
+        -------
+        :
+            The updated solution values based on this iteration
+        """
+        current_vals[np.where(current_vals < min_val)] = min_val
+
+        group_averages = get_group_averages(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=current_vals,
+            group_bounds=x_bounds_target,
+        )
+
+        # Rymes-Meyers lower-bound "f" correction function
+        rm_lb_f_numerator = get_group_integrals(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=current_vals - target[(current_vals_group_indexes,)],
+            group_bounds=x_bounds_target,
+        )
+        rm_lb_f_denominator = get_group_integrals(
+            integrand_x_bounds=x_bounds_out,
+            integrand_y=current_vals - min_val,
+            group_bounds=x_bounds_target,
+        )
+
+        rm_lb_f = rm_lb_f_numerator / rm_lb_f_denominator
+
+        if np.isnan(rm_lb_f).any():
+            # If the numerator is also zeor, set to zero and move on
+            rm_lb_f[np.where(rm_lb_f_numerator == 0.0)] = 0.0 * rm_lb_f.u
+
+            if np.isnan(rm_lb_f).any():
+                # If still nans, raise
+                raise AssertionError()
+
+        group_delta = group_averages - target
+
+        rm_lb_correction = rm_lb_f[(current_vals_group_indexes,)] * (current_vals - min_val)
+        # Only apply deltas where we have overshot
+        rm_lb_correction[np.where(group_delta <= 0.0)] = 0.0 * group_averages.u
+
+        current_vals = current_vals - rm_lb_correction
+
+        current_vals[np.where(current_vals < min_val)] = min_val
+
+        return current_vals

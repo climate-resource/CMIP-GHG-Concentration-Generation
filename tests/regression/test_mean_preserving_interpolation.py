@@ -19,6 +19,7 @@ from local.mean_preserving_interpolation import (
     mean_preserving_interpolation,
 )
 from local.mean_preserving_interpolation.grouping import get_group_averages
+from local.mean_preserving_interpolation.lai_kaplan import LaiKaplanInterpolator
 from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 
 Q = pint.get_application_registry().Quantity
@@ -232,7 +233,8 @@ def test_mean_preserving_interpolation_uneven_increase(
         pytest.param("lazy_linear", marks=pytest.mark.skip(reason="Not implemented")),
         pytest.param(RymesMeyersInterpolator(min_val=Q(-1.0, "m")), id="rymes_meyers_-1"),
         pytest.param(RymesMeyersInterpolator(min_val=Q(0.0, "m")), id="rymes_meyers_0"),
-        "lai_kaplan",
+        pytest.param(LaiKaplanInterpolator(min_val=Q(-1.0, "m")), id="lai_kaplan_-1"),
+        pytest.param(LaiKaplanInterpolator(min_val=Q(0.0, "m")), id="lai_kaplan_0"),
     ),
 )
 def test_mean_preserving_min_val(
@@ -301,9 +303,27 @@ def test_mean_preserving_min_val(
 def test_mean_preserving_interpolation_long_array(  # noqa: PLR0913
     algorithm, y_in, data_regression, num_regression, image_regression, tmpdir
 ):
+    x_0 = 1.0
+    x_in_spacing = 1.0
+    res_increase = 12
+    x_bounds_in = Q(
+        x_0 + np.arange(0.0, x_in_spacing * (y_in.size + 1), x_in_spacing),
+        "yr",
+    )
+    x_bounds_out = Q(
+        x_bounds_in.m[0]
+        + np.arange(
+            0.0,
+            x_in_spacing * y_in.size + 1 / (2 * res_increase),
+            x_in_spacing / res_increase,
+        ),
+        "yr",
+    )
     execute_test_logic(
         algorithm=algorithm,
         y_in=y_in,
+        x_bounds_in=x_bounds_in,
+        x_bounds_out=x_bounds_out,
         data_regression=data_regression,
         num_regression=num_regression,
         image_regression=image_regression,
