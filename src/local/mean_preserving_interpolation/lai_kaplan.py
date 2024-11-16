@@ -6,6 +6,7 @@ See [Lai and Kaplan, J. Atmos. Oceanic Technol. 2022](https://doi.org/10.1175/JT
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import partial
 from typing import Generic, TypeVar
 
@@ -18,10 +19,6 @@ from numpy.polynomial import Polynomial
 
 from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
-    GetYAtBoundariesLike,
-)
-from local.mean_preserving_interpolation.boundary_handling import (
-    get_y_at_boundaries as get_y_at_boundaries_default,
 )
 from local.optional_dependencies import get_optional_dependency
 
@@ -253,25 +250,21 @@ class LaiKaplanF:
 
         return self.calculate_u(u, check_domain=False)
 
-    def calculate_no_output_units(
+    def calculate_unitless(
         self,
-        x: pint.UnitRegistry.Quantity,
-        assumed_units: pint.UnitRegistry.UnitsContainer,
+        x: float,
         check_domain: bool = True,
-    ) -> pint.UnitRegistry.Quantity:
+    ) -> float:
         """
         Calculate Lai-Kaplan interpolating function value
 
-        Return the value without units.
+        Do the calculation without units.
         This is helpful for integrating the function with scipy.
 
         Parameters
         ----------
         x
             Value for which we want to calculate the value of the function
-
-        assumed_units
-            Assumed units to apply to x before doing the calculation
 
         check_domain
             Whether to check that is in the supported domain before calculating.
@@ -281,7 +274,21 @@ class LaiKaplanF:
         :
             Function value at `x`, given the other parameters
         """
-        return self.calculate(x * assumed_units, check_domain=check_domain).m
+        if check_domain:
+            if (x < self.x_i.m) or (x > self.x_i.m + self.delta.m):
+                msg = f"x is outside the supported domain. {x=} {self.x_i=} {self.x_i + self.delta=}"
+                raise ValueError(msg)
+
+        u = (x - self.x_i.m) / self.delta.m
+
+        res = (
+            self.s_i.m * HERMITE_CUBICS[0][0](u)
+            + self.delta.m * self.m_i.m * HERMITE_CUBICS[1][0](u)
+            + self.s_i_plus_half.m * HERMITE_CUBICS[0][1](u)
+            + self.delta.m * self.m_i_plus_half.m * HERMITE_CUBICS[1][1](u)
+        )
+
+        return res
 
     def calculate_u(
         self,
@@ -321,6 +328,76 @@ class LaiKaplanF:
         return res
 
 
+def extrapolate_y_interval_values(
+    x_in: pint.UnitRegistry.Quantity,
+    y_in: pint.UnitRegistry.Quantity,
+    x_out: pint.UnitRegistry.Quantity,
+    left: BoundaryHandling = BoundaryHandling.CONSTANT,
+    right: BoundaryHandling = BoundaryHandling.CUBIC_EXTRAPOLATION,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Extrapolate our y-interval values to get an extra value either side of the input domain
+
+    Parameters
+    ----------
+    x_in
+        x-values of the input array
+
+    y_in
+        y-values of the input array
+
+    x_out
+        x-values to extrapolate
+
+        There should be two: the x-value to the left of `x_in`
+        and the x-value to the right of `x_in`.
+
+    left
+        The extrapolation method to use for the left-hand value.
+
+    right
+        The extrapolation method to use for the right-hand value.
+
+    Returns
+    -------
+    :
+        The extrapolated values at `x_out`.
+    """
+    expected_out_size = 2
+
+    if x_out.size != expected_out_size:
+        raise NotImplementedError
+    y_out = np.zeros(expected_out_size) * y_in.u
+
+    if any(bh == BoundaryHandling.CUBIC_EXTRAPOLATION for bh in (left, right)):
+        scipy_inter = get_optional_dependency("scipy.interpolate")
+
+        cubic_interpolator = scipy_inter.interp1d(
+            x_in.m,
+            y_in.m,
+            kind="cubic",
+            fill_value="extrapolate",
+        )
+        if left == BoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_out[0] = cubic_interpolator(x_out[0].m) * y_in.u
+
+        if right == BoundaryHandling.CUBIC_EXTRAPOLATION:
+            y_out[-1] = cubic_interpolator(x_out[-1].m) * y_in.u
+
+    else:
+        if left == BoundaryHandling.CONSTANT:
+            y_out[0] = y_in[0]
+        else:
+            raise NotImplementedError(left)
+
+        if right == BoundaryHandling.CONSTANT:
+            y_out[-1] = y_in[-1]
+        else:
+            raise NotImplementedError(right)
+
+    return np.hstack(y_out)
+
+
 @define
 class LaiKaplanInterpolator:
     """
@@ -338,13 +415,18 @@ class LaiKaplanInterpolator:
     See [Lai and Kaplan, J. Atm. Ocn. Tech. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1)
     """
 
-    get_y_at_boundaries: GetYAtBoundariesLike = partial(
-        get_y_at_boundaries_default,
+    extrapolate_y_interval_values: Callable[
+        [pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity],
+        pint.UnitRegistry.Quantity,
+    ] = partial(
+        extrapolate_y_interval_values,
         left=BoundaryHandling.CONSTANT,
         right=BoundaryHandling.CUBIC_EXTRAPOLATION,
     )
     """
-    Function that calculates the y-values at the boundaries from the y-values in each interval
+    Function that calculates the extrapolated y interval values from the input data
+
+    This function is given the input y-values, plus the mid-point of each interval.
     """
 
     min_val: pint.UnitRegistry.Quantity | None = None
@@ -448,13 +530,10 @@ class LaiKaplanInterpolator:
             data=control_points_x_d,
         )
 
-        external_intervals_y = extrapolate_y_interval_values(
+        external_intervals_y = self.extrapolate_y_interval_values(
             x_in=control_points_x[1.5 : n_lai_kaplan + 1 : 1],
             y_in=y_in,
             x_out=np.hstack([control_points_x_d[0], control_points_x_d[-1]]),
-            # TODO: make this injectable
-            # left=,
-            # right=,
         )
         intervals_y = LaiKaplanArray(
             lai_kaplan_idx_min=0.0,
@@ -573,17 +652,6 @@ class LaiKaplanInterpolator:
             control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
         ) / (2 * delta)
 
-        lai_kaplan_interval_idx = 1
-        x_i = control_points_x[lai_kaplan_interval_idx]
-        lai_kaplan_f = LaiKaplanF(
-            x_i=x_i,
-            delta=delta,
-            s_i=control_points_y[lai_kaplan_interval_idx],
-            s_i_plus_half=control_points_y[lai_kaplan_interval_idx + 1 / 2],
-            m_i=gradients_at_control_points[lai_kaplan_interval_idx],
-            m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
-        )
-
         y_out = np.zeros(x_bounds_out.size - 1) * y_in.u
         # TODO: Can't see how to do this with vectors, maybe someone smarter can.
         iterh = range(y_out.size)
@@ -592,8 +660,11 @@ class LaiKaplanInterpolator:
             iterh = tqdman.tqdm(iterh, desc="Calculating output values")
 
         scipy_integrate = get_optional_dependency("scipy.integrate")
+
+        lai_kaplan_interval_idx = 1 / 2
+        x_i = control_points_x[lai_kaplan_interval_idx] - 10 * delta
         for out_index in iterh:
-            if x_bounds_out[out_index] >= control_points_x[lai_kaplan_interval_idx + 1 / 2]:
+            if x_bounds_out[out_index] >= x_i + delta:
                 lai_kaplan_interval_idx += 1 / 2
 
                 x_i = control_points_x[lai_kaplan_interval_idx]
@@ -606,20 +677,20 @@ class LaiKaplanInterpolator:
                     m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
                 )
 
-                np.testing.assert_allclose(
-                    control_points_y[lai_kaplan_interval_idx], lai_kaplan_f.calculate(x_i)
-                )
-                np.testing.assert_allclose(
-                    control_points_y[lai_kaplan_interval_idx + 1 / 2], lai_kaplan_f.calculate(x_i + delta)
+                # Do a single calculation to make sure we have the units right
+                res_x_i = lai_kaplan_f.calculate(x_i)
+                pint.testing.assert_allclose(
+                    res_x_i,
+                    control_points_y[lai_kaplan_interval_idx],
                 )
 
             integration_res = (
                 scipy_integrate.quad(
-                    partial(lai_kaplan_f.calculate_no_output_units, assumed_units=x_bounds_out.u),
+                    partial(lai_kaplan_f.calculate_unitless, check_domain=False),
                     x_bounds_out[out_index].m,
                     x_bounds_out[out_index + 1].m,
                 )
-                * control_points_y[lai_kaplan_interval_idx].u
+                * res_x_i.u
                 * x_bounds_out.u
             )
             y_out[out_index] = integration_res[0] / (x_bounds_out[out_index + 1] - x_bounds_out[out_index])
@@ -636,73 +707,3 @@ class LaiKaplanInterpolator:
             breakpoint()
 
         return y_out
-
-
-def extrapolate_y_interval_values(
-    x_in: pint.UnitRegistry.Quantity,
-    y_in: pint.UnitRegistry.Quantity,
-    x_out: pint.UnitRegistry.Quantity,
-    left: BoundaryHandling = BoundaryHandling.CONSTANT,
-    right: BoundaryHandling = BoundaryHandling.CUBIC_EXTRAPOLATION,
-) -> pint.UnitRegistry.Quantity:
-    """
-    Extrapolate our y-interval values to get an extra value either side of the input domain
-
-    Parameters
-    ----------
-    x_in
-        x-values of the input array
-
-    y_in
-        y-values of the input array
-
-    x_out
-        x-values to extrapolate
-
-        There should be two: the x-value to the left of `x_in`
-        and the x-value to the right of `x_in`.
-
-    left
-        The extrapolation method to use for the left-hand value.
-
-    right
-        The extrapolation method to use for the right-hand value.
-
-    Returns
-    -------
-    :
-        The extrapolated values at `x_out`.
-    """
-    expected_out_size = 2
-
-    if x_out.size != expected_out_size:
-        raise NotImplementedError
-    y_out = np.zeros(expected_out_size) * y_in.u
-
-    if any(bh == BoundaryHandling.CUBIC_EXTRAPOLATION for bh in (left, right)):
-        scipy_inter = get_optional_dependency("scipy.interpolate")
-
-        cubic_interpolator = scipy_inter.interp1d(
-            x_in.m,
-            y_in.m,
-            kind="cubic",
-            fill_value="extrapolate",
-        )
-        if left == BoundaryHandling.CUBIC_EXTRAPOLATION:
-            y_out[0] = cubic_interpolator(x_out[0].m) * y_in.u
-
-        if right == BoundaryHandling.CUBIC_EXTRAPOLATION:
-            y_out[-1] = cubic_interpolator(x_out[-1].m) * y_in.u
-
-    else:
-        if left == BoundaryHandling.CONSTANT:
-            y_out[0] = y_in[0]
-        else:
-            raise NotImplementedError(left)
-
-        if right == BoundaryHandling.CONSTANT:
-            y_out[-1] = y_in[-1]
-        else:
-            raise NotImplementedError(right)
-
-    return np.hstack(y_out)

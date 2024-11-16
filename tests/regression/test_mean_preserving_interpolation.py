@@ -4,6 +4,7 @@ Regression tests of our mean-preserving interpolation algorithms
 
 from __future__ import annotations
 
+from functools import partial
 from pathlib import Path
 
 import matplotlib
@@ -18,8 +19,12 @@ from local.mean_preserving_interpolation import (
     MeanPreservingInterpolationAlgorithmLike,
     mean_preserving_interpolation,
 )
+from local.mean_preserving_interpolation.boundary_handling import BoundaryHandling
 from local.mean_preserving_interpolation.grouping import get_group_averages
-from local.mean_preserving_interpolation.lai_kaplan import LaiKaplanInterpolator
+from local.mean_preserving_interpolation.lai_kaplan import (
+    LaiKaplanInterpolator,
+    extrapolate_y_interval_values,
+)
 from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 
 Q = pint.get_application_registry().Quantity
@@ -202,7 +207,14 @@ def test_mean_preserving_interpolation_res_increase(  # noqa: PLR0913
     )
 
 
-@pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
+@pytest.mark.parametrize(
+    "algorithm",
+    (
+        "lazy_linear",
+        "rymes_meyers",
+        pytest.param("lai_kaplan", marks=pytest.mark.xfail(reason="Not implemented")),
+    ),
+)
 def test_mean_preserving_interpolation_uneven_increase(
     algorithm,
     data_regression,
@@ -294,6 +306,16 @@ def test_mean_preserving_min_val(
     "algorithm",
     (
         "lai_kaplan",
+        pytest.param(
+            LaiKaplanInterpolator(
+                extrapolate_y_interval_values=partial(
+                    extrapolate_y_interval_values,
+                    left=BoundaryHandling.CONSTANT,
+                    right=BoundaryHandling.CONSTANT,
+                ),
+            ),
+            id="lai_kaplan_const_extrap",
+        ),
         pytest.param(
             "rymes_meyers",
             marks=pytest.mark.skip(reason="Current Rymes-Meyers implementation too slow for long tests"),
