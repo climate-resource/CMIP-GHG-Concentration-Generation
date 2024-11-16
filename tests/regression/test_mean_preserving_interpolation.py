@@ -34,6 +34,7 @@ def execute_test_logic(  # noqa: PLR0913
     num_regression,
     image_regression,
     tmpdir: Path,
+    min_val: pint.UnitRegistry.Quantity | None = None,
 ) -> None:
     y_out = mean_preserving_interpolation(
         x_bounds_in=x_bounds_in,
@@ -50,6 +51,9 @@ def execute_test_logic(  # noqa: PLR0913
         group_bounds=x_bounds_in,
     )
     pint.testing.assert_allclose(y_in, y_out_group_averages, atol=1e-10)
+
+    if min_val is not None:
+        assert (y_out >= min_val).all()
 
     data_regression.check({"y_out_u": str(y_out.u)})
     num_regression.check({"y_out_m": y_out.m})
@@ -96,12 +100,8 @@ def execute_test_logic(  # noqa: PLR0913
     "y_in, x_0, x_in_spacing",
     (
         pytest.param(Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 1.0, id="basic"),
-        pytest.param(
-            Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, id="x_spacing_equal_to_2"
-        ),
-        pytest.param(
-            Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 1.0, 1.0, id="x_0_equal_to_one"
-        ),
+        pytest.param(Q([0, 0, 1, 3, 5, 7, 9.0], "kg"), 2000.0, 2.0, id="x_spacing_equal_to_2"),
+        pytest.param(Q([0, 0, 0.3, 2, 2.5, 3, 5], "kg"), 1.0, 1.0, id="x_0_equal_to_one"),
         pytest.param(
             Q(np.arange(50.0) / 20.0 + RNG.random(50), "kg"),
             0.0,
@@ -212,9 +212,7 @@ def test_mean_preserving_interpolation_uneven_increase(
     y_in = Q([0, 1, 10, 20], "m")
 
     x_bounds_in = Q([0, 1, 6, 12, 24], "month")
-    x_bounds_out = Q(
-        [0, 1 / 3, 2 / 3, 1, 2, 3, 4, 5, 6, 9, 12, 15, 18, 21, 24], "month"
-    )
+    x_bounds_out = Q([0, 1 / 3, 2 / 3, 1, 2, 3, 4, 5, 6, 9, 12, 15, 18, 21, 24], "month")
 
     execute_test_logic(
         algorithm=algorithm,
@@ -232,8 +230,8 @@ def test_mean_preserving_interpolation_uneven_increase(
     "algorithm",
     (
         pytest.param("lazy_linear", marks=pytest.mark.skip(reason="Not implemented")),
-        pytest.param(RymesMeyersInterpolator(min_val=-1.0), id="rymes_meyers_-1"),
-        pytest.param(RymesMeyersInterpolator(min_val=0.0), id="rymes_meyers_0"),
+        pytest.param(RymesMeyersInterpolator(min_val=Q(-1.0, "m")), id="rymes_meyers_-1"),
+        pytest.param(RymesMeyersInterpolator(min_val=Q(0.0, "m")), id="rymes_meyers_0"),
         "lai_kaplan",
     ),
 )
@@ -277,6 +275,7 @@ def test_mean_preserving_min_val(
         num_regression=num_regression,
         image_regression=image_regression,
         tmpdir=Path(tmpdir),
+        min_val=algorithm.min_val,
     )
 
 
@@ -295,9 +294,7 @@ def test_mean_preserving_min_val(
         "lai_kaplan",
         pytest.param(
             "rymes_meyers",
-            marks=pytest.mark.skip(
-                reason="Current Rymes-Meyers implementation too slow for long tests"
-            ),
+            marks=pytest.mark.skip(reason="Current Rymes-Meyers implementation too slow for long tests"),
         ),
     ),
 )
