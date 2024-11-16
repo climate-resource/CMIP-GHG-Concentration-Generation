@@ -20,7 +20,7 @@ from numpy.polynomial import Polynomial
 from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
 )
-from local.mean_preserving_interpolation.grouping import get_group_sums
+from local.mean_preserving_interpolation.grouping import get_group_indexes, get_group_sums
 from local.optional_dependencies import get_optional_dependency
 
 T = TypeVar("T")
@@ -703,8 +703,14 @@ class LaiKaplanInterpolator:
                 vals=below_min,
                 group_bounds=x_bounds_in,
             )
-            breakpoint()
-            below_min_vals = below_min_in_group > 0
+            y_out_group_index = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
+            for below_min_group_idx in np.where(below_min_in_group > 0)[0]:
+                breakpoint()
+                interval_indexer = np.where(y_out_group_index == below_min_group_idx)
+                interval_vals = y_out[interval_indexer]
+                lai_kaplan_interval = below_min_group_idx + 1
+                interval_slice = slice(polish_interval * res_increase, (polish_interval + 1) * res_increase)
+
             raise NotImplementedError
 
         return y_out
