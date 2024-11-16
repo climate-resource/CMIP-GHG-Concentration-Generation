@@ -21,7 +21,7 @@ from local.mean_preserving_interpolation.boundary_handling import (
 )
 from local.mean_preserving_interpolation.grouping import (
     get_group_averages,
-    get_number_elements_per_group,
+    get_group_indexes,
 )
 from local.optional_dependencies import get_optional_dependency
 
@@ -109,18 +109,6 @@ class RymesMeyersInterpolator:
         else:
             min_it = self.min_it
 
-        n_out_elements_per_in_group = get_number_elements_per_group(
-            x_bounds=x_bounds_out, group_bounds=x_bounds_in
-        )
-
-        if not (n_out_elements_per_in_group == n_out_elements_per_in_group[0]).all():
-            msg = (
-                "This function currently only supports interpolation "
-                "where each interval in in the input is interpolated to the same "
-                "number of elements in the output"
-            )
-            raise NotImplementedError(msg)
-
         y_at_boundaries = self.get_y_at_boundaries(x_bounds=x_bounds_in, y_in=y_in)
 
         x_out_mids = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
@@ -128,6 +116,9 @@ class RymesMeyersInterpolator:
 
         # Run the algorithm
         current_vals = y_starting_values
+        current_vals_group_idexes = get_group_indexes(
+            x_bounds=x_bounds_out, group_bounds=x_bounds_in
+        )
 
         adjust_mat = np.zeros((y_starting_values.size, y_starting_values.size))
         rows, cols = np.diag_indices_from(adjust_mat)
@@ -163,12 +154,7 @@ class RymesMeyersInterpolator:
                 group_bounds=x_bounds_in,
             )
             corrections = y_in - group_averages
-            # Can use simple repeat
-            # because we checked that there are the same number of elements in each group.
-            # (If you remove that check, you need to change this too.)
-            corrections_rep = (
-                np.repeat(corrections.m, n_out_elements_per_in_group) * corrections.u
-            )
+            corrections_rep = corrections[(current_vals_group_idexes,)]
             current_vals = current_vals + corrections_rep
 
             if self.min_val is not None:
