@@ -14,15 +14,19 @@ import pint
 import pint.testing
 import pytest
 
-from local.mean_preserving_interpolation import mean_preserving_interpolation
+from local.mean_preserving_interpolation import (
+    MeanPreservingInterpolationAlgorithmLike,
+    mean_preserving_interpolation,
+)
 from local.mean_preserving_interpolation.grouping import get_group_averages
+from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 
 Q = pint.get_application_registry().Quantity
 RNG = np.random.default_rng(seed=4234)
 
 
 def execute_test_logic(  # noqa: PLR0913
-    algorithm: str,
+    algorithm: str | MeanPreservingInterpolationAlgorithmLike,
     y_in: numpy.typing.NDArray[np.float64],
     x_bounds_in: numpy.typing.NDArray[np.float64],
     x_bounds_out: numpy.typing.NDArray[np.float64],
@@ -210,6 +214,58 @@ def test_mean_preserving_interpolation_uneven_increase(
     x_bounds_in = Q([0, 1, 6, 12, 24], "month")
     x_bounds_out = Q(
         [0, 1 / 3, 2 / 3, 1, 2, 3, 4, 5, 6, 9, 12, 15, 18, 21, 24], "month"
+    )
+
+    execute_test_logic(
+        algorithm=algorithm,
+        y_in=y_in,
+        x_bounds_in=x_bounds_in,
+        x_bounds_out=x_bounds_out,
+        data_regression=data_regression,
+        num_regression=num_regression,
+        image_regression=image_regression,
+        tmpdir=Path(tmpdir),
+    )
+
+
+@pytest.mark.parametrize(
+    "algorithm",
+    (
+        pytest.param("lazy_linear", marks=pytest.mark.skip(reason="Not implemented")),
+        pytest.param(RymesMeyersInterpolator(min_val=-1.0), id="rymes_meyers_-1"),
+        pytest.param(RymesMeyersInterpolator(min_val=0.0), id="rymes_meyers_0"),
+        "lai_kaplan",
+    ),
+)
+def test_mean_preserving_min_val(
+    algorithm,
+    data_regression,
+    num_regression,
+    image_regression,
+    tmpdir,
+):
+    """
+    Test support for minimum values
+
+    This also implicitly tests our ability to pass a callable as `algorithm`.
+    """
+    res_increase = 6
+    y_in = Q([0, 0, 0, 1, 4, 9, 10, 12, 8, 4, 0, 0, 2, 6, 5, 0, 0], "m")
+
+    x_0 = 1750.0
+    x_in_spacing = 1.0
+    x_bounds_in = Q(
+        x_0 + np.arange(0.0, x_in_spacing * (y_in.size + 1), x_in_spacing),
+        "yr",
+    )
+    x_bounds_out = Q(
+        x_bounds_in.m[0]
+        + np.arange(
+            0.0,
+            x_in_spacing * y_in.size + 1 / (2 * res_increase),
+            x_in_spacing / res_increase,
+        ),
+        "yr",
     )
 
     execute_test_logic(

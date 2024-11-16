@@ -7,6 +7,9 @@ Hence, this module is surprisingly large.
 
 from __future__ import annotations
 
-from local.mean_preserving_interpolation.core import mean_preserving_interpolation
+from local.mean_preserving_interpolation.core import (
+    MeanPreservingInterpolationAlgorithmLike,
+    mean_preserving_interpolation,
+)
 
-__all__ = ["mean_preserving_interpolation"]
+__all__ = ["MeanPreservingInterpolationAlgorithmLike", "mean_preserving_interpolation"]
