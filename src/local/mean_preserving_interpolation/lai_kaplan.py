@@ -1,16 +1,19 @@
 """
 Lai-Kaplan mean-preserving interpolator
 
-See [Lai and Kaplan, J. Atm. Ocn. Tech. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1)
+See [Lai and Kaplan, J. Atmos. Oceanic Technol. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1)
 """
 
 from __future__ import annotations
 
 from functools import partial
+from typing import Generic, TypeVar
 
+import attrs.validators
 import numpy as np
+import numpy.typing as npt
 import pint
-from attrs import define
+from attrs import define, field
 
 from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
@@ -25,6 +28,153 @@ from local.mean_preserving_interpolation.grouping import (
     get_group_integrals,
 )
 from local.optional_dependencies import get_optional_dependency
+
+T = TypeVar("T")
+
+
+@define
+class LaiKaplanArray(Generic[T]):
+    """
+    Thin wrapper around numpy arrays to support indexing like in the paper.
+
+    This is sort of like writing a Python array that supports Fortran-style indexing,
+    but trying to translate the paper with raw python indexes was too confusing,
+    so we wrote this instead.
+    """
+
+    lai_kaplan_idx_min: float | int
+    """Minimum index"""
+
+    lai_kaplan_stride: float = field(validator=attrs.validators.in_((0.5, 1.0, 1)))
+    """Size of stride"""
+
+    data: npt.NDArray[T]
+    """Actual data array"""
+
+    @property
+    def max_allowed_lai_kaplan_index(self):
+        """
+        The maximum allowed Lai-Kaplan style index for `self.data`
+
+        Returns
+        -------
+        :
+            The index.
+        """
+        return (self.data.size - 1) * self.lai_kaplan_stride + self.lai_kaplan_idx_min
+
+    def to_data_index(self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False) -> int | None:
+        """
+        Convert a Lai-Kaplan index to the equivalent index for `self.data`
+
+        Parameters
+        ----------
+        idx_lai_kaplan
+            Lai-Kaplan index to translate
+
+        is_slice_idx
+            Whether this index is a slice index.
+
+            This is important to ensure we give sensible errors
+            about whether the index is too big for `self.data` or not.
+
+        Returns
+        -------
+        :
+            The index for `self.data`.
+        """
+        if idx_lai_kaplan is None:
+            return None
+
+        if idx_lai_kaplan < self.lai_kaplan_idx_min:
+            msg = f"{idx_lai_kaplan=} is less than {self.lai_kaplan_idx_min=}"
+            raise IndexError(msg)
+
+        idx_data_float = (idx_lai_kaplan - self.lai_kaplan_idx_min) / self.lai_kaplan_stride
+        if idx_data_float % 1.0:
+            msg = f"{idx_lai_kaplan=} leads to {idx_data_float=}, which is not an int. {self=}"
+            raise IndexError(msg)
+
+        idx_data = int(idx_data_float)
+
+        if is_slice_idx:
+            max_idx = self.data.size
+        else:
+            max_idx = self.data.size - 1
+
+        if idx_data > max_idx:
+            msg = (
+                f"{idx_lai_kaplan=} leads to {idx_data=}, "
+                f"which is outside the bounds of `self.data` ({self.data.size=}). "
+                f"{self.max_allowed_lai_kaplan_index=}, {self=}"
+            )
+            raise IndexError(msg)
+
+        return idx_data
+
+    def to_data_step(self, step_lai_kaplan: int | float | None) -> int | None:
+        """
+        Translate a Lai-Kaplan step into the equivalent step for `self.data`
+
+        Parameters
+        ----------
+        step_lai_kaplan
+            Lai-Kaplan step size
+
+        Returns
+        -------
+        :
+            `self.data` step size
+        """
+        if step_lai_kaplan is None:
+            return None
+
+        step_data_float = step_lai_kaplan / self.lai_kaplan_stride
+        if step_data_float % 1.0:
+            msg = f"{step_lai_kaplan=} leads to {step_data_float=}, which is not an int. {self=}"
+            raise IndexError(msg)
+
+        step_data = int(step_data_float)
+
+        return step_data
+
+    def __getitem__(self, idx_lai_kaplan: int | float | slice) -> T | npt.NDArray[T]:
+        """
+        Get an item from `self.data` using standard Python indexing
+
+        The trick here is that we can use indexing like in the Lai-Kaplan paper
+        and get the correct part of the underlying data array back.
+        """
+        if isinstance(idx_lai_kaplan, slice):
+            idx_data = slice(
+                self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
+                self.to_data_index(idx_lai_kaplan.stop, is_slice_idx=True),
+                self.to_data_step(idx_lai_kaplan.step),
+            )
+
+        else:
+            idx_data = self.to_data_index(idx_lai_kaplan)
+
+        return self.data[idx_data]
+
+    def __setitem__(self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]) -> None:
+        """
+        Set an item (or slice) in `self.data` using standard Python indexing
+
+        The trick here is that we can use indexing like in the Lai-Kaplan paper
+        and set the correct part of the underlying data array.
+        """
+        if isinstance(idx_lai_kaplan, slice):
+            idx_data = slice(
+                self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
+                self.to_data_index(idx_lai_kaplan.stop, is_slice_idx=True),
+                self.to_data_step(idx_lai_kaplan.step),
+            )
+
+        else:
+            idx_data = self.to_data_index(idx_lai_kaplan)
+
+        self.data[idx_data] = val
 
 
 @define
