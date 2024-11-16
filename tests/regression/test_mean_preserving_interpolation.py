@@ -24,31 +24,13 @@ RNG = np.random.default_rng(seed=4234)
 def execute_test_logic(  # noqa: PLR0913
     algorithm: str,
     y_in: numpy.typing.NDArray[np.float64],
+    x_bounds_in: numpy.typing.NDArray[np.float64],
+    x_bounds_out: numpy.typing.NDArray[np.float64],
     data_regression,
     num_regression,
     image_regression,
     tmpdir: Path,
-    x_0: float = 100.0,
-    x_in_spacing: float = 1.0,
-    res_increase: int = 12,
 ) -> None:
-    x_bounds_in = Q(
-        x_0 + np.arange(0.0, x_in_spacing * (y_in.size + 1), x_in_spacing),
-        "yr",
-    )
-
-    x_bounds_out = Q(
-        x_bounds_in.m[0]
-        + np.arange(
-            0.0,
-            x_in_spacing * y_in.size + 1 / (2 * res_increase),
-            x_in_spacing / res_increase,
-        ),
-        "yr",
-    )
-
-    assert x_bounds_out.size == (x_bounds_in.size - 1) * res_increase + 1
-
     y_out = mean_preserving_interpolation(
         x_bounds_in=x_bounds_in,
         y_in=y_in,
@@ -135,15 +117,34 @@ def test_mean_preserving_interpolation(  # noqa: PLR0913
     image_regression,
     tmpdir,
 ):
+    res_increase = 12
+
+    x_bounds_in = Q(
+        x_0 + np.arange(0.0, x_in_spacing * (y_in.size + 1), x_in_spacing),
+        "yr",
+    )
+
+    x_bounds_out = Q(
+        x_bounds_in.m[0]
+        + np.arange(
+            0.0,
+            x_in_spacing * y_in.size + 1 / (2 * res_increase),
+            x_in_spacing / res_increase,
+        ),
+        "yr",
+    )
+
+    assert x_bounds_out.size == (x_bounds_in.size - 1) * res_increase + 1
+
     execute_test_logic(
         algorithm=algorithm,
         y_in=y_in,
+        x_bounds_in=x_bounds_in,
+        x_bounds_out=x_bounds_out,
         data_regression=data_regression,
         num_regression=num_regression,
         image_regression=image_regression,
         tmpdir=Path(tmpdir),
-        x_0=x_0,
-        x_in_spacing=x_in_spacing,
     )
 
 
@@ -165,15 +166,61 @@ def test_mean_preserving_interpolation_res_increase(  # noqa: PLR0913
     image_regression,
     tmpdir,
 ):
+    y_in = Q(np.sin(2 * np.pi * np.arange(20) / 8.0), "m")
+    x_0 = 100.0
+    x_bounds_in = Q(
+        x_0 + np.arange(0.0, x_in_spacing * (y_in.size + 1), x_in_spacing),
+        "yr",
+    )
+
+    x_bounds_out = Q(
+        x_bounds_in.m[0]
+        + np.arange(
+            0.0,
+            x_in_spacing * y_in.size + 1 / (2 * res_increase),
+            x_in_spacing / res_increase,
+        ),
+        "yr",
+    )
+
+    assert x_bounds_out.size == (x_bounds_in.size - 1) * res_increase + 1
+
     execute_test_logic(
         algorithm=algorithm,
-        y_in=Q(np.sin(2 * np.pi * np.arange(20) / 8.0), "m"),
+        y_in=y_in,
+        x_bounds_in=x_bounds_in,
+        x_bounds_out=x_bounds_out,
         data_regression=data_regression,
         num_regression=num_regression,
         image_regression=image_regression,
         tmpdir=Path(tmpdir),
-        x_in_spacing=x_in_spacing,
-        res_increase=res_increase,
+    )
+
+
+@pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
+def test_mean_preserving_interpolation_uneven_increase(
+    algorithm,
+    data_regression,
+    num_regression,
+    image_regression,
+    tmpdir,
+):
+    y_in = Q([0, 1, 10, 20], "m")
+
+    x_bounds_in = Q([0, 1, 6, 12, 24], "month")
+    x_bounds_out = Q(
+        [0, 1 / 3, 2 / 3, 1, 2, 3, 4, 5, 6, 9, 12, 15, 18, 21, 24], "month"
+    )
+
+    execute_test_logic(
+        algorithm=algorithm,
+        y_in=y_in,
+        x_bounds_in=x_bounds_in,
+        x_bounds_out=x_bounds_out,
+        data_regression=data_regression,
+        num_regression=num_regression,
+        image_regression=image_regression,
+        tmpdir=Path(tmpdir),
     )
 
 

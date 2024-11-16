@@ -4,6 +4,7 @@ Grouping and associated tools
 
 from __future__ import annotations
 
+import itertools
 from typing import cast
 
 import numpy as np
@@ -116,6 +117,42 @@ def get_number_elements_per_group(
     group_boundaries = get_group_boundary_indexes(x_bounds, group_bounds)
 
     return np.diff(group_boundaries[0])
+
+
+def get_group_indexes(
+    x_bounds: pint.UnitRegistry.Quantity,
+    group_bounds: pint.UnitRegistry.Quantity,
+) -> npt.NDArray[np.int_]:
+    """
+    Get the the index of the group in `group_bounds` that each interval in `x_bounds` belongs to.
+
+    This is useful for later being able to index y-arrays
+    that correspond to the bounds defined by `group_bounds`
+    and get an array of the size of an array that is defined by `x_bounds`.
+
+    Parameters
+    ----------
+    x_bounds
+        The x-bounds of the array we wish to group
+
+    group_bounds
+        The bounds of the groups we want to apply to `x_bounds`
+
+    Returns
+    -------
+    :
+        For each interval in `x_bounds`, the index of the interval in `group_bounds` it belongs to.
+    """
+    group_boundaries = get_group_boundary_indexes(x_bounds, group_bounds)
+
+    res = -1 * np.ones(x_bounds.size - 1, dtype=int)
+
+    # Not sure if there is a faster way to do this.
+    # In general, we should only be doing this once so ok price to pay.
+    for i, (start, stop) in enumerate(itertools.pairwise(group_boundaries[0])):
+        res[start:stop] = int(i)
+
+    return res
 
 
 def get_group_integrals(
