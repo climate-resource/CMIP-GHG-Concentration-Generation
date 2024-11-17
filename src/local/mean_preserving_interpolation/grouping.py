@@ -5,11 +5,13 @@ Grouping and associated tools
 from __future__ import annotations
 
 import itertools
-from typing import Any, cast
+from typing import Any, TypeVar, cast
 
 import numpy as np
 import numpy.typing as npt
 import pint
+
+Summable = TypeVar("Summable", npt.NDArray[Any], pint.UnitRegistry.Quantity)
 
 
 class NonIntersectingBoundsError(IndexError):
@@ -156,10 +158,10 @@ def get_group_indexes(
 
 
 def get_group_sums(
-    x_bounds: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
-    vals: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
-    group_bounds: npt.NDArray[Any] | pint.UnitRegistry.Quantity,
-) -> npt.NDArray[Any] | pint.UnitRegistry.Quantity:
+    x_bounds: pint.UnitRegistry.Quantity,
+    vals: Summable,
+    group_bounds: pint.UnitRegistry.Quantity,
+) -> Summable:
     """
     Get sums for groups of values within an array
 
@@ -194,7 +196,7 @@ def get_group_sums(
 
     res = np.hstack([res[0], np.diff(res)])
 
-    return res
+    return res  # type: ignore # mypy being stupid
 
 
 def get_group_integrals(

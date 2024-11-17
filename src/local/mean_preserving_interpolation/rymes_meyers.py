@@ -7,6 +7,7 @@ See [Rymes and Myers, Solar Energy 2001](https://doi.org/10.1016/S0038-092X(01)0
 from __future__ import annotations
 
 from functools import partial
+from typing import cast
 
 import numpy as np
 import numpy.typing as npt
@@ -109,7 +110,9 @@ class RymesMeyersInterpolator:
         y_at_boundaries = self.get_y_at_boundaries(x_bounds=x_bounds_in, y_in=y_in)
 
         x_out_mids = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
-        y_starting_values = np.interp(x_out_mids, x_bounds_in, y_at_boundaries)
+        y_starting_values = cast(
+            pint.UnitRegistry.Quantity, np.interp(x_out_mids, x_bounds_in, y_at_boundaries)
+        )
 
         return self.iterate_to_solution(
             starting_values=y_starting_values,
@@ -208,11 +211,8 @@ class RymesMeyersInterpolator:
             if min_val is not None and (current_vals < min_val).any():
                 current_vals_new = self.lower_bound_adjustment(
                     min_val=min_val,
-                    current_vals=np.copy(current_vals),
+                    current_vals=current_vals,
                     current_vals_group_indexes=current_vals_group_indexes,
-                    adjust_mat=adjust_mat,
-                    left_bound_val=left_bound_val,
-                    right_bound_val=right_bound_val,
                     x_bounds_target=x_bounds_in,
                     target=y_in,
                     x_bounds_out=x_bounds_out,
@@ -263,8 +263,8 @@ class RymesMeyersInterpolator:
         current_vals: pint.UnitRegistry.Quantity,
         current_vals_group_indexes: npt.NDArray[np.int_],
         adjust_mat: npt.NDArray[np.float64],
-        left_bound_val: float,
-        right_bound_val: float,
+        left_bound_val: pint.UnitRegistry.Quantity,
+        right_bound_val: pint.UnitRegistry.Quantity,
         x_bounds_target: pint.UnitRegistry.Quantity,
         target: pint.UnitRegistry.Quantity,
         x_bounds_out: pint.UnitRegistry.Quantity,
@@ -303,7 +303,7 @@ class RymesMeyersInterpolator:
         :
             The updated solution values based on this iteration
         """
-        current_vals = adjust_mat @ current_vals
+        current_vals = cast(pint.UnitRegistry.Quantity, adjust_mat @ current_vals)
         current_vals[0] += left_bound_val / 3
         current_vals[-1] += right_bound_val / 3
 
@@ -322,9 +322,6 @@ class RymesMeyersInterpolator:
         min_val: pint.UnitRegistry.Quantity,
         current_vals: pint.UnitRegistry.Quantity,
         current_vals_group_indexes: npt.NDArray[np.int_],
-        adjust_mat: npt.NDArray[np.float64],
-        left_bound_val: float,
-        right_bound_val: float,
         x_bounds_target: pint.UnitRegistry.Quantity,
         target: pint.UnitRegistry.Quantity,
         x_bounds_out: pint.UnitRegistry.Quantity,
@@ -342,15 +339,6 @@ class RymesMeyersInterpolator:
 
         current_vals_group_indexes
             For each value in `current_vals`, the index of the group in `target` it belongs to.
-
-        adjust_mat
-            Matrix for adjusting the values
-
-        left_bound_val
-            Value to use as the left-bound during the adjustments
-
-        right_bound_val
-            Value to use as the right-bound during the adjustments
 
         x_bounds_target
             The x-bounds of the target

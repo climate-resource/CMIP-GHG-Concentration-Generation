@@ -9,11 +9,10 @@ from __future__ import annotations
 import warnings
 from collections.abc import Callable
 from functools import partial
-from typing import Generic, Protocol, TypeVar
+from typing import Protocol, TypeVar, cast, overload
 
 import attrs.validators
 import numpy as np
-import numpy.typing as npt
 import pint
 from attrs import define, field
 from numpy.polynomial import Polynomial
@@ -25,11 +24,12 @@ from local.mean_preserving_interpolation.grouping import get_group_indexes, get_
 from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 from local.optional_dependencies import get_optional_dependency
 
-T = TypeVar("T")
+NPVal = TypeVar("NPVal", bound=np.generic)
+# NPArray = TypeVar("NPArray", bound=npt.NDArray[Any])
 
 
 @define
-class LaiKaplanArray(Generic[T]):
+class LaiKaplanArray:
     """
     Thin wrapper around numpy arrays to support indexing like in the paper.
 
@@ -44,11 +44,11 @@ class LaiKaplanArray(Generic[T]):
     lai_kaplan_stride: float = field(validator=attrs.validators.in_((0.5, 1.0, 1)))
     """Size of stride"""
 
-    data: npt.NDArray[T]
+    data: pint.UnitRegistry.Quantity
     """Actual data array"""
 
     @property
-    def max_allowed_lai_kaplan_index(self):
+    def max_allowed_lai_kaplan_index(self) -> float:
         """
         The maximum allowed Lai-Kaplan style index for `self.data`
 
@@ -57,7 +57,13 @@ class LaiKaplanArray(Generic[T]):
         :
             The index.
         """
-        return (self.data.size - 1) * self.lai_kaplan_stride + self.lai_kaplan_idx_min
+        return cast(float, (self.data.size - 1) * self.lai_kaplan_stride + self.lai_kaplan_idx_min)
+
+    @overload
+    def to_data_index(self, idx_lai_kaplan: int | float, is_slice_idx: bool = False) -> int: ...
+
+    @overload
+    def to_data_index(self, idx_lai_kaplan: None, is_slice_idx: bool = False) -> None: ...
 
     def to_data_index(self, idx_lai_kaplan: int | float | None, is_slice_idx: bool = False) -> int | None:
         """
@@ -134,7 +140,7 @@ class LaiKaplanArray(Generic[T]):
 
         return step_data
 
-    def __getitem__(self, idx_lai_kaplan: int | float | slice) -> T | npt.NDArray[T]:
+    def __getitem__(self, idx_lai_kaplan: int | float | slice) -> pint.UnitRegistry.Quantity:
         """
         Get an item from `self.data` using standard Python indexing
 
@@ -142,7 +148,7 @@ class LaiKaplanArray(Generic[T]):
         and get the correct part of the underlying data array back.
         """
         if isinstance(idx_lai_kaplan, slice):
-            idx_data = slice(
+            idx_data: slice | int = slice(
                 self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
                 self.to_data_index(idx_lai_kaplan.stop, is_slice_idx=True),
                 self.to_data_step(idx_lai_kaplan.step),
@@ -151,9 +157,9 @@ class LaiKaplanArray(Generic[T]):
         else:
             idx_data = self.to_data_index(idx_lai_kaplan)
 
-        return self.data[idx_data]
+        return cast(pint.UnitRegistry.Quantity, self.data[idx_data])
 
-    def __setitem__(self, idx_lai_kaplan: int | float | slice, val: T | npt.NDArray[T]) -> None:
+    def __setitem__(self, idx_lai_kaplan: int | float | slice, val: pint.UnitRegistry.Quantity) -> None:
         """
         Set an item (or slice) in `self.data` using standard Python indexing
 
@@ -161,7 +167,7 @@ class LaiKaplanArray(Generic[T]):
         and set the correct part of the underlying data array.
         """
         if isinstance(idx_lai_kaplan, slice):
-            idx_data = slice(
+            idx_data: slice | int = slice(
                 self.to_data_index(idx_lai_kaplan.start, is_slice_idx=True),
                 self.to_data_index(idx_lai_kaplan.stop, is_slice_idx=True),
                 self.to_data_step(idx_lai_kaplan.step),
@@ -189,8 +195,9 @@ Hermite cubic polynomials
 Allows for the same notation as the paper.
 """
 
-HERMITE_QUARTICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = tuple(
-    tuple(hc.integ() for hc in hcs_row) for hcs_row in HERMITE_CUBICS
+HERMITE_QUARTICS: tuple[tuple[Polynomial, Polynomial], tuple[Polynomial, Polynomial]] = (
+    (cast(Polynomial, HERMITE_CUBICS[0][0].integ()), cast(Polynomial, HERMITE_CUBICS[0][1].integ())),  # type: ignore[no-untyped-call]
+    (cast(Polynomial, HERMITE_CUBICS[1][0].integ()), cast(Polynomial, HERMITE_CUBICS[1][1].integ())),  # type: ignore[no-untyped-call]
 )
 """
 Hermite quartic polynomials
@@ -284,11 +291,15 @@ class LaiKaplanF:
 
         u = (x - self.x_i) / self.delta
 
-        res = self.delta * (
-            self.s_i * HERMITE_QUARTICS[0][0](u)
-            + self.delta * self.m_i * HERMITE_QUARTICS[1][0](u)
-            + self.s_i_plus_half * HERMITE_QUARTICS[0][1](u)
-            + self.delta * self.m_i_plus_half * HERMITE_QUARTICS[1][1](u)
+        res = cast(
+            pint.UnitRegistry.Quantity,
+            self.delta
+            * (
+                self.s_i * HERMITE_QUARTICS[0][0](u)
+                + self.delta * self.m_i * HERMITE_QUARTICS[1][0](u)
+                + self.s_i_plus_half * HERMITE_QUARTICS[0][1](u)
+                + self.delta * self.m_i_plus_half * HERMITE_QUARTICS[1][1](u)
+            ),
         )
 
         return res
@@ -326,11 +337,15 @@ class LaiKaplanF:
 
         u = (x - self.x_i.m) / self.delta.m
 
-        res = self.delta.m * (
-            self.s_i.m * HERMITE_QUARTICS[0][0](u)
-            + self.delta.m * self.m_i.m * HERMITE_QUARTICS[1][0](u)
-            + self.s_i_plus_half.m * HERMITE_QUARTICS[0][1](u)
-            + self.delta.m * self.m_i_plus_half.m * HERMITE_QUARTICS[1][1](u)
+        res = cast(
+            float,
+            self.delta.m
+            * (
+                self.s_i.m * HERMITE_QUARTICS[0][0](u)
+                + self.delta.m * self.m_i.m * HERMITE_QUARTICS[1][0](u)
+                + self.s_i_plus_half.m * HERMITE_QUARTICS[0][1](u)
+                + self.delta.m * self.m_i_plus_half.m * HERMITE_QUARTICS[1][1](u)
+            ),
         )
 
         return res
@@ -364,9 +379,11 @@ class LaiKaplanF:
             msg = f"`x_lower` must be less than `x_upper`. {x_lower=} {x_upper=}"
             raise ValueError(msg)
 
-        res = self.calculate_integral_indefinite(
-            x_upper, check_domain=check_domain
-        ) - self.calculate_integral_indefinite(x_lower, check_domain=check_domain)
+        res = cast(
+            pint.UnitRegistry.Quantity,
+            self.calculate_integral_indefinite(x_upper, check_domain=check_domain)
+            - self.calculate_integral_indefinite(x_lower, check_domain=check_domain),
+        )
 
         return res
 
@@ -438,11 +455,14 @@ class LaiKaplanF:
 
         u = (x - self.x_i.m) / self.delta.m
 
-        res = (
-            self.s_i.m * HERMITE_CUBICS[0][0](u)
-            + self.delta.m * self.m_i.m * HERMITE_CUBICS[1][0](u)
-            + self.s_i_plus_half.m * HERMITE_CUBICS[0][1](u)
-            + self.delta.m * self.m_i_plus_half.m * HERMITE_CUBICS[1][1](u)
+        res = cast(
+            float,
+            (
+                self.s_i.m * HERMITE_CUBICS[0][0](u)
+                + self.delta.m * self.m_i.m * HERMITE_CUBICS[1][0](u)
+                + self.s_i_plus_half.m * HERMITE_CUBICS[0][1](u)
+                + self.delta.m * self.m_i_plus_half.m * HERMITE_CUBICS[1][1](u)
+            ),
         )
 
         return res
@@ -475,14 +495,52 @@ class LaiKaplanF:
                 msg = f"u is outside the supported domain. {u=}"
                 raise ValueError(msg)
 
-        res = (
-            self.s_i * HERMITE_CUBICS[0][0](u)
-            + self.delta * self.m_i * HERMITE_CUBICS[1][0](u)
-            + self.s_i_plus_half * HERMITE_CUBICS[0][1](u)
-            + self.delta * self.m_i_plus_half * HERMITE_CUBICS[1][1](u)
+        res = cast(
+            pint.UnitRegistry.Quantity,
+            (
+                self.s_i * HERMITE_CUBICS[0][0](u)
+                + self.delta * self.m_i * HERMITE_CUBICS[1][0](u)
+                + self.s_i_plus_half * HERMITE_CUBICS[0][1](u)
+                + self.delta * self.m_i_plus_half * HERMITE_CUBICS[1][1](u)
+            ),
         )
 
         return res
+
+
+class ExtrapolateYIntervalValuesLike(Protocol):
+    """
+    Class that can be used for extrapolating the y-values for the external intervals
+    """
+
+    def __call__(
+        self,
+        x_in: pint.UnitRegistry.Quantity,
+        y_in: pint.UnitRegistry.Quantity,
+        x_out: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Extrapolate our y-interval values to get an extra value either side of the input domain
+
+        Parameters
+        ----------
+        x_in
+            x-values of the input array
+
+        y_in
+            y-values of the input array
+
+        x_out
+            x-values to extrapolate
+
+            There should be two: the x-value to the left of `x_in`
+            and the x-value to the right of `x_in`.
+
+        Returns
+        -------
+        :
+            The extrapolated values at `x_out`.
+        """
 
 
 def extrapolate_y_interval_values(
@@ -551,7 +609,7 @@ def extrapolate_y_interval_values(
     else:
         raise NotImplementedError(right)
 
-    return np.hstack(y_out)
+    return cast(pint.UnitRegistry.Quantity, np.hstack(y_out))
 
 
 class MinValApplierLike(Protocol):
@@ -659,7 +717,9 @@ def get_wall_control_points_y_linear(
     :
         y-values at each wall control point.
     """
-    control_points_wall_y = np.interp(control_points_wall_x, intervals_x, intervals_y)
+    control_points_wall_y = cast(
+        pint.UnitRegistry.Quantity, np.interp(control_points_wall_x, intervals_x, intervals_y)
+    )
 
     return control_points_wall_y
 
@@ -742,7 +802,9 @@ def get_wall_control_points_y_cubic(
         kind="cubic",
         fill_value="extrapolate",
     )
-    control_points_wall_y = cubic_interpolator(control_points_wall_x.m) * intervals_y.u
+    control_points_wall_y = cast(
+        pint.UnitRegistry.Quantity, cubic_interpolator(control_points_wall_x.m) * intervals_y.u
+    )
 
     return control_points_wall_y
 
@@ -798,10 +860,7 @@ class LaiKaplanInterpolator:
     See [Lai and Kaplan, J. Atm. Ocn. Tech. 2022](https://doi.org/10.1175/JTECH-D-21-0154.1)
     """
 
-    extrapolate_y_interval_values: Callable[
-        [pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity, pint.UnitRegistry.Quantity],
-        pint.UnitRegistry.Quantity,
-    ] = partial(
+    extrapolate_y_interval_values: ExtrapolateYIntervalValuesLike = partial(
         extrapolate_y_interval_values,
         left=BoundaryHandling.CONSTANT,
         right=BoundaryHandling.CUBIC_EXTRAPOLATION,
@@ -882,7 +941,7 @@ class LaiKaplanInterpolator:
             msg = f"x_bounds_out must be sorted for this to work {x_bounds_out=}"
             raise AssertionError(msg)
 
-        x_bounds_out = x_bounds_out.to(x_bounds_in.u)
+        x_bounds_out = cast(pint.UnitRegistry.Quantity, x_bounds_out.to(x_bounds_in.u))
 
         x_steps = x_bounds_in[1:] - x_bounds_in[:-1]
         x_step = x_steps[0]
@@ -893,12 +952,15 @@ class LaiKaplanInterpolator:
         delta = x_step / 2.0
         intervals_internal_x = (x_bounds_in[1:] + x_bounds_in[:-1]) / 2.0
         walls_x = x_bounds_in
-        intervals_x = np.hstack(
-            [
-                intervals_internal_x[0] - x_step,
-                intervals_internal_x,
-                intervals_internal_x[-1] + x_step,
-            ]
+        intervals_x = cast(
+            pint.UnitRegistry.Quantity,
+            np.hstack(
+                [
+                    intervals_internal_x[0] - x_step,
+                    intervals_internal_x,
+                    intervals_internal_x[-1] + x_step,
+                ]
+            ),
         )
 
         n_lai_kaplan = y_in.size
@@ -925,12 +987,15 @@ class LaiKaplanInterpolator:
         external_intervals_y_d = self.extrapolate_y_interval_values(
             x_in=intervals_internal_x,
             y_in=y_in,
-            x_out=np.hstack([intervals_x[0], intervals_x[-1]]),
+            x_out=cast(pint.UnitRegistry.Quantity, np.hstack([intervals_x[0], intervals_x[-1]])),
         )
         intervals_y = LaiKaplanArray(
             lai_kaplan_idx_min=0.0,
             lai_kaplan_stride=1.0,
-            data=np.hstack([external_intervals_y_d[0], y_in, external_intervals_y_d[-1]]),
+            data=cast(
+                pint.UnitRegistry.Quantity,
+                np.hstack([external_intervals_y_d[0], y_in, external_intervals_y_d[-1]]),
+            ),
         )
 
         control_points_wall_y_d = self.get_wall_control_points_y_from_interval_ys(
@@ -986,10 +1051,10 @@ class LaiKaplanInterpolator:
         n_lai_kaplan: int,
         x_step: pint.UnitRegistry.Quantity,
         target: pint.UnitRegistry.Quantity,
-        control_points_x: LaiKaplanArray[pint.UnitRegistry.Quantity],
-        control_points_wall_y: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        control_points_x: LaiKaplanArray,
+        control_points_wall_y: LaiKaplanArray,
         external_control_points_y_d: pint.UnitRegistry.Quantity,
-    ) -> LaiKaplanArray[pint.UnitRegistry.Quantity]:
+    ) -> LaiKaplanArray:
         """
         Solve for the y-values at the control points
 
@@ -1037,7 +1102,7 @@ class LaiKaplanInterpolator:
         a = LaiKaplanArray(
             lai_kaplan_idx_min=1,
             lai_kaplan_stride=1,
-            data=a_d,
+            data=a_d,  # type: ignore # given up on making this nicer
         )
 
         # A-matrix
@@ -1067,7 +1132,7 @@ class LaiKaplanInterpolator:
                 ),
             ]
         )
-        beta = LaiKaplanArray(1, 1, beta_d)
+        beta = LaiKaplanArray(1, 1, beta_d)  # type: ignore # given up making this nicer
 
         b = LaiKaplanArray(
             lai_kaplan_idx_min=1,
@@ -1094,7 +1159,7 @@ class LaiKaplanInterpolator:
             - a[3] * external_control_points_y_d[-1]
         )
 
-        control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
+        control_points_interval_y_d = cast(pint.UnitRegistry.Quantity, np.linalg.solve(A_mat, b.data))
         # # Not needed, but helpful double check if debugging
         # pint.testing.assert_allclose(
         #     np.dot(A_mat, control_points_interval_y_d.m), b.data.m, atol=self.atol, rtol=self.rtol
@@ -1103,14 +1168,17 @@ class LaiKaplanInterpolator:
         control_points_y = LaiKaplanArray(
             lai_kaplan_idx_min=1 / 2,
             lai_kaplan_stride=1 / 2,
-            data=np.nan * np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
+            data=cast(
+                pint.UnitRegistry.Quantity,
+                np.nan * np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
+            ),
         )
         # Pre-calculated external interval values
         control_points_y[1 / 2] = external_control_points_y_d[0]
         control_points_y[n_lai_kaplan + 3 / 2] = external_control_points_y_d[-1]
         control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
         # Calculated values
-        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
+        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d  # type: ignore # mypy confused by hacky slicing
 
         return control_points_y
 
@@ -1118,8 +1186,8 @@ class LaiKaplanInterpolator:
         self,
         target: pint.UnitRegistry.Quantity,
         x_bounds_out: pint.UnitRegistry.Quantity,
-        control_points_x: LaiKaplanArray[pint.UnitRegistry.Quantity],
-        control_points_y: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        control_points_x: LaiKaplanArray,
+        control_points_y: LaiKaplanArray,
         n_lai_kaplan: int,
         delta: pint.UnitRegistry.Quantity,
     ) -> pint.UnitRegistry.Quantity:
@@ -1157,7 +1225,7 @@ class LaiKaplanInterpolator:
             data=np.nan * np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
         )
         gradients_at_control_points[:] = (
-            control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
+            control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]  # type: ignore # mypy confused by hacky slicing
         ) / (2 * delta)
 
         # TODO: Can't see how to do calculate the result with vectors,
@@ -1190,7 +1258,7 @@ class LaiKaplanInterpolator:
             average_m = integral_m / (x_bounds_out[out_index + 1].m - x_bounds_out[out_index].m)
             y_out_m[out_index] = average_m
 
-        y_out = y_out_m * target.u
+        y_out = cast(pint.UnitRegistry.Quantity, y_out_m * target.u)
 
         return y_out
 
@@ -1229,6 +1297,10 @@ class LaiKaplanInterpolator:
         :
             The updated solution values based on adjusting for the lower bound.
         """
+        if self.min_val is None:
+            msg = "`self.min_val` should not be `None` if you're calling this method"
+            raise AssertionError(msg)
+
         # Apply some sense
         min_val_same_u = self.min_val.to(y_out.u)
         already_close_to_min_val = np.isclose(y_out.m, min_val_same_u.m, atol=self.atol, rtol=self.rtol)

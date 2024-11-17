@@ -19,7 +19,7 @@ from local.mean_preserving_interpolation.lai_kaplan import (
 )
 from local.xarray_time import convert_time_to_year_month
 
-Q = pint.get_application_registry().Quantity
+Q = pint.get_application_registry().Quantity  # type: ignore
 
 N_MONTHS_PER_YEAR: int = 12
 """Number of months in a year"""
