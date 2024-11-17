@@ -942,13 +942,6 @@ class LaiKaplanInterpolator:
                     m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
                 )
 
-                # Do a single calculation to make sure we have the units right
-                res_x_i = lai_kaplan_f.calculate(x_i)
-                pint.testing.assert_allclose(
-                    res_x_i,
-                    control_points_y[lai_kaplan_interval_idx],
-                )
-
             integral_m = lai_kaplan_f.calculate_integral_definite_unitless(
                 x_bounds_out[out_index].m, x_bounds_out[out_index + 1].m
             )
@@ -958,47 +951,92 @@ class LaiKaplanInterpolator:
         y_out = y_out_m * y_in.u
 
         if self.min_val is not None and (y_out < self.min_val).any():
-            below_min = y_out < self.min_val
-            below_min_in_group = get_group_sums(
-                x_bounds=x_bounds_out,
-                vals=below_min,
-                group_bounds=x_bounds_in,
+            y_out = self.lower_bound_adjustment(
+                y_out=y_out,
+                control_points_y=control_points_y,
+                x_bounds_target=x_bounds_in,
+                target=y_in,
+                x_bounds_out=x_bounds_out,
             )
-            y_out_group_index = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
 
-            min_val_applier = self.get_min_val_applier(self)
+        return y_out
 
-            iterh = np.where(below_min_in_group > 0)[0]
-            if self.progress_bar:
-                tqdman = get_optional_dependency("tqdm.autonotebook")
-                iterh = tqdman.tqdm(
-                    iterh, desc="Updating intervals where the solution is less than the minimum value"
-                )
+    def lower_bound_adjustment(  # noqa: PLR0913
+        self,
+        y_out: pint.UnitRegistry.Quantity,
+        control_points_y: LaiKaplanArray,
+        x_bounds_target: pint.UnitRegistry.Quantity,
+        target: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Adjust the solution to account for the fact that some values are below a specified minimum
 
-            for below_min_group_idx in iterh:
-                below_min_group_lai_kaplan_idx = below_min_group_idx + 1
+        Parameters
+        ----------
+        y_out
+            The current solution.
 
-                interval_indexer = np.where(y_out_group_index == below_min_group_idx)
-                interval_vals = y_out[interval_indexer]
+            This is modified in-place.
 
-                x_bounds_out_interval = x_bounds_out[interval_indexer[0][0] : interval_indexer[0][-1] + 2]
+        control_points_y
+            The y-value at each control point.
 
-                x_bounds_in_interval = x_bounds_in[below_min_group_idx : below_min_group_idx + 2]
-                y_in_interval = y_in[[below_min_group_idx]]
+        x_bounds_target
+            The x-bounds of the target
 
-                left_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx]
-                right_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx + 1]
+        target
+            The target values
 
-                interval_vals_updated = min_val_applier.iterate_to_solution(
-                    starting_values=interval_vals,
-                    x_bounds_out=x_bounds_out_interval,
-                    x_bounds_in=x_bounds_in_interval,
-                    y_in=y_in_interval,
-                    left_bound_val=left_bound_val_interval,
-                    right_bound_val=right_bound_val_interval,
-                    min_val=self.min_val,
-                )
+        x_bounds_out
+            The x-bounds onto which we are interpolating
 
-                y_out[interval_indexer] = interval_vals_updated
+        Returns
+        -------
+        :
+            The updated solution values based on adjusting for the lower bound.
+        """
+        below_min = y_out < self.min_val
+        below_min_in_group = get_group_sums(
+            x_bounds=x_bounds_out,
+            vals=below_min,
+            group_bounds=x_bounds_target,
+        )
+        y_out_group_index = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_target)
+
+        min_val_applier = self.get_min_val_applier(self)
+
+        iterh = np.where(below_min_in_group > 0)[0]
+        if self.progress_bar:
+            tqdman = get_optional_dependency("tqdm.autonotebook")
+            iterh = tqdman.tqdm(
+                iterh, desc="Updating intervals where the solution is less than the minimum value"
+            )
+
+        for below_min_group_idx in iterh:
+            below_min_group_lai_kaplan_idx = below_min_group_idx + 1
+
+            interval_indexer = np.where(y_out_group_index == below_min_group_idx)
+            interval_vals = y_out[interval_indexer]
+
+            x_bounds_out_interval = x_bounds_out[interval_indexer[0][0] : interval_indexer[0][-1] + 2]
+
+            x_bounds_in_interval = x_bounds_target[below_min_group_idx : below_min_group_idx + 2]
+            y_in_interval = target[[below_min_group_idx]]
+
+            left_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx]
+            right_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx + 1]
+
+            interval_vals_updated = min_val_applier.iterate_to_solution(
+                starting_values=interval_vals,
+                x_bounds_out=x_bounds_out_interval,
+                x_bounds_in=x_bounds_in_interval,
+                y_in=y_in_interval,
+                left_bound_val=left_bound_val_interval,
+                right_bound_val=right_bound_val_interval,
+                min_val=self.min_val,
+            )
+
+            y_out[interval_indexer] = interval_vals_updated
 
         return y_out

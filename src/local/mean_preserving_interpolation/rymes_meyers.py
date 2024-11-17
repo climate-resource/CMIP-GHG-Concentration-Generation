@@ -360,7 +360,7 @@ class RymesMeyersInterpolator:
         Returns
         -------
         :
-            The updated solution values based on this iteration
+            The updated solution values based on adjusting for the lower bound.
         """
         current_vals[np.where(current_vals < min_val)] = min_val
 
