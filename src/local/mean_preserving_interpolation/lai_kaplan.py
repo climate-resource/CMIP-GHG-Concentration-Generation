@@ -6,6 +6,7 @@ See [Lai and Kaplan, J. Atmos. Oceanic Technol. 2022](https://doi.org/10.1175/JT
 
 from __future__ import annotations
 
+import warnings
 from collections.abc import Callable
 from functools import partial
 from typing import Generic, Protocol, TypeVar
@@ -574,6 +575,14 @@ class LaiKaplanInterpolator:
         :
             Interpolated, mean-preserving values
         """
+        if issubclass(y_in.m.dtype.type, np.integer):
+            msg = (
+                "The input will be converted to a floating type. "
+                "If we don't do this, the algorithm doesn't work."
+            )
+            warnings.warn(msg)
+            y_in = y_in * 1.0  # make sure that y_in is float type
+
         if not np.all(x_bounds_out[:-1] <= x_bounds_out[1:]):
             msg = f"x_bounds_out must be sorted for this to work {x_bounds_out=}"
             raise AssertionError(msg)
@@ -717,7 +726,9 @@ class LaiKaplanInterpolator:
         )
 
         control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
-        np.testing.assert_allclose(np.dot(A_mat, control_points_interval_y_d), b.data)
+        pint.testing.assert_allclose(
+            np.dot(A_mat, control_points_interval_y_d.m), b.data.m, atol=self.atol, rtol=self.rtol
+        )
 
         control_points_y = LaiKaplanArray(
             lai_kaplan_idx_min=1 / 2,

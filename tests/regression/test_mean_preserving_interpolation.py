@@ -115,10 +115,17 @@ def execute_test_logic(  # noqa: PLR0913
             id="x_0_equal_to_zero",
         ),
         pytest.param(
-            Q([1, 2, 1, 0, 1], "W"),
+            Q([1.0, 2.0, 1.0, 0.0], "W"),
+            # Q([1, 2, 1, 0, 1], "W"),
             1750.0,
             10.0,
             id="y_oscillating",
+        ),
+        pytest.param(
+            Q([1, 2, 1, 0, 1], "W"),
+            1750.0,
+            10.0,
+            id="y_oscillating_ints",
         ),
     ),
 )
