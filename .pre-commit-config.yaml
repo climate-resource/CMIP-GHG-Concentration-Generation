@@ -20,6 +20,7 @@ repos:
             ^pixi.lock/|
             ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_basic_.csv/|
             ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_const_extrap_basic_.csv/|
+            ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_min_zero_basic_.csv/|
             ^tests/regression/test_workflow/test_workflow_basic.npz/|
             ^tests/regression/test_workflow_nightly/test_workflow_nightly.npz
           )

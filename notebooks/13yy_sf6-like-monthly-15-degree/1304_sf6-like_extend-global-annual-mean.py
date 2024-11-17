@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -73,7 +73,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "sf6"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -286,8 +286,11 @@ with axes_vertical_split() as axes:
 # ### Interpolate between to fill missing values
 
 # %%
+# TODO: re-think this, linear not ideal, cubic does weird things
+
+# %%
 global_annual_mean_composite = (
-    global_annual_mean_composite.pint.dequantify().interp(year=out_years, method="cubic").pint.quantify()
+    global_annual_mean_composite.pint.dequantify().interp(year=out_years, method="linear").pint.quantify()
 )
 global_annual_mean_composite
 
@@ -340,6 +343,14 @@ obs_network_full_field
 tmp = allyears_full_field.copy()
 tmp.name = "allyears_global_annual_mean"
 allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
+
+# Round appropriately
+allyears_global_annual_mean[np.isclose(allyears_global_annual_mean.data.m, 0.0)] = 0.0
+
+if (allyears_global_annual_mean.data.m < 0.0).any():
+    msg = "Values less than zero"
+    raise AssertionError(msg)
+
 allyears_global_annual_mean
 
 # %% [markdown]

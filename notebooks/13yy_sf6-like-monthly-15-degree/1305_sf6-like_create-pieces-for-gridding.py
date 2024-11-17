@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -47,6 +47,10 @@ import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
+from local.mean_preserving_interpolation.lai_kaplan import (
+    LaiKaplanInterpolator,
+    get_wall_control_points_y_linear_with_flat_override_on_left,
+)
 
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
@@ -68,7 +72,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch3cl"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -106,27 +110,17 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
-    try:
-        global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-            global_annual_mean,
-            degrees_freedom_scalar=degrees_freedom_scalar,
-            atol=1e-6,  # avoid inifite relative error for things which are close to zero
-        )
-        print(f"Run succeeded with {degrees_freedom_scalar=}")
-        break
-    except AssertionError:
-        print(f"Run failed with {degrees_freedom_scalar=}")
-        continue
-
-else:
-    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-    raise AssertionError(msg)
-
+global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+    global_annual_mean,
+    algorithm=LaiKaplanInterpolator(
+        get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+        min_val=Quantity(0, "ppt"),
+    ),
+)
 global_annual_mean_monthly
 
 # %%
-fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+fig, axes = plt.subplots(ncols=4, figsize=(12, 4))
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
@@ -147,13 +141,22 @@ local.xarray_time.convert_year_to_time(
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"].isin(range(1950, 2023))),
     calendar="proleptic_gregorian",
 ).plot(ax=axes[2])  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean.sel(year=global_annual_mean["year"].isin(range(1950, 2023))),
     calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
+
+local.xarray_time.convert_year_month_to_time(
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot(ax=axes[3])  # type: ignore
+local.xarray_time.convert_year_to_time(
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[3])
 
 plt.tight_layout()
 plt.show()
@@ -216,27 +219,13 @@ local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="prolept
 # in our latitudinal gradient.
 
 # %%
-for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
-    try:
-        pcs_monthly = (
-            lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-            .groupby("eof", squeeze=False)
-            .apply(
-                local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
-                degrees_freedom_scalar=degrees_freedom_scalar,
-                atol=1e-7,
-            )
-        )
-        print(f"Run succeeded with {degrees_freedom_scalar=}")
-        break
-    except AssertionError:
-        print(f"Run failed with {degrees_freedom_scalar=}")
-        continue
-
-else:
-    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-    raise AssertionError(msg)
-
+pcs_monthly = (
+    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+    .groupby("eof", squeeze=True)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+    )
+)
 pcs_monthly
 
 # %%

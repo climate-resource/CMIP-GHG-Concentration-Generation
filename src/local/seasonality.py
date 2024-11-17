@@ -26,7 +26,7 @@ def calculate_seasonality(
         raise AssertionError(msg)
 
     lon_mean_ym_annual_mean = lon_mean_ym.mean("month")
-    lon_mean_ym_annual_mean_monthly = lon_mean_ym_annual_mean.groupby("lat", squeeze=False).apply(  # type: ignore
+    lon_mean_ym_annual_mean_monthly = lon_mean_ym_annual_mean.groupby("lat", squeeze=True).apply(  # type: ignore
         interpolate_annual_mean_to_monthly,
     )
     lon_mean_ym_monthly_anomalies = lon_mean_ym - lon_mean_ym_annual_mean_monthly

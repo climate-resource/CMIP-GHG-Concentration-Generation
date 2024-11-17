@@ -206,9 +206,9 @@ class RymesMeyersInterpolator:
             )
 
             if min_val is not None and (current_vals < min_val).any():
-                current_vals = self.lower_bound_adjustment(
+                current_vals_new = self.lower_bound_adjustment(
                     min_val=min_val,
-                    current_vals=current_vals,
+                    current_vals=np.copy(current_vals),
                     current_vals_group_indexes=current_vals_group_indexes,
                     adjust_mat=adjust_mat,
                     left_bound_val=left_bound_val,
@@ -217,6 +217,10 @@ class RymesMeyersInterpolator:
                     target=y_in,
                     x_bounds_out=x_bounds_out,
                 )
+                if np.isnan(current_vals_new).any():
+                    raise AssertionError
+
+                current_vals = current_vals_new
 
         else:
             msg = f"Ran out of iterations ({self.max_it=})"
@@ -313,8 +317,8 @@ class RymesMeyersInterpolator:
 
         return current_vals
 
-    @staticmethod
     def lower_bound_adjustment(  # noqa: PLR0913
+        self,
         min_val: pint.UnitRegistry.Quantity,
         current_vals: pint.UnitRegistry.Quantity,
         current_vals_group_indexes: npt.NDArray[np.int_],
@@ -362,6 +366,13 @@ class RymesMeyersInterpolator:
         :
             The updated solution values based on adjusting for the lower bound.
         """
+        # Apply some sense
+        min_val_same_u = min_val.to(current_vals.u)
+        current_vals[
+            np.where(np.isclose(current_vals.m, min_val_same_u.m, atol=self.atol, rtol=self.rtol))
+        ] = min_val_same_u
+
+        # Start the algorithm proper
         current_vals[np.where(current_vals < min_val)] = min_val
 
         group_averages = get_group_averages(
@@ -385,7 +396,7 @@ class RymesMeyersInterpolator:
         rm_lb_f = rm_lb_f_numerator / rm_lb_f_denominator
 
         if np.isnan(rm_lb_f).any():
-            # If the numerator is also zeor, set to zero and move on
+            # If the numerator is also zero, set to zero and move on
             rm_lb_f[np.where(rm_lb_f_numerator == 0.0)] = 0.0 * rm_lb_f.u
 
             if np.isnan(rm_lb_f).any():

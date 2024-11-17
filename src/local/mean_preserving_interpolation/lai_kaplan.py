@@ -623,6 +623,7 @@ def get_min_val_applier_default(lai_kaplan_interpolator: LaiKaplanInterpolator) 
         Class which can be used to updated the solution to obey the minimum value.
     """
     rm_interpolator = RymesMeyersInterpolator(
+        min_it=1,
         min_val=lai_kaplan_interpolator.min_val,
         atol=lai_kaplan_interpolator.atol,
         rtol=lai_kaplan_interpolator.rtol,
@@ -962,6 +963,14 @@ class LaiKaplanInterpolator:
         )
 
         if self.min_val is not None and (y_out < self.min_val).any():
+            if (y_in < self.min_val).any():
+                msg = (
+                    "There are values in `y_in` that are less than the minimum value. "
+                    "This isn't going to work. "
+                    f"{y_in.min()=} {self.min_val=}"
+                )
+                raise AssertionError(msg)
+
             y_out = self.lower_bound_adjustment(
                 y_out=y_out,
                 control_points_y=control_points_y,
@@ -1220,6 +1229,11 @@ class LaiKaplanInterpolator:
         :
             The updated solution values based on adjusting for the lower bound.
         """
+        # Apply some sense
+        min_val_same_u = self.min_val.to(y_out.u)
+        already_close_to_min_val = np.isclose(y_out.m, min_val_same_u.m, atol=self.atol, rtol=self.rtol)
+        y_out[np.where(already_close_to_min_val)] = min_val_same_u
+
         below_min = y_out < self.min_val
         below_min_in_group = get_group_sums(
             x_bounds=x_bounds_out,

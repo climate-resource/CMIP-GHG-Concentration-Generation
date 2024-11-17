@@ -11,6 +11,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing
+import pandas as pd
 import pint
 import pint.testing
 import pytest
@@ -30,6 +31,11 @@ from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpol
 
 Q = pint.get_application_registry().Quantity
 RNG = np.random.default_rng(seed=4234)
+
+FAILING_HFC152A = pd.read_csv(Path(__file__).parent / "failing_hfc152a.csv")
+"""
+Failing HFC152a values
+"""
 
 
 def execute_test_logic(  # noqa: PLR0913
@@ -341,6 +347,10 @@ def test_mean_preserving_min_val(
             Q(np.arange(2022) / 1000.0 + RNG.random(2022), "kg"),
             id="basic",
         ),
+        pytest.param(
+            Q(FAILING_HFC152A["vals"].to_numpy(), "kg"),
+            id="failing_hfc152a",
+        ),
     ),
 )
 @pytest.mark.parametrize(
@@ -356,6 +366,10 @@ def test_mean_preserving_min_val(
                 ),
             ),
             id="lai_kaplan_const_extrap",
+        ),
+        pytest.param(
+            LaiKaplanInterpolator(min_val=Q(0, "kg")),
+            id="lai_kaplan_min_zero",
         ),
         pytest.param(
             "rymes_meyers",
