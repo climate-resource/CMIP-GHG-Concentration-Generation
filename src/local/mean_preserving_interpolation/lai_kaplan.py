@@ -617,7 +617,6 @@ def get_min_val_applier_default(lai_kaplan_interpolator: LaiKaplanInterpolator) 
     lai_kaplan_interpolator
         The Lai-Kaplan interpolator, whose solution we want to apply the minimum value to.
 
-
     Returns
     -------
     :
@@ -631,6 +630,156 @@ def get_min_val_applier_default(lai_kaplan_interpolator: LaiKaplanInterpolator) 
     )
 
     return rm_interpolator
+
+
+def get_wall_control_points_y_linear(
+    intervals_x: pint.UnitRegistry.Quantity,
+    intervals_y: pint.UnitRegistry.Quantity,
+    control_points_wall_x: pint.UnitRegistry.Quantity,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Get y-values at wall control points using linear interpolation
+
+    Parameters
+    ----------
+    intervals_x
+        The x-values at the mid-point of each interval
+
+    intervals_y
+        The y-values for each interval.
+
+        These y-values are the average value over each interval.
+
+    control_points_wall_x
+        The x-values at each wall control point
+
+    Returns
+    -------
+    :
+        y-values at each wall control point.
+    """
+    control_points_wall_y = np.interp(control_points_wall_x, intervals_x, intervals_y)
+
+    return control_points_wall_y
+
+
+def get_wall_control_points_y_cubic(
+    intervals_x: pint.UnitRegistry.Quantity,
+    intervals_y: pint.UnitRegistry.Quantity,
+    control_points_wall_x: pint.UnitRegistry.Quantity,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Get y-values at wall control points using a cubic spline
+
+    Parameters
+    ----------
+    intervals_x
+        The x-values at the mid-point of each interval
+
+    intervals_y
+        The y-values for each interval.
+
+        These y-values are the average value over each interval.
+
+    control_points_wall_x
+        The x-values at each wall control point
+
+    Returns
+    -------
+    :
+        y-values at each wall control point.
+    """
+    scipy_interp = get_optional_dependency("scipy.interpolate")
+    cubic_interpolator = scipy_interp.interp1d(
+        intervals_x.m,
+        intervals_y.m,
+        kind="cubic",
+        fill_value="extrapolate",
+    )
+    control_points_wall_y = cubic_interpolator(control_points_wall_x.m) * intervals_y.u
+
+    return control_points_wall_y
+
+
+def get_wall_control_points_y_cubic_with_flat_override_on_left(
+    intervals_x: pint.UnitRegistry.Quantity,
+    intervals_y: pint.UnitRegistry.Quantity,
+    control_points_wall_x: pint.UnitRegistry.Quantity,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Get y-values at wall control points using a cubic spline and keeping flat values flat.
+
+    If the values start out flat,
+    we keep them flat right up to the end of the last interval
+    that has the same value as the first value.
+    This can help to avoid values increasing before one might intuitively expect they should.
+
+    Parameters
+    ----------
+    intervals_x
+        The x-values at the mid-point of each interval
+
+    intervals_y
+        The y-values for each interval.
+
+        These y-values are the average value over each interval.
+
+    control_points_wall_x
+        The x-values at each wall control point
+
+    Returns
+    -------
+    :
+        y-values at each wall control point.
+    """
+    control_points_wall_y = get_wall_control_points_y_cubic(
+        intervals_x=intervals_x,
+        intervals_y=intervals_y,
+        control_points_wall_x=control_points_wall_x,
+    )
+
+    # Fix this
+    # # If the values start out flat, keep them flat right until the end of the flat intervals.
+    # breakpoint()
+    # first_change = np.argmax(np.abs(np.diff(control_points_wall_y)) > 0)
+    # if first_change > 0:
+    #     control_points_wall_y[first_change + 1] = control_points_wall_y[0]
+
+    return control_points_wall_y
+
+
+class GetWallControlPointsY(Protocol):
+    """
+    Callable that can be used to get the y-values at the wall control points
+    """
+
+    def __call__(
+        self,
+        intervals_x: pint.UnitRegistry.Quantity,
+        intervals_y: pint.UnitRegistry.Quantity,
+        control_points_wall_x: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Get y-values at wall control points
+
+        Parameters
+        ----------
+        intervals_x
+            The x-values at the mid-point of each interval
+
+        intervals_y
+            The y-values for each interval.
+
+            These y-values are the average value over each interval.
+
+        control_points_wall_x
+            The x-values at each wall control point
+
+        Returns
+        -------
+        :
+            y-values at each wall control point.
+        """
 
 
 @define
@@ -664,6 +813,13 @@ class LaiKaplanInterpolator:
     This function is given the input y-values, plus the mid-point of each interval.
     """
 
+    get_wall_control_points_y_from_interval_ys: GetWallControlPointsY = (
+        get_wall_control_points_y_cubic_with_flat_override_on_left
+    )
+    """
+    Function that calculates the y-values at the wall control points from the averages over each interval
+    """
+
     get_min_val_applier: Callable[[LaiKaplanInterpolator], MinValApplierLike] = get_min_val_applier_default
     """
     Rymes-Meyers interpolator
@@ -676,18 +832,6 @@ class LaiKaplanInterpolator:
     """
     Minimum value that can appear in the solution
     """
-
-    # min_it: int | None = None
-    # """
-    # Minimum number of iterations to perform
-    #
-    # If not provided, we use the length of the output data array.
-    # """
-    #
-    # max_it: int = int(1e4)
-    # """
-    # Maximum number of iterations to perform
-    # """
 
     atol: float = 1e-10
     """
@@ -762,7 +906,6 @@ class LaiKaplanInterpolator:
 
         n_lai_kaplan = y_in.size
 
-        # TODO: split out after control points have been derived
         control_points_x_d = (
             np.zeros(
                 2 * x_bounds_in.size + 1,
@@ -793,26 +936,11 @@ class LaiKaplanInterpolator:
             data=np.hstack([external_intervals_y_d[0], y_in, external_intervals_y_d[-1]]),
         )
 
-        # Control point values at the walls
-        # TODO: allow the user to control this.
-        # Linear
-        control_points_wall_y_d = (
-            intervals_y[0 : n_lai_kaplan + 1 : 1] + intervals_y[1 : n_lai_kaplan + 1 + 1 : 1]
-        ) / 2
-        # Cubic
-        scipy_interp = get_optional_dependency("scipy.interpolate")
-        cubic_interpolator = scipy_interp.interp1d(
-            intervals_x.m,
-            intervals_y.data.m,
-            kind="cubic",
-            fill_value="extrapolate",
+        control_points_wall_y_d = self.get_wall_control_points_y_from_interval_ys(
+            intervals_x=intervals_x,
+            intervals_y=intervals_y.data,
+            control_points_wall_x=x_bounds_in,
         )
-        control_points_wall_y_d = cubic_interpolator(x_bounds_in.m) * intervals_y.data.u
-        # If the values start out flat, keep them flat right until the end of the flat intervals.
-        first_increase = np.argmax(~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:]))
-        if first_increase > 0:
-            control_points_wall_y_d[first_increase + 1] = control_points_wall_y_d[0]
-
         control_points_wall_y = LaiKaplanArray(
             lai_kaplan_idx_min=1,
             lai_kaplan_stride=1,
