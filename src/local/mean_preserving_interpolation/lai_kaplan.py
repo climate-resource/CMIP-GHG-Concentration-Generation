@@ -828,47 +828,14 @@ class LaiKaplanInterpolator:
             external_control_points_y_d=external_intervals_y_d,
         )
 
-        # Now that we have all the control points, we can do the gradients
-        gradients_at_control_points = LaiKaplanArray(
-            lai_kaplan_idx_min=1,
-            lai_kaplan_stride=1 / 2,
-            data=np.nan * np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
+        y_out = self.create_y_out_from_control_points(
+            target=y_in,
+            x_bounds_out=x_bounds_out,
+            control_points_x=control_points_x,
+            control_points_y=control_points_y,
+            n_lai_kaplan=n_lai_kaplan,
+            delta=delta,
         )
-        gradients_at_control_points[:] = (
-            control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
-        ) / (2 * delta)
-
-        # TODO: Can't see how to do calculate the result with vectors,
-        # maybe someone else can.
-        y_out_m = np.nan * np.zeros(x_bounds_out.size - 1)
-        iterh = range(y_out_m.size)
-        if self.progress_bar:
-            tqdman = get_optional_dependency("tqdm.autonotebook")
-            iterh = tqdman.tqdm(iterh, desc="Calculating output values")
-
-        lai_kaplan_interval_idx = 1 / 2
-        x_i = control_points_x[lai_kaplan_interval_idx] - 10 * delta
-        for out_index in iterh:
-            if x_bounds_out[out_index] >= x_i + delta:
-                lai_kaplan_interval_idx += 1 / 2
-
-                x_i = control_points_x[lai_kaplan_interval_idx]
-                lai_kaplan_f = LaiKaplanF(
-                    x_i=x_i,
-                    delta=delta,
-                    s_i=control_points_y[lai_kaplan_interval_idx],
-                    s_i_plus_half=control_points_y[lai_kaplan_interval_idx + 1 / 2],
-                    m_i=gradients_at_control_points[lai_kaplan_interval_idx],
-                    m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
-                )
-
-            integral_m = lai_kaplan_f.calculate_integral_definite_unitless(
-                x_bounds_out[out_index].m, x_bounds_out[out_index + 1].m
-            )
-            average_m = integral_m / (x_bounds_out[out_index + 1].m - x_bounds_out[out_index].m)
-            y_out_m[out_index] = average_m
-
-        y_out = y_out_m * y_in.u
 
         if self.min_val is not None and (y_out < self.min_val).any():
             y_out = self.lower_bound_adjustment(
@@ -1013,6 +980,86 @@ class LaiKaplanInterpolator:
         control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
 
         return control_points_y
+
+    def create_y_out_from_control_points(  # noqa: PLR0913
+        self,
+        target: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+        control_points_x: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        control_points_y: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        n_lai_kaplan: int,
+        delta: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Create our solution for `y_out` based on our solved control points
+
+        Parameters
+        ----------
+        target
+            The mean in each interval we want our solution to match.
+
+        x_bounds_out
+            The bounds of each interval in our output solution.
+
+        control_points_x
+            The x-values of our control points
+
+        control_points_y
+            The y-values of our control points
+
+        n_lai_kaplan
+            The Lai-Kaplan "n" value
+
+        delta
+            The size of each window in our Lai-Kaplan solution space
+
+        Returns
+        -------
+        :
+            y-values that correspond to our solved control points.
+        """
+        gradients_at_control_points = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1 / 2,
+            data=np.nan * np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
+        )
+        gradients_at_control_points[:] = (
+            control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
+        ) / (2 * delta)
+
+        # TODO: Can't see how to do calculate the result with vectors,
+        # maybe someone else can.
+        y_out_m = np.nan * np.zeros(x_bounds_out.size - 1)
+        iterh = range(y_out_m.size)
+        if self.progress_bar:
+            tqdman = get_optional_dependency("tqdm.autonotebook")
+            iterh = tqdman.tqdm(iterh, desc="Calculating output values")
+
+        lai_kaplan_interval_idx = 1 / 2
+        x_i = control_points_x[lai_kaplan_interval_idx] - 10 * delta
+        for out_index in iterh:
+            if x_bounds_out[out_index] >= x_i + delta:
+                lai_kaplan_interval_idx += 1 / 2
+
+                x_i = control_points_x[lai_kaplan_interval_idx]
+                lai_kaplan_f = LaiKaplanF(
+                    x_i=x_i,
+                    delta=delta,
+                    s_i=control_points_y[lai_kaplan_interval_idx],
+                    s_i_plus_half=control_points_y[lai_kaplan_interval_idx + 1 / 2],
+                    m_i=gradients_at_control_points[lai_kaplan_interval_idx],
+                    m_i_plus_half=gradients_at_control_points[lai_kaplan_interval_idx + 1 / 2],
+                )
+
+            integral_m = lai_kaplan_f.calculate_integral_definite_unitless(
+                x_bounds_out[out_index].m, x_bounds_out[out_index + 1].m
+            )
+            average_m = integral_m / (x_bounds_out[out_index + 1].m - x_bounds_out[out_index].m)
+            y_out_m[out_index] = average_m
+
+        y_out = y_out_m * target.u
+
+        return y_out
 
     def lower_bound_adjustment(  # noqa: PLR0913
         self,
