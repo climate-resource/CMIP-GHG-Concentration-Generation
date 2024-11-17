@@ -237,7 +237,7 @@ class LaiKaplanF:
             Value for which we want to calculate the value of the function
 
         check_domain
-            Whether to check that is in the supported domain before calculating.
+            Whether to check that `x` is in the supported domain before calculating.
 
         Returns
         -------
@@ -252,6 +252,160 @@ class LaiKaplanF:
         u = (x - self.x_i) / self.delta
 
         return self.calculate_u(u, check_domain=False)
+
+    def calculate_integral_indefinite(
+        self,
+        x: pint.UnitRegistry.Quantity,
+        check_domain: bool = True,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Calculate the indefinite integral of the Lai-Kaplan interpolating function value
+
+        This is just the indefinite integral, i.e. is missing an integrating constant.
+        For integration, see [`calculate_integral_definite`][].
+
+        Parameters
+        ----------
+        x
+            x-value for which we want to calculate the indefinite integral.
+
+        check_domain
+            Whether to check that `x` is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Indefinite integral of the Lai-Kaplan interpolating function.
+        """
+        if check_domain:
+            if (x < self.x_i) or (x > self.x_i + self.delta):
+                msg = "`x` is outside the supported domain. " f"{x=} {self.x_i=} {self.x_i + self.delta=}"
+                raise ValueError(msg)
+
+        u = (x - self.x_i) / self.delta
+
+        res = self.delta * (
+            self.s_i * HERMITE_QUARTICS[0][0](u)
+            + self.delta * self.m_i * HERMITE_QUARTICS[1][0](u)
+            + self.s_i_plus_half * HERMITE_QUARTICS[0][1](u)
+            + self.delta * self.m_i_plus_half * HERMITE_QUARTICS[1][1](u)
+        )
+
+        return res
+
+    def calculate_integral_indefinite_unitless(
+        self,
+        x: float,
+        check_domain: bool = True,
+    ) -> float:
+        """
+        Calculate the indefinite integral of the Lai-Kaplan interpolating function value
+
+        The calculation is performed without considering units.
+
+        This is just the indefinite integral, i.e. is missing an integrating constant.
+        For integration, see [`calculate_integral_definite`][].
+
+        Parameters
+        ----------
+        x
+            x-value for which we want to calculate the indefinite integral.
+
+        check_domain
+            Whether to check that `x` is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Indefinite integral of the Lai-Kaplan interpolating function.
+        """
+        if check_domain:
+            if (x < self.x_i.m) or (x > self.x_i.m + self.delta.m):
+                msg = "`x` is outside the supported domain. " f"{x=} {self.x_i=} {self.x_i + self.delta=}"
+                raise ValueError(msg)
+
+        u = (x - self.x_i.m) / self.delta.m
+
+        res = self.delta.m * (
+            self.s_i.m * HERMITE_QUARTICS[0][0](u)
+            + self.delta.m * self.m_i.m * HERMITE_QUARTICS[1][0](u)
+            + self.s_i_plus_half.m * HERMITE_QUARTICS[0][1](u)
+            + self.delta.m * self.m_i_plus_half.m * HERMITE_QUARTICS[1][1](u)
+        )
+
+        return res
+
+    def calculate_integral_definite(
+        self,
+        x_lower: pint.UnitRegistry.Quantity,
+        x_upper: pint.UnitRegistry.Quantity,
+        check_domain: bool = True,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Calculate the definite integral of the Lai-Kaplan interpolating function value
+
+        Parameters
+        ----------
+        x_lower
+            Lower x-bound for the domain over which we want to calculate the integral.
+
+        x_upper
+            Upper x-bound for the domain over which we want to calculate the integral.
+
+        check_domain
+            Whether to check that `x_lower` and `x_upper` is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Integral of the Lai-Kaplan interpolating function from `x_lower` to `x_upper`.
+        """
+        if x_lower >= x_upper:
+            msg = f"`x_lower` must be less than `x_upper`. {x_lower=} {x_upper=}"
+            raise ValueError(msg)
+
+        res = self.calculate_integral_indefinite(
+            x_upper, check_domain=check_domain
+        ) - self.calculate_integral_indefinite(x_lower, check_domain=check_domain)
+
+        return res
+
+    def calculate_integral_definite_unitless(
+        self,
+        x_lower: float,
+        x_upper: float,
+        check_domain: bool = True,
+    ) -> float:
+        """
+        Calculate the definite integral of the Lai-Kaplan interpolating function value
+
+        The calculation is performed without considering units.
+
+        Parameters
+        ----------
+        x_lower
+            Lower x-bound for the domain over which we want to calculate the integral.
+
+        x_upper
+            Upper x-bound for the domain over which we want to calculate the integral.
+
+        check_domain
+            Whether to check that `x_lower` and `x_upper` is in the supported domain before calculating.
+
+        Returns
+        -------
+        :
+            Integral of the Lai-Kaplan interpolating function from `x_lower` to `x_upper`.
+        """
+        if x_lower >= x_upper:
+            msg = f"`x_lower` must be less than `x_upper`. {x_lower=} {x_upper=}"
+            raise ValueError(msg)
+
+        res = self.calculate_integral_indefinite_unitless(
+            x_upper, check_domain=check_domain
+        ) - self.calculate_integral_indefinite_unitless(x_lower, check_domain=check_domain)
+
+        return res
 
     def calculate_unitless(
         self,
@@ -270,7 +424,7 @@ class LaiKaplanF:
             Value for which we want to calculate the value of the function
 
         check_domain
-            Whether to check that is in the supported domain before calculating.
+            Whether to check that `x` is in the supported domain before calculating.
 
         Returns
         -------
@@ -309,7 +463,7 @@ class LaiKaplanF:
             This should have been normalised first i.e. this is in 'u-space', not 'x-space'.
 
         check_domain
-            Whether to check that is in the supported domain before calculating.
+            Whether to check that `u` is in the supported domain before calculating.
 
         Returns
         -------
@@ -587,6 +741,8 @@ class LaiKaplanInterpolator:
             msg = f"x_bounds_out must be sorted for this to work {x_bounds_out=}"
             raise AssertionError(msg)
 
+        x_bounds_out = x_bounds_out.to(x_bounds_in.u)
+
         x_steps = x_bounds_in[1:] - x_bounds_in[:-1]
         x_step = x_steps[0]
         if not np.equal(x_steps, x_step).all():
@@ -762,14 +918,13 @@ class LaiKaplanInterpolator:
             control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
         ) / (2 * delta)
 
-        y_out = np.nan * np.zeros(x_bounds_out.size - 1) * y_in.u
-        # TODO: Can't see how to do this with vectors, maybe someone smarter can.
-        iterh = range(y_out.size)
+        # TODO: Can't see how to do calculate the result with vectors,
+        # maybe someone else can.
+        y_out_m = np.nan * np.zeros(x_bounds_out.size - 1)
+        iterh = range(y_out_m.size)
         if self.progress_bar:
             tqdman = get_optional_dependency("tqdm.autonotebook")
             iterh = tqdman.tqdm(iterh, desc="Calculating output values")
-
-        scipy_integrate = get_optional_dependency("scipy.integrate")
 
         lai_kaplan_interval_idx = 1 / 2
         x_i = control_points_x[lai_kaplan_interval_idx] - 10 * delta
@@ -794,16 +949,13 @@ class LaiKaplanInterpolator:
                     control_points_y[lai_kaplan_interval_idx],
                 )
 
-            integration_res = (
-                scipy_integrate.quad(
-                    partial(lai_kaplan_f.calculate_unitless, check_domain=False),
-                    x_bounds_out[out_index].m,
-                    x_bounds_out[out_index + 1].m,
-                )
-                * res_x_i.u
-                * x_bounds_out.u
+            integral_m = lai_kaplan_f.calculate_integral_definite_unitless(
+                x_bounds_out[out_index].m, x_bounds_out[out_index + 1].m
             )
-            y_out[out_index] = integration_res[0] / (x_bounds_out[out_index + 1] - x_bounds_out[out_index])
+            average_m = integral_m / (x_bounds_out[out_index + 1].m - x_bounds_out[out_index].m)
+            y_out_m[out_index] = average_m
+
+        y_out = y_out_m * y_in.u
 
         if self.min_val is not None and (y_out < self.min_val).any():
             below_min = y_out < self.min_val
@@ -824,7 +976,7 @@ class LaiKaplanInterpolator:
                 )
 
             for below_min_group_idx in iterh:
-                below_min_group_lai_kaplan_idx = below_min_group_idx
+                below_min_group_lai_kaplan_idx = below_min_group_idx + 1
 
                 interval_indexer = np.where(y_out_group_index == below_min_group_idx)
                 interval_vals = y_out[interval_indexer]
