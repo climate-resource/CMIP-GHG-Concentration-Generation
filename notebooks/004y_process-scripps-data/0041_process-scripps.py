@@ -53,9 +53,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
@@ -64,9 +62,7 @@ config_step = get_config_for_step_id(
 # ### Read and process merged ice core data
 
 # %%
-with open(
-    config_step.raw_dir / config_step.merged_ice_core_data.url.split("/")[-1]
-) as fh:
+with open(config_step.raw_dir / config_step.merged_ice_core_data.url.split("/")[-1]) as fh:
     raw_ice_core = fh.read()
 
 assert "CO2 in ppm" in raw_ice_core
@@ -91,12 +87,8 @@ merged_ice_core.set_index("time")["co2"].plot()
 # This can be saved as is because it will just be used for later comparisons (and we can tweak the format in future).
 
 # %%
-config_step.merged_ice_core_data_processed_data_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-merged_ice_core.to_csv(
-    config_step.merged_ice_core_data_processed_data_file, index=False
-)
+config_step.merged_ice_core_data_processed_data_file.parent.mkdir(exist_ok=True, parents=True)
+merged_ice_core.to_csv(config_step.merged_ice_core_data_processed_data_file, index=False)
 config_step.merged_ice_core_data_processed_data_file
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -139,9 +131,9 @@ for scripps_source in config_step.station_data:
         loc = contents.tell()
         next_line = contents.readline()
 
-        if next_line.startswith(
-            '" Monthly average CO2 concentrations (ppm)'
-        ) or next_line.startswith('" Atmospheric CO2 concentrations (ppm)'):
+        if next_line.startswith('" Monthly average CO2 concentrations (ppm)') or next_line.startswith(
+            '" Atmospheric CO2 concentrations (ppm)'
+        ):
             found_unit = True
             unit = "ppm"
 
@@ -200,7 +192,7 @@ for scripps_source in config_step.station_data:
     keep["gas"] = "co2"
     keep[["year", "month"]] = keep[["year", "month"]].astype(int)
     keep["value"] = keep["value"].astype(float)
-    keep["value"] = keep["value"].replace(-99.99, np.NaN)
+    keep["value"] = keep["value"].replace(-99.99, np.nan)
 
     monthly_dfs_with_loc.append(keep)
 

@@ -162,9 +162,7 @@ class WeightedQuantileRegressor:
             )
 
         Q = pint.get_application_registry().Quantity  # type: ignore
-        beta_m: npt.NDArray[np.float64] = (
-            res.x[:beta_len] - res.x[beta_len : 2 * beta_len]
-        )
+        beta_m: npt.NDArray[np.float64] = res.x[:beta_len] - res.x[beta_len : 2 * beta_len]
         # Ah yes, different units in one array aren't supported so this is super awkward to handle.
         beta: list[pint.UnitRegistry.Quantity] = [
             Q(v, f"{y.units} / {(x[0] ** i).units}") for i, v in enumerate(beta_m)

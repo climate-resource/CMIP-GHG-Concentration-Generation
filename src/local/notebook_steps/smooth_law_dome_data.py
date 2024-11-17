@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
     config_process_law_dome = get_config_for_step_id(
         config=config, step="retrieve_and_process_law_dome_data", step_config_id="only"
     )
@@ -74,14 +72,11 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="smooth_law_dome_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("030y_smooth-law-dome-data")
-            / "0301_smooth-law-dome-data",
+            notebook_path=Path("030y_smooth-law-dome-data") / "0301_smooth-law-dome-data",
             raw_notebook_ext=".py",
             summary="Smooth Law Dome data - do smoothing",
             doc=(

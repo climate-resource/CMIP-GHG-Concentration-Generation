@@ -99,8 +99,12 @@ markers = [
 
 [tool.ruff]
 src = ["src"]
-exclude = ["notebooks-archive/*"]
 target-version = "py311"
+# Provide some leeway for long docstring, this is otherwise handled by black
+line-length = 110
+exclude = ["notebooks-archive/*"]
+
+[tool.ruff.lint]
 select = [
     "E",  # pycodestyle error
     "W",  # pycodestyle warning
@@ -127,10 +131,8 @@ ignore = [
     "PD010", # `.pivot_table` is preferred to `.pivot` or `.unstack`; provides same functionality
     "PD013", # False positives when using xarray
 ]
-# Provide some leeway for long docstring, this is otherwise handled by black
-line-length = 110
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "notebooks/*" = [
     "D100",  # Missing docstring in public module
     "E402",  # Module level import not at top of file
@@ -148,10 +150,10 @@ line-length = 110
     "S101",  # Use of assert detected
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["src"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
 [tool.mypy]

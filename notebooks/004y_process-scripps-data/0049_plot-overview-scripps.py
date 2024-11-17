@@ -55,13 +55,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 config_process = get_config_for_step_id(
     config=config, step="retrieve_and_process_scripps_data", step_config_id="only"
@@ -75,8 +71,7 @@ monthly_df_with_loc = pd.read_csv(config_process.processed_data_with_loc_file)
 
 # %% editable=true slideshow={"slide_type": ""}
 countries = gpd.read_file(
-    config_retrieve_misc.natural_earth.raw_dir
-    / config_retrieve_misc.natural_earth.countries_shape_file_name
+    config_retrieve_misc.natural_earth.raw_dir / config_retrieve_misc.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 
@@ -92,9 +87,7 @@ for (station, source), sdf in tqdman.tqdm(
 
     label = f"{station} {source}"
 
-    axes[0].scatter(
-        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
-    )
+    axes[0].scatter(x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2)
 
     axes[0].set_xlim([-180, 180])
     axes[0].set_ylim([-90, 90])
@@ -129,9 +122,7 @@ for (station, source), sdf in tqdman.tqdm(
     # print(f"Examining {station} ")
     label = f"{station} {source}"
 
-    axes[0].scatter(
-        x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2
-    )
+    axes[0].scatter(x=sdf["longitude"], y=sdf["latitude"], alpha=0.4, label=label, zorder=2)
 
     axes[0].set_xlim([-180, 180])
     axes[0].set_ylim([-90, 90])

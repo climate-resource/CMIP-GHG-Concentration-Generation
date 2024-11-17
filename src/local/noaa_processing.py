@@ -129,8 +129,7 @@ def get_metadata_from_filename_default(filename: str) -> dict[str, str]:
         )
 
     return {
-        k: re_match.group(k)
-        for k in ["gas", "site_code_filename", "surf_or_ship", "source", "reporting_id"]
+        k: re_match.group(k) for k in ["gas", "site_code_filename", "surf_or_ship", "source", "reporting_id"]
     }
 
 
@@ -389,18 +388,12 @@ def read_noaa_flask_zip(
     with zipfile.ZipFile(noaa_zip_file) as zip:
         event_files = [item for item in zip.filelist if is_event_file(item.filename)]
         df_events = pd.concat(
-            [
-                read_data_incl_datetime(zip, event_file_item)
-                for event_file_item in tqdman.tqdm(event_files)
-            ]
+            [read_data_incl_datetime(zip, event_file_item) for event_file_item in tqdman.tqdm(event_files)]
         )
 
         month_files = [item for item in zip.filelist if is_monthly_file(item.filename)]
         df_months = pd.concat(
-            [
-                read_flask_monthly_data(zip, month_files_item)
-                for month_files_item in tqdman.tqdm(month_files)
-            ]
+            [read_flask_monthly_data(zip, month_files_item) for month_files_item in tqdman.tqdm(month_files)]
         )
         df_months["unit"] = ASSUMED_MONTHLY_UNITS[gas]
 
@@ -468,9 +461,7 @@ def read_noaa_in_situ_zip(
         month_files = [item for item in zip.filelist if is_monthly_file(item.filename)]
         df_months = pd.concat(
             [
-                read_data_incl_datetime(
-                    zip, month_files_item, datetime_columns=["datetime"]
-                )
+                read_data_incl_datetime(zip, month_files_item, datetime_columns=["datetime"])
                 for month_files_item in tqdman.tqdm(month_files)
             ]
         )
@@ -557,9 +548,7 @@ def read_noaa_hats(  # noqa: PLR0913
     res["gas"] = gas
     res["source"] = "hats"
     res["latitude"] = res["site"].apply(lambda x: HATS_ASSUMED_LOCATION[x]["latitude"])
-    res["longitude"] = res["site"].apply(
-        lambda x: HATS_ASSUMED_LOCATION[x]["longitude"]
-    )
+    res["longitude"] = res["site"].apply(lambda x: HATS_ASSUMED_LOCATION[x]["longitude"])
     res = res.rename({"site": "site_code"}, axis="columns")
     res = res[
         [
@@ -658,17 +647,11 @@ def read_noaa_hats_combined(  # noqa: PLR0912, PLR0915
     res_l = []
     for c in tmp:
         c = cast(str, c)
-        if (
-            c.endswith("sd")
-            or not c.endswith(gas_end)
-            or any(v in c for v in ("NH", "SH", "Global"))
-        ):
+        if c.endswith("sd") or not c.endswith(gas_end) or any(v in c for v in ("NH", "SH", "Global")):
             continue
 
         station = c.split("_")[1]
-        station_dat = (
-            tmp[c].dropna().to_frame("value")
-        )  # .rename({c: "value"}, axis="columns")
+        station_dat = tmp[c].dropna().to_frame("value")  # .rename({c: "value"}, axis="columns")
         station_dat["site_code"] = station
 
         for line in file_content.splitlines():
@@ -777,12 +760,8 @@ def read_noaa_hats_m2_and_pr1(  # noqa: PLR0913
     res["unit"] = unit
     res["gas"] = gas
     res["source"] = "hats"
-    res["latitude"] = res["site"].apply(
-        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["latitude"]
-    )
-    res["longitude"] = res["site"].apply(
-        lambda x: HATS_ASSUMED_LOCATION[x.lower()]["longitude"]
-    )
+    res["latitude"] = res["site"].apply(lambda x: HATS_ASSUMED_LOCATION[x.lower()]["latitude"])
+    res["longitude"] = res["site"].apply(lambda x: HATS_ASSUMED_LOCATION[x.lower()]["longitude"])
     res = res.rename({"site": "site_code"}, axis="columns")
     res = res[
         [

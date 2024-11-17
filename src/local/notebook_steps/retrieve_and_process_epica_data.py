@@ -48,15 +48,11 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("005y_process-epica-data") / "0050_download-epica"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("005y_process-epica-data") / "0050_download-epica"],
             configuration=(config_step.download_url,),
             dependencies=(),
             targets=(get_checklist_file(config_step.raw_dir),),
@@ -64,9 +60,7 @@ def configure_notebooks(
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("005y_process-epica-data") / "0051_process-epica"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("005y_process-epica-data") / "0051_process-epica"],
             configuration=(),
             dependencies=(get_checklist_file(config_step.raw_dir),),
             targets=(config_step.processed_data_with_loc_file,),
@@ -78,9 +72,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="retrieve_and_process_epica_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

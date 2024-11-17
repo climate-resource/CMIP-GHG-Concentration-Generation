@@ -54,9 +54,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -81,9 +79,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 config_smooth_law_dome_data = get_config_for_step_id(
     config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
@@ -168,9 +164,7 @@ epica_data.sort_values("year")
 
 # %%
 if not config.ci:
-    out_years: npt.NDArray[np.int64] = np.arange(
-        1, global_annual_mean_obs_network["year"].max() + 1
-    )
+    out_years: npt.NDArray[np.int64] = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
 
 else:
     out_years = np.arange(1750, global_annual_mean_obs_network["year"].max() + 1)
@@ -198,9 +192,7 @@ law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
 law_dome_lat
 
 # %%
-law_dome_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"]
-)
+law_dome_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"])
 law_dome_lat_nearest
 
 # %%
@@ -208,9 +200,7 @@ neem_lat = get_col_assert_single_value(neem_data, "latitude")
 neem_lat
 
 # %%
-neem_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=neem_lat, method="nearest")["lat"]
-)
+neem_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=neem_lat, method="nearest")["lat"])
 neem_lat_nearest
 
 # %%
@@ -218,9 +208,7 @@ epica_lat = get_col_assert_single_value(epica_data, "latitude")
 epica_lat
 
 # %%
-epica_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=epica_lat, method="nearest")["lat"]
-)
+epica_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=epica_lat, method="nearest")["lat"])
 epica_lat_nearest
 
 # %%
@@ -285,9 +273,7 @@ law_dome_da = xr.DataArray(
 law_dome_da
 
 # %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(
-    lat=law_dome_lat, method="nearest"
-)
+offset = law_dome_da - allyears_latitudinal_gradient.sel(lat=law_dome_lat, method="nearest")
 offset
 
 # %%
@@ -306,8 +292,7 @@ law_dome_years_full_field
 # so that the interpolation will have something to join with.
 epica_data_pre_start_year = -50
 epica_data_to_add = epica_data[
-    (epica_data["year"] > epica_data_pre_start_year)
-    & (epica_data["year"] < smooth_law_dome["year"].min())
+    (epica_data["year"] > epica_data_pre_start_year) & (epica_data["year"] < smooth_law_dome["year"].min())
 ].sort_values(by="year")
 epica_data_to_add
 
@@ -333,9 +318,7 @@ years_use_epica
 # %%
 if years_use_epica.size > 0:
     harmonisation_value = float(
-        law_dome_years_full_field.sel(year=law_dome_start_year)
-        .sel(lat=epica_lat, method="nearest")
-        .data.m
+        law_dome_years_full_field.sel(year=law_dome_start_year).sel(lat=epica_lat, method="nearest").data.m
     )
     harmonisation_value
 
@@ -347,9 +330,7 @@ if years_use_epica.size > 0:
         xr.DataArray(
             data=np.hstack([epica_data_to_add["value"], harmonisation_value]),
             dims=["year"],
-            coords=dict(
-                year=np.hstack([epica_data_to_add["year"], law_dome_start_year])
-            ),
+            coords=dict(year=np.hstack([epica_data_to_add["year"], law_dome_start_year])),
             attrs=dict(units=conc_unit),
         )
         .interp(year=years_use_epica)
@@ -367,9 +348,7 @@ if years_use_epica.size > 0:
 
 # %%
 if years_use_epica.size > 0:
-    offset_epica = epica_da - allyears_latitudinal_gradient.sel(
-        lat=epica_lat, method="nearest"
-    )
+    offset_epica = epica_da - allyears_latitudinal_gradient.sel(lat=epica_lat, method="nearest")
     epica_years_full_field = allyears_latitudinal_gradient + offset_epica
     epica_years_full_field
 
@@ -388,9 +367,7 @@ else:
         msg = "Should be using EPICA"
         raise AssertionError(msg)
 
-    allyears_full_field = xr.concat(
-        [law_dome_years_full_field, obs_network_full_field], "year"
-    )
+    allyears_full_field = xr.concat([law_dome_years_full_field, obs_network_full_field], "year")
 
 allyears_full_field
 
@@ -451,9 +428,7 @@ else:
         .sel(year=law_dome_compare_years)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use[
-            np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)
-        ]["value"],
+        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
     )
 
 if years_use_epica.size > 0:
@@ -475,9 +450,7 @@ allyears_full_field
 # %%
 tmp = allyears_full_field.copy()
 tmp.name = "allyears_global_annual_mean"
-allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
-    tmp
-)
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
 allyears_global_annual_mean
 
 # %% [markdown]
@@ -502,7 +475,5 @@ np.testing.assert_allclose(
 
 # %%
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
-allyears_global_annual_mean.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_file
-)
+allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean

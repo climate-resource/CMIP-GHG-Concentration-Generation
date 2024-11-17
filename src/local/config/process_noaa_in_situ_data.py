@@ -1,6 +1,7 @@
 """
 Config for processing NOAA in-situ data
 """
+
 from __future__ import annotations
 
 from pathlib import Path

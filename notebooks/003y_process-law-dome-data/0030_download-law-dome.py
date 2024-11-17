@@ -65,9 +65,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown]
 # ## Action
@@ -79,9 +77,7 @@ config_step = get_config_for_step_id(
 for fp, expected_md5 in config_step.files_md5_sum.items():
     actual_md5 = get_file_md5(fp)
     if not expected_md5 == actual_md5:
-        error_msg = (
-            f"Unexpected MD5 hash for {fp}. " f"{expected_md5=} " f"{actual_md5=} "
-        )
+        error_msg = f"Unexpected MD5 hash for {fp}. " f"{expected_md5=} " f"{actual_md5=} "
         raise AssertionError(error_msg)
 
 # %%

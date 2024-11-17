@@ -43,9 +43,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 # %% [markdown]
 # ## Define branch this notebook belongs to
@@ -65,9 +63,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -150,8 +146,7 @@ fig, ax = plt.subplots()
 
 for i in range(3):
     ax.plot(
-        full_eofs_pcs["principal-components"].sel(eof=i).isel(year=1)
-        @ full_eofs_pcs["eofs"].sel(eof=i),
+        full_eofs_pcs["principal-components"].sel(eof=i).isel(year=1) @ full_eofs_pcs["eofs"].sel(eof=i),
         full_eofs_pcs["lat"],
         label=f"EOF {i}",
         zorder=2 - i / 10,
@@ -217,29 +212,17 @@ relative_seasonality.plot.line(hue="lat")
 # ### Save
 
 # %%
-config_step.observational_network_global_annual_mean_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-global_annual_mean.pint.dequantify().to_netcdf(
-    config_step.observational_network_global_annual_mean_file
-)
+config_step.observational_network_global_annual_mean_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean.pint.dequantify().to_netcdf(config_step.observational_network_global_annual_mean_file)
 global_annual_mean
 
 # %%
-config_step.observational_network_latitudinal_gradient_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-eofs_pcs.pint.dequantify().to_netcdf(
-    config_step.observational_network_latitudinal_gradient_eofs_file
-)
+config_step.observational_network_latitudinal_gradient_eofs_file.parent.mkdir(exist_ok=True, parents=True)
+eofs_pcs.pint.dequantify().to_netcdf(config_step.observational_network_latitudinal_gradient_eofs_file)
 eofs_pcs
 
 # %%
 # Use relative seasonality for CH4
-config_step.observational_network_seasonality_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-relative_seasonality.pint.dequantify().to_netcdf(
-    config_step.observational_network_seasonality_file
-)
+config_step.observational_network_seasonality_file.parent.mkdir(exist_ok=True, parents=True)
+relative_seasonality.pint.dequantify().to_netcdf(config_step.observational_network_seasonality_file)
 relative_seasonality

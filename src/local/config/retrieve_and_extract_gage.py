@@ -1,6 +1,7 @@
 """
 Config for retrieving and extracting GAGE data
 """
+
 from __future__ import annotations
 
 from pathlib import Path

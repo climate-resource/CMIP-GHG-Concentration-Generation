@@ -61,13 +61,9 @@ step_config_id: str = "ch4"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
     step="retrieve_and_extract_noaa_data",
@@ -103,18 +99,14 @@ potential_dups_locator = (
 potential_dups = monthly_dfs_with_loc[potential_dups_locator]
 if potential_dups.shape[0] > 1:
     print("Removing dups by simply averaging. Not perfect. Better solution TBD")
-    averaged = (
-        potential_dups.groupby(list(set(potential_dups.columns) - {"value"}))
-        .mean()
-        .reset_index()
-    )
+    averaged = potential_dups.groupby(list(set(potential_dups.columns) - {"value"})).mean().reset_index()
     if averaged.shape[0] > 1:
         msg = "Still a problem after averaging"
         raise AssertionError(msg)
 
-    monthly_dfs_with_loc = pd.concat(
-        [monthly_dfs_with_loc[~potential_dups_locator], averaged]
-    ).reset_index(drop=True)
+    monthly_dfs_with_loc = pd.concat([monthly_dfs_with_loc[~potential_dups_locator], averaged]).reset_index(
+        drop=True
+    )
 
 # %% editable=true slideshow={"slide_type": ""}
 duplicate_cols = ["gas", "year", "month", "site_code_filename"]
@@ -137,8 +129,7 @@ pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(  #
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 
@@ -146,9 +137,7 @@ countries = gpd.read_file(
 colours = (c for c in ["tab:blue", "tab:green", "tab:red", "tab:pink", "tab:brown"])
 markers = (m for m in ["o", "x", ".", ",", "v"])
 
-for station, station_df in tqdman.tqdm(
-    monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"
-):
+for station, station_df in tqdman.tqdm(monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"):
     print(station_df)
 
     fig, axes = plt.subplots(ncols=2, figsize=(12, 4))
@@ -204,9 +193,7 @@ markers = (m for m in ["o", "x", ".", ",", "v"])
 
 countries.plot(color="lightgray", ax=axes[0])
 
-for station, station_df in tqdman.tqdm(
-    monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"
-):
+for station, station_df in tqdman.tqdm(monthly_dfs_with_loc.groupby("site_code_filename"), desc="Stations"):
     colour = next(colours)
     marker = next(markers)
 

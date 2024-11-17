@@ -18,8 +18,12 @@ from local.config.process_noaa_surface_flask_data import (
 from local.config.retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from local.noaa_processing import HATS_GAS_NAME_MAPPING
 
-IN_SITU_URL_BASE = "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-situ/surface/{gas}_surface-insitu_ccgg_text.zip"
-SURFACE_FLASK_URL_BASE = "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
+IN_SITU_URL_BASE = (
+    "https://gml.noaa.gov/aftp/data/greenhouse_gases/{gas}/in-situ/surface/{gas}_surface-insitu_ccgg_text.zip"
+)
+SURFACE_FLASK_URL_BASE = (
+    "https://gml.noaa.gov/aftp/data/trace_gases/{gas}/flask/surface/{gas}_surface-flask_ccgg_text.zip"
+)
 
 
 def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
@@ -37,7 +41,9 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
     """
     if "hcfc" in gas:
         if gas in ("hcfc142b", "hcfc22"):
-            res = f"https://gml.noaa.gov/aftp/data/hats/hcfcs/{gas.lower()}/flasks/{gas.upper()}_GCMS_flask.txt"
+            res = (
+                f"https://gml.noaa.gov/aftp/data/hats/hcfcs/{gas.lower()}/flasks/{gas.upper()}_GCMS_flask.txt"
+            )
 
         else:
             res = f"https://gml.noaa.gov/aftp/data/hats/hcfcs/{gas.lower()}/{gas.upper()}_GCMS_flask.txt"
@@ -53,7 +59,9 @@ def get_hats_url(gas: str) -> str:  # noqa: PLR0912, PLR0915
             gas_hats = gas
 
         if "cfc" in gas:
-            res = f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+            res = (
+                f"https://gml.noaa.gov/aftp/data/hats/cfcs/{gas.lower()}/combined/HATS_global_{gas_hats}.txt"
+            )
         elif gas == "hfc152a":
             # Typo fun :)
             res = "https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt"
@@ -368,9 +376,7 @@ class NOAAHandlingPieces(TypedDict):
     """Configuration steps for processing the NOAA in-situ data"""
 
 
-def create_noaa_handling_config(
-    data_sources: tuple[tuple[str, str]]
-) -> NOAAHandlingPieces:
+def create_noaa_handling_config(data_sources: tuple[tuple[str, str]]) -> NOAAHandlingPieces:
     """
     Create configuration for handling NOAA data
 
@@ -387,9 +393,7 @@ def create_noaa_handling_config(
     """
     res = defaultdict(list)
     for data_source in data_sources:
-        pieces = create_noaa_data_source_handling_pieces(
-            gas=data_source[0], network=data_source[1]
-        )
+        pieces = create_noaa_data_source_handling_pieces(gas=data_source[0], network=data_source[1])
 
         for key, value in pieces.items():
             res[key].append(value)
@@ -397,9 +401,7 @@ def create_noaa_handling_config(
     return cast(NOAAHandlingPieces, res)
 
 
-def create_noaa_data_source_handling_pieces(
-    gas: str, network: str
-) -> NOAAHandlingPieces:
+def create_noaa_data_source_handling_pieces(gas: str, network: str) -> NOAAHandlingPieces:
     """
     Create the handling pieces for a given NOAA data source
 
@@ -423,9 +425,7 @@ def create_noaa_data_source_handling_pieces(
         monthly_data=interim_dir / f"monthly_{gas}_{network}_raw-consolidated.csv",
     )
     if network == "surface-flask":
-        interim_files["events_data"] = (
-            interim_dir / f"events_{gas}_{network}_raw-consolidated.csv"
-        )
+        interim_files["events_data"] = interim_dir / f"events_{gas}_{network}_raw-consolidated.csv"
 
     out["retrieve_and_extract_noaa_data"] = RetrieveExtractNOAADataConfig(
         step_config_id=f"{gas}_{network}",
@@ -440,8 +440,7 @@ def create_noaa_data_source_handling_pieces(
     process_step_attrs = dict(
         step_config_id=gas,
         gas=gas,
-        processed_monthly_data_with_loc_file=interim_dir
-        / f"monthly_{gas}_{network}.csv",
+        processed_monthly_data_with_loc_file=interim_dir / f"monthly_{gas}_{network}.csv",
     )
     if network == "surface-flask":
         out["process_noaa_surface_flask_data"] = ProcessNOAASurfaceFlaskDataConfig(  # type: ignore

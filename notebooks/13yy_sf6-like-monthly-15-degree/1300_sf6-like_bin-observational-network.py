@@ -55,9 +55,7 @@ step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -67,10 +65,8 @@ config_step = get_config_for_step_id(
 # ### Load data
 
 # %%
-obs_network_input_files = (
-    local.observational_network_binning.get_obs_network_binning_input_files(
-        gas=config_step.gas, config=config
-    )
+obs_network_input_files = local.observational_network_binning.get_obs_network_binning_input_files(
+    gas=config_step.gas, config=config
 )
 obs_network_input_files
 
@@ -118,9 +114,7 @@ bin_averages
 # ### Save
 
 # %%
-local.binned_data_interpolation.check_data_columns_for_binned_data_interpolation(
-    bin_averages
-)
+local.binned_data_interpolation.check_data_columns_for_binned_data_interpolation(bin_averages)
 assert set(bin_averages["gas"]) == {config_step.gas}
 
 # %%

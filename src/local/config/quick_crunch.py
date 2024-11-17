@@ -1,6 +1,7 @@
 """
 Config for the quick crunch
 """
+
 from __future__ import annotations
 
 from pathlib import Path

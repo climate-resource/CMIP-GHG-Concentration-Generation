@@ -97,9 +97,7 @@ EQUIVALENT_COMPONENTS: dict[str, tuple[str, ...]] = {
 }
 
 
-def create_crunch_equivalent_species_config(
-    gases: tuple[str, ...]
-) -> list[EquivalentSpeciesCrunchingConfig]:
+def create_crunch_equivalent_species_config(gases: tuple[str, ...]) -> list[EquivalentSpeciesCrunchingConfig]:
     """
     Create configuration for crunching the equivalent species
 
@@ -122,16 +120,12 @@ def create_crunch_equivalent_species_config(
                 step_config_id=gas,
                 gas=gas,
                 equivalent_component_gases=EQUIVALENT_COMPONENTS[gas],
-                fifteen_degree_monthly_file=interim_dir
-                / f"{gas}_fifteen-degree_monthly.nc",
+                fifteen_degree_monthly_file=interim_dir / f"{gas}_fifteen-degree_monthly.nc",
                 # half_degree_monthly_file=interim_dir / f"{gas}_half-degree_monthly.nc",
                 global_mean_monthly_file=interim_dir / f"{gas}_global-mean_monthly.nc",
-                hemispheric_mean_monthly_file=interim_dir
-                / f"{gas}_hemispheric-mean_monthly.nc",
-                global_mean_annual_mean_file=interim_dir
-                / f"{gas}_global-mean_annual-mean.nc",
-                hemispheric_mean_annual_mean_file=interim_dir
-                / f"{gas}_hemispheric-mean_annual-mean.nc",
+                hemispheric_mean_monthly_file=interim_dir / f"{gas}_hemispheric-mean_monthly.nc",
+                global_mean_annual_mean_file=interim_dir / f"{gas}_global-mean_annual-mean.nc",
+                hemispheric_mean_annual_mean_file=interim_dir / f"{gas}_hemispheric-mean_annual-mean.nc",
             )
         )
 

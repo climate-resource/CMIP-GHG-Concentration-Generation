@@ -52,9 +52,7 @@ def configure_notebooks(
     # Multiple loops because mypy is being stupid
     dependencies_noaa = []
     for c_noaa_surface_flask in config.process_noaa_surface_flask_data:
-        dependencies_noaa.append(
-            c_noaa_surface_flask.processed_monthly_data_with_loc_file
-        )
+        dependencies_noaa.append(c_noaa_surface_flask.processed_monthly_data_with_loc_file)
 
     for c_noaa_in_situ in config.process_noaa_in_situ_data:
         dependencies_noaa.append(c_noaa_in_situ.processed_monthly_data_with_loc_file)
@@ -73,14 +71,11 @@ def configure_notebooks(
         dependencies_agage.append(c_agage.processed_monthly_data_with_loc_file)
 
     dependencies_law_dome = tuple(
-        c.processed_data_with_loc_file
-        for c in config.retrieve_and_process_law_dome_data
+        c.processed_data_with_loc_file for c in config.retrieve_and_process_law_dome_data
     )
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("001y_process-noaa-data") / "0019_noaa-network-overview"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("001y_process-noaa-data") / "0019_noaa-network-overview"],
             configuration=(),
             dependencies=tuple(dependencies_noaa),
             targets=(),
@@ -122,9 +117,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="plot_input_data_overviews",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
@@ -134,15 +127,13 @@ step: UnconfiguredNotebookBasedStep[
             doc="Plot an overview of the NOAA network for all gases",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("002y_process-agage-data")
-            / "0029_agage-network-overview",
+            notebook_path=Path("002y_process-agage-data") / "0029_agage-network-overview",
             raw_notebook_ext=".py",
             summary="plot - Plot AGAGE network overview",
             doc="Plot an overview of the AGAGE network for all gases",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("003y_process-law-dome-data")
-            / "0039_plot-overview-law-dome",
+            notebook_path=Path("003y_process-law-dome-data") / "0039_plot-overview-law-dome",
             raw_notebook_ext=".py",
             summary="plot - Plot Law Dome observations overview",
             doc="Plot an overview of the Law Dome observations for all gases",

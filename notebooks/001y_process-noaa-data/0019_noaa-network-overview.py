@@ -54,9 +54,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 if config.ci:
     to_show: tuple[tuple[str, str, str], ...] = (
@@ -76,15 +74,11 @@ else:
     )
 
 gas_configs = {
-    f"{gas}_{source}": get_config_for_step_id(
-        config=config, step=step, step_config_id=gas
-    )
+    f"{gas}_{source}": get_config_for_step_id(config=config, step=step, step_config_id=gas)
     for gas, source, step in to_show
 }
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 # %%
 gas_configs
@@ -94,10 +88,7 @@ gas_configs
 
 # %% editable=true slideshow={"slide_type": ""}
 full_df = pd.concat(
-    [
-        pd.read_csv(c.processed_monthly_data_with_loc_file)
-        for c in tqdman.tqdm(gas_configs.values())
-    ]
+    [pd.read_csv(c.processed_monthly_data_with_loc_file) for c in tqdman.tqdm(gas_configs.values())]
 )
 full_df
 
@@ -106,8 +97,7 @@ full_df["source"].unique()
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 

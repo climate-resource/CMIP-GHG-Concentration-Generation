@@ -2145,10 +2145,8 @@ def create_agage_handling_config(
                 instrument=instrument,
                 time_frequency=frequency,
                 raw_dir=raw_dir,
-                download_complete_file=raw_dir
-                / f"{gas}_{instrument}_{frequency}.complete",
-                processed_monthly_data_with_loc_file=interim_dir
-                / f"{gas}_{instrument}_{frequency}.csv",
+                download_complete_file=raw_dir / f"{gas}_{instrument}_{frequency}.complete",
+                processed_monthly_data_with_loc_file=interim_dir / f"{gas}_{instrument}_{frequency}.csv",
                 # generate_hashes=False,
                 generate_hashes=True,
                 download_urls=DOWNLOAD_URLS[(gas, instrument, frequency)],

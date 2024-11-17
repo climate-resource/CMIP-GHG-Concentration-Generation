@@ -49,13 +49,9 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
-    obs_network_input_files = get_obs_network_binning_input_files(
-        gas=config_step.gas, config=config
-    )
+    obs_network_input_files = get_obs_network_binning_input_files(gas=config_step.gas, config=config)
 
     config_historical_emissions = get_config_for_step_id(
         config=config, step="compile_historical_emissions", step_config_id="only"
@@ -64,15 +60,12 @@ def configure_notebooks(
     #     config=config, step="retrieve_misc_data", step_config_id="only"
     # )
 
-    global_mean_supplement_files = get_obs_network_binning_input_files(
-        gas=config_step.gas, config=config
-    )
+    global_mean_supplement_files = get_obs_network_binning_input_files(gas=config_step.gas, config=config)
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree")
-                / "1300_sf6-like_bin-observational-network"
+                Path("13yy_sf6-like-monthly-15-degree") / "1300_sf6-like_bin-observational-network"
             ],
             configuration=(),
             dependencies=tuple(obs_network_input_files),
@@ -82,8 +75,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree")
-                / "1301_sf6-like_interpolate-observational-network"
+                Path("13yy_sf6-like-monthly-15-degree") / "1301_sf6-like_interpolate-observational-network"
             ],
             configuration=(
                 config_step.allow_poleward_extension,
@@ -114,8 +106,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree")
-                / "1303_sf6-like_extend-lat-gradient-pcs"
+                Path("13yy_sf6-like-monthly-15-degree") / "1303_sf6-like_extend-lat-gradient-pcs"
             ],
             configuration=(),
             dependencies=(
@@ -132,8 +123,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree")
-                / "1304_sf6-like_extend-global-annual-mean"
+                Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_extend-global-annual-mean"
             ],
             configuration=(),
             dependencies=(
@@ -147,8 +137,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree")
-                / "1305_sf6-like_create-pieces-for-gridding"
+                Path("13yy_sf6-like-monthly-15-degree") / "1305_sf6-like_create-pieces-for-gridding"
             ],
             configuration=(),
             dependencies=(
@@ -169,14 +158,11 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="calculate_sf6_like_monthly_fifteen_degree_pieces",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("13yy_sf6-like-monthly-15-degree")
-            / "1300_sf6-like_bin-observational-network",
+            notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1300_sf6-like_bin-observational-network",
             raw_notebook_ext=".py",
             summary="SF6-like gas pieces - Bin observational data",
             doc="Bin the observational data for SF6-like gases.",
@@ -196,15 +182,13 @@ step: UnconfiguredNotebookBasedStep[
             doc="Calculate latitudinal gradient, seasonality and global-mean from the observational network",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("13yy_sf6-like-monthly-15-degree")
-            / "1303_sf6-like_extend-lat-gradient-pcs",
+            notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1303_sf6-like_extend-lat-gradient-pcs",
             raw_notebook_ext=".py",
             summary="SF6-like gas pieces - Extend PCs over the entire time period",
             doc="Extend the principal components (PCs) over the entire time period of interest",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("13yy_sf6-like-monthly-15-degree")
-            / "1304_sf6-like_extend-global-annual-mean",
+            notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_extend-global-annual-mean",
             raw_notebook_ext=".py",
             summary="SF6-like gas pieces - Extend global, annual-mean over the entire time period",
             doc=(

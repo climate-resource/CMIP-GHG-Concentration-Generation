@@ -47,15 +47,12 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("010y_compile-historical-emissions")
-                / "0109_compile-complete-dataset"
+                Path("010y_compile-historical-emissions") / "0109_compile-complete-dataset"
             ],
             configuration=(),
             dependencies=(),
@@ -68,14 +65,11 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="compile_historical_emissions",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("010y_compile-historical-emissions")
-            / "0109_compile-complete-dataset",
+            notebook_path=Path("010y_compile-historical-emissions") / "0109_compile-complete-dataset",
             raw_notebook_ext=".py",
             summary="Compile historical emissions - create complete dataset",
             doc="Compile a complete historical emissions dataset from our various sources.",

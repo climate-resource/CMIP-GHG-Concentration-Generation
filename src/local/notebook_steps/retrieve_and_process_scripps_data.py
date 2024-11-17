@@ -48,15 +48,11 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("004y_process-scripps-data") / "0040_download-scripps"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("004y_process-scripps-data") / "0040_download-scripps"],
             configuration=(
                 config_step.merged_ice_core_data,
                 config_step.station_data,
@@ -70,9 +66,7 @@ def configure_notebooks(
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("004y_process-scripps-data") / "0041_process-scripps"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("004y_process-scripps-data") / "0041_process-scripps"],
             configuration=(),
             dependencies=(get_checklist_file(config_step.raw_dir),),
             targets=(config_step.processed_data_with_loc_file,),
@@ -84,9 +78,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="retrieve_and_process_scripps_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

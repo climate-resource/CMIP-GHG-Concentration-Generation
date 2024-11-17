@@ -43,7 +43,6 @@ import local.binning
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
-import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
@@ -52,9 +51,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -76,9 +73,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
 # %% [markdown]
@@ -105,14 +100,9 @@ lat_gradient_eofs_pcs: xr.Dataset = xr.load_dataset(
 ).pint.quantify()
 lat_gradient_eofs_pcs
 
-# %% [markdown]
-# ### Calculate global-, annual-mean monthly
-
 # %%
-global_annual_mean_monthly = (
-    local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-        global_annual_mean
-    )
+global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+    global_annual_mean
 )
 global_annual_mean_monthly
 
@@ -130,18 +120,14 @@ local.xarray_time.convert_year_to_time(global_annual_mean).plot.scatter(
 
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10])
-).plot(
-    ax=axes[1]
-)  # type: ignore
+).plot(ax=axes[1])  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10])
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:])
-).plot(
-    ax=axes[2]
-)  # type: ignore
+).plot(ax=axes[2])  # type: ignore
 local.xarray_time.convert_year_to_time(
     global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:])
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
@@ -157,10 +143,7 @@ plt.show()
 # %%
 seasonality_full = global_annual_mean * obs_network_seasonality
 atol = (
-    # # TODO: dial this back down
-    # 1e-6 * global_annual_mean.mean().data.m
-    1e-1
-    * global_annual_mean.mean().data.m
+    1e-6 * global_annual_mean.mean().data.m
 )  # Approximately match the tolerance of our mean-preserving interpolation algorithm
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
@@ -205,27 +188,16 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ig
 # in our latitudinal gradient.
 
 # %%
-for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
-    try:
-        pcs_monthly = (
-            lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-            .groupby("eof", squeeze=False)
-            .apply(
-                local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
-                degrees_freedom_scalar=degrees_freedom_scalar,
-                # atol=1e-4,
-            )
-        )
-        print(f"Run succeeded with {degrees_freedom_scalar=}")
-        break
-    except AssertionError:
-        print(f"Run failed with {degrees_freedom_scalar=}")
-        continue
+# %pdb
 
-else:
-    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-    raise AssertionError(msg)
-
+# %%
+pcs_monthly = (
+    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+    .groupby("eof", squeeze=True)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+    )
+)
 pcs_monthly
 
 # %%
@@ -241,19 +213,19 @@ local.xarray_time.convert_year_to_time(pcs_annual).plot.scatter(
     x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0]
 )
 
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][1:10])
-).plot(ax=axes[1], hue="eof")
-local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][1:10])
-).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[1])
+local.xarray_time.convert_year_month_to_time(pcs_monthly.sel(year=pcs_monthly["year"][1:10])).plot(
+    ax=axes[1], hue="eof"
+)
+local.xarray_time.convert_year_to_time(pcs_annual.sel(year=pcs_monthly["year"][1:10])).plot.scatter(
+    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[1]
+)
 
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][-10:])
-).plot(ax=axes[2], hue="eof")
-local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][-10:])
-).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[2])
+local.xarray_time.convert_year_month_to_time(pcs_monthly.sel(year=pcs_monthly["year"][-10:])).plot(
+    ax=axes[2], hue="eof"
+)
+local.xarray_time.convert_year_to_time(pcs_annual.sel(year=pcs_monthly["year"][-10:])).plot.scatter(
+    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[2]
+)
 
 plt.tight_layout()
 plt.show()
@@ -273,29 +245,19 @@ np.testing.assert_allclose(
 latitudinal_gradient_monthly
 
 # %%
-local.xarray_time.convert_year_month_to_time(latitudinal_gradient_monthly).plot(
-    hue="lat"
-)
+local.xarray_time.convert_year_month_to_time(latitudinal_gradient_monthly).plot(hue="lat")
 
 # %% [markdown]
 # ### Save
 
 # %%
-config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-global_annual_mean_monthly.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_monthly_file
-)
+config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean_monthly.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_monthly_file)
 global_annual_mean_monthly
 
 # %%
-config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-seasonality_full.pint.dequantify().to_netcdf(
-    config_step.seasonality_allyears_fifteen_degree_monthly_file
-)
+config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
+seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_allyears_fifteen_degree_monthly_file)
 seasonality_full
 
 # %%

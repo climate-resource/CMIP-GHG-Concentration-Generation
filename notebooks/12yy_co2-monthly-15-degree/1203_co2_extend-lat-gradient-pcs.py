@@ -53,9 +53,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -80,13 +78,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -169,9 +163,7 @@ tmp = tmp.assign_coords(year=zero_year)
 tmp.values = 0.0
 
 allyears_pc1 = (
-    xr.concat([tmp, pc1], "year")
-    .pint.dequantify()
-    .interp(year=out_years, kwargs={"fill_value": 0})
+    xr.concat([tmp, pc1], "year").pint.dequantify().interp(year=out_years, kwargs={"fill_value": 0})
 )
 
 with axes_vertical_split() as axes:
@@ -196,8 +188,7 @@ allyears_pc1
 
 # %% editable=true slideshow={"slide_type": ""}
 primap_full = primap2.open_dataset(
-    config_retrieve_misc.primap.raw_dir
-    / config_retrieve_misc.primap.download_url.url.split("/")[-1]
+    config_retrieve_misc.primap.raw_dir / config_retrieve_misc.primap.download_url.url.split("/")[-1]
 )
 
 primap_fossil_co2_emissions = (
@@ -218,9 +209,7 @@ primap_fossil_co2_emissions = (
 primap_fossil_co2_emissions
 
 # %% editable=true slideshow={"slide_type": ""}
-regression_years = np.intersect1d(
-    lat_grad_eofs_obs_network["year"], primap_fossil_co2_emissions["year"]
-)
+regression_years = np.intersect1d(lat_grad_eofs_obs_network["year"], primap_fossil_co2_emissions["year"])
 regression_years
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -241,18 +230,14 @@ with axes_vertical_split() as axes:
 # %% editable=true slideshow={"slide_type": ""}
 x = QuantityOSCM(primap_regression_data.data.m, str(primap_regression_data.data.units))
 A = np.vstack([x.m, np.ones(x.size)]).T
-y = QuantityOSCM(
-    pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units)
-)
+y = QuantityOSCM(pc0_obs_network_regression.data.m, str(pc0_obs_network_regression.data.units))
 
 res = np.linalg.lstsq(A, y.m, rcond=None)
 m, c = res[0]
 m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(c, y.units)
 
-latitudinal_gradient_pc0_co2_fossil_emissions_regression = (
-    local.regressors.LinearRegressionResult(m=m, c=c)
-)
+latitudinal_gradient_pc0_co2_fossil_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -276,24 +261,17 @@ primap_fossil_co2_emissions_extension_years = np.union1d(
     primap_fossil_co2_emissions["year"],
 )
 # Ensure we only extend backwards
-primap_fossil_co2_emissions_extension_years = (
-    primap_fossil_co2_emissions_extension_years[
-        np.where(
-            primap_fossil_co2_emissions_extension_years
-            <= primap_fossil_co2_emissions["year"].max().values
-        )
-    ]
-)
+primap_fossil_co2_emissions_extension_years = primap_fossil_co2_emissions_extension_years[
+    np.where(primap_fossil_co2_emissions_extension_years <= primap_fossil_co2_emissions["year"].max().values)
+]
 
 primap_fossil_co2_emissions_extension_years
 
 # %% editable=true slideshow={"slide_type": ""}
 primap_fossil_co2_emissions_extended = primap_fossil_co2_emissions.copy()
-primap_fossil_co2_emissions_extended = (
-    primap_fossil_co2_emissions_extended.pint.dequantify().interp(
-        year=primap_fossil_co2_emissions_extension_years,
-        kwargs={"fill_value": primap_fossil_co2_emissions.data[0].m},
-    )
+primap_fossil_co2_emissions_extended = primap_fossil_co2_emissions_extended.pint.dequantify().interp(
+    year=primap_fossil_co2_emissions_extension_years,
+    kwargs={"fill_value": primap_fossil_co2_emissions.data[0].m},
 )
 
 with axes_vertical_split() as axes:
@@ -313,9 +291,9 @@ years_to_fill_with_regression
 # %%
 pc0_emissions_extended = (
     m
-    * primap_fossil_co2_emissions_extended.sel(
-        year=years_to_fill_with_regression
-    ).pint.quantify(unit_registry=openscm_units.unit_registry)
+    * primap_fossil_co2_emissions_extended.sel(year=years_to_fill_with_regression).pint.quantify(
+        unit_registry=openscm_units.unit_registry
+    )
     + c
 )
 pc0_emissions_extended = pc0_emissions_extended.assign_coords(eof=0)
@@ -343,9 +321,7 @@ allyears_pc0 = xr.concat(
     [
         pc0_emissions_extended,
         pc0_obs_network_regression,
-        lat_grad_eofs_obs_network["principal-components"].sel(
-            eof=0, year=pc0_obs_network_raw_years
-        ),
+        lat_grad_eofs_obs_network["principal-components"].sel(eof=0, year=pc0_obs_network_raw_years),
     ],
     "year",
 )
@@ -362,9 +338,7 @@ allyears_pc0
 # ### Join the PCs back together
 
 # %%
-allyears_pcs = (
-    xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
-)
+allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
 allyears_pcs
 
 # %% [markdown]
@@ -389,20 +363,15 @@ out
 
 # %%
 xr.testing.assert_allclose(
-    (out["principal-components"] @ out["eofs"]).sel(
-        year=lat_grad_eofs_obs_network["year"]
-    ),
-    lat_grad_eofs_obs_network["principal-components"]
-    @ lat_grad_eofs_obs_network["eofs"],
+    (out["principal-components"] @ out["eofs"]).sel(year=lat_grad_eofs_obs_network["year"]),
+    lat_grad_eofs_obs_network["principal-components"] @ lat_grad_eofs_obs_network["eofs"],
 )
 
 # %% [markdown]
 # ## Save
 
 # %%
-config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(exist_ok=True, parents=True)
 out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eofs_file)
 out
 
@@ -410,13 +379,7 @@ out
 config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file.parent.mkdir(
     exist_ok=True, parents=True
 )
-with open(
-    config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file, "w"
-) as fh:
-    fh.write(
-        local.config.converter_yaml.dumps(
-            latitudinal_gradient_pc0_co2_fossil_emissions_regression
-        )
-    )
+with open(config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file, "w") as fh:
+    fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_co2_fossil_emissions_regression))
 
 latitudinal_gradient_pc0_co2_fossil_emissions_regression

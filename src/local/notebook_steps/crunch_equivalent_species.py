@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     config_grid_crunching_included_gases = [
         get_config_for_step_id(
@@ -98,14 +96,11 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="crunch_equivalent_species",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("35yy_equivalent-species")
-            / "3501_calculate-full-equivalence",
+            notebook_path=Path("35yy_equivalent-species") / "3501_calculate-full-equivalence",
             raw_notebook_ext=".py",
             summary="equivalent species - Calculate equivalent species timeseries",
             doc=(

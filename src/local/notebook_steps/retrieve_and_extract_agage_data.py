@@ -1,6 +1,7 @@
 """
 Retrieve and extract AGAGE data notebook steps
 """
+
 from __future__ import annotations
 
 from collections.abc import Iterable
@@ -46,15 +47,11 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("002y_process-agage-data") / "0020_download-agage"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0020_download-agage"],
             configuration=(
                 config_step.gas,
                 config_step.instrument,
@@ -69,9 +66,7 @@ def configure_notebooks(
             step_config_id=step_config_id,
         ),
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("002y_process-agage-data") / "0023_extract-agage"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0023_extract-agage"],
             configuration=(
                 config_step.gas,
                 config_step.instrument,
@@ -87,9 +82,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="retrieve_and_extract_agage_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

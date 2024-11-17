@@ -58,13 +58,9 @@ step_config_id: str = "monthly"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -100,9 +96,7 @@ def read_ale_file(f: Path, skiprows: int = 3, sep: str = r"\s+") -> pd.DataFrame
         file_content = fh.read()
 
     site_code = f.name.split("-ale")[0]
-    lat_str = re_search_and_retrieve_group(
-        r"Lat.: (?P<latitude>-?\d*(\.\d*)?[SN])", file_content, "latitude"
-    )
+    lat_str = re_search_and_retrieve_group(r"Lat.: (?P<latitude>-?\d*(\.\d*)?[SN])", file_content, "latitude")
     if lat_str.endswith("S"):
         lat = -float(lat_str[:-1])
     elif lat_str.endswith("N"):
@@ -157,8 +151,7 @@ df_monthly
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 
@@ -171,9 +164,7 @@ for gas, gas_df in tqdman.tqdm(df_monthly.groupby("gas"), desc="gas"):
     countries.plot(color="lightgray", ax=axes[0])
     colours = (c for c in ["tab:blue", "tab:green", "tab:red", "tab:pink", "tab:brown"])
     markers = (m for m in ["o", "x", ".", ",", "v"])
-    for station, station_df in tqdman.tqdm(
-        gas_df.groupby("site_code"), desc="Observing site"
-    ):
+    for station, station_df in tqdman.tqdm(gas_df.groupby("site_code"), desc="Observing site"):
         colour = next(colours)
         marker = next(markers)
 
@@ -206,9 +197,7 @@ for gas, gas_df in tqdman.tqdm(df_monthly.groupby("gas"), desc="gas"):
     axes[0].set_xlim([-180, 180])
     axes[0].set_ylim([-90, 90])
 
-    axes[1].set_xticks(
-        range(station_df["year"].min(), station_df["year"].max() + 2), minor=True
-    )
+    axes[1].set_xticks(range(station_df["year"].min(), station_df["year"].max() + 2), minor=True)
     axes[1].legend()
 
     plt.suptitle(str(gas))
@@ -233,8 +222,6 @@ local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 # ### Save
 
 # %%
-config_step.processed_monthly_data_with_loc_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.processed_monthly_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out

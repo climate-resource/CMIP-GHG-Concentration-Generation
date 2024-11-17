@@ -53,9 +53,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -80,9 +78,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 config_smooth_law_dome_data = get_config_for_step_id(
     config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
@@ -176,9 +172,7 @@ law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
 law_dome_lat
 
 # %%
-law_dome_lat_nearest = float(
-    lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"]
-)
+law_dome_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"])
 law_dome_lat_nearest
 
 # %%
@@ -229,9 +223,7 @@ law_dome_da = xr.DataArray(
 law_dome_da
 
 # %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(
-    lat=law_dome_lat, method="nearest"
-)
+offset = law_dome_da - allyears_latitudinal_gradient.sel(lat=law_dome_lat, method="nearest")
 offset
 
 # %%
@@ -242,9 +234,7 @@ law_dome_years_full_field
 # #### Join back together
 
 # %%
-mostyears_full_field = xr.concat(
-    [law_dome_years_full_field, obs_network_full_field], "year"
-)
+mostyears_full_field = xr.concat([law_dome_years_full_field, obs_network_full_field], "year")
 
 mostyears_full_field
 
@@ -285,17 +275,13 @@ else:
         .sel(year=law_dome_compare_years)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use[
-            np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)
-        ]["value"],
+        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
     )
 
 # %%
 tmp = mostyears_full_field.copy()
 tmp.name = "mostyears_global_annual_mean"
-mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
-    tmp
-)
+mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
 mostyears_global_annual_mean
 
 # %% [markdown]
@@ -313,9 +299,7 @@ back_extend_years
 
 # %%
 if back_extend_years.size > 0:
-    tmp = mostyears_global_annual_mean.sel(
-        year=[mostyears_global_annual_mean["year"][0]]
-    )
+    tmp = mostyears_global_annual_mean.sel(year=[mostyears_global_annual_mean["year"][0]])
     back_extended_global_annual_mean = (
         mostyears_global_annual_mean.pint.dequantify()
         .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
@@ -328,12 +312,9 @@ if back_extend_years.size > 0:
     )
 
     back_extended_full_field = (
-        allyears_latitudinal_gradient.sel(year=back_extend_years)
-        + back_extended_global_annual_mean
+        allyears_latitudinal_gradient.sel(year=back_extend_years) + back_extended_global_annual_mean
     )
-    allyears_full_field = xr.concat(
-        [back_extended_full_field, mostyears_full_field], "year"
-    )
+    allyears_full_field = xr.concat([back_extended_full_field, mostyears_full_field], "year")
 
 
 else:
@@ -364,7 +345,5 @@ np.testing.assert_allclose(
 
 # %%
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
-allyears_global_annual_mean.pint.dequantify().to_netcdf(
-    config_step.global_annual_mean_allyears_file
-)
+allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean

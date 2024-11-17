@@ -56,13 +56,9 @@ step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 config_retrieve_noaa = get_config_for_step_id(
     config=config,
     step="retrieve_and_extract_noaa_data",
@@ -101,8 +97,7 @@ pd.MultiIndex.from_product([range(1972, 2022 + 1), range(1, 13)]).difference(  #
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 

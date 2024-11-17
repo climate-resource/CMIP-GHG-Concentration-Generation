@@ -4,6 +4,7 @@ Update development config
 Goes quickly out of date, use with care (more intended as a helper script
 than for continuous use)
 """
+
 from __future__ import annotations
 
 from pathlib import Path

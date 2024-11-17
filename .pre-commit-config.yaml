@@ -18,6 +18,9 @@ repos:
         exclude: |
           (?x)(
             ^pixi.lock/|
+            ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_basic_.csv/|
+            ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_const_extrap_basic_.csv/|
+            ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_min_zero_basic_.csv/|
             ^tests/regression/test_workflow/test_workflow_basic.npz/|
             ^tests/regression/test_workflow_nightly/test_workflow_nightly.npz
           )
@@ -42,14 +45,11 @@ repos:
         language: fail
         files: "\\.rej$"
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: 'v0.1.9'
+    rev: 'v0.3.0'
     hooks:
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
-  - repo: https://github.com/psf/black
-    rev: '23.3.0'
-    hooks:
-      - id: black
+      - id: ruff-format
   # additional to the above, apply black to doctests in source code
   - repo: https://github.com/keewis/blackdoc
     rev: v0.3.8

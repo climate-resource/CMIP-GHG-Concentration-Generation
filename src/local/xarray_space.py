@@ -85,9 +85,7 @@ def calculate_area_weighted_mean_latitude_only(
     # This is what we evaluate below.
     area_weighting = np.sin(lat_bnds).diff(dim=bounds_dim_name).squeeze()
 
-    area_weighted_mean = (inp[variables] * area_weighting).sum(
-        lat_name
-    ) / area_weighting.sum(lat_name)
+    area_weighted_mean = (inp[variables] * area_weighting).sum(lat_name) / area_weighting.sum(lat_name)
 
     # May need to allow dependency injection in future here.
     keys_to_check = list(inp.data_vars.keys()) + list(inp.coords.keys())

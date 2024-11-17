@@ -47,9 +47,7 @@ def configure_notebooks(
 
     config = config_bundle.config_hydrated
 
-    config_step = get_config_for_step_id(
-        config=config, step=step_name, step_config_id=step_config_id
-    )
+    config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     if "eq" in config_step.gas:
         config_crunch_grids = get_config_for_step_id(
@@ -67,9 +65,7 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("40yy_write-input4mips") / "4001_write-input4mips-files"
-            ],
+            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4001_write-input4mips-files"],
             configuration=(config.doi,),
             dependencies=(
                 config_crunch_grids.fifteen_degree_monthly_file,
@@ -91,9 +87,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
-step: UnconfiguredNotebookBasedStep[
-    Config, ConfigBundle
-] = UnconfiguredNotebookBasedStep(
+step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="write_input4mips",
     unconfigured_notebooks=[
         UnconfiguredNotebook(

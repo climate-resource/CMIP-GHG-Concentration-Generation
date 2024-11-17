@@ -56,9 +56,7 @@ from local.config import load_config_from_file
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 
-pint_xarray.accessors.default_registry = pint_xarray.setup_registry(
-    cf_xarray.units.units
-)
+pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.units.units)
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
@@ -83,13 +81,9 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve_misc = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -222,8 +216,7 @@ allyears_pc1
 
 # %%
 primap_full = primap2.open_dataset(
-    config_retrieve_misc.primap.raw_dir
-    / config_retrieve_misc.primap.download_url.url.split("/")[-1]
+    config_retrieve_misc.primap.raw_dir / config_retrieve_misc.primap.download_url.url.split("/")[-1]
 )
 
 primap_n2o_emissions = (
@@ -250,9 +243,7 @@ primap_obs_network_overlapping_years = np.intersect1d(
 primap_obs_network_overlapping_years
 
 # %%
-primap_regression_data = primap_n2o_emissions.sel(
-    year=primap_obs_network_overlapping_years
-)
+primap_regression_data = primap_n2o_emissions.sel(year=primap_obs_network_overlapping_years)
 primap_regression_data
 
 # %%
@@ -276,9 +267,7 @@ m, c = res[0]
 m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(c, y.units)
 
-latitudinal_gradient_pc0_n2o_emissions_regression = (
-    local.regressors.LinearRegressionResult(m=m, c=c)
-)
+latitudinal_gradient_pc0_n2o_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -291,9 +280,7 @@ ax.legend()
 # ### Join the PCs back together
 
 # %%
-allyears_pcs = (
-    xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
-)
+allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
 allyears_pcs
 
 # %% [markdown]
@@ -309,34 +296,21 @@ out
 
 # %%
 xr.testing.assert_allclose(
-    (out["principal-components"] @ out["eofs"]).sel(
-        year=lat_grad_eofs_obs_network["year"]
-    ),
-    lat_grad_eofs_obs_network["principal-components"]
-    @ lat_grad_eofs_obs_network["eofs"],
+    (out["principal-components"] @ out["eofs"]).sel(year=lat_grad_eofs_obs_network["year"]),
+    lat_grad_eofs_obs_network["principal-components"] @ lat_grad_eofs_obs_network["eofs"],
 )
 
 # %% [markdown]
 # ## Save
 
 # %%
-config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(exist_ok=True, parents=True)
 out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eofs_file)
 out
 
 # %%
-config_step.latitudinal_gradient_pc0_n2o_emissions_regression_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-with open(
-    config_step.latitudinal_gradient_pc0_n2o_emissions_regression_file, "w"
-) as fh:
-    fh.write(
-        local.config.converter_yaml.dumps(
-            latitudinal_gradient_pc0_n2o_emissions_regression
-        )
-    )
+config_step.latitudinal_gradient_pc0_n2o_emissions_regression_file.parent.mkdir(exist_ok=True, parents=True)
+with open(config_step.latitudinal_gradient_pc0_n2o_emissions_regression_file, "w") as fh:
+    fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_n2o_emissions_regression))
 
 latitudinal_gradient_pc0_n2o_emissions_regression

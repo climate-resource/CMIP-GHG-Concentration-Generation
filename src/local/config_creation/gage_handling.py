@@ -14,9 +14,7 @@ RETRIEVE_AND_EXTRACT_GAGE_STEPS = [
     RetrieveExtractGAGEDataConfig(
         step_config_id="monthly",
         raw_dir=Path("data/raw/agage/gage"),
-        processed_monthly_data_with_loc_file=Path(
-            "data/interim/agage/gage/monthly.csv"
-        ),
+        processed_monthly_data_with_loc_file=Path("data/interim/agage/gage/monthly.csv"),
         download_complete_file=Path("data/raw/agage/gage/gage_monthly.complete"),
         download_urls=[
             URLSource(

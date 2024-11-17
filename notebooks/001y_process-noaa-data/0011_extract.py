@@ -57,18 +57,13 @@ step_config_id: str = "co2_in-situ"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown]
 # ## Action
 
 # %%
-files = [
-    config_step.raw_dir / url_source.url.split("/")[-1]
-    for url_source in config_step.download_urls
-]
+files = [config_step.raw_dir / url_source.url.split("/")[-1] for url_source in config_step.download_urls]
 files
 
 # %%
@@ -92,9 +87,7 @@ elif config_step.source == "in-situ":
 
 elif config_step.source == "hats":
     if config_step.gas in ("n2o", "ccl4", "cfc11", "cfc113", "cfc12", "sf6"):
-        df_months = read_noaa_hats_combined(
-            zf, gas=config_step.gas, source=config_step.source
-        )
+        df_months = read_noaa_hats_combined(zf, gas=config_step.gas, source=config_step.source)
 
     elif config_step.gas in (
         "c2f6",
@@ -107,9 +100,7 @@ elif config_step.source == "hats":
         "nf3",
         "so2f2",
     ):
-        df_months = read_noaa_hats_m2_and_pr1(
-            zf, gas=config_step.gas, source=config_step.source
-        )
+        df_months = read_noaa_hats_m2_and_pr1(zf, gas=config_step.gas, source=config_step.source)
 
     else:
         df_months = read_noaa_hats(zf, gas=config_step.gas, source=config_step.source)

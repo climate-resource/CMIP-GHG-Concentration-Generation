@@ -62,13 +62,9 @@ step_config_id: str = "c2f6_gc-ms-medusa_monthly"  # config ID to select for thi
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 # %% [markdown]
 # ## Action
@@ -131,9 +127,7 @@ relevant_files
 
 
 # %%
-def read_agage_file(
-    f: Path, skiprows: int = 34, sep: str = r"\s+"
-) -> tuple[tuple[str, ...], pd.DataFrame]:
+def read_agage_file(f: Path, skiprows: int = 34, sep: str = r"\s+") -> tuple[tuple[str, ...], pd.DataFrame]:
     """
     Read a data file from the AGAGE experiment
     """
@@ -143,23 +137,17 @@ def read_agage_file(
     site_code = f.name.split("_")[1]
 
     try:
-        gas = re_search_and_retrieve_group(
-            r"species: (?P<species>\S*)", file_content, "species"
-        )
+        gas = re_search_and_retrieve_group(r"species: (?P<species>\S*)", file_content, "species")
     except ValueError:
         print(f"File is missing species information: {f}")
         gas = config_step.gas
 
-    lat = re_search_and_retrieve_group(
-        r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content, "latitude"
-    )
+    lat = re_search_and_retrieve_group(r"inlet_latitude: (?P<latitude>-?\d*\.\d*)", file_content, "latitude")
     lon = re_search_and_retrieve_group(
         r"inlet_longitude: (?P<longitude>-?\d*\.\d*)", file_content, "longitude"
     )
     try:
-        unit = re_search_and_retrieve_group(
-            r"units: (?P<unit>\S*)", file_content, "unit"
-        )
+        unit = re_search_and_retrieve_group(r"units: (?P<unit>\S*)", file_content, "unit")
     except ValueError:
         print(f"File is missing units information: {f}")
         if any(
@@ -217,9 +205,7 @@ def read_agage_file(
     )
     contacts = tuple(v.strip() for v in contact_points.split(";"))
 
-    header_row = re_search_and_retrieve_group(
-        r"(?P<header_row>#    time.*)", file_content, "header_row"
-    )
+    header_row = re_search_and_retrieve_group(r"(?P<header_row>#    time.*)", file_content, "header_row")
     columns = [v.strip() for v in header_row.split("  ") if v][1:]
     res = pd.read_csv(StringIO(file_content), skiprows=skiprows, sep=sep, header=None)
     res.columns = columns  # type: ignore
@@ -263,8 +249,7 @@ df_monthly
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 
@@ -294,9 +279,7 @@ markers = (m for m in ["o", "x", ".", ",", "v", "+", "1", "2", "3", "4", "p", "P
 
 countries.plot(color="lightgray", ax=axes[0])
 
-for station, station_df in tqdman.tqdm(
-    df_monthly.groupby("site_code"), desc="Observing site"
-):
+for station, station_df in tqdman.tqdm(df_monthly.groupby("site_code"), desc="Observing site"):
     colour = next(colours)
     marker = next(markers)
 
@@ -329,9 +312,7 @@ for station, station_df in tqdman.tqdm(
 axes[0].set_xlim([-180, 180])
 axes[0].set_ylim([-90, 90])
 
-axes[1].set_xticks(
-    range(station_df["year"].min(), station_df["year"].max() + 2), minor=True
-)
+axes[1].set_xticks(range(station_df["year"].min(), station_df["year"].max() + 2), minor=True)
 axes[1].legend()
 
 plt.tight_layout()
@@ -356,8 +337,6 @@ local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 
 # %%
 assert set(out["gas"]) == {config_step.gas}
-config_step.processed_monthly_data_with_loc_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
+config_step.processed_monthly_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out

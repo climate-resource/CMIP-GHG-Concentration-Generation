@@ -54,9 +54,7 @@ step_config_id: str = "only"  # config ID to select for this branch
 
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
-config_step = get_config_for_step_id(
-    config=config, step=step, step_config_id=step_config_id
-)
+config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 config_retrieve_and_extract_gage_data = get_config_for_step_id(
     config=config, step="retrieve_and_extract_gage_data", step_config_id="monthly"
@@ -66,9 +64,7 @@ config_retrieve_and_extract_ale_data = get_config_for_step_id(
     config=config, step="retrieve_and_extract_ale_data", step_config_id="monthly"
 )
 
-config_retrieve = get_config_for_step_id(
-    config=config, step="retrieve_misc_data", step_config_id="only"
-)
+config_retrieve = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 # %% [markdown]
 # ## Action
@@ -76,12 +72,8 @@ config_retrieve = get_config_for_step_id(
 # %%
 full_df = pd.concat(
     [
-        pd.read_csv(
-            config_retrieve_and_extract_gage_data.processed_monthly_data_with_loc_file
-        ),
-        pd.read_csv(
-            config_retrieve_and_extract_ale_data.processed_monthly_data_with_loc_file
-        ),
+        pd.read_csv(config_retrieve_and_extract_gage_data.processed_monthly_data_with_loc_file),
+        pd.read_csv(config_retrieve_and_extract_ale_data.processed_monthly_data_with_loc_file),
         *[
             pd.read_csv(c.processed_monthly_data_with_loc_file)
             for c in config.retrieve_and_extract_agage_data
@@ -107,8 +99,7 @@ full_df
 
 # %%
 countries = gpd.read_file(
-    config_retrieve.natural_earth.raw_dir
-    / config_retrieve.natural_earth.countries_shape_file_name
+    config_retrieve.natural_earth.raw_dir / config_retrieve.natural_earth.countries_shape_file_name
 )
 # countries.columns.tolist()
 

@@ -66,8 +66,7 @@ def get_regression_values(
         key_write = f"{filepath_write}__{key}"
 
         metadata_to_check = {
-            k: v if k not in metadata_keys_to_overwrite else k
-            for k, v in cube.attributes.items()
+            k: v if k not in metadata_keys_to_overwrite else k for k, v in cube.attributes.items()
         }
         out_data_regression[key_write] = metadata_to_check
 
