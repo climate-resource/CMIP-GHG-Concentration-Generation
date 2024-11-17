@@ -206,10 +206,9 @@ local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="prolept
 # %%
 pcs_monthly = (
     lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-    .groupby("eof", squeeze=False)
+    .groupby("eof", squeeze=True)
     .apply(
         local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
-        atol=1e-7,
     )
 )
 pcs_monthly
