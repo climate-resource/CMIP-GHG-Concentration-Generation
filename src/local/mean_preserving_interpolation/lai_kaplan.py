@@ -606,7 +606,7 @@ class LaiKaplanInterpolator:
 
         n_lai_kaplan = y_in.size
 
-        # TODO: consider whether to make control points derivation injectable
+        # TODO: split out after control points have been derived
         control_points_x_d = (
             np.zeros(
                 2 * x_bounds_in.size + 1,
@@ -638,11 +638,21 @@ class LaiKaplanInterpolator:
         )
 
         # Control point values at the walls
+        # TODO: allow the user to control this.
+        # Linear
         control_points_wall_y_d = (
             intervals_y[0 : n_lai_kaplan + 1 : 1] + intervals_y[1 : n_lai_kaplan + 1 + 1 : 1]
         ) / 2
+        # Cubic
+        scipy_interp = get_optional_dependency("scipy.interpolate")
+        cubic_interpolator = scipy_interp.interp1d(
+            intervals_x.m,
+            intervals_y.data.m,
+            kind="cubic",
+            fill_value="extrapolate",
+        )
+        control_points_wall_y_d = cubic_interpolator(x_bounds_in.m) * intervals_y.data.u
         # If the values start out flat, keep them flat right until the end of the flat intervals.
-        # TODO: allow the user to control this.
         first_increase = np.argmax(~np.isclose(control_points_wall_y_d[:-1], control_points_wall_y_d[1:]))
         if first_increase > 0:
             control_points_wall_y_d[first_increase + 1] = control_points_wall_y_d[0]
