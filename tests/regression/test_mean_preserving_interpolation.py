@@ -24,6 +24,7 @@ from local.mean_preserving_interpolation.grouping import get_group_averages
 from local.mean_preserving_interpolation.lai_kaplan import (
     LaiKaplanInterpolator,
     extrapolate_y_interval_values,
+    get_wall_control_points_y_linear_with_flat_override_on_left,
 )
 from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 
@@ -129,7 +130,20 @@ def execute_test_logic(  # noqa: PLR0913
         ),
     ),
 )
-@pytest.mark.parametrize("algorithm", ("lazy_linear", "lai_kaplan", "rymes_meyers"))
+@pytest.mark.parametrize(
+    "algorithm",
+    (
+        "lazy_linear",
+        "lai_kaplan",
+        pytest.param(
+            LaiKaplanInterpolator(
+                get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+            ),
+            id="lai_kaplan_initial_flat",
+        ),
+        "rymes_meyers",
+    ),
+)
 def test_mean_preserving_interpolation(  # noqa: PLR0913
     algorithm,
     y_in,
@@ -260,6 +274,20 @@ def test_mean_preserving_interpolation_uneven_increase(
         pytest.param(RymesMeyersInterpolator(min_val=Q(0.0, "m")), id="rymes_meyers_0"),
         pytest.param(LaiKaplanInterpolator(min_val=Q(-1.0, "m")), id="lai_kaplan_-1"),
         pytest.param(LaiKaplanInterpolator(min_val=Q(0.0, "m")), id="lai_kaplan_0"),
+        pytest.param(
+            LaiKaplanInterpolator(
+                min_val=Q(-1.0, "m"),
+                get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+            ),
+            id="lai_kaplan_-1_initial_flat",
+        ),
+        pytest.param(
+            LaiKaplanInterpolator(
+                min_val=Q(0.0, "m"),
+                get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+            ),
+            id="lai_kaplan_0_initial_flat",
+        ),
     ),
 )
 def test_mean_preserving_min_val(

@@ -663,6 +663,51 @@ def get_wall_control_points_y_linear(
     return control_points_wall_y
 
 
+def get_wall_control_points_y_linear_with_flat_override_on_left(
+    intervals_x: pint.UnitRegistry.Quantity,
+    intervals_y: pint.UnitRegistry.Quantity,
+    control_points_wall_x: pint.UnitRegistry.Quantity,
+) -> pint.UnitRegistry.Quantity:
+    """
+    Get y-values at wall control points using linear interpolation and keeping initially flat values flat.
+
+    If the values start out flat,
+    we keep them flat right up to the end of the last interval
+    that has the same value as the first value.
+    This can help to avoid values increasing before one might intuitively expect they should.
+
+    Parameters
+    ----------
+    intervals_x
+        The x-values at the mid-point of each interval
+
+    intervals_y
+        The y-values for each interval.
+
+        These y-values are the average value over each interval.
+
+    control_points_wall_x
+        The x-values at each wall control point
+
+    Returns
+    -------
+    :
+        y-values at each wall control point.
+    """
+    control_points_wall_y = get_wall_control_points_y_linear(
+        intervals_x=intervals_x,
+        intervals_y=intervals_y,
+        control_points_wall_x=control_points_wall_x,
+    )
+
+    # If the values start out flat, keep them flat right until the end of the flat intervals.
+    first_change = np.argmax(np.abs(np.diff(intervals_y)) > 0)
+    if first_change > 0:
+        control_points_wall_y[first_change] = intervals_y[0]
+
+    return control_points_wall_y
+
+
 def get_wall_control_points_y_cubic(
     intervals_x: pint.UnitRegistry.Quantity,
     intervals_y: pint.UnitRegistry.Quantity,
@@ -697,53 +742,6 @@ def get_wall_control_points_y_cubic(
         fill_value="extrapolate",
     )
     control_points_wall_y = cubic_interpolator(control_points_wall_x.m) * intervals_y.u
-
-    return control_points_wall_y
-
-
-def get_wall_control_points_y_cubic_with_flat_override_on_left(
-    intervals_x: pint.UnitRegistry.Quantity,
-    intervals_y: pint.UnitRegistry.Quantity,
-    control_points_wall_x: pint.UnitRegistry.Quantity,
-) -> pint.UnitRegistry.Quantity:
-    """
-    Get y-values at wall control points using a cubic spline and keeping flat values flat.
-
-    If the values start out flat,
-    we keep them flat right up to the end of the last interval
-    that has the same value as the first value.
-    This can help to avoid values increasing before one might intuitively expect they should.
-
-    Parameters
-    ----------
-    intervals_x
-        The x-values at the mid-point of each interval
-
-    intervals_y
-        The y-values for each interval.
-
-        These y-values are the average value over each interval.
-
-    control_points_wall_x
-        The x-values at each wall control point
-
-    Returns
-    -------
-    :
-        y-values at each wall control point.
-    """
-    control_points_wall_y = get_wall_control_points_y_cubic(
-        intervals_x=intervals_x,
-        intervals_y=intervals_y,
-        control_points_wall_x=control_points_wall_x,
-    )
-
-    # Fix this
-    # # If the values start out flat, keep them flat right until the end of the flat intervals.
-    # breakpoint()
-    # first_change = np.argmax(np.abs(np.diff(control_points_wall_y)) > 0)
-    # if first_change > 0:
-    #     control_points_wall_y[first_change + 1] = control_points_wall_y[0]
 
     return control_points_wall_y
 
@@ -813,9 +811,7 @@ class LaiKaplanInterpolator:
     This function is given the input y-values, plus the mid-point of each interval.
     """
 
-    get_wall_control_points_y_from_interval_ys: GetWallControlPointsY = (
-        get_wall_control_points_y_cubic_with_flat_override_on_left
-    )
+    get_wall_control_points_y_from_interval_ys: GetWallControlPointsY = get_wall_control_points_y_cubic
     """
     Function that calculates the y-values at the wall control points from the averages over each interval
     """
