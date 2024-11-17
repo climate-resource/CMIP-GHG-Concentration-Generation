@@ -819,94 +819,14 @@ class LaiKaplanInterpolator:
             data=control_points_wall_y_d,
         )
 
-        a_d = np.array(
-            [
-                -HERMITE_QUARTICS[1][0](1) / 2.0,
-                (
-                    HERMITE_QUARTICS[0][0](1)
-                    + HERMITE_QUARTICS[0][1](1)
-                    + HERMITE_QUARTICS[1][0](1) / 2.0
-                    - HERMITE_QUARTICS[1][1](1) / 2.0
-                ),
-                HERMITE_QUARTICS[1][1](1) / 2.0,
-            ]
+        control_points_y = self.solve_control_points_y(
+            n_lai_kaplan=n_lai_kaplan,
+            x_step=x_step,
+            target=y_in,
+            control_points_x=control_points_x,
+            control_points_wall_y=control_points_wall_y,
+            external_control_points_y_d=external_intervals_y_d,
         )
-        a = LaiKaplanArray(
-            lai_kaplan_idx_min=1,
-            lai_kaplan_stride=1,
-            data=a_d,
-        )
-
-        # A-matrix
-        # (Not indexed in the paper, hence not done with Lai Kaplan indexing)
-        A_mat = np.zeros((n_lai_kaplan, n_lai_kaplan))
-        rows, cols = np.diag_indices_from(A_mat)
-        A_mat[rows[1:], cols[:-1]] = a[1]
-        A_mat[rows, cols] = a[2]
-        A_mat[rows[:-1], cols[1:]] = a[3]
-
-        # Area under the curve in each interval
-        A_d = x_step * y_in
-        A = LaiKaplanArray(lai_kaplan_idx_min=1, lai_kaplan_stride=1, data=A_d)
-
-        # beta array
-        beta_d = np.array(
-            [
-                (
-                    HERMITE_QUARTICS[0][0](1)
-                    - HERMITE_QUARTICS[1][0](1) / 2.0
-                    - HERMITE_QUARTICS[1][1](1) / 2.0
-                ),
-                (
-                    HERMITE_QUARTICS[0][1](1)
-                    + HERMITE_QUARTICS[1][0](1) / 2.0
-                    + HERMITE_QUARTICS[1][1](1) / 2.0
-                ),
-            ]
-        )
-        beta = LaiKaplanArray(1, 1, beta_d)
-
-        b = LaiKaplanArray(
-            lai_kaplan_idx_min=1,
-            lai_kaplan_stride=1,
-            data=np.zeros_like(y_in.data) * y_in.u,
-        )
-        b[1] = (
-            A[1] / delta
-            - beta[1] * control_points_wall_y[1]
-            - beta[2] * control_points_wall_y[2]
-            - a[1] * external_intervals_y_d[0]
-        )
-        middle_slice = slice(2, n_lai_kaplan)
-        middle_slice_plus_one = slice(3, n_lai_kaplan + 1)
-        b[middle_slice] = (
-            A[middle_slice] / delta
-            - beta[1] * control_points_wall_y[middle_slice]
-            - beta[2] * control_points_wall_y[middle_slice_plus_one]
-        )
-        b[n_lai_kaplan] = (
-            A[n_lai_kaplan] / delta
-            - beta[1] * control_points_wall_y[n_lai_kaplan]
-            - beta[2] * control_points_wall_y[n_lai_kaplan + 1]
-            - a[3] * external_intervals_y_d[-1]
-        )
-
-        control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
-        pint.testing.assert_allclose(
-            np.dot(A_mat, control_points_interval_y_d.m), b.data.m, atol=self.atol, rtol=self.rtol
-        )
-
-        control_points_y = LaiKaplanArray(
-            lai_kaplan_idx_min=1 / 2,
-            lai_kaplan_stride=1 / 2,
-            data=np.nan * np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
-        )
-        # Pre-calculated external interval values
-        control_points_y[1 / 2] = external_intervals_y_d[0]
-        control_points_y[n_lai_kaplan + 3 / 2] = external_intervals_y_d[-1]
-        control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
-        # Calculated values
-        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
 
         # Now that we have all the control points, we can do the gradients
         gradients_at_control_points = LaiKaplanArray(
@@ -960,6 +880,139 @@ class LaiKaplanInterpolator:
             )
 
         return y_out
+
+    def solve_control_points_y(  # noqa: PLR0913
+        self,
+        n_lai_kaplan: int,
+        x_step: pint.UnitRegistry.Quantity,
+        target: pint.UnitRegistry.Quantity,
+        control_points_x: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        control_points_wall_y: LaiKaplanArray[pint.UnitRegistry.Quantity],
+        external_control_points_y_d: pint.UnitRegistry.Quantity,
+    ) -> LaiKaplanArray[pint.UnitRegistry.Quantity]:
+        """
+        Solve for the y-values at the control points
+
+        Parameters
+        ----------
+        n_lai_kaplan
+            The Lai-Kaplan "n" value
+
+        x_step
+            The size of the x-step.
+
+            `delta` is calculated internally and is assumed to be half of `x_step`.
+
+        target
+            The mean in each interval we want our solution to match.
+
+        control_points_x
+            The x-values of the control points.
+
+        control_points_wall_y
+            The y-values of the control points at the walls (i.e. the boundary of each interval).
+
+        external_control_points_y_d
+            The y-values of the control points to be used for the external control points.
+
+        Returns
+        -------
+        :
+            The solved y-values of the control points.
+        """
+        delta = x_step / 2.0
+
+        a_d = np.array(
+            [
+                -HERMITE_QUARTICS[1][0](1) / 2.0,
+                (
+                    HERMITE_QUARTICS[0][0](1)
+                    + HERMITE_QUARTICS[0][1](1)
+                    + HERMITE_QUARTICS[1][0](1) / 2.0
+                    - HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+                HERMITE_QUARTICS[1][1](1) / 2.0,
+            ]
+        )
+        a = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1,
+            data=a_d,
+        )
+
+        # A-matrix
+        # (Not indexed in the paper, hence not done with Lai Kaplan indexing)
+        A_mat = np.zeros((n_lai_kaplan, n_lai_kaplan))
+        rows, cols = np.diag_indices_from(A_mat)
+        A_mat[rows[1:], cols[:-1]] = a[1]
+        A_mat[rows, cols] = a[2]
+        A_mat[rows[:-1], cols[1:]] = a[3]
+
+        # Area under the curve in each interval
+        A_d = x_step * target
+        A = LaiKaplanArray(lai_kaplan_idx_min=1, lai_kaplan_stride=1, data=A_d)
+
+        # beta array
+        beta_d = np.array(
+            [
+                (
+                    HERMITE_QUARTICS[0][0](1)
+                    - HERMITE_QUARTICS[1][0](1) / 2.0
+                    - HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+                (
+                    HERMITE_QUARTICS[0][1](1)
+                    + HERMITE_QUARTICS[1][0](1) / 2.0
+                    + HERMITE_QUARTICS[1][1](1) / 2.0
+                ),
+            ]
+        )
+        beta = LaiKaplanArray(1, 1, beta_d)
+
+        b = LaiKaplanArray(
+            lai_kaplan_idx_min=1,
+            lai_kaplan_stride=1,
+            data=np.zeros_like(target.data) * target.u,
+        )
+        b[1] = (
+            A[1] / delta
+            - beta[1] * control_points_wall_y[1]
+            - beta[2] * control_points_wall_y[2]
+            - a[1] * external_control_points_y_d[0]
+        )
+        middle_slice = slice(2, n_lai_kaplan)
+        middle_slice_plus_one = slice(3, n_lai_kaplan + 1)
+        b[middle_slice] = (
+            A[middle_slice] / delta
+            - beta[1] * control_points_wall_y[middle_slice]
+            - beta[2] * control_points_wall_y[middle_slice_plus_one]
+        )
+        b[n_lai_kaplan] = (
+            A[n_lai_kaplan] / delta
+            - beta[1] * control_points_wall_y[n_lai_kaplan]
+            - beta[2] * control_points_wall_y[n_lai_kaplan + 1]
+            - a[3] * external_control_points_y_d[-1]
+        )
+
+        control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
+        # # Not needed, but helpful double check if debugging
+        # pint.testing.assert_allclose(
+        #     np.dot(A_mat, control_points_interval_y_d.m), b.data.m, atol=self.atol, rtol=self.rtol
+        # )
+
+        control_points_y = LaiKaplanArray(
+            lai_kaplan_idx_min=1 / 2,
+            lai_kaplan_stride=1 / 2,
+            data=np.nan * np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
+        )
+        # Pre-calculated external interval values
+        control_points_y[1 / 2] = external_control_points_y_d[0]
+        control_points_y[n_lai_kaplan + 3 / 2] = external_control_points_y_d[-1]
+        control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
+        # Calculated values
+        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
+
+        return control_points_y
 
     def lower_bound_adjustment(  # noqa: PLR0913
         self,
