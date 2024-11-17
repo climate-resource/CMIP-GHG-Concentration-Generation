@@ -43,8 +43,6 @@ import local.binning
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
-
-# import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
@@ -106,71 +104,74 @@ lat_gradient_eofs_pcs
 # ### Calculate global-, annual-mean monthly
 
 # %%
-from local.mean_preserving_interpolation import mean_preserving_interpolation
+# from local.mean_preserving_interpolation import mean_preserving_interpolation
 
-y_in = global_annual_mean.data
-
-# %%
-global_annual_mean
+# y_in = global_annual_mean.data
 
 # %%
-x_bounds_in = Quantity(
-    np.hstack([global_annual_mean.year.values, global_annual_mean.year.values[-1] + 1.0]), "yr"
-)
-x_bounds_in
+# y_in.u._REGISTRY.Quantity
 
 # %%
-x_bounds_out = Quantity(np.round(np.arange(x_bounds_in[0].m, x_bounds_in[-1].m + 1 / 24, 1 / 12), 4), "yr")
-x_bounds_out.to("yr")
+# global_annual_mean.year.to_numpy()
 
 # %%
-monthly_vals = mean_preserving_interpolation(
-    x_bounds_in=x_bounds_in,
-    y_in=y_in,
-    x_bounds_out=x_bounds_out,
-    algorithm="lai_kaplan",
-    verify_output_is_mean_preserving=True,
-)
-monthly_vals
-
-# %%
-month_out = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
-month_out
-
-# %%
-import cftime
-
-N_MONTHS_PER_YEAR = 12
-time = [
-    cftime.datetime(
-        np.floor(time_val),
-        np.round(N_MONTHS_PER_YEAR * (time_val % 1 + 1 / N_MONTHS_PER_YEAR / 2)),
-        1,
-    )
-    for time_val in month_out.m
-]
-time[:24]
-
-# %%
-out = xr.DataArray(
-    data=monthly_vals,
-    dims=["time"],
-    coords=dict(time=time),
-)
-out
-
-# %%
-from local.xarray_time import convert_time_to_year_month
-
-# %%
-global_annual_mean_monthly = convert_time_to_year_month(out)
-global_annual_mean_monthly
-
-# %%
-# global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-#     global_annual_mean
+# x_bounds_in = Quantity(
+#     np.hstack([global_annual_mean.year.values, global_annual_mean.year.values[-1] + 1.0]), "yr"
 # )
+# x_bounds_in
+
+# %%
+# x_bounds_out = Quantity(np.round(np.arange(x_bounds_in[0].m, x_bounds_in[-1].m + 1 / 24, 1 / 12), 4), "yr")
+# x_bounds_out.to("yr")
+
+# %%
+# monthly_vals = mean_preserving_interpolation(
+#     x_bounds_in=x_bounds_in,
+#     y_in=y_in,
+#     x_bounds_out=x_bounds_out,
+#     algorithm="lai_kaplan",
+#     verify_output_is_mean_preserving=True,
+# )
+# monthly_vals
+
+# %%
+# month_out = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
+# month_out
+
+# %%
+# import cftime
+
+# N_MONTHS_PER_YEAR = 12
+# time = [
+#     cftime.datetime(
+#         np.floor(time_val),
+#         np.round(N_MONTHS_PER_YEAR * (time_val % 1 + 1 / N_MONTHS_PER_YEAR / 2)),
+#         1,
+#     )
+#     for time_val in month_out.m
+# ]
+# time[:24]
+
+# %%
+# out = xr.DataArray(
+#     data=monthly_vals,
+#     dims=["time"],
+#     coords=dict(time=time),
+# )
+# out
+
+# %%
+# from local.xarray_time import convert_time_to_year_month
+
+# %%
+# global_annual_mean_monthly = convert_time_to_year_month(out)
 # global_annual_mean_monthly
+
+# %%
+global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+    global_annual_mean
+)
+global_annual_mean_monthly
 
 # %%
 fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
@@ -256,27 +257,16 @@ local.xarray_time.convert_year_month_to_time(seasonality_full).plot(  # type: ig
 # in our latitudinal gradient.
 
 # %%
-for degrees_freedom_scalar in np.arange(1.1, 2.1, 0.1):
-    try:
-        pcs_monthly = (
-            lat_gradient_eofs_pcs["principal-components"]  # type: ignore
-            .groupby("eof", squeeze=False)
-            .apply(
-                local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
-                degrees_freedom_scalar=degrees_freedom_scalar,
-                # atol=1e-4,
-            )
-        )
-        print(f"Run succeeded with {degrees_freedom_scalar=}")
-        break
-    except AssertionError:
-        print(f"Run failed with {degrees_freedom_scalar=}")
-        continue
+# %pdb
 
-else:
-    msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
-    raise AssertionError(msg)
-
+# %%
+pcs_monthly = (
+    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+    .groupby("eof", squeeze=True)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+    )
+)
 pcs_monthly
 
 # %%
