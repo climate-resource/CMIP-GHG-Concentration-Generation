@@ -143,9 +143,7 @@ plt.show()
 # %%
 seasonality_full = global_annual_mean * obs_network_seasonality
 atol = (
-    # # TODO: dial this back down
-    # 1e-6 * global_annual_mean.mean().data.m
-    1e-1 * global_annual_mean.mean().data.m
+    1e-6 * global_annual_mean.mean().data.m
 )  # Approximately match the tolerance of our mean-preserving interpolation algorithm
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,

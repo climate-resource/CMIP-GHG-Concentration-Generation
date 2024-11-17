@@ -39,8 +39,10 @@ def test_workflow_nightly(nightly_workflow_output_info, data_regression, ndarray
     ndarrays_regression.check(
         array_check,
         default_tolerance=dict(
-            # TODO: dial this back down
+            # # TODO: dial this back down
+            # atol=1e-6,
+            # rtol=1e-3,
             atol=1e-1,
-            rtol=1,
+            rtol=1e-0,
         ),
     )

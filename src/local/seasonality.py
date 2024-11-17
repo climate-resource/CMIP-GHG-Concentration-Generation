@@ -36,9 +36,7 @@ def calculate_seasonality(
     seasonality = lon_mean_ym_monthly_anomalies_year_average
     relative_seasonality = seasonality / global_mean.mean("time")
 
-    # TODO: dial this back down
-    # atol = max(1e-6 * global_mean.mean().data.m, 1e-7)
-    atol = max(1e-1 * global_mean.mean().data.m, 5e-2)
+    atol = max(1e-6 * global_mean.mean().data.m, 1e-7)
     np.testing.assert_allclose(seasonality.mean("month").pint.dequantify(), 0.0, atol=atol)
     np.testing.assert_allclose(relative_seasonality.sum("month").pint.dequantify(), 0.0, atol=atol)
 

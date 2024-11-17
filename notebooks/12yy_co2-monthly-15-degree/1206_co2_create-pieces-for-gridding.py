@@ -160,9 +160,7 @@ seasonality_full = (
     + seasonality_change_eofs_pcs["principal-components"] @ seasonality_change_eofs_pcs["eofs"]
 )
 atol = (
-    # # TODO: dial this back down
-    # 1e-6 * global_annual_mean.mean().data.m
-    1e-4 * global_annual_mean.mean().data.m
+    1e-6 * global_annual_mean.mean().data.m
 )  # Approximately match the tolerance of our mean-preserving interpolation algorithm
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
