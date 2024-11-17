@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from functools import partial
-from typing import Generic, TypeVar
+from typing import Generic, Protocol, TypeVar
 
 import attrs.validators
 import numpy as np
@@ -369,7 +369,8 @@ def extrapolate_y_interval_values(
 
     if x_out.size != expected_out_size:
         raise NotImplementedError
-    y_out = np.zeros(expected_out_size) * y_in.u
+
+    y_out = np.nan * np.zeros(expected_out_size) * y_in.u
 
     if any(bh == BoundaryHandling.CUBIC_EXTRAPOLATION for bh in (left, right)):
         scipy_inter = get_optional_dependency("scipy.interpolate")
@@ -380,24 +381,101 @@ def extrapolate_y_interval_values(
             kind="cubic",
             fill_value="extrapolate",
         )
-        if left == BoundaryHandling.CUBIC_EXTRAPOLATION:
-            y_out[0] = cubic_interpolator(x_out[0].m) * y_in.u
 
-        if right == BoundaryHandling.CUBIC_EXTRAPOLATION:
-            y_out[-1] = cubic_interpolator(x_out[-1].m) * y_in.u
-
+    if left == BoundaryHandling.CONSTANT:
+        y_out[0] = y_in[0]
+    elif left == BoundaryHandling.CUBIC_EXTRAPOLATION:
+        y_out[0] = cubic_interpolator(x_out[0].m) * y_in.u
     else:
-        if left == BoundaryHandling.CONSTANT:
-            y_out[0] = y_in[0]
-        else:
-            raise NotImplementedError(left)
+        raise NotImplementedError(left)
 
-        if right == BoundaryHandling.CONSTANT:
-            y_out[-1] = y_in[-1]
-        else:
-            raise NotImplementedError(right)
+    if right == BoundaryHandling.CUBIC_EXTRAPOLATION:
+        y_out[-1] = cubic_interpolator(x_out[-1].m) * y_in.u
+    elif right == BoundaryHandling.CONSTANT:
+        y_out[-1] = y_in[-1]
+    else:
+        raise NotImplementedError(right)
 
     return np.hstack(y_out)
+
+
+class MinValApplierLike(Protocol):
+    """
+    Class that can be used for ensuring the solution obeys the minimum value criteria
+    """
+
+    def iterate_to_solution(  # noqa: PLR0913
+        self,
+        starting_values: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+        x_bounds_in: pint.UnitRegistry.Quantity,
+        y_in: pint.UnitRegistry.Quantity,
+        left_bound_val: pint.UnitRegistry.Quantity,
+        right_bound_val: pint.UnitRegistry.Quantity,
+        min_val: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Iterate to the solution
+
+        Parameters
+        ----------
+        starting_values
+            Starting values for the iterations
+
+        x_bounds_out
+            x-bounds to which we want to interpolate
+
+        x_bounds_in
+            x-bounds of the input values
+
+        y_in
+            y-values of the input values
+
+        left_bound_val
+            Value to use for the left boundary of the domain while iterating
+
+        right_bound_val
+            Value to use for the right boundary of the domain while iterating
+
+        min_val
+            Minimum value allowed in the solution
+
+        Returns
+        -------
+        :
+            Solution (i.e. the result of the iterations)
+        """
+
+
+def get_min_val_applier_default(lai_kaplan_interpolator: LaiKaplanInterpolator) -> RymesMeyersInterpolator:
+    """
+    Get minimum value applier
+
+    In other words, get the class we can use to ensure that our solutions
+    obey any minimum value criteria.
+
+    This is the default implementation.
+    Others can be used to inject different behaviour.
+
+    Parameters
+    ----------
+    lai_kaplan_interpolator
+        The Lai-Kaplan interpolator, whose solution we want to apply the minimum value to.
+
+
+    Returns
+    -------
+    :
+        Class which can be used to updated the solution to obey the minimum value.
+    """
+    rm_interpolator = RymesMeyersInterpolator(
+        min_val=lai_kaplan_interpolator.min_val,
+        atol=lai_kaplan_interpolator.atol,
+        rtol=lai_kaplan_interpolator.rtol,
+        progress_bar=lai_kaplan_interpolator.progress_bar,
+    )
+
+    return rm_interpolator
 
 
 @define
@@ -431,7 +509,7 @@ class LaiKaplanInterpolator:
     This function is given the input y-values, plus the mid-point of each interval.
     """
 
-    rymes_meyers_interpolator: RymesMeyersInterpolator = RymesMeyersInterpolator()
+    get_min_val_applier: Callable[[LaiKaplanInterpolator], MinValApplierLike] = get_min_val_applier_default
     """
     Rymes-Meyers interpolator
 
@@ -509,12 +587,11 @@ class LaiKaplanInterpolator:
         delta = x_step / 2.0
         intervals_internal_x = (x_bounds_in[1:] + x_bounds_in[:-1]) / 2.0
         walls_x = x_bounds_in
-        external_intervals_x = np.hstack([x_bounds_in[0] - x_step / 2.0, x_bounds_in[-1] + x_step / 2.0])
         intervals_x = np.hstack(
             [
-                external_intervals_x[0],
+                intervals_internal_x[0] - x_step,
                 intervals_internal_x,
-                external_intervals_x[-1],
+                intervals_internal_x[-1] + x_step,
             ]
         )
 
@@ -540,15 +617,15 @@ class LaiKaplanInterpolator:
             data=control_points_x_d,
         )
 
-        external_intervals_y = self.extrapolate_y_interval_values(
-            x_in=control_points_x[1.5 : n_lai_kaplan + 1 : 1],
+        external_intervals_y_d = self.extrapolate_y_interval_values(
+            x_in=intervals_internal_x,
             y_in=y_in,
-            x_out=np.hstack([control_points_x_d[0], control_points_x_d[-1]]),
+            x_out=np.hstack([intervals_x[0], intervals_x[-1]]),
         )
         intervals_y = LaiKaplanArray(
             lai_kaplan_idx_min=0.0,
             lai_kaplan_stride=1.0,
-            data=np.hstack([external_intervals_y[0], y_in, external_intervals_y[-1]]),
+            data=np.hstack([external_intervals_y_d[0], y_in, external_intervals_y_d[-1]]),
         )
 
         # Control point values at the walls
@@ -623,7 +700,7 @@ class LaiKaplanInterpolator:
             A[1] / delta
             - beta[1] * control_points_wall_y[1]
             - beta[2] * control_points_wall_y[2]
-            - a[1] * intervals_y[0]
+            - a[1] * external_intervals_y_d[0]
         )
         middle_slice = slice(2, n_lai_kaplan)
         middle_slice_plus_one = slice(3, n_lai_kaplan + 1)
@@ -636,33 +713,35 @@ class LaiKaplanInterpolator:
             A[n_lai_kaplan] / delta
             - beta[1] * control_points_wall_y[n_lai_kaplan]
             - beta[2] * control_points_wall_y[n_lai_kaplan + 1]
-            - a[3] * intervals_y[n_lai_kaplan + 1]
+            - a[3] * external_intervals_y_d[-1]
         )
 
         control_points_interval_y_d = np.linalg.solve(A_mat, b.data)
+        np.testing.assert_allclose(np.dot(A_mat, control_points_interval_y_d), b.data)
 
         control_points_y = LaiKaplanArray(
             lai_kaplan_idx_min=1 / 2,
             lai_kaplan_stride=1 / 2,
-            data=np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
+            data=np.nan * np.zeros_like(control_points_x.data) * control_points_interval_y_d.u,
         )
-        control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
-        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
         # Pre-calculated external interval values
-        control_points_y[1 / 2] = external_intervals_y[0]
-        control_points_y[n_lai_kaplan + 3 / 2] = external_intervals_y[-1]
+        control_points_y[1 / 2] = external_intervals_y_d[0]
+        control_points_y[n_lai_kaplan + 3 / 2] = external_intervals_y_d[-1]
+        control_points_y[1 : n_lai_kaplan + 1 + 1 : 1] = control_points_wall_y[:]
+        # Calculated values
+        control_points_y[3 / 2 : n_lai_kaplan + 1 / 2 + 1 : 1] = control_points_interval_y_d
 
         # Now that we have all the control points, we can do the gradients
         gradients_at_control_points = LaiKaplanArray(
             lai_kaplan_idx_min=1,
             lai_kaplan_stride=1 / 2,
-            data=np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
+            data=np.nan * np.zeros(2 * n_lai_kaplan + 1) * (control_points_y.data.u / delta.u),
         )
         gradients_at_control_points[:] = (
             control_points_y[3 / 2 : n_lai_kaplan + 1 + 1] - control_points_y[1 / 2 : n_lai_kaplan + 1]
         ) / (2 * delta)
 
-        y_out = np.zeros(x_bounds_out.size - 1) * y_in.u
+        y_out = np.nan * np.zeros(x_bounds_out.size - 1) * y_in.u
         # TODO: Can't see how to do this with vectors, maybe someone smarter can.
         iterh = range(y_out.size)
         if self.progress_bar:
@@ -713,7 +792,17 @@ class LaiKaplanInterpolator:
                 group_bounds=x_bounds_in,
             )
             y_out_group_index = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
-            for below_min_group_idx in np.where(below_min_in_group > 0)[0]:
+
+            min_val_applier = self.get_min_val_applier(self)
+
+            iterh = np.where(below_min_in_group > 0)[0]
+            if self.progress_bar:
+                tqdman = get_optional_dependency("tqdm.autonotebook")
+                iterh = tqdman.tqdm(
+                    iterh, desc="Updating intervals where the solution is less than the minimum value"
+                )
+
+            for below_min_group_idx in iterh:
                 below_min_group_lai_kaplan_idx = below_min_group_idx
 
                 interval_indexer = np.where(y_out_group_index == below_min_group_idx)
@@ -722,22 +811,21 @@ class LaiKaplanInterpolator:
                 x_bounds_out_interval = x_bounds_out[interval_indexer[0][0] : interval_indexer[0][-1] + 2]
 
                 x_bounds_in_interval = x_bounds_in[below_min_group_idx : below_min_group_idx + 2]
-                y_in_interval = y_in[below_min_group_idx]
+                y_in_interval = y_in[[below_min_group_idx]]
 
                 left_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx]
                 right_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx + 1]
 
-                assert False, "Have to create Rymes-Meyers here to pass on min_val and progress_bar"
-                interval_vals_updated = self.rymes_meyers_interpolator.iterate_to_solution(
+                interval_vals_updated = min_val_applier.iterate_to_solution(
                     starting_values=interval_vals,
                     x_bounds_out=x_bounds_out_interval,
                     x_bounds_in=x_bounds_in_interval,
                     y_in=y_in_interval,
                     left_bound_val=left_bound_val_interval,
                     right_bound_val=right_bound_val_interval,
+                    min_val=self.min_val,
                 )
-                breakpoint()
 
-            raise NotImplementedError
+                y_out[interval_indexer] = interval_vals_updated
 
         return y_out

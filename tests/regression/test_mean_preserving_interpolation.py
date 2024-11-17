@@ -87,7 +87,7 @@ def execute_test_logic(  # noqa: PLR0913
     plot_filename = tmpdir / "tmp.png"
     fig.savefig(str(plot_filename))
 
-    image_regression.check(plot_filename.read_bytes(), diff_threshold=1.0)
+    image_regression.check(plot_filename.read_bytes(), diff_threshold=1e-4)
 
     # Run again, with the verification checks
     # and make sure the result is the same.
@@ -113,6 +113,12 @@ def execute_test_logic(  # noqa: PLR0913
             0.0,
             1.0,
             id="x_0_equal_to_zero",
+        ),
+        pytest.param(
+            Q([1, 2, 1, 0, 1], "W"),
+            1750.0,
+            10.0,
+            id="y_oscillating",
         ),
     ),
 )

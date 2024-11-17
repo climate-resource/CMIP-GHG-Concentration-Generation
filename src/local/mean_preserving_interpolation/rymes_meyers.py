@@ -118,6 +118,7 @@ class RymesMeyersInterpolator:
             y_in=y_in,
             left_bound_val=y_at_boundaries[0],
             right_bound_val=y_at_boundaries[-1],
+            min_val=self.min_val,
         )
 
     def iterate_to_solution(  # noqa: PLR0913
@@ -128,6 +129,7 @@ class RymesMeyersInterpolator:
         y_in: pint.UnitRegistry.Quantity,
         left_bound_val: pint.UnitRegistry.Quantity,
         right_bound_val: pint.UnitRegistry.Quantity,
+        min_val: pint.UnitRegistry.Quantity | None,
     ) -> pint.UnitRegistry.Quantity:
         """
         Iterate to the solution
@@ -151,6 +153,9 @@ class RymesMeyersInterpolator:
 
         right_bound_val
             Value to use for the right boundary of the domain while iterating
+
+        min_val
+            Minimum value allowed in the solution
 
         Returns
         -------
@@ -200,9 +205,9 @@ class RymesMeyersInterpolator:
                 x_bounds_out=x_bounds_out,
             )
 
-            if self.min_val is not None and (current_vals < self.min_val).any():
+            if min_val is not None and (current_vals < min_val).any():
                 current_vals = self.lower_bound_adjustment(
-                    min_val=self.min_val,
+                    min_val=min_val,
                     current_vals=current_vals,
                     current_vals_group_indexes=current_vals_group_indexes,
                     adjust_mat=adjust_mat,
