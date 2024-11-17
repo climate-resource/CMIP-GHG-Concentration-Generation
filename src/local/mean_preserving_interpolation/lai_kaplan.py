@@ -21,6 +21,7 @@ from local.mean_preserving_interpolation.boundary_handling import (
     BoundaryHandling,
 )
 from local.mean_preserving_interpolation.grouping import get_group_indexes, get_group_sums
+from local.mean_preserving_interpolation.rymes_meyers import RymesMeyersInterpolator
 from local.optional_dependencies import get_optional_dependency
 
 T = TypeVar("T")
@@ -430,6 +431,14 @@ class LaiKaplanInterpolator:
     This function is given the input y-values, plus the mid-point of each interval.
     """
 
+    rymes_meyers_interpolator: RymesMeyersInterpolator = RymesMeyersInterpolator()
+    """
+    Rymes-Meyers interpolator
+
+    Used to create a new solution when values in the initial solution
+    are less than `self.min_val`.
+    """
+
     min_val: pint.UnitRegistry.Quantity | None = None
     """
     Minimum value that can appear in the solution
@@ -705,11 +714,29 @@ class LaiKaplanInterpolator:
             )
             y_out_group_index = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
             for below_min_group_idx in np.where(below_min_in_group > 0)[0]:
-                breakpoint()
+                below_min_group_lai_kaplan_idx = below_min_group_idx
+
                 interval_indexer = np.where(y_out_group_index == below_min_group_idx)
                 interval_vals = y_out[interval_indexer]
-                lai_kaplan_interval = below_min_group_idx + 1
-                interval_slice = slice(polish_interval * res_increase, (polish_interval + 1) * res_increase)
+
+                x_bounds_out_interval = x_bounds_out[interval_indexer[0][0] : interval_indexer[0][-1] + 2]
+
+                x_bounds_in_interval = x_bounds_in[below_min_group_idx : below_min_group_idx + 2]
+                y_in_interval = y_in[below_min_group_idx]
+
+                left_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx]
+                right_bound_val_interval = control_points_y[below_min_group_lai_kaplan_idx + 1]
+
+                assert False, "Have to create Rymes-Meyers here to pass on min_val and progress_bar"
+                interval_vals_updated = self.rymes_meyers_interpolator.iterate_to_solution(
+                    starting_values=interval_vals,
+                    x_bounds_out=x_bounds_out_interval,
+                    x_bounds_in=x_bounds_in_interval,
+                    y_in=y_in_interval,
+                    left_bound_val=left_bound_val_interval,
+                    right_bound_val=right_bound_val_interval,
+                )
+                breakpoint()
 
             raise NotImplementedError
 

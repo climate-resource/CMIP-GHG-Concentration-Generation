@@ -106,21 +106,66 @@ class RymesMeyersInterpolator:
         :
             Interpolated, mean-preserving values
         """
-        if self.min_it is None:
-            min_it = x_bounds_out.size - 1
-        else:
-            min_it = self.min_it
-
         y_at_boundaries = self.get_y_at_boundaries(x_bounds=x_bounds_in, y_in=y_in)
 
         x_out_mids = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0
         y_starting_values = np.interp(x_out_mids, x_bounds_in, y_at_boundaries)
 
-        # Run the algorithm
-        current_vals = y_starting_values
+        return self.iterate_to_solution(
+            starting_values=y_starting_values,
+            x_bounds_out=x_bounds_out,
+            x_bounds_in=x_bounds_in,
+            y_in=y_in,
+            left_bound_val=y_at_boundaries[0],
+            right_bound_val=y_at_boundaries[-1],
+        )
+
+    def iterate_to_solution(  # noqa: PLR0913
+        self,
+        starting_values: pint.UnitRegistry.Quantity,
+        x_bounds_out: pint.UnitRegistry.Quantity,
+        x_bounds_in: pint.UnitRegistry.Quantity,
+        y_in: pint.UnitRegistry.Quantity,
+        left_bound_val: pint.UnitRegistry.Quantity,
+        right_bound_val: pint.UnitRegistry.Quantity,
+    ) -> pint.UnitRegistry.Quantity:
+        """
+        Iterate to the solution
+
+        Parameters
+        ----------
+        starting_values
+            Starting values for the iterations
+
+        x_bounds_out
+            x-bounds to which we want to interpolate
+
+        x_bounds_in
+            x-bounds of the input values
+
+        y_in
+            y-values of the input values
+
+        left_bound_val
+            Value to use for the left boundary of the domain while iterating
+
+        right_bound_val
+            Value to use for the right boundary of the domain while iterating
+
+        Returns
+        -------
+        :
+            Solution (i.e. the result of the iterations)
+        """
+        if self.min_it is None:
+            min_it = x_bounds_out.size - 1
+        else:
+            min_it = self.min_it
+
+        current_vals = starting_values
         current_vals_group_indexes = get_group_indexes(x_bounds=x_bounds_out, group_bounds=x_bounds_in)
 
-        adjust_mat = np.zeros((y_starting_values.size, y_starting_values.size))
+        adjust_mat = np.zeros((current_vals.size, current_vals.size))
         rows, cols = np.diag_indices_from(adjust_mat)
         adjust_mat[rows[1:], cols[:-1]] = 1 / 3
         adjust_mat[rows, cols] = 1 / 3
@@ -148,8 +193,8 @@ class RymesMeyersInterpolator:
                 current_vals=current_vals,
                 current_vals_group_indexes=current_vals_group_indexes,
                 adjust_mat=adjust_mat,
-                left_bound_val=y_at_boundaries[0],
-                right_bound_val=y_at_boundaries[-1],
+                left_bound_val=left_bound_val,
+                right_bound_val=right_bound_val,
                 x_bounds_target=x_bounds_in,
                 target=y_in,
                 x_bounds_out=x_bounds_out,
@@ -161,8 +206,8 @@ class RymesMeyersInterpolator:
                     current_vals=current_vals,
                     current_vals_group_indexes=current_vals_group_indexes,
                     adjust_mat=adjust_mat,
-                    left_bound_val=y_at_boundaries[0],
-                    right_bound_val=y_at_boundaries[-1],
+                    left_bound_val=left_bound_val,
+                    right_bound_val=right_bound_val,
                     x_bounds_target=x_bounds_in,
                     target=y_in,
                     x_bounds_out=x_bounds_out,
