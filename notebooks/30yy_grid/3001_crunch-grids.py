@@ -23,9 +23,6 @@
 # - 0.5&deg; latitudinal, monthly
 # - global-, northern hemisphere-mean, southern-hemisphere mean, monthly
 # - global-, northern hemisphere-mean, southern-hemisphere mean, annual-mean
-#
-# TODO: move this into its own notebook
-# We also perform some basic data validation checks.
 
 # %% [markdown]
 # ## Imports

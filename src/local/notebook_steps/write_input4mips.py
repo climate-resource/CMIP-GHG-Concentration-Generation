@@ -65,7 +65,7 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4001_write-input4mips-files"],
+            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4010_write-input4mips-files"],
             configuration=(config.doi,),
             dependencies=(
                 config_crunch_grids.fifteen_degree_monthly_file,
@@ -91,7 +91,7 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
     step_name="write_input4mips",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("40yy_write-input4mips") / "4001_write-input4mips-files",
+            notebook_path=Path("40yy_write-input4mips") / "4010_write-input4mips-files",
             raw_notebook_ext=".py",
             summary="write input4MIPs - write all files",
             doc="Write input4MIPs files for our four data products",
