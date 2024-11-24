@@ -72,7 +72,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a"  # config ID to select for this branch
+step_config_id: str = "c3f8"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -184,6 +184,11 @@ np.testing.assert_allclose(
 )
 
 # %%
+if ((global_annual_mean + seasonality_full) < 0.0).any():
+    msg = "Seasonality will cause negative valuesin the output"
+    raise AssertionError(msg)
+
+# %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
@@ -271,6 +276,44 @@ np.testing.assert_allclose(
 )
 
 latitudinal_gradient_monthly
+
+# %%
+tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
+if tmp.min() < 0.0:
+    msg = (
+        "When combining the global values and the latitudinal gradient, "
+        f"the minimum value is less than 0.0. {tmp.min()=}"
+    )
+    print(msg)
+    # raise AssertionError(msg)
+
+    atol_close = 1e-8
+    print(
+        "Trying with a forced update of the latitudinal gradient "
+        f"to be zero where the global-mean is within {atol_close} of zero"
+    )
+    latitudinal_gradient_monthly_candidate = xr.where(
+        np.abs(global_annual_mean_monthly.pint.dequantify()) < atol_close, 0.0, latitudinal_gradient_monthly
+    )
+
+    tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
+    if tmp2.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        raise AssertionError(msg)
+
+    print("Updated the latitudinal gradient")
+    latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
+
+    # Ensure spatial mean is still zero
+    tmp = latitudinal_gradient_monthly
+    tmp.name = "latitudinal-gradient"
+    np.testing.assert_allclose(
+        local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+        0.0,
+        atol=1e-10,
+    )
+
+    latitudinal_gradient_monthly
 
 # %%
 local.xarray_time.convert_year_month_to_time(

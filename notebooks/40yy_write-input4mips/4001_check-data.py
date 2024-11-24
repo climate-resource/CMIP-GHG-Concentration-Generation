@@ -137,10 +137,7 @@ if neg_vals:
     raise AssertionError(msg)
 
 # %%
-arr.min()
-
-# %%
-with open(config_step.check_data_complete_file, "w") as fh:
+with open(config_step.complete_file_check_data, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
-config_step.check_data_complete_file
+config_step.complete_file_check_data

@@ -65,8 +65,8 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4010_write-input4mips-files"],
-            configuration=(config.doi,),
+            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4001_check-data"],
+            configuration=(),
             dependencies=(
                 config_crunch_grids.fifteen_degree_monthly_file,
                 # config_crunch_grids.half_degree_monthly_file,
@@ -75,10 +75,23 @@ def configure_notebooks(
                 config_crunch_grids.global_mean_annual_mean_file,
                 config_crunch_grids.hemispheric_mean_annual_mean_file,
             ),
-            targets=(
-                # get_checklist_file(config_step.input4mips_out_dir),
-                config_step.complete_file,
+            targets=(config_step.complete_file_check_data,),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[Path("40yy_write-input4mips") / "4010_write-input4mips-files"],
+            configuration=(config.doi,),
+            dependencies=(
+                config_step.complete_file_check_data,
+                config_crunch_grids.fifteen_degree_monthly_file,
+                # config_crunch_grids.half_degree_monthly_file,
+                config_crunch_grids.global_mean_monthly_file,
+                config_crunch_grids.hemispheric_mean_monthly_file,
+                config_crunch_grids.global_mean_annual_mean_file,
+                config_crunch_grids.hemispheric_mean_annual_mean_file,
             ),
+            targets=(config_step.complete_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -90,6 +103,12 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="write_input4mips",
     unconfigured_notebooks=[
+        UnconfiguredNotebook(
+            notebook_path=Path("40yy_write-input4mips") / "4001_check-data",
+            raw_notebook_ext=".py",
+            summary="write input4MIPs - check data",
+            doc="One more check of the data before writing our input4MIPs files.",
+        ),
         UnconfiguredNotebook(
             notebook_path=Path("40yy_write-input4mips") / "4010_write-input4mips-files",
             raw_notebook_ext=".py",

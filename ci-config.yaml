@@ -332,6 +332,7 @@ smooth_law_dome_data:
 version: 0.2.1a1-ci
 write_input4mips:
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch4
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -340,6 +341,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/cfc114_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc114_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc114
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -348,6 +350,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: cfc114
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc152a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc152a
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/

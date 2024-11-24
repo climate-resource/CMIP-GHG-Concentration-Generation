@@ -799,6 +799,7 @@ smooth_law_dome_data:
 version: 0.2.1a1-ci-nightly
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/co2_input4MIPs_check-data.complete
   end_year: 2022
   gas: co2
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -807,6 +808,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: co2
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch4
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -815,6 +817,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/n2o_input4MIPs_check-data.complete
   end_year: 2022
   gas: n2o
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -823,6 +826,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: n2o
 - complete_file: data/processed/esgf-ready/sf6_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/sf6_input4MIPs_check-data.complete
   end_year: 2022
   gas: sf6
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -831,6 +835,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: sf6
 - complete_file: data/processed/esgf-ready/cfc11_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc11_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc11
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -839,6 +844,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: cfc11
 - complete_file: data/processed/esgf-ready/cfc12_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc12_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc12
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -847,6 +853,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: cfc12
 - complete_file: data/processed/esgf-ready/hfc134a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc134a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc134a
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
@@ -855,6 +862,7 @@ write_input4mips:
   start_year: 1750
   step_config_id: hfc134a
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc152a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc152a
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/

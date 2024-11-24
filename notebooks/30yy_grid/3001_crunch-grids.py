@@ -142,10 +142,8 @@ if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
     seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
 
 else:
-    print("TODO: raise an error here instead rather than forcing a shift")
-    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
-    seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
-
+    msg = f"Max shift would be {seasonality_monthly_use_month_mean.max()}"
+    raise AssertionError(msg)
 
 seasonality_monthly_use.mean("month")
 
