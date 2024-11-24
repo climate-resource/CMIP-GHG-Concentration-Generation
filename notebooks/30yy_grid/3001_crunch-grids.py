@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -23,6 +23,9 @@
 # - 0.5&deg; latitudinal, monthly
 # - global-, northern hemisphere-mean, southern-hemisphere mean, monthly
 # - global-, northern hemisphere-mean, southern-hemisphere mean, annual-mean
+#
+# TODO: move this into its own notebook
+# We also perform some basic data validation checks.
 
 # %% [markdown]
 # ## Imports
@@ -68,7 +71,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114"  # config ID to select for this branch
+step_config_id: str = "c3f8"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -201,10 +204,10 @@ ax.view_init(15, -135, 0)  # type: ignore
 plt.tight_layout()
 plt.show()
 
-# # %% [markdown]
-# # ### 0.5&deg; monthly file
-#
-# # %%
+# %% [markdown]
+# ### 0.5&deg; monthly file
+
+# %%
 # try:
 #     process_map_res: list[xr.DataArray] = process_map(  # type: ignore
 #         local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
@@ -221,8 +224,7 @@ plt.show()
 #     print(len(process_map_res))
 # except AssertionError:
 #     interpolation_successful = False
-#
-# # %%
+
 # if not interpolation_successful:
 #     for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
 #         print(f"Trying {degrees_freedom_scalar=}")
@@ -246,25 +248,23 @@ plt.show()
 #         except AssertionError:
 #             print(f"Run failed with {degrees_freedom_scalar=}")
 #             continue
-#
+
 #     else:
 #         msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
 #         raise AssertionError(msg)
-#
+
 # len(process_map_res)
-#
-# # %%
+
 # half_degree_data_l = []
 # for map_res in tqdman.tqdm(process_map_res):
 #     half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
-#
+
 # half_degree_data = local.xarray_time.convert_time_to_year_month(
 #     xr.concat(half_degree_data_l, "time")
 # )
 # half_degree_data.name = fifteen_degree_data.name
 # half_degree_data
-#
-# # %%
+
 # np.testing.assert_allclose(
 #     fifteen_degree_data.transpose("year", "month", "lat").data.m,
 #     half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
@@ -273,8 +273,7 @@ plt.show()
 #     .data.m,
 #     atol=5e-6,  # Tolerance of our mean-preserving algorithm
 # )
-#
-# # %%
+
 # print("Flying carpet")
 # fig = plt.figure(figsize=(8, 6))
 # ax = fig.add_subplot(projection="3d")
