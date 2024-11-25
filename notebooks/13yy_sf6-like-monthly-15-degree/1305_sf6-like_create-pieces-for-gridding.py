@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pint
 import pint_xarray
+import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -292,9 +293,36 @@ if tmp.min() < 0.0:
         "Trying with a forced update of the latitudinal gradient "
         f"to be zero where the global-mean is within {atol_close} of zero"
     )
-    latitudinal_gradient_monthly_candidate = xr.where(
-        np.abs(global_annual_mean_monthly.pint.dequantify()) < atol_close, 0.0, latitudinal_gradient_monthly
-    )
+    latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
+    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+        for month, month_da in yr_da.groupby("month", squeeze=False):
+            if np.isclose(month_da.data.m, 0.0):
+                # print(yr)
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
+                continue
+
+            # The latitudinal gradient can't be bigger than the global-mean value,
+            # because this leads to negative values.
+            # This actually points to an issue in the overall workflow,
+            # because what we're actually seeing is a disagreement between the
+            # concentration assumptions (i.e. pre-industrial values)
+            # and the emissions assumptions (which drive the latitudinal gradient).
+            # However, fixing this is an issue for the future.
+
+            min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
+            if np.abs(min_grad_val) > month_da:
+                msg = (
+                    "TODO: fix consistency issue. "
+                    f"In {yr:04d}-{month:02d}, "
+                    f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
+                    f"The global-mean value is {month_da.data}. "
+                    "This makes no sense. For now, force overriding."
+                )
+                print(msg)
+                shrink_ratio = (0.8 * month_da / np.abs(min_grad_val)).squeeze()
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = (
+                    shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
+                )
 
     tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
     if tmp2.min() < 0.0:
