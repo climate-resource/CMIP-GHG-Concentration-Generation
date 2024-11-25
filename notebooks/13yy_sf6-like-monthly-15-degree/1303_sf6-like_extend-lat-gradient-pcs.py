@@ -205,7 +205,6 @@ historical_emissions_xr
 
 # %%
 historical_emissions_regression_data = historical_emissions_xr.sel(year=regression_years)
-
 historical_emissions_regression_data
 
 # %%
@@ -268,7 +267,7 @@ historical_emissions_extended = historical_emissions_extended.pint.dequantify().
 )
 
 with axes_vertical_split() as axes:
-    SPLIT_YEAR = 1950
+    SPLIT_YEAR = 1850
     historical_emissions_extended.plot(ax=axes[0])
     historical_emissions_extended.sel(year=historical_emissions_extended["year"] >= SPLIT_YEAR).plot(
         ax=axes[1]
