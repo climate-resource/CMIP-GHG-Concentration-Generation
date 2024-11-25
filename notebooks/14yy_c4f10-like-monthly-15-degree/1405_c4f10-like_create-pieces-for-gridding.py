@@ -49,6 +49,10 @@ import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
+from local.mean_preserving_interpolation.lai_kaplan import (
+    LaiKaplanInterpolator,
+    get_wall_control_points_y_linear_with_flat_override_on_left,
+)
 
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
@@ -70,7 +74,7 @@ step: str = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114"  # config ID to select for this branch
+step_config_id: str = "c4f10"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -111,10 +115,6 @@ unit = rcmip_concs_to_use.index.get_level_values("unit")[0]
 rcmip_concs_to_use
 
 # %%
-# Try freeing up some memory
-del rcmip_concs_to_use_run
-
-# %%
 global_annual_mean = (
     xr.DataArray(
         rcmip_concs_to_use.values.squeeze(),
@@ -138,7 +138,11 @@ global_annual_mean
 
 # %%
 global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-    global_annual_mean
+    global_annual_mean,
+    algorithm=LaiKaplanInterpolator(
+        get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+        min_val=global_annual_mean.min().data,
+    ),
 )
 global_annual_mean_monthly
 

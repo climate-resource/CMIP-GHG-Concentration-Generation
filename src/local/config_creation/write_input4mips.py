@@ -47,6 +47,7 @@ def create_write_input4mips_config(
             step_config_id=gas,
             gas=gas,
             input4mips_out_dir=input4mips_out_dir,
+            complete_file_check_data=input4mips_out_dir / f"{gas}_input4MIPs_check-data.complete",
             complete_file=input4mips_out_dir / f"{gas}_input4MIPs_esgf-ready.complete",
             start_year=start_year,
             end_year=end_year,

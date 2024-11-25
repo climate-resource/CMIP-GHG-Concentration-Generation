@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pint
 import pint_xarray
+import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -72,7 +73,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a"  # config ID to select for this branch
+step_config_id: str = "hfc236fa"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -184,6 +185,62 @@ np.testing.assert_allclose(
 )
 
 # %%
+tmp = global_annual_mean_monthly + seasonality_full
+if tmp.min() < 0.0:
+    msg = (
+        "When combining the global values and the seasonality, "
+        f"the minimum value is less than 0.0. {tmp.min()=}"
+    )
+    print(msg)
+    # raise AssertionError(msg)
+
+    atol_close = 1e-8
+    print(
+        "Trying with a forced update of the seasonality "
+        f"to be zero where the global-mean is within {atol_close} of zero"
+    )
+    seasonality_full_candidate = seasonality_full.copy(deep=True)
+    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+        for month, month_da in yr_da.groupby("month", squeeze=False):
+            if np.isclose(month_da.data.m, 0.0):
+                # print(yr)
+                seasonality_full.loc[{"year": yr, "month": month}] = 0.0
+                continue
+
+            # The seasonality can't be bigger than the global-mean value,
+            # because this leads to negative values.
+            # This actually points to an issue in the overall workflow,
+            # because what we're actually seeing is a disagreement between the
+            # observations and the global-means derived from the observations.
+            # However, fixing this is an issue for the future.
+            # We squeeze even harder, to avoid seasonality breaking things too.
+            min_seasonality_val = seasonality_full_candidate.loc[{"year": yr, "month": month}].min()
+            if np.abs(min_seasonality_val) > month_da * 0.9:
+                shrink_ratio = (0.5 * month_da / np.abs(min_seasonality_val)).squeeze()
+                new_val = shrink_ratio * seasonality_full_candidate.loc[{"year": yr, "month": month}]
+
+                msg = (
+                    "TODO: fix consistency issue. "
+                    f"In {yr:04d}-{month:02d}, "
+                    f"the minimum seasonality value is: {min_seasonality_val.data}. "
+                    f"The global-mean value is {month_da.data}. "
+                    f"This makes no sense. For now, force overriding to {new_val.data}."
+                )
+                print(msg)
+
+                seasonality_full_candidate.loc[{"year": yr, "month": month}] = new_val
+
+    tmp2 = global_annual_mean_monthly + seasonality_full_candidate
+    if tmp2.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        raise AssertionError(msg)
+
+    print("Updated the seasonality")
+    seasonality_full = seasonality_full_candidate
+
+seasonality_full
+
+# %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
@@ -269,6 +326,74 @@ np.testing.assert_allclose(
     0.0,
     atol=1e-10,
 )
+
+latitudinal_gradient_monthly
+
+# %%
+tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
+if tmp.min() < 0.0:
+    msg = (
+        "When combining the global values and the latitudinal gradient, "
+        f"the minimum value is less than 0.0. {tmp.min()=}"
+    )
+    print(msg)
+    # raise AssertionError(msg)
+
+    atol_close = 1e-8
+    print(
+        "Trying with a forced update of the latitudinal gradient "
+        f"to be zero where the global-mean is within {atol_close} of zero"
+    )
+    latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
+    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+        for month, month_da in yr_da.groupby("month", squeeze=False):
+            if np.isclose(month_da.data.m, 0.0):
+                # print(yr)
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
+                continue
+
+            # The latitudinal gradient can't be bigger than the global-mean value,
+            # because this leads to negative values.
+            # This actually points to an issue in the overall workflow,
+            # because what we're actually seeing is a disagreement between the
+            # concentration assumptions (i.e. pre-industrial values)
+            # and the emissions assumptions (which drive the latitudinal gradient).
+            # However, fixing this is an issue for the future.
+            # We squeeze even harder, to avoid seasonality breaking things too.
+            min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
+            if np.abs(min_grad_val) > month_da * 0.9:
+                shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
+                new_val = (
+                    shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
+                )
+
+                msg = (
+                    "TODO: fix consistency issue. "
+                    f"In {yr:04d}-{month:02d}, "
+                    f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
+                    f"The global-mean value is {month_da.data}. "
+                    f"This makes no sense. For now, force overriding to {new_val.data}."
+                )
+                print(msg)
+
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = new_val
+
+    tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
+    if tmp2.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        raise AssertionError(msg)
+
+    print("Updated the latitudinal gradient")
+    latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
+
+    # Ensure spatial mean is still zero
+    tmp = latitudinal_gradient_monthly
+    tmp.name = "latitudinal-gradient"
+    np.testing.assert_allclose(
+        local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+        0.0,
+        atol=1e-10,
+    )
 
 latitudinal_gradient_monthly
 

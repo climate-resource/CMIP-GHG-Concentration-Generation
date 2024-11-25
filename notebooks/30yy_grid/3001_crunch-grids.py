@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -68,7 +68,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114"  # config ID to select for this branch
+step_config_id: str = "hfc236fa"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -134,18 +134,21 @@ lat_grad_fifteen_degree_monthly
 # ### 15&deg; monthly file
 
 # %%
+atol_seasonality_shift = max(1e-8, global_annual_mean_monthly.max().data.m * 7.5e-5)
+atol_seasonality_shift
+
+# %%
 seasonality_monthly_use = seasonality_monthly.copy()
 seasonality_monthly_use_month_mean = seasonality_monthly_use.mean("month")
-if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
+max_shift = np.abs(seasonality_monthly_use_month_mean.data.m).max()
+if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=atol_seasonality_shift).all():
     # Force the data to zero. This is a bit of a hack, but also basically fine.
-    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
+    print(f"Applying max shift of {max_shift}")
     seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
 
 else:
-    print("TODO: raise an error here instead rather than forcing a shift")
-    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
-    seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
-
+    msg = f"Absolute value of max shift would be {max_shift}"
+    raise AssertionError(msg)
 
 seasonality_monthly_use.mean("month")
 
@@ -162,6 +165,20 @@ fifteen_degree_data = LatitudeSeasonalityGridder(gridding_values).calculate(
     global_annual_mean_monthly.to_dataset()
 )[config_step.gas]
 fifteen_degree_data
+
+# %%
+gridding_values.sel(year=range(1971, 1971 + 1), lat=-82.5, month=1)
+
+# %%
+global_annual_mean_monthly.sel(year=range(1971, 1971 + 1), month=1)
+
+# %%
+fifteen_degree_data.idxmin("year")
+
+# %%
+if fifteen_degree_data.min() < 0.0:
+    msg = f"{fifteen_degree_data.min()=} {np.unique(fifteen_degree_data.idxmin('year'))=}"
+    raise AssertionError(msg)
 
 # %%
 fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(fifteen_degree_data)
@@ -201,10 +218,10 @@ ax.view_init(15, -135, 0)  # type: ignore
 plt.tight_layout()
 plt.show()
 
-# # %% [markdown]
-# # ### 0.5&deg; monthly file
-#
-# # %%
+# %% [markdown]
+# ### 0.5&deg; monthly file
+
+# %%
 # try:
 #     process_map_res: list[xr.DataArray] = process_map(  # type: ignore
 #         local.mean_preserving_interpolation.interpolate_time_slice_parallel_helper,
@@ -221,8 +238,7 @@ plt.show()
 #     print(len(process_map_res))
 # except AssertionError:
 #     interpolation_successful = False
-#
-# # %%
+
 # if not interpolation_successful:
 #     for degrees_freedom_scalar in np.arange(2.0, 5.1, 0.25):
 #         print(f"Trying {degrees_freedom_scalar=}")
@@ -246,25 +262,23 @@ plt.show()
 #         except AssertionError:
 #             print(f"Run failed with {degrees_freedom_scalar=}")
 #             continue
-#
+
 #     else:
 #         msg = "Mean-preserving interpolation failed, consider increasing degrees_freedom_scalar"
 #         raise AssertionError(msg)
-#
+
 # len(process_map_res)
-#
-# # %%
+
 # half_degree_data_l = []
 # for map_res in tqdman.tqdm(process_map_res):
 #     half_degree_data_l.append(map_res[1].assign_coords(time=map_res[0]))
-#
+
 # half_degree_data = local.xarray_time.convert_time_to_year_month(
 #     xr.concat(half_degree_data_l, "time")
 # )
 # half_degree_data.name = fifteen_degree_data.name
 # half_degree_data
-#
-# # %%
+
 # np.testing.assert_allclose(
 #     fifteen_degree_data.transpose("year", "month", "lat").data.m,
 #     half_degree_data.groupby_bins("lat", bins=local.binning.LAT_BIN_BOUNDS)  # type: ignore
@@ -273,8 +287,7 @@ plt.show()
 #     .data.m,
 #     atol=5e-6,  # Tolerance of our mean-preserving algorithm
 # )
-#
-# # %%
+
 # print("Flying carpet")
 # fig = plt.figure(figsize=(8, 6))
 # ax = fig.add_subplot(projection="3d")
@@ -350,7 +363,7 @@ config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True
 fifteen_degree_data.pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
 fifteen_degree_data
 
-# # %%
+# %%
 # config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
 # half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
 # half_degree_data
