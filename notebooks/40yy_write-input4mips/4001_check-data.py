@@ -137,6 +137,7 @@ if neg_vals:
     raise AssertionError(msg)
 
 # %%
+config_step.complete_file_check_data.parent.mkdir(parents=True, exist_ok=True)
 with open(config_step.complete_file_check_data, "w") as fh:
     fh.write(datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
 
