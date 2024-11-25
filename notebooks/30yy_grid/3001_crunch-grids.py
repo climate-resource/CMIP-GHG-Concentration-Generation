@@ -68,7 +68,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c3f8"  # config ID to select for this branch
+step_config_id: str = "hfc236fa"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -134,15 +134,20 @@ lat_grad_fifteen_degree_monthly
 # ### 15&deg; monthly file
 
 # %%
+atol_seasonality_shift = max(1e-8, global_annual_mean_monthly.max().data.m * 7.5e-5)
+atol_seasonality_shift
+
+# %%
 seasonality_monthly_use = seasonality_monthly.copy()
 seasonality_monthly_use_month_mean = seasonality_monthly_use.mean("month")
-if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=1e-7).all():
+max_shift = np.abs(seasonality_monthly_use_month_mean.data.m).max()
+if np.isclose(seasonality_monthly_use_month_mean.data.m, 0.0, atol=atol_seasonality_shift).all():
     # Force the data to zero. This is a bit of a hack, but also basically fine.
-    print(f"Applying max shift of {seasonality_monthly_use_month_mean.max()}")
+    print(f"Applying max shift of {max_shift}")
     seasonality_monthly_use = seasonality_monthly_use - seasonality_monthly_use_month_mean
 
 else:
-    msg = f"Max shift would be {seasonality_monthly_use_month_mean.max()}"
+    msg = f"Absolute value of max shift would be {max_shift}"
     raise AssertionError(msg)
 
 seasonality_monthly_use.mean("month")
@@ -160,6 +165,20 @@ fifteen_degree_data = LatitudeSeasonalityGridder(gridding_values).calculate(
     global_annual_mean_monthly.to_dataset()
 )[config_step.gas]
 fifteen_degree_data
+
+# %%
+gridding_values.sel(year=range(1971, 1971 + 1), lat=-82.5, month=1)
+
+# %%
+global_annual_mean_monthly.sel(year=range(1971, 1971 + 1), month=1)
+
+# %%
+fifteen_degree_data.idxmin("year")
+
+# %%
+if fifteen_degree_data.min() < 0.0:
+    msg = f"{fifteen_degree_data.min()=} {np.unique(fifteen_degree_data.idxmin('year'))=}"
+    raise AssertionError(msg)
 
 # %%
 fifteen_degree_data_time_axis = local.xarray_time.convert_year_month_to_time(fifteen_degree_data)
@@ -344,7 +363,7 @@ config_step.fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True
 fifteen_degree_data.pint.dequantify().to_netcdf(config_step.fifteen_degree_monthly_file)
 fifteen_degree_data
 
-# # %%
+# %%
 # config_step.half_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
 # half_degree_data.pint.dequantify().to_netcdf(config_step.half_degree_monthly_file)
 # half_degree_data

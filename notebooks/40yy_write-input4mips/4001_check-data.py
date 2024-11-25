@@ -50,7 +50,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c3f8"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -130,7 +130,7 @@ if len(all_data_arrays) != 5:  # noqa: PLR2004
 neg_vals = []
 for name, arr in all_data_arrays.items():
     if (arr < 0).any():
-        neg_vals.append(name)
+        neg_vals.append(f"{name} {arr.min().data=:.10f}")
 
 if neg_vals:
     msg = f"Negative values in {neg_vals}"
