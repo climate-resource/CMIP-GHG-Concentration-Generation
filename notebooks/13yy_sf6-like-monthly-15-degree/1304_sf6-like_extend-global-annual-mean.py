@@ -36,6 +36,7 @@ import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
+import scipy.optimize
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -240,8 +241,8 @@ if global_mean_supplements is not None:
 # #### Use pre-industrial value and time
 
 # %%
-pre_ind_value = config_step.pre_industrial.value  # Quantity(0, "ppt")
-pre_ind_year = config_step.pre_industrial.year  # 1950
+pre_ind_value = config_step.pre_industrial.value
+pre_ind_year = config_step.pre_industrial.year
 
 # %%
 if (global_annual_mean_composite["year"] <= pre_ind_year).any():
@@ -282,20 +283,154 @@ with axes_vertical_split() as axes:
         ]
     ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 
+
 # %% [markdown]
 # ### Interpolate between to fill missing values
+#
+# Here we fit a sigmoidal function to our gap.
+# We raise errors if the sigmoid won't fit nicely.
+
 
 # %%
-# TODO: re-think this, linear not ideal, cubic does weird things
+def sigmoid(x, a, c, x_0, x_delta):
+    """
+    Sigmoidal function
+    """
+    res = a / (1 + np.exp(-(x - x_0) / x_delta)) + c
+
+    return res
+
+
+# %%
+out_years_still_missing = np.setdiff1d(out_years, global_annual_mean_composite.year)
+if np.diff(out_years_still_missing).max() > 1:
+    msg = "More than one gap"
+    raise AssertionError(msg)
+
+print(f"Filling in from {out_years_still_missing[0]} to {out_years_still_missing[-1]}")
+
+# %%
+years_pre_gap = np.arange(out_years_still_missing[0] - 10, out_years_still_missing[0])
+years_pre_gap
+
+# %%
+years_post_gap = np.arange(
+    out_years_still_missing[-1] + 1,
+    min(out_years_still_missing[-1] + 10, global_annual_mean_composite.year[-1] + 1),
+)
+years_post_gap
+
+# %%
+fit_years = np.hstack([years_pre_gap, years_post_gap])
+fit_years
+
+# %%
+fit_values = global_annual_mean_composite.sel(year=fit_years).data.m
+fit_values
+
+# %%
+pre_ind_value_m = pre_ind_value.m
+pre_ind_value_m
+
+# %%
+centre_year = (years_pre_gap[-1] + years_post_gap[0]) / 2.0
+centre_year
+
+# %%
+width = (years_post_gap[0] - years_pre_gap[-1]) / 2.0
+width
+
+# %%
+increase = (fit_values[-1] - fit_values[0]) / 2.0
+increase
+
+
+# %%
+def transform_yr_to_scipy(y):
+    """
+    Transform a year value to a value that can be used in scipy's fitting
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    return (y - centre_year) / width
+
+
+def transform_yr_from_scipy(y):
+    """
+    Transform a year value to a value on the raw scale
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    return y * width + centre_year
+
+
+# %%
+fit_years_scipy = transform_yr_to_scipy(fit_years)
+fit_years_scipy
+
+
+# %%
+def transform_val_to_scipy(v):
+    """
+    Transform a value to a value that can be used in scipy's fitting
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    return (v - pre_ind_value_m) / (2 * increase)
+
+
+def transform_val_from_scipy(v):
+    """
+    Transform a value to a value on the raw scale
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    return v * 2 * increase + pre_ind_value_m
+
+
+# %%
+fit_values_scipy = transform_val_to_scipy(fit_values)
+fit_values_scipy
+
+# %%
+fig, ax = plt.subplots()
+ax.scatter(fit_years_scipy, fit_values_scipy)
+
+# %%
+p_res = scipy.optimize.curve_fit(
+    sigmoid,
+    fit_years_scipy,
+    fit_values_scipy,
+)
+p_fit = p_res[0]
+p_fit
+
+# %%
+compare_vals = transform_val_from_scipy(sigmoid(transform_yr_to_scipy(fit_years), *p_fit))
+interp_vals = transform_val_from_scipy(sigmoid(transform_yr_to_scipy(out_years_still_missing), *p_fit))
+
+# %%
+fig, ax = plt.subplots()
+ax.scatter(fit_years, fit_values)
+ax.plot(years_pre_gap, transform_val_from_scipy(sigmoid(transform_yr_to_scipy(years_pre_gap), *p_fit)))
+ax.plot(years_post_gap, transform_val_from_scipy(sigmoid(transform_yr_to_scipy(years_post_gap), *p_fit)))
+ax.plot(out_years_still_missing, interp_vals)
+
+np.testing.assert_allclose(
+    compare_vals, fit_values, rtol=1e-2, atol=increase * 1e-4, err_msg="The fit is clearly not good"
+)
 
 # %%
 global_annual_mean_composite = (
     global_annual_mean_composite.pint.dequantify().interp(year=out_years, method="linear").pint.quantify()
 )
+global_annual_mean_composite.loc[{"year": out_years_still_missing}] = (
+    interp_vals * global_annual_mean_composite.data.u
+)
 global_annual_mean_composite
 
 # %%
-SHOW_AFTER_YEAR = 1950
+SHOW_AFTER_YEAR = 1850
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
     global_annual_mean_composite.plot.scatter(ax=axes[0], alpha=1.0, color="tab:orange", marker="x")
