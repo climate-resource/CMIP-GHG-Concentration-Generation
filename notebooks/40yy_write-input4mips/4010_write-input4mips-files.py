@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -30,6 +30,7 @@
 
 # %%
 import datetime
+import itertools
 from functools import partial
 from pathlib import Path
 
@@ -341,6 +342,25 @@ cvs.source_id_entries.source_ids
 # ### Write files
 
 # %%
+if config_step.start_year == 1:
+    time_ranges_to_write = [
+        range(1, 1000),
+        range(1000, 1750),
+        range(1750, int(global_mean_annual_data.time.dt.year[-1].values) + 1),
+    ]
+
+elif config_step.start_year == 1750:  # noqa: PLR2004
+    time_ranges_to_write = [range(1750, int(global_mean_annual_data.time.dt.year[-1].values) + 1)]
+
+else:
+    raise NotImplementedError(config_step.start_year)
+
+for start, end in itertools.pairwise(time_ranges_to_write):
+    assert start[-1] == end[0] - 1
+
+time_ranges_to_write
+
+# %%
 config_step.input4mips_out_dir.mkdir(exist_ok=True, parents=True)
 
 time_dimension = "time"
@@ -386,49 +406,53 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         **metadata_minimum_common,
     )
 
-    input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
-        data=ds_to_write,
-        metadata_minimum=metadata_minimum,
-        dimensions=dimensions,
-        time_dimension=time_dimension,
-        add_time_bounds=partial(
-            add_time_bounds,
-            monthly_time_bounds=not yearly_time_bounds,
-            yearly_time_bounds=yearly_time_bounds,
-        ),
-        cvs=cvs,
-        standard_and_or_long_names={
-            variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
-        },
-        dataset_category="GHGConcentrations",
-        realm="atmos",
-    )
+    for time_range in time_ranges_to_write:
+        ds_to_write_time_section = ds_to_write.sel(time=ds_to_write.time.dt.year.isin(time_range))
 
-    metadata_evolved = evolve(
-        input4mips_ds.metadata,
-        product="derived",
-        comment=(
-            "[TBC which grant] Data produced by Climate Resource supported by funding "
-            "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
-            "This is an interim dataset, do not use in production."
-        ),
-    )
+        input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
+            data=ds_to_write_time_section,
+            metadata_minimum=metadata_minimum,
+            dimensions=dimensions,
+            time_dimension=time_dimension,
+            add_time_bounds=partial(
+                add_time_bounds,
+                monthly_time_bounds=not yearly_time_bounds,
+                yearly_time_bounds=yearly_time_bounds,
+            ),
+            cvs=cvs,
+            standard_and_or_long_names={
+                variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
+            },
+            dataset_category="GHGConcentrations",
+            realm="atmos",
+        )
 
-    ds = input4mips_ds.data
-    ds[variable_name_output].attrs["cell_methods"] = "area: time: mean"
-    input4mips_ds = Input4MIPsDataset(
-        data=ds,
-        metadata=metadata_evolved,
-        cvs=cvs,
-        non_input4mips_metadata=dict(
-            doi=config.doi,
-            references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
-        ),
-    )
+        metadata_evolved = evolve(
+            input4mips_ds.metadata,
+            product="derived",
+            comment=(
+                "[TBC which grant] Data produced by Climate Resource supported by funding "
+                "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
+                "This is an interim dataset, do not use in production."
+            ),
+        )
 
-    print("Writing")
-    written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
-    print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
+        ds = input4mips_ds.data
+        ds[variable_name_output].attrs["cell_methods"] = "area: time: mean"
+        input4mips_ds = Input4MIPsDataset(
+            data=ds,
+            metadata=metadata_evolved,
+            cvs=cvs,
+            non_input4mips_metadata=dict(
+                doi=config.doi,
+                references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
+            ),
+        )
+
+        print("Writing")
+        written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
+        print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
+
     print("")
 
 checklist_path = generate_directory_checklist(config_step.input4mips_out_dir)
