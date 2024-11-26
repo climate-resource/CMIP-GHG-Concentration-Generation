@@ -388,6 +388,8 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
     print(f"{grid_label=}")
     print(f"{dimensions=}")
 
+    # Use appropriate precision
+    ds_to_write[variable_name_raw] = ds_to_write[variable_name_raw].astype(np.dtypes.Float32DType)
     ds_to_write["time"].encoding = {
         "calendar": "proleptic_gregorian",
         "units": "days since 1850-01-01",
