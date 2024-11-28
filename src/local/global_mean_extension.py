@@ -39,6 +39,8 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
         "halon1211",
         "halon1301",
         "halon2402",
+        "ch3br",
+        "ch3cl",
     ]:
         return [
             get_config_for_step_id(
@@ -47,5 +49,38 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
                 step_config_id="only",
             ).processed_data_file
         ]
+
+    # if gas in [
+    #     "hcfc141b",
+    #     "hcfc142b",
+    #     "hcfc22",
+    # ]:
+    #     return [
+    #         get_config_for_step_id(
+    #             config=config,
+    #             step="retrieve_and_process_western_et_al_2024_data",
+    #             step_config_id="only",
+    #         ).processed_data_file
+    #     ]
+    #
+    # if gas in [
+    #     "hfc32",
+    #     "hfc125",
+    #     "hfc134a",
+    #     "hfc143a",
+    #     "hfc152a",
+    #     "hfc227ea",
+    #     "hfc236fa",
+    #     "hfc245fa",
+    #     "hfc365mfc",
+    #     "hfc4310mee",
+    # ]:
+    #     return [
+    #         get_config_for_step_id(
+    #             config=config,
+    #             step="retrieve_and_process_velders_et_al_2022_data",
+    #             step_config_id="only",
+    #         ).processed_data_file
+    #     ]
 
     return []

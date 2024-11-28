@@ -68,7 +68,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc236fa"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -167,13 +167,10 @@ fifteen_degree_data = LatitudeSeasonalityGridder(gridding_values).calculate(
 fifteen_degree_data
 
 # %%
-gridding_values.sel(year=range(1971, 1971 + 1), lat=-82.5, month=1)
+gridding_values.sel(year=1986)
 
 # %%
-global_annual_mean_monthly.sel(year=range(1971, 1971 + 1), month=1)
-
-# %%
-fifteen_degree_data.idxmin("year")
+global_annual_mean_monthly.sel(year=1986)
 
 # %%
 if fifteen_degree_data.min() < 0.0:

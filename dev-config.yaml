@@ -273,7 +273,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1960
+    year: 1950
   processed_all_data_with_bins_file: data/interim/cfc115/cfc115_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/cfc115/cfc115_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc115/cfc115_seasonality_fifteen-degree_allyears-monthly.nc
@@ -373,7 +373,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1950
   processed_all_data_with_bins_file: data/interim/ch3ccl3/ch3ccl3_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/ch3ccl3/ch3ccl3_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_seasonality_fifteen-degree_allyears-monthly.nc
@@ -448,7 +448,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1211/halon1211_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1211/halon1211_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1211/halon1211_seasonality_fifteen-degree_allyears-monthly.nc
@@ -473,7 +473,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1301/halon1301_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1301/halon1301_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1301/halon1301_seasonality_fifteen-degree_allyears-monthly.nc
@@ -498,7 +498,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon2402/halon2402_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon2402/halon2402_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon2402/halon2402_seasonality_fifteen-degree_allyears-monthly.nc

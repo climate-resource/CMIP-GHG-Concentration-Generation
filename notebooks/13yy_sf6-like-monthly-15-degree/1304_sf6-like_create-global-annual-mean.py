@@ -76,7 +76,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc11"  # config ID to select for this branch
+step_config_id: str = "hcfc141b"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -271,13 +271,13 @@ if np.diff(out_years_still_missing).max() > 1:
 print(f"Filling in from {out_years_still_missing[0]} to {out_years_still_missing[-1]}")
 
 # %% editable=true slideshow={"slide_type": ""}
-years_pre_gap = np.arange(out_years_still_missing[0] - 10, out_years_still_missing[0])
+years_pre_gap = np.arange(out_years_still_missing[0] - 3, out_years_still_missing[0])
 years_pre_gap
 
 # %% editable=true slideshow={"slide_type": ""}
 years_post_gap = np.arange(
     out_years_still_missing[-1] + 1,
-    min(out_years_still_missing[-1] + 10, global_annual_mean_composite.year[-1] + 1),
+    min(out_years_still_missing[-1] + 4, global_annual_mean_composite.year[-1] + 1),
 )
 years_post_gap
 
@@ -294,24 +294,120 @@ fig, ax = plt.subplots()
 ax.scatter(fit_years, fit_values)
 
 # %% editable=true slideshow={"slide_type": ""}
-interpolator = scipy.interpolate.CubicSpline(fit_years, fit_values)
+width = (years_post_gap[0] - years_pre_gap[-1]) / 2.0
+width
 
 # %% editable=true slideshow={"slide_type": ""}
-compare_vals = interpolator(fit_years)
-interp_vals = interpolator(out_years_still_missing)
+increase = (fit_values[-1] - fit_values[0]) / 2.0
+increase
+
+
+# %% editable=true slideshow={"slide_type": ""}
+def quartic(x, a, b):
+    """
+    Quartic function, locked to make fitting easier
+    """
+    res = a * ((x - pre_ind_year) / width) ** 4 + b * ((x - pre_ind_year) / width) ** 2
+
+    return res
+
+
+# %% editable=true slideshow={"slide_type": ""}
+def transform_val_to_scipy(v):
+    """
+    Transform a value to a value that can be used in scipy's fitting
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    if increase > 0.0:
+        return (v - pre_ind_value.m) / (2 * increase)
+
+    return np.zeros_like(v)
+
+
+def transform_val_from_scipy(v):
+    """
+    Transform a value to a value on the raw scale
+
+    This is needed because scipy's fitting works best if all parameter values are ~1.0.
+    """
+    return v * 2 * increase + pre_ind_value.m
+
+
+# %% editable=true slideshow={"slide_type": ""}
+fit_values_scipy = transform_val_to_scipy(fit_values)
+fit_values_scipy
+
+# %% editable=true slideshow={"slide_type": ""}
+fig, ax = plt.subplots()
+ax.scatter(fit_years, fit_values_scipy)
+
+# %% editable=true slideshow={"slide_type": ""}
+p_res = scipy.optimize.curve_fit(
+    quartic,
+    fit_years,
+    fit_values_scipy,
+    bounds=(0.0, np.inf),
+)
+p_fit = p_res[0]
+p_fit
+
+# %% editable=true slideshow={"slide_type": ""}
+compare_vals = transform_val_from_scipy(quartic(years_post_gap, *p_fit))
+interp_vals = transform_val_from_scipy(quartic(out_years_still_missing, *p_fit))
+
+# %% editable=true slideshow={"slide_type": ""}
+if (interp_vals < global_annual_mean_composite.sel(year=years_pre_gap[-1]).data.m).any() or (
+    interp_vals > 1.1 * global_annual_mean_composite.sel(year=years_post_gap[0]).data.m
+).any():
+    print("quadratic spline doesn't work")
+    workable_interpolation = False
+else:
+    workable_interpolation = True
+
+# %% editable=true slideshow={"slide_type": ""}
+if not workable_interpolation:
+    interpolator = scipy.interpolate.interp1d(fit_years, fit_values, kind="quadratic")
+    compare_vals = interpolator(years_post_gap)
+    interp_vals = interpolator(out_years_still_missing)
+    if (interp_vals < global_annual_mean_composite.sel(year=years_pre_gap[-1]).data.m).any() or (
+        interp_vals > global_annual_mean_composite.sel(year=years_post_gap[0]).data.m
+    ).any():
+        print("quadratic spline doesn't work")
+    else:
+        workable_interpolation = True
+
+# %% editable=true slideshow={"slide_type": ""}
+if not workable_interpolation:
+    interpolator = scipy.interpolate.CubicSpline(fit_years, fit_values)
+    compare_vals = interpolator(years_post_gap)
+    interp_vals = interpolator(out_years_still_missing)
+    if (interp_vals < global_annual_mean_composite.sel(year=years_pre_gap[-1]).data.m).any() or (
+        interp_vals > global_annual_mean_composite.sel(year=years_post_gap[0]).data.m
+    ).any():
+        print("cubic spline doesn't work")
+    else:
+        workable_interpolation = True
+
+# %% editable=true slideshow={"slide_type": ""}
+if not workable_interpolation:
+    msg = "Did not find workable interpolation"
+    raise AssertionError(msg)
 
 # %% editable=true slideshow={"slide_type": ""}
 fig, ax = plt.subplots()
 ax.scatter(fit_years, fit_values)
-ax.scatter(fit_years, compare_vals)
+ax.scatter(years_post_gap, compare_vals)
 ax.plot(out_years_still_missing, interp_vals)
 ax.axhline(pre_ind_value.m, color="k", linestyle="--")
 
-if (interp_vals < global_annual_mean_composite.sel(year=years_pre_gap[-1]).data.m).any() or (
-    interp_vals > global_annual_mean_composite.sel(year=years_post_gap[0]).data.m
-).any():
-    print("something wrong with interpolation")
-    raise AssertionError
+np.testing.assert_allclose(
+    compare_vals,
+    global_annual_mean_composite.sel(year=years_post_gap).data.m,
+    rtol=2e-1,
+    atol=increase * 1e-1,
+    err_msg="The fit is clearly not good",
+)
 
 # %% editable=true slideshow={"slide_type": ""}
 global_annual_mean_composite = (
