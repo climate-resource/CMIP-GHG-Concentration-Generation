@@ -52,6 +52,8 @@ def configure_notebooks(
     config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     obs_network_input_files = get_obs_network_binning_input_files(gas=config_step.gas, config=config)
+    # # TODO: add this in
+    # get_global_mean_supplement_files
 
     config_historical_emissions = get_config_for_step_id(
         config=config, step="compile_historical_emissions", step_config_id="only"
@@ -123,7 +125,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_extend-global-annual-mean"
+                Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_create-global-annual-mean"
             ],
             configuration=(),
             dependencies=(
@@ -188,7 +190,7 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
             doc="Extend the principal components (PCs) over the entire time period of interest",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_extend-global-annual-mean",
+            notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_create-global-annual-mean",
             raw_notebook_ext=".py",
             summary="SF6-like gas pieces - Extend global, annual-mean over the entire time period",
             doc=(

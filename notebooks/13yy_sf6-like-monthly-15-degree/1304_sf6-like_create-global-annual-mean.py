@@ -13,16 +13,18 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # SF$_6$-like - extend the global-, annual-mean
+# # SF$_6$-like - create the global-, annual-mean
 #
-# Extend the global-, annual-mean from the observational network back in time.
-# For SF$_6$, we do this by combining the values from other data sources
+# Where available, we use data from WMO/Western et al. (2024)/Velders et al. (2022)
+# to set our global-mean.
+# Then we extend it back in time as needed.
+# For SF$_6$-like gases, we do this by combining the values from other data sources
 # with an assumption about when zero was reached.
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
@@ -36,6 +38,7 @@ import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
+import scipy.optimize
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -50,7 +53,7 @@ import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 cf_xarray.units.units.define("ppm = 1 / 1000000")
 cf_xarray.units.units.define("ppb = ppm / 1000")
 cf_xarray.units.units.define("ppt = ppb / 1000")
@@ -59,21 +62,21 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.un
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 QuantityOSCM = openscm_units.unit_registry.Quantity
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
 step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c3f8"  # config ID to select for this branch
+step_config_id: str = "cfc11"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -83,14 +86,14 @@ config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Helper functions
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> Any:
     """Get a column's value, asserting that it only has one value"""
     res = idf[col].unique()
@@ -100,7 +103,7 @@ def get_col_assert_single_value(idf: pd.DataFrame, col: str) -> Any:
     return res[0]
 
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 @contextmanager
 def axes_vertical_split(
     ncols: int = 2,
@@ -116,67 +119,52 @@ def axes_vertical_split(
     plt.show()
 
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Load data
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 global_mean_supplement_files = local.global_mean_extension.get_global_mean_supplement_files(
     gas=config_step.gas, config=config
 )
 global_mean_supplement_files
 
-# %%
-if global_mean_supplement_files:
-    raise NotImplementedError
-    # global_mean_supplements_l = []
-    # for f in global_mean_supplement_files:
-    #     try:
-    #         global_mean_supplements_l.append(
-    #             local.raw_data_processing.read_and_check_global_mean_supplementing_columns(
-    #                 f
-    #             )
-    #         )
-    #     except Exception as exc:
-    #         msg = f"Error reading {f}"
-    #         raise ValueError(msg) from exc
-    #
-    # global_mean_supplements = pd.concat(global_mean_supplements_l)
-    # # TODO: add check of gas names to processed data checker
-    # # global_mean_supplements["gas"] = global_mean_supplements["gas"].str.lower()
-    # assert global_mean_supplements["gas"].unique().tolist() == [config_step.gas]
-
+# %% editable=true slideshow={"slide_type": ""}
+if not global_mean_supplement_files:
+    pass
+elif len(global_mean_supplement_files) == 1:
+    global_mean_data = pd.read_csv(global_mean_supplement_files[0])
+    global_mean_data = global_mean_data[global_mean_data["gas"] == config_step.gas]
+    display(global_mean_data)  # noqa: F821
 else:
-    global_mean_supplements = None
+    raise NotImplementedError(global_mean_supplement_files)
 
-global_mean_supplements
-
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
     config_step.observational_network_global_annual_mean_file
 ).pint.quantify()
 global_annual_mean_obs_network
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 lat_grad_eofs_allyears = xr.load_dataset(
     config_step.latitudinal_gradient_allyears_pcs_eofs_file
 ).pint.quantify()
 lat_grad_eofs_allyears
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # #### Create annual-mean latitudinal gradient
 #
 # This can be combined with our hemispheric information if needed.
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 allyears_latitudinal_gradient = (
     lat_grad_eofs_allyears["principal-components"] @ lat_grad_eofs_allyears["eofs"]
 )
 allyears_latitudinal_gradient
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Define some important constants
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 if not config.ci:
     out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
 
@@ -185,65 +173,51 @@ else:
 
 out_years
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 obs_network_years = global_annual_mean_obs_network["year"]
 obs_network_years
 
-# %%
-use_extensions_years = np.setdiff1d(out_years, obs_network_years)
+# %% [markdown] editable=true slideshow={"slide_type": ""}
+# ## Initialise
+
+# %% editable=true slideshow={"slide_type": ""}
+if global_mean_supplement_files:
+    tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
+    unit = global_mean_data["unit"].unique()
+    if len(unit) != 1:
+        raise AssertionError
+    unit = unit[0]
+
+    global_annual_mean_composite = xr.DataArray(
+        tmp["value"], dims=("year",), coords={"year": tmp["year"]}, attrs={"units": unit}
+    ).pint.quantify()
+
+else:
+    global_annual_mean_composite = global_annual_mean_obs_network.copy()
+
+global_annual_mean_composite
+
+# %% editable=true slideshow={"slide_type": ""}
+use_extensions_years = np.setdiff1d(out_years, global_annual_mean_composite.year)
 use_extensions_years
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Extend global-, annual-mean
 #
 # This happens in a few steps.
 
-# %%
-global_annual_mean_composite = global_annual_mean_obs_network.copy()
-
-# %% [markdown]
-# #### Use other global-mean sources
-
-# %%
-if global_mean_supplements is not None:
-    raise NotImplementedError
-# if (
-#     global_mean_supplements is not None
-#     and "global" in global_mean_supplements["region"].tolist()
-# ):
-#     # Add in the global stuff here
-#     msg = (
-#         "Add some other global-mean sources handling here "
-#         "(including what to do in overlap/join periods)"
-#     )
-#     raise NotImplementedError(msg)
-
-# %% [markdown]
-# #### Use other spatial sources
-
-# %%
-if global_mean_supplements is not None:
-    raise NotImplementedError
-# if (
-#     global_mean_supplements is not None
-#     and (~global_mean_supplements["lat"].isnull()).any()
-# ):
-#     # Add in the latitudinal information here
-#     msg = (
-#         "Add some other spatial sources handling here. "
-#         "That will need to use the gradient information too "
-#         "(including what to do in overlap/join periods)"
-#     )
-#     raise NotImplementedError(msg)
-
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # #### Use pre-industrial value and time
 
-# %%
-pre_ind_value = config_step.pre_industrial.value  # Quantity(0, "ppt")
-pre_ind_year = config_step.pre_industrial.year  # 1950
+# %% editable=true slideshow={"slide_type": ""}
+pre_ind_value = config_step.pre_industrial.value
+pre_ind_value
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
+pre_ind_year = config_step.pre_industrial.year
+pre_ind_year
+
+# %% editable=true slideshow={"slide_type": ""}
 if (global_annual_mean_composite["year"] <= pre_ind_year).any():
     pre_ind_years = global_annual_mean_composite["year"][
         np.where(global_annual_mean_composite["year"] <= pre_ind_year)
@@ -251,7 +225,7 @@ if (global_annual_mean_composite["year"] <= pre_ind_year).any():
     msg = f"You have data before your pre-industrial year, please check. {pre_ind_years=}"
     raise AssertionError(msg)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 pre_ind_part = (
     global_annual_mean_composite.pint.dequantify()
     .interp(
@@ -261,11 +235,11 @@ pre_ind_part = (
     .pint.quantify()
 )
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 global_annual_mean_composite = xr.concat([pre_ind_part, global_annual_mean_composite], "year")
 global_annual_mean_composite
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
@@ -282,19 +256,73 @@ with axes_vertical_split() as axes:
         ]
     ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Interpolate between to fill missing values
+#
+# Here we fit a sigmoidal function to our gap.
+# We raise errors if the sigmoid won't fit nicely.
 
-# %%
-# TODO: re-think this, linear not ideal, cubic does weird things
+# %% editable=true slideshow={"slide_type": ""}
+out_years_still_missing = np.setdiff1d(out_years, global_annual_mean_composite.year)
+if np.diff(out_years_still_missing).max() > 1:
+    msg = "More than one gap"
+    raise AssertionError(msg)
 
-# %%
+print(f"Filling in from {out_years_still_missing[0]} to {out_years_still_missing[-1]}")
+
+# %% editable=true slideshow={"slide_type": ""}
+years_pre_gap = np.arange(out_years_still_missing[0] - 10, out_years_still_missing[0])
+years_pre_gap
+
+# %% editable=true slideshow={"slide_type": ""}
+years_post_gap = np.arange(
+    out_years_still_missing[-1] + 1,
+    min(out_years_still_missing[-1] + 10, global_annual_mean_composite.year[-1] + 1),
+)
+years_post_gap
+
+# %% editable=true slideshow={"slide_type": ""}
+fit_years = np.hstack([years_pre_gap, years_post_gap])
+fit_years
+
+# %% editable=true slideshow={"slide_type": ""}
+fit_values = global_annual_mean_composite.sel(year=fit_years).data.m
+fit_values
+
+# %% editable=true slideshow={"slide_type": ""}
+fig, ax = plt.subplots()
+ax.scatter(fit_years, fit_values)
+
+# %% editable=true slideshow={"slide_type": ""}
+interpolator = scipy.interpolate.CubicSpline(fit_years, fit_values)
+
+# %% editable=true slideshow={"slide_type": ""}
+compare_vals = interpolator(fit_years)
+interp_vals = interpolator(out_years_still_missing)
+
+# %% editable=true slideshow={"slide_type": ""}
+fig, ax = plt.subplots()
+ax.scatter(fit_years, fit_values)
+ax.scatter(fit_years, compare_vals)
+ax.plot(out_years_still_missing, interp_vals)
+ax.axhline(pre_ind_value.m, color="k", linestyle="--")
+
+if (interp_vals < global_annual_mean_composite.sel(year=years_pre_gap[-1]).data.m).any() or (
+    interp_vals > global_annual_mean_composite.sel(year=years_post_gap[0]).data.m
+).any():
+    print("something wrong with interpolation")
+    raise AssertionError
+
+# %% editable=true slideshow={"slide_type": ""}
 global_annual_mean_composite = (
     global_annual_mean_composite.pint.dequantify().interp(year=out_years, method="linear").pint.quantify()
 )
+global_annual_mean_composite.loc[{"year": out_years_still_missing}] = (
+    interp_vals * global_annual_mean_composite.data.u
+)
 global_annual_mean_composite
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 SHOW_AFTER_YEAR = 1950
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
@@ -311,14 +339,14 @@ with axes_vertical_split() as axes:
         ]
     ).plot.scatter(ax=axes[1], alpha=1.0, color="tab:orange", marker="x")
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Create full field over all years
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 allyears_full_field = global_annual_mean_composite + allyears_latitudinal_gradient
 allyears_full_field
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # #### Observational network
 #
 # We start with the field we have from the observational network.
@@ -361,7 +389,7 @@ allyears_global_annual_mean
 check = allyears_full_field - allyears_global_annual_mean
 xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
 np.testing.assert_allclose(
@@ -373,7 +401,7 @@ np.testing.assert_allclose(
 # %% [markdown]
 # ## Save
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
 allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean

@@ -173,6 +173,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             # > (Western et al., Nature Geosci., 16(4), 309-313, 10.1038/s41561-023-01147-w, 2023)
             # > is increasingly affecting CFC-114 measurements,
             # > AGAGE CFC-114 data will be withheld from 2018 onward until further notice.
+            # TODO: move this to use WMO assessment data
             "cfc114",
         ):
             out["calculate_c4f10_like_monthly_fifteen_degree_pieces"].append(
