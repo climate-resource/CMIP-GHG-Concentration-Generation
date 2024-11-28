@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -30,7 +30,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
@@ -53,10 +53,13 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
+# %% editable=true slideshow={"slide_type": ""}
+config_step
+
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Read and process data
 
 # %%
@@ -91,10 +94,10 @@ read_df["gas"] = "ch4"
 read_df = read_df[["year", "value", "unit", "latitude", "longitude", "gas"]]
 read_df
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Save
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 config_step.processed_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 read_df.to_csv(config_step.processed_data_with_loc_file, index=False)
 config_step.processed_data_with_loc_file

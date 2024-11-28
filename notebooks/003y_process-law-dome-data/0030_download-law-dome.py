@@ -5,14 +5,14 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # # Law dome ice core - download
 #
 # Download data from the [Law Dome ice core dataset](https://data.csiro.au/collection/csiro%3A37077v2),
@@ -70,10 +70,10 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # %% [markdown]
 # ## Action
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Check we have the intended files
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 for fp, expected_md5 in config_step.files_md5_sum.items():
     actual_md5 = get_file_md5(fp)
     if not expected_md5 == actual_md5:

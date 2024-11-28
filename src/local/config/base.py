@@ -41,6 +41,9 @@ from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
 from .retrieve_and_process_neem_data import RetrieveProcessNEEMConfig
 from .retrieve_and_process_scripps_data import RetrieveProcessScrippsConfig
+from .retrieve_and_process_wmo_2022_ozone_assessment_ch7_data import (
+    RetrieveProcessWMO2022OzoneAssessmentCh7Config,
+)
 from .retrieve_misc_data import RetrieveMiscDataConfig
 from .smooth_law_dome_data import SmoothLawDomeDataConfig
 from .write_input4mips import WriteInput4MIPsConfig
@@ -143,6 +146,11 @@ class Config:
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing NEEM data"""
+
+    retrieve_and_process_wmo_2022_ozone_assessment_ch7_data: list[
+        RetrieveProcessWMO2022OzoneAssessmentCh7Config
+    ] = field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
+    """Configurations to use for retrieving and processing WMO 2022 ozone assessment ch. 7 data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
