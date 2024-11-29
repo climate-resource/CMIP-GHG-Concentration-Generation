@@ -153,6 +153,8 @@ def create_dev_config() -> Config:
             ("cf4", "hats"),
             ("cfc11", "hats"),
             ("cfc113", "hats"),
+            # Pulled by NOAA
+            # ("cfc114", "hats"),
             ("cfc12", "hats"),
             ("ch2cl2", "hats"),
             ("ch3br", "hats"),
@@ -304,10 +306,10 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4", "cfc114", "hfc152a")
+    gases_to_write = ("ch4", "c3f8", "hfc152a")
 
     gases_long_poleward_extension = (
-        "cfc114",
+        "c3f8",
         "hfc152a",
     )
 
@@ -325,8 +327,8 @@ def create_ci_config() -> Config:
     retrieve_and_extract_agage_data = create_agage_handling_config(
         data_sources=(
             ("ch4", "gc-md", "monthly"),
-            ("cfc114", "gc-ms", "monthly"),
-            ("cfc114", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms", "monthly"),
             ("hfc152a", "gc-ms-medusa", "monthly"),
             ("hfc152a", "gc-ms", "monthly"),
         )

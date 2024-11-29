@@ -77,7 +77,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc134a"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -165,12 +165,18 @@ allyears_latitudinal_gradient
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ### Define some important constants
 
+# %%
+if global_mean_supplement_files:
+    max_year = 2023
+else:
+    max_year = global_annual_mean_obs_network["year"].max()
+
 # %% editable=true slideshow={"slide_type": ""}
 if not config.ci:
-    out_years = np.arange(1, global_annual_mean_obs_network["year"].max() + 1)
+    out_years = np.arange(1, max_year + 1)
 
 else:
-    out_years = np.arange(1750, global_annual_mean_obs_network["year"].max() + 1)
+    out_years = np.arange(1750, max_year + 1)
 
 out_years
 

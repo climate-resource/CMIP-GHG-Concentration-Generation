@@ -32,8 +32,6 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
         "cfc11",
         "cfc12",
         "cfc113",
-        # TODO: update this so cfc114 data from WMO it is actually used
-        # (requires moving CFC114 into SF6-like)
         "cfc114",
         "cfc115",
         "ccl4",

@@ -59,7 +59,6 @@ def configure_notebooks(
         "c6f14",
         "c7f16",
         "c8f18",
-        "cfc114",
     ):
         step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
         step_config_id_gridding_pieces_step = config_step.gas
