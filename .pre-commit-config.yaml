@@ -22,6 +22,7 @@ repos:
             ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_const_extrap_basic_.csv/|
             ^tests/regression/test_mean_preserving_interpolation/test_mean_preserving_interpolation_long_array_lai_kaplan_min_zero_basic_.csv/|
             ^tests/regression/test_workflow/test_workflow_basic.npz/|
+            ^data/raw/velders-et-al-2022/KGL2021_constrProdEmis_ObsAgage_2500_OECD-SSP5.dat/|
             ^tests/regression/test_workflow_nightly/test_workflow_nightly.npz
           )
       - id: check-ast

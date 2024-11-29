@@ -18,6 +18,10 @@
 # Download data from [Velders et al., 2022](https://doi.org/10.5194/acp-22-6087-2022).
 
 # %% [markdown]
+# Note: this notebook isn't used right now.
+# It will be once Guus' data is online again.
+
+# %% [markdown]
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}

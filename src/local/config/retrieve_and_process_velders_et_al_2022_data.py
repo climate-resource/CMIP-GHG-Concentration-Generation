@@ -26,6 +26,13 @@ class RetrieveExtractVeldersEtal2022Data:
     Must be unique among all configurations for this step
     """
 
+    raw_data_file_tmp: Path
+    """
+    File in which to the raw data is found
+
+    This is a temporary thing while we wait for Guus to upload the Zenodo record.
+    """
+
     zenodo_record: URLSource
     """Zenodo record from which to download the raw data"""
 
