@@ -619,11 +619,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc134a/hfc134a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc134a/hfc134a_observational-network_seasonality.nc
   pre_industrial:
-    source: Velders et al., 2022
+    source: Making interpolation behave with Velders et al., 2022 data
     value:
     - 0.0
     - ppt
-    year: 1980
+    year: 1988
   processed_all_data_with_bins_file: data/interim/hfc134a/hfc134a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc134a/hfc134a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc134a/hfc134a_seasonality_fifteen-degree_allyears-monthly.nc

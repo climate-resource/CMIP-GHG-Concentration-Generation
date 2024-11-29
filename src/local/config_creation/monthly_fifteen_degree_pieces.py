@@ -340,7 +340,9 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
         value=Q(0.0, "ppt"), year=1935, source="Guessing from reading M2017"
     ),
     "hfc125": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
-    "hfc134a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc134a": SF6LikePreIndustrialConfig(
+        value=Q(0.0, "ppt"), year=1988, source="Making interpolation behave with Velders et al., 2022 data"
+    ),
     "hfc143a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
     "hfc152a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
     "hfc227ea": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),

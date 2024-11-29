@@ -76,7 +76,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc32"  # config ID to select for this branch
+step_config_id: str = "hfc134a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -264,7 +264,7 @@ with axes_vertical_split() as axes:
 
 # %% editable=true slideshow={"slide_type": ""}
 out_years_still_missing = np.setdiff1d(out_years, global_annual_mean_composite.year)
-if np.diff(out_years_still_missing).max() > 1:
+if out_years_still_missing.size > 1 and np.diff(out_years_still_missing).max() > 1:
     msg = "More than one gap"
     raise AssertionError(msg)
 
