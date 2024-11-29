@@ -523,7 +523,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc141b/hcfc141b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc141b/hcfc141b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc141b/hcfc141b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -548,7 +548,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc142b/hcfc142b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc142b/hcfc142b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc142b/hcfc142b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -573,7 +573,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1935
   processed_all_data_with_bins_file: data/interim/hcfc22/hcfc22_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc22/hcfc22_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc22/hcfc22_seasonality_fifteen-degree_allyears-monthly.nc
@@ -3424,6 +3424,14 @@ retrieve_and_process_neem_data:
   raw_dir: data/raw/neem
   step_config_id: only
 retrieve_and_process_scripps_data: []
+retrieve_and_process_western_et_al_2024_data:
+- download_complete_file: data/raw/western-et-al-2024/download.complete
+  processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
+  raw_dir: data/raw/western-et-al-2024
+  step_config_id: only
+  zenodo_record:
+    known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7
+    url: https://zenodo.org/records/10782689/files/Projections.zip?download=1
 retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
 - processed_data_file: data/interim/wmo-2022-ozone-assessment-ch7/wmo_2022_ozone_assessment_ch7.csv
   raw_data: data/raw/wmo-2022-ozone-assessment-ch7/wmo2022_Ch7_mixingratios.xlsx

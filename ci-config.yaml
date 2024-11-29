@@ -289,6 +289,14 @@ retrieve_and_process_neem_data:
   raw_dir: data/raw/neem
   step_config_id: only
 retrieve_and_process_scripps_data: []
+retrieve_and_process_western_et_al_2024_data:
+- download_complete_file: data/raw/western-et-al-2024/download.complete
+  processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
+  raw_dir: data/raw/western-et-al-2024
+  step_config_id: only
+  zenodo_record:
+    known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7
+    url: https://zenodo.org/records/10782689/files/Projections.zip?download=1
 retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
 - processed_data_file: data/interim/wmo-2022-ozone-assessment-ch7/wmo_2022_ozone_assessment_ch7.csv
   raw_data: data/raw/wmo-2022-ozone-assessment-ch7/wmo2022_Ch7_mixingratios.xlsx

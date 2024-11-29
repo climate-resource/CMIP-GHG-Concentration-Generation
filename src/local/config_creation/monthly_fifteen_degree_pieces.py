@@ -331,13 +331,13 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
         value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
     "hcfc141b": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
     "hcfc142b": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
+        value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"
     ),
     "hcfc22": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1955, source="Guessing from reading M2017"
+        value=Q(0.0, "ppt"), year=1935, source="Guessing from reading M2017"
     ),
     "hfc125": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
