@@ -76,7 +76,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hcfc22"  # config ID to select for this branch
+step_config_id: str = "hfc32"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -270,16 +270,27 @@ if np.diff(out_years_still_missing).max() > 1:
 
 print(f"Filling in from {out_years_still_missing[0]} to {out_years_still_missing[-1]}")
 
-# %% editable=true slideshow={"slide_type": ""}
-years_pre_gap = np.arange(out_years_still_missing[0] - 3, out_years_still_missing[0])
-years_pre_gap
+# %%
+if global_annual_mean_composite.sel(year=out_years_still_missing[0] - 1) == global_annual_mean_composite.sel(
+    year=out_years_still_missing[-1] + 1
+):
+    # Data is already at pre-industrial so we can just keep things flat
+    years_pre_gap = np.arange(out_years_still_missing[0] - 3, out_years_still_missing[0])
+    years_post_gap = np.arange(
+        out_years_still_missing[-1] + 1,
+        min(out_years_still_missing[-1] + 2, global_annual_mean_composite.year[-1] + 1),
+    )
 
-# %% editable=true slideshow={"slide_type": ""}
-years_post_gap = np.arange(
-    out_years_still_missing[-1] + 1,
-    min(out_years_still_missing[-1] + 4, global_annual_mean_composite.year[-1] + 1),
-)
-years_post_gap
+else:
+    # Will need to actually interpolate
+    years_pre_gap = np.arange(out_years_still_missing[0] - 3, out_years_still_missing[0])
+    years_post_gap = np.arange(
+        out_years_still_missing[-1] + 1,
+        min(out_years_still_missing[-1] + 4, global_annual_mean_composite.year[-1] + 1),
+    )
+
+print(f"{years_pre_gap=}")
+print(f"{years_post_gap=}")
 
 # %% editable=true slideshow={"slide_type": ""}
 fit_years = np.hstack([years_pre_gap, years_post_gap])

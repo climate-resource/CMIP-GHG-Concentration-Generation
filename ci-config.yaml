@@ -37,11 +37,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc152a/hfc152a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc152a/hfc152a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1985
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc152a/hfc152a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc152a/hfc152a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc152a/hfc152a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -289,6 +289,14 @@ retrieve_and_process_neem_data:
   raw_dir: data/raw/neem
   step_config_id: only
 retrieve_and_process_scripps_data: []
+retrieve_and_process_velders_et_al_2022_data:
+- download_complete_file: data/raw/velders-et-al-2022/download.complete
+  processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
+  raw_dir: data/raw/velders-et-al-2022
+  step_config_id: only
+  zenodo_record:
+    known_hash: 74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd
+    url: https://zenodo.org/records/6520707/files/veldersguus/HFC-scenarios-2022-v1.0.zip?download=1
 retrieve_and_process_western_et_al_2024_data:
 - download_complete_file: data/raw/western-et-al-2024/download.complete
   processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv

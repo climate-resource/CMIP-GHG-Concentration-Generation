@@ -339,35 +339,17 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "hcfc22": SF6LikePreIndustrialConfig(
         value=Q(0.0, "ppt"), year=1935, source="Guessing from reading M2017"
     ),
-    "hfc125": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
-    ),
-    "hfc134a": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"
-    ),
-    "hfc143a": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1975, source="Guessing from reading M2017"
-    ),
-    "hfc152a": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1985, source="Guessing from reading M2017"
-    ),
-    "hfc227ea": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
-    ),
+    "hfc125": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc134a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc143a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc152a": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc227ea": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
     "hfc23": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"),
-    "hfc236fa": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1970, source="Guessing from reading M2017"
-    ),
-    "hfc245fa": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=2000, source="Guessing from reading M2017"
-    ),
-    "hfc32": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1990, source="Guessing from reading M2017"),
-    "hfc365mfc": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1980, source="Guessing from reading M2017"
-    ),
-    "hfc4310mee": SF6LikePreIndustrialConfig(
-        value=Q(0.0, "ppt"), year=1985, source="Guessing from reading M2017"
-    ),
+    "hfc236fa": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc245fa": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc32": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc365mfc": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
+    "hfc4310mee": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1980, source="Velders et al., 2022"),
     "nf3": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1975, source="Guessing from reading M2017"),
     "sf6": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1950, source="Guessing from reading M2017"),
     "so2f2": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1960, source="Guessing from reading M2017"),

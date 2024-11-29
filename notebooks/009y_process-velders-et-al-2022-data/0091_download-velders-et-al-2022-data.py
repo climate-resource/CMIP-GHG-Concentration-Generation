@@ -13,19 +13,21 @@
 # ---
 
 # %% [markdown]
-# # Western et al., 2024 - process
+# # Velders et al., 2022 - download
 #
-# Process data from [Western et al., 2024](https://doi.org/10.1038/s41558-024-02038-7).
+# Download data from [Velders et al., 2022](https://doi.org/10.5194/acp-22-6087-2022).
 
 # %% [markdown]
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+import shutil
 from pathlib import Path
 
 import openscm_units
-import pandas as pd
 import pint
+import pooch
+from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
@@ -37,7 +39,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_western_et_al_2024_data"
+step: str = "retrieve_and_process_velders_et_al_2022_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -57,39 +59,24 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ## Action
 
 # %%
-assumed_unit = "ppt"
-
-# %%
-files = list(config_step.raw_dir.rglob("*.csv"))
-if len(files) != 1:
+raw_data_file_l = pooch.retrieve(
+    url=config_step.zenodo_record.url,
+    known_hash=config_step.zenodo_record.known_hash,
+    processor=pooch.Unzip(
+        members=["veldersguus-HFC-scenarios-2022-859d44c/HFC_Current_Policy_2022_Scenario.xlsx"]
+    ),
+    progressbar=True,
+)
+if len(raw_data_file_l) != 1:
     raise AssertionError
 
-raw_data_file = files[0]
-raw_data_file
+raw_data_file = Path(raw_data_file_l[0])
+
+config_step.raw_dir.mkdir(parents=True, exist_ok=True)
+out_file = config_step.raw_dir / raw_data_file.name
+shutil.copyfile(raw_data_file, out_file)
+
+out_file
 
 # %%
-raw = pd.read_csv(raw_data_file, skiprows=1)
-raw
-
-# %%
-western_variable_normalisation_map = {
-    "HCFC-22": "hcfc22",
-    "HCFC-141b": "hcfc141b",
-    "HCFC-142b": "hcfc142b",
-}
-
-# %%
-clean = raw.rename({"Year": "year", **western_variable_normalisation_map}, axis="columns")
-clean = clean.set_index("year")
-clean.columns.name = "gas"
-clean = clean.stack().to_frame("value").reset_index()
-clean["unit"] = assumed_unit
-clean
-
-# %% [markdown]
-# ## Save
-
-# %%
-config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
-clean.to_csv(config_step.processed_data_file, index=False)
-config_step.processed_data_file
+write_complete_file(config_step.download_complete_file)
