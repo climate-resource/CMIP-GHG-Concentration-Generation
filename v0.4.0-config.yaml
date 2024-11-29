@@ -26,11 +26,6 @@ calculate_c4f10_like_monthly_fifteen_degree_pieces:
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c8f18/c8f18_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c8f18/c8f18_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c8f18
-- gas: cfc114
-  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
-  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
-  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
-  step_config_id: cfc114
 calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
@@ -258,6 +253,31 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   year_drop_observational_data_before_and_including: null
 - allow_long_poleward_extension: true
   allow_poleward_extension: true
+  gas: cfc114
+  global_annual_mean_allyears_file: data/interim/cfc114/cfc114_global-annual-mean_allyears.nc
+  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
+  lat_gradient_n_eofs_to_use: 1
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/cfc114/cfc114_allyears-lat-gradient-eofs-pcs.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/cfc114/cfc114_pc0-total-emissions-regression.yaml
+  observational_network_global_annual_mean_file: data/interim/cfc114/cfc114_observational-network_global-annual-mean.nc
+  observational_network_interpolated_file: data/interim/cfc114/cfc114_observational-network_interpolated.nc
+  observational_network_latitudinal_gradient_eofs_file: data/interim/cfc114/cfc114_observational-network_latitudinal-gradient-eofs.nc
+  observational_network_seasonality_file: data/interim/cfc114/cfc114_observational-network_seasonality.nc
+  pre_industrial:
+    source: Guessing from reading M2017
+    value:
+    - 0.0
+    - ppt
+    year: 1940
+  processed_all_data_with_bins_file: data/interim/cfc114/cfc114_observational-network_all-data-with-bin-information.csv
+  processed_bin_averages_file: data/interim/cfc114/cfc114_observational-network_bin-averages.csv
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
+  step_config_id: cfc114
+  year_drop_observational_data_after_and_including: null
+  year_drop_observational_data_before_and_including: null
+- allow_long_poleward_extension: true
+  allow_poleward_extension: true
   gas: cfc115
   global_annual_mean_allyears_file: data/interim/cfc115/cfc115_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/cfc115/cfc115_global-annual-mean_allyears-monthly.nc
@@ -274,7 +294,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1960
+    year: 1950
   processed_all_data_with_bins_file: data/interim/cfc115/cfc115_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/cfc115/cfc115_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc115/cfc115_seasonality_fifteen-degree_allyears-monthly.nc
@@ -374,7 +394,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1950
   processed_all_data_with_bins_file: data/interim/ch3ccl3/ch3ccl3_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/ch3ccl3/ch3ccl3_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_seasonality_fifteen-degree_allyears-monthly.nc
@@ -449,7 +469,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1211/halon1211_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1211/halon1211_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1211/halon1211_seasonality_fifteen-degree_allyears-monthly.nc
@@ -474,7 +494,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1301/halon1301_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1301/halon1301_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1301/halon1301_seasonality_fifteen-degree_allyears-monthly.nc
@@ -499,7 +519,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon2402/halon2402_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon2402/halon2402_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon2402/halon2402_seasonality_fifteen-degree_allyears-monthly.nc
@@ -524,7 +544,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc141b/hcfc141b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc141b/hcfc141b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc141b/hcfc141b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -549,7 +569,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc142b/hcfc142b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc142b/hcfc142b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc142b/hcfc142b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -574,7 +594,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1935
   processed_all_data_with_bins_file: data/interim/hcfc22/hcfc22_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc22/hcfc22_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc22/hcfc22_seasonality_fifteen-degree_allyears-monthly.nc
@@ -595,11 +615,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc125/hfc125_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc125/hfc125_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc125/hfc125_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc125/hfc125_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc125/hfc125_seasonality_fifteen-degree_allyears-monthly.nc
@@ -620,11 +640,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc134a/hfc134a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc134a/hfc134a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Making interpolation behave with Velders et al., 2022 data
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1988
   processed_all_data_with_bins_file: data/interim/hfc134a/hfc134a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc134a/hfc134a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc134a/hfc134a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -645,11 +665,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc143a/hfc143a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc143a/hfc143a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1975
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc143a/hfc143a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc143a/hfc143a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc143a/hfc143a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -670,11 +690,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc152a/hfc152a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc152a/hfc152a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1985
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc152a/hfc152a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc152a/hfc152a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc152a/hfc152a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -695,11 +715,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc227ea/hfc227ea_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc227ea/hfc227ea_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc227ea/hfc227ea_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc227ea/hfc227ea_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc227ea/hfc227ea_seasonality_fifteen-degree_allyears-monthly.nc
@@ -745,11 +765,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc236fa/hfc236fa_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc236fa/hfc236fa_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc236fa/hfc236fa_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc236fa/hfc236fa_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc236fa/hfc236fa_seasonality_fifteen-degree_allyears-monthly.nc
@@ -770,11 +790,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc245fa/hfc245fa_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc245fa/hfc245fa_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 2000
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc245fa/hfc245fa_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc245fa/hfc245fa_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc245fa/hfc245fa_seasonality_fifteen-degree_allyears-monthly.nc
@@ -795,11 +815,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc32/hfc32_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc32/hfc32_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc32/hfc32_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc32/hfc32_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc32/hfc32_seasonality_fifteen-degree_allyears-monthly.nc
@@ -820,7 +840,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc365mfc/hfc365mfc_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc365mfc/hfc365mfc_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
@@ -845,11 +865,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc4310mee/hfc4310mee_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc4310mee/hfc4310mee_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1985
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc4310mee/hfc4310mee_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc4310mee/hfc4310mee_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc4310mee/hfc4310mee_seasonality_fifteen-degree_allyears-monthly.nc
@@ -951,7 +971,6 @@ crunch_equivalent_species:
   - cfc113
   - cfc114
   - cfc115
-  - cfc12
   - ch2cl2
   - ch3br
   - ch3ccl3
@@ -3176,7 +3195,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: cfc11_hats
 - download_complete_file: data/raw/noaa/cfc113_hats.complete
   download_urls:
-  - known_hash: 7b7984976d6cadce14d27cfc67f38adba1686b6041c7676dc5296fca8ee9a3e0
+  - known_hash: e2b8369b85286203fcc61ae1cfddb5efb426013055a6b9163fe8db97ca619972
     url: https://gml.noaa.gov/aftp/data/hats/cfcs/cfc113/combined/HATS_global_F113.txt
   gas: cfc113
   interim_files:
@@ -3196,7 +3215,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: cfc12_hats
 - download_complete_file: data/raw/noaa/ch2cl2_hats.complete
   download_urls:
-  - known_hash: e32417315bbf068c52bb160f531785c74062e5055359f1f825939846bf4dc01c
+  - known_hash: 7a26146524e47421a718a7a432f043340ef254aa741d10ec1541a535bc501372
     url: https://gml.noaa.gov/aftp/data/hats/solvents/CH2Cl2/flasks/ch2cl2_GCMS_flask.txt
   gas: ch2cl2
   interim_files:
@@ -3206,7 +3225,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch2cl2_hats
 - download_complete_file: data/raw/noaa/ch3br_hats.complete
   download_urls:
-  - known_hash: 71d765146c9aec0a96d0ab5ba7a3640ea1ce734b669f2218adea1b6ecb8d093a
+  - known_hash: 6df26f410a34ab5255501a89a21944cf0b87379c06181e5b5f2cb02265ff4d4f
     url: https://gml.noaa.gov/aftp/data/hats/methylhalides/ch3br/flasks/CH3BR_GCMS_flask.txt
   gas: ch3br
   interim_files:
@@ -3216,7 +3235,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch3br_hats
 - download_complete_file: data/raw/noaa/ch3ccl3_hats.complete
   download_urls:
-  - known_hash: 8ea2b8e1317c6a62f409a52edf13bfecf7c960739fcbb7de0688688045b2f180
+  - known_hash: 4ee2d9db3f7e7a122ac1d0d2b428b64fff63a2a118ad6c707aded36a0082008d
     url: https://gml.noaa.gov/aftp/data/hats/solvents/CH3CCl3/flasks/GCMS/CH3CCL3_GCMS_flask.txt
   gas: ch3ccl3
   interim_files:
@@ -3226,7 +3245,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch3ccl3_hats
 - download_complete_file: data/raw/noaa/ch3cl_hats.complete
   download_urls:
-  - known_hash: 8d6442dfc6216bb9ace91959ab49ad4bdbbef7042a2440d2d512660d22471080
+  - known_hash: 53f025bb646cba4828a461b4e7d5972a478bc67b4e527488101c8b38f5af0197
     url: https://gml.noaa.gov/aftp/data/hats/methylhalides/ch3cl/flasks/CH3Cl_GCMS_flask.txt
   gas: ch3cl
   interim_files:
@@ -3236,7 +3255,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch3cl_hats
 - download_complete_file: data/raw/noaa/halon1211_hats.complete
   download_urls:
-  - known_hash: e09004be32c4a1cb34a55302e54b47dd1fd56a9724d562042d170d782bb7ee35
+  - known_hash: 6eeff05658ca067d73f59981bdc069d56a09ab297e59c49d784c0328bc991e5a
     url: https://gml.noaa.gov/aftp/data/hats/halons/flasks/HAL1211_GCMS_flask.txt
   gas: halon1211
   interim_files:
@@ -3256,7 +3275,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: halon1301_hats
 - download_complete_file: data/raw/noaa/halon2402_hats.complete
   download_urls:
-  - known_hash: 5fdbbc85fcaf9d92ccec37e3f3f073df65d4f516fbe842d23342c13317205017
+  - known_hash: fbecc158b8aec169226c0dabca24ade879f3a813ea7716004d0d81c8e5e2ce52
     url: https://gml.noaa.gov/aftp/data/hats/halons/flasks/Hal2402_GCMS_flask.txt
   gas: halon2402
   interim_files:
@@ -3266,7 +3285,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: halon2402_hats
 - download_complete_file: data/raw/noaa/hcfc141b_hats.complete
   download_urls:
-  - known_hash: a4a96582b90bb9bb2027b6db2de99f3c1aa9f0acdd042437d00ae340f487ebae
+  - known_hash: 73030ef0c782c67a9a9cd636e4f4eb2408c06158d38c798135a39896e87a055d
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc141b/HCFC141B_GCMS_flask.txt
   gas: hcfc141b
   interim_files:
@@ -3276,7 +3295,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hcfc141b_hats
 - download_complete_file: data/raw/noaa/hcfc142b_hats.complete
   download_urls:
-  - known_hash: f0e0cc665d4a16040ad8038b5c61626f1de7a6eca80b7e0162ca792c105d91ed
+  - known_hash: b80a7097bee0078de564dcddf9ba292b6db8474022cc10d4d3f934179c237549
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc142b/flasks/HCFC142B_GCMS_flask.txt
   gas: hcfc142b
   interim_files:
@@ -3286,7 +3305,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hcfc142b_hats
 - download_complete_file: data/raw/noaa/hcfc22_hats.complete
   download_urls:
-  - known_hash: f7bf03518216bdbe5096fd95d0bed2baf895a7ef0c1d81644408f41e8215cf77
+  - known_hash: 9a21406480796ed9f4f8b8d37cf37465bbfd25712bc2bfc78c7863c4d2c57cc0
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc22/flasks/HCFC22_GCMS_flask.txt
   gas: hcfc22
   interim_files:
@@ -3336,7 +3355,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hfc152a_hats
 - download_complete_file: data/raw/noaa/hfc227ea_hats.complete
   download_urls:
-  - known_hash: c5d4bfb4f413015a8fb125528ce55aca9a6a9d67cfb933fa2c5ad6ff760b0b54
+  - known_hash: 69cc53b7223cfb17dfd3217ab954232de64c4518c0f61e04897e36f4c77f2d82
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-227ea_GCMS_flask.txt
   gas: hfc227ea
   interim_files:
@@ -3366,7 +3385,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hfc32_hats
 - download_complete_file: data/raw/noaa/hfc365mfc_hats.complete
   download_urls:
-  - known_hash: e774693a7f1b252e48eb512d0f210a959e7ebd57c6ab5b0699d9f28563ffc206
+  - known_hash: e59690c02ad32cbc775584076ffb86b1e1a4228179f83de535aba11435ef827c
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-365mfc_GCMS_flask.txt
   gas: hfc365mfc
   interim_files:
@@ -3426,6 +3445,26 @@ retrieve_and_process_neem_data:
   raw_dir: data/raw/neem
   step_config_id: only
 retrieve_and_process_scripps_data: []
+retrieve_and_process_velders_et_al_2022_data:
+- download_complete_file: data/raw/velders-et-al-2022/download.complete
+  processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
+  raw_dir: data/raw/velders-et-al-2022
+  step_config_id: only
+  zenodo_record:
+    known_hash: 74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd
+    url: https://zenodo.org/records/6520707/files/veldersguus/HFC-scenarios-2022-v1.0.zip?download=1
+retrieve_and_process_western_et_al_2024_data:
+- download_complete_file: data/raw/western-et-al-2024/download.complete
+  processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
+  raw_dir: data/raw/western-et-al-2024
+  step_config_id: only
+  zenodo_record:
+    known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7
+    url: https://zenodo.org/records/10782689/files/Projections.zip?download=1
+retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
+- processed_data_file: data/interim/wmo-2022-ozone-assessment-ch7/wmo_2022_ozone_assessment_ch7.csv
+  raw_data: data/raw/wmo-2022-ozone-assessment-ch7/wmo2022_Ch7_mixingratios.xlsx
+  step_config_id: only
 retrieve_misc_data:
 - hadcrut5:
     download_url:
@@ -3511,6 +3550,7 @@ smooth_law_dome_data:
 version: 0.4.0
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/co2_input4MIPs_check-data.complete
   end_year: 2022
   gas: co2
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3519,6 +3559,7 @@ write_input4mips:
   start_year: 1
   step_config_id: co2
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch4
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3527,6 +3568,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/n2o_input4MIPs_check-data.complete
   end_year: 2022
   gas: n2o
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3535,6 +3577,7 @@ write_input4mips:
   start_year: 1
   step_config_id: n2o
 - complete_file: data/processed/esgf-ready/c2f6_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c2f6_input4MIPs_check-data.complete
   end_year: 2022
   gas: c2f6
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3543,6 +3586,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c2f6
 - complete_file: data/processed/esgf-ready/c3f8_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c3f8_input4MIPs_check-data.complete
   end_year: 2022
   gas: c3f8
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3551,6 +3595,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c3f8
 - complete_file: data/processed/esgf-ready/c4f10_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c4f10_input4MIPs_check-data.complete
   end_year: 2022
   gas: c4f10
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3559,6 +3604,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c4f10
 - complete_file: data/processed/esgf-ready/c5f12_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c5f12_input4MIPs_check-data.complete
   end_year: 2022
   gas: c5f12
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3567,6 +3613,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c5f12
 - complete_file: data/processed/esgf-ready/c6f14_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c6f14_input4MIPs_check-data.complete
   end_year: 2022
   gas: c6f14
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3575,6 +3622,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c6f14
 - complete_file: data/processed/esgf-ready/c7f16_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c7f16_input4MIPs_check-data.complete
   end_year: 2022
   gas: c7f16
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3583,6 +3631,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c7f16
 - complete_file: data/processed/esgf-ready/c8f18_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/c8f18_input4MIPs_check-data.complete
   end_year: 2022
   gas: c8f18
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3591,6 +3640,7 @@ write_input4mips:
   start_year: 1
   step_config_id: c8f18
 - complete_file: data/processed/esgf-ready/cc4f8_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cc4f8_input4MIPs_check-data.complete
   end_year: 2022
   gas: cc4f8
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3599,6 +3649,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cc4f8
 - complete_file: data/processed/esgf-ready/ccl4_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ccl4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ccl4
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3607,6 +3658,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ccl4
 - complete_file: data/processed/esgf-ready/cf4_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cf4_input4MIPs_check-data.complete
   end_year: 2022
   gas: cf4
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3615,6 +3667,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cf4
 - complete_file: data/processed/esgf-ready/cfc11_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc11_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc11
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3623,6 +3676,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc11
 - complete_file: data/processed/esgf-ready/cfc113_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc113_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc113
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3631,6 +3685,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc113
 - complete_file: data/processed/esgf-ready/cfc114_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc114_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc114
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3639,6 +3694,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc114
 - complete_file: data/processed/esgf-ready/cfc115_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc115_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc115
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3647,6 +3703,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc115
 - complete_file: data/processed/esgf-ready/cfc12_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc12_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc12
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3655,6 +3712,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc12
 - complete_file: data/processed/esgf-ready/ch2cl2_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch2cl2_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch2cl2
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3663,6 +3721,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ch2cl2
 - complete_file: data/processed/esgf-ready/ch3br_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch3br_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3br
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3671,6 +3730,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ch3br
 - complete_file: data/processed/esgf-ready/ch3ccl3_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch3ccl3_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3ccl3
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3679,6 +3739,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ch3ccl3
 - complete_file: data/processed/esgf-ready/ch3cl_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/ch3cl_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3cl
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3687,6 +3748,7 @@ write_input4mips:
   start_year: 1
   step_config_id: ch3cl
 - complete_file: data/processed/esgf-ready/chcl3_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/chcl3_input4MIPs_check-data.complete
   end_year: 2022
   gas: chcl3
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3695,6 +3757,7 @@ write_input4mips:
   start_year: 1
   step_config_id: chcl3
 - complete_file: data/processed/esgf-ready/halon1211_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/halon1211_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon1211
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3703,6 +3766,7 @@ write_input4mips:
   start_year: 1
   step_config_id: halon1211
 - complete_file: data/processed/esgf-ready/halon1301_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/halon1301_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon1301
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3711,6 +3775,7 @@ write_input4mips:
   start_year: 1
   step_config_id: halon1301
 - complete_file: data/processed/esgf-ready/halon2402_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/halon2402_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon2402
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3719,6 +3784,7 @@ write_input4mips:
   start_year: 1
   step_config_id: halon2402
 - complete_file: data/processed/esgf-ready/hcfc141b_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hcfc141b_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc141b
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3727,6 +3793,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hcfc141b
 - complete_file: data/processed/esgf-ready/hcfc142b_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hcfc142b_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc142b
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3735,6 +3802,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hcfc142b
 - complete_file: data/processed/esgf-ready/hcfc22_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hcfc22_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc22
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3743,6 +3811,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hcfc22
 - complete_file: data/processed/esgf-ready/hfc125_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc125_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc125
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3751,6 +3820,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc125
 - complete_file: data/processed/esgf-ready/hfc134a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc134a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc134a
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3759,6 +3829,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc134a
 - complete_file: data/processed/esgf-ready/hfc143a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc143a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc143a
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3767,6 +3838,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc143a
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc152a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc152a
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3775,6 +3847,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc152a
 - complete_file: data/processed/esgf-ready/hfc227ea_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc227ea_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc227ea
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3783,6 +3856,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc227ea
 - complete_file: data/processed/esgf-ready/hfc23_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc23_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc23
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3791,6 +3865,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc23
 - complete_file: data/processed/esgf-ready/hfc236fa_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc236fa_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc236fa
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3799,6 +3874,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc236fa
 - complete_file: data/processed/esgf-ready/hfc245fa_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc245fa_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc245fa
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3807,6 +3883,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc245fa
 - complete_file: data/processed/esgf-ready/hfc32_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc32_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc32
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3815,6 +3892,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc32
 - complete_file: data/processed/esgf-ready/hfc365mfc_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc365mfc_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc365mfc
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3823,6 +3901,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc365mfc
 - complete_file: data/processed/esgf-ready/hfc4310mee_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc4310mee_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc4310mee
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3831,6 +3910,7 @@ write_input4mips:
   start_year: 1
   step_config_id: hfc4310mee
 - complete_file: data/processed/esgf-ready/nf3_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/nf3_input4MIPs_check-data.complete
   end_year: 2022
   gas: nf3
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3839,6 +3919,7 @@ write_input4mips:
   start_year: 1
   step_config_id: nf3
 - complete_file: data/processed/esgf-ready/sf6_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/sf6_input4MIPs_check-data.complete
   end_year: 2022
   gas: sf6
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3847,6 +3928,7 @@ write_input4mips:
   start_year: 1
   step_config_id: sf6
 - complete_file: data/processed/esgf-ready/so2f2_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/so2f2_input4MIPs_check-data.complete
   end_year: 2022
   gas: so2f2
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3855,6 +3937,7 @@ write_input4mips:
   start_year: 1
   step_config_id: so2f2
 - complete_file: data/processed/esgf-ready/cfc11eq_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc11eq_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc11eq
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3863,6 +3946,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc11eq
 - complete_file: data/processed/esgf-ready/cfc12eq_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/cfc12eq_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc12eq
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
@@ -3871,6 +3955,7 @@ write_input4mips:
   start_year: 1
   step_config_id: cfc12eq
 - complete_file: data/processed/esgf-ready/hfc134aeq_input4MIPs_esgf-ready.complete
+  complete_file_check_data: data/processed/esgf-ready/hfc134aeq_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc134aeq
   input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
