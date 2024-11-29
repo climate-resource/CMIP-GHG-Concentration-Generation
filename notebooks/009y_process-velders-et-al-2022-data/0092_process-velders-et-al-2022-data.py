@@ -21,6 +21,7 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+import io
 from pathlib import Path
 
 import openscm_units
@@ -60,14 +61,6 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 assumed_unit = "ppt"
 
 # %%
-files = list(config_step.raw_dir.rglob("*.xlsx"))
-if len(files) != 1:
-    raise AssertionError
-
-raw_data_file = files[0]
-raw_data_file
-
-# %%
 expected_species = [
     "HFC-32",
     "HFC-125",
@@ -81,22 +74,24 @@ expected_species = [
     "HFC-43-10mee",
 ]
 
-# %%
-# Doesn't matter whether we use upper or lower as we're just getting historical data
-raw_excel = pd.read_excel(raw_data_file, sheet_name="Upper", header=None)
+# %% [markdown]
+# Read the temporary file, while the Zenodo record is not updated.
 
 # %%
-start_idx = 4
-block_length = 112
+with open(config_step.raw_data_file_tmp) as fh:
+    raw = tuple(fh.readlines())
+
+# %%
+start_idx = 74
+block_length = 512
 expected_n_blocks = 10
 
 clean_l = []
 for i in range(expected_n_blocks):
     start = start_idx + i * (block_length + 1)
-    species_df = raw_excel.iloc[start : start + block_length]
-    species_df = species_df.dropna(how="all", axis="columns")
-    species_df.columns = species_df.iloc[0, :]  # type: ignore
-    species_df = species_df.iloc[1:, :]
+
+    block = io.StringIO("\n".join(raw[start : start + block_length]))
+    species_df = pd.read_csv(block, sep=r"\s+")
 
     gas = species_df["Species"].unique()
     if len(gas) != 1:
@@ -114,6 +109,48 @@ if set(clean.columns) != set(expected_species):
     raise AssertionError
 
 clean
+
+# %%
+# files = list(config_step.raw_dir.rglob("*.xlsx"))
+# if len(files) != 1:
+#     raise AssertionError
+
+# raw_data_file = files[0]
+# raw_data_file
+
+# %%
+# # Doesn't matter whether we use upper or lower as we're just getting historical data
+# raw_excel = pd.read_excel(raw_data_file, sheet_name="Upper", header=None)
+
+# %%
+# start_idx = 4
+# block_length = 112
+# expected_n_blocks = 10
+
+# clean_l = []
+# for i in range(expected_n_blocks):
+#     start = start_idx + i * (block_length + 1)
+#     species_df = raw_excel.iloc[start : start + block_length]
+#     species_df = species_df.dropna(how="all", axis="columns")
+#     species_df.columns = species_df.iloc[0, :]  # type: ignore
+#     species_df = species_df.iloc[1:, :]
+
+#     gas = species_df["Species"].unique()
+#     if len(gas) != 1:
+#         raise AssertionError
+#     gas = gas[0]
+
+#     keep = species_df[["Year", "Mix_tot"]].rename({"Year": "year", "Mix_tot": str(gas)}, axis="columns")
+#     keep = keep.set_index("year")
+#     # display(keep)
+
+#     clean_l.append(keep)
+
+# clean = pd.concat(clean_l, axis="columns")
+# if set(clean.columns) != set(expected_species):
+#     raise AssertionError
+
+# clean
 
 # %%
 # Velders data is start of year, yet we want mid-year values, hence do the below

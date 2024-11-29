@@ -17,6 +17,7 @@ RAW_DIR = Path("data/raw/velders-et-al-2022")
 RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS = [
     RetrieveExtractVeldersEtal2022Data(
         step_config_id="only",
+        raw_data_file_tmp=RAW_DIR / "KGL2021_constrProdEmis_ObsAgage_2500_OECD-SSP5.dat",
         zenodo_record=URLSource(
             url="https://zenodo.org/records/6520707/files/veldersguus/HFC-scenarios-2022-v1.0.zip?download=1",
             known_hash="74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd",

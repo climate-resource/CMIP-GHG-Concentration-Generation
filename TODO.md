@@ -28,10 +28,11 @@ As the to-do's become concrete, take them out and turn them into [issues](https:
 
 - use better data source to extend CO2 and N2O from the start of Law Dome back to year 1
 
-- reach out to AGAGE authors to ask if processing has made the right choice re polluted and unpolluted
-    - Malte's paper used polluted
-
-- use third-order piecewise smoothing to fill in data gaps
+- check polluted data with AGAGE authors.
+    - I think I'm using monthly means i.e. only baseline data, but should check
+- check with NOAA people why some stations only have event data, when they pass quality control and seem to have enough data to do a fit
+    - ask Steve Montzka
+- I don't think I'm using any pollution data as I use monthly means everywhere
 
 - reach out to NOAA and AGAGE authors to ask them what the right choice is in terms of using monthly vs. event data
 

@@ -312,6 +312,7 @@ retrieve_and_process_scripps_data: []
 retrieve_and_process_velders_et_al_2022_data:
 - download_complete_file: data/raw/velders-et-al-2022/download.complete
   processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
+  raw_data_file_tmp: data/raw/velders-et-al-2022/KGL2021_constrProdEmis_ObsAgage_2500_OECD-SSP5.dat
   raw_dir: data/raw/velders-et-al-2022
   step_config_id: only
   zenodo_record:

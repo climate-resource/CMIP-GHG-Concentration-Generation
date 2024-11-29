@@ -50,22 +50,23 @@ def configure_notebooks(
     config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     configured_notebooks = [
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("009y_process-velders-et-al-2022-data") / "0091_download-velders-et-al-2022-data"
-            ],
-            configuration=(config_step.zenodo_record,),
-            dependencies=(),
-            targets=(config_step.download_complete_file,),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
+        # Turn back on when Guus has updated zenodo
+        # ConfiguredNotebook(
+        #     unconfigured_notebook=uc_nbs_dict[
+        #         Path("009y_process-velders-et-al-2022-data") / "0091_download-velders-et-al-2022-data"
+        #     ],
+        #     configuration=(config_step.zenodo_record,),
+        #     dependencies=(),
+        #     targets=(config_step.download_complete_file,),
+        #     config_file=config_bundle.config_hydrated_path,
+        #     step_config_id=step_config_id,
+        # ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
                 Path("009y_process-velders-et-al-2022-data") / "0092_process-velders-et-al-2022-data"
             ],
-            configuration=(),
-            dependencies=(config_step.download_complete_file,),
+            configuration=(config_step.raw_data_file_tmp,),
+            dependencies=(),
             targets=(config_step.processed_data_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -78,13 +79,14 @@ def configure_notebooks(
 step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="retrieve_and_process_velders_et_al_2022_data",
     unconfigured_notebooks=[
-        UnconfiguredNotebook(
-            notebook_path=Path("009y_process-velders-et-al-2022-data")
-            / "0091_download-velders-et-al-2022-data",
-            raw_notebook_ext=".py",
-            summary="Retrieve and process Velders et al. (2022) data - download",
-            doc="Download Velders et al. (2022) data",
-        ),
+        # Turn back on when Guus has updated zenodo
+        # UnconfiguredNotebook(
+        #     notebook_path=Path("009y_process-velders-et-al-2022-data")
+        #     / "0091_download-velders-et-al-2022-data",
+        #     raw_notebook_ext=".py",
+        #     summary="Retrieve and process Velders et al. (2022) data - download",
+        #     doc="Download Velders et al. (2022) data",
+        # ),
         UnconfiguredNotebook(
             notebook_path=Path("009y_process-velders-et-al-2022-data")
             / "0092_process-velders-et-al-2022-data",
