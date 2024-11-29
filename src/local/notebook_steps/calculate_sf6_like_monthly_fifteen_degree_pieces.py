@@ -192,10 +192,10 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
         UnconfiguredNotebook(
             notebook_path=Path("13yy_sf6-like-monthly-15-degree") / "1304_sf6-like_create-global-annual-mean",
             raw_notebook_ext=".py",
-            summary="SF6-like gas pieces - Extend global, annual-mean over the entire time period",
+            summary="SF6-like gas pieces - Create global, annual-mean over the entire time period",
             doc=(
-                "Extend the global, annual-mean over the entire time period of interest "
-                "using other data sources and our latitudinal gradient."
+                "Create the global, annual-mean over the entire time period of interest "
+                "using other data sources as needed and our latitudinal gradient."
             ),
         ),
         UnconfiguredNotebook(

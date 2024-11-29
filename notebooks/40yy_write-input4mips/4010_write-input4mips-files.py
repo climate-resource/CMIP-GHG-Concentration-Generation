@@ -79,7 +79,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114"  # config ID to select for this branch
+step_config_id: str = "ccl4"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -471,7 +471,7 @@ checklist_path
 # !input4mips-validation --logging-level INFO_INDIVIDUAL_CHECK \
 #     validate-tree {config_step.input4mips_out_dir} \
 #     --cv-source "gh:main" \
-#     --rglob-input "**/*{variable_name_output.replace('_', '-')}*/**/*.nc"
+#     --rglob-input "**/*{variable_name_output}*/**/*.nc"
 
 # %%
 config_step.input4mips_out_dir
