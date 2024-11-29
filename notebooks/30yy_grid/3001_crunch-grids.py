@@ -167,12 +167,6 @@ fifteen_degree_data = LatitudeSeasonalityGridder(gridding_values).calculate(
 fifteen_degree_data
 
 # %%
-gridding_values.sel(year=1986)
-
-# %%
-global_annual_mean_monthly.sel(year=1986)
-
-# %%
 if fifteen_degree_data.min() < 0.0:
     msg = f"{fifteen_degree_data.min()=} {np.unique(fifteen_degree_data.idxmin('year'))=}"
     raise AssertionError(msg)
