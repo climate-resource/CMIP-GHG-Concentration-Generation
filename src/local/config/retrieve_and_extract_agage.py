@@ -42,8 +42,7 @@ class RetrieveExtractAGAGEDataConfig:
     """
     Path in which to write the time at which the download was completed
 
-    This is mainly used to help with setting the dependencies between notebooks
-    correctly.
+    This is mainly used to help with setting the dependencies between notebooks correctly.
     """
 
     processed_monthly_data_with_loc_file: Path

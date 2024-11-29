@@ -12,10 +12,10 @@
 #     name: python3
 # ---
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# # NEEM - process
+# %% [markdown]
+# # Western et al., 2024 - process
 #
-# Process data from the NEEM dataset.
+# Process data from [Western et al., 2024](https://doi.org/10.1038/s41558-024-02038-7).
 
 # %% [markdown]
 # ## Imports
@@ -37,7 +37,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_neem_data"
+step: str = "retrieve_and_process_western_et_al_2024_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -56,45 +56,40 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# ### Read and process data
+# %%
+assumed_unit = "ppt"
 
 # %%
-with open(config_step.raw_dir / config_step.download_url.url.split("/")[-1]) as fh:
-    raw = fh.read()
+files = list(config_step.raw_dir.rglob("*.csv"))
+if len(files) != 1:
+    raise AssertionError
 
-assert "Methane [ppbv] (CH4)" in raw
-units = "ppb"
-assert "LATITUDE: 77.450000 * LONGITUDE: -51.060000" in raw
-lat = 77.450000
-lon = -51.060000
+raw_data_file = files[0]
+raw_data_file
 
+# %%
+raw = pd.read_csv(raw_data_file, skiprows=1)
+raw
 
-read_df = pd.read_csv(
-    config_step.raw_dir / config_step.download_url.url.split("/")[-1],
-    skiprows=37,
-    header=0,
-    delimiter="\t",
-)
-read_df = read_df.rename(
-    {
-        "CH4 [ppbv] (5 yr medians, see abstract)": "value",
-        "Age [a AD/CE] (Gas age (yr CE) (constant del...)": "year",
-    },
-    axis="columns",
-)
-read_df["unit"] = units
-# read_df["year"] = year_now - (read_df["Age [ka BP]"] * 1000)
-read_df["latitude"] = lat
-read_df["longitude"] = lon
-read_df["gas"] = "ch4"
-read_df = read_df[["year", "value", "unit", "latitude", "longitude", "gas"]]
-read_df
+# %%
+western_variable_normalisation_map = {
+    "HCFC-22": "hcfc22",
+    "HCFC-141b": "hcfc141b",
+    "HCFC-142b": "hcfc142b",
+}
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
-# ### Save
+# %%
+clean = raw.rename({"Year": "year", **western_variable_normalisation_map}, axis="columns")
+clean = clean.set_index("year")
+clean.columns.name = "gas"
+clean = clean.stack().to_frame("value").reset_index()  # type: ignore
+clean["unit"] = assumed_unit
+clean
 
-# %% editable=true slideshow={"slide_type": ""}
-config_step.processed_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
-read_df.to_csv(config_step.processed_data_with_loc_file, index=False)
-config_step.processed_data_with_loc_file
+# %% [markdown]
+# ## Save
+
+# %%
+config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
+clean.to_csv(config_step.processed_data_file, index=False)
+config_step.processed_data_file

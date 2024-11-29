@@ -39,6 +39,15 @@ from local.config_creation.monthly_fifteen_degree_pieces import (
 from local.config_creation.neem_handling import RETRIEVE_AND_PROCESS_NEEM_STEPS
 from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
+from local.config_creation.velders_et_al_2022_handling import (
+    RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
+)
+from local.config_creation.western_et_al_2024_handling import (
+    RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
+)
+from local.config_creation.wmo_2022_ozone_assessment_ch7_handling import (
+    RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
+)
 from local.config_creation.write_input4mips import create_write_input4mips_config
 
 
@@ -144,6 +153,8 @@ def create_dev_config() -> Config:
             ("cf4", "hats"),
             ("cfc11", "hats"),
             ("cfc113", "hats"),
+            # Pulled by NOAA
+            # ("cfc114", "hats"),
             ("cfc12", "hats"),
             ("ch2cl2", "hats"),
             ("ch3br", "hats"),
@@ -271,6 +282,9 @@ def create_dev_config() -> Config:
         retrieve_and_process_scripps_data=[],
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
+        retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
+        retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -292,10 +306,10 @@ def create_ci_config() -> Config:
     """
     Create our (relative) CI config
     """
-    gases_to_write = ("ch4", "cfc114", "hfc152a")
+    gases_to_write = ("ch4", "c3f8", "hfc152a")
 
     gases_long_poleward_extension = (
-        "cfc114",
+        "c3f8",
         "hfc152a",
     )
 
@@ -313,8 +327,8 @@ def create_ci_config() -> Config:
     retrieve_and_extract_agage_data = create_agage_handling_config(
         data_sources=(
             ("ch4", "gc-md", "monthly"),
-            ("cfc114", "gc-ms", "monthly"),
-            ("cfc114", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms-medusa", "monthly"),
+            ("c3f8", "gc-ms", "monthly"),
             ("hfc152a", "gc-ms-medusa", "monthly"),
             ("hfc152a", "gc-ms", "monthly"),
         )
@@ -342,6 +356,9 @@ def create_ci_config() -> Config:
         retrieve_and_process_scripps_data=[],
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
+        retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
+        retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -455,6 +472,9 @@ def create_ci_nightly_config() -> Config:
         retrieve_and_process_scripps_data=[],
         retrieve_and_process_epica_data=RETRIEVE_AND_PROCESS_EPICA_STEPS,
         retrieve_and_process_neem_data=RETRIEVE_AND_PROCESS_NEEM_STEPS,
+        retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
+        retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,

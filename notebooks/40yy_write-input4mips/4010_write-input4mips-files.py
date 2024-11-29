@@ -471,7 +471,7 @@ checklist_path
 # !input4mips-validation --logging-level INFO_INDIVIDUAL_CHECK \
 #     validate-tree {config_step.input4mips_out_dir} \
 #     --cv-source "gh:main" \
-#     --rglob-input "**/*{variable_name_output.replace('_', '-')}*/**/*.nc"
+#     --rglob-input "**/*{variable_name_output}*/**/*.nc"
 
 # %%
 config_step.input4mips_out_dir

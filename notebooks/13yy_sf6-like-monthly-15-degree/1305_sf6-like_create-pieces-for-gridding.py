@@ -171,68 +171,88 @@ plt.show()
 obs_network_seasonality.plot()  # type: ignore
 
 # %%
+atol_seasonality_shift = max(1e-8, global_annual_mean_monthly.max().data.m * 7.5e-5)
+atol_seasonality_shift
+
+# %%
 seasonality_full = global_annual_mean * obs_network_seasonality
-atol = max(
-    (
-        1e-6 * global_annual_mean.mean().data.m
-    ),  # Approximately match the tolerance of our mean-preserving interpolation algorithm
-    5e-6,
-)
+seasonality_full_use = seasonality_full.copy()
+seasonality_full_use_month_mean = seasonality_full_use.mean("month")
+max_shift = np.abs(seasonality_full_use_month_mean.data.m).max()
+if np.isclose(seasonality_full_use_month_mean.data.m, 0.0, atol=atol_seasonality_shift).all():
+    # Force the data to zero. This is a bit of a hack, but also basically fine.
+    print(f"Applying max shift of {max_shift}")
+    seasonality_full_use = seasonality_full_use - seasonality_full_use_month_mean
+    seasonality_full_use
+
+else:
+    msg = f"Absolute value of max shift would be {max_shift}"
+    raise AssertionError(msg)
+
+seasonality_full = seasonality_full_use
+
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
-    atol=atol,
+    atol=1e-8,  # Set by carpet-concentrations
 )
 
 # %%
-tmp = global_annual_mean_monthly + seasonality_full
-if tmp.min() < 0.0:
+max_reasonable_seasonality_frac = 0.35  # expert judgement
+
+seasonality_frac_monthly = seasonality_full / global_annual_mean_monthly
+seasonality_frac_monthly = xr.where(seasonality_full == 0.0, 0.0, seasonality_frac_monthly)  # type: ignore
+
+borked_years = seasonality_frac_monthly.year[
+    (np.abs(seasonality_frac_monthly) > max_reasonable_seasonality_frac).any(["month", "lat"])  # type: ignore
+]
+if borked_years.size > 0:
     msg = (
-        "When combining the global values and the seasonality, "
-        f"the minimum value is less than 0.0. {tmp.min()=}"
+        "There are time steps in which the seasonality is more then "
+        f"{max_reasonable_seasonality_frac * 100}% of the global-mean value. "
+        "Fixing now."
     )
     print(msg)
-    # raise AssertionError(msg)
+    # This actually points to an issue in the overall workflow,
+    # because what we're actually seeing is a disagreement between the
+    # observations and the global-means derived from the observations.
+    # However, fixing this is an issue for the future.
 
-    atol_close = 1e-8
-    print(
-        "Trying with a forced update of the seasonality "
-        f"to be zero where the global-mean is within {atol_close} of zero"
-    )
     seasonality_full_candidate = seasonality_full.copy(deep=True)
-    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
-        for month, month_da in yr_da.groupby("month", squeeze=False):
-            if np.isclose(month_da.data.m, 0.0):
-                # print(yr)
-                seasonality_full.loc[{"year": yr, "month": month}] = 0.0
-                continue
+    for borked_yr in tqdman.tqdm(borked_years):
+        seasonality_full_yr = seasonality_full.sel(year=borked_yr)
+        global_annual_mean_monthly_yr = global_annual_mean_monthly.sel(year=borked_yr)
 
-            # The seasonality can't be bigger than the global-mean value,
-            # because this leads to negative values.
-            # This actually points to an issue in the overall workflow,
-            # because what we're actually seeing is a disagreement between the
-            # observations and the global-means derived from the observations.
-            # However, fixing this is an issue for the future.
-            # We squeeze even harder, to avoid seasonality breaking things too.
-            min_seasonality_val = seasonality_full_candidate.loc[{"year": yr, "month": month}].min()
-            if np.abs(min_seasonality_val) > month_da * 0.9:
-                shrink_ratio = (0.5 * month_da / np.abs(min_seasonality_val)).squeeze()
-                new_val = shrink_ratio * seasonality_full_candidate.loc[{"year": yr, "month": month}]
+        max_abs_seasonality_frac_monthly_yr = np.abs(seasonality_frac_monthly.sel(year=borked_yr)).max()
 
-                msg = (
-                    "TODO: fix consistency issue. "
-                    f"In {yr:04d}-{month:02d}, "
-                    f"the minimum seasonality value is: {min_seasonality_val.data}. "
-                    f"The global-mean value is {month_da.data}. "
-                    f"This makes no sense. For now, force overriding to {new_val.data}."
-                )
-                print(msg)
+        if np.isinf(max_abs_seasonality_frac_monthly_yr):
+            msg = (
+                "TODO: fix consistency issue. "
+                f"In {borked_yr:04d}, "
+                f"the minimum seasonality value is: {seasonality_full_yr.data.min()}. "
+                f"The minimum global-mean monthly value is {global_annual_mean_monthly_yr.data.min()}. "
+                f"This makes no sense. For now, force overriding seasonality to zero."
+            )
+            seasonality_full_candidate.loc[{"year": borked_yr}] = 0.0
 
-                seasonality_full_candidate.loc[{"year": yr, "month": month}] = new_val
+        else:
+            shrink_ratio = max_reasonable_seasonality_frac / max_abs_seasonality_frac_monthly_yr
+            seasonality_full_candidate.loc[{"year": borked_yr}] = (
+                seasonality_full_candidate.loc[{"year": borked_yr}] * shrink_ratio
+            )
+            msg = (
+                "TODO: fix consistency issue. "
+                f"In {borked_yr:04d}, "
+                f"the minimum seasonality value is: {seasonality_full_yr.data.min():.3e}. "
+                f"The minimum global-mean monthly value is {global_annual_mean_monthly_yr.data.min():.3e}. "
+                f"This makes no sense. For now, shrinking seasonality by {shrink_ratio.data.m}."
+            )
 
-    tmp2 = global_annual_mean_monthly + seasonality_full_candidate
-    if tmp2.min() < 0.0:
-        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        print(msg)
+
+    tmp = global_annual_mean_monthly + seasonality_full_candidate
+    if tmp.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp.min()=}"
         raise AssertionError(msg)
 
     print("Updated the seasonality")
@@ -361,7 +381,7 @@ if tmp.min() < 0.0:
             # However, fixing this is an issue for the future.
             # We squeeze even harder, to avoid seasonality breaking things too.
             min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
-            if np.abs(min_grad_val) > month_da * 0.9:
+            if np.abs(min_grad_val) > month_da * 0.5:
                 shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
                 new_val = (
                     shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]

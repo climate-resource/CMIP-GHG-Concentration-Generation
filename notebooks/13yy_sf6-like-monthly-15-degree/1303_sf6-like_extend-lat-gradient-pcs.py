@@ -15,7 +15,7 @@
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # # SF$_6$-like - extend the latitudinal gradient principal components
 #
-# Extend the latitudinal gradient's principal components back in time.
+# Extend the latitudinal gradient's principal components back and forward in time as needed.
 # For SF$_6$-like gases, we do this by using a regression against emissions.
 
 # %% [markdown]
@@ -74,7 +74,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c3f8"  # config ID to select for this branch
+step_config_id: str = "cfc114"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -141,11 +141,19 @@ historical_emissions
 # ### Define some important constants
 
 # %%
+# Figuring out how to not hard code this is a problem for another day
+min_last_year = 2022
+
+# %%
+max_year = max(min_last_year, lat_grad_eofs_obs_network["year"].max())
+max_year
+
+# %%
 if not config.ci:
-    out_years = np.arange(1, lat_grad_eofs_obs_network["year"].max() + 1)
+    out_years = np.arange(1, max_year + 1)
 
 else:
-    out_years = np.arange(1750, lat_grad_eofs_obs_network["year"].max() + 1)
+    out_years = np.arange(1750, max_year + 1)
 
 out_years
 
@@ -332,7 +340,7 @@ allyears_pcs
 
 # %%
 allyears_pcs.name = "principal-components"
-out = xr.merge([allyears_pcs, lat_grad_eofs_obs_network["eofs"]])
+out = xr.merge([allyears_pcs, lat_grad_eofs_obs_network["eofs"]]).sortby("year")
 out
 
 # %%

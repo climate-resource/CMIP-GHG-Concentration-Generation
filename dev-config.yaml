@@ -25,11 +25,6 @@ calculate_c4f10_like_monthly_fifteen_degree_pieces:
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c8f18/c8f18_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c8f18/c8f18_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c8f18
-- gas: cfc114
-  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
-  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
-  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
-  step_config_id: cfc114
 calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
@@ -257,6 +252,31 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   year_drop_observational_data_before_and_including: null
 - allow_long_poleward_extension: true
   allow_poleward_extension: true
+  gas: cfc114
+  global_annual_mean_allyears_file: data/interim/cfc114/cfc114_global-annual-mean_allyears.nc
+  global_annual_mean_allyears_monthly_file: data/interim/cfc114/cfc114_global-annual-mean_allyears-monthly.nc
+  lat_gradient_n_eofs_to_use: 1
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/cfc114/cfc114_allyears-lat-gradient-eofs-pcs.nc
+  latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/cfc114/cfc114_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/cfc114/cfc114_pc0-total-emissions-regression.yaml
+  observational_network_global_annual_mean_file: data/interim/cfc114/cfc114_observational-network_global-annual-mean.nc
+  observational_network_interpolated_file: data/interim/cfc114/cfc114_observational-network_interpolated.nc
+  observational_network_latitudinal_gradient_eofs_file: data/interim/cfc114/cfc114_observational-network_latitudinal-gradient-eofs.nc
+  observational_network_seasonality_file: data/interim/cfc114/cfc114_observational-network_seasonality.nc
+  pre_industrial:
+    source: Guessing from reading M2017
+    value:
+    - 0.0
+    - ppt
+    year: 1940
+  processed_all_data_with_bins_file: data/interim/cfc114/cfc114_observational-network_all-data-with-bin-information.csv
+  processed_bin_averages_file: data/interim/cfc114/cfc114_observational-network_bin-averages.csv
+  seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc114/cfc114_seasonality_fifteen-degree_allyears-monthly.nc
+  step_config_id: cfc114
+  year_drop_observational_data_after_and_including: null
+  year_drop_observational_data_before_and_including: null
+- allow_long_poleward_extension: true
+  allow_poleward_extension: true
   gas: cfc115
   global_annual_mean_allyears_file: data/interim/cfc115/cfc115_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/cfc115/cfc115_global-annual-mean_allyears-monthly.nc
@@ -273,7 +293,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1960
+    year: 1950
   processed_all_data_with_bins_file: data/interim/cfc115/cfc115_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/cfc115/cfc115_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/cfc115/cfc115_seasonality_fifteen-degree_allyears-monthly.nc
@@ -373,7 +393,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1950
   processed_all_data_with_bins_file: data/interim/ch3ccl3/ch3ccl3_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/ch3ccl3/ch3ccl3_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch3ccl3/ch3ccl3_seasonality_fifteen-degree_allyears-monthly.nc
@@ -448,7 +468,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1211/halon1211_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1211/halon1211_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1211/halon1211_seasonality_fifteen-degree_allyears-monthly.nc
@@ -473,7 +493,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon1301/halon1301_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon1301/halon1301_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon1301/halon1301_seasonality_fifteen-degree_allyears-monthly.nc
@@ -498,7 +518,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1965
+    year: 1950
   processed_all_data_with_bins_file: data/interim/halon2402/halon2402_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/halon2402/halon2402_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/halon2402/halon2402_seasonality_fifteen-degree_allyears-monthly.nc
@@ -523,7 +543,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc141b/hcfc141b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc141b/hcfc141b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc141b/hcfc141b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -548,7 +568,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1950
   processed_all_data_with_bins_file: data/interim/hcfc142b/hcfc142b_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc142b/hcfc142b_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc142b/hcfc142b_seasonality_fifteen-degree_allyears-monthly.nc
@@ -573,7 +593,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
     value:
     - 0.0
     - ppt
-    year: 1955
+    year: 1935
   processed_all_data_with_bins_file: data/interim/hcfc22/hcfc22_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hcfc22/hcfc22_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hcfc22/hcfc22_seasonality_fifteen-degree_allyears-monthly.nc
@@ -594,11 +614,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc125/hfc125_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc125/hfc125_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc125/hfc125_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc125/hfc125_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc125/hfc125_seasonality_fifteen-degree_allyears-monthly.nc
@@ -619,11 +639,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc134a/hfc134a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc134a/hfc134a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Making interpolation behave with Velders et al., 2022 data
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1988
   processed_all_data_with_bins_file: data/interim/hfc134a/hfc134a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc134a/hfc134a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc134a/hfc134a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -644,11 +664,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc143a/hfc143a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc143a/hfc143a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1975
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc143a/hfc143a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc143a/hfc143a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc143a/hfc143a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -669,11 +689,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc152a/hfc152a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc152a/hfc152a_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1985
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc152a/hfc152a_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc152a/hfc152a_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc152a/hfc152a_seasonality_fifteen-degree_allyears-monthly.nc
@@ -694,11 +714,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc227ea/hfc227ea_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc227ea/hfc227ea_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc227ea/hfc227ea_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc227ea/hfc227ea_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc227ea/hfc227ea_seasonality_fifteen-degree_allyears-monthly.nc
@@ -744,11 +764,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc236fa/hfc236fa_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc236fa/hfc236fa_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1970
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc236fa/hfc236fa_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc236fa/hfc236fa_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc236fa/hfc236fa_seasonality_fifteen-degree_allyears-monthly.nc
@@ -769,11 +789,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc245fa/hfc245fa_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc245fa/hfc245fa_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 2000
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc245fa/hfc245fa_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc245fa/hfc245fa_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc245fa/hfc245fa_seasonality_fifteen-degree_allyears-monthly.nc
@@ -794,11 +814,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc32/hfc32_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc32/hfc32_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1990
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc32/hfc32_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc32/hfc32_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc32/hfc32_seasonality_fifteen-degree_allyears-monthly.nc
@@ -819,7 +839,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc365mfc/hfc365mfc_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc365mfc/hfc365mfc_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
@@ -844,11 +864,11 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc4310mee/hfc4310mee_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc4310mee/hfc4310mee_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: Velders et al., 2022
     value:
     - 0.0
     - ppt
-    year: 1985
+    year: 1980
   processed_all_data_with_bins_file: data/interim/hfc4310mee/hfc4310mee_observational-network_all-data-with-bin-information.csv
   processed_bin_averages_file: data/interim/hfc4310mee/hfc4310mee_observational-network_bin-averages.csv
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/hfc4310mee/hfc4310mee_seasonality_fifteen-degree_allyears-monthly.nc
@@ -3424,6 +3444,26 @@ retrieve_and_process_neem_data:
   raw_dir: data/raw/neem
   step_config_id: only
 retrieve_and_process_scripps_data: []
+retrieve_and_process_velders_et_al_2022_data:
+- download_complete_file: data/raw/velders-et-al-2022/download.complete
+  processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
+  raw_dir: data/raw/velders-et-al-2022
+  step_config_id: only
+  zenodo_record:
+    known_hash: 74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd
+    url: https://zenodo.org/records/6520707/files/veldersguus/HFC-scenarios-2022-v1.0.zip?download=1
+retrieve_and_process_western_et_al_2024_data:
+- download_complete_file: data/raw/western-et-al-2024/download.complete
+  processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
+  raw_dir: data/raw/western-et-al-2024
+  step_config_id: only
+  zenodo_record:
+    known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7
+    url: https://zenodo.org/records/10782689/files/Projections.zip?download=1
+retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
+- processed_data_file: data/interim/wmo-2022-ozone-assessment-ch7/wmo_2022_ozone_assessment_ch7.csv
+  raw_data: data/raw/wmo-2022-ozone-assessment-ch7/wmo2022_Ch7_mixingratios.xlsx
+  step_config_id: only
 retrieve_misc_data:
 - hadcrut5:
     download_url:
