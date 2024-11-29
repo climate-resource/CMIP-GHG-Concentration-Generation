@@ -65,6 +65,9 @@ raw_data_file_l = pooch.retrieve(
     processor=pooch.Unzip(members=["Projections/hcfc_projections_v2.csv"]),
     progressbar=True,
 )
+if isinstance(raw_data_file_l, Path):
+    raise TypeError
+
 if len(raw_data_file_l) != 1:
     raise AssertionError
 

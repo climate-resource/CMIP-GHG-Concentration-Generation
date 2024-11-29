@@ -105,7 +105,7 @@ wmo_ch7_df
 # %% editable=true slideshow={"slide_type": ""}
 wmo_ch7_df = wmo_ch7_df.set_index("year")
 wmo_ch7_df.columns.name = "gas"
-wmo_ch7_df = wmo_ch7_df.stack().to_frame("value").reset_index()
+wmo_ch7_df = wmo_ch7_df.stack().to_frame("value").reset_index()  # type: ignore
 wmo_ch7_df["unit"] = assumed_unit
 wmo_ch7_df
 

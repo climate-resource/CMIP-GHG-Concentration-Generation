@@ -67,6 +67,9 @@ raw_data_file_l = pooch.retrieve(
     ),
     progressbar=True,
 )
+if isinstance(raw_data_file_l, Path):
+    raise TypeError
+
 if len(raw_data_file_l) != 1:
     raise AssertionError
 

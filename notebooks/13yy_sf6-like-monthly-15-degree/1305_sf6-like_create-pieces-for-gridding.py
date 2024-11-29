@@ -201,10 +201,10 @@ np.testing.assert_allclose(
 max_reasonable_seasonality_frac = 0.35  # expert judgement
 
 seasonality_frac_monthly = seasonality_full / global_annual_mean_monthly
-seasonality_frac_monthly = xr.where(seasonality_full == 0.0, 0.0, seasonality_frac_monthly)
+seasonality_frac_monthly = xr.where(seasonality_full == 0.0, 0.0, seasonality_frac_monthly)  # type: ignore
 
 borked_years = seasonality_frac_monthly.year[
-    (np.abs(seasonality_frac_monthly) > max_reasonable_seasonality_frac).any(["month", "lat"])
+    (np.abs(seasonality_frac_monthly) > max_reasonable_seasonality_frac).any(["month", "lat"])  # type: ignore
 ]
 if borked_years.size > 0:
     msg = (

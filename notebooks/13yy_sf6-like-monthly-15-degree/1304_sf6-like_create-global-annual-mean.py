@@ -34,11 +34,12 @@ import cf_xarray.units
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
-import scipy.optimize
+import scipy.optimize  # type: ignore
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -134,7 +135,7 @@ if not global_mean_supplement_files:
 elif len(global_mean_supplement_files) == 1:
     global_mean_data = pd.read_csv(global_mean_supplement_files[0])
     global_mean_data = global_mean_data[global_mean_data["gas"] == config_step.gas]
-    display(global_mean_data)  # noqa: F821
+    print(global_mean_data)
 else:
     raise NotImplementedError(global_mean_supplement_files)
 
@@ -314,35 +315,35 @@ increase
 
 
 # %% editable=true slideshow={"slide_type": ""}
-def quartic(x, a, b):
+def quartic(x: npt.NDArray[Any], a: float, b: float) -> npt.NDArray[Any]:
     """
     Quartic function, locked to make fitting easier
     """
     res = a * ((x - pre_ind_year) / width) ** 4 + b * ((x - pre_ind_year) / width) ** 2
 
-    return res
+    return res  # type: ignore
 
 
 # %% editable=true slideshow={"slide_type": ""}
-def transform_val_to_scipy(v):
+def transform_val_to_scipy(v: npt.NDArray[Any]) -> npt.NDArray[Any]:
     """
     Transform a value to a value that can be used in scipy's fitting
 
     This is needed because scipy's fitting works best if all parameter values are ~1.0.
     """
     if increase > 0.0:
-        return (v - pre_ind_value.m) / (2 * increase)
+        return (v - pre_ind_value.m) / (2 * increase)  # type: ignore
 
     return np.zeros_like(v)
 
 
-def transform_val_from_scipy(v):
+def transform_val_from_scipy(v: npt.NDArray[Any]) -> npt.NDArray[Any]:
     """
     Transform a value to a value on the raw scale
 
     This is needed because scipy's fitting works best if all parameter values are ~1.0.
     """
-    return v * 2 * increase + pre_ind_value.m
+    return v * 2 * increase + pre_ind_value.m  # type: ignore
 
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -475,9 +476,11 @@ obs_network_full_field
 #     gradient we calculated earlier.
 
 # %%
-tmp = allyears_full_field.copy()
-tmp.name = "allyears_global_annual_mean"
-allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
+allyears_full_field_renamed = allyears_full_field.copy()
+allyears_full_field_renamed.name = "allyears_global_annual_mean"
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
+    allyears_full_field_renamed
+)
 
 # Round appropriately
 allyears_global_annual_mean[np.isclose(allyears_global_annual_mean.data.m, 0.0)] = 0.0
@@ -497,10 +500,12 @@ check = allyears_full_field - allyears_global_annual_mean
 xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 
 # %% editable=true slideshow={"slide_type": ""}
-tmp = allyears_latitudinal_gradient.copy()
-tmp.name = "tmp"
+allyears_latitudinal_gradient_renamed = allyears_latitudinal_gradient.copy()
+allyears_latitudinal_gradient_renamed.name = "tmp"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+    local.xarray_space.calculate_global_mean_from_lon_mean(allyears_latitudinal_gradient_renamed)
+    .data.to("ppb")
+    .m,
     0.0,
     atol=1e-10,
 )

@@ -95,7 +95,7 @@ for i in range(expected_n_blocks):
     start = start_idx + i * (block_length + 1)
     species_df = raw_excel.iloc[start : start + block_length]
     species_df = species_df.dropna(how="all", axis="columns")
-    species_df.columns = species_df.iloc[0, :]
+    species_df.columns = species_df.iloc[0, :]  # type: ignore
     species_df = species_df.iloc[1:, :]
 
     gas = species_df["Species"].unique()
@@ -103,7 +103,7 @@ for i in range(expected_n_blocks):
         raise AssertionError
     gas = gas[0]
 
-    keep = species_df[["Year", "Mix_tot"]].rename({"Year": "year", "Mix_tot": gas}, axis="columns")
+    keep = species_df[["Year", "Mix_tot"]].rename({"Year": "year", "Mix_tot": str(gas)}, axis="columns")
     keep = keep.set_index("year")
     # display(keep)
 
@@ -139,7 +139,7 @@ velders_variable_normalisation_map = {
 # %%
 clean = clean.rename(velders_variable_normalisation_map, axis="columns")
 clean.columns.name = "gas"
-clean = clean.stack().to_frame("value").reset_index()
+clean = clean.stack().to_frame("value").reset_index()  # type: ignore
 clean["unit"] = assumed_unit
 clean
 

@@ -82,7 +82,7 @@ western_variable_normalisation_map = {
 clean = raw.rename({"Year": "year", **western_variable_normalisation_map}, axis="columns")
 clean = clean.set_index("year")
 clean.columns.name = "gas"
-clean = clean.stack().to_frame("value").reset_index()
+clean = clean.stack().to_frame("value").reset_index()  # type: ignore
 clean["unit"] = assumed_unit
 clean
 
