@@ -12,6 +12,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
+from local.global_mean_extension import get_global_mean_supplement_files
 from local.observational_network_binning import get_obs_network_binning_input_files
 
 if TYPE_CHECKING:
@@ -52,8 +53,7 @@ def configure_notebooks(
     config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
     obs_network_input_files = get_obs_network_binning_input_files(gas=config_step.gas, config=config)
-    # # TODO: add this in
-    # get_global_mean_supplement_files
+    global_mean_supplement_files = get_global_mean_supplement_files(gas=config_step.gas, config=config)
 
     config_historical_emissions = get_config_for_step_id(
         config=config, step="compile_historical_emissions", step_config_id="only"
@@ -61,8 +61,6 @@ def configure_notebooks(
     # config_retrieve_misc = get_config_for_step_id(
     #     config=config, step="retrieve_misc_data", step_config_id="only"
     # )
-
-    global_mean_supplement_files = get_obs_network_binning_input_files(gas=config_step.gas, config=config)
 
     configured_notebooks = [
         ConfiguredNotebook(
