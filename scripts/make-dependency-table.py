@@ -304,7 +304,7 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
     return DependencyInfo(tuple(dependency_info_l))
 
 
-def main(
+def main(  # noqa: PLR0913
     force_dot_generation: Annotated[
         bool, typer.Option(help="Should we force the dot files to be re-generated?")
     ] = False,
@@ -320,6 +320,9 @@ def main(
     config_file: Annotated[
         str, typer.Option(help="Config file to use when determining the dependencies")
     ] = "v0.4.0-config.yaml",
+    expected_number_of_writing_tasks: Annotated[
+        int, typer.Option(help="Expected number of file writing tasks")
+    ] = 43,
 ) -> None:
     """
     Create the dependency table
@@ -332,7 +335,6 @@ def main(
     )
 
     input4mips_writing_tasks = extract_input4mips_writing_tasks(doit_list_all)
-    expected_number_of_writing_tasks = 43
     if len(input4mips_writing_tasks) != expected_number_of_writing_tasks:
         raise AssertionError(len(input4mips_writing_tasks))
 
@@ -376,13 +378,13 @@ def main(
         fh.write("\n")
         source_txt = "\n".join(md_summary_by_source_l)
         fh.write(f"{source_txt}\n")
+
         fh.write("\n")
 
         fh.write("# Summary by gas\n")
         fh.write("\n")
         gas_txt = "\n".join(md_summary_by_gas_l)
         fh.write(f"{gas_txt}\n")
-        fh.write("\n")
 
 
 if __name__ == "__main__":
