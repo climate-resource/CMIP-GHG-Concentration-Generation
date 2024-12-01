@@ -286,16 +286,10 @@ gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
 gas_deps
 
 # %%
-references = (
-    "(Note, these are just written as a JSON list. Nothing fancy, but also human readable.) "
-    f"{json.dumps([v['reference'] for v in gas_deps])}"
-)
-references = references.replace('"', "'")
-
 non_input4mips_metadata_common = {
-    "references_short_names": "; ".join([v["source"] for v in gas_deps]),
-    "references": references,
-    "references_dois": ";".join([v["doi"] for v in gas_deps]),
+    "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
+    "references": " --- ".join([v["reference"] for v in gas_deps]),
+    "references_dois": " --- ".join([v["doi"] for v in gas_deps]),
     # DOI for the dataset, not references
     "doi": config.doi,
 }
