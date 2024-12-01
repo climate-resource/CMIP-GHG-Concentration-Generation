@@ -31,6 +31,7 @@
 # %%
 import datetime
 import itertools
+import json
 from functools import partial
 from pathlib import Path
 
@@ -224,6 +225,64 @@ metadata_minimum_common = dict(
     target_mip="CMIP",
 )
 metadata_minimum_common
+
+# %%
+# TODO: replace this with generation of references throughout the workflow,
+# rather than from static file
+run_id = config_step.input4mips_out_dir.parents[2].name
+data_dir = config_step.input4mips_out_dir.parents[1]
+
+with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
+    all_gas_deps = json.load(fh)
+
+gas_deps = all_gas_deps[config_step.gas]
+gas_deps.append(
+    {
+        "gas": "cfc114",
+        "source": "Meinshausen et al., GMD (2017)",
+        "licence": "Paper, NA",
+        "reference": (
+            "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
+            "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
+            "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
+        ),
+        "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
+    }
+)
+# Once we have a pre-print or something, can do this
+# gas_deps.append({
+#     'gas': 'cfc114',
+#   'source': 'Nicholls et al., in-prep (2024)',
+#   'licence': 'Paper, NA',
+#   'reference': (
+#       "Nicholls, Z., Meinshausen, M., ...: "
+#       "Historical greenhouse gas concentrations for climate modelling (CMIP7), "
+#   ),
+#   'doi': 'https://doi.org/tbd'
+# })
+gas_deps
+
+# %%
+# Order deps by reverse alphabetical order for now,
+# can sort out order of priority when solving #62.
+gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
+gas_deps
+
+# %%
+references = (
+    "(Note, these are just written as a JSON list. Nothing fancy, but also human readable.) "
+    f"{json.dumps([v['reference'] for v in gas_deps])}"
+)
+references = references.replace('"', "'")
+
+non_input4mips_metadata_common = {
+    "references_short_names": "; ".join([v["source"] for v in gas_deps]),
+    "references": references,
+    "references_dois": ";".join([v["doi"] for v in gas_deps]),
+    # DOI for the dataset, not references
+    "doi": config.doi,
+}
+non_input4mips_metadata_common
 
 # %% [markdown]
 # ### Define variable renaming
@@ -433,9 +492,11 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
             input4mips_ds.metadata,
             product="derived",
             comment=(
-                "[TBC which grant] Data produced by Climate Resource supported by funding "
-                "from the CMIP IPO (Coupled Model Intercomparison Project International Project Office). "
                 "This is an interim dataset, do not use in production."
+                "Data compiled by Climate Resource, based on science by many others "
+                "(see 'references*' attributes)). "
+                "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
+                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd. "
             ),
         )
 
@@ -445,10 +506,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
             data=ds,
             metadata=metadata_evolved,
             cvs=cvs,
-            non_input4mips_metadata=dict(
-                doi=config.doi,
-                references="Meinshausen et al., 2017, GMD (https://doi.org/10.5194/gmd-10-2057-2017)",
-            ),
+            non_input4mips_metadata=non_input4mips_metadata_common,
         )
 
         print("Writing")
