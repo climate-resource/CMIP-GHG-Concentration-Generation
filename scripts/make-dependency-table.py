@@ -142,7 +142,7 @@ source_info: dict[str, SourceInfo] = {
             "PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: "
             "Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): "
             "One-to-one coupling of glacial climate variability in Greenland and Antarctica. "
-            "Nature, 444, 195-198, https://doi.org/10.1038/nature05301",
+            "Nature, 444, 195-198, https://doi.org/10.1038/nature05301"
         ),
         doi="https://doi.pangaea.de/10.1594/PANGAEA.552232",
     ),
