@@ -11,9 +11,12 @@ import shutil
 import subprocess
 from collections import defaultdict
 from pathlib import Path
+from typing import Annotated
 
+import pandas as pd
 import pygraphviz
 import tqdm
+import typer
 from attrs import asdict, define
 
 
@@ -302,10 +305,21 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
 
 
 def main(
-    force_dot_generation: bool = False,
-    out_file: Path = Path("dependencies-table.md"),
-    out_file_by_gas_json: Path = Path("dependencies-by-gas.json"),
-    config_file: str = "v0.4.0-config.yaml",
+    force_dot_generation: Annotated[
+        bool, typer.Option(help="Should we force the dot files to be re-generated?")
+    ] = False,
+    out_file: Annotated[Path, typer.Option(help="Path in which to write the dependency table)")] = Path(
+        "dependencies-table.md"
+    ),
+    out_file_by_gas_json: Annotated[
+        Path, typer.Option(help="Path in which to write the dependencies, grouped by gas")
+    ] = Path("dependencies-by-gas.json"),
+    out_file_csv: Annotated[
+        Path, typer.Option(help="Path in which to write the dependencies as a csv")
+    ] = Path("dependencies-table.csv"),
+    config_file: Annotated[
+        str, typer.Option(help="Config file to use when determining the dependencies")
+    ] = "v0.4.0-config.yaml",
 ) -> None:
     """
     Create the dependency table
@@ -329,6 +343,8 @@ def main(
     dependency_info = extract_dependencies(dot_files)
     with open(out_file_by_gas_json, "w") as fh:
         json.dump(dependency_info.by_gas_serialised(), fh, indent=2)
+
+    pd.DataFrame([asdict(source) for source in dependency_info.sources]).to_csv(out_file_csv, index=False)
 
     md_summary_by_source_d = defaultdict(list)
     for source in dependency_info.sources:
@@ -370,4 +386,4 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)

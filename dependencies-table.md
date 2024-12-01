@@ -10,10 +10,10 @@
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
 **AGAGE GAGE** - 2: ch4, n2o
 **AGAGE ALE** - 2: ch4, n2o
-**NOAA surface flask** - 2: ch4, co2
 **NOAA in-situ** - 2: ch4, co2
-**EPICA** - 1: ch4
+**NOAA surface flask** - 2: ch4, co2
 **NEEM** - 1: ch4
+**EPICA** - 1: ch4
 
 # Summary by gas
 
