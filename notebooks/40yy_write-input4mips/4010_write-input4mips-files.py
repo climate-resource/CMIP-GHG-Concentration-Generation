@@ -238,12 +238,24 @@ with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
 try:
     gas_deps = all_gas_deps[config_step.gas]
 except KeyError:
-    # No deps yet
-    gas_deps = []
+    # No deps yet, assume it came from SSP2-4.5
+    gas_deps = [
+        {
+            "gas": config_step.gas,
+            "source": "Meinshausen et al., GMD (2020)",
+            "licence": "Paper, NA",
+            "reference": (
+                "Meinshausen, M., Nicholls, Z. R. J., ..., Vollmer, M. K., and Wang, R. H. J.: "
+                "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
+                "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
+            ),
+            "doi": "https://doi.org/10.5194/gmd-13-3571-2020",
+        }
+    ]
 
 gas_deps.append(
     {
-        "gas": "cfc114",
+        "gas": config_step.gas,
         "source": "Meinshausen et al., GMD (2017)",
         "licence": "Paper, NA",
         "reference": (
