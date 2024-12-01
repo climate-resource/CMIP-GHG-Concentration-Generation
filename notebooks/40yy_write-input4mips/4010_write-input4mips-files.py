@@ -263,6 +263,12 @@ gas_deps.append(
 gas_deps
 
 # %%
+# Order deps by reverse alphabetical order for now,
+# can sort out order of priority when solving #62.
+gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
+gas_deps
+
+# %%
 references = (
     "(Note, these are just written as a JSON list. Nothing fancy, but also human readable.) "
     f"{json.dumps([v['reference'] for v in gas_deps])}"
