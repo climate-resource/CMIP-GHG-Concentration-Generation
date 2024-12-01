@@ -24,7 +24,7 @@ if [ "$RUN_ID" == "dev-test-run" ]; then
 
 	doit_config_file="dev-config-absolute.yaml"
 
-	# This is only temporary.
+	# This is only temporary (x-ref #62).
 	# In future, we will capture the dependencies as we go along.
 	pixi run -e all-dev python scripts/make-dependency-table.py \
 		--out-file-by-gas-json "data/raw/${RUN_ID}_dependencies-by-gas.json" \
@@ -52,7 +52,7 @@ else
 
 	doit_config_file=$RUN_ID-config.yaml
 
-	# This is only temporary.
+	# This is only temporary (x-ref #62).
 	# In future, we will capture the dependencies as we go along.
 	pixi run -e all-dev python scripts/make-dependency-table.py \
 		--out-file-by-gas-json "data/raw/${RUN_ID}_dependencies-by-gas.json" \

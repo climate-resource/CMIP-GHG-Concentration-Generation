@@ -1,5 +1,9 @@
 """
 Make a table of dependencies
+
+This is a temporary solution.
+In future work (https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues/62),
+we will create dependency information on the fly.
 """
 
 # ruff: noqa: D101, D102, D103
