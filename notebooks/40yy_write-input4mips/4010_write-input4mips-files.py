@@ -235,7 +235,12 @@ data_dir = config_step.input4mips_out_dir.parents[1]
 with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
     all_gas_deps = json.load(fh)
 
-gas_deps = all_gas_deps[config_step.gas]
+try:
+    gas_deps = all_gas_deps[config_step.gas]
+except KeyError:
+    # No deps yet
+    gas_deps = []
+
 gas_deps.append(
     {
         "gas": "cfc114",
