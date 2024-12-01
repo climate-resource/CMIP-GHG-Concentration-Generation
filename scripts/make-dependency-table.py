@@ -166,8 +166,7 @@ source_info: dict[str, SourceInfo] = {
         doi="https://doi.org/10.25919/5bfe29ff807fb",
     ),
     "Western et al., 2024": SourceInfo(
-        # https://zenodo.org/records/10782689
-        licence="CC BY 4.0",
+        licence="CC BY 4.0",  # https://zenodo.org/records/10782689
         reference=(
             "Western, L.M., Daniel, J.S., Vollmer, M.K. et al. "
             "A decrease in radiative forcing "
@@ -177,8 +176,7 @@ source_info: dict[str, SourceInfo] = {
         doi="https://doi.org/10.1038/s41558-024-02038-7",
     ),
     "Velders et al., 2022": SourceInfo(
-        # https://zenodo.org/records/6520707
-        licence="Other (Open)",
+        licence="Other (Open)",  # https://zenodo.org/records/6520707
         reference=(
             "Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.: "
             "Projections of hydrofluorocarbon (HFC) emissions "
