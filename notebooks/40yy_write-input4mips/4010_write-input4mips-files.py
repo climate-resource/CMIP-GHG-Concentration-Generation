@@ -232,7 +232,7 @@ metadata_minimum_common
 run_id = config_step.input4mips_out_dir.parents[2].name
 data_dir = config_step.input4mips_out_dir.parents[1]
 
-with open(data_dir / "raw" / f"{run_id}_dependencies-by-gas.json") as fh:
+with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
     all_gas_deps = json.load(fh)
 
 gas_deps = all_gas_deps[config_step.gas]
