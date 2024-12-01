@@ -2,42 +2,49 @@
 Make a table of dependencies
 """
 
+# ruff: noqa: D101, D102, D103
+
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
+from collections import defaultdict
 from pathlib import Path
 
 import pygraphviz
 import tqdm
+from attrs import asdict, define
 
 
-def main(force_dot_generation: bool = False, out_file: Path = Path("dependencies-table.md")) -> None:  # noqa: PLR0912, PLR0915
-    """
-    Create the dependency table
-    """
-    pixi = shutil.which("pixi")
+def get_doit_list_all(pixi: str, config_file: str) -> tuple[str, ...]:
     doit_list_all = subprocess.check_output(
         [pixi, "run", "-e", "all-dev", "doit", "list", "--all", "--quiet"],  # noqa: S603
-        env={"DOIT_CONFIGURATION_FILE": "v0.4.0-config.yaml"},
+        env={"DOIT_CONFIGURATION_FILE": config_file},
     )
 
+    return tuple(doit_list_all.decode().splitlines())
+
+
+def extract_input4mips_writing_tasks(doit_list_all: tuple[str, ...]) -> tuple[str, ...]:
     input4mips_writing_tasks = []
-    for task in doit_list_all.decode().splitlines():
+    for task in doit_list_all:
         task_clean = task.strip()
         if "write input4MIPs - write all files:" in task_clean and "eq" not in task_clean:
             input4mips_writing_tasks.append(task_clean)
 
-    expected_number_of_writing_tasks = 43
-    if len(input4mips_writing_tasks) != expected_number_of_writing_tasks:
-        raise AssertionError
+    return tuple(input4mips_writing_tasks)
 
+
+def get_dependency_dot_files(
+    pixi: str, input4mips_writing_tasks: tuple[str, ...], force_generation: bool
+) -> dict[str, Path]:
     dot_files = {}
     for writing_task in tqdm.tqdm(input4mips_writing_tasks, desc="Creating dot files"):
         gas = writing_task.split(":")[-1]
 
         out_dot = Path(f"{gas}-dependencies.dot")
-        if force_dot_generation or not out_dot.exists():
+        if force_generation or not out_dot.exists():
             subprocess.check_output(
                 [  # noqa: S603
                     pixi,
@@ -56,12 +63,159 @@ def main(force_dot_generation: bool = False, out_file: Path = Path("dependencies
 
         dot_files[gas] = out_dot
 
-    all_gas_deps = {}
+    return dot_files
+
+
+@define
+class SourceInfo:
+    licence: str
+    reference: str
+    doi: str
+
+
+source_info: dict[str, SourceInfo] = {
+    # Need to get in contact with AGAGE station PIs
+    # Need to cite the DOI of the dataset
+    # Need to cite most recent paper here: https://www-air.larc.nasa.gov/missions/agage/publications/
+    # TODO: add acknowledgements
+    # Publications must state:
+    # “AGAGE is supported principally by the National Aeronautics and Space Administration (USA) "
+    # "grants to the Massachusetts Institute of Technology and the Scripps Institution of Oceanography.
+    # Additional statements must be included to acknowledge funding for the individual stations.
+    # These are located on the individual station pages.
+    # Obviously too simple, but better than zero
+    **{
+        key: SourceInfo(
+            licence="Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+            # Actually incorrect, should be using gas-specific references
+            reference="Prinn et al., Earth Syst. Sci. Data 2018",
+            # Actually incorrect, should be using the individual station DOIs.
+            # Do that next time.
+            doi="https://doi.org/10.5194/essd-10-985-2018",
+        )
+        for key in ("AGAGE gc-ms-medusa", "AGAGE gc-ms", "AGAGE gc-md", "AGAGE GAGE", "AGAGE ALE")
+    },
+    # Need to get in contact with GML
+    # Consider whether obs pack is a better source for future
+    "NOAA HATS": SourceInfo(
+        licence="Free for scientific use, offer co-authorship. See https://gml.noaa.gov/hats/hats_datause.html",
+        # Incorrect, will need to work out how to navigate the NOAA website properly
+        reference="https://gml.noaa.gov/hats/",
+        # Obviously incorrect, but better than zero
+        doi="https://gml.noaa.gov/hats/",
+    ),
+    **{
+        key: SourceInfo(
+            licence="Free for scientific use, offer co-authorship. See https://gml.noaa.gov/ccgg/data/datause.html",
+            # Incorrect, will need to work out how to navigate the NOAA website properly
+            reference="https://gml.noaa.gov/ccgg",
+            # Obviously incorrect, but better than zero
+            doi="https://gml.noaa.gov/ccgg",
+        )
+        for key in ("NOAA surface flask", "NOAA in-situ")
+    },
+    "WMO 2022 ozone assessment Ch. 7": SourceInfo(
+        licence="Underlying data all openly licensed, so assuming the same, but not 100% clear",
+        # TODO: see if we can get WMO to provide bibtex
+        reference=(
+            "Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini, R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. "  # noqa: E501
+            "(2022). "
+            "Chapter 7: Scenarios and Information for Policymakers. "
+            "In World Meteorological Organization (WMO), "
+            "Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278"
+            "(pp. 509); WMO: Geneva, 2022."
+        ),
+        # Are there proper DOIs?
+        doi="https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf",
+    ),
+    "EPICA": SourceInfo(
+        licence="CC BY 3.0",
+        reference=(
+            "EPICA Community Members (2006): Methane of ice core EDML [dataset]. "
+            "PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: "
+            "Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): "
+            "One-to-one coupling of glacial climate variability in Greenland and Antarctica. "
+            "Nature, 444, 195-198, https://doi.org/10.1038/nature05301",
+        ),
+        doi="https://doi.pangaea.de/10.1594/PANGAEA.552232",
+    ),
+    "NEEM": SourceInfo(
+        licence="CC BY 4.0",
+        reference=(
+            "Rhodes, Rachael H; Brook, Edward J (2019): "
+            "Methane in NEEM-2011-S1 ice core from North Greenland, "
+            "1800 years continuous record: 5 year median, v2 [dataset]. "
+            "PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: "
+            "Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013): "
+            "Continuous methane measurements from a late Holocene Greenland ice core: "
+            "Atmospheric and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, "
+            "https://doi.org/10.1016/j.epsl.2013.02.034"
+        ),
+        doi="https://doi.pangaea.de/10.1594/PANGAEA.899039",
+    ),
+    "Law Dome": SourceInfo(
+        licence="CC BY 4.0",
+        reference=(
+            "Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): "
+            "Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. "
+            "Data Collection. https://doi.org/10.25919/5bfe29ff807fb"
+        ),
+        doi="https://doi.org/10.25919/5bfe29ff807fb",
+    ),
+    "Western et al., 2024": SourceInfo(
+        # https://zenodo.org/records/10782689
+        licence="CC BY 4.0",
+        reference=(
+            "Western, L.M., Daniel, J.S., Vollmer, M.K. et al. "
+            "A decrease in radiative forcing "
+            "and equivalent effective chlorine from hydrochlorofluorocarbons. "
+            "Nat. Clim. Chang. 14, 805-807 (2024)."
+        ),
+        doi="https://doi.org/10.1038/s41558-024-02038-7",
+    ),
+    "Velders et al., 2022": SourceInfo(
+        # https://zenodo.org/records/6520707
+        licence="Other (Open)",
+        reference=(
+            "Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.: "
+            "Projections of hydrofluorocarbon (HFC) emissions "
+            "and the resulting global warming based on recent trends in observed abundances "
+            "and current policies, "
+            "Atmos. Chem. Phys., 22, 6087-6101, "
+            "https://doi.org/10.5194/acp-22-6087-2022, 2022."
+        ),
+        doi="https://doi.org/10.5194/acp-22-6087-2022",
+    ),
+}
+
+
+@define
+class DependencyInfoSource:
+    gas: str
+    source: str
+    licence: str
+    reference: str
+    doi: str
+
+
+@define
+class DependencyInfo:
+    sources: tuple[DependencyInfoSource, ...]
+
+    def by_gas_serialised(self) -> dict[str, list[dict[str, str], ...]]:
+        res = defaultdict(list)
+        for source in self.sources:
+            res[source.gas].append(asdict(source))
+
+        return res
+
+
+def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa: PLR0912, PLR0915
+    dependency_info_l = []
     for gas, dot_file in tqdm.tqdm(dot_files.items(), desc="Extracting dependencies from dot files"):
         gas_graph = pygraphviz.AGraph(dot_file, strict=False, directed=True)
         input_data_nodes = [n for n in gas_graph.nodes() if n.startswith("(00")]
 
-        gas_deps = []
         for input_data_node in input_data_nodes:
             if "Natural Earth shape files" in input_data_node:
                 continue
@@ -111,7 +265,7 @@ def main(force_dot_generation: bool = False, out_file: Path = Path("dependencies
                 dependency = "Western et al., 2024"
 
             elif "WMO 2022 ozone assessment" in input_data_node:
-                dependency = "WMO 2022 ozone assessment"
+                dependency = "WMO 2022 ozone assessment Ch. 7"
 
             elif "Law Dome" in input_data_node and "download" in input_data_node:
                 dependency = "Law Dome"
@@ -135,57 +289,84 @@ def main(force_dot_generation: bool = False, out_file: Path = Path("dependencies
             else:
                 raise NotImplementedError(input_data_node)
 
-            gas_deps.append(dependency)
+            di = DependencyInfoSource(
+                gas=gas,
+                source=dependency,
+                licence=source_info[dependency].licence,
+                reference=source_info[dependency].reference,
+                doi=source_info[dependency].doi,
+            )
+            dependency_info_l.append(di)
 
-        all_gas_deps[gas] = gas_deps
+    return DependencyInfo(tuple(dependency_info_l))
 
-    pretty_deps = {}
-    for gas in sorted(all_gas_deps):
-        deps = all_gas_deps[gas]
-        non_agage_non_noaa = [d for d in deps if "AGAGE" not in d and "NOAA" not in d]
 
-        pd = []
-        if non_agage_non_noaa:
-            pd.append(", ".join(non_agage_non_noaa))
+def main(
+    force_dot_generation: bool = False,
+    out_file: Path = Path("dependencies-table.md"),
+    out_file_by_gas_json: Path = Path("dependencies-by-gas.json"),
+    config_file: str = "v0.4.0-config.yaml",
+) -> None:
+    """
+    Create the dependency table
+    """
+    pixi = shutil.which("pixi")
 
-        noaa = [d for d in deps if "NOAA" in d]
-        if noaa:
-            noaa_d = [d.replace("NOAA ", "") for d in noaa]
-            pd.append(f"NOAA ({', '.join(noaa_d)})")
+    doit_list_all = get_doit_list_all(
+        pixi=pixi,
+        config_file=config_file,
+    )
 
-        agage = [d for d in deps if "AGAGE" in d]
-        if agage:
-            agage_d = [d.replace("AGAGE ", "") for d in agage]
-            pd.append(f"AGAGE ({', '.join(agage_d)})")
+    input4mips_writing_tasks = extract_input4mips_writing_tasks(doit_list_all)
+    expected_number_of_writing_tasks = 43
+    if len(input4mips_writing_tasks) != expected_number_of_writing_tasks:
+        raise AssertionError(len(input4mips_writing_tasks))
 
-        pretty_deps[gas] = pd
+    dot_files = get_dependency_dot_files(
+        pixi=pixi, input4mips_writing_tasks=input4mips_writing_tasks, force_generation=force_dot_generation
+    )
+
+    dependency_info = extract_dependencies(dot_files)
+    with open(out_file_by_gas_json, "w") as fh:
+        json.dump(dependency_info.by_gas_serialised(), fh, indent=2)
+
+    md_summary_by_source_d = defaultdict(list)
+    for source in dependency_info.sources:
+        md_summary_by_source_d[source.source].append(source.gas)
+
+    md_summary_by_gas_d = defaultdict(list)
+    for source in dependency_info.sources:
+        md_summary_by_gas_d[source.gas].append(source.source)
+
+    md_summary_by_source_l = []
+    sorted_by_n_gases = sorted(md_summary_by_source_d.items(), key=lambda x: len(x[1]), reverse=True)
+    for source, gases in sorted_by_n_gases:
+        line = f"**{source}** - {len(gases)}: {', '.join(sorted(set(gases)))}"
+        md_summary_by_source_l.append(line)
+
+    gas_order = ["co2", "ch4", "n2o", "cfc12", "cfc11", "hfc134a", "sf6"]
+    for gas in sorted(md_summary_by_gas_d):
+        if gas not in gas_order:
+            gas_order.append(gas)
+
+    md_summary_by_gas_l = []
+    for gas in gas_order:
+        sources = md_summary_by_gas_d[gas]
+        line = f"**{gas}**: {', '.join(sorted(set(sources)))}"
+        md_summary_by_gas_l.append(line)
 
     with open(out_file, "w") as fh:
-        dep_sums = {
-            "AGAGE": [],
-            "NOAA": [],
-            "WMO": [],
-            "Velders": [],
-            "Western": [],
-            "Law Dome": [],
-            "EPICA": [],
-            "NEEM": [],
-        }
-        for gas, deps in pretty_deps.items():
-            for id in dep_sums:
-                if any(id in v for v in deps):
-                    dep_sums[id].append(gas)
+        fh.write("# Summary by source\n")
+        fh.write("\n")
+        source_txt = "\n".join(md_summary_by_source_l)
+        fh.write(f"{source_txt}\n")
+        fh.write("\n")
 
-        for id, gases in dep_sums.items():
-            fh.write(f"**{id}**: {len(gases)} ({', '.join(gases)})")
-            fh.write("\n")
-
-        fh.write("\n\n")
-
-        for gas in sorted(pretty_deps):
-            fh.write(f"**{gas}**: ")
-            fh.write(". ".join(pretty_deps[gas]))
-            fh.write("\n")
+        fh.write("# Summary by gas\n")
+        fh.write("\n")
+        gas_txt = "\n".join(md_summary_by_gas_l)
+        fh.write(f"{gas_txt}\n")
+        fh.write("\n")
 
 
 if __name__ == "__main__":
