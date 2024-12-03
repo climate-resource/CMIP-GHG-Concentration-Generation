@@ -18,6 +18,9 @@ from pydoit_nb.config_helpers import (
 from .calculate_c4f10_like_monthly_fifteen_degree_pieces import (
     CalculateC4F10LikeMonthlyFifteenDegreePieces,
 )
+from .calculate_c8f18_like_monthly_fifteen_degree_pieces import (
+    CalculateC8F18LikeMonthlyFifteenDegreePieces,
+)
 from .calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -203,6 +206,11 @@ class Config:
         field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
     )
     """Configurations to use for calculating the 15 degree, monthly data for gases we handle like C4F10"""
+
+    calculate_c8f18_like_monthly_fifteen_degree_pieces: list[CalculateC8F18LikeMonthlyFifteenDegreePieces] = (
+        field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
+    )
+    """Configurations to use for calculating the 15 degree, monthly data for gases we handle like C8F18"""
 
     crunch_grids: list[GridCrunchingConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]

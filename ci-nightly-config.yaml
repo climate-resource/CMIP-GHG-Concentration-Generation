@@ -1,5 +1,6 @@
 base_seed: 20241109
 calculate_c4f10_like_monthly_fifteen_degree_pieces: []
+calculate_c8f18_like_monthly_fifteen_degree_pieces: []
 calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc

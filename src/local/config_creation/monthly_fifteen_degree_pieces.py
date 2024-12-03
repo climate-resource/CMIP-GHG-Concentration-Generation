@@ -11,6 +11,9 @@ import pint
 from local.config.calculate_c4f10_like_monthly_fifteen_degree_pieces import (
     CalculateC4F10LikeMonthlyFifteenDegreePieces,
 )
+from local.config.calculate_c8f18_like_monthly_fifteen_degree_pieces import (
+    CalculateC8F18LikeMonthlyFifteenDegreePieces,
+)
 from local.config.calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -34,6 +37,7 @@ PieceCalculationOption = (
     | CalculateN2OMonthlyFifteenDegreePieces
     | CalculateSF6LikeMonthlyFifteenDegreePieces
     | CalculateC4F10LikeMonthlyFifteenDegreePieces
+    | CalculateC8F18LikeMonthlyFifteenDegreePieces
 )
 
 
@@ -82,6 +86,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
         "calculate_n2o_monthly_fifteen_degree_pieces": [],
         "calculate_sf6_like_monthly_fifteen_degree_pieces": [],
         "calculate_c4f10_like_monthly_fifteen_degree_pieces": [],
+        "calculate_c8f18_like_monthly_fifteen_degree_pieces": [],
     }
 
     for gas in gases:
@@ -175,10 +180,16 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "c5f12",
             "c6f14",
             "c7f16",
-            "c8f18",
         ):
             out["calculate_c4f10_like_monthly_fifteen_degree_pieces"].append(
                 get_c4f10_like_monthly_fifteen_degree_pieces_config(
+                    gas=gas,
+                )
+            )
+
+        elif gas in ("c8f18",):
+            out["calculate_c8f18_like_monthly_fifteen_degree_pieces"].append(
+                get_c8f18_like_monthly_fifteen_degree_pieces_config(
                     gas=gas,
                 )
             )
@@ -453,6 +464,35 @@ def get_c4f10_like_monthly_fifteen_degree_pieces_config(
     interim_dir = Path(f"data/interim/{gas}")
 
     return CalculateC4F10LikeMonthlyFifteenDegreePieces(
+        step_config_id=gas,
+        gas=gas,
+        global_annual_mean_allyears_monthly_file=interim_dir
+        / f"{gas}_global-annual-mean_allyears-monthly.nc",
+        seasonality_allyears_fifteen_degree_monthly_file=interim_dir
+        / f"{gas}_seasonality_fifteen-degree_allyears-monthly.nc",
+        latitudinal_gradient_fifteen_degree_allyears_monthly_file=interim_dir
+        / f"{gas}_latitudinal-gradient_fifteen-degree_allyears-monthly.nc",
+    )
+
+
+def get_c8f18_like_monthly_fifteen_degree_pieces_config(
+    gas: str,
+) -> CalculateC8F18LikeMonthlyFifteenDegreePieces:
+    """
+    Get the configuration for calculating the monthly, 15 degree pieces for a gas handled like c8f18
+
+    Parameters
+    ----------
+    gas
+        Gas for which to create the config
+
+    Returns
+    -------
+        Configuration for calculating the monthly, 15 degree pieces for a gas handled like SF6
+    """
+    interim_dir = Path(f"data/interim/{gas}")
+
+    return CalculateC8F18LikeMonthlyFifteenDegreePieces(
         step_config_id=gas,
         gas=gas,
         global_annual_mean_allyears_monthly_file=interim_dir
