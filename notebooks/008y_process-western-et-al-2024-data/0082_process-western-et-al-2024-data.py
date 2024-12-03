@@ -81,6 +81,16 @@ western_variable_normalisation_map = {
 # %%
 clean = raw.rename({"Year": "year", **western_variable_normalisation_map}, axis="columns")
 clean = clean.set_index("year")
+clean
+
+# %%
+# Western data from this file is start of year, yet we want mid-year values, hence do the below
+tmp = ((clean.iloc[:-1, :].values + clean.iloc[1:, :].values) / 2.0).copy()
+clean = clean.iloc[:-1, :]
+clean.iloc[:, :] = tmp
+clean
+
+# %%
 clean.columns.name = "gas"
 clean = clean.stack().to_frame("value").reset_index()  # type: ignore
 clean["unit"] = assumed_unit
