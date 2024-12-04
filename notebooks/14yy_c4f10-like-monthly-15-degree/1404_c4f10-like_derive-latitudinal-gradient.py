@@ -230,11 +230,11 @@ lat_grad_helper = lat_grad_pc * lat_grad_eof
 lat_grad_helper
 
 # %%
-global_lat_gridded = (lat_grad_helper - lat_grad_helper.sel(lat=cg_lat_bin_centre)).pint.dequantify() + (
+global_lat_gridded_tmp = (lat_grad_helper - lat_grad_helper.sel(lat=cg_lat_bin_centre)).pint.dequantify() + (
     droste_cg["value"].values[:, np.newaxis]
 )
-global_lat_gridded.attrs["units"] = str(lat_grad_helper.data.u)
-global_lat_gridded
+global_lat_gridded_tmp.attrs["units"] = str(lat_grad_helper.data.u)
+global_lat_gridded_tmp
 
 # %%
 for lat_sel, ref in (
@@ -243,7 +243,7 @@ for lat_sel, ref in (
 ):
     np.testing.assert_allclose(
     ref["value"].values,
-    global_lat_gridded.sel(lat=lat_sel).data.squeeze()
+    global_lat_gridded_tmp.sel(lat=lat_sel).data.squeeze()
 )
 
 # %% [markdown]
@@ -251,10 +251,34 @@ for lat_sel, ref in (
 
 # %%
 global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
-    global_lat_gridded.pint.quantify()
+    global_lat_gridded_tmp.pint.quantify()
 )
 global_annual_mean.plot.line()
 global_annual_mean
+
+# %% [markdown]
+# Check that this, plus the latitudinal gradient, gets back to Droste et al.
+
+# %%
+lat_grad_annual_mean = global_lat_gridded_tmp.pint.quantify() - global_annual_mean
+lat_grad_annual_mean
+
+# %%
+np.testing.assert_allclose(
+    local.xarray_space.calculate_global_mean_from_lon_mean(lat_grad_annual_mean).data.m,
+    0.0,
+    atol=1e-10,
+)
+
+# %%
+for lat_sel, ref in (
+    (lat_grad_helper["lat"] == tal_lat_bin_centre, droste_tal),
+    (lat_grad_helper["lat"] == cg_lat_bin_centre, droste_cg),
+):
+    np.testing.assert_allclose(
+        ref["value"].values,
+        (global_annual_mean + lat_grad_annual_mean).sel(lat=lat_sel).data.m.squeeze()
+    )
 
 # %% [markdown]
 # For now, basic linear extrapolation to get to 2022.
