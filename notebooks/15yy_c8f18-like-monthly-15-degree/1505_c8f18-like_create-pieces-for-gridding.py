@@ -33,10 +33,12 @@ import cf_xarray.units
 import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
+import openscm_units
+import pandas as pd
 import pint
 import pint_xarray
 import pooch
-import scmdata
+import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -63,6 +65,11 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.un
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
+# %%
+pint_xarray.setup_registry(openscm_units.unit_registry)
+
+QuantityOSCM = openscm_units.unit_registry.Quantity
+
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
@@ -83,35 +90,113 @@ step_config_id: str = "c8f18"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
+config_historical_emissions = get_config_for_step_id(
+    config=config, step="compile_historical_emissions", step_config_id="only"
+)
+
 
 # %% [markdown]
 # ## Action
 
 # %% [markdown]
+# ### Load raw data
+
+# %%
+historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
+historical_emissions = historical_emissions[
+    historical_emissions["variable"] == f"Emissions|{config_step.gas}"
+]
+if historical_emissions.empty:
+    msg = "No data found for gas, check your config"
+    raise AssertionError(msg)
+historical_emissions
+
+# %% [markdown]
 # There have been no updates since Ivy et al. (2012), so just use CMIP6 data.
 
 # %%
-cmip6_concs_fname = pooch.retrieve(
-    url="https://aims3.llnl.gov/thredds/fileServer/user_pub_work/input4MIPs/CMIP6/CMIP/UoM/UoM-CMIP-1-2-0/atmos/mon/mole-fraction-of-c8f18-in-air/gr1-GMNHSH/v20160830/mole-fraction-of-c8f18-in-air_input4MIPs_GHGConcentrations_CMIP_UoM-CMIP-1-2-0_gr1-GMNHSH_000001-201412.nc",
-    known_hash="e173b8128ab081688a0990e81db31c3ed1ed300cad15b9187e5820a1108d8ad5",
+cmip6_concs_hist_fname = pooch.retrieve(
+    url="https://aims3.llnl.gov/thredds/fileServer/user_pub_work/input4MIPs/CMIP6/CMIP/UoM/UoM-CMIP-1-2-0/atmos/yr/mole-fraction-of-c8f18-in-air/gr1-GMNHSH/v20160830/mole-fraction-of-c8f18-in-air_input4MIPs_GHGConcentrations_CMIP_UoM-CMIP-1-2-0_gr1-GMNHSH_0000-2014.nc",
+    known_hash="56039beef454a49b1bdc65b9cc9ae9640caff8f0751fbbb23603e41aa465701e",
     progressbar=True,
 )
-cmip6_concs_fname
+cmip6_concs_hist_fname
 
 # %%
-cmip6_concs = xr.open_dataset(cmip6_concs_fname, decode_times=False)
+cmip6_concs_ssp245_fname = pooch.retrieve(
+    url="https://aims3.llnl.gov/thredds/fileServer/user_pub_work/input4MIPs/CMIP6/ScenarioMIP/UoM/UoM-MESSAGE-GLOBIOM-ssp245-1-2-1/atmos/yr/mole_fraction_of_c8f18_in_air/gr1-GMNHSH/v20181127/mole-fraction-of-c8f18-in-air_input4MIPs_GHGConcentrations_ScenarioMIP_UoM-MESSAGE-GLOBIOM-ssp245-1-2-1_gr1-GMNHSH_2015-2500.nc",
+    known_hash="e040d2481ac091cf874f7464e4041be394f0a9af3a34a4c27ca6e937bf228073",
+    progressbar=True,
+)
+cmip6_concs_ssp245_fname
+
+# %%
+cmip6_concs_ssp245 = xr.open_dataset(cmip6_concs_ssp245_fname, use_cftime=True)
+cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.year.isin(range(2015, 2024)))
+cmip6_concs_ssp245
+
+# %%
+cmip6_concs_hist = xr.open_dataset(cmip6_concs_hist_fname, decode_times=False)
 # Drop out year 0, which breaks everything
-cmip6_concs = cmip6_concs.isel(time=range(12, 24180))
-cmip6_concs["time"] = cmip6_concs["time"] - 381.5 + 15.5
-cmip6_concs["time"].attrs["units"] = "days since 0001-01-01"
-cmip6_concs = xr.decode_cf(cmip6_concs, use_cftime=True)
+cmip6_concs_hist = cmip6_concs_hist.isel(time=range(1, 2015))
+cmip6_concs_hist["time"] = cmip6_concs_hist["time"] - 381.5 + 15.5
+cmip6_concs_hist["time"].attrs["units"] = "days since 0001-01-01"
+cmip6_concs_hist = xr.decode_cf(cmip6_concs_hist, use_cftime=True)
+cmip6_concs_hist
+
+# %%
+cmip6_concs = xr.concat([cmip6_concs_hist, cmip6_concs_ssp245], "time")
 cmip6_concs = cmip6_concs[f"mole_fraction_of_{config_step.gas}_in_air"]
 cmip6_concs
 
+
 # %%
-gm = cmip6_concs.sel(sector=0)
-nh = cmip6_concs.sel(sector=1)
-sh = cmip6_concs.sel(sector=2)
+def to_da(inv: xr.DataArray, sector: int) -> xr.DataArray:
+    """
+    Convert the CMIP6 data to an easy to use `xr.DataArray`
+    """
+    out = inv.sel(sector=sector).drop_vars("sector")
+    out.attrs["units"] = "ppt"
+    out.name = None
+    out = out.rename({"time": "year"})
+    out["year"] = [int(v.year) for v in out["year"].values]
+    out = out.pint.quantify()
+    out.attrs = {}
+
+    return out
+
+
+# %%
+gm = to_da(cmip6_concs, sector=0)
+nh = to_da(cmip6_concs, sector=1)
+sh = to_da(cmip6_concs, sector=2)
+
+# %%
+global_annual_mean = gm
+
+# %% [markdown]
+# ### Seasonality
+#
+# Assumed zero
+
+# %%
+# Assume zero.
+obs_network_seasonality = xr.DataArray(
+    np.zeros((12, 12)),
+    dims=("lat", "month"),
+    coords=dict(month=range(1, 13), lat=local.binning.LAT_BIN_CENTRES),
+).pint.quantify("dimensionless")
+
+seasonality_full = global_annual_mean * obs_network_seasonality
+np.testing.assert_allclose(
+    seasonality_full.mean("month").data.m,
+    0.0,
+    atol=1e-6,  # Match the tolerance of our mean-preserving interpolation algorithm
+)
+seasonality_full
+
+# %% [markdown]
+# ### Latitudinal gradient
 
 # %% [markdown]
 # With c8f18, the latitudinal gradient is just cos of latitude, so we can do this a bit more simply.
@@ -121,86 +206,165 @@ if config_step.gas != "c8f18":
     raise AssertionError
 
 # %%
-np.linspace(-1, 1, len(local.binning.LAT_BIN_CENTRES))
+lat_bin_weights = np.sin(local.binning.LAT_BIN_BOUNDS * np.pi / 180)
+lat_bin_weights = np.diff(lat_bin_weights)
+lat_bin_weights
+
+# %% [markdown]
+# #### EOF
 
 # %%
-np.cos(np.pi * local.binning.LAT_BIN_CENTRES / 180)
+n_bins = len(local.binning.LAT_BIN_CENTRES)
+lat_grad_eof = np.linspace(-1, 1, n_bins) / lat_bin_weights
 
-# %%
-local.binning.LAT_BIN_CENTRES
+nh_slice = slice(int(n_bins / 2), n_bins, 1)
+sh_slice = slice(0, int(n_bins / 2), 1)
+norm = 2 * np.sum(lat_bin_weights[nh_slice] * lat_grad_eof[nh_slice]) / np.sum(lat_bin_weights[nh_slice])
+lat_grad_eof = lat_grad_eof / norm
 
-# %%
-lat_grad_eof = np.linspace(-1, 1, len(local.binning.LAT_BIN_CENTRES)) / np.cos(np.pi * local.binning.LAT_BIN_CENTRES / 180)
-lat_grad_eof = lat_grad_eof / (2 * np.mean(lat_grad_eof[int(lat_grad_eof.size / 2):]))
+if not np.isclose((lat_bin_weights * lat_grad_eof).sum(), 0.0):
+    msg = "Spatial mean of lat. gradient is clearly wrong"
+    raise AssertionError(msg)
+
+
+if not np.isclose(
+    np.sum(lat_bin_weights[nh_slice] * lat_grad_eof[nh_slice]) / np.sum(lat_bin_weights[nh_slice]), 0.5
+):
+    msg = "Norm of lat. gradient is wrong"
+    raise AssertionError(msg)
+
+if not np.isclose(
+    np.sum(lat_bin_weights[sh_slice] * lat_grad_eof[sh_slice]) / np.sum(lat_bin_weights[sh_slice]), -0.5
+):
+    msg = "Norm of lat. gradient is wrong"
+    raise AssertionError(msg)
+
+lat_grad_eof = xr.DataArray(
+    lat_grad_eof,
+    dims=("lat",),
+    coords={"lat": local.binning.LAT_BIN_CENTRES},
+    attrs={"units": "dimensionless"},
+).pint.quantify()
 lat_grad_eof
 
 # %%
-plt.plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)
+fig, axes = plt.subplots(ncols=2)
+axes[0].plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)
+axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)
+
+# %% [markdown]
+# #### Principal components
 
 # %%
-plt.plot(local.binning.LAT_BIN_CENTRES / np.cos(np.pi * local.binning.LAT_BIN_CENTRES / 180), lat_grad_eof)
+lat_grad_pc = nh - sh
+lat_grad_pc
+
+# %% [markdown]
+# #### Latitudinal gradient over time
 
 # %%
-assert False, "Continue from here"
-# Calculate the mean of the lat. gradient
-# Normalise the mean of the lat. gradient
-# Use the NH and SH data to scale the lat. gradient
-# Check that adding lat. gradient to GM
-# reproduces NH and SH values.
-# so the NH and SH values are matched
-# Do the regression against emissions data,
-# to recover those values too
-# # Done?
+lat_grad = lat_grad_pc * lat_grad_eof
+lat_grad
+
+# %% [markdown]
+# Check that this latitudinal gradient recovers the original NH/SH data.
 
 # %%
-np.mean(lat_grad_eof[:int(lat_grad_eof.size / 2)])
+for lat_sel, ref in (
+    (lat_grad["lat"] >= 0, nh),
+    (lat_grad["lat"] < 0, sh),
+):
+    checker = gm + lat_grad.sel(lat=lat_sel)
+    checker = checker.to_dataset(name=config_step.gas)
+    checker = checker.cf.add_bounds("lat")
+    checker["lat_bounds"].attrs["units"] = "degrees"
+    checker = checker.pint.quantify()
+    checker = local.xarray_space.calculate_area_weighted_mean_latitude_only(checker, [config_step.gas])[
+        config_step.gas
+    ]
 
+    xr.testing.assert_allclose(checker, ref)
+
+# %% [markdown]
+# #### Regress the latitudinal gradient against emissions
 
 # %%
-assert False, "switch to download CMIP6 data, extract lat. gradient, then continue"
-assert (
-    False
-), "switch to using CMIP6 emissions to regress lat. gradient score then use that to extend lat. gradient"
-rcmip_concentrations_fname = pooch.retrieve(
-    url="https://rcmip-protocols-au.s3-ap-southeast-2.amazonaws.com/v5.1.0/rcmip-concentrations-annual-means-v5-1-0.csv",
-    known_hash="md5:0d82c3c3cdd4dd632b2bb9449a5c315f",
-    progressbar=True,
+lat_grad_pc
+
+# %%
+historical_emissions = historical_emissions.rename({"time": "year"}, axis="columns")
+historical_emissions
+
+# %%
+regression_years = np.intersect1d(lat_grad_pc["year"], historical_emissions["year"])
+regression_years
+
+# %%
+unit = historical_emissions["unit"].unique()
+assert len(unit) == 1
+unit = unit[0]
+
+historical_emissions_xr = xr.DataArray(
+    historical_emissions["value"],
+    dims=("year",),
+    coords=dict(year=historical_emissions["year"]),
+    attrs={"units": unit},
+).pint.quantify(unit_registry=openscm_units.unit_registry)
+historical_emissions_xr = historical_emissions_xr.sel(
+    year=historical_emissions_xr["year"] <= regression_years.max()
 )
-rcmip_concentrations_fname
+
+
+historical_emissions_xr
 
 # %%
-rcmip_concs = scmdata.ScmRun(rcmip_concentrations_fname, lowercase_cols=True)
-rcmip_concs
+historical_emissions_regression_data = historical_emissions_xr.sel(year=regression_years)
+
+historical_emissions_regression_data
 
 # %%
-rcmip_concs_to_use_run = rcmip_concs.filter(region="World", scenario="ssp245", year=range(1, 2022 + 1))
-rcmip_concs_to_use_run["variable"] = rcmip_concs_to_use_run["variable"].str.lower()
-rcmip_concs_to_use_run = rcmip_concs_to_use_run.filter(variable=f"*{config_step.gas}")
-if rcmip_concs_to_use_run.shape[0] != 1:
-    raise AssertionError
-
-rcmip_concs_to_use = rcmip_concs_to_use_run.timeseries(time_axis="year")
-unit = rcmip_concs_to_use.index.get_level_values("unit")[0]
-rcmip_concs_to_use
+lat_grad_pc_regression = lat_grad_pc.sel(year=regression_years)
+lat_grad_pc_regression
 
 # %%
-global_annual_mean = (
-    xr.DataArray(
-        rcmip_concs_to_use.values.squeeze(),
-        dims=("year",),
-        coords=dict(year=rcmip_concs_to_use.columns.values),
-        attrs={"units": unit},
-    )
-    .interp(
-        year=np.arange(1, 2022 + 1),
-        kwargs={"fill_value": rcmip_concs_to_use.values.squeeze()[0]},
-    )
-    .pint.quantify()
+fig, axes = plt.subplots(ncols=2)
+historical_emissions_regression_data.plot(ax=axes[0])
+lat_grad_pc_regression.plot(ax=axes[1])
+fig.tight_layout()
+
+# %%
+# The code below fixes the y-intercept to be zero, so that the latitudinal gradient is zero
+# when emissions are zero.
+# This is fine for gases like SF6, whose pre-industrial concentrations are zero.
+# Have to be more careful when the pre-industrial concentrations are non-zero.
+x = QuantityOSCM(
+    historical_emissions_regression_data.data.m,
+    str(historical_emissions_regression_data.data.units),
 )
+A = x.m[:, np.newaxis]
+y = QuantityOSCM(lat_grad_pc_regression.data.m, str(lat_grad_pc_regression.data.units))
 
-global_annual_mean.plot.line()
+res = np.linalg.lstsq(A, y.m, rcond=None)
+m = res[0]
+m = QuantityOSCM(m, (y / x).units)
+c = QuantityOSCM(0.0, y.units)
 
-global_annual_mean
+latitudinal_gradient_pc0_total_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
+
+fig, ax = plt.subplots()
+ax.scatter(x.m, y.m, label="raw data")
+ax.plot(x.m, (m * x + c).m, color="tab:orange", label="regression")
+ax.plot(
+    np.hstack([0, x.m]),
+    (m * np.hstack([0, x]) + c).m,
+    color="tab:orange",
+    label="regression-extended",
+)
+ax.set_ylabel("PC0")
+ax.set_xlabel("PRIMAP emissions")
+ax.legend()
+
+latitudinal_gradient_pc0_total_emissions_regression
 
 # %% [markdown]
 # ### Calculate global-, annual-mean monthly
@@ -249,82 +413,122 @@ plt.tight_layout()
 plt.show()
 
 # %% [markdown]
-# ### Calculate seasonality
-#
-# You have to use the global-, annual-mean on a yearly time axis otherwise the time-mean of the seasonality over each year is not zero.
+# ### Latitudinal-gradient, monthly
 
 # %%
-# Assume zero.
-obs_network_seasonality = xr.DataArray(
-    np.zeros((12, 12)),
-    dims=("lat", "month"),
-    coords=dict(month=range(1, 13), lat=local.binning.LAT_BIN_CENTRES),
-).pint.quantify("dimensionless")
-obs_network_seasonality
+lat_grad_pc_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(lat_grad_pc)
+lat_grad_pc_monthly
 
 # %%
-obs_network_seasonality.plot()
+pcs_annual = lat_grad_pc
+pcs_monthly = lat_grad_pc_monthly
 
-# %%
-seasonality_full = global_annual_mean * obs_network_seasonality
-np.testing.assert_allclose(
-    seasonality_full.mean("month").data.m,
-    0.0,
-    atol=1e-6,  # Match the tolerance of our mean-preserving interpolation algorithm
-)
-
-# %%
-fig, axes = plt.subplots(ncols=2, sharey=True)
+fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=seasonality_full["year"][-6:])).sel(
-    lat=[-82.5, 7.5, 82.5]
-).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
 
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=range(1984, 1986))).sel(
-    lat=[-82.5, 7.5, 82.5]
-).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
+local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(ax=axes[0])
+local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
+    x="time", zorder=3, alpha=0.5, ax=axes[0]
+)
+
+local.xarray_time.convert_year_month_to_time(
+    pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+).plot(ax=axes[1])
+local.xarray_time.convert_year_to_time(
+    pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[1])
+
+local.xarray_time.convert_year_month_to_time(
+    pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+).plot(ax=axes[2])
+local.xarray_time.convert_year_to_time(
+    pcs_annual.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[2])
 
 plt.tight_layout()
+plt.show()
 
 # %%
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=seasonality_full["year"][-6:])).plot(
-    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
-)
+latitudinal_gradient_monthly = lat_grad_eof @ lat_grad_pc_monthly
 
-# %%
-local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="proleptic_gregorian").plot(
-    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
-)
-
-# %% [markdown]
-# ### Latitudinal gradient, monthly
-
-# %% [markdown]
-# This obviously needs to be updated to an actual calculation.
-
-# %%
-latitudinal_gradient_monthly = xr.DataArray(
-    np.zeros((global_annual_mean["year"].shape[0], 12, 12)),
-    dims=("year", "month", "lat"),
-    coords=dict(
-        year=global_annual_mean["year"],
-        month=range(1, 13),
-        lat=local.binning.LAT_BIN_CENTRES,
-    ),
-).pint.quantify(unit)
-latitudinal_gradient_monthly
-
-# %%
 # Ensure spatial mean is zero
 tmp = latitudinal_gradient_monthly
 tmp.name = "latitudinal-gradient"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppt").m,
     0.0,
     atol=1e-10,
 )
+
+latitudinal_gradient_monthly
+
+# %%
+tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
+if tmp.min() < 0.0:
+    msg = (
+        "When combining the global values and the latitudinal gradient, "
+        f"the minimum value is less than 0.0. {tmp.min()=}"
+    )
+    print(msg)
+    # raise AssertionError(msg)
+
+    atol_close = 1e-8
+    print(
+        "Trying with a forced update of the latitudinal gradient "
+        f"to be zero where the global-mean is within {atol_close} of zero"
+    )
+    latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
+    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+        for month, month_da in yr_da.groupby("month", squeeze=False):
+            if np.isclose(month_da.data.m, 0.0):
+                # print(yr)
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
+                continue
+
+            # The latitudinal gradient can't be bigger than the global-mean value,
+            # because this leads to negative values.
+            # This actually points to an issue in the overall workflow,
+            # because what we're actually seeing is a disagreement between the
+            # concentration assumptions (i.e. pre-industrial values)
+            # and the emissions assumptions (which drive the latitudinal gradient).
+            # However, fixing this is an issue for the future.
+            # We squeeze even harder, to avoid seasonality breaking things too.
+            min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
+            if np.abs(min_grad_val) > month_da * 0.5:
+                shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
+                new_val = (
+                    shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
+                )
+
+                msg = (
+                    "TODO: fix consistency issue. "
+                    f"In {yr:04d}-{month:02d}, "
+                    f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
+                    f"The global-mean value is {month_da.data}. "
+                    f"This makes no sense. For now, force overriding to {new_val.data}."
+                )
+                print(msg)
+
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = new_val
+
+    tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
+    if tmp2.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        raise AssertionError(msg)
+
+    print("Updated the latitudinal gradient")
+    latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
+
+    # Ensure spatial mean is still zero
+    tmp = latitudinal_gradient_monthly
+    tmp.name = "latitudinal-gradient"
+    np.testing.assert_allclose(
+        local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+        0.0,
+        atol=1e-10,
+    )
 
 latitudinal_gradient_monthly
 

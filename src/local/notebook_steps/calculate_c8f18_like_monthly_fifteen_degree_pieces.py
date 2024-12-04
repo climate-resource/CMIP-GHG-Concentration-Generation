@@ -49,13 +49,17 @@ def configure_notebooks(
 
     config_step = get_config_for_step_id(config=config, step=step_name, step_config_id=step_config_id)
 
+    config_historical_emissions = get_config_for_step_id(
+        config=config, step="compile_historical_emissions", step_config_id="only"
+    )
+
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("14yy_c8f18-like-monthly-15-degree") / "1505_c8f18-like_create-pieces-for-gridding"
+                Path("15yy_c8f18-like-monthly-15-degree") / "1505_c8f18-like_create-pieces-for-gridding"
             ],
             configuration=(),
-            dependencies=(),
+            dependencies=(config_historical_emissions.complete_historical_emissions_file,),
             targets=(
                 # TODO: save out regression between lat. gradient and emissions too
                 # Save out the historical emissions we used for that regression too,
@@ -76,11 +80,11 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
     step_name="calculate_c8f18_like_monthly_fifteen_degree_pieces",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("14yy_c8f18-like-monthly-15-degree")
+            notebook_path=Path("15yy_c8f18-like-monthly-15-degree")
             / "1505_c8f18-like_create-pieces-for-gridding",
             raw_notebook_ext=".py",
-            summary="c8f18-like gas pieces - Finalise the pieces for gridding",
-            doc="Finalise the pieces required for creating gridded files",
+            summary="c8f18-like gas pieces - Create the pieces for gridding",
+            doc="Create the pieces required for creating gridded files from CMIP6 data",
         ),
     ],
     configure_notebooks=configure_notebooks,

@@ -205,6 +205,9 @@ np.testing.assert_allclose(
 )
 
 # %%
+seasonality_full
+
+# %%
 fig, axes = plt.subplots(ncols=2, sharey=True)
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
