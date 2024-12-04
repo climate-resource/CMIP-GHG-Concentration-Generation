@@ -131,11 +131,6 @@ cmip6_concs_ssp245_fname = pooch.retrieve(
 cmip6_concs_ssp245_fname
 
 # %%
-cmip6_concs_ssp245 = xr.open_dataset(cmip6_concs_ssp245_fname, use_cftime=True)
-cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.year.isin(range(2015, 2024)))
-cmip6_concs_ssp245
-
-# %%
 cmip6_concs_hist = xr.open_dataset(cmip6_concs_hist_fname, decode_times=False)
 # Drop out year 0, which breaks everything
 cmip6_concs_hist = cmip6_concs_hist.isel(time=range(1, 2015))
@@ -143,6 +138,11 @@ cmip6_concs_hist["time"] = cmip6_concs_hist["time"] - 381.5 + 15.5
 cmip6_concs_hist["time"].attrs["units"] = "days since 0001-01-01"
 cmip6_concs_hist = xr.decode_cf(cmip6_concs_hist, use_cftime=True)
 cmip6_concs_hist
+
+# %%
+cmip6_concs_ssp245 = xr.open_dataset(cmip6_concs_ssp245_fname, use_cftime=True)
+cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.year.isin(range(2015, 2024)))
+cmip6_concs_ssp245
 
 # %%
 cmip6_concs = xr.concat([cmip6_concs_hist, cmip6_concs_ssp245], "time")
@@ -180,7 +180,6 @@ global_annual_mean = gm
 # Assumed zero
 
 # %%
-# Assume zero.
 obs_network_seasonality = xr.DataArray(
     np.zeros((12, 12)),
     dims=("lat", "month"),
@@ -197,9 +196,8 @@ seasonality_full
 
 # %% [markdown]
 # ### Latitudinal gradient
-
-# %% [markdown]
-# With c8f18, the latitudinal gradient is just cos of latitude, so we can do this a bit more simply.
+#
+# With c8f18, the latitudinal gradient is just linear (incorporating a cosine weighting), so we can do this a bit more simply.
 
 # %%
 if config_step.gas != "c8f18":
@@ -260,21 +258,23 @@ lat_grad_pc = nh - sh
 lat_grad_pc
 
 # %% [markdown]
-# #### Latitudinal gradient over time
+# #### Check latitudinal gradient over time
+#
+# Check that this latitudinal gradient recovers the original NH/SH data.
 
 # %%
-lat_grad = lat_grad_pc * lat_grad_eof
-lat_grad
+lat_grad_checker = lat_grad_pc * lat_grad_eof
+lat_grad_checker
 
 # %% [markdown]
 # Check that this latitudinal gradient recovers the original NH/SH data.
 
 # %%
 for lat_sel, ref in (
-    (lat_grad["lat"] >= 0, nh),
-    (lat_grad["lat"] < 0, sh),
+    (lat_grad_checker["lat"] >= 0, nh),
+    (lat_grad_checker["lat"] < 0, sh),
 ):
-    checker = gm + lat_grad.sel(lat=lat_sel)
+    checker = gm + lat_grad_checker.sel(lat=lat_sel)
     checker = checker.to_dataset(name=config_step.gas)
     checker = checker.cf.add_bounds("lat")
     checker["lat_bounds"].attrs["units"] = "degrees"

@@ -13,15 +13,9 @@
 # ---
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
-# # C$_4$F$_{10}$-like - Create pieces for gridding
+# # C$_4$F$_{10}$-like - Derive latitudinal gradient
 #
-# Here we create:
-#
-# - global-, annual-mean, interpolated to monthly timesteps
-# - seasonality, extended over all years
-# - latitudinal gradient, interpolated to monthly timesteps
-#
-# Then we check consistency between these pieces.
+# User the data to derive the latitudinal gradient.
 
 # %% [markdown]
 # ## Imports
@@ -94,6 +88,9 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 config_historical_emissions = get_config_for_step_id(
     config=config, step="compile_historical_emissions", step_config_id="only"
 )
+config_droste = get_config_for_step_id(
+    config=config, step="retrieve_and_process_droste_et_al_2020_data", step_config_id="only"
+)
 
 
 # %% [markdown]
@@ -101,6 +98,11 @@ config_historical_emissions = get_config_for_step_id(
 
 # %% [markdown]
 # ### Load raw data
+
+# %%
+droste = pd.read_csv(config_droste.processed_data_file)
+droste = droste[droste["gas"] == config_step.gas]
+droste
 
 # %%
 historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
@@ -113,113 +115,10 @@ if historical_emissions.empty:
 historical_emissions
 
 # %% [markdown]
-# There have been no hemispheric updates since Ivy et al. (2012),
-# so just use CMIP6 data for those gradients.
-
-# %%
-config_step.gas
-
-# %%
-known_hashes_cmip6_hist = {
- "c4f10":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
- "c5f12":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
- "c6f14":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
- "c7f16":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
-}
-
-# %%
-cmip6_concs_hist_fname = pooch.retrieve(
-    url=f"https://aims3.llnl.gov/thredds/fileServer/user_pub_work/input4MIPs/CMIP6/CMIP/UoM/UoM-CMIP-1-2-0/atmos/yr/mole-fraction-of-{config_step.gas}-in-air/gr1-GMNHSH/v20160830/mole-fraction-of-{config_step.gas}-in-air_input4MIPs_GHGConcentrations_CMIP_UoM-CMIP-1-2-0_gr1-GMNHSH_0000-2014.nc",
-    known_hash=known_hashes_cmip6_hist[config_step.gas],
-    progressbar=True,
-)
-cmip6_concs_hist_fname
-
-# %%
-known_hashes_cmip6_ssp25 = {
- "c4f10":    "0a7035766f90b0494c92ad21e8dbd8b6231cf05dfea83ef4773d9e727c66d3a9",
- "c5f12":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
- "c6f14":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
- "c7f16":    "ff97d4ab60686e9ea9143648f254362c81f801562b288c93a771f83f346aa610",
-}
-
-# %%
-cmip6_concs_ssp245_fname = pooch.retrieve(
-    url=f"https://aims3.llnl.gov/thredds/fileServer/user_pub_work/input4MIPs/CMIP6/ScenarioMIP/UoM/UoM-MESSAGE-GLOBIOM-ssp245-1-2-1/atmos/yr/mole_fraction_of_{config_step.gas}_in_air/gr1-GMNHSH/v20181127/mole-fraction-of-{config_step.gas}-in-air_input4MIPs_GHGConcentrations_ScenarioMIP_UoM-MESSAGE-GLOBIOM-ssp245-1-2-1_gr1-GMNHSH_2015-2500.nc",
-    known_hash=known_hashes_cmip6_ssp25[config_step.gas],
-    progressbar=True,
-)
-cmip6_concs_ssp245_fname
-
-# %%
-cmip6_concs_hist = xr.open_dataset(cmip6_concs_hist_fname, decode_times=False)
-# Drop out year 0, which breaks everything
-cmip6_concs_hist = cmip6_concs_hist.isel(time=range(1, 2015))
-cmip6_concs_hist["time"] = cmip6_concs_hist["time"] - 381.5 + 15.5
-cmip6_concs_hist["time"].attrs["units"] = "days since 0001-01-01"
-cmip6_concs_hist = xr.decode_cf(cmip6_concs_hist, use_cftime=True)
-cmip6_concs_hist
-
-# %%
-cmip6_concs_ssp245 = xr.open_dataset(cmip6_concs_ssp245_fname, use_cftime=True)
-cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.year.isin(range(2015, 2024)))
-cmip6_concs_ssp245
-
-# %%
-cmip6_concs = xr.concat([cmip6_concs_hist, cmip6_concs_ssp245], "time")
-cmip6_concs = cmip6_concs[f"mole_fraction_of_{config_step.gas}_in_air"]
-cmip6_concs
-
-
-# %%
-def to_da(inv: xr.DataArray, sector: int) -> xr.DataArray:
-    """
-    Convert the CMIP6 data to an easy to use `xr.DataArray`
-    """
-    out = inv.sel(sector=sector).drop_vars("sector")
-    out.attrs["units"] = "ppt"
-    out.name = None
-    out = out.rename({"time": "year"})
-    out["year"] = [int(v.year) for v in out["year"].values]
-    out = out.pint.quantify()
-    out.attrs = {}
-
-    return out
-
-
-# %%
-gm = to_da(cmip6_concs, sector=0)
-nh = to_da(cmip6_concs, sector=1)
-sh = to_da(cmip6_concs, sector=2)
-
-# %% [markdown]
-# ### Seasonality
+# ### Calculate latitudinal gradient
 #
-# Assumed zero
-
-# %%
-obs_network_seasonality = xr.DataArray(
-    np.zeros((12, 12)),
-    dims=("lat", "month"),
-    coords=dict(month=range(1, 13), lat=local.binning.LAT_BIN_CENTRES),
-).pint.quantify("dimensionless")
-
-seasonality_full = gm * obs_network_seasonality
-np.testing.assert_allclose(
-    seasonality_full.mean("month").data.m,
-    0.0,
-    atol=1e-6,  # Match the tolerance of our mean-preserving interpolation algorithm
-)
-seasonality_full
-
-# %% [markdown]
-# ### Latitudinal gradient
-#
-# With c8f18, the latitudinal gradient is just linear (incorporating a cosine weighting), so we can do this a bit more simply.
-
-# %%
-if config_step.gas not in ["c4f10", "c5f12", "c6f14", "c7f16"]:
-    raise AssertionError
+# We assume that the latitudinal gradient is just linear (incorporating a cosine weighting), 
+# then inform its size based on the Droste et al. data.
 
 # %%
 lat_bin_weights = np.sin(local.binning.LAT_BIN_BOUNDS * np.pi / 180)
@@ -259,7 +158,7 @@ lat_grad_eof = xr.DataArray(
     lat_grad_eof,
     dims=("lat",),
     coords={"lat": local.binning.LAT_BIN_CENTRES},
-    attrs={"units": "dimensionless"},
+    attrs={"units": "ppt"},
 ).pint.quantify()
 lat_grad_eof
 
@@ -272,41 +171,125 @@ axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)
 # #### Principal components
 
 # %%
-lat_grad_pc = nh - sh
+cg_lat = -40.6833
+tal_lat = 52.5127
+
+# %%
+droste_cg = droste[droste["lat"] == cg_lat]
+droste_tal = droste[droste["lat"] == tal_lat]
+
+# %%
+lat_grad_eof["lat"][
+        (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) 
+        & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
+    ].values.squeeze()
+
+# %%
+cg_lat_bin_centre = lat_grad_eof["lat"][
+        (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) 
+        & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
+    ].values.squeeze()
+
+tal_lat_bin_centre = lat_grad_eof["lat"][
+        (local.binning.LAT_BIN_BOUNDS[:-1] < tal_lat) 
+        & (local.binning.LAT_BIN_BOUNDS[1:] > tal_lat)
+    ].values.squeeze()
+
+# %%
+lat_grad_eof_cg = lat_grad_eof.sel(
+    lat=cg_lat_bin_centre
+).data.m.squeeze()
+
+lat_grad_eof_tal = lat_grad_eof.sel(
+    lat=tal_lat_bin_centre
+).data.m.squeeze()
+
+# %%
+lat_grad_pc_df = (
+    (droste_tal.set_index("year")["value"] - droste_cg.set_index("year")["value"])
+    / (lat_grad_eof_tal - lat_grad_eof_cg)
+)
+lat_grad_pc_df
+
+# %%
+lat_grad_pc = xr.DataArray(
+    lat_grad_pc_df.values,
+    dims=("year",),
+    coords={"year": lat_grad_pc_df.index.values},
+    attrs={"units": "dimensionless"},
+)
 lat_grad_pc
 
 # %% [markdown]
-# #### Check latitudinal gradient over time
+# ### Create latitudinally-gridded values
 #
-# Check that this latitudinal gradient recovers the original NH/SH data.
+# Check that this latitudinal gradient recovers the original data.
 
 # %%
-lat_grad_checker = lat_grad_pc * lat_grad_eof
-lat_grad_checker
+lat_grad_helper = lat_grad_pc * lat_grad_eof
+lat_grad_helper
 
-# %% [markdown]
-# Check that this latitudinal gradient recovers the original NH/SH data.
+# %%
+global_lat_gridded = (lat_grad_helper - lat_grad_helper.sel(lat=cg_lat_bin_centre)).pint.dequantify() + (
+    droste_cg["value"].values[:, np.newaxis]
+)
+global_lat_gridded.attrs["units"] = str(lat_grad_helper.data.u)
+global_lat_gridded
 
 # %%
 for lat_sel, ref in (
-    (lat_grad_checker["lat"] >= 0, nh),
-    (lat_grad_checker["lat"] < 0, sh),
+    (lat_grad_helper["lat"] == tal_lat_bin_centre, droste_tal),
+    (lat_grad_helper["lat"] == cg_lat_bin_centre, droste_cg),
 ):
-    checker = gm + lat_grad_checker.sel(lat=lat_sel)
-    checker = checker.to_dataset(name=config_step.gas)
-    checker = checker.cf.add_bounds("lat")
-    checker["lat_bounds"].attrs["units"] = "degrees"
-    checker = checker.pint.quantify()
-    checker = local.xarray_space.calculate_area_weighted_mean_latitude_only(checker, [config_step.gas])[
-        config_step.gas
-    ]
+    np.testing.assert_allclose(
+    ref["value"].values,
+    global_lat_gridded.sel(lat=lat_sel).data.squeeze()
+)
 
-    xr.testing.assert_allclose(checker, ref)
+# %% [markdown]
+# ### Global-, annual-mean
+
+# %%
+global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(
+    global_lat_gridded.pint.quantify()
+)
+global_annual_mean.plot.line()
+global_annual_mean
+
+# %% [markdown]
+# For now, basic linear extrapolation to get to 2022.
+# Ideally, we don't need this in future.
+
+# %%
+min_last_year = 2022
+if global_annual_mean["year"].max() < min_last_year:
+    global_annual_mean = global_annual_mean.pint.dequantify().interp(
+    year=range(global_annual_mean["year"].min().values, min_last_year + 1),
+    method="linear",
+    kwargs=dict(fill_value="extrapolate"),
+).pint.quantify()
+    global_annual_mean.plot.line()
+
+# %% [markdown]
+# Extrapolate backwards in time to get complete coverage.
+
+# %%
+if not np.isclose(global_annual_mean.isel(year=0).data.m, 0.0, atol=1e-5):
+    raise ValueError
+
+# %%
+global_annual_mean = global_annual_mean.pint.dequantify().interp(
+year=range(1, global_annual_mean["year"].max().values + 1),
+method="linear",
+kwargs=dict(fill_value=0.0),
+).pint.quantify()
+global_annual_mean.plot.line()
 
 # %% [markdown]
 # #### Regress the latitudinal gradient against emissions
 
 # %%
+lat_grad_pc = lat_grad_pc.pint.quantify()
 lat_grad_pc
 
 # %%
@@ -467,6 +450,10 @@ local.xarray_time.convert_year_to_time(
 
 plt.tight_layout()
 plt.show()
+
+# %%
+
+assert False, "Extend PC"
 
 # %%
 latitudinal_gradient_monthly = lat_grad_eof @ lat_grad_pc_monthly

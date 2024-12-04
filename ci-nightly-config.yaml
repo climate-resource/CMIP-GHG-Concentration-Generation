@@ -693,6 +693,14 @@ retrieve_and_extract_noaa_data:
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc152a_hats
+retrieve_and_process_droste_et_al_2020_data:
+- download_complete_file: data/raw/droste-et-al-2020/download.complete
+  processed_data_file: data/interim/droste-et-al-2020/droste_et_al_2020.csv
+  raw_dir: data/raw/droste-et-al-2020
+  step_config_id: only
+  zenodo_record:
+    known_hash: f71fda6b8848f627b7736870241bfa075d941bcd458fff6105287e951aed6c21
+    url: https://zenodo.org/records/3519317/files/Trends-Emission_PFCs_Droste-etal_ACP_20191025.zip?download=1
 retrieve_and_process_epica_data:
 - download_url:
     known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
