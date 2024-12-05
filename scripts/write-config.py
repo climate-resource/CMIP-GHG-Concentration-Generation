@@ -27,6 +27,9 @@ from local.config_creation.crunch_equivalent_species import (
     create_crunch_equivalent_species_config,
 )
 from local.config_creation.crunch_grids import create_crunch_grids_config
+from local.config_creation.droste_et_al_2020_handling import (
+    RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
+)
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
 from local.config_creation.law_dome_handling import (
@@ -41,9 +44,6 @@ from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 from local.config_creation.velders_et_al_2022_handling import (
     RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
-)
-from local.config_creation.droste_et_al_2020_handling import (
-    RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
 )
 from local.config_creation.western_et_al_2024_handling import (
     RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,

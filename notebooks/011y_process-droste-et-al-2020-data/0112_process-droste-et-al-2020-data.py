@@ -21,7 +21,6 @@
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
-import io
 from pathlib import Path
 
 import openscm_units
@@ -70,33 +69,44 @@ for file in files:
     if file.name.startswith("best-fits_CG"):
         # Cape grim lat
         lat = -40.6833
-        
+
     elif file.name.startswith("best-fits_TAC"):
         # Talconeston, UK lat
         lat = 52.5127
-    
+
     else:
         raise NotImplementedError(file)
 
     raw = pd.read_csv(file)
-    raw = raw[["Date", 'cC4F8', 'nC4F10', 'nC5F12', 
-               # 'iC6F14',  # not using for now
-               'nC6F14', 'nC7F16']]
-    
-    raw = raw.rename({
-        "cC4F8": "cc4f8",
-        "nC4F10": "c4f10",
-        "nC5F12": "c5f12",
-        "nC6F14": "c6f14",
-        "nC7F16": "c7f16",
-    }, axis="columns")
+    raw = raw[
+        [
+            "Date",
+            "cC4F8",
+            "nC4F10",
+            "nC5F12",
+            # 'iC6F14',  # not using for now
+            "nC6F14",
+            "nC7F16",
+        ]
+    ]
+
+    raw = raw.rename(
+        {
+            "cC4F8": "cc4f8",
+            "nC4F10": "c4f10",
+            "nC5F12": "c5f12",
+            "nC6F14": "c6f14",
+            "nC7F16": "c7f16",
+        },
+        axis="columns",
+    )
     raw["year"] = raw["Date"].apply(lambda x: int(x.split("/")[-1]))
     raw["month"] = raw["Date"].apply(lambda x: int(x.split("/")[1]))
     raw = raw.drop("Date", axis="columns")
     annual_mean = raw.groupby("year")[["cc4f8", "c4f10", "c5f12", "c6f14", "c7f16"]].mean()
 
     annual_mean.columns.name = "gas"
-    annual_mean = annual_mean.stack().to_frame("value").reset_index()
+    annual_mean = annual_mean.stack().to_frame("value").reset_index()  # type: ignore
     annual_mean["unit"] = assumed_unit
     annual_mean["lat"] = lat
 

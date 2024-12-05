@@ -62,17 +62,13 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 raw_data_files_l = pooch.retrieve(
     url=config_step.zenodo_record.url,
     known_hash=config_step.zenodo_record.known_hash,
-    processor=pooch.Unzip(
-        members=["best-fits_CG_PFCs.csv", "best-fits_TAC_PFCs.csv"]
-    ),
+    processor=pooch.Unzip(members=["best-fits_CG_PFCs.csv", "best-fits_TAC_PFCs.csv"]),
     progressbar=True,
 )
 if isinstance(raw_data_files_l, Path):
     raise TypeError
 
-for raw_data_file in raw_data_files_l:
-    raw_data_file = Path(raw_data_file)
-    
+for raw_data_file in [Path(f) for f in raw_data_files_l]:
     config_step.raw_dir.mkdir(parents=True, exist_ok=True)
     out_file = config_step.raw_dir / raw_data_file.name
     shutil.copyfile(raw_data_file, out_file)

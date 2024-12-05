@@ -120,6 +120,9 @@ cmip6_concs_hist_fname = pooch.retrieve(
     known_hash="56039beef454a49b1bdc65b9cc9ae9640caff8f0751fbbb23603e41aa465701e",
     progressbar=True,
 )
+if isinstance(cmip6_concs_hist_fname, list):
+    raise TypeError
+
 cmip6_concs_hist_fname
 
 # %%
@@ -128,6 +131,9 @@ cmip6_concs_ssp245_fname = pooch.retrieve(
     known_hash="e040d2481ac091cf874f7464e4041be394f0a9af3a34a4c27ca6e937bf228073",
     progressbar=True,
 )
+if isinstance(cmip6_concs_ssp245_fname, list):
+    raise TypeError
+
 cmip6_concs_ssp245_fname
 
 # %%
@@ -145,8 +151,8 @@ cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.y
 cmip6_concs_ssp245
 
 # %%
-cmip6_concs = xr.concat([cmip6_concs_hist, cmip6_concs_ssp245], "time")
-cmip6_concs = cmip6_concs[f"mole_fraction_of_{config_step.gas}_in_air"]
+cmip6_concs_ds = xr.concat([cmip6_concs_hist, cmip6_concs_ssp245], "time")
+cmip6_concs = cmip6_concs_ds[f"mole_fraction_of_{config_step.gas}_in_air"]
 cmip6_concs
 
 
@@ -247,8 +253,8 @@ lat_grad_eof
 
 # %%
 fig, axes = plt.subplots(ncols=2)
-axes[0].plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)
-axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)
+axes[0].plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)  # type: ignore
+axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)  # type: ignore
 
 # %% [markdown]
 # #### Principal components
@@ -328,8 +334,8 @@ lat_grad_pc_regression
 
 # %%
 fig, axes = plt.subplots(ncols=2)
-historical_emissions_regression_data.plot(ax=axes[0])
-lat_grad_pc_regression.plot(ax=axes[1])
+historical_emissions_regression_data.plot(ax=axes[0])  # type: ignore
+lat_grad_pc_regression.plot(ax=axes[1])  # type: ignore
 fig.tight_layout()
 
 # %%
@@ -428,19 +434,19 @@ if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
 
-local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(ax=axes[0])
+local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(ax=axes[0])  # type: ignore
 local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
     x="time", zorder=3, alpha=0.5, ax=axes[0]
 )
 
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
 ).plot(ax=axes[1])
 local.xarray_time.convert_year_to_time(
     pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
 ).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[1])
 
-local.xarray_time.convert_year_month_to_time(
+local.xarray_time.convert_year_month_to_time(  # type: ignore
     pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
 ).plot(ax=axes[2])
 local.xarray_time.convert_year_to_time(

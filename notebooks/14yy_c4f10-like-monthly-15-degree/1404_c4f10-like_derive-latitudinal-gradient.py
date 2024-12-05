@@ -24,16 +24,12 @@
 from pathlib import Path
 
 import cf_xarray.units
-import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
-import pooch
-import tqdm.autonotebook as tqdman
-import scmdata
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -46,10 +42,6 @@ import local.seasonality
 import local.xarray_space
 import local.xarray_time
 from local.config import load_config_from_file
-from local.mean_preserving_interpolation.lai_kaplan import (
-    LaiKaplanInterpolator,
-    get_wall_control_points_y_linear_with_flat_override_on_left,
-)
 
 # %%
 cf_xarray.units.units.define("ppm = 1 / 1000000")
@@ -117,7 +109,7 @@ historical_emissions
 # %% [markdown]
 # ### Calculate latitudinal gradient
 #
-# We assume that the latitudinal gradient is just linear (incorporating a cosine weighting), 
+# We assume that the latitudinal gradient is just linear (incorporating a cosine weighting),
 # then inform its size based on the Droste et al. data.
 
 # %%
@@ -164,8 +156,9 @@ lat_grad_eof
 
 # %%
 fig, axes = plt.subplots(ncols=2)
-axes[0].plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)
-axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)
+axes[0].plot(local.binning.LAT_BIN_CENTRES, lat_grad_eof)  # type: ignore
+axes[1].plot(local.binning.LAT_BIN_CENTRES / lat_bin_weights, lat_grad_eof)  # type: ignore
+
 
 # %% [markdown]
 # #### Principal components
@@ -180,34 +173,26 @@ droste_tal = droste[droste["lat"] == tal_lat]
 
 # %%
 lat_grad_eof["lat"][
-        (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) 
-        & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
-    ].values.squeeze()
+    (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
+].values.squeeze()
 
 # %%
 cg_lat_bin_centre = lat_grad_eof["lat"][
-        (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) 
-        & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
-    ].values.squeeze()
+    (local.binning.LAT_BIN_BOUNDS[:-1] < cg_lat) & (local.binning.LAT_BIN_BOUNDS[1:] > cg_lat)
+].values.squeeze()
 
 tal_lat_bin_centre = lat_grad_eof["lat"][
-        (local.binning.LAT_BIN_BOUNDS[:-1] < tal_lat) 
-        & (local.binning.LAT_BIN_BOUNDS[1:] > tal_lat)
-    ].values.squeeze()
+    (local.binning.LAT_BIN_BOUNDS[:-1] < tal_lat) & (local.binning.LAT_BIN_BOUNDS[1:] > tal_lat)
+].values.squeeze()
 
 # %%
-lat_grad_eof_cg = lat_grad_eof.sel(
-    lat=cg_lat_bin_centre
-).data.m.squeeze()
+lat_grad_eof_cg = lat_grad_eof.sel(lat=cg_lat_bin_centre).data.m.squeeze()
 
-lat_grad_eof_tal = lat_grad_eof.sel(
-    lat=tal_lat_bin_centre
-).data.m.squeeze()
+lat_grad_eof_tal = lat_grad_eof.sel(lat=tal_lat_bin_centre).data.m.squeeze()
 
 # %%
-lat_grad_pc_df = (
-    (droste_tal.set_index("year")["value"] - droste_cg.set_index("year")["value"])
-    / (lat_grad_eof_tal - lat_grad_eof_cg)
+lat_grad_pc_df = (droste_tal.set_index("year")["value"] - droste_cg.set_index("year")["value"]) / (
+    lat_grad_eof_tal - lat_grad_eof_cg
 )
 lat_grad_pc_df
 
@@ -241,10 +226,7 @@ for lat_sel, ref in (
     (lat_grad_helper["lat"] == tal_lat_bin_centre, droste_tal),
     (lat_grad_helper["lat"] == cg_lat_bin_centre, droste_cg),
 ):
-    np.testing.assert_allclose(
-    ref["value"].values,
-    global_lat_gridded_tmp.sel(lat=lat_sel).data.squeeze()
-)
+    np.testing.assert_allclose(ref["value"].values, global_lat_gridded_tmp.sel(lat=lat_sel).data.squeeze())  # type: ignore
 
 # %% [markdown]
 # ### Global-, annual-mean
@@ -276,8 +258,8 @@ for lat_sel, ref in (
     (lat_grad_helper["lat"] == cg_lat_bin_centre, droste_cg),
 ):
     np.testing.assert_allclose(
-        ref["value"].values,
-        (global_annual_mean + lat_grad_annual_mean).sel(lat=lat_sel).data.m.squeeze()
+        ref["value"].values,  # type: ignore
+        (global_annual_mean + lat_grad_annual_mean).sel(lat=lat_sel).data.m.squeeze(),
     )
 
 # %% [markdown]
@@ -287,11 +269,15 @@ for lat_sel, ref in (
 # %%
 min_last_year = 2022
 if global_annual_mean["year"].max() < min_last_year:
-    global_annual_mean = global_annual_mean.pint.dequantify().interp(
-    year=range(global_annual_mean["year"].min().values, min_last_year + 1),
-    method="linear",
-    kwargs=dict(fill_value="extrapolate"),
-).pint.quantify()
+    global_annual_mean = (
+        global_annual_mean.pint.dequantify()
+        .interp(
+            year=range(global_annual_mean["year"].min().values, min_last_year + 1),
+            method="linear",
+            kwargs=dict(fill_value="extrapolate"),
+        )
+        .pint.quantify()
+    )
     global_annual_mean.plot.line()
 
 # %% [markdown]
@@ -302,11 +288,15 @@ if not np.isclose(global_annual_mean.isel(year=0).data.m, 0.0, atol=1e-5):
     raise ValueError
 
 # %%
-global_annual_mean = global_annual_mean.pint.dequantify().interp(
-year=range(1, global_annual_mean["year"].max().values + 1),
-method="linear",
-kwargs=dict(fill_value=0.0),
-).pint.quantify()
+global_annual_mean = (
+    global_annual_mean.pint.dequantify()
+    .interp(
+        year=range(1, global_annual_mean["year"].max().values + 1),
+        method="linear",
+        kwargs=dict(fill_value=0.0),
+    )
+    .pint.quantify()
+)
 global_annual_mean.plot.line()
 
 # %% [markdown]
@@ -353,8 +343,8 @@ lat_grad_pc_regression
 
 # %%
 fig, axes = plt.subplots(ncols=2)
-historical_emissions_regression_data.plot(ax=axes[0])
-lat_grad_pc_regression.plot(ax=axes[1])
+historical_emissions_regression_data.plot(ax=axes[0])  # type: ignore
+lat_grad_pc_regression.plot(ax=axes[1])  # type: ignore
 fig.tight_layout()
 
 # %%
@@ -446,12 +436,16 @@ latitudinal_gradient_pc0_total_emissions_regression
 # %%
 if not np.isclose(lat_grad_pc.isel(year=0).data.m, 0.0, atol=1e-5):
     raise AssertionError
-    
-lat_grad_pc_extended = lat_grad_pc.pint.dequantify().interp(
-    year=range(1, lat_grad_pc.year.max().data.squeeze() + 1),
-    method="linear",
-    kwargs=dict(fill_value=0.0),
-).pint.quantify()
+
+lat_grad_pc_extended = (
+    lat_grad_pc.pint.dequantify()
+    .interp(
+        year=range(1, lat_grad_pc.year.max().data.squeeze() + 1),
+        method="linear",
+        kwargs=dict(fill_value=0.0),
+    )
+    .pint.quantify()
+)
 lat_grad_pc_extended
 
 # %% [markdown]
@@ -483,11 +477,15 @@ lat_grad_pc_extended
 # lat_grad_pc_extended
 
 # %%
-lat_grad_pc_extended = lat_grad_pc_extended.pint.dequantify().interp(
-    year=range(1, min_last_year + 1),
-    method="linear",
-    kwargs=dict(fill_value="extrapolate"),
-).pint.quantify()
+lat_grad_pc_extended = (
+    lat_grad_pc_extended.pint.dequantify()
+    .interp(
+        year=range(1, min_last_year + 1),
+        method="linear",
+        kwargs=dict(fill_value="extrapolate"),
+    )
+    .pint.quantify()
+)
 lat_grad_pc_extended.sel(year=range(min_last_year - 10, min_last_year + 1)).plot.line()
 lat_grad_pc_extended
 
