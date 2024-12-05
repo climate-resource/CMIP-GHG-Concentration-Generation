@@ -1,5 +1,5 @@
 """
-Config for the calculation of the 15 degree monthly data for gases we handle like C4F10
+Config for the calculation of the 15 degree monthly data for gases we handle like C8F18
 """
 
 from __future__ import annotations
@@ -10,9 +10,9 @@ from attrs import frozen
 
 
 @frozen
-class CalculateC4F10LikeMonthlyFifteenDegreePieces:
+class CalculateC8F18LikeMonthlyFifteenDegreePieces:
     """
-    Configuration for the calculation of the 15 degree monthly data pieces for gases we handle like C4F10
+    Configuration for the calculation of the 15 degree monthly data pieces for gases we handle like C8F18
     """
 
     step_config_id: str
@@ -24,22 +24,6 @@ class CalculateC4F10LikeMonthlyFifteenDegreePieces:
 
     gas: str
     """Gas to which this config applies (a bit redundant, but handy to be explicit)"""
-
-    latitudinal_gradient_allyears_pcs_eofs_file: Path
-    """
-    Path in which to save the latitudinal gradient information for all years
-
-    This contains the PCs and EOFs separately,
-    but the PCs have been extended to cover all the years of interest.
-    """
-
-    latitudinal_gradient_pc0_total_emissions_regression_file: Path
-    """
-    Path in which to save the regression between pc0 and global emissions of the gas
-    """
-
-    global_annual_mean_allyears_file: Path
-    """Path in which to save the global-, annual-mean, extended over all years"""
 
     global_annual_mean_allyears_monthly_file: Path
     """

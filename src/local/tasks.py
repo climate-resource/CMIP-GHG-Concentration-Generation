@@ -19,6 +19,7 @@ from .config import converter_yaml
 from .config.base import ConfigBundle
 from .notebook_steps import (
     calculate_c4f10_like_monthly_fifteen_degree_pieces,
+    calculate_c8f18_like_monthly_fifteen_degree_pieces,
     calculate_ch4_monthly_fifteen_degree_pieces,
     calculate_co2_monthly_fifteen_degree_pieces,
     calculate_n2o_monthly_fifteen_degree_pieces,
@@ -35,6 +36,7 @@ from .notebook_steps import (
     retrieve_and_extract_gage_data,
     retrieve_and_extract_misc_data,
     retrieve_and_extract_noaa_data,
+    retrieve_and_process_droste_et_al_2020_data,
     retrieve_and_process_epica_data,
     retrieve_and_process_law_dome_data,
     retrieve_and_process_neem_data,
@@ -176,6 +178,7 @@ def gen_all_tasks(
         retrieve_and_process_velders_et_al_2022_data,
         retrieve_and_process_western_et_al_2024_data,
         retrieve_and_process_wmo_2022_ozone_assessment_ch7_data,
+        retrieve_and_process_droste_et_al_2020_data,
         plot_input_data_overviews,
         compile_historical_emissions,
         smooth_law_dome_data,
@@ -184,6 +187,7 @@ def gen_all_tasks(
         calculate_n2o_monthly_fifteen_degree_pieces,
         calculate_sf6_like_monthly_fifteen_degree_pieces,
         calculate_c4f10_like_monthly_fifteen_degree_pieces,
+        calculate_c8f18_like_monthly_fifteen_degree_pieces,
         crunch_grids,
         crunch_equivalent_species,
         write_input4mips,

@@ -80,7 +80,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc114"  # config ID to select for this branch
+step_config_id: str = "ch4"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -235,10 +235,27 @@ data_dir = config_step.input4mips_out_dir.parents[1]
 with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
     all_gas_deps = json.load(fh)
 
-gas_deps = all_gas_deps[config_step.gas]
+try:
+    gas_deps = all_gas_deps[config_step.gas]
+except KeyError:
+    # No deps yet, assume it came from SSP2-4.5
+    gas_deps = [
+        {
+            "gas": config_step.gas,
+            "source": "Meinshausen et al., GMD (2020)",
+            "licence": "Paper, NA",
+            "reference": (
+                "Meinshausen, M., Nicholls, Z. R. J., ..., Vollmer, M. K., and Wang, R. H. J.: "
+                "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
+                "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
+            ),
+            "doi": "https://doi.org/10.5194/gmd-13-3571-2020",
+        }
+    ]
+
 gas_deps.append(
     {
-        "gas": "cfc114",
+        "gas": config_step.gas,
         "source": "Meinshausen et al., GMD (2017)",
         "licence": "Paper, NA",
         "reference": (
@@ -269,16 +286,10 @@ gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
 gas_deps
 
 # %%
-references = (
-    "(Note, these are just written as a JSON list. Nothing fancy, but also human readable.) "
-    f"{json.dumps([v['reference'] for v in gas_deps])}"
-)
-references = references.replace('"', "'")
-
 non_input4mips_metadata_common = {
-    "references_short_names": "; ".join([v["source"] for v in gas_deps]),
-    "references": references,
-    "references_dois": ";".join([v["doi"] for v in gas_deps]),
+    "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
+    "references": " --- ".join([v["reference"] for v in gas_deps]),
+    "references_dois": " --- ".join([v["doi"] for v in gas_deps]),
     # DOI for the dataset, not references
     "doi": config.doi,
 }

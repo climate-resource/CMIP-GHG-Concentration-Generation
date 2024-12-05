@@ -1,5 +1,5 @@
 """
-Calculate C4F10 gases monthly 15 degree pieces notebook steps
+Calculate C8F18 gases monthly 15 degree pieces notebook steps
 """
 
 from __future__ import annotations
@@ -52,38 +52,18 @@ def configure_notebooks(
     config_historical_emissions = get_config_for_step_id(
         config=config, step="compile_historical_emissions", step_config_id="only"
     )
-    config_droste = get_config_for_step_id(
-        config=config, step="retrieve_and_process_droste_et_al_2020_data", step_config_id="only"
-    )
 
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("14yy_c4f10-like-monthly-15-degree") / "1404_c4f10-like_derive-latitudinal-gradient"
+                Path("15yy_c8f18-like-monthly-15-degree") / "1505_c8f18-like_create-pieces-for-gridding"
             ],
             configuration=(),
-            dependencies=(
-                config_historical_emissions.complete_historical_emissions_file,
-                config_droste.processed_data_file,
-            ),
+            dependencies=(config_historical_emissions.complete_historical_emissions_file,),
             targets=(
-                config_step.global_annual_mean_allyears_file,
-                config_step.latitudinal_gradient_allyears_pcs_eofs_file,
-                config_step.latitudinal_gradient_pc0_total_emissions_regression_file,
-            ),
-            config_file=config_bundle.config_hydrated_path,
-            step_config_id=step_config_id,
-        ),
-        ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[
-                Path("14yy_c4f10-like-monthly-15-degree") / "1405_c4f10-like_create-pieces-for-gridding"
-            ],
-            configuration=(),
-            dependencies=(
-                config_step.global_annual_mean_allyears_file,
-                config_step.latitudinal_gradient_allyears_pcs_eofs_file,
-            ),
-            targets=(
+                # TODO: save out regression between lat. gradient and emissions too
+                # Save out the historical emissions we used for that regression too,
+                # to support harmonisation
                 config_step.global_annual_mean_allyears_monthly_file,
                 config_step.seasonality_allyears_fifteen_degree_monthly_file,
                 config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file,
@@ -97,21 +77,14 @@ def configure_notebooks(
 
 
 step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
-    step_name="calculate_c4f10_like_monthly_fifteen_degree_pieces",
+    step_name="calculate_c8f18_like_monthly_fifteen_degree_pieces",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("14yy_c4f10-like-monthly-15-degree")
-            / "1404_c4f10-like_derive-latitudinal-gradient",
+            notebook_path=Path("15yy_c8f18-like-monthly-15-degree")
+            / "1505_c8f18-like_create-pieces-for-gridding",
             raw_notebook_ext=".py",
-            summary="C4F10-like gas pieces - Derive the latitudinal gradient",
-            doc="Derive the latitudinal gradient from raw data",
-        ),
-        UnconfiguredNotebook(
-            notebook_path=Path("14yy_c4f10-like-monthly-15-degree")
-            / "1405_c4f10-like_create-pieces-for-gridding",
-            raw_notebook_ext=".py",
-            summary="C4F10-like gas pieces - Finalise the pieces for gridding",
-            doc="Finalise the pieces required for creating gridded files",
+            summary="c8f18-like gas pieces - Create the pieces for gridding",
+            doc="Create the pieces required for creating gridded files from CMIP6 data",
         ),
     ],
     configure_notebooks=configure_notebooks,

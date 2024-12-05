@@ -33,10 +33,10 @@ import cf_xarray.units
 import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
+import openscm_units
 import pint
 import pint_xarray
-import pooch
-import scmdata
+import tqdm.autonotebook as tqdman
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -63,6 +63,11 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.un
 
 Quantity = pint.get_application_registry().Quantity  # type: ignore
 
+# %%
+pint_xarray.setup_registry(openscm_units.unit_registry)
+
+QuantityOSCM = openscm_units.unit_registry.Quantity
+
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
@@ -88,50 +93,19 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ## Action
 
 # %% [markdown]
-# Temporary hack: just use CMIP6 data as a placeholder,
-# until we figure out an Ivy et al. (2012) or similar study to use.
+# ### Load raw data
 
 # %%
-rcmip_concentrations_fname = pooch.retrieve(
-    url="https://rcmip-protocols-au.s3-ap-southeast-2.amazonaws.com/v5.1.0/rcmip-concentrations-annual-means-v5-1-0.csv",
-    known_hash="md5:0d82c3c3cdd4dd632b2bb9449a5c315f",
-    progressbar=True,
-)
-rcmip_concentrations_fname
-
-# %%
-rcmip_concs = scmdata.ScmRun(rcmip_concentrations_fname, lowercase_cols=True)
-rcmip_concs
-
-# %%
-rcmip_concs_to_use_run = rcmip_concs.filter(region="World", scenario="ssp245", year=range(1, 2022 + 1))
-rcmip_concs_to_use_run["variable"] = rcmip_concs_to_use_run["variable"].str.lower()
-rcmip_concs_to_use_run = rcmip_concs_to_use_run.filter(variable=f"*{config_step.gas}")
-if rcmip_concs_to_use_run.shape[0] != 1:
-    raise AssertionError
-
-rcmip_concs_to_use = rcmip_concs_to_use_run.timeseries(time_axis="year")
-unit = rcmip_concs_to_use.index.get_level_values("unit")[0]
-rcmip_concs_to_use
-
-# %%
-global_annual_mean = (
-    xr.DataArray(
-        rcmip_concs_to_use.values.squeeze(),
-        dims=("year",),
-        coords=dict(year=rcmip_concs_to_use.columns.values),
-        attrs={"units": unit},
-    )
-    .interp(
-        year=np.arange(1, 2022 + 1),
-        kwargs={"fill_value": rcmip_concs_to_use.values.squeeze()[0]},
-    )
-    .pint.quantify()
-)
-
-global_annual_mean.plot.line()
-
+global_annual_mean: xr.DataArray = xr.load_dataarray(  # type: ignore
+    config_step.global_annual_mean_allyears_file
+).pint.quantify()
 global_annual_mean
+
+# %%
+lat_gradient_eofs_pcs: xr.Dataset = xr.load_dataset(
+    config_step.latitudinal_gradient_allyears_pcs_eofs_file
+).pint.quantify()
+lat_gradient_eofs_pcs
 
 # %% [markdown]
 # ### Calculate global-, annual-mean monthly
@@ -141,13 +115,13 @@ global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_ann
     global_annual_mean,
     algorithm=LaiKaplanInterpolator(
         get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
-        min_val=global_annual_mean.min().data,
+        min_val=Quantity(0, "ppt"),
     ),
 )
 global_annual_mean_monthly
 
 # %%
-fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+fig, axes = plt.subplots(ncols=4, figsize=(12, 4))
 if isinstance(axes, matplotlib.axes.Axes):
     raise TypeError(type(axes))
 
@@ -168,86 +142,103 @@ local.xarray_time.convert_year_to_time(
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
 local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"].isin(range(1950, 2023))),
     calendar="proleptic_gregorian",
 ).plot(ax=axes[2])  # type: ignore
 local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    global_annual_mean.sel(year=global_annual_mean["year"].isin(range(1950, 2023))),
     calendar="proleptic_gregorian",
 ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
+
+local.xarray_time.convert_year_month_to_time(
+    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot(ax=axes[3])  # type: ignore
+local.xarray_time.convert_year_to_time(
+    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+    calendar="proleptic_gregorian",
+).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[3])
 
 plt.tight_layout()
 plt.show()
 
 # %% [markdown]
-# ### Calculate seasonality
+# ### Seasonality
 #
-# You have to use the global-, annual-mean on a yearly time axis otherwise the time-mean of the seasonality over each year is not zero.
+# Assumed zero
 
 # %%
-# TODO: update and actually calculate seasonality from something
 obs_network_seasonality = xr.DataArray(
     np.zeros((12, 12)),
     dims=("lat", "month"),
-    coords=dict(month=range(1, 13), lat=local.binning.LAT_BIN_CENTRES),
+    coords=dict(month=range(1, 13), lat=lat_gradient_eofs_pcs["lat"]),
 ).pint.quantify("dimensionless")
-obs_network_seasonality
 
-# %%
-obs_network_seasonality.plot()
-
-# %%
-seasonality_full = global_annual_mean * obs_network_seasonality
+seasonality_full = global_annual_mean_monthly * obs_network_seasonality
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
     atol=1e-6,  # Match the tolerance of our mean-preserving interpolation algorithm
 )
-
-# %%
-fig, axes = plt.subplots(ncols=2, sharey=True)
-if isinstance(axes, matplotlib.axes.Axes):
-    raise TypeError(type(axes))
-
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=seasonality_full["year"][-6:])).sel(
-    lat=[-82.5, 7.5, 82.5]
-).plot(x="time", hue="lat", alpha=0.7, ax=axes[0])
-
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=range(1984, 1986))).sel(
-    lat=[-82.5, 7.5, 82.5]
-).plot(x="time", hue="lat", alpha=0.7, ax=axes[1])
-
-plt.tight_layout()
-
-# %%
-local.xarray_time.convert_year_month_to_time(seasonality_full.sel(year=seasonality_full["year"][-6:])).plot(
-    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
-)
-
-# %%
-local.xarray_time.convert_year_month_to_time(seasonality_full, calendar="proleptic_gregorian").plot(
-    x="time", hue="lat", alpha=0.7, col="lat", col_wrap=3, sharey=True
-)
+seasonality_full
 
 # %% [markdown]
 # ### Latitudinal gradient, monthly
-
-# %% [markdown]
-# This obviously needs to be updated to an actual calculation.
-
-# %%
-latitudinal_gradient_monthly = xr.DataArray(
-    np.zeros((global_annual_mean["year"].shape[0], 12, 12)),
-    dims=("year", "month", "lat"),
-    coords=dict(
-        year=global_annual_mean["year"],
-        month=range(1, 13),
-        lat=local.binning.LAT_BIN_CENTRES,
-    ),
-).pint.quantify(unit)
-latitudinal_gradient_monthly
+#
+# We interpolate the PCs, then apply these to the EOFs.
+# This is much faster than interpolating each latitude separately
+# and ensures that we preserve a spatial-mean of zero
+# in our latitudinal gradient.
 
 # %%
+pcs_monthly = (
+    lat_gradient_eofs_pcs["principal-components"]  # type: ignore
+    .groupby("eof", squeeze=True)
+    .apply(
+        local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
+        algorithm=LaiKaplanInterpolator(
+            get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+            min_val=lat_gradient_eofs_pcs["principal-components"].min().data,
+        ),
+    )
+)
+pcs_monthly
+
+# %%
+pcs_annual = lat_gradient_eofs_pcs["principal-components"]
+
+fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
+
+
+local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(
+    ax=axes[0], hue="eof"
+)
+local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
+    x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[0]
+)
+
+local.xarray_time.convert_year_month_to_time(
+    pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+).plot(ax=axes[1], hue="eof")
+local.xarray_time.convert_year_to_time(
+    pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[1])
+
+local.xarray_time.convert_year_month_to_time(
+    pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+).plot(ax=axes[2], hue="eof")
+local.xarray_time.convert_year_to_time(
+    pcs_annual.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+).plot.scatter(x="time", hue="eof", zorder=3, alpha=0.5, ax=axes[2])
+
+plt.tight_layout()
+plt.show()
+
+# %%
+latitudinal_gradient_monthly = pcs_monthly @ lat_gradient_eofs_pcs["eofs"]
+
 # Ensure spatial mean is zero
 tmp = latitudinal_gradient_monthly
 tmp.name = "latitudinal-gradient"
@@ -256,6 +247,74 @@ np.testing.assert_allclose(
     0.0,
     atol=1e-10,
 )
+
+latitudinal_gradient_monthly
+
+# %%
+tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
+if tmp.min() < 0.0:
+    msg = (
+        "When combining the global values and the latitudinal gradient, "
+        f"the minimum value is less than 0.0. {tmp.min()=}"
+    )
+    print(msg)
+    # raise AssertionError(msg)
+
+    atol_close = 1e-8
+    print(
+        "Trying with a forced update of the latitudinal gradient "
+        f"to be zero where the global-mean is within {atol_close} of zero"
+    )
+    latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
+    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+        for month, month_da in yr_da.groupby("month", squeeze=False):
+            if np.isclose(month_da.data.m, 0.0):
+                # print(yr)
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
+                continue
+
+            # The latitudinal gradient can't be bigger than the global-mean value,
+            # because this leads to negative values.
+            # This actually points to an issue in the overall workflow,
+            # because what we're actually seeing is a disagreement between the
+            # concentration assumptions (i.e. pre-industrial values)
+            # and the emissions assumptions (which drive the latitudinal gradient).
+            # However, fixing this is an issue for the future.
+            # We squeeze even harder, to avoid seasonality breaking things too.
+            min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
+            if np.abs(min_grad_val) > month_da * 0.5:
+                shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
+                new_val = (
+                    shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
+                )
+
+                msg = (
+                    "TODO: fix consistency issue. "
+                    f"In {yr:04d}-{month:02d}, "
+                    f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
+                    f"The global-mean value is {month_da.data}. "
+                    f"This makes no sense. For now, force overriding to {new_val.data}."
+                )
+                print(msg)
+
+                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = new_val
+
+    tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
+    if tmp2.min() < 0.0:
+        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+        raise AssertionError(msg)
+
+    print("Updated the latitudinal gradient")
+    latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
+
+    # Ensure spatial mean is still zero
+    tmp = latitudinal_gradient_monthly
+    tmp.name = "latitudinal-gradient"
+    np.testing.assert_allclose(
+        local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+        0.0,
+        atol=1e-10,
+    )
 
 latitudinal_gradient_monthly
 

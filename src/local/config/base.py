@@ -18,6 +18,9 @@ from pydoit_nb.config_helpers import (
 from .calculate_c4f10_like_monthly_fifteen_degree_pieces import (
     CalculateC4F10LikeMonthlyFifteenDegreePieces,
 )
+from .calculate_c8f18_like_monthly_fifteen_degree_pieces import (
+    CalculateC8F18LikeMonthlyFifteenDegreePieces,
+)
 from .calculate_ch4_monthly_15_degree import (
     CalculateCH4MonthlyFifteenDegreePieces,
 )
@@ -37,6 +40,7 @@ from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from .retrieve_and_process_droste_et_al_2020_data import RetrieveExtractDrosteEtal2020Data
 from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
 from .retrieve_and_process_neem_data import RetrieveProcessNEEMConfig
@@ -164,6 +168,11 @@ class Config:
     )
     """Configurations to use for retrieving and processing Velders et al. (2022) data"""
 
+    retrieve_and_process_droste_et_al_2020_data: list[RetrieveExtractDrosteEtal2020Data] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use for retrieving and processing Droste et al. (2020) data"""
+
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
@@ -203,6 +212,11 @@ class Config:
         field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
     )
     """Configurations to use for calculating the 15 degree, monthly data for gases we handle like C4F10"""
+
+    calculate_c8f18_like_monthly_fifteen_degree_pieces: list[CalculateC8F18LikeMonthlyFifteenDegreePieces] = (
+        field(validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)])
+    )
+    """Configurations to use for calculating the 15 degree, monthly data for gases we handle like C8F18"""
 
     crunch_grids: list[GridCrunchingConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]

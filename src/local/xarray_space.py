@@ -9,7 +9,7 @@ import xarray as xr
 
 
 def calculate_area_weighted_mean_latitude_only(
-    inp: xr.DataArray,
+    inp: xr.Dataset,
     variables: list[str],
     bounds_dim_name: str = "bounds",
     lat_name: str = "lat",
@@ -56,7 +56,7 @@ def calculate_area_weighted_mean_latitude_only(
     Parameters
     ----------
     inp
-        :obj:`xr.Dataset` to process
+        Data to process
 
     variables
         Variables of which to calculate the area-mean
@@ -72,7 +72,8 @@ def calculate_area_weighted_mean_latitude_only(
 
     Returns
     -------
-        :obj:`xr.Dataset` with area-weighted mean of ``variables``
+    :
+        Area-weighted mean of `variables`
     """
     lat_bnds = inp[lat_bounds_name].pint.to("radian")
 

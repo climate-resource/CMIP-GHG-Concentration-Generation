@@ -53,14 +53,12 @@ def configure_notebooks(
         step = f"calculate_{config_step.gas}_monthly_fifteen_degree_pieces"
         step_config_id_gridding_pieces_step = "only"
 
-    elif config_step.gas in (
-        "c4f10",
-        "c5f12",
-        "c6f14",
-        "c7f16",
-        "c8f18",
-    ):
+    elif config_step.gas in ("c4f10", "c5f12", "c6f14", "c7f16", "cc4f8"):
         step = "calculate_c4f10_like_monthly_fifteen_degree_pieces"
+        step_config_id_gridding_pieces_step = config_step.gas
+
+    elif config_step.gas in ("c8f18",):
+        step = "calculate_c8f18_like_monthly_fifteen_degree_pieces"
         step_config_id_gridding_pieces_step = config_step.gas
 
     else:

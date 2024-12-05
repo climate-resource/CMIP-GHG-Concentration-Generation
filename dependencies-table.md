@@ -1,19 +1,20 @@
 # Summary by source
 
-**AGAGE gc-ms-medusa** - 35: c2f6, c3f8, cc4f8, ccl4, cf4, cfc11, cfc113, cfc114, cfc115, cfc12, ch2cl2, ch3br, ch3ccl3, ch3cl, chcl3, halon1211, halon1301, halon2402, hcfc141b, hcfc142b, hcfc22, hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc23, hfc236fa, hfc245fa, hfc32, hfc365mfc, hfc4310mee, nf3, sf6, so2f2
+**AGAGE gc-ms-medusa** - 34: c2f6, c3f8, ccl4, cf4, cfc11, cfc113, cfc114, cfc115, cfc12, ch2cl2, ch3br, ch3ccl3, ch3cl, chcl3, halon1211, halon1301, halon2402, hcfc141b, hcfc142b, hcfc22, hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc23, hfc236fa, hfc245fa, hfc32, hfc365mfc, hfc4310mee, nf3, sf6, so2f2
 **NOAA HATS** - 28: c2f6, ccl4, cf4, cfc11, cfc113, cfc12, ch2cl2, ch3br, ch3ccl3, ch3cl, halon1211, halon1301, halon2402, hcfc141b, hcfc142b, hcfc22, hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc236fa, hfc32, hfc365mfc, n2o, nf3, sf6, so2f2
-**AGAGE gc-ms** - 27: c3f8, cc4f8, ccl4, cfc11, cfc114, cfc115, cfc12, ch2cl2, ch3br, ch3ccl3, ch3cl, chcl3, halon1211, halon1301, hcfc141b, hcfc142b, hcfc22, hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc236fa, hfc245fa, hfc32, hfc365mfc, so2f2
+**AGAGE gc-ms** - 26: c3f8, ccl4, cfc11, cfc114, cfc115, cfc12, ch2cl2, ch3br, ch3ccl3, ch3cl, chcl3, halon1211, halon1301, hcfc141b, hcfc142b, hcfc22, hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc236fa, hfc245fa, hfc32, hfc365mfc, so2f2
 **WMO 2022 ozone assessment Ch. 7** - 12: ccl4, cfc11, cfc113, cfc114, cfc115, cfc12, ch3br, ch3ccl3, ch3cl, halon1211, halon1301, halon2402
 **Velders et al., 2022** - 10: hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc236fa, hfc245fa, hfc32, hfc365mfc, hfc4310mee
 **AGAGE gc-md** - 9: ccl4, cfc11, cfc113, cfc12, ch3ccl3, ch4, chcl3, n2o, sf6
+**Droste et al., 2020** - 5: c4f10, c5f12, c6f14, c7f16, cc4f8
 **Law Dome** - 3: ch4, co2, n2o
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
 **AGAGE GAGE** - 2: ch4, n2o
 **AGAGE ALE** - 2: ch4, n2o
-**NOAA in-situ** - 2: ch4, co2
 **NOAA surface flask** - 2: ch4, co2
-**NEEM** - 1: ch4
+**NOAA in-situ** - 2: ch4, co2
 **EPICA** - 1: ch4
+**NEEM** - 1: ch4
 
 # Summary by gas
 
@@ -26,7 +27,11 @@
 **sf6**: AGAGE gc-md, AGAGE gc-ms-medusa, NOAA HATS
 **c2f6**: AGAGE gc-ms-medusa, NOAA HATS
 **c3f8**: AGAGE gc-ms, AGAGE gc-ms-medusa
-**cc4f8**: AGAGE gc-ms, AGAGE gc-ms-medusa
+**c4f10**: Droste et al., 2020
+**c5f12**: Droste et al., 2020
+**c6f14**: Droste et al., 2020
+**c7f16**: Droste et al., 2020
+**cc4f8**: Droste et al., 2020
 **ccl4**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
 **cf4**: AGAGE gc-ms-medusa, NOAA HATS
 **cfc113**: AGAGE gc-md, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7

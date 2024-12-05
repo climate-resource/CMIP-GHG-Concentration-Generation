@@ -27,6 +27,9 @@ from local.config_creation.crunch_equivalent_species import (
     create_crunch_equivalent_species_config,
 )
 from local.config_creation.crunch_grids import create_crunch_grids_config
+from local.config_creation.droste_et_al_2020_handling import (
+    RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
+)
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
 from local.config_creation.law_dome_handling import (
@@ -285,6 +288,7 @@ def create_dev_config() -> Config:
         retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
+        retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -359,6 +363,7 @@ def create_ci_config() -> Config:
         retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
+        retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -475,6 +480,7 @@ def create_ci_nightly_config() -> Config:
         retrieve_and_process_wmo_2022_ozone_assessment_ch7_data=RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
+        retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
