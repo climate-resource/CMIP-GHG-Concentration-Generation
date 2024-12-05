@@ -88,10 +88,6 @@ step_config_id: str = "c4f10"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_historical_emissions = get_config_for_step_id(
-    config=config, step="compile_historical_emissions", step_config_id="only"
-)
-
 
 # %% [markdown]
 # ## Action
