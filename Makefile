@@ -73,6 +73,10 @@ checks:  ## run all the linting checks of the codebase
 changelog-draft:  ## compile a draft of the next changelog
 	pixi run -e all-dev towncrier build --draft
 
+.PHONY: changelog
+changelog:  ## compile the changelog entries into CHANGELOG.md
+	pixi run -e all-dev towncrier build
+
 virtual-environment: pyproject.toml  ## update virtual environment, create a new one if it doesn't already exist
 	pixi install
 	pixi run -e all-dev pre-commit install

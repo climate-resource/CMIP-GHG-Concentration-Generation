@@ -15,7 +15,7 @@ dependencies = [
     "python-dotenv>=1.0.1",
 ]
 name = "local"
-version = "0.2.1a1"
+version = "0.3.0"
 description = "Local code to support running the notebooks"
 readme = "README.md"
 
@@ -45,7 +45,7 @@ dev = [
     "mypy",
     "pandas-stubs",
     "tomli",
-    "towncrier",
+    "towncrier>=24.8.0",
     "types-beautifulsoup4",
     "types-tqdm",
     "jupyter-resource-usage",
@@ -169,7 +169,7 @@ follow_imports = "normal"
 [tool.towncrier]
 package = "local"
 package_dir = "src"
-filename = "docs/changelog.md"
+filename = "CHANGELOG.md"
 directory = "changelog/"
 title_format = "## CMIP GHG Concentration Generation {version} ({project_date})"
 underlines = [
