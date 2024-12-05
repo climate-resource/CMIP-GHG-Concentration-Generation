@@ -28,7 +28,7 @@ editable = true
 
 # conda dependencies
 [tool.pixi.dependencies]
-input4mips-validation-locked = "0.11.3"
+input4mips-validation-locked = "0.15.0"
 doit = ">=0.36.0,<0.37"
 jupyterlab = ">=1.0"
 loguru-config = ">=0.1.0"
