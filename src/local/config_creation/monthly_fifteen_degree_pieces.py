@@ -108,7 +108,6 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
         elif gas in (
             "c2f6",
             "c3f8",
-            "cc4f8",
             "ccl4",
             "cf4",
             "cfc11",
@@ -180,6 +179,9 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             "c5f12",
             "c6f14",
             "c7f16",
+            # Droste data is basically AGAGE,
+            # so prefer Droste over AGAGE for c-C4F8
+            "cc4f8",
         ):
             out["calculate_c4f10_like_monthly_fifteen_degree_pieces"].append(
                 get_c4f10_like_monthly_fifteen_degree_pieces_config(
