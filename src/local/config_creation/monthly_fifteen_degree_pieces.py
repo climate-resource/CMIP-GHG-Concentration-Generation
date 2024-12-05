@@ -466,6 +466,10 @@ def get_c4f10_like_monthly_fifteen_degree_pieces_config(
     return CalculateC4F10LikeMonthlyFifteenDegreePieces(
         step_config_id=gas,
         gas=gas,
+        latitudinal_gradient_allyears_pcs_eofs_file=interim_dir / f"{gas}_allyears-lat-gradient-eofs-pcs.nc",
+        latitudinal_gradient_pc0_total_emissions_regression_file=interim_dir
+        / f"{gas}_pc0-total-emissions-regression.yaml",
+        global_annual_mean_allyears_file=interim_dir / f"{gas}_global-annual-mean_allyears.nc",
         global_annual_mean_allyears_monthly_file=interim_dir
         / f"{gas}_global-annual-mean_allyears-monthly.nc",
         seasonality_allyears_fifteen_degree_monthly_file=interim_dir

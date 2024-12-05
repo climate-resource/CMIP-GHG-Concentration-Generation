@@ -34,12 +34,9 @@ import matplotlib.axes
 import matplotlib.pyplot as plt
 import numpy as np
 import openscm_units
-import pandas as pd
 import pint
 import pint_xarray
-import pooch
 import tqdm.autonotebook as tqdman
-import scmdata
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -175,16 +172,13 @@ plt.show()
 # Assumed zero
 
 # %%
-assert False, "fix the below to use info from global mean/lat. gradient"
-
-# %%
 obs_network_seasonality = xr.DataArray(
     np.zeros((12, 12)),
     dims=("lat", "month"),
-    coords=dict(month=range(1, 13), lat=local.binning.LAT_BIN_CENTRES),
+    coords=dict(month=range(1, 13), lat=lat_gradient_eofs_pcs["lat"]),
 ).pint.quantify("dimensionless")
 
-seasonality_full = gm * obs_network_seasonality
+seasonality_full = global_annual_mean_monthly * obs_network_seasonality
 np.testing.assert_allclose(
     seasonality_full.mean("month").data.m,
     0.0,
@@ -207,9 +201,9 @@ pcs_monthly = (
     .apply(
         local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly,
         algorithm=LaiKaplanInterpolator(
-        get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
-        min_val=lat_gradient_eofs_pcs["principal-components"].min().data,
-    )
+            get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+            min_val=lat_gradient_eofs_pcs["principal-components"].min().data,
+        ),
     )
 )
 pcs_monthly

@@ -1,23 +1,35 @@
 base_seed: 20240428
 calculate_c4f10_like_monthly_fifteen_degree_pieces:
 - gas: c4f10
+  global_annual_mean_allyears_file: data/interim/c4f10/c4f10_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/c4f10/c4f10_global-annual-mean_allyears-monthly.nc
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/c4f10/c4f10_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c4f10/c4f10_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/c4f10/c4f10_pc0-total-emissions-regression.yaml
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c4f10/c4f10_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c4f10
 - gas: c5f12
+  global_annual_mean_allyears_file: data/interim/c5f12/c5f12_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/c5f12/c5f12_global-annual-mean_allyears-monthly.nc
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/c5f12/c5f12_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c5f12/c5f12_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/c5f12/c5f12_pc0-total-emissions-regression.yaml
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c5f12/c5f12_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c5f12
 - gas: c6f14
+  global_annual_mean_allyears_file: data/interim/c6f14/c6f14_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/c6f14/c6f14_global-annual-mean_allyears-monthly.nc
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/c6f14/c6f14_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c6f14/c6f14_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/c6f14/c6f14_pc0-total-emissions-regression.yaml
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c6f14/c6f14_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c6f14
 - gas: c7f16
+  global_annual_mean_allyears_file: data/interim/c7f16/c7f16_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/c7f16/c7f16_global-annual-mean_allyears-monthly.nc
+  latitudinal_gradient_allyears_pcs_eofs_file: data/interim/c7f16/c7f16_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/c7f16/c7f16_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
+  latitudinal_gradient_pc0_total_emissions_regression_file: data/interim/c7f16/c7f16_pc0-total-emissions-regression.yaml
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c7f16/c7f16_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c7f16
 calculate_c8f18_like_monthly_fifteen_degree_pieces:
