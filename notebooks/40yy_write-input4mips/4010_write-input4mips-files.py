@@ -45,6 +45,7 @@ from attrs import evolve
 from input4mips_validation.cvs.loading import load_cvs_known_loader
 from input4mips_validation.cvs.loading_raw import get_raw_cvs_loader
 from input4mips_validation.dataset import Input4MIPsDataset
+from input4mips_validation.dataset.dataset import prepare_ds_and_get_frequency
 from input4mips_validation.dataset.metadata_data_producer_minimum import (
     Input4MIPsDatasetMetadataDataProducerMinimum,
 )
@@ -290,8 +291,6 @@ non_input4mips_metadata_common = {
     "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
     "references": " --- ".join([v["reference"] for v in gas_deps]),
     "references_dois": " --- ".join([v["doi"] for v in gas_deps]),
-    # DOI for the dataset, not references
-    "doi": config.doi,
 }
 non_input4mips_metadata_common
 
@@ -483,18 +482,21 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
 
         input4mips_ds = Input4MIPsDataset.from_data_producer_minimum_information(
             data=ds_to_write_time_section,
-            metadata_minimum=metadata_minimum,
-            dimensions=dimensions,
-            time_dimension=time_dimension,
-            add_time_bounds=partial(
-                add_time_bounds,
-                monthly_time_bounds=not yearly_time_bounds,
-                yearly_time_bounds=yearly_time_bounds,
+            prepare_func=partial(
+                prepare_ds_and_get_frequency,
+                dimensions=dimensions,
+                time_dimension=time_dimension,
+                standard_and_or_long_names={
+                    variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
+                },
+                add_time_bounds=partial(
+                    add_time_bounds,
+                    monthly_time_bounds=not yearly_time_bounds,
+                    yearly_time_bounds=yearly_time_bounds,
+                ),
             ),
+            metadata_minimum=metadata_minimum,
             cvs=cvs,
-            standard_and_or_long_names={
-                variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
-            },
             dataset_category="GHGConcentrations",
             realm="atmos",
         )
@@ -509,6 +511,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
                 "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
                 "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd. "
             ),
+            doi=config.doi,
         )
 
         ds = input4mips_ds.data
