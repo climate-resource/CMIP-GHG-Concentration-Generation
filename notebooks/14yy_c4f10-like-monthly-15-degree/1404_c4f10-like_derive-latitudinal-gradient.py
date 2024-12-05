@@ -335,9 +335,9 @@ historical_emissions_xr = xr.DataArray(
     coords=dict(year=historical_emissions["year"]),
     attrs={"units": unit},
 ).pint.quantify(unit_registry=openscm_units.unit_registry)
-historical_emissions_xr = historical_emissions_xr.sel(
-    year=historical_emissions_xr["year"] <= regression_years.max()
-)
+# historical_emissions_xr = historical_emissions_xr.sel(
+#     year=historical_emissions_xr["year"] <= regression_years.max()
+# )
 
 
 historical_emissions_xr
@@ -395,195 +395,254 @@ latitudinal_gradient_pc0_total_emissions_regression
 # ### Calculate global-, annual-mean monthly
 
 # %%
-global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
-    global_annual_mean,
-    algorithm=LaiKaplanInterpolator(
-        get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
-        min_val=global_annual_mean.min().data,
-    ),
-)
-global_annual_mean_monthly
+# global_annual_mean_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+#     global_annual_mean,
+#     algorithm=LaiKaplanInterpolator(
+#         get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+#         min_val=global_annual_mean.min().data,
+#     ),
+# )
+# global_annual_mean_monthly
 
 # %%
-fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
-if isinstance(axes, matplotlib.axes.Axes):
-    raise TypeError(type(axes))
+# fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+# if isinstance(axes, matplotlib.axes.Axes):
+#     raise TypeError(type(axes))
 
-local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
-    ax=axes[0]
-)
-local.xarray_time.convert_year_to_time(global_annual_mean, calendar="proleptic_gregorian").plot.scatter(
-    x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
-)
+# local.xarray_time.convert_year_month_to_time(global_annual_mean_monthly, calendar="proleptic_gregorian").plot(  # type: ignore
+#     ax=axes[0]
+# )
+# local.xarray_time.convert_year_to_time(global_annual_mean, calendar="proleptic_gregorian").plot.scatter(
+#     x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[0]
+# )
 
-local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
-    calendar="proleptic_gregorian",
-).plot(ax=axes[1])  # type: ignore
-local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10]),
-    calendar="proleptic_gregorian",
-).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
+# local.xarray_time.convert_year_month_to_time(
+#     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][1:10]),
+#     calendar="proleptic_gregorian",
+# ).plot(ax=axes[1])  # type: ignore
+# local.xarray_time.convert_year_to_time(
+#     global_annual_mean.sel(year=global_annual_mean_monthly["year"][1:10]),
+#     calendar="proleptic_gregorian",
+# ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[1])
 
-local.xarray_time.convert_year_month_to_time(
-    global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
-    calendar="proleptic_gregorian",
-).plot(ax=axes[2])  # type: ignore
-local.xarray_time.convert_year_to_time(
-    global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
-    calendar="proleptic_gregorian",
-).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
+# local.xarray_time.convert_year_month_to_time(
+#     global_annual_mean_monthly.sel(year=global_annual_mean_monthly["year"][-10:]),
+#     calendar="proleptic_gregorian",
+# ).plot(ax=axes[2])  # type: ignore
+# local.xarray_time.convert_year_to_time(
+#     global_annual_mean.sel(year=global_annual_mean_monthly["year"][-10:]),
+#     calendar="proleptic_gregorian",
+# ).plot.scatter(x="time", color="tab:orange", zorder=3, alpha=0.5, ax=axes[2])
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
 
 # %% [markdown]
-# ### Latitudinal-gradient, monthly
+# ### Latitudinal-gradient extension
+
+# %% [markdown]
+# Firstly extend back to year 1.
 
 # %%
-lat_grad_pc_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(lat_grad_pc)
-lat_grad_pc_monthly
+if not np.isclose(lat_grad_pc.isel(year=0).data.m, 0.0, atol=1e-5):
+    raise AssertionError
+    
+lat_grad_pc_extended = lat_grad_pc.pint.dequantify().interp(
+    year=range(1, lat_grad_pc.year.max().data.squeeze() + 1),
+    method="linear",
+    kwargs=dict(fill_value=0.0),
+).pint.quantify()
+lat_grad_pc_extended
+
+# %% [markdown]
+# Extend forward using linear extrapolation
+# (this can also be done with the regression against emissions,
+# but it is more complicated than it needs to be).
 
 # %%
-pcs_annual = lat_grad_pc
-pcs_monthly = lat_grad_pc_monthly
+# # The code for doing this with a regression
+# years_to_fill_with_regression = np.setdiff1d(
+#     range(1, min_last_year + 1),
+#     lat_grad_pc_extended["year"],
+# )
 
-fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
-if isinstance(axes, matplotlib.axes.Axes):
-    raise TypeError(type(axes))
+# years_to_fill_with_regression
 
+# historical_emissions_xr.sel(year=years_to_fill_with_regression).plot.line()
 
-local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(ax=axes[0])
-local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
-    x="time", zorder=3, alpha=0.5, ax=axes[0]
-)
-
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
-).plot(ax=axes[1])
-local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
-).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[1])
-
-local.xarray_time.convert_year_month_to_time(
-    pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
-).plot(ax=axes[2])
-local.xarray_time.convert_year_to_time(
-    pcs_annual.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
-).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[2])
-
-plt.tight_layout()
-plt.show()
+# lat_grad_pc_extended_reg_part = (
+#     m
+#     * historical_emissions_xr.sel(year=years_to_fill_with_regression).pint.quantify(
+#         unit_registry=openscm_units.unit_registry
+#     )
+#     + c
+# )
+# lat_grad_pc_extended_reg_part
+# lat_grad_pc_extended = xr.concat([lat_grad_pc_extended, lat_grad_pc_extended_reg_part], "year")
+# lat_grad_pc_extended.plot.line()
+# lat_grad_pc_extended
 
 # %%
-
-assert False, "Extend PC"
-
-# %%
-latitudinal_gradient_monthly = lat_grad_eof @ lat_grad_pc_monthly
-
-# Ensure spatial mean is zero
-tmp = latitudinal_gradient_monthly
-tmp.name = "latitudinal-gradient"
-np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppt").m,
-    0.0,
-    atol=1e-10,
-)
-
-latitudinal_gradient_monthly
+lat_grad_pc_extended = lat_grad_pc_extended.pint.dequantify().interp(
+    year=range(1, min_last_year + 1),
+    method="linear",
+    kwargs=dict(fill_value="extrapolate"),
+).pint.quantify()
+lat_grad_pc_extended.sel(year=range(min_last_year - 10, min_last_year + 1)).plot.line()
+lat_grad_pc_extended
 
 # %%
-tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
-if tmp.min() < 0.0:
-    msg = (
-        "When combining the global values and the latitudinal gradient, "
-        f"the minimum value is less than 0.0. {tmp.min()=}"
-    )
-    print(msg)
-    # raise AssertionError(msg)
-
-    atol_close = 1e-8
-    print(
-        "Trying with a forced update of the latitudinal gradient "
-        f"to be zero where the global-mean is within {atol_close} of zero"
-    )
-    latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
-    for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
-        for month, month_da in yr_da.groupby("month", squeeze=False):
-            if np.isclose(month_da.data.m, 0.0):
-                # print(yr)
-                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
-                continue
-
-            # The latitudinal gradient can't be bigger than the global-mean value,
-            # because this leads to negative values.
-            # This actually points to an issue in the overall workflow,
-            # because what we're actually seeing is a disagreement between the
-            # concentration assumptions (i.e. pre-industrial values)
-            # and the emissions assumptions (which drive the latitudinal gradient).
-            # However, fixing this is an issue for the future.
-            # We squeeze even harder, to avoid seasonality breaking things too.
-            min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
-            if np.abs(min_grad_val) > month_da * 0.5:
-                shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
-                new_val = (
-                    shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
-                )
-
-                msg = (
-                    "TODO: fix consistency issue. "
-                    f"In {yr:04d}-{month:02d}, "
-                    f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
-                    f"The global-mean value is {month_da.data}. "
-                    f"This makes no sense. For now, force overriding to {new_val.data}."
-                )
-                print(msg)
-
-                latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = new_val
-
-    tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
-    if tmp2.min() < 0.0:
-        msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
-        raise AssertionError(msg)
-
-    print("Updated the latitudinal gradient")
-    latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
-
-    # Ensure spatial mean is still zero
-    tmp = latitudinal_gradient_monthly
-    tmp.name = "latitudinal-gradient"
-    np.testing.assert_allclose(
-        local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
-        0.0,
-        atol=1e-10,
-    )
-
-latitudinal_gradient_monthly
+# lat_grad_pc_monthly = local.mean_preserving_interpolation.interpolate_annual_mean_to_monthly(
+#     lat_grad_pc_extended,
+#     algorithm=LaiKaplanInterpolator(
+#         get_wall_control_points_y_from_interval_ys=get_wall_control_points_y_linear_with_flat_override_on_left,
+#         min_val=lat_grad_pc_extended.min().data,
+#     ),
+# )
+# lat_grad_pc_monthly
 
 # %%
-local.xarray_time.convert_year_month_to_time(
-    latitudinal_gradient_monthly, calendar="proleptic_gregorian"
-).plot(hue="lat")
+# pcs_annual = lat_grad_pc_extended
+# pcs_monthly = lat_grad_pc_monthly
+
+# fig, axes = plt.subplots(ncols=3, figsize=(12, 4))
+# if isinstance(axes, matplotlib.axes.Axes):
+#     raise TypeError(type(axes))
+
+
+# local.xarray_time.convert_year_month_to_time(pcs_monthly, calendar="proleptic_gregorian").plot(ax=axes[0])
+# local.xarray_time.convert_year_to_time(pcs_annual, calendar="proleptic_gregorian").plot.scatter(
+#     x="time", zorder=3, alpha=0.5, ax=axes[0]
+# )
+
+# local.xarray_time.convert_year_month_to_time(
+#     pcs_monthly.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+# ).plot(ax=axes[1])
+# local.xarray_time.convert_year_to_time(
+#     pcs_annual.sel(year=pcs_monthly["year"][1:10]), calendar="proleptic_gregorian"
+# ).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[1])
+
+# local.xarray_time.convert_year_month_to_time(
+#     pcs_monthly.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+# ).plot(ax=axes[2])
+# local.xarray_time.convert_year_to_time(
+#     pcs_annual.sel(year=pcs_monthly["year"][-10:]), calendar="proleptic_gregorian"
+# ).plot.scatter(x="time", zorder=3, alpha=0.5, ax=axes[2])
+
+# plt.tight_layout()
+# plt.show()
+
+# %%
+# latitudinal_gradient_monthly = lat_grad_eof @ lat_grad_pc_monthly
+
+# # Ensure spatial mean is zero
+# tmp = latitudinal_gradient_monthly
+# tmp.name = "latitudinal-gradient"
+# np.testing.assert_allclose(
+#     local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppt").m,
+#     0.0,
+#     atol=1e-10,
+# )
+
+# latitudinal_gradient_monthly
+
+# %%
+# tmp = global_annual_mean_monthly + latitudinal_gradient_monthly
+# if tmp.min() < 0.0:
+#     msg = (
+#         "When combining the global values and the latitudinal gradient, "
+#         f"the minimum value is less than 0.0. {tmp.min()=}"
+#     )
+#     print(msg)
+#     # raise AssertionError(msg)
+
+#     atol_close = 1e-8
+#     print(
+#         "Trying with a forced update of the latitudinal gradient "
+#         f"to be zero where the global-mean is within {atol_close} of zero"
+#     )
+#     latitudinal_gradient_monthly_candidate = latitudinal_gradient_monthly.copy(deep=True)
+#     for yr, yr_da in tqdman.tqdm(global_annual_mean_monthly.groupby("year", squeeze=False)):
+#         for month, month_da in yr_da.groupby("month", squeeze=False):
+#             if np.isclose(month_da.data.m, 0.0):
+#                 # print(yr)
+#                 latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = 0.0
+#                 continue
+
+#             # The latitudinal gradient can't be bigger than the global-mean value,
+#             # because this leads to negative values.
+#             # This actually points to an issue in the overall workflow,
+#             # because what we're actually seeing is a disagreement between the
+#             # concentration assumptions (i.e. pre-industrial values)
+#             # and the emissions assumptions (which drive the latitudinal gradient).
+#             # However, fixing this is an issue for the future.
+#             # We squeeze even harder, to avoid seasonality breaking things too.
+#             min_grad_val = latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}].min()
+#             if np.abs(min_grad_val) > month_da * 0.5:
+#                 shrink_ratio = (0.5 * month_da / np.abs(min_grad_val)).squeeze()
+#                 new_val = (
+#                     shrink_ratio * latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}]
+#                 )
+
+#                 msg = (
+#                     "TODO: fix consistency issue. "
+#                     f"In {yr:04d}-{month:02d}, "
+#                     f"the minimum latitudinal gradient value is: {min_grad_val.data}. "
+#                     f"The global-mean value is {month_da.data}. "
+#                     f"This makes no sense. For now, force overriding to {new_val.data}."
+#                 )
+#                 print(msg)
+
+#                 latitudinal_gradient_monthly_candidate.loc[{"year": yr, "month": month}] = new_val
+
+#     tmp2 = global_annual_mean_monthly + latitudinal_gradient_monthly_candidate
+#     if tmp2.min() < 0.0:
+#         msg = "Even after the force update, " f"the minimum value is less than 0.0. {tmp2.min()=}"
+#         raise AssertionError(msg)
+
+#     print("Updated the latitudinal gradient")
+#     latitudinal_gradient_monthly = latitudinal_gradient_monthly_candidate
+
+#     # Ensure spatial mean is still zero
+#     tmp = latitudinal_gradient_monthly
+#     tmp.name = "latitudinal-gradient"
+#     np.testing.assert_allclose(
+#         local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+#         0.0,
+#         atol=1e-10,
+#     )
+
+# latitudinal_gradient_monthly
+
+# %%
+# local.xarray_time.convert_year_month_to_time(
+#     latitudinal_gradient_monthly, calendar="proleptic_gregorian"
+# ).plot(hue="lat")
+
+# %%
+lat_grad_pc_extended.name = "principal-components"
+lat_grad_pc_extended = lat_grad_pc_extended.assign_coords(eof=0).expand_dims(dim={"eof": [0]})
+lat_grad_eof.name = "eofs"
+lat_grad_eof = lat_grad_eof.assign_coords(eof=0).expand_dims(dim={"eof": [0]})
+lat_grad_pieces_out = xr.merge([lat_grad_pc_extended, lat_grad_eof]).sortby("year")
+lat_grad_pieces_out
 
 # %% [markdown]
 # ### Save
 
 # %%
-config_step.global_annual_mean_allyears_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-global_annual_mean_monthly.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_monthly_file)
-global_annual_mean_monthly
+config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
+global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
+global_annual_mean
 
 # %%
-config_step.seasonality_allyears_fifteen_degree_monthly_file.parent.mkdir(exist_ok=True, parents=True)
-seasonality_full.pint.dequantify().to_netcdf(config_step.seasonality_allyears_fifteen_degree_monthly_file)
-seasonality_full
+config_step.latitudinal_gradient_allyears_pcs_eofs_file.parent.mkdir(exist_ok=True, parents=True)
+lat_grad_pieces_out.pint.dequantify().to_netcdf(config_step.latitudinal_gradient_allyears_pcs_eofs_file)
+lat_grad_pieces_out
 
-# %% editable=true slideshow={"slide_type": ""}
-config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file.parent.mkdir(
-    exist_ok=True, parents=True
-)
-latitudinal_gradient_monthly.pint.dequantify().to_netcdf(
-    config_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
-)
-latitudinal_gradient_monthly
+# %%
+config_step.latitudinal_gradient_pc0_total_emissions_regression_file.parent.mkdir(exist_ok=True, parents=True)
+with open(config_step.latitudinal_gradient_pc0_total_emissions_regression_file, "w") as fh:
+    fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_total_emissions_regression))
+
+latitudinal_gradient_pc0_total_emissions_regression
