@@ -191,6 +191,16 @@ source_info: dict[str, SourceInfo] = {
         ),
         doi="https://doi.org/10.5194/acp-22-6087-2022",
     ),
+    "Droste et al., 2020": SourceInfo(
+        licence="CC BY 4.0",  # https://zenodo.org/records/3519317
+        reference=(
+            "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: "
+            "Trends and emissions of six perfluorocarbons "
+            "in the Northern Hemisphere and Southern Hemisphere, "
+            "Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020."
+        ),
+        doi="https://doi.org/10.5194/acp-20-4787-2020",
+    ),
 }
 
 
@@ -219,7 +229,7 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
     dependency_info_l = []
     for gas, dot_file in tqdm.tqdm(dot_files.items(), desc="Extracting dependencies from dot files"):
         gas_graph = pygraphviz.AGraph(dot_file, strict=False, directed=True)
-        input_data_nodes = [n for n in gas_graph.nodes() if n.startswith("(00")]
+        input_data_nodes = [n for n in gas_graph.nodes() if n.startswith("(00") or n.startswith("(011")]
 
         for input_data_node in input_data_nodes:
             if "Natural Earth shape files" in input_data_node:
@@ -269,6 +279,9 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
             elif "Western" in input_data_node and "download" in input_data_node:
                 dependency = "Western et al., 2024"
 
+            elif "Droste" in input_data_node and "download" in input_data_node:
+                dependency = "Droste et al., 2020"
+
             elif "WMO 2022 ozone assessment" in input_data_node:
                 dependency = "WMO 2022 ozone assessment Ch. 7"
 
@@ -284,7 +297,17 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
             elif "process" in input_data_node:
                 if any(
                     v in input_data_node
-                    for v in ("NOAA", "AGAGE", "GAGE", "ALE", "EPICA", "NEEM", "Law Dome", "Western")
+                    for v in (
+                        "NOAA",
+                        "AGAGE",
+                        "GAGE",
+                        "ALE",
+                        "EPICA",
+                        "NEEM",
+                        "Law Dome",
+                        "Western",
+                        "Droste",
+                    )
                 ):
                     # Sources which have a download step then a process step
                     continue
