@@ -29,6 +29,9 @@ The difference in ERF between the CMIP6 data and v0.4.0 is less than 0.02 W / m^
 In most cases, it is much less than this.
 For the full list of updates since v0.3.0 (and before), see below.
 
+For further analysis of the changes,
+see https://github.com/climate-resource/CMIP6-vs-CMIP7-GHG-Concentrations.
+
 ### ⚠️ Breaking Changes
 
 - Updated to produce the v0.3.0 concentrations.
