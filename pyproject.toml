@@ -15,7 +15,7 @@ dependencies = [
     "python-dotenv>=1.0.1",
 ]
 name = "local"
-version = "0.2.1a1"
+version = "0.3.0"
 description = "Local code to support running the notebooks"
 readme = "README.md"
 
@@ -28,7 +28,8 @@ editable = true
 
 # conda dependencies
 [tool.pixi.dependencies]
-input4mips-validation-locked = "0.11.3"
+input4mips-validation = "0.15.0"
+xarray = "2024.6.0"
 doit = ">=0.36.0,<0.37"
 jupyterlab = ">=1.0"
 loguru-config = ">=0.1.0"
@@ -45,7 +46,7 @@ dev = [
     "mypy",
     "pandas-stubs",
     "tomli",
-    "towncrier",
+    "towncrier>=24.8.0",
     "types-beautifulsoup4",
     "types-tqdm",
     "jupyter-resource-usage",
@@ -169,7 +170,7 @@ follow_imports = "normal"
 [tool.towncrier]
 package = "local"
 package_dir = "src"
-filename = "docs/changelog.md"
+filename = "CHANGELOG.md"
 directory = "changelog/"
 title_format = "## CMIP GHG Concentration Generation {version} ({project_date})"
 underlines = [

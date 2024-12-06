@@ -371,7 +371,9 @@ def main(  # noqa: PLR0913
     with open(out_file_by_gas_json, "w") as fh:
         json.dump(dependency_info.by_gas_serialised(), fh, indent=2)
 
-    pd.DataFrame([asdict(source) for source in dependency_info.sources]).to_csv(out_file_csv, index=False)
+    pd.DataFrame([asdict(source) for source in dependency_info.sources]).sort_values(
+        ["gas", "source"]
+    ).to_csv(out_file_csv, index=False)
 
     md_summary_by_source_d = defaultdict(list)
     for source in dependency_info.sources:
@@ -382,7 +384,9 @@ def main(  # noqa: PLR0913
         md_summary_by_gas_d[source.gas].append(source.source)
 
     md_summary_by_source_l = []
-    sorted_by_n_gases = sorted(md_summary_by_source_d.items(), key=lambda x: len(x[1]), reverse=True)
+    sorted_by_n_gases = sorted(
+        md_summary_by_source_d.items(), key=lambda x: f"{len(x[1]):02d}-{x[0]}", reverse=True
+    )
     for source, gases in sorted_by_n_gases:
         line = f"**{source}** - {len(gases)}: {', '.join(sorted(set(gases)))}"
         md_summary_by_source_l.append(line)

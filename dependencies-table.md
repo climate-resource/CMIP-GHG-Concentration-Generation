@@ -7,14 +7,14 @@
 **Velders et al., 2022** - 10: hfc125, hfc134a, hfc143a, hfc152a, hfc227ea, hfc236fa, hfc245fa, hfc32, hfc365mfc, hfc4310mee
 **AGAGE gc-md** - 9: ccl4, cfc11, cfc113, cfc12, ch3ccl3, ch4, chcl3, n2o, sf6
 **Droste et al., 2020** - 5: c4f10, c5f12, c6f14, c7f16, cc4f8
-**Law Dome** - 3: ch4, co2, n2o
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
-**AGAGE GAGE** - 2: ch4, n2o
-**AGAGE ALE** - 2: ch4, n2o
+**Law Dome** - 3: ch4, co2, n2o
 **NOAA surface flask** - 2: ch4, co2
 **NOAA in-situ** - 2: ch4, co2
-**EPICA** - 1: ch4
+**AGAGE GAGE** - 2: ch4, n2o
+**AGAGE ALE** - 2: ch4, n2o
 **NEEM** - 1: ch4
+**EPICA** - 1: ch4
 
 # Summary by gas
 

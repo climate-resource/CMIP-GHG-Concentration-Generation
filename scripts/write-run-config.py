@@ -19,7 +19,7 @@ from local.config import Config, converter_yaml
 if __name__ == "__main__":
     RUN_NAME = "v0.4.0"
     VERSION = "0.4.0"
-    SEED = 20241130
+    SEED = 20241205
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
