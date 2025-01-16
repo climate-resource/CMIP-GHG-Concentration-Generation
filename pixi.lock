@@ -17739,7 +17739,7 @@ packages:
   name: local
   version: 0.3.0
   path: .
-  sha256: 66b6cc87e2371dda350e585424a90075d69dbd2990941a1992fbcf0747eba3d3
+  sha256: ccec539ee0876a9e70244a6f9c53cab2bf15a2231b64f63c511436e2a7247d8b
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1

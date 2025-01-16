@@ -703,7 +703,7 @@ retrieve_and_process_droste_et_al_2020_data:
     url: https://zenodo.org/records/3519317/files/Trends-Emission_PFCs_Droste-etal_ACP_20191025.zip?download=1
 retrieve_and_process_epica_data:
 - download_url:
-    known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
+    known_hash: 8cf4efd10a93a3783985c49e4dd0eba2aa02475f7afe7fbd147f7aae3229a267
     url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
   processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
   raw_dir: data/raw/epica
@@ -747,7 +747,7 @@ retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
 retrieve_misc_data:
 - hadcrut5:
     download_url:
-      known_hash: 35ec055febd2107277e7ab965baec13ee2e0a36416e18220c8d9cbb5d509867c
+      known_hash: 98d9fa3bbbb4b36ed5eb8b11fcbc308e7b96c83f8ac21902e52d238246f790d8
       url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
     raw_dir: data/raw/hadcrut5
   natural_earth:
@@ -826,7 +826,7 @@ smooth_law_dome_data:
   smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
   step_config_id: n2o
-version: 0.2.1a1-ci-nightly
+version: 0.3.0-ci-nightly
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
   complete_file_check_data: data/processed/esgf-ready/co2_input4MIPs_check-data.complete
