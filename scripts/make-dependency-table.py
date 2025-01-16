@@ -25,8 +25,8 @@ from attrs import asdict, define
 
 
 def get_doit_list_all(pixi: str, config_file: str) -> tuple[str, ...]:
-    doit_list_all = subprocess.check_output(
-        [pixi, "run", "-e", "all-dev", "doit", "list", "--all", "--quiet"],  # noqa: S603
+    doit_list_all = subprocess.check_output(  # noqa: S603
+        [pixi, "run", "-e", "all-dev", "doit", "list", "--all", "--quiet"],
         env={"DOIT_CONFIGURATION_FILE": config_file},
     )
 
@@ -52,8 +52,8 @@ def get_dependency_dot_files(
 
         out_dot = Path(f"{gas}-dependencies.dot")
         if force_generation or not out_dot.exists():
-            subprocess.check_output(
-                [  # noqa: S603
+            subprocess.check_output(  # noqa: S603
+                [
                     pixi,
                     "run",
                     "-e",
@@ -201,6 +201,16 @@ source_info: dict[str, SourceInfo] = {
         ),
         doi="https://doi.org/10.5194/acp-20-4787-2020",
     ),
+    "Adam et al., 2024": SourceInfo(
+        # Effectively AGAGE data
+        licence="Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+        reference=(
+            "Adam, B., Western, L.M., Mühle, J. et al. "
+            "Emissions of HFC-23 do not reflect commitments made under the Kigali Amendment. "
+            "Commun Earth Environ 5, 783 (2024)."
+        ),
+        doi="https://doi.org/10.1038/s43247-024-01946-y",
+    ),
 }
 
 
@@ -229,7 +239,11 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
     dependency_info_l = []
     for gas, dot_file in tqdm.tqdm(dot_files.items(), desc="Extracting dependencies from dot files"):
         gas_graph = pygraphviz.AGraph(dot_file, strict=False, directed=True)
-        input_data_nodes = [n for n in gas_graph.nodes() if n.startswith("(00") or n.startswith("(011")]
+        input_data_nodes = [
+            n
+            for n in gas_graph.nodes()
+            if (n.startswith("(00") or n.startswith("(01")) and (not n.startswith("(010"))
+        ]
 
         for input_data_node in input_data_nodes:
             if "Natural Earth shape files" in input_data_node:
@@ -311,6 +325,10 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
                 ):
                     # Sources which have a download step then a process step
                     continue
+
+                elif "Adam" in input_data_node:
+                    dependency = "Adam et al., 2024"
+
                 else:
                     raise NotImplementedError(input_data_node)
 

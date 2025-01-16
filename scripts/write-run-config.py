@@ -14,19 +14,20 @@ from attrs import evolve
 
 pint.set_application_registry(openscm_units.unit_registry)
 
+
 from local.config import Config, converter_yaml
 
 if __name__ == "__main__":
-    RUN_NAME = "v0.4.0"
-    VERSION = "0.4.0"
-    SEED = 20241205
+    RUN_NAME = "v0.5.0"
+    VERSION = "0.5.0"
+    SEED = 20250201
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
     # zenodo_doi = get_zenodo_doi("13365838")
-    assert (  # noqa: S101
-        False
-    ), "Zenodo DOI is hard-coded while we don't have any published versions"
+    # assert (
+    #     False
+    # ), "Zenodo DOI is hard-coded while we don't have any published versions"
     zenodo_doi = "10.5281/zenodo.13365838"
 
     DEV_FILE: Path = Path("dev-config.yaml")
