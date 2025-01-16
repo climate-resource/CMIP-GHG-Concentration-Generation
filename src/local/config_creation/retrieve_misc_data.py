@@ -40,7 +40,7 @@ RETRIEVE_MISC_DATA_STEPS = [
             download_url=URLSource(
                 # Use the analysis time series, rather than non-infilled
                 url="https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc",
-                known_hash="35ec055febd2107277e7ab965baec13ee2e0a36416e18220c8d9cbb5d509867c",
+                known_hash="98d9fa3bbbb4b36ed5eb8b11fcbc308e7b96c83f8ac21902e52d238246f790d8",
             ),
         ),
     )
