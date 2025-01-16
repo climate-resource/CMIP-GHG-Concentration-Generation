@@ -40,6 +40,7 @@ from .retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 from .retrieve_and_extract_ale import RetrieveExtractALEDataConfig
 from .retrieve_and_extract_gage import RetrieveExtractGAGEDataConfig
 from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
+from .retrieve_and_process_adam_et_al_2024_data import RetrieveExtractAdamEtal2024Data
 from .retrieve_and_process_droste_et_al_2020_data import RetrieveExtractDrosteEtal2020Data
 from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
@@ -172,6 +173,11 @@ class Config:
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing Droste et al. (2020) data"""
+
+    retrieve_and_process_adam_et_al_2024_data: list[RetrieveExtractAdamEtal2024Data] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use for retrieving and processing Adam et al. (2024) data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]

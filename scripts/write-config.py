@@ -18,6 +18,7 @@ pint.set_application_registry(openscm_units.unit_registry)
 import local
 from local.config import Config, converter_yaml
 from local.config.plot_input_data_overviews import PlotInputDataOverviewsConfig
+from local.config_creation.adam_et_al_2024_handling import RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS
 from local.config_creation.agage_handling import create_agage_handling_config
 from local.config_creation.ale_handling import RETRIEVE_AND_EXTRACT_ALE_STEPS
 from local.config_creation.compile_historical_emissions import (
@@ -289,6 +290,7 @@ def create_dev_config() -> Config:
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
+        retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -364,6 +366,7 @@ def create_ci_config() -> Config:
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
+        retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -481,6 +484,7 @@ def create_ci_nightly_config() -> Config:
         retrieve_and_process_western_et_al_2024_data=RETRIEVE_AND_PROCESS_WESTERN_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
+        retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,

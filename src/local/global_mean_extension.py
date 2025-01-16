@@ -83,4 +83,15 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
             ).processed_data_file
         ]
 
+    if gas in [
+        "hfc23",
+    ]:
+        return [
+            get_config_for_step_id(
+                config=config,
+                step="retrieve_and_process_adam_et_al_2024_data",
+                step_config_id="only",
+            ).processed_data_file
+        ]
+
     return []
