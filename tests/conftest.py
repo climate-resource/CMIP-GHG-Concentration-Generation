@@ -37,8 +37,8 @@ def get_workflow_results(
     :
         Workflow results
     """
-    subprocess.run(
-        (  # noqa: S603 # inputs come from us
+    subprocess.run(  # noqa: S603  # inputs come from us
+        (
             "doit",
             "run",
             "--verbosity=2",

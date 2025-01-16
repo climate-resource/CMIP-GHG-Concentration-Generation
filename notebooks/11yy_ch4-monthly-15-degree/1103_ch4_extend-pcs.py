@@ -312,7 +312,7 @@ def diff_from_ice_cores(
 
 # %%
 years_to_optimise = np.setdiff1d(neem_data["year"], obs_network_years.data)
-years_to_optimise = years_to_optimise[np.in1d(years_to_optimise, out_years)]
+years_to_optimise = years_to_optimise[np.isin(years_to_optimise, out_years)]
 years_to_optimise
 
 # %%

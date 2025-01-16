@@ -82,7 +82,7 @@ def get_group_boundary_indexes(
     xb_m = x_bounds.m
     gb_m = group_bounds.to(x_bounds.u).m
 
-    not_in_integrand_x_bounds = ~np.in1d(gb_m, xb_m)
+    not_in_integrand_x_bounds = ~np.isin(gb_m, xb_m)
     if not_in_integrand_x_bounds.any():
         raise NonIntersectingBoundsError(
             x_bounds=x_bounds,
@@ -90,7 +90,7 @@ def get_group_boundary_indexes(
             not_in_integrand_x_bounds=not_in_integrand_x_bounds,
         )
 
-    group_boundaries = np.where(np.in1d(xb_m, gb_m))
+    group_boundaries = np.where(np.isin(xb_m, gb_m))
 
     return group_boundaries
 
