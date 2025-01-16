@@ -3428,7 +3428,7 @@ retrieve_and_process_droste_et_al_2020_data:
     url: https://zenodo.org/records/3519317/files/Trends-Emission_PFCs_Droste-etal_ACP_20191025.zip?download=1
 retrieve_and_process_epica_data:
 - download_url:
-    known_hash: 26c9259d69bfe390f521d1f651de8ea37ece5bbb95b43df749ba4e00f763e9fd
+    known_hash: 8cf4efd10a93a3783985c49e4dd0eba2aa02475f7afe7fbd147f7aae3229a267
     url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
   processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
   raw_dir: data/raw/epica
