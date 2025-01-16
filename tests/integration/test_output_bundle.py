@@ -26,8 +26,8 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
     env_here.pop("CONDA_PREFIX")
     env_here.pop("PIXI_PROJECT_MANIFEST")
 
-    subprocess.check_output(
-        (  # noqa: S603 # inputs come from us
+    subprocess.check_output(  # noqa: S603  # inputs come from us
+        (
             "pixi",
             "install",
             "-e",
@@ -37,8 +37,8 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
         env=env_here,
     )
 
-    venv_check = subprocess.check_output(
-        (  # noqa: S603 # inputs come from us
+    venv_check = subprocess.check_output(  # noqa: S603  # inputs come from us
+        (
             "pixi",
             "run",
             "which",
@@ -60,8 +60,8 @@ def test_output_bundle_runs(basic_workflow_output_info, tmpdir):
     assert expected_readme_line in readme_contents
 
     command_to_run_base = expected_readme_line.split(" ")[1:]
-    subprocess.check_output(
-        [*command_to_run_base, "-n", "2"],  # noqa: S603 # inputs come from us
+    subprocess.check_output(  # noqa: S603  # inputs come from us
+        [*command_to_run_base, "-n", "2"],
         cwd=copied_output_dir / basic_workflow_output_info["run_id"],
         env={
             "DOIT_CONFIGURATION_FILE": assumed_raw_config_file,

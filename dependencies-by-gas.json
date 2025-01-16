@@ -18,33 +18,62 @@
   "c3f8": [
     {
       "gas": "c3f8",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "c3f8",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     }
   ],
+  "c4f10": [
+    {
+      "gas": "c4f10",
+      "source": "Droste et al., 2020",
+      "licence": "CC BY 4.0",
+      "reference": "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: Trends and emissions of six perfluorocarbons in the Northern Hemisphere and Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020.",
+      "doi": "https://doi.org/10.5194/acp-20-4787-2020"
+    }
+  ],
+  "c5f12": [
+    {
+      "gas": "c5f12",
+      "source": "Droste et al., 2020",
+      "licence": "CC BY 4.0",
+      "reference": "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: Trends and emissions of six perfluorocarbons in the Northern Hemisphere and Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020.",
+      "doi": "https://doi.org/10.5194/acp-20-4787-2020"
+    }
+  ],
+  "c6f14": [
+    {
+      "gas": "c6f14",
+      "source": "Droste et al., 2020",
+      "licence": "CC BY 4.0",
+      "reference": "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: Trends and emissions of six perfluorocarbons in the Northern Hemisphere and Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020.",
+      "doi": "https://doi.org/10.5194/acp-20-4787-2020"
+    }
+  ],
+  "c7f16": [
+    {
+      "gas": "c7f16",
+      "source": "Droste et al., 2020",
+      "licence": "CC BY 4.0",
+      "reference": "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: Trends and emissions of six perfluorocarbons in the Northern Hemisphere and Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020.",
+      "doi": "https://doi.org/10.5194/acp-20-4787-2020"
+    }
+  ],
   "cc4f8": [
     {
       "gas": "cc4f8",
-      "source": "AGAGE gc-ms",
-      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
-      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
-      "doi": "https://doi.org/10.5194/essd-10-985-2018"
-    },
-    {
-      "gas": "cc4f8",
-      "source": "AGAGE gc-ms-medusa",
-      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
-      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
-      "doi": "https://doi.org/10.5194/essd-10-985-2018"
+      "source": "Droste et al., 2020",
+      "licence": "CC BY 4.0",
+      "reference": "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: Trends and emissions of six perfluorocarbons in the Northern Hemisphere and Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020.",
+      "doi": "https://doi.org/10.5194/acp-20-4787-2020"
     }
   ],
   "ccl4": [
@@ -57,13 +86,6 @@
     },
     {
       "gas": "ccl4",
-      "source": "AGAGE gc-ms-medusa",
-      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
-      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
-      "doi": "https://doi.org/10.5194/essd-10-985-2018"
-    },
-    {
-      "gas": "ccl4",
       "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
@@ -72,6 +94,13 @@
     {
       "gas": "ccl4",
       "source": "AGAGE gc-ms",
+      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
+      "doi": "https://doi.org/10.5194/essd-10-985-2018"
+    },
+    {
+      "gas": "ccl4",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -110,14 +139,14 @@
     },
     {
       "gas": "cfc11",
-      "source": "AGAGE gc-md",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "cfc11",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -177,14 +206,14 @@
     },
     {
       "gas": "cfc114",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "cfc114",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -200,14 +229,14 @@
     },
     {
       "gas": "cfc115",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "cfc115",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -223,13 +252,6 @@
     },
     {
       "gas": "cfc12",
-      "source": "AGAGE gc-md",
-      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
-      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
-      "doi": "https://doi.org/10.5194/essd-10-985-2018"
-    },
-    {
-      "gas": "cfc12",
       "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
@@ -238,6 +260,13 @@
     {
       "gas": "cfc12",
       "source": "AGAGE gc-ms-medusa",
+      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
+      "doi": "https://doi.org/10.5194/essd-10-985-2018"
+    },
+    {
+      "gas": "cfc12",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -253,14 +282,14 @@
   "ch2cl2": [
     {
       "gas": "ch2cl2",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "ch2cl2",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -313,14 +342,14 @@
     },
     {
       "gas": "ch3ccl3",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "ch3ccl3",
-      "source": "AGAGE gc-md",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -382,9 +411,7 @@
       "gas": "ch4",
       "source": "EPICA",
       "licence": "CC BY 3.0",
-      "reference": [
-        "EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301"
-      ],
+      "reference": "EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301",
       "doi": "https://doi.pangaea.de/10.1594/PANGAEA.552232"
     },
     {
@@ -433,6 +460,13 @@
   "chcl3": [
     {
       "gas": "chcl3",
+      "source": "AGAGE gc-ms-medusa",
+      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
+      "doi": "https://doi.org/10.5194/essd-10-985-2018"
+    },
+    {
+      "gas": "chcl3",
       "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
@@ -441,13 +475,6 @@
     {
       "gas": "chcl3",
       "source": "AGAGE gc-md",
-      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
-      "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
-      "doi": "https://doi.org/10.5194/essd-10-985-2018"
-    },
-    {
-      "gas": "chcl3",
-      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -463,14 +490,14 @@
     },
     {
       "gas": "co2",
-      "source": "NOAA surface flask",
+      "source": "NOAA in-situ",
       "licence": "Free for scientific use, offer co-authorship. See https://gml.noaa.gov/ccgg/data/datause.html",
       "reference": "https://gml.noaa.gov/ccgg",
       "doi": "https://gml.noaa.gov/ccgg"
     },
     {
       "gas": "co2",
-      "source": "NOAA in-situ",
+      "source": "NOAA surface flask",
       "licence": "Free for scientific use, offer co-authorship. See https://gml.noaa.gov/ccgg/data/datause.html",
       "reference": "https://gml.noaa.gov/ccgg",
       "doi": "https://gml.noaa.gov/ccgg"
@@ -486,14 +513,14 @@
     },
     {
       "gas": "halon1211",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "halon1211",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -516,14 +543,14 @@
     },
     {
       "gas": "halon1301",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "halon1301",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -569,14 +596,14 @@
     },
     {
       "gas": "hcfc141b",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hcfc141b",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -659,14 +686,14 @@
     },
     {
       "gas": "hfc125",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc125",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -689,14 +716,14 @@
     },
     {
       "gas": "hfc134a",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc134a",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -749,14 +776,14 @@
     },
     {
       "gas": "hfc152a",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc152a",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -779,14 +806,14 @@
     },
     {
       "gas": "hfc227ea",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc227ea",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -800,6 +827,13 @@
     }
   ],
   "hfc23": [
+    {
+      "gas": "hfc23",
+      "source": "Adam et al., 2024",
+      "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+      "reference": "Adam, B., Western, L.M., M\u00fchle, J. et al. Emissions of HFC-23 do not reflect commitments made under the Kigali Amendment. Commun Earth Environ 5, 783 (2024).",
+      "doi": "https://doi.org/10.1038/s43247-024-01946-y"
+    },
     {
       "gas": "hfc23",
       "source": "AGAGE gc-ms-medusa",
@@ -818,14 +852,14 @@
     },
     {
       "gas": "hfc236fa",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc236fa",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -848,14 +882,14 @@
     },
     {
       "gas": "hfc245fa",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc245fa",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -871,14 +905,14 @@
     },
     {
       "gas": "hfc32",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-ms",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "hfc32",
-      "source": "AGAGE gc-ms",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -947,7 +981,7 @@
     },
     {
       "gas": "n2o",
-      "source": "AGAGE ALE",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -961,7 +995,7 @@
     },
     {
       "gas": "n2o",
-      "source": "AGAGE gc-md",
+      "source": "AGAGE ALE",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -993,14 +1027,14 @@
   "sf6": [
     {
       "gas": "sf6",
-      "source": "AGAGE gc-md",
+      "source": "AGAGE gc-ms-medusa",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
     },
     {
       "gas": "sf6",
-      "source": "AGAGE gc-ms-medusa",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"

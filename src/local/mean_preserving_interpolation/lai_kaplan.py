@@ -1262,7 +1262,7 @@ class LaiKaplanInterpolator:
 
         return y_out
 
-    def lower_bound_adjustment(  # noqa: PLR0913
+    def lower_bound_adjustment(
         self,
         y_out: pint.UnitRegistry.Quantity,
         control_points_y: LaiKaplanArray,

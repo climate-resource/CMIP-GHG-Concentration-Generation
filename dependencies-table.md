@@ -15,6 +15,7 @@
 **AGAGE ALE** - 2: ch4, n2o
 **NEEM** - 1: ch4
 **EPICA** - 1: ch4
+**Adam et al., 2024** - 1: hfc23
 
 # Summary by gas
 
@@ -52,7 +53,7 @@
 **hfc143a**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
 **hfc152a**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
 **hfc227ea**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
-**hfc23**: AGAGE gc-ms-medusa
+**hfc23**: AGAGE gc-ms-medusa, Adam et al., 2024
 **hfc236fa**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
 **hfc245fa**: AGAGE gc-ms, AGAGE gc-ms-medusa, Velders et al., 2022
 **hfc32**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
