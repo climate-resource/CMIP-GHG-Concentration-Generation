@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -18,6 +18,9 @@
 # Extend the latitudinal gradient's principal components back in time.
 # For N$_2$O, we do this by assuming constant principal components
 # before the instrumental period.
+#
+# There are now way more observations available for this,
+# so you could do something much more intelligent.
 
 # %% [markdown]
 # ## Imports

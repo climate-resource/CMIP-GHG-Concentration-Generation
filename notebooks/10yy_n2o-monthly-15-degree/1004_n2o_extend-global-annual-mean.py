@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -80,8 +80,8 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_smooth_law_dome_data = get_config_for_step_id(
-    config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
+config_smooth_ghosh_et_al_2023_data = get_config_for_step_id(
+    config=config, step="smooth_ghosh_et_al_2023_data", step_config_id="only"
 )
 
 
@@ -134,10 +134,9 @@ lat_grad_eofs_allyears = xr.load_dataset(
 lat_grad_eofs_allyears
 
 # %%
-smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
-smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
-smooth_law_dome["source"] = "law_dome"
-smooth_law_dome
+smooth_ghosh_et_al = pd.read_csv(config_smooth_ghosh_et_al_2023_data.smoothed_file)
+smooth_ghosh_et_al["source"] = "ghosh_et_al_2023"
+smooth_ghosh_et_al
 
 # %% [markdown]
 # ### Define some important constants
@@ -168,21 +167,11 @@ use_extensions_years
 # #### Define some constants
 
 # %%
-law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
-law_dome_lat
-
-# %%
-law_dome_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"])
-law_dome_lat_nearest
-
-# %%
-conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
+conc_unit = get_col_assert_single_value(smooth_ghosh_et_al, "unit")
 conc_unit
 
 # %% [markdown]
 # #### Create annual-mean latitudinal gradient
-#
-# This is then combined with our ice core information.
 
 # %%
 allyears_latitudinal_gradient = (
@@ -203,43 +192,40 @@ obs_network_full_field = allyears_latitudinal_gradient + global_annual_mean_obs_
 obs_network_full_field
 
 # %% [markdown]
-# #### Law Dome
+# #### Ghosh et al. 2023
 #
-# Then we use the Law Dome data.
-# We calculate the offset by ensuring that the value in Law Dome's bin
-# matches our smoothed Law Dome timeseries in the years in which we have Law Dome data
-# and don't have the observational network.
+# Then we use the Ghosh et al. 2023 data.
+# The latitudinal gradient's mean is by construction zero,
+# so we don't need to calculate any offset
+# (unlike for other gases).
 
 # %%
-smooth_law_dome_to_use = smooth_law_dome[
-    smooth_law_dome["year"] < float(obs_network_full_field["year"].min())
+smooth_ghosh_to_use = smooth_ghosh_et_al[
+    (smooth_ghosh_et_al["year"] < float(obs_network_full_field["year"].min()))
+    & (smooth_ghosh_et_al["year"] >= 1)
 ]
-law_dome_da = xr.DataArray(
-    data=smooth_law_dome_to_use["value"],
+ghosh_da = xr.DataArray(
+    data=smooth_ghosh_to_use["value"],
     dims=["year"],
-    coords=dict(year=smooth_law_dome_to_use["year"]),
+    coords=dict(year=smooth_ghosh_to_use["year"]),
     attrs=dict(units=conc_unit),
 ).pint.quantify()
-law_dome_da
+ghosh_da
 
 # %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(lat=law_dome_lat, method="nearest")
-offset
-
-# %%
-law_dome_years_full_field = allyears_latitudinal_gradient + offset
-law_dome_years_full_field
+ghosh_years_full_field = ghosh_da + allyears_latitudinal_gradient
+ghosh_years_full_field
 
 # %% [markdown]
 # #### Join back together
 
 # %%
-mostyears_full_field = xr.concat([law_dome_years_full_field, obs_network_full_field], "year")
+allyears_full_field = xr.concat([ghosh_years_full_field, obs_network_full_field], "year")
 
-mostyears_full_field
+allyears_full_field
 
 # %%
-mostyears_full_field.plot(hue="lat")
+allyears_full_field.plot(hue="lat")
 
 # %% [markdown]
 # #### Check our full field calculation
@@ -247,8 +233,7 @@ mostyears_full_field.plot(hue="lat")
 # There's a lot of steps above, if we have got this right the field will:
 #
 # - have an annual-average that matches:
-#    - our smoothed Law Dome in the Law Dome latitude
-#      (for the years of the smoothed Law Dome timeseries)
+#    - our smoothed Ghosh et al. data
 #
 # - be decomposable into:
 #   - a global-mean timeseries (with dims (year,))
@@ -258,70 +243,21 @@ mostyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
-if not config.ci:
-    np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=smooth_law_dome_to_use["year"].values)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use["value"],
-    )
-else:
-    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
-    ]
-    np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=law_dome_compare_years)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
-    )
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(allyears_full_field)
 
 # %%
-tmp = mostyears_full_field.copy()
-tmp.name = "mostyears_global_annual_mean"
-mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
-mostyears_global_annual_mean
-
-# %% [markdown]
-# #### Extending back to year 1
-#
-# We simply assume that global-mean concentrations are constant
-# before the start of the Law Dome record.
-
-# %%
-back_extend_years = np.setdiff1d(
-    out_years[np.where(out_years < mostyears_global_annual_mean["year"].values[-1])],
-    mostyears_global_annual_mean["year"],
+ghosh_compare_years = smooth_ghosh_to_use["year"].values[
+    np.isin(smooth_ghosh_to_use["year"].values, out_years)  # type: ignore
+]
+np.testing.assert_allclose(
+    allyears_global_annual_mean.sel(year=ghosh_compare_years).data.to(conc_unit).m,
+    smooth_ghosh_to_use[np.isin(smooth_ghosh_to_use["year"], ghosh_compare_years)]["value"],
 )
-back_extend_years
 
 # %%
-if back_extend_years.size > 0:
-    tmp = mostyears_global_annual_mean.sel(year=[mostyears_global_annual_mean["year"][0]])
-    back_extended_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-    allyears_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=out_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-
-    back_extended_full_field = (
-        allyears_latitudinal_gradient.sel(year=back_extend_years) + back_extended_global_annual_mean
-    )
-    allyears_full_field = xr.concat([back_extended_full_field, mostyears_full_field], "year")
-
-
-else:
-    allyears_full_field = mostyears_full_field
-    allyears_global_annual_mean = mostyears_global_annual_mean
-
-allyears_global_annual_mean
+if not config.ci:
+    if float(allyears_full_field["year"].min()) != 1.0:
+        raise AssertionError
 
 # %% [markdown]
 # The residual between our full field and our annual, global-mean
@@ -339,6 +275,16 @@ np.testing.assert_allclose(
     0.0,
     atol=1e-10,
 )
+
+# %%
+allyears_global_annual_mean.plot()
+
+# %%
+join_year = int(obs_network_years.min())
+fig, ax = plt.subplots()
+allyears_global_annual_mean.sel(year=range(join_year - 20, join_year + 21)).plot(ax=ax)
+# as smooth a transition as we could hope for I think
+ax.axvline(join_year)
 
 # %% [markdown]
 # ## Save

@@ -43,6 +43,7 @@ from .retrieve_and_extract_noaa import RetrieveExtractNOAADataConfig
 from .retrieve_and_process_adam_et_al_2024_data import RetrieveExtractAdamEtal2024Data
 from .retrieve_and_process_droste_et_al_2020_data import RetrieveExtractDrosteEtal2020Data
 from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
+from .retrieve_and_process_ghosh_et_al_2023_data import RetrieveExtractGhoshEtal2023Data
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
 from .retrieve_and_process_neem_data import RetrieveProcessNEEMConfig
 from .retrieve_and_process_scripps_data import RetrieveProcessScrippsConfig
@@ -52,6 +53,7 @@ from .retrieve_and_process_wmo_2022_ozone_assessment_ch7_data import (
     RetrieveProcessWMO2022OzoneAssessmentCh7Config,
 )
 from .retrieve_misc_data import RetrieveMiscDataConfig
+from .smooth_ghosh_et_al_2023_data import SmoothGhoshEtAl2023DataConfig
 from .smooth_law_dome_data import SmoothLawDomeDataConfig
 from .write_input4mips import WriteInput4MIPsConfig
 
@@ -179,6 +181,11 @@ class Config:
     )
     """Configurations to use for retrieving and processing Adam et al. (2024) data"""
 
+    retrieve_and_process_ghosh_et_al_2023_data: list[RetrieveExtractGhoshEtal2023Data] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use for retrieving and processing Ghosh et al. (2023) data"""
+
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
@@ -193,6 +200,11 @@ class Config:
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for the smoothing of Law Dome data step"""
+
+    smooth_ghosh_et_al_2023_data: list[SmoothGhoshEtAl2023DataConfig] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use for the smoothing of Ghosh et al. 2023 data step"""
 
     calculate_co2_monthly_fifteen_degree_pieces: list[CalculateCO2MonthlyFifteenDegreePieces] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
