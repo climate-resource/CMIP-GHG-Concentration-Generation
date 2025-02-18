@@ -72,8 +72,11 @@ def configure_notebooks(
         config=config, step="retrieve_and_extract_gage_data", step_config_id="monthly"
     )
 
-    config_smooth_law_dome_data = get_config_for_step_id(
-        config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
+    # config_smooth_law_dome_data = get_config_for_step_id(
+    #     config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
+    # )
+    config_smooth_ghosh_et_al_2023_data = get_config_for_step_id(
+        config=config, step="smooth_ghosh_et_al_2023_data", step_config_id="only"
     )
 
     config_retrieve_misc = get_config_for_step_id(
@@ -144,7 +147,8 @@ def configure_notebooks(
             dependencies=(
                 config_step.observational_network_global_annual_mean_file,
                 config_step.latitudinal_gradient_allyears_pcs_eofs_file,
-                config_smooth_law_dome_data.smoothed_median_file,
+                # config_smooth_law_dome_data.smoothed_median_file,
+                config_smooth_ghosh_et_al_2023_data.smoothed_file,
             ),
             targets=(config_step.global_annual_mean_allyears_file,),
             config_file=config_bundle.config_hydrated_path,
