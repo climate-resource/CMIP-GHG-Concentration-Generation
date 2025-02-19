@@ -4,6 +4,7 @@ Upload a bundle to Zenodo
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 import shutil
@@ -12,6 +13,7 @@ import tarfile
 from pathlib import Path
 from typing import Annotated, Any
 
+import pandas as pd
 import typer
 import yaml
 from dotenv import load_dotenv
@@ -161,6 +163,32 @@ def upload_to_zenodo(
         print(f"You can preview the draft upload at https://zenodo.org/uploads/{draft_deposition_id}")
 
 
+def add_dependencies_to_metadata(
+    metadata: dict[str, Any], dependencies_table: pd.DataFrame
+) -> dict[str, Any]:
+    metadata_out = copy.deepcopy(metadata)
+    metadata_out["metadata"]["related_identifiers"] = []
+    for (url, doi, resource_type), _ in dependencies_table.groupby(["url", "doi", "resource_type"]):
+        if pd.isnull(doi):
+            related_id = {
+                "identifier": url,
+                "scheme": "url",
+            }
+
+        else:
+            related_id = {
+                "identifier": doi,
+                "scheme": "doi",
+            }
+
+        related_id["relation"] = "isDerivedFrom"
+        related_id["resource_type"] = resource_type
+
+        metadata_out["metadata"]["related_identifiers"].append(related_id)
+
+    return metadata_out
+
+
 def main(  # noqa: PLR0913
     bundle_path: Annotated[Path, typer.Argument(help="Path to the bundle to upload")],
     zenodo_bundle_root_path: Annotated[
@@ -174,6 +202,9 @@ def main(  # noqa: PLR0913
     reserved_zenodo_doi_file: Annotated[
         str, typer.Option(help="Name of the file in which the reserved Zenodo DOI was saved")
     ] = "reserved-zenodo-doi.txt",
+    dependencies_table_file: Annotated[
+        Path, typer.Option(help="Path from which to read the dependencies table")
+    ] = "dependencies-table.csv",
 ) -> None:
     load_dotenv()
 
@@ -192,6 +223,16 @@ def main(  # noqa: PLR0913
 
     draft_deposition_id = config["doi"].split("10.5281/zenodo.")[1]
 
+    # # Helpful if you need to work out how identifiers look in Zenodo JSON
+    # tmp = zenodo_interactor.get_metadata("14892947")
+    # tmp["metadata"]["related_identifiers"]
+    dependencies_table = pd.read_csv(dependencies_table_file)
+
+    zenodo_metadata_incl_refs = add_dependencies_to_metadata(
+        dependencies_table=dependencies_table,
+        metadata=zenodo_metadata,
+    )
+
     create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
 
     upload_to_zenodo(
@@ -199,7 +240,7 @@ def main(  # noqa: PLR0913
         publish=publish,
         zenodo_interactor=zenodo_interactor,
         draft_deposition_id=draft_deposition_id,
-        metadata=zenodo_metadata,
+        metadata=zenodo_metadata_incl_refs,
     )
 
 
