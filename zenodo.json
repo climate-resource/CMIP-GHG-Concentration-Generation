@@ -32,6 +32,18 @@
         "relation": "isDerivedFrom",
         "resource_type": "publication-article",
         "scheme": "doi"
+      },
+      {
+        "identifier": "https://gml.noaa.gov/hats/",
+        "relation": "isDerivedFrom",
+        "resource_type": "dataset",
+        "scheme": "url"
+      },
+      {
+        "identifier": "https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf",
+        "relation": "isDerivedFrom",
+        "resource_type": "publication-book",
+        "scheme": "url"
       }
     ],
     "custom": {

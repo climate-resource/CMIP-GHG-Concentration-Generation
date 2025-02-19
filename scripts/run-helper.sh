@@ -49,7 +49,7 @@ if [ "$RUN_ID" == "dev-test-run" ]; then
 
 else
 
-    pixi run python scripts/write-run-config.py
+    pixi run -e all-dev python scripts/write-run-config.py
 
     doit_config_file=$RUN_ID-config.yaml
 
