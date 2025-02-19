@@ -6,6 +6,7 @@ ci-nightly-config-absolute.yaml
 
 # Output
 output-bundles*
+zenodo-bundles*
 *.tar.gz
 
 # Visualisations of the workflow
