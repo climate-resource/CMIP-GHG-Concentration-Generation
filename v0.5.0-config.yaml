@@ -1357,7 +1357,7 @@ crunch_grids:
   hemispheric_mean_annual_mean_file: data/interim/so2f2/so2f2_hemispheric-mean_annual-mean.nc
   hemispheric_mean_monthly_file: data/interim/so2f2/so2f2_hemispheric-mean_monthly.nc
   step_config_id: so2f2
-doi: 10.5281/zenodo.13365838
+doi: https://doi.org/10.5281/zenodo.14892947
 name: v0.5.0
 plot_input_data_overviews:
 - step_config_id: only
@@ -3591,7 +3591,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/co2_input4MIPs_check-data.complete
   end_year: 2022
   gas: co2
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3600,7 +3600,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ch4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch4
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3609,7 +3609,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/n2o_input4MIPs_check-data.complete
   end_year: 2022
   gas: n2o
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3618,7 +3618,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c2f6_input4MIPs_check-data.complete
   end_year: 2022
   gas: c2f6
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3627,7 +3627,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c3f8_input4MIPs_check-data.complete
   end_year: 2022
   gas: c3f8
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3636,7 +3636,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c4f10_input4MIPs_check-data.complete
   end_year: 2022
   gas: c4f10
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3645,7 +3645,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c5f12_input4MIPs_check-data.complete
   end_year: 2022
   gas: c5f12
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3654,7 +3654,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c6f14_input4MIPs_check-data.complete
   end_year: 2022
   gas: c6f14
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3663,7 +3663,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c7f16_input4MIPs_check-data.complete
   end_year: 2022
   gas: c7f16
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3672,7 +3672,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/c8f18_input4MIPs_check-data.complete
   end_year: 2022
   gas: c8f18
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3681,7 +3681,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cc4f8_input4MIPs_check-data.complete
   end_year: 2022
   gas: cc4f8
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3690,7 +3690,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ccl4_input4MIPs_check-data.complete
   end_year: 2022
   gas: ccl4
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3699,7 +3699,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cf4_input4MIPs_check-data.complete
   end_year: 2022
   gas: cf4
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3708,7 +3708,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc11_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc11
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3717,7 +3717,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc113_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc113
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3726,7 +3726,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc114_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc114
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3735,7 +3735,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc115_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc115
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3744,7 +3744,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc12_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc12
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3753,7 +3753,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ch2cl2_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch2cl2
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3762,7 +3762,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ch3br_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3br
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3771,7 +3771,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ch3ccl3_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3ccl3
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3780,7 +3780,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/ch3cl_input4MIPs_check-data.complete
   end_year: 2022
   gas: ch3cl
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3789,7 +3789,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/chcl3_input4MIPs_check-data.complete
   end_year: 2022
   gas: chcl3
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3798,7 +3798,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/halon1211_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon1211
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3807,7 +3807,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/halon1301_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon1301
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3816,7 +3816,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/halon2402_input4MIPs_check-data.complete
   end_year: 2022
   gas: halon2402
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3825,7 +3825,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hcfc141b_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc141b
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3834,7 +3834,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hcfc142b_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc142b
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3843,7 +3843,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hcfc22_input4MIPs_check-data.complete
   end_year: 2022
   gas: hcfc22
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3852,7 +3852,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc125_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc125
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3861,7 +3861,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc134a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc134a
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3870,7 +3870,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc143a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc143a
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3879,7 +3879,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc152a_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc152a
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3888,7 +3888,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc227ea_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc227ea
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3897,7 +3897,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc23_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc23
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3906,7 +3906,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc236fa_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc236fa
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3915,7 +3915,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc245fa_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc245fa
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3924,7 +3924,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc32_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc32
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3933,7 +3933,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc365mfc_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc365mfc
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3942,7 +3942,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc4310mee_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc4310mee
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3951,7 +3951,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/nf3_input4MIPs_check-data.complete
   end_year: 2022
   gas: nf3
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3960,7 +3960,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/sf6_input4MIPs_check-data.complete
   end_year: 2022
   gas: sf6
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3969,7 +3969,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/so2f2_input4MIPs_check-data.complete
   end_year: 2022
   gas: so2f2
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3978,7 +3978,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc11eq_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc11eq
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3987,7 +3987,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/cfc12eq_input4MIPs_check-data.complete
   end_year: 2022
   gas: cfc12eq
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1
@@ -3996,7 +3996,7 @@ write_input4mips:
   complete_file_check_data: data/processed/esgf-ready/hfc134aeq_input4MIPs_check-data.complete
   end_year: 2022
   gas: hfc134aeq
-  input4mips_cvs_cv_source: gh:cr-cmip-0-4-0
+  input4mips_cvs_cv_source: gh:cr-cmip-0-5-0
   input4mips_cvs_source_id: CR-CMIP-0-5-0
   input4mips_out_dir: data/processed/esgf-ready
   start_year: 1

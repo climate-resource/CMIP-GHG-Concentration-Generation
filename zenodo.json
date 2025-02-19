@@ -1,26 +1,50 @@
 {
-    "metadata": {
-        "title": "Example workflow",
-        "version": "to-be-replaced",
-        "upload_type": "dataset",
-        "description": "Demonstration of workflows using pydoit-nb",
-        "creators": [
-            {
-                "name": "Zebedee Nicholls",
-                "affiliation": "Climate Resource",
-                "orcid": "0000-0002-4767-2723"
-            },
-            {
-                "name": "Jared Lewis",
-                "affiliation": "Climate Resource",
-                "orcid": "0000-0002-4767-2723"
-            }
-        ],
-        "language": "eng",
-        "license": "TBD",
-        "keywords": ["pydoit-nb", "doit", "notebook", "reproducible-workflow"],
-        "references": [
-            "TBD"
-        ]
-    }
+  "metadata": {
+    "title": "CMIP GHG Forcing",
+    "version": "to-be-replaced",
+    "description": "Coupled Model Intercomparison Project (CMIP) greenhouse gas (GHG) forcing files.",
+    "access_right": "open",
+    "creators": [
+      {
+        "name": "Nicholls, Zebedee",
+        "affiliation": "Climate Resource S GmbH",
+        "orcid": "0000-0002-4767-2723"
+      },
+      {
+        "name": "Meinshausen, Malte",
+        "affiliation": "Climate Resource (Australia)",
+        "orcid": "0000-0003-4048-3521"
+      },
+      {
+        "name": "Pfl\u00fcger, Mika",
+        "affiliation": "Climate Resource S GmbH",
+        "orcid": "0000-0002-7814-8916"
+      },
+      {
+        "name": "Lewis, Jared",
+        "affiliation": "Climate Resource (Australia)",
+        "orcid": "0000-0002-8155-8924"
+      }
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "10.1038/s41558-024-02038-7",
+        "relation": "isDerivedFrom",
+        "resource_type": "publication-article",
+        "scheme": "doi"
+      }
+    ],
+    "custom": {
+      "code:codeRepository": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
+      "code:developmentStatus": {
+        "id": "active",
+        "title": {
+          "en": "Active"
+        }
+      }
+    },
+    "license": "cc-by-4.0",
+    "imprint_publisher": "Zenodo",
+    "upload_type": "software"
+  }
 }

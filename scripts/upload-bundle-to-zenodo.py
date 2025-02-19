@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Annotated, Any
 
 import typer
+import yaml
 from dotenv import load_dotenv
 from loguru import logger
 from openscm_zenodo.zenodo import ZenodoInteractor
@@ -99,21 +100,22 @@ def create_zenodo_bundle(zenodo_bundle_path: Path, original_bundle_path: Path) -
     )
 
     directories_to_copy = (
-        ("src", 0, ["egg"]),
-        ("notebooks", 1, ["ipynb_checkpoints"]),
-        # (
-        #     "data",
-        #     2,
-        #     [
-        #         "complete",
-        #         "checklist",
-        #         "PRIMAP",  # Backed by DOI
-        #         "epica",  # Backed by DOI
-        #         "law_dome",  # Backed by DOI
-        #         "neem",  # Backed by DOI
-        #         "natural_earth",
-        #     ],
-        # ),
+        ("src", 0, ["egg", "DS_Store"]),
+        ("notebooks", 1, ["ipynb_checkpoints", "DS_Store"]),
+        (
+            "data",
+            2,
+            [
+                "DS_Store",
+                "complete",
+                "checklist",
+                "primap",  # Backed by DOI
+                "epica",  # Backed by DOI
+                "law_dome",  # Backed by DOI
+                "neem",  # Backed by DOI
+                "natural_earth",
+            ],
+        ),
     )
 
     zenodo_bundle_path.mkdir(exist_ok=True, parents=True)
@@ -185,8 +187,10 @@ def main(  # noqa: PLR0913
     with open(bundle_path / zenodo_metadata_file) as fh:
         zenodo_metadata = json.load(fh)
 
-    with open(bundle_path / reserved_zenodo_doi_file) as fh:
-        draft_deposition_id = fh.read().strip().split("10.5281/zenodo.")[1].strip()
+    with open(bundle_path / f"{bundle_id}-config.yaml") as fh:
+        config = yaml.safe_load(fh)
+
+    draft_deposition_id = config["doi"].split("10.5281/zenodo.")[1]
 
     create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
 

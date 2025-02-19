@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import os
 
-import requests
 from dotenv import load_dotenv
 from openscm_zenodo.zenodo import ZenodoDomain, ZenodoInteractor, get_reserved_doi
 
@@ -38,29 +37,20 @@ def get_zenodo_doi(any_deposition_id: str) -> str:
     latest_deposition_id = zenoodo_interactor.get_latest_deposition_id(
         any_deposition_id=any_deposition_id,
     )
+    draft_deposition_id = zenoodo_interactor.get_draft_deposition_id(
+        latest_deposition_id=latest_deposition_id
+    )
 
-    try:
-        new_deposition_id = zenoodo_interactor.create_new_version_from_latest(
-            latest_deposition_id=latest_deposition_id
-        ).json()["id"]
-    except AssertionError:
-        # Assume that our latest draft is fine
-        new_deposition_id = latest_deposition_id
-
-    try:
-        zenoodo_interactor.remove_all_files(deposition_id=new_deposition_id)
-    except requests.exceptions.HTTPError:
-        # assume all files already removed and move on
-        pass
-
-    metadata = zenoodo_interactor.get_metadata(latest_deposition_id)
-    metadata["metadata"]["prereserve_doi"] = True  # type: ignore
+    metadata = zenoodo_interactor.get_metadata(latest_deposition_id, user_controlled_only=True)
+    for k in ["doi", "prereserve_doi", "publication_date", "version"]:
+        if k in metadata["metadata"]:
+            metadata["metadata"].pop(k)
 
     update_metadata_response = zenoodo_interactor.update_metadata(
-        deposition_id=new_deposition_id,
+        deposition_id=draft_deposition_id,
         metadata=metadata,
     )
 
-    reserved_doi = get_reserved_doi(update_metadata_response)
+    doi = get_reserved_doi(update_metadata_response)
 
-    return reserved_doi
+    return doi

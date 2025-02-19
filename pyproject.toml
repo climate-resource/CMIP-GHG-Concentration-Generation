@@ -11,7 +11,7 @@ dependencies = [
     "pydoit-nb>=0.3.4",
     "carpet-concentrations>=0.5.1",
     "scmdata>=0.17.0",
-    "openscm-zenodo>=0.3.1",
+    "openscm-zenodo>=0.5.0",
     "python-dotenv>=1.0.1",
 ]
 name = "local"
