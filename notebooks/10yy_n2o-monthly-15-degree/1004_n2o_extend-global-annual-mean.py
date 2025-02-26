@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -36,11 +36,13 @@ import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
+import scipy.interpolate
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -80,8 +82,8 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_smooth_law_dome_data = get_config_for_step_id(
-    config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
+config_retrieve_and_process_menking_et_al_2025_data = get_config_for_step_id(
+    config=config, step="retrieve_and_process_menking_et_al_2025_data", step_config_id="only"
 )
 
 
@@ -134,10 +136,50 @@ lat_grad_eofs_allyears = xr.load_dataset(
 lat_grad_eofs_allyears
 
 # %%
-smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
-smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
-smooth_law_dome["source"] = "law_dome"
-smooth_law_dome
+menking_et_al = pd.read_csv(config_retrieve_and_process_menking_et_al_2025_data.processed_data_file)
+menking_et_al = menking_et_al[menking_et_al["gas"] == config_step.gas]
+menking_et_al["source"] = "menking_et_al_2025"
+menking_et_al
+
+# %% [markdown]
+# Extend Meking data back to year 1.
+
+# %%
+if menking_et_al["year"].min() > 1:
+    if menking_et_al["year"].min() > 10:  # noqa: PLR2004
+        raise NotImplementedError
+
+    extrap_years = np.arange(1, menking_et_al["year"].min())
+    # Use the last 5 years or data to do a linear extrapolation
+    loc = menking_et_al["year"] < menking_et_al["year"].min() + 5
+
+    extrap_values = scipy.interpolate.make_interp_spline(
+        x=menking_et_al[loc]["year"], y=menking_et_al[loc]["value"], k=1
+    )(extrap_years)
+
+    extrap_df = menking_et_al.iloc[: extrap_years.size, :].copy()
+    extrap_df["year"] = extrap_years
+    extrap_df["value"] = extrap_values
+    menking_et_al_full = pd.concat([extrap_df, menking_et_al]).sort_values("year").reset_index(drop=True)
+
+else:
+    menking_et_al_full = menking_et_al
+
+if not (menking_et_al_full["year"] == 1850).any():  # noqa: PLR2004
+    print("Hacking in 1850 value")
+    hacked_value = np.mean(
+        [
+            menking_et_al_full[menking_et_al_full["year"] == 1849]["value"].iloc[0],  # noqa: PLR2004
+            menking_et_al_full[menking_et_al_full["year"] == 1851]["value"].iloc[0],  # noqa: PLR2004
+        ]
+    )
+    tmp = menking_et_al_full.iloc[:1, :].copy()
+    tmp["year"] = 1850
+    tmp["value"] = hacked_value
+
+    menking_et_al_full = pd.concat([menking_et_al_full, tmp]).sort_values("year").reset_index(drop=True)
+
+menking_et_al_full
 
 # %% [markdown]
 # ### Define some important constants
@@ -168,21 +210,11 @@ use_extensions_years
 # #### Define some constants
 
 # %%
-law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
-law_dome_lat
-
-# %%
-law_dome_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"])
-law_dome_lat_nearest
-
-# %%
-conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
+conc_unit = get_col_assert_single_value(menking_et_al_full, "unit")
 conc_unit
 
 # %% [markdown]
 # #### Create annual-mean latitudinal gradient
-#
-# This is then combined with our ice core information.
 
 # %%
 allyears_latitudinal_gradient = (
@@ -203,43 +235,79 @@ obs_network_full_field = allyears_latitudinal_gradient + global_annual_mean_obs_
 obs_network_full_field
 
 # %% [markdown]
-# #### Law Dome
+# #### Menking et al. 2025
 #
-# Then we use the Law Dome data.
-# We calculate the offset by ensuring that the value in Law Dome's bin
-# matches our smoothed Law Dome timeseries in the years in which we have Law Dome data
-# and don't have the observational network.
+# Then we use the Menking et al. 2025 data.
+# The Menking et al. data for N2O is a global-mean
+# and the latitudinal gradient's mean is by construction zero,
+# so we don't need to calculate any offset
+# (unlike for other gases where these assumptions don't hold).
+
+# %% [markdown]
+# ##### Harmonise
+#
+# Firstly, we harmonise the Meking et al. 2025 data with the observational record
+# to avoid jumps as we transition between the two.
 
 # %%
-smooth_law_dome_to_use = smooth_law_dome[
-    smooth_law_dome["year"] < float(obs_network_full_field["year"].min())
-]
-law_dome_da = xr.DataArray(
-    data=smooth_law_dome_to_use["value"],
+join_year = int(obs_network_years.min())
+join_year
+
+# %%
+menking_et_al_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=menking_et_al_full.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(global_annual_mean_obs_network.pint.to(conc_unit).sel(year=join_year).data.m),
+        harm_year=join_year,
+        n_transition_years=100,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+menking_et_al_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network")
+ax.plot(
+    menking_et_al_full["year"],
+    menking_et_al_full["value"],
+    label="Menking et al., raw",
+)
+ax.plot(
+    menking_et_al_harmonised["year"],
+    menking_et_al_harmonised["value"],
+    label="Menking et al., harmonised",
+)
+ax.legend()
+ax.set_xlim([1850, 2030])
+
+# %%
+menking_da = xr.DataArray(
+    data=menking_et_al_harmonised["value"],
     dims=["year"],
-    coords=dict(year=smooth_law_dome_to_use["year"]),
+    coords=dict(year=menking_et_al_harmonised["year"]),
     attrs=dict(units=conc_unit),
 ).pint.quantify()
-law_dome_da
+menking_da
 
 # %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(lat=law_dome_lat, method="nearest")
-offset
-
-# %%
-law_dome_years_full_field = allyears_latitudinal_gradient + offset
-law_dome_years_full_field
+menking_years_full_field = menking_da + allyears_latitudinal_gradient
+menking_years_full_field
 
 # %% [markdown]
 # #### Join back together
 
 # %%
-mostyears_full_field = xr.concat([law_dome_years_full_field, obs_network_full_field], "year")
+allyears_full_field = xr.concat([menking_years_full_field, obs_network_full_field], "year")
 
-mostyears_full_field
+allyears_full_field
 
 # %%
-mostyears_full_field.plot(hue="lat")
+allyears_full_field.plot(hue="lat")
 
 # %% [markdown]
 # #### Check our full field calculation
@@ -247,8 +315,7 @@ mostyears_full_field.plot(hue="lat")
 # There's a lot of steps above, if we have got this right the field will:
 #
 # - have an annual-average that matches:
-#    - our smoothed Law Dome in the Law Dome latitude
-#      (for the years of the smoothed Law Dome timeseries)
+#    - the Menking et al. data
 #
 # - be decomposable into:
 #   - a global-mean timeseries (with dims (year,))
@@ -258,70 +325,25 @@ mostyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
+allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(allyears_full_field)
+
+# %%
 if not config.ci:
     np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=smooth_law_dome_to_use["year"].values)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use["value"],
+        allyears_global_annual_mean.sel(year=menking_et_al_harmonised["year"].values).data.to(conc_unit).m,
+        menking_et_al_harmonised["value"],
     )
 else:
-    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
-    ]
+    compare_years = np.intersect1d(allyears_global_annual_mean.year, menking_et_al_harmonised["year"])
     np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=law_dome_compare_years)
-        .data.to(conc_unit)
-        .m,
-        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
+        allyears_global_annual_mean.sel(year=compare_years).data.to(conc_unit).m,
+        menking_et_al_harmonised[menking_et_al_harmonised["year"].isin(compare_years)]["value"],
     )
 
 # %%
-tmp = mostyears_full_field.copy()
-tmp.name = "mostyears_global_annual_mean"
-mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
-mostyears_global_annual_mean
-
-# %% [markdown]
-# #### Extending back to year 1
-#
-# We simply assume that global-mean concentrations are constant
-# before the start of the Law Dome record.
-
-# %%
-back_extend_years = np.setdiff1d(
-    out_years[np.where(out_years < mostyears_global_annual_mean["year"].values[-1])],
-    mostyears_global_annual_mean["year"],
-)
-back_extend_years
-
-# %%
-if back_extend_years.size > 0:
-    tmp = mostyears_global_annual_mean.sel(year=[mostyears_global_annual_mean["year"][0]])
-    back_extended_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-    allyears_global_annual_mean = (
-        mostyears_global_annual_mean.pint.dequantify()
-        .interp(year=out_years, kwargs={"fill_value": tmp.data[0].m})
-        .pint.quantify()
-    )
-
-    back_extended_full_field = (
-        allyears_latitudinal_gradient.sel(year=back_extend_years) + back_extended_global_annual_mean
-    )
-    allyears_full_field = xr.concat([back_extended_full_field, mostyears_full_field], "year")
-
-
-else:
-    allyears_full_field = mostyears_full_field
-    allyears_global_annual_mean = mostyears_global_annual_mean
-
-allyears_global_annual_mean
+if not config.ci:
+    if float(allyears_full_field["year"].min()) != 1.0:
+        raise AssertionError
 
 # %% [markdown]
 # The residual between our full field and our annual, global-mean
@@ -339,6 +361,9 @@ np.testing.assert_allclose(
     0.0,
     atol=1e-10,
 )
+
+# %%
+allyears_global_annual_mean.plot()
 
 # %% [markdown]
 # ## Save

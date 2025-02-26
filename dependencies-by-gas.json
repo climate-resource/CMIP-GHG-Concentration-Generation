@@ -974,14 +974,14 @@
   "n2o": [
     {
       "gas": "n2o",
-      "source": "Law Dome",
-      "licence": "CC BY 4.0",
-      "reference": "Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb",
-      "doi": "https://doi.org/10.25919/5bfe29ff807fb"
+      "source": "Ghosh et al., 2023",
+      "licence": "Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]",
+      "reference": "Ghosh, S., Toyoda, S., Buizert, C., Etheridge, D. M., Langenfelds, R. L., Yoshida, N., et al. (2023). Concentration and isotopic composition of atmospheric N2O over the last century. Journal of Geophysical Research: Atmospheres, 128, e2022JD038281. https://doi.org/10.1029/2022JD038281",
+      "doi": "https://doi.org/10.15784/601693"
     },
     {
       "gas": "n2o",
-      "source": "AGAGE gc-md",
+      "source": "AGAGE ALE",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"
@@ -995,7 +995,7 @@
     },
     {
       "gas": "n2o",
-      "source": "AGAGE ALE",
+      "source": "AGAGE gc-md",
       "licence": "Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
       "reference": "Prinn et al., Earth Syst. Sci. Data 2018",
       "doi": "https://doi.org/10.5194/essd-10-985-2018"

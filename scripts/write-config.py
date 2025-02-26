@@ -33,9 +33,16 @@ from local.config_creation.droste_et_al_2020_handling import (
 )
 from local.config_creation.epica_handling import RETRIEVE_AND_PROCESS_EPICA_STEPS
 from local.config_creation.gage_handling import RETRIEVE_AND_EXTRACT_GAGE_STEPS
+from local.config_creation.ghosh_et_al_2023_handling import (
+    RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
+    SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
+)
 from local.config_creation.law_dome_handling import (
     RETRIEVE_AND_PROCESS_LAW_DOME_STEPS,
     create_smooth_law_dome_data_config,
+)
+from local.config_creation.menking_et_al_2025_handling import (
+    RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
 )
 from local.config_creation.monthly_fifteen_degree_pieces import (
     create_monthly_fifteen_degree_pieces_configs,
@@ -291,9 +298,12 @@ def create_dev_config() -> Config:
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
+        retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
+        smooth_ghosh_et_al_2023_data=SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         crunch_equivalent_species=create_crunch_equivalent_species_config(gases=equivalent_species_to_write),
@@ -367,9 +377,12 @@ def create_ci_config() -> Config:
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
+        retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
+        smooth_ghosh_et_al_2023_data=SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         crunch_equivalent_species=[],
@@ -485,9 +498,12 @@ def create_ci_nightly_config() -> Config:
         retrieve_and_process_velders_et_al_2022_data=RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
         retrieve_and_process_droste_et_al_2020_data=RETRIEVE_AND_PROCESS_DROSTE_ET_AL_2020_DATA_STEPS,
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
+        retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
+        retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
+        smooth_ghosh_et_al_2023_data=SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         # TODO: test this in CI

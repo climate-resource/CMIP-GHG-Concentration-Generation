@@ -81,7 +81,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch4"  # config ID to select for this branch
+step_config_id: str = "n2o"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -505,11 +505,10 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
             input4mips_ds.metadata,
             product="derived",
             comment=(
-                "This is an interim dataset, do not use in production."
                 "Data compiled by Climate Resource, based on science by many others "
-                "(see 'references*' attributes)). "
+                "(see 'references*' attributes). "
                 "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
-                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd. "
+                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd."
             ),
             doi=config.doi,
         )

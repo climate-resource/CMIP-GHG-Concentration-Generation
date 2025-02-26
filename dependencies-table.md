@@ -8,12 +8,13 @@
 **AGAGE gc-md** - 9: ccl4, cfc11, cfc113, cfc12, ch3ccl3, ch4, chcl3, n2o, sf6
 **Droste et al., 2020** - 5: c4f10, c5f12, c6f14, c7f16, cc4f8
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
-**Law Dome** - 3: ch4, co2, n2o
 **NOAA surface flask** - 2: ch4, co2
 **NOAA in-situ** - 2: ch4, co2
+**Law Dome** - 2: ch4, co2
 **AGAGE GAGE** - 2: ch4, n2o
 **AGAGE ALE** - 2: ch4, n2o
 **NEEM** - 1: ch4
+**Menking et al., 2025** - 1: n2o
 **EPICA** - 1: ch4
 **Adam et al., 2024** - 1: hfc23
 
@@ -21,7 +22,7 @@
 
 **co2**: Law Dome, NOAA in-situ, NOAA surface flask
 **ch4**: AGAGE ALE, AGAGE GAGE, AGAGE gc-md, EPICA, Law Dome, NEEM, NOAA in-situ, NOAA surface flask
-**n2o**: AGAGE ALE, AGAGE GAGE, AGAGE gc-md, Law Dome, NOAA HATS
+**n2o**: AGAGE ALE, AGAGE GAGE, AGAGE gc-md, Menking et al., 2025, NOAA HATS
 **cfc12**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
 **cfc11**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
 **hfc134a**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
