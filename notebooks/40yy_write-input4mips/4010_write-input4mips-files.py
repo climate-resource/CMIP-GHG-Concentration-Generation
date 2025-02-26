@@ -81,7 +81,7 @@ step: str = "write_input4mips"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "n2o"  # config ID to select for this branch
+step_config_id: str = "ch3ccl3"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -269,17 +269,20 @@ gas_deps.append(
         "url": "https://doi.org/10.5194/gmd-10-2057-2017",
     }
 )
-# Once we have a pre-print or something, can do this
-# gas_deps.append({
-#     'gas': 'cfc114',
-#   'source': 'Nicholls et al., in-prep (2024)',
-#   'licence': 'Paper, NA',
-#   'reference': (
-#       "Nicholls, Z., Meinshausen, M., ...: "
-#       "Historical greenhouse gas concentrations for climate modelling (CMIP7), "
-#   ),
-#   'doi': 'https://doi.org/tbd'
-# })
+
+gas_deps.append(
+    {
+        "gas": config_step.gas,
+        "source": "Nicholls et al., in-prep (2015)",
+        "licence": "Paper, NA",
+        "reference": (
+            "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
+            "Greenhouse gas concentrations for climate modelling (CMIP7), "
+            "in-prep, 2025."
+        ),
+        "url": "https://doi.org/10.5194/gmd-10-2057-2017",
+    }
+)
 gas_deps
 
 # %%
@@ -357,14 +360,14 @@ gas_to_cmip_variable_renaming = {
     "co2": "co2",
     "ch4": "ch4",
     "n2o": "n2o",
-    "c2f6": "pfc116",
-    "c3f8": "pfc218",
-    "c4f10": "pfc3110",
-    "c5f12": "pfc4112",
-    "c6f14": "pfc5114",
-    "c7f16": "pfc6116",
-    "c8f18": "pfc7118",
-    "cc4f8": "pfc318",
+    "c2f6": "c2f6",
+    "c3f8": "c3f8",
+    "c4f10": "c4f10",
+    "c5f12": "c5f12",
+    "c6f14": "c6f14",
+    "c7f16": "c7f16",
+    "c8f18": "c8f18",
+    "cc4f8": "cc4f8",
     "ccl4": "ccl4",
     "cf4": "cf4",
     "cfc11": "cfc11",
@@ -374,7 +377,7 @@ gas_to_cmip_variable_renaming = {
     "cfc12": "cfc12",
     "ch2cl2": "ch2cl2",
     "ch3br": "ch3br",
-    "ch3ccl3": "hcc140a",
+    "ch3ccl3": "ch3ccl3",
     "ch3cl": "ch3cl",
     "chcl3": "chcl3",
     "halon1211": "halon1211",
@@ -492,7 +495,10 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
                 dimensions=dimensions,
                 time_dimension=time_dimension,
                 standard_and_or_long_names={
-                    variable_name_output: {"standard_name": gas_to_standard_name_renaming[variable_name_raw]},
+                    variable_name_output: {
+                        "standard_name": gas_to_standard_name_renaming[variable_name_raw],
+                        "long_name": variable_name_raw,
+                    },
                 },
                 add_time_bounds=partial(
                     add_time_bounds,
