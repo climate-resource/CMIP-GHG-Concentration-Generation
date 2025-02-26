@@ -57,10 +57,10 @@ else
     # In future, we will capture the dependencies as we go along.
     pixi run -e all-dev python scripts/make-dependency-table.py \
         --out-file-by-gas-json "data/raw/dependencies-by-gas.json" \
-        --config-file "${doit_config_file}" \
-        --force-dot-generation || echo "make dep table failed"
-    # --config-file "${doit_config_file}" ||
-    # echo "make dep table failed"
+        --config-file "${doit_config_file}" ||
+        echo "make dep table failed"
+    # --config-file "${doit_config_file}" \
+    # --force-dot-generation || echo "make dep table failed"
 
     if [ "$GAS" == "all" ]; then
 
