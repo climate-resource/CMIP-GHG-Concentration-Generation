@@ -42,6 +42,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -145,7 +146,7 @@ menking_et_al
 
 # %%
 if menking_et_al["year"].min() > 1:
-    if menking_et_al["year"].min() > 10:
+    if menking_et_al["year"].min() > 10:  # noqa: PLR2004
         raise NotImplementedError
 
     extrap_years = np.arange(1, menking_et_al["year"].min())
@@ -164,12 +165,12 @@ if menking_et_al["year"].min() > 1:
 else:
     menking_et_al_full = menking_et_al
 
-if not (menking_et_al_full["year"] == 1850).any():
+if not (menking_et_al_full["year"] == 1850).any():  # noqa: PLR2004
     print("Hacking in 1850 value")
     hacked_value = np.mean(
         [
-            menking_et_al_full[menking_et_al_full["year"] == 1849]["value"].iloc[0],
-            menking_et_al_full[menking_et_al_full["year"] == 1851]["value"].iloc[0],
+            menking_et_al_full[menking_et_al_full["year"] == 1849]["value"].iloc[0],  # noqa: PLR2004
+            menking_et_al_full[menking_et_al_full["year"] == 1851]["value"].iloc[0],  # noqa: PLR2004
         ]
     )
     tmp = menking_et_al_full.iloc[:1, :].copy()
@@ -242,21 +243,56 @@ obs_network_full_field
 # so we don't need to calculate any offset
 # (unlike for other gases where these assumptions don't hold).
 
+# %% [markdown]
+# ##### Harmonise
+#
+# Firstly, we harmonise the Meking et al. 2025 data with the observational record
+# to avoid jumps as we transition between the two.
+
 # %%
-menking_et_al_full_to_use = menking_et_al_full[
-    (menking_et_al_full["year"] < float(obs_network_full_field["year"].min()))
-    & (menking_et_al_full["year"] >= 1)
-]
+join_year = int(obs_network_years.min())
+join_year
+
+# %%
+menking_et_al_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=menking_et_al_full.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(global_annual_mean_obs_network.pint.to(conc_unit).sel(year=join_year).data.m),
+        harm_year=join_year,
+        n_transition_years=100,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+menking_et_al_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network")
+ax.plot(
+    menking_et_al_full["year"],
+    menking_et_al_full["value"],
+    label="Menking et al., raw",
+)
+ax.plot(
+    menking_et_al_harmonised["year"],
+    menking_et_al_harmonised["value"],
+    label="Menking et al., harmonised",
+)
+ax.legend()
+ax.set_xlim([1850, 2030])
+
+# %%
 menking_da = xr.DataArray(
-    data=menking_et_al_full_to_use["value"],
+    data=menking_et_al_harmonised["value"],
     dims=["year"],
-    coords=dict(year=menking_et_al_full_to_use["year"]),
+    coords=dict(year=menking_et_al_harmonised["year"]),
     attrs=dict(units=conc_unit),
 ).pint.quantify()
 menking_da
-
-# %%
-assert False, "Add harmonisation in here: 50 year offset slide"
 
 # %%
 menking_years_full_field = menking_da + allyears_latitudinal_gradient
@@ -292,12 +328,9 @@ allyears_full_field.plot(hue="lat")
 allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(allyears_full_field)
 
 # %%
-menking_compare_years = menking_et_al_full_to_use["year"].values[
-    np.isin(menking_et_al_full_to_use["year"].values, out_years)  # type: ignore
-]
 np.testing.assert_allclose(
-    allyears_global_annual_mean.sel(year=menking_compare_years).data.to(conc_unit).m,
-    menking_et_al_full_to_use[np.isin(menking_et_al_full_to_use["year"], menking_compare_years)]["value"],
+    allyears_global_annual_mean.sel(year=menking_et_al_harmonised["year"].values).data.to(conc_unit).m,
+    menking_et_al_harmonised["value"],
 )
 
 # %%
@@ -308,9 +341,6 @@ if not config.ci:
 # %% [markdown]
 # The residual between our full field and our annual, global-mean
 # should just be the latitudinal gradient we started with.
-
-# %%
-allyears_latitudinal_gradient
 
 # %%
 check = allyears_full_field - allyears_global_annual_mean
@@ -327,19 +357,6 @@ np.testing.assert_allclose(
 
 # %%
 allyears_global_annual_mean.plot()
-
-# %%
-join_year = int(obs_network_years.min())
-fig, ax = plt.subplots()
-allyears_global_annual_mean.sel(year=range(join_year - 20, join_year + 21)).plot(ax=ax)
-ax.plot(
-    menking_et_al_full["year"],
-    menking_et_al_full["value"],
-)
-ax.set_xlim(join_year - 20, join_year + 21)
-ax.set_ylim([290, 320])
-ax.grid()
-ax.axvline(join_year)
 
 # %% [markdown]
 # ## Save
