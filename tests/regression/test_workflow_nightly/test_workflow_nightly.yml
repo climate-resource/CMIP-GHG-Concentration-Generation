@@ -2,14 +2,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -30,20 +35,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -53,14 +61,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -81,20 +94,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -104,14 +120,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -132,20 +153,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -155,14 +179,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -183,20 +212,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -206,14 +238,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -234,20 +271,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -257,14 +297,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -285,20 +330,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -308,14 +356,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -332,32 +385,34 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes,
-    Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North
-    Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA,
-    https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael H; Faïn,
-    Xavier; ...; Brook, Edward J (2013): Continuous methane measurements from a late
-    Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary
-    Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034 --- Meinshausen,
-    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
-    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- EPICA Community Members
-    (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232,
-    In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William
-    (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica.
-    Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
-    Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
-    al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
+    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
+    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
+    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
+    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
+    Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core
+    2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb
+    --- EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA,
+    https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
+    Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
+    variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
+    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
+    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
-    et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
-    ALE
-  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
+    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -370,14 +425,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -394,32 +454,34 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes,
-    Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North
-    Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA,
-    https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael H; Faïn,
-    Xavier; ...; Brook, Edward J (2013): Continuous methane measurements from a late
-    Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary
-    Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034 --- Meinshausen,
-    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
-    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- EPICA Community Members
-    (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232,
-    In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William
-    (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica.
-    Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
-    Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
-    al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
+    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
+    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
+    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
+    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
+    Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core
+    2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb
+    --- EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA,
+    https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
+    Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
+    variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
+    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
+    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
-    et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
-    ALE
-  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
+    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -432,14 +494,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -456,32 +523,34 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes,
-    Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North
-    Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA,
-    https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael H; Faïn,
-    Xavier; ...; Brook, Edward J (2013): Continuous methane measurements from a late
-    Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary
-    Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034 --- Meinshausen,
-    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
-    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- EPICA Community Members
-    (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232,
-    In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William
-    (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica.
-    Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
-    Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
-    al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
+    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
+    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
+    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
+    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
+    Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core
+    2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb
+    --- EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA,
+    https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
+    Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
+    variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
+    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
+    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
-    et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
-    ALE
-  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
+    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -494,14 +563,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -522,19 +596,20 @@
     M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
     terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
     Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A.,
-    Etheridge, D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer,
-    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
-    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
-    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
-    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017.'
-  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- NOAA surface flask --- NOAA in-situ --- Menking
-    et al., 2025 --- Meinshausen et al., GMD (2017)
+    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
+    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
+    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
+    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
+    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
+    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
+    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
+    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+    flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
-    --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -544,14 +619,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -572,19 +652,20 @@
     M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
     terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
     Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A.,
-    Etheridge, D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer,
-    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
-    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
-    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
-    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017.'
-  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- NOAA surface flask --- NOAA in-situ --- Menking
-    et al., 2025 --- Meinshausen et al., GMD (2017)
+    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
+    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
+    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
+    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
+    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
+    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
+    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
+    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+    flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
-    --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -594,14 +675,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -622,19 +708,20 @@
     M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
     terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
     Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A.,
-    Etheridge, D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer,
-    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
-    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
-    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
-    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017.'
-  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- NOAA surface flask --- NOAA in-situ --- Menking
-    et al., 2025 --- Meinshausen et al., GMD (2017)
+    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
+    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
+    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
+    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
+    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
+    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
+    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
+    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+    flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
-    --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -644,14 +731,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -671,18 +763,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -692,14 +788,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -719,18 +820,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -740,14 +845,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -767,18 +877,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -788,14 +902,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -815,18 +934,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -836,14 +959,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -863,18 +991,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -884,14 +1016,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -911,18 +1048,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -932,14 +1073,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -956,7 +1102,9 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
     R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
     prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
@@ -964,14 +1112,15 @@
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
     et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+    et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
+    --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -981,14 +1130,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -1005,7 +1159,9 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
     R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
     prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
@@ -1013,14 +1169,15 @@
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
     et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+    et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
+    --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1030,14 +1187,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1054,7 +1216,9 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
     R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
     prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
@@ -1062,14 +1226,15 @@
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
     et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+    et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
+    --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1079,14 +1244,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1103,17 +1273,20 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang, R. H.
+    J., and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
-    --- AGAGE gc-md
-  references_urls: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1123,14 +1296,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gnz
   institution_id: CR
@@ -1147,17 +1325,20 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang, R. H.
+    J., and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
-    --- AGAGE gc-md
-  references_urls: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1167,14 +1348,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: mon
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1191,17 +1377,20 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang, R. H.
+    J., and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
-    --- AGAGE gc-md
-  references_urls: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1211,14 +1400,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1239,20 +1433,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1262,14 +1459,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1290,20 +1492,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1313,14 +1518,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1341,20 +1551,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1364,14 +1577,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1392,20 +1610,23 @@
     R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
     and Information for Policymakers. In World Meteorological Organization (WMO),
     Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ...,
-    Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
+    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
+    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
     modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: WMO 2022 ozone assessment Ch. 7 --- NOAA HATS --- Meinshausen
-    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms --- AGAGE gc-md
+  references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
+    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1415,14 +1636,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1439,32 +1665,34 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes,
-    Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North
-    Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA,
-    https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael H; Faïn,
-    Xavier; ...; Brook, Edward J (2013): Continuous methane measurements from a late
-    Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary
-    Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034 --- Meinshausen,
-    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
-    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- EPICA Community Members
-    (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232,
-    In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William
-    (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica.
-    Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
-    Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
-    al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
+    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
+    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
+    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
+    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
+    Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core
+    2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb
+    --- EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA,
+    https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
+    Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
+    variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
+    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
+    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
-    et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
-    ALE
-  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
+    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -1477,14 +1705,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1501,32 +1734,34 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes,
-    Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North
-    Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA,
-    https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael H; Faïn,
-    Xavier; ...; Brook, Edward J (2013): Continuous methane measurements from a late
-    Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary
-    Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034 --- Meinshausen,
-    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
-    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- EPICA Community Members
-    (2006): Methane of ice core EDML [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.552232,
-    In supplement to: Barbante, Carlo; Barnola, Jean-Marc; ... Wolff, Eric William
-    (2006): One-to-one coupling of glacial climate variability in Greenland and Antarctica.
-    Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
-    Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
-    al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
+    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
+    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
+    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
+    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
+    Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): Law Dome Ice Core
+    2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data Collection. https://doi.org/10.25919/5bfe29ff807fb
+    --- EPICA Community Members (2006): Methane of ice core EDML [dataset]. PANGAEA,
+    https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
+    Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
+    variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
+    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
+    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
-    et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
-    ALE
-  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
+    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -1539,14 +1774,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1567,19 +1807,20 @@
     M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
     terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
     Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A.,
-    Etheridge, D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer,
-    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
-    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
-    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
-    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017.'
-  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- NOAA surface flask --- NOAA in-situ --- Menking
-    et al., 2025 --- Meinshausen et al., GMD (2017)
+    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
+    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
+    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
+    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
+    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
+    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
+    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
+    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+    flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
-    --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1589,14 +1830,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1617,19 +1863,20 @@
     M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
     terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
     Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A.,
-    Etheridge, D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer,
-    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
-    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
-    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
-    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017.'
-  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- NOAA surface flask --- NOAA in-situ --- Menking
-    et al., 2025 --- Meinshausen et al., GMD (2017)
+    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
+    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
+    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
+    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
+    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
+    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
+    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
+    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+    flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
-    --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
+    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1639,14 +1886,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1666,18 +1918,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1687,14 +1943,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1714,18 +1975,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1735,14 +2000,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1762,18 +2032,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1783,14 +2057,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1810,18 +2089,22 @@
   references: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
     Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
     based on recent trends in observed abundances and current policies, Atmos. Chem.
-    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- https://gml.noaa.gov/hats/
+    Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
+    Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
+    gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1831,14 +2114,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1855,7 +2143,9 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
     R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
     prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
@@ -1863,14 +2153,15 @@
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
     et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+    et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
+    --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1880,14 +2171,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1904,7 +2200,9 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
     R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
     prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
@@ -1912,14 +2210,15 @@
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
     et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+    et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
+    --- AGAGE ALE
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1929,14 +2228,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gm
   institution_id: CR
@@ -1953,17 +2257,20 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang, R. H.
+    J., and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
-    --- AGAGE gc-md
-  references_urls: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1973,14 +2280,19 @@
 : Conventions: CF-1.7
   activity_id: input4MIPs
   comment: Data compiled by Climate Resource, based on science by many others (see
-    'references*' attributes). Financial support has been provided by the CMIP International
-    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
-    staff provided by HE Space Operations Ltd.
+    'references*' attributes). For funding information, see the 'funding*' attributes.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
   doi: ci-hence-no-valid-doi
   frequency: yr
+  funding: Financial support has been provided by the CMIP International Project Office
+    (CMIP IPO), which is hosted by the European Space Agency (ESA), with staff provided
+    by HE Space Operations Ltd. This research has been funded by the European Space
+    Agency (ESA) as part of the GHG Forcing For CMIP project of the Climate Change
+    Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl).
+  funding_short_names: Quick DECK GHG Forcing --- GHG Forcing For CMIP
+  funding_urls: No URL --- climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/
   further_info_url: http://www.tbd.invalid
   grid_label: gr1z
   institution_id: CR
@@ -1997,17 +2309,20 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+    ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
+    --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang, R. H.
+    J., and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
-    --- AGAGE gc-md
-  references_urls: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+    et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
