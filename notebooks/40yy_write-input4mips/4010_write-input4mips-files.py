@@ -250,6 +250,7 @@ except KeyError:
                 "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
                 "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
             ),
+            "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
             "url": "https://doi.org/10.5194/gmd-13-3571-2020",
         }
     ]
@@ -264,6 +265,7 @@ gas_deps.append(
             "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
             "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
         ),
+        "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
         "url": "https://doi.org/10.5194/gmd-10-2057-2017",
     }
 )
@@ -288,8 +290,11 @@ gas_deps
 
 # %%
 non_input4mips_metadata_common = {
-    "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
     "references": " --- ".join([v["reference"] for v in gas_deps]),
+    "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
+    "references_dois": " --- ".join(
+        [v["doi"] if ("doi" in v and v["doi"] is not None) else "No DOI" for v in gas_deps]
+    ),
     "references_urls": " --- ".join([v["url"] for v in gas_deps]),
 }
 non_input4mips_metadata_common
