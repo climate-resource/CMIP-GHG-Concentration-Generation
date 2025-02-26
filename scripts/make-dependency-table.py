@@ -254,7 +254,9 @@ source_info: dict[str, SourceInfo] = {
             "Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in prep.). "
             "Filling gaps and reducing uncertainty in existing Law Dome ice core records."
         ),
-        doi="author-supplied.invalid",
+        doi=None,
+        url="author-supplied.invalid",
+        resource_type="publication-article",
     ),
     "Scripps": SourceInfo(
         licence="CC BY 4.0",
@@ -265,7 +267,9 @@ source_info: dict[str, SourceInfo] = {
             "oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, "
             "Scripps Institution of Oceanography, San Diego, 88 pages, 2001."
         ),
-        doi="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+        doi=None,
+        url="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+        resource_type="publication-article",
     ),
 }
 
