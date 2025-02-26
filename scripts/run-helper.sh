@@ -67,6 +67,9 @@ else
         DOIT_CONFIGURATION_FILE=$doit_config_file DOIT_RUN_ID="$RUN_ID" \
             pixi run doit run --verbosity=2 -n 4
 
+        # Upload to zenodo
+        pixi run python scripts/upload-bundle-to-zenodo.py "output-bundles/${RUN_ID}"
+
     else
 
         # Run for individual gas
