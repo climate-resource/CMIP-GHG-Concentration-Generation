@@ -73,20 +73,20 @@ pint_xarray.accessors.default_registry = pint_xarray.setup_registry(cf_xarray.un
 # %% [markdown]
 # ## Define branch this notebook belongs to
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% editable=true
 step: str = "write_input4mips"
 
 # %% [markdown]
 # ## Parameters
 
-# %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
+# %% editable=true  tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "ch3ccl3"  # config ID to select for this branch
 
-# %% [markdown] editable=true slideshow={"slide_type": ""}
+# %% [markdown] editable=true
 # ## Load config
 
-# %% editable=true slideshow={"slide_type": ""}
+# %% editable=true
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
@@ -292,6 +292,33 @@ gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
 gas_deps
 
 # %%
+funding_info = (
+    {
+        "name": "Quick DECK GHG Forcing",
+        "url": "No URL",
+        "long_text": (
+            "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
+            "which is hosted by the European Space Agency (ESA), with staff provided by HE Space Operations Ltd."
+        ),
+    },
+    {
+        "name": "GHG Forcing For CMIP",
+        "url": "climate.esa.int/supporting-modelling/cmip-forcing-ghg-concentrations/",
+        "long_text": (
+            "This research has been funded by the European Space Agency (ESA) as part of the "
+            "GHG Forcing For CMIP project of the Climate Change Initiative (CCI) (ESA Contract No. 4000146681/24/I-LR-cl)."
+        ),
+    },
+)
+
+# %%
+comment = (
+    "Data compiled by Climate Resource, based on science by many others "
+    "(see 'references*' attributes). "
+    "For funding information, see the 'funding*' attributes."
+)
+
+# %%
 non_input4mips_metadata_common = {
     "references": " --- ".join([v["reference"] for v in gas_deps]),
     "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
@@ -299,6 +326,9 @@ non_input4mips_metadata_common = {
         [v["doi"] if ("doi" in v and v["doi"] is not None) else "No DOI" for v in gas_deps]
     ),
     "references_urls": " --- ".join([v["url"] for v in gas_deps]),
+    "funding": " ".join([v["long_text"] for v in funding_info]),
+    "funding_short_names": " --- ".join([v["name"] for v in funding_info]),
+    "funding_urls": " --- ".join([v["url"] for v in funding_info]),
 }
 non_input4mips_metadata_common
 
@@ -410,6 +440,7 @@ gas_to_cmip_variable_renaming = {
 
 # %%
 raw_cvs_loader = get_raw_cvs_loader(config_step.input4mips_cvs_cv_source)
+raw_cvs_loader
 
 # %%
 cvs = load_cvs_known_loader(raw_cvs_loader)
@@ -515,12 +546,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
         metadata_evolved = evolve(
             input4mips_ds.metadata,
             product="derived",
-            comment=(
-                "Data compiled by Climate Resource, based on science by many others "
-                "(see 'references*' attributes). "
-                "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
-                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd."
-            ),
+            comment=comment,
             doi=config.doi,
         )
 
@@ -552,7 +578,7 @@ checklist_path
 # %%
 # !input4mips-validation --logging-level INFO_INDIVIDUAL_CHECK \
 #     validate-tree {config_step.input4mips_out_dir} \
-#     --cv-source "gh:main" \
+#     --cv-source {config_step.input4mips_cvs_cv_source} \
 #     --rglob-input "**/*{variable_name_output}*/**/*.nc"
 
 # %%

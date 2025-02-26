@@ -243,6 +243,17 @@ def main(  # noqa: PLR0913
         metadata=zenodo_metadata_incl_refs,
     )
 
+    print(
+        "\n".join(
+            [
+                "Next steps:",
+                "",
+                "- update affiliations (can't have multiple from zenodo.json)",
+                "- update grants (can't upload from zenodo.json)",
+            ]
+        )
+    )
+
 
 if __name__ == "__main__":
     typer.run(main)
