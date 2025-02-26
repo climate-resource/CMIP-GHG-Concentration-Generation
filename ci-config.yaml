@@ -319,6 +319,11 @@ retrieve_and_process_law_dome_data:
   processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
   raw_dir: data/raw/law_dome
   step_config_id: only
+retrieve_and_process_menking_et_al_2025_data:
+- expected_hash: bf832acdf24460e88312bda558200c60
+  processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
+  raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
+  step_config_id: only
 retrieve_and_process_neem_data:
 - download_url:
     known_hash: d46f08c9339ebea201abe99772505a903aa597c30c7a91372efd2cc063657d5a

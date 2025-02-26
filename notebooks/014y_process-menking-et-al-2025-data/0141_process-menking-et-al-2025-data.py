@@ -13,16 +13,16 @@
 # ---
 
 # %% [markdown]
-# # Ghosh et al., 2023 - process
+# # Menking et al., 2025 - process
 #
-# Process data from [Ghosh et al., 2023](https://doi.org/10.1029/2022JD038281).
+# Process data from Menking et al., 2025 (in prep.).
 # Raw data is included in the repository
-# because you can't download it an automated way.
+# because the paper isn't published yet.
 # If you are using this repo,
-# please go and download your own copy
-# from https://www.usap-dc.org/view/dataset/601693
-# to help the authors' own tracking statistics
-# as a way of saying thank you.
+# please go and find the paper and cite it.
+# If you can't find the paper,
+# please feel free to
+# [raise an issue](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/issues/new).
 
 # %% [markdown]
 # ## Imports
@@ -45,7 +45,7 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_ghosh_et_al_2023_data"
+step: str = "retrieve_and_process_menking_et_al_2025_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -71,31 +71,31 @@ with open(config_step.raw_data_file, "rb") as fh:
         raise AssertionError
 
 # %%
-raw = pd.read_excel(config_step.raw_data_file, sheet_name="Inversion (N2O)")
+raw = pd.read_excel(config_step.raw_data_file, sheet_name="Sheet1", skiprows=6)
 raw
 
 # %%
-if raw.iloc[0, 0] != "Median (column D) is the best estimate for the atmospheric history":
-    raise AssertionError
+clean_l = []
+for yr_col, value_col in (
+    ("Year (CE)", "CO2 (ppm)"),
+    ("Year (CE).1", "N2O (ppb)"),
+):
+    toks = value_col.split(" ")
+    gas = toks[0].strip().lower()
+    unit = toks[1].replace("(", "").replace(")", "").strip().lower()
 
-best_estimate_col = 3
+    tmp = raw[[yr_col, value_col]].rename({yr_col: "year", value_col: "value"}, axis="columns")
+    tmp["unit"] = unit
+    tmp["gas"] = gas
+
+    clean_l.append(tmp)
+
+clean = pd.concat(clean_l).dropna()
+clean["year"] = clean["year"].astype(int)
+clean
 
 # %%
-cleaner = pd.read_excel(
-    config_step.raw_data_file, sheet_name="Inversion (N2O)", skiprows=3
-)  # .rename({"Unnamed: 0": "year"}, axis="columns").iloc[:, [0, best_estimate_col]].set_index("year")
-
-unit = cleaner.loc[:, "N2O, median"].iloc[0]
-if unit != "ppb":
-    raise AssertionError
-
-# Drop out the units row
-clean = cleaner.iloc[1:, :]
-clean = clean.rename({"Cal year CE": "year", "N2O, median": "value"}, axis="columns")[["year", "value"]]
-clean["unit"] = unit
-clean["gas"] = "n2o"
-
-clean
+clean.set_index(["year", "unit", "gas"]).unstack("year")
 
 # %% [markdown]
 # ## Save

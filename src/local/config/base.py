@@ -45,6 +45,7 @@ from .retrieve_and_process_droste_et_al_2020_data import RetrieveExtractDrosteEt
 from .retrieve_and_process_epica_data import RetrieveProcessEPICAConfig
 from .retrieve_and_process_ghosh_et_al_2023_data import RetrieveExtractGhoshEtal2023Data
 from .retrieve_and_process_law_dome import RetrieveProcessLawDomeConfig
+from .retrieve_and_process_menking_et_al_2025_data import RetrieveExtractMenkingEtal2025Data
 from .retrieve_and_process_neem_data import RetrieveProcessNEEMConfig
 from .retrieve_and_process_scripps_data import RetrieveProcessScrippsConfig
 from .retrieve_and_process_velders_et_al_2022_data import RetrieveExtractVeldersEtal2022Data
@@ -185,6 +186,11 @@ class Config:
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for retrieving and processing Ghosh et al. (2023) data"""
+
+    retrieve_and_process_menking_et_al_2025_data: list[RetrieveExtractMenkingEtal2025Data] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+    """Configurations to use for retrieving and processing Menking et al. (2025) data"""
 
     plot_input_data_overviews: list[PlotInputDataOverviewsConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
