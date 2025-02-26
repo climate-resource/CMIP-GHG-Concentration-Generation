@@ -10,17 +10,18 @@
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
 **NOAA surface flask** - 2: ch4, co2
 **NOAA in-situ** - 2: ch4, co2
-**Law Dome** - 2: ch4, co2
+**Menking et al., 2025** - 2: co2, n2o
 **AGAGE GAGE** - 2: ch4, n2o
 **AGAGE ALE** - 2: ch4, n2o
+**Scripps** - 1: co2
 **NEEM** - 1: ch4
-**Menking et al., 2025** - 1: n2o
+**Law Dome** - 1: ch4
 **EPICA** - 1: ch4
 **Adam et al., 2024** - 1: hfc23
 
 # Summary by gas
 
-**co2**: Law Dome, NOAA in-situ, NOAA surface flask
+**co2**: Menking et al., 2025, NOAA in-situ, NOAA surface flask, Scripps
 **ch4**: AGAGE ALE, AGAGE GAGE, AGAGE gc-md, EPICA, Law Dome, NEEM, NOAA in-situ, NOAA surface flask
 **n2o**: AGAGE ALE, AGAGE GAGE, AGAGE gc-md, Menking et al., 2025, NOAA HATS
 **cfc12**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7

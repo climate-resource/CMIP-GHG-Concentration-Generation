@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -41,6 +41,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -80,8 +81,12 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-config_smooth_law_dome_data = get_config_for_step_id(
-    config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
+config_retrieve_and_process_scripps_data = get_config_for_step_id(
+    config=config, step="retrieve_and_process_scripps_data", step_config_id="only"
+)
+
+config_retrieve_and_process_menking_et_al_2025_data = get_config_for_step_id(
+    config=config, step="retrieve_and_process_menking_et_al_2025_data", step_config_id="only"
 )
 
 
@@ -134,10 +139,19 @@ lat_grad_eofs_allyears = xr.load_dataset(
 lat_grad_eofs_allyears
 
 # %%
-smooth_law_dome = pd.read_csv(config_smooth_law_dome_data.smoothed_median_file)
-smooth_law_dome = smooth_law_dome[smooth_law_dome["gas"] == config_step.gas]
-smooth_law_dome["source"] = "law_dome"
-smooth_law_dome
+mauna_loa_merged = pd.read_csv(
+    config_retrieve_and_process_scripps_data.merged_ice_core_data_processed_data_file
+)
+mauna_loa_merged
+
+# %%
+menking_et_al = pd.read_csv(config_retrieve_and_process_menking_et_al_2025_data.processed_data_file)
+menking_et_al = menking_et_al[menking_et_al["gas"] == config_step.gas]
+menking_et_al["source"] = "menking_et_al_2025"
+if menking_et_al["year"].min() > 1:
+    raise AssertionError
+
+menking_et_al
 
 # %% [markdown]
 # ### Define some important constants
@@ -168,15 +182,15 @@ use_extensions_years
 # #### Define some constants
 
 # %%
-law_dome_lat = get_col_assert_single_value(smooth_law_dome, "latitude")
-law_dome_lat
+menking_et_al_lat = get_col_assert_single_value(menking_et_al, "latitude")
+menking_et_al_lat
 
 # %%
-law_dome_lat_nearest = float(lat_grad_eofs_allyears.sel(lat=law_dome_lat, method="nearest")["lat"])
-law_dome_lat_nearest
+menking_et_al_nearest = float(lat_grad_eofs_allyears.sel(lat=menking_et_al_lat, method="nearest")["lat"])
+menking_et_al_nearest
 
 # %%
-conc_unit = get_col_assert_single_value(smooth_law_dome, "unit")
+conc_unit = get_col_assert_single_value(menking_et_al, "unit")
 conc_unit
 
 # %% [markdown]
@@ -203,38 +217,182 @@ obs_network_full_field = allyears_latitudinal_gradient + global_annual_mean_obs_
 obs_network_full_field
 
 # %% [markdown]
-# #### Law Dome
+# #### Mauna Loa
 #
-# Then we use the Law Dome data.
-# We calculate the offset by ensuring that the value in Law Dome's bin
-# matches our smoothed Law Dome timeseries in the years in which we have Law Dome data
-# and don't have the observational network.
+# We start by adding in data from the Mauna Loa - Law Dome merged ice core record.
+# We use this data from the first full year of Mauna Loa data.
 
 # %%
-smooth_law_dome_to_use = smooth_law_dome[
-    smooth_law_dome["year"] < float(obs_network_full_field["year"].min())
+mauna_loa_start = 1959
+
+# %% [markdown]
+# ##### Harmonise
+#
+# Firstly, we harmonise the Mauna Loa data with the observational record
+# to avoid jumps as we transition between the two.
+
+# %%
+join_year = int(obs_network_years.min())
+join_year
+
+# %%
+mauna_loa_use_years = np.arange(
+    mauna_loa_start + 0.5, join_year + 1
+)  # keep an extra year for harmonisation to work
+mauna_loa_use_years
+
+# %%
+mauna_loa_law_dome_merged_to_use = mauna_loa_merged[mauna_loa_merged["time"].isin(mauna_loa_use_years)]
+if mauna_loa_law_dome_merged_to_use.shape[0] != mauna_loa_use_years.size:
+    raise AssertionError
+
+mauna_loa_law_dome_merged_to_use = mauna_loa_law_dome_merged_to_use.rename({"time": "year"}, axis="columns")
+mauna_loa_law_dome_merged_to_use["year"] = mauna_loa_law_dome_merged_to_use["year"].astype(int)
+mauna_loa_law_dome_merged_to_use
+
+# %%
+n_transition_years = 100
+
+# A better written harmonisation function wouldn't need this.
+tmp = pd.concat([mauna_loa_law_dome_merged_to_use.iloc[:1, :]] * n_transition_years)
+tmp["year"] = np.arange(mauna_loa_start - n_transition_years, mauna_loa_start)
+tmp["value"] = 0.0
+harmonise_helper = pd.concat([tmp, mauna_loa_law_dome_merged_to_use])
+
+mauna_loa_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=harmonise_helper.set_index(["year", "unit", "gas"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(
+            # Assume that Mauna Loa spline is roughly global-mean
+            global_annual_mean_obs_network.pint.to(conc_unit).sel(year=join_year).data.m
+        ),
+        harm_year=join_year,
+        n_transition_years=n_transition_years,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+mauna_loa_harmonised = mauna_loa_harmonised[
+    mauna_loa_harmonised["year"].isin(mauna_loa_law_dome_merged_to_use["year"])
 ]
-law_dome_da = xr.DataArray(
-    data=smooth_law_dome_to_use["value"],
+mauna_loa_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network")
+ax.plot(
+    mauna_loa_merged["time"],
+    mauna_loa_merged["value"],
+    label="Mauna Loa Law Dome merged",
+)
+ax.plot(
+    mauna_loa_harmonised["year"],
+    mauna_loa_harmonised["value"],
+    label="Mauna Loa Law Dome merged, harmonised",
+    alpha=0.4,
+)
+ax.legend()
+ax.set_xlim([1920, 2030])
+
+# %%
+ml_ld_da = xr.DataArray(
+    data=mauna_loa_harmonised["value"],
     dims=["year"],
-    coords=dict(year=smooth_law_dome_to_use["year"]),
+    coords=dict(year=mauna_loa_harmonised["year"]),
     attrs=dict(units=conc_unit),
 ).pint.quantify()
-law_dome_da
+ml_ld_da
 
 # %%
-offset = law_dome_da - allyears_latitudinal_gradient.sel(lat=law_dome_lat, method="nearest")
+mauna_loa_law_dome_merged_years_full_field = ml_ld_da + allyears_latitudinal_gradient
+mauna_loa_law_dome_merged_years_full_field
+
+# %% [markdown]
+# #### Menking et al., 2025
+#
+# Then we use the Menking et al., 2025 data.
+# We calculate the offset by ensuring that the value in Menking et al's latitudinal bin
+# matches the Menking et al., 2025 timeseries in the years in which we have Menking et al. data and don't have the observational network.
+
+# %% [markdown]
+# ##### Harmonise
+#
+# We also harmonise the Menking et al. data with the observational record
+# to avoid jumps as we transition between the two.
+
+# %%
+join_year_menking = int(mauna_loa_law_dome_merged_years_full_field["year"].min())
+join_year_menking
+
+# %%
+menking_et_al_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=menking_et_al.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(
+            mauna_loa_law_dome_merged_years_full_field.sel(lat=menking_et_al_lat, method="nearest")
+            .pint.to(conc_unit)
+            .sel(year=join_year_menking)
+            .data.m
+        ),
+        harm_year=join_year_menking,
+        n_transition_years=100,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+menking_et_al_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+mauna_loa_law_dome_merged_years_full_field.sel(lat=menking_et_al_lat, method="nearest").plot(
+    ax=ax, label="Mauna Loa Law Dome merged full field"
+)
+ax.plot(
+    menking_et_al["year"],
+    menking_et_al["value"],
+    label="Menking et al., raw",
+)
+ax.plot(
+    menking_et_al_harmonised["year"],
+    menking_et_al_harmonised["value"],
+    label="Menking et al., harmonised",
+    alpha=0.4,
+)
+ax.legend()
+ax.set_xlim([1830, 2030])
+# ax.set_xlim([join_year - 20, join_year + 20])
+
+# %%
+menking_et_al_da = xr.DataArray(
+    data=menking_et_al_harmonised["value"],
+    dims=["year"],
+    coords=dict(year=menking_et_al_harmonised["year"]),
+    attrs=dict(units=conc_unit),
+).pint.quantify()
+menking_et_al_da
+
+# %%
+offset = menking_et_al_da - allyears_latitudinal_gradient.sel(lat=menking_et_al_lat, method="nearest")
 offset
 
 # %%
-law_dome_years_full_field = allyears_latitudinal_gradient + offset
-law_dome_years_full_field
+menking_et_al_years_full_field = allyears_latitudinal_gradient + offset
+menking_et_al_years_full_field
 
 # %% [markdown]
 # #### Join back together
 
 # %%
-mostyears_full_field = xr.concat([law_dome_years_full_field, obs_network_full_field], "year")
+mostyears_full_field = xr.concat(
+    [menking_et_al_years_full_field, mauna_loa_law_dome_merged_years_full_field, obs_network_full_field],
+    "year",
+)
 
 mostyears_full_field
 
@@ -260,22 +418,24 @@ mostyears_full_field.plot(hue="lat")
 # %%
 if not config.ci:
     np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=smooth_law_dome_to_use["year"].values)
+        mostyears_full_field.sel(lat=menking_et_al_lat, method="nearest")
+        .sel(year=menking_et_al_harmonised["year"].values)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use["value"],
+        menking_et_al_harmonised["value"],
     )
 else:
-    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
+    menking_et_al_compare_years = menking_et_al_harmonised["year"].values[
+        np.isin(menking_et_al_harmonised["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
-        mostyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=law_dome_compare_years)
+        mostyears_full_field.sel(lat=menking_et_al_lat, method="nearest")
+        .sel(year=menking_et_al_compare_years)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
+        menking_et_al_harmonised[np.isin(menking_et_al_harmonised["year"], menking_et_al_compare_years)][
+            "value"
+        ],
     )
 
 # %%
@@ -288,7 +448,7 @@ mostyears_global_annual_mean
 # #### Extending back to year 1
 #
 # We simply assume that global-mean concentrations are constant
-# before the start of the Law Dome record.
+# before the start of the ice core record.
 
 # %%
 back_extend_years = np.setdiff1d(
@@ -318,10 +478,21 @@ if back_extend_years.size > 0:
 
 
 else:
+    print("No back extension necessary")
     allyears_full_field = mostyears_full_field
     allyears_global_annual_mean = mostyears_global_annual_mean
 
 allyears_global_annual_mean
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network", alpha=0.4)
+allyears_global_annual_mean.sel(year=range(1900, 2023 + 1)).plot(ax=ax, label="output", alpha=0.4)
+ax.axvline(join_year, linestyle="--", color="gray")
+ax.axvline(join_year_menking, linestyle="--", color="gray")
+
+ax.legend()
 
 # %% [markdown]
 # The residual between our full field and our annual, global-mean

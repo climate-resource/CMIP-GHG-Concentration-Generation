@@ -58,10 +58,7 @@ def configure_notebooks(
                 config_step.station_data,
             ),
             dependencies=(),
-            targets=(
-                config_step.merged_ice_core_data_processed_data_file,
-                get_checklist_file(config_step.raw_dir),
-            ),
+            targets=(get_checklist_file(config_step.raw_dir),),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -69,7 +66,10 @@ def configure_notebooks(
             unconfigured_notebook=uc_nbs_dict[Path("004y_process-scripps-data") / "0041_process-scripps"],
             configuration=(),
             dependencies=(get_checklist_file(config_step.raw_dir),),
-            targets=(config_step.processed_data_with_loc_file,),
+            targets=(
+                config_step.merged_ice_core_data_processed_data_file,
+                config_step.processed_data_with_loc_file,
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
