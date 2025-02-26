@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.7
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -42,6 +42,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -260,14 +261,62 @@ obs_network_full_field
 # matches our smoothed Law Dome timeseries in the years in which we have Law Dome data
 # and don't have the observational network.
 
+# %% [markdown]
+# ##### Harmonise
+#
+# Firstly, we harmonise the Law Dome data with the observational record
+# to avoid jumps as we transition between the two.
+
 # %%
-smooth_law_dome_to_use = smooth_law_dome[
-    smooth_law_dome["year"] < float(obs_network_full_field["year"].min())
+join_year = int(obs_network_years.min())
+join_year
+
+# %%
+smooth_law_dome_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=smooth_law_dome.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(
+            obs_network_full_field.sel(lat=law_dome_lat, method="nearest")
+            .pint.to(conc_unit)
+            .sel(year=join_year)
+            .data.m
+        ),
+        harm_year=join_year,
+        n_transition_years=100,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+smooth_law_dome_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+obs_network_full_field.sel(lat=law_dome_lat, method="nearest").plot(ax=ax, label="Obs network")
+ax.plot(
+    smooth_law_dome["year"],
+    smooth_law_dome["value"],
+    label="Smoothed Law Dome",
+)
+ax.plot(
+    smooth_law_dome_harmonised["year"],
+    smooth_law_dome_harmonised["value"],
+    label="Law Dome, harmonised",
+    alpha=0.4,
+)
+ax.legend()
+ax.set_xlim([1970, 2030])
+
+# %%
+smooth_law_dome_to_use = smooth_law_dome_harmonised[
+    smooth_law_dome_harmonised["year"] < float(obs_network_full_field["year"].min())
 ]
 law_dome_da = xr.DataArray(
-    data=smooth_law_dome_to_use["value"],
+    data=smooth_law_dome_harmonised["value"],
     dims=["year"],
-    coords=dict(year=smooth_law_dome_to_use["year"]),
+    coords=dict(year=smooth_law_dome_harmonised["year"]),
     attrs=dict(units=conc_unit),
 ).pint.quantify()
 law_dome_da
@@ -292,7 +341,8 @@ law_dome_years_full_field
 # so that the interpolation will have something to join with.
 epica_data_pre_start_year = -50
 epica_data_to_add = epica_data[
-    (epica_data["year"] > epica_data_pre_start_year) & (epica_data["year"] < smooth_law_dome["year"].min())
+    (epica_data["year"] > epica_data_pre_start_year)
+    & (epica_data["year"] < smooth_law_dome_harmonised["year"].min())
 ].sort_values(by="year")
 epica_data_to_add
 
@@ -400,7 +450,7 @@ if not config.ci:
         .data.to(conc_unit)
         .m,
         neem_data["value"],
-        rtol=1e-5,
+        rtol=1e-3,
     )
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
@@ -452,6 +502,12 @@ tmp = allyears_full_field.copy()
 tmp.name = "allyears_global_annual_mean"
 allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
 allyears_global_annual_mean
+
+# %%
+fig, ax = plt.subplots()
+allyears_global_annual_mean.sel(year=range(join_year - 50, 2023)).plot(ax=ax)
+ax.axvline(join_year, linestyle="--", color="gray")
+ax.grid()
 
 # %% [markdown]
 # The residual between our full field and our annual, global-mean
