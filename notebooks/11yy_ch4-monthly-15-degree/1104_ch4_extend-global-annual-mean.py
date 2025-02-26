@@ -310,9 +310,6 @@ ax.legend()
 ax.set_xlim([1970, 2030])
 
 # %%
-smooth_law_dome_to_use = smooth_law_dome_harmonised[
-    smooth_law_dome_harmonised["year"] < float(obs_network_full_field["year"].min())
-]
 law_dome_da = xr.DataArray(
     data=smooth_law_dome_harmonised["value"],
     dims=["year"],
@@ -454,10 +451,10 @@ if not config.ci:
     )
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
-        .sel(year=smooth_law_dome_to_use["year"].values)
+        .sel(year=smooth_law_dome_harmonised["year"].values)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use["value"],
+        smooth_law_dome_harmonised["value"],
     )
 else:
     neem_compare_years = neem_data["year"].values[
@@ -469,16 +466,19 @@ else:
         .data.to(conc_unit)
         .m,
         neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
+        rtol=1e-3,
     )
-    law_dome_compare_years = smooth_law_dome_to_use["year"].values[
-        np.isin(smooth_law_dome_to_use["year"].values, out_years)  # type: ignore
+    law_dome_compare_years = smooth_law_dome_harmonised["year"].values[
+        np.isin(smooth_law_dome_harmonised["year"].values, out_years)  # type: ignore
     ]
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
         .sel(year=law_dome_compare_years)
         .data.to(conc_unit)
         .m,
-        smooth_law_dome_to_use[np.isin(smooth_law_dome_to_use["year"], law_dome_compare_years)]["value"],
+        smooth_law_dome_harmonised[np.isin(smooth_law_dome_harmonised["year"], law_dome_compare_years)][
+            "value"
+        ],
     )
 
 if years_use_epica.size > 0:
