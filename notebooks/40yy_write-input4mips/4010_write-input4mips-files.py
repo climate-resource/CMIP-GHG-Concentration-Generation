@@ -505,11 +505,10 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
             input4mips_ds.metadata,
             product="derived",
             comment=(
-                "This is an interim dataset, do not use in production."
                 "Data compiled by Climate Resource, based on science by many others "
-                "(see 'references*' attributes)). "
+                "(see 'references*' attributes). "
                 "Financial support has been provided by the CMIP International Project Office (CMIP IPO), "
-                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd. "
+                "which is hosted by the European Space Agency, with staff provided by HE Space Operations Ltd."
             ),
             doi=config.doi,
         )

@@ -212,7 +212,6 @@ source_info: dict[str, SourceInfo] = {
         doi="https://doi.org/10.1038/s43247-024-01946-y",
     ),
     "Ghosh et al., 2023": SourceInfo(
-        # Effectively AGAGE data
         licence="Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]",
         reference=(
             "Ghosh, S., Toyoda, S., Buizert, C., Etheridge, D. M., "
@@ -223,6 +222,15 @@ source_info: dict[str, SourceInfo] = {
             "https://doi.org/10.1029/2022JD038281"
         ),
         doi="https://doi.org/10.15784/601693",
+    ),
+    "Menking et al., 2025": SourceInfo(
+        licence="Author supplied",
+        reference=(
+            "Menking, J. A., Etheridge, D., Langenfelds, R., Trudinger, C., "
+            "Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in prep.). "
+            "Filling gaps and reducing uncertainty in existing Law Dome ice core records."
+        ),
+        doi="author-supplied.invalid",
     ),
 }
 
@@ -344,6 +352,9 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
 
                 elif "Ghosh" in input_data_node:
                     dependency = "Ghosh et al., 2023"
+
+                elif "Menking" in input_data_node:
+                    dependency = "Menking et al., 2025"
 
                 else:
                     raise NotImplementedError(input_data_node)

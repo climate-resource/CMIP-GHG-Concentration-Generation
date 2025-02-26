@@ -1,11 +1,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc11/gm/vYYYYMMDD/cfc11_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_cfc11_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -50,11 +49,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc11/gnz/vYYYYMMDD/cfc11_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_cfc11_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -99,11 +97,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc11/gr1z/vYYYYMMDD/cfc11_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_cfc11_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -148,11 +145,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc12/gm/vYYYYMMDD/cfc12_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_cfc12_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -197,11 +193,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc12/gnz/vYYYYMMDD/cfc12_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_cfc12_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -246,11 +241,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/cfc12/gr1z/vYYYYMMDD/cfc12_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_cfc12_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -295,11 +289,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gm/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_methane_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -354,11 +347,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gnz/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_methane_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -413,11 +405,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/ch4/gr1z/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_methane_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -472,11 +463,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/co2/gm/vYYYYMMDD/co2_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_carbon_dioxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -516,11 +506,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/co2/gnz/vYYYYMMDD/co2_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_carbon_dioxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -560,11 +549,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/co2/gr1z/vYYYYMMDD/co2_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_carbon_dioxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -604,11 +592,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc134a/gm/vYYYYMMDD/hfc134a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_hfc134a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -651,11 +638,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc134a/gnz/vYYYYMMDD/hfc134a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_hfc134a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -698,11 +684,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc134a/gr1z/vYYYYMMDD/hfc134a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_hfc134a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -745,11 +730,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gm/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_hfc152a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -792,11 +776,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gnz/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_hfc152a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -839,11 +822,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/hfc152a/gr1z/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_hfc152a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -886,11 +868,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/n2o/gm/vYYYYMMDD/n2o_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_nitrous_oxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -912,19 +893,19 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- Prinn et al., Earth Syst.
-    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al.,
-    Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.org/10.5194/essd-10-985-2018
+  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
+    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
+    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
+    et al., Earth Syst. Sci. Data 2018'
+  references_dois: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- Law Dome
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
+    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -933,11 +914,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/n2o/gnz/vYYYYMMDD/n2o_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_nitrous_oxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -959,19 +939,19 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- Prinn et al., Earth Syst.
-    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al.,
-    Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.org/10.5194/essd-10-985-2018
+  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
+    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
+    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
+    et al., Earth Syst. Sci. Data 2018'
+  references_dois: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- Law Dome
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
+    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -980,11 +960,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/n2o/gr1z/vYYYYMMDD/n2o_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_nitrous_oxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1006,19 +985,19 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- Prinn et al., Earth Syst.
-    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al.,
-    Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.org/10.5194/essd-10-985-2018
+  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
+    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
+    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
+    et al., Earth Syst. Sci. Data 2018'
+  references_dois: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- Law Dome
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
+    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1027,11 +1006,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/sf6/gm/vYYYYMMDD/sf6_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_175001-202212.nc__mole_fraction_of_sulfur_hexafluoride_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1070,11 +1048,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/sf6/gnz/vYYYYMMDD/sf6_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_175001-202212.nc__mole_fraction_of_sulfur_hexafluoride_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1113,11 +1090,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/mon/sf6/gr1z/vYYYYMMDD/sf6_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_175001-202212.nc__mole_fraction_of_sulfur_hexafluoride_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1156,11 +1132,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc11/gm/vYYYYMMDD/cfc11_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_cfc11_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1205,11 +1180,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc11/gr1z/vYYYYMMDD/cfc11_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_cfc11_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1254,11 +1228,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc12/gm/vYYYYMMDD/cfc12_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_cfc12_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1303,11 +1276,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/cfc12/gr1z/vYYYYMMDD/cfc12_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_cfc12_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1352,11 +1324,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/ch4/gm/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_methane_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1411,11 +1382,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/ch4/gr1z/vYYYYMMDD/ch4_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_methane_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1470,11 +1440,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/co2/gm/vYYYYMMDD/co2_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_carbon_dioxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1514,11 +1483,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/co2/gr1z/vYYYYMMDD/co2_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_carbon_dioxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1558,11 +1526,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc134a/gm/vYYYYMMDD/hfc134a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_hfc134a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1605,11 +1572,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc134a/gr1z/vYYYYMMDD/hfc134a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_hfc134a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1652,11 +1618,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc152a/gm/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_hfc152a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1699,11 +1664,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/hfc152a/gr1z/vYYYYMMDD/hfc152a_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_hfc152a_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1746,11 +1710,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/n2o/gm/vYYYYMMDD/n2o_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_nitrous_oxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1772,19 +1735,19 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- Prinn et al., Earth Syst.
-    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al.,
-    Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.org/10.5194/essd-10-985-2018
+  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
+    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
+    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
+    et al., Earth Syst. Sci. Data 2018'
+  references_dois: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- Law Dome
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
+    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1793,11 +1756,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/n2o/gr1z/vYYYYMMDD/n2o_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_nitrous_oxide_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1819,19 +1781,19 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
-    2017. --- Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
-    (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
-    Collection. https://doi.org/10.25919/5bfe29ff807fb --- Prinn et al., Earth Syst.
-    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al.,
-    Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.org/10.5194/essd-10-985-2018
+  references: 'https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
+    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
+    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
+    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
+    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
+    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
+    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
+    et al., Earth Syst. Sci. Data 2018'
+  references_dois: https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: NOAA HATS --- Meinshausen et al., GMD (2017) --- Law Dome
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: NOAA HATS --- Menking et al., 2025 --- Meinshausen et al.,
+    GMD (2017) --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1840,11 +1802,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/sf6/gm/vYYYYMMDD/sf6_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gm_1750-2022.nc__mole_fraction_of_sulfur_hexafluoride_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
@@ -1883,11 +1844,10 @@
 ? test-nightly-workflow/data/processed/esgf-ready/input4MIPs/CMIP6Plus/CMIP/CR/CR-CMIP-testing/atmos/yr/sf6/gr1z/vYYYYMMDD/sf6_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gr1z_1750-2022.nc__mole_fraction_of_sulfur_hexafluoride_in_air
 : Conventions: CF-1.7
   activity_id: input4MIPs
-  comment: 'This is an interim dataset, do not use in production.Data compiled by
-    Climate Resource, based on science by many others (see ''references*'' attributes)).
-    Financial support has been provided by the CMIP International Project Office (CMIP
-    IPO), which is hosted by the European Space Agency, with staff provided by HE
-    Space Operations Ltd. '
+  comment: Data compiled by Climate Resource, based on science by many others (see
+    'references*' attributes). Financial support has been provided by the CMIP International
+    Project Office (CMIP IPO), which is hosted by the European Space Agency, with
+    staff provided by HE Space Operations Ltd.
   contact: zebedee.nicholls@climate-resource.com;malte.meinshausen@climate-resource.com
   creation_date: creation_date
   dataset_category: GHGConcentrations
