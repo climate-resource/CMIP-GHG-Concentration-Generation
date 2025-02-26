@@ -328,10 +328,17 @@ allyears_full_field.plot(hue="lat")
 allyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(allyears_full_field)
 
 # %%
-np.testing.assert_allclose(
-    allyears_global_annual_mean.sel(year=menking_et_al_harmonised["year"].values).data.to(conc_unit).m,
-    menking_et_al_harmonised["value"],
-)
+if not config.ci:
+    np.testing.assert_allclose(
+        allyears_global_annual_mean.sel(year=menking_et_al_harmonised["year"].values).data.to(conc_unit).m,
+        menking_et_al_harmonised["value"],
+    )
+else:
+    compare_years = np.intersect1d(allyears_global_annual_mean.year, menking_et_al_harmonised["year"])
+    np.testing.assert_allclose(
+        allyears_global_annual_mean.sel(year=compare_years).data.to(conc_unit).m,
+        menking_et_al_harmonised[menking_et_al_harmonised["year"].isin(compare_years)]["value"],
+    )
 
 # %%
 if not config.ci:
