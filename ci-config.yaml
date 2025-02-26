@@ -331,7 +331,21 @@ retrieve_and_process_neem_data:
   processed_data_with_loc_file: data/interim/neem/neem_with_location.csv
   raw_dir: data/raw/neem
   step_config_id: only
-retrieve_and_process_scripps_data: []
+retrieve_and_process_scripps_data:
+- merged_ice_core_data:
+    known_hash: 1d9a64819477180f48426e3b23b221b59801d13dfde594b23ee12784a470b340
+    url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
+  merged_ice_core_data_processed_data_file: data/interim/mauna_loa/merged_ice_core.csv
+  processed_data_with_loc_file: data/interim/mauna_loa/stations_with_loc.csv
+  raw_dir: data/raw/mauna_loa
+  station_data:
+  - lat: 71.3 N
+    lon: 156.6 W
+    station_code: ptb
+    url_source:
+      known_hash: 0b75a1e45bbc4157037adab240cc4560e1bb149da256b9424ff94c7dacb9084a
+      url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/merged_in_situ_and_flask/monthly/monthly_merge_co2_ptb.csv
+  step_config_id: only
 retrieve_and_process_velders_et_al_2022_data:
 - download_complete_file: data/raw/velders-et-al-2022/download.complete
   processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv

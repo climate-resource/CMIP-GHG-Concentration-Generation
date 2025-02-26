@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -75,11 +75,15 @@ merged_ice_core = pd.read_csv(
 )
 merged_ice_core.columns = [v.strip() for v in merged_ice_core.columns]  # type: ignore
 merged_ice_core["unit"] = "ppm"
-merged_ice_core = merged_ice_core.rename({"sample_date": "time"}, axis="columns")
+merged_ice_core = merged_ice_core.rename({"sample_date": "time", "co2": "value"}, axis="columns")
+merged_ice_core["gas"] = "co2"
 merged_ice_core
 
 # %%
-merged_ice_core.set_index("time")["co2"].plot()
+merged_ice_core["time"].unique()
+
+# %%
+merged_ice_core.set_index("time")["value"].plot()
 
 # %% [markdown]
 # ### Save

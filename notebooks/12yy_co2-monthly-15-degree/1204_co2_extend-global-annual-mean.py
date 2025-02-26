@@ -81,6 +81,10 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
+config_retrieve_and_process_scripps_data = get_config_for_step_id(
+    config=config, step="retrieve_and_process_scripps_data", step_config_id="only"
+)
+
 config_retrieve_and_process_menking_et_al_2025_data = get_config_for_step_id(
     config=config, step="retrieve_and_process_menking_et_al_2025_data", step_config_id="only"
 )
@@ -133,6 +137,12 @@ lat_grad_eofs_allyears = xr.load_dataset(
     config_step.latitudinal_gradient_allyears_pcs_eofs_file
 ).pint.quantify()
 lat_grad_eofs_allyears
+
+# %%
+mauna_loa_merged = pd.read_csv(
+    config_retrieve_and_process_scripps_data.merged_ice_core_data_processed_data_file
+)
+mauna_loa_merged
 
 # %%
 menking_et_al = pd.read_csv(config_retrieve_and_process_menking_et_al_2025_data.processed_data_file)
@@ -206,8 +216,99 @@ allyears_latitudinal_gradient
 obs_network_full_field = allyears_latitudinal_gradient + global_annual_mean_obs_network
 obs_network_full_field
 
+# %% [markdown]
+# #### Mauna Loa
+#
+# We start by adding in data from the Mauna Loa - Law Dome merged ice core record.
+# We use this data from the first full year of Mauna Loa data.
+
 # %%
-assert False, "Mauna Loa in here"
+mauna_loa_start = 1959
+
+# %% [markdown]
+# ##### Harmonise
+#
+# Firstly, we harmonise the Mauna Loa data with the observational record
+# to avoid jumps as we transition between the two.
+
+# %%
+join_year = int(obs_network_years.min())
+join_year
+
+# %%
+mauna_loa_use_years = np.arange(
+    mauna_loa_start + 0.5, join_year + 1
+)  # keep an extra year for harmonisation to work
+mauna_loa_use_years
+
+# %%
+mauna_loa_law_dome_merged_to_use = mauna_loa_merged[mauna_loa_merged["time"].isin(mauna_loa_use_years)]
+if mauna_loa_law_dome_merged_to_use.shape[0] != mauna_loa_use_years.size:
+    raise AssertionError
+
+mauna_loa_law_dome_merged_to_use = mauna_loa_law_dome_merged_to_use.rename({"time": "year"}, axis="columns")
+mauna_loa_law_dome_merged_to_use["year"] = mauna_loa_law_dome_merged_to_use["year"].astype(int)
+mauna_loa_law_dome_merged_to_use
+
+# %%
+n_transition_years = 100
+
+# A better written harmonisation function wouldn't need this.
+tmp = pd.concat([mauna_loa_law_dome_merged_to_use.iloc[:1, :]] * n_transition_years)
+tmp["year"] = np.arange(mauna_loa_start - n_transition_years, mauna_loa_start)
+tmp["value"] = 0.0
+harmonise_helper = pd.concat([tmp, mauna_loa_law_dome_merged_to_use])
+
+mauna_loa_harmonised = (
+    local.harmonisation.get_harmonised_timeseries(
+        ints=harmonise_helper.set_index(["year", "unit", "gas"])["value"].unstack("year"),
+        harm_units=conc_unit,
+        harm_value=float(
+            # Assume that Mauna Loa spline is roughly global-mean
+            global_annual_mean_obs_network.pint.to(conc_unit).sel(year=join_year).data.m
+        ),
+        harm_year=join_year,
+        n_transition_years=n_transition_years,
+    )
+    .stack()
+    .to_frame("value")
+    .reset_index()
+)
+mauna_loa_harmonised = mauna_loa_harmonised[
+    mauna_loa_harmonised["year"].isin(mauna_loa_law_dome_merged_to_use["year"])
+]
+mauna_loa_harmonised
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network")
+ax.plot(
+    mauna_loa_merged["time"],
+    mauna_loa_merged["value"],
+    label="Mauna Loa Law Dome merged",
+)
+ax.plot(
+    mauna_loa_harmonised["year"],
+    mauna_loa_harmonised["value"],
+    label="Mauna Loa Law Dome merged, harmonised",
+    alpha=0.4,
+)
+ax.legend()
+ax.set_xlim([1920, 2030])
+
+# %%
+ml_ld_da = xr.DataArray(
+    data=mauna_loa_harmonised["value"],
+    dims=["year"],
+    coords=dict(year=mauna_loa_harmonised["year"]),
+    attrs=dict(units=conc_unit),
+).pint.quantify()
+ml_ld_da
+
+# %%
+mauna_loa_law_dome_merged_years_full_field = ml_ld_da + allyears_latitudinal_gradient
+mauna_loa_law_dome_merged_years_full_field
 
 # %% [markdown]
 # #### Menking et al., 2025
@@ -219,12 +320,12 @@ assert False, "Mauna Loa in here"
 # %% [markdown]
 # ##### Harmonise
 #
-# Firstly, we harmonise the Law Dome data with the observational record
+# We also harmonise the Menking et al. data with the observational record
 # to avoid jumps as we transition between the two.
 
 # %%
-join_year = int(obs_network_years.min())
-join_year
+join_year_menking = int(mauna_loa_law_dome_merged_years_full_field["year"].min())
+join_year_menking
 
 # %%
 menking_et_al_harmonised = (
@@ -232,12 +333,12 @@ menking_et_al_harmonised = (
         ints=menking_et_al.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
         harm_units=conc_unit,
         harm_value=float(
-            obs_network_full_field.sel(lat=menking_et_al_lat, method="nearest")
+            mauna_loa_law_dome_merged_years_full_field.sel(lat=menking_et_al_lat, method="nearest")
             .pint.to(conc_unit)
-            .sel(year=join_year)
+            .sel(year=join_year_menking)
             .data.m
         ),
-        harm_year=join_year,
+        harm_year=join_year_menking,
         n_transition_years=100,
     )
     .stack()
@@ -249,7 +350,9 @@ menking_et_al_harmonised
 # %%
 fig, ax = plt.subplots()
 
-obs_network_full_field.sel(lat=menking_et_al_lat, method="nearest").plot(ax=ax, label="Obs network")
+mauna_loa_law_dome_merged_years_full_field.sel(lat=menking_et_al_lat, method="nearest").plot(
+    ax=ax, label="Mauna Loa Law Dome merged full field"
+)
 ax.plot(
     menking_et_al["year"],
     menking_et_al["value"],
@@ -286,7 +389,10 @@ menking_et_al_years_full_field
 # #### Join back together
 
 # %%
-mostyears_full_field = xr.concat([menking_et_al_years_full_field, obs_network_full_field], "year")
+mostyears_full_field = xr.concat(
+    [menking_et_al_years_full_field, mauna_loa_law_dome_merged_years_full_field, obs_network_full_field],
+    "year",
+)
 
 mostyears_full_field
 
@@ -377,6 +483,16 @@ else:
     allyears_global_annual_mean = mostyears_global_annual_mean
 
 allyears_global_annual_mean
+
+# %%
+fig, ax = plt.subplots()
+
+global_annual_mean_obs_network.plot(ax=ax, label="Obs network", alpha=0.4)
+allyears_global_annual_mean.sel(year=range(1900, 2023 + 1)).plot(ax=ax, label="output", alpha=0.4)
+ax.axvline(join_year, linestyle="--", color="gray")
+ax.axvline(join_year_menking, linestyle="--", color="gray")
+
+ax.legend()
 
 # %% [markdown]
 # The residual between our full field and our annual, global-mean

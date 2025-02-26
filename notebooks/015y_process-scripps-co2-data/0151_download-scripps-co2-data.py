@@ -13,32 +13,33 @@
 # ---
 
 # %% [markdown]
-# # Scripps - download
+# # Droste et al., 2020 - download
 #
-# Download data from the [Scripps CO$_2$ program](https://scrippsco2.ucsd.edu/).
+# Download data from [Droste et al., 2020](https://doi.org/10.5194/acp-20-4787-2020).
 
 # %% [markdown]
 # ## Imports
 
 # %% editable=true slideshow={"slide_type": ""}
+import shutil
 from pathlib import Path
 
 import openscm_units
 import pint
 import pooch
-from pydoit_nb.checklist import generate_directory_checklist
+from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config import load_config_from_file
 
-# %%
+# %% editable=true slideshow={"slide_type": ""}
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Define branch this notebook belongs to
 
 # %% editable=true slideshow={"slide_type": ""}
-step: str = "retrieve_and_process_scripps_data"
+step: str = "retrieve_and_process_droste_et_al_2020_data"
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Parameters
@@ -54,36 +55,25 @@ step_config_id: str = "only"  # config ID to select for this branch
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
-# %% [markdown]
+# %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Action
 
-# %% [markdown]
-# ### Download merged ice core data
-#
-# We probably won't use this directly, but it is handy to have as a comparison point.
-
 # %%
-pooch.retrieve(
-    url=config_step.merged_ice_core_data.url,
-    known_hash=config_step.merged_ice_core_data.known_hash,
-    fname=config_step.merged_ice_core_data.url.split("/")[-1],
-    path=config_step.raw_dir,
+raw_data_files_l = pooch.retrieve(
+    url=config_step.zenodo_record.url,
+    known_hash=config_step.zenodo_record.known_hash,
+    processor=pooch.Unzip(members=["best-fits_CG_PFCs.csv", "best-fits_TAC_PFCs.csv"]),
     progressbar=True,
 )
+if isinstance(raw_data_files_l, Path):
+    raise TypeError
 
-# %% [markdown]
-# ### Download station data
+for raw_data_file in [Path(f) for f in raw_data_files_l]:
+    config_step.raw_dir.mkdir(parents=True, exist_ok=True)
+    out_file = config_step.raw_dir / raw_data_file.name
+    shutil.copyfile(raw_data_file, out_file)
 
-# %%
-for scripps_source in config_step.station_data:
-    outfile = pooch.retrieve(
-        url=scripps_source.url_source.url,
-        known_hash=scripps_source.url_source.known_hash,
-        fname=scripps_source.url_source.url.split("/")[-1],
-        path=config_step.raw_dir,
-        progressbar=True,
-    )
-    assert scripps_source.station_code in str(outfile)
+    print(out_file)
 
 # %%
-generate_directory_checklist(config_step.raw_dir)
+write_complete_file(config_step.download_complete_file)

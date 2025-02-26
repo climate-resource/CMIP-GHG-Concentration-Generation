@@ -35,8 +35,6 @@ class RetrieveProcessScrippsConfig:
     raw_dir: Path
     """
     Directory in which the raw data is saved
-
-    (Noting that we can't automatically download the CSIRO data)
     """
 
     processed_data_with_loc_file: Path

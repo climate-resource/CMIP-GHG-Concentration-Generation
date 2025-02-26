@@ -16,10 +16,6 @@
 # # NOAA - process in-situ
 #
 # Process data from NOAA's in-situ network.
-#
-# To-do's:
-#
-# - work out why MLO only starts in 1974 when https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html says it starts in 1958...
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Imports
