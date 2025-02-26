@@ -232,6 +232,17 @@ source_info: dict[str, SourceInfo] = {
         ),
         doi="author-supplied.invalid",
     ),
+    "Scripps": SourceInfo(
+        licence="CC BY 4.0",
+        reference=(
+            "C. D. Keeling, S. C. Piper, R. B. Bacastow, "
+            "M. Wahlen, T. P. Whorf, M. Heimann, and H. A. Meijer, "
+            "Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  "
+            "oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, "
+            "Scripps Institution of Oceanography, San Diego, 88 pages, 2001."
+        ),
+        doi="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+    ),
 }
 
 
@@ -329,6 +340,9 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
             elif "NEEM" in input_data_node and "download" in input_data_node:
                 dependency = "NEEM"
 
+            elif "Scripps" in input_data_node and "download" in input_data_node:
+                dependency = "Scripps"
+
             elif "process" in input_data_node:
                 if any(
                     v in input_data_node
@@ -342,6 +356,7 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
                         "Law Dome",
                         "Western",
                         "Droste",
+                        "Scripps",
                     )
                 ):
                     # Sources which have a download step then a process step
