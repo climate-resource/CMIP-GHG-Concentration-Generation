@@ -76,9 +76,9 @@ raw
 
 # %%
 clean_l = []
-for yr_col, value_col in (
-    ("Year (CE)", "CO2 (ppm)"),
-    ("Year (CE).1", "N2O (ppb)"),
+for yr_col, value_col, latitude in (
+    ("Year (CE)", "CO2 (ppm)", -66.0),  # roughly Law Dome latitude, near enough
+    ("Year (CE).1", "N2O (ppb)", 0.0),  # global-mean spline
 ):
     toks = value_col.split(" ")
     gas = toks[0].strip().lower()
@@ -87,6 +87,7 @@ for yr_col, value_col in (
     tmp = raw[[yr_col, value_col]].rename({yr_col: "year", value_col: "value"}, axis="columns")
     tmp["unit"] = unit
     tmp["gas"] = gas
+    tmp["latitude"] = latitude
 
     clean_l.append(tmp)
 
