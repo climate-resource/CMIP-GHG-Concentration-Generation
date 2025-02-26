@@ -18,9 +18,10 @@
 echo "RUN_ID=${RUN_ID}"
 echo "GAS=${GAS}"
 
-if [ "$RUN_ID" == "dev-test-run" ]; then
+# Need to remake this, no matter what we're doing
+rm -f dev-config-absolute.yaml && make dev-config-absolute.yaml
 
-    rm -f dev-config-absolute.yaml && make dev-config-absolute.yaml
+if [ "$RUN_ID" == "dev-test-run" ]; then
 
     doit_config_file="dev-config-absolute.yaml"
 
@@ -48,7 +49,7 @@ if [ "$RUN_ID" == "dev-test-run" ]; then
 
 else
 
-    pixi run python scripts/write-run-config.py
+    pixi run -e all-dev python scripts/write-run-config.py
 
     doit_config_file=$RUN_ID-config.yaml
 
@@ -65,6 +66,9 @@ else
 
         DOIT_CONFIGURATION_FILE=$doit_config_file DOIT_RUN_ID="$RUN_ID" \
             pixi run doit run --verbosity=2 -n 4
+
+        # Upload to zenodo
+        pixi run python scripts/upload-bundle-to-zenodo.py "output-bundles/${RUN_ID}"
 
     else
 

@@ -44,13 +44,17 @@
     Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
     Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
     al., Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
     et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
     ALE
+  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
+    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -102,13 +106,17 @@
     Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
     Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
     al., Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
     et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
     ALE
+  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
+    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -160,13 +168,17 @@
     Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
     Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
     al., Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
     et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
     ALE
+  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
+    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -208,11 +220,13 @@
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
     GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -254,11 +268,13 @@
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
     GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -300,11 +316,13 @@
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
     GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -346,6 +364,8 @@
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa ---
     AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -387,6 +407,8 @@
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa ---
     AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -428,6 +450,8 @@
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa ---
     AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -479,13 +503,17 @@
     Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
     Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
     al., Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
     et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
     ALE
+  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
+    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -537,13 +565,17 @@
     Nature, 444, 195-198, https://doi.org/10.1038/nature05301 --- Prinn et al., Earth
     Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et
     al., Earth Syst. Sci. Data 2018'
-  references_dois: https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_dois: No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: NOAA surface flask --- NOAA in-situ --- NEEM --- Meinshausen
     et al., GMD (2017) --- Law Dome --- EPICA --- AGAGE gc-md --- AGAGE GAGE --- AGAGE
     ALE
+  references_urls: https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
+    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -585,11 +617,13 @@
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
     GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -631,11 +665,13 @@
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Velders et al., 2022 --- NOAA HATS --- Meinshausen et al.,
     GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://gml.noaa.gov/hats/
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -677,6 +713,8 @@
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa ---
     AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -718,6 +756,8 @@
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa ---
     AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP

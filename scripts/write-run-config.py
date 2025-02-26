@@ -12,6 +12,8 @@ import openscm_units
 import pint
 from attrs import evolve
 
+from local.zenodo import get_zenodo_doi
+
 pint.set_application_registry(openscm_units.unit_registry)
 
 
@@ -24,11 +26,18 @@ if __name__ == "__main__":
 
     ROOT_DIR_OUTPUT: Path = Path(__file__).parent.parent.absolute() / "output-bundles"
 
-    # zenodo_doi = get_zenodo_doi("13365838")
-    # assert (
-    #     False
-    # ), "Zenodo DOI is hard-coded while we don't have any published versions"
-    zenodo_doi = "10.5281/zenodo.13365838"
+    known_zenodo_doi = None
+    known_zenodo_doi = "https://doi.org/10.5281/zenodo.14892947"
+    if known_zenodo_doi is None:
+        # TODO: push this up into openscm-zenodo
+        # so other users don't have my experience.
+        zenodo_doi = get_zenodo_doi(any_deposition_id="14892938")
+
+        msg = f"Go to Zenodo and press 'reserve DOI'. Expected DOI: https://doi.org/{zenodo_doi}"
+        raise ValueError(msg)
+
+    else:
+        zenodo_doi = known_zenodo_doi
 
     DEV_FILE: Path = Path("dev-config.yaml")
     with open(DEV_FILE) as fh:
@@ -39,7 +48,7 @@ if __name__ == "__main__":
         evolve(
             v,
             input4mips_cvs_source_id=f"CR-CMIP-{VERSION.replace('.', '-')}",
-            input4mips_cvs_cv_source="gh:cr-cmip-0-4-0",
+            input4mips_cvs_cv_source="gh:cr-cmip-0-5-0",
         )
         for v in write_input4mips_old
     ]

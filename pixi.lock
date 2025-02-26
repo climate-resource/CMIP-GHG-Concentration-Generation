@@ -411,7 +411,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -842,7 +842,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -1258,7 +1258,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -1674,7 +1674,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d2/1d/1b658dbd2b9fa9c4c9f32accbfc0205d532c8c6194dc0f2a4c0428e7128a/nodeenv-1.9.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/10/f9/d713f7d1dcea92031bfa9d0a26426033b02dd260cd550b995be80abe9097/pandas_stubs-2.2.2.240603-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
@@ -2089,7 +2089,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
@@ -2482,7 +2482,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
@@ -2860,7 +2860,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
@@ -3238,7 +3238,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ee/21/2c957d52389339634cef549df5d2004cc0d452062dd97a24f784899c1068/primap2-0.11.1-py3-none-any.whl
@@ -3640,7 +3640,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -4040,7 +4040,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -4425,7 +4425,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -4810,7 +4810,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/90/a3/285eb1e79dbbd8e9513a3bb1bb2bb3d4c7c22c8a92efb8449baface0b864/jupytext-1.16.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ef/f7/8a4dcea720a581e69ac8c5a38524baf0e3e2bb5f3819a9ff661464fe7d10/mdit_py_plugins-0.4.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/1c/68b6616f798e639b0621a6c70bd131f6d37c5fc46fe73762f09ded4268c5/openscm_units-0.6.1-py3-none-any.whl
-      - pypi: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/61/55/83ce641bc61a70cc0721af6f50154ecaaccedfbdbc27366c1755a2a34972/papermill-2.6.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/95/b0/2dcc0f58caf8d3bfc16df1214922fa826bbf7526145383872f257b903375/Pint_Pandas-0.6.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/88/5f/e351af9a41f866ac3f1fac4ca0613908d9a41741cfcf2228f4ad853b697d/pluggy-1.5.0-py3-none-any.whl
@@ -17738,14 +17738,14 @@ packages:
   name: local
   version: 0.3.0
   path: .
-  sha256: bebf20f0a1bc96cf4350c5c8425074c8b30e095dd796f397db6e8a05e2fc8317
+  sha256: b7a2ef880ba37c3970a58de808b64bc8b5133e5a87eb5c13d8686bb6e89c8dad
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1
   - pydoit-nb>=0.3.4
   - carpet-concentrations>=0.5.1
   - scmdata>=0.17.0
-  - openscm-zenodo>=0.3.1
+  - openscm-zenodo>=0.5.0
   - python-dotenv>=1.0.1
   - pre-commit ; extra == 'dev'
   - mypy ; extra == 'dev'
@@ -19370,33 +19370,33 @@ packages:
   requires_python: '>=3.9,<4.0'
 - kind: pypi
   name: openscm-zenodo
-  version: 0.3.1
-  url: https://files.pythonhosted.org/packages/1c/ce/7041247d11a2af75560addec25c315a3fd3e82628a05948675aad8874896/openscm_zenodo-0.3.1-py3-none-any.whl
-  sha256: 033c2b9e0b0e3316f1caadbb3efab6344e80cca458a31eb40c6e22fd3a937eb4
+  version: 0.5.0
+  url: https://files.pythonhosted.org/packages/17/08/97926b870ec546106df82f8554d01208bfa19f17da574af851fd8818761f/openscm_zenodo-0.5.0-py3-none-any.whl
+  sha256: 27c847a699f928c324e24d5b0896fb432901061aa7302d6bc45cf657aee97906
   requires_dist:
-  - requests
-  - tqdm
-  - typer
-  - loguru
-  - attrs
-  - attrs==24.2.0 ; extra == 'locked'
-  - certifi==2024.8.30 ; extra == 'locked'
-  - charset-normalizer==3.3.2 ; extra == 'locked'
-  - click==8.1.7 ; extra == 'locked'
+  - attrs>=22.0
+  - loguru>=0.5
+  - requests>=2.26
+  - tqdm>=4.50
+  - typer>=0.10
+  - attrs==24.3.0 ; extra == 'locked'
+  - certifi==2025.1.31 ; extra == 'locked'
+  - charset-normalizer==3.4.1 ; extra == 'locked'
+  - click==8.1.8 ; extra == 'locked'
   - colorama==0.4.6 ; extra == 'locked'
   - idna==3.10 ; extra == 'locked'
-  - loguru==0.7.2 ; extra == 'locked'
+  - loguru==0.7.3 ; extra == 'locked'
   - markdown-it-py==3.0.0 ; extra == 'locked'
   - mdurl==0.1.2 ; extra == 'locked'
-  - pygments==2.18.0 ; extra == 'locked'
+  - pygments==2.19.1 ; extra == 'locked'
   - requests==2.32.3 ; extra == 'locked'
-  - rich==13.8.1 ; extra == 'locked'
+  - rich==13.9.4 ; extra == 'locked'
   - shellingham==1.5.4 ; extra == 'locked'
-  - tqdm==4.66.5 ; extra == 'locked'
-  - typer==0.12.5 ; extra == 'locked'
+  - tqdm==4.67.1 ; extra == 'locked'
+  - typer==0.15.1 ; extra == 'locked'
   - typing-extensions==4.12.2 ; extra == 'locked'
-  - urllib3==2.2.3 ; extra == 'locked'
-  - win32-setctime==1.1.0 ; sys_platform == 'win32' and extra == 'locked'
+  - urllib3==2.3.0 ; extra == 'locked'
+  - win32-setctime==1.2.0 ; sys_platform == 'win32' and extra == 'locked'
   requires_python: '>=3.9'
 - kind: conda
   name: openssl

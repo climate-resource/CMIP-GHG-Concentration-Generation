@@ -77,7 +77,9 @@ def get_dependency_dot_files(
 class SourceInfo:
     licence: str
     reference: str
-    doi: str
+    url: str
+    resource_type: str
+    doi: str | None = None
 
 
 source_info: dict[str, SourceInfo] = {
@@ -98,7 +100,9 @@ source_info: dict[str, SourceInfo] = {
             reference="Prinn et al., Earth Syst. Sci. Data 2018",
             # Actually incorrect, should be using the individual station DOIs.
             # Do that next time.
+            url="https://doi.org/10.5194/essd-10-985-2018",
             doi="https://doi.org/10.5194/essd-10-985-2018",
+            resource_type="dataset",
         )
         for key in ("AGAGE gc-ms-medusa", "AGAGE gc-ms", "AGAGE gc-md", "AGAGE GAGE", "AGAGE ALE")
     },
@@ -108,16 +112,18 @@ source_info: dict[str, SourceInfo] = {
         licence="Free for scientific use, offer co-authorship. See https://gml.noaa.gov/hats/hats_datause.html",
         # Incorrect, will need to work out how to navigate the NOAA website properly
         reference="https://gml.noaa.gov/hats/",
-        # Obviously incorrect, but better than zero
-        doi="https://gml.noaa.gov/hats/",
+        doi=None,
+        url="https://gml.noaa.gov/hats/",
+        resource_type="dataset",
     ),
     **{
         key: SourceInfo(
             licence="Free for scientific use, offer co-authorship. See https://gml.noaa.gov/ccgg/data/datause.html",
             # Incorrect, will need to work out how to navigate the NOAA website properly
             reference="https://gml.noaa.gov/ccgg",
-            # Obviously incorrect, but better than zero
-            doi="https://gml.noaa.gov/ccgg",
+            doi=None,
+            url="https://gml.noaa.gov/hats/",
+            resource_type="dataset",
         )
         for key in ("NOAA surface flask", "NOAA in-situ")
     },
@@ -133,7 +139,9 @@ source_info: dict[str, SourceInfo] = {
             "(pp. 509); WMO: Geneva, 2022."
         ),
         # Are there proper DOIs?
-        doi="https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf",
+        doi=None,
+        url="https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf",
+        resource_type="publication-book",
     ),
     "EPICA": SourceInfo(
         licence="CC BY 3.0",
@@ -145,6 +153,8 @@ source_info: dict[str, SourceInfo] = {
             "Nature, 444, 195-198, https://doi.org/10.1038/nature05301"
         ),
         doi="https://doi.pangaea.de/10.1594/PANGAEA.552232",
+        url="https://doi.pangaea.de/10.1594/PANGAEA.552232",
+        resource_type="dataset",
     ),
     "NEEM": SourceInfo(
         licence="CC BY 4.0",
@@ -159,6 +169,8 @@ source_info: dict[str, SourceInfo] = {
             "https://doi.org/10.1016/j.epsl.2013.02.034"
         ),
         doi="https://doi.pangaea.de/10.1594/PANGAEA.899039",
+        url="https://doi.pangaea.de/10.1594/PANGAEA.899039",
+        resource_type="dataset",
     ),
     "Law Dome": SourceInfo(
         licence="CC BY 4.0",
@@ -168,6 +180,8 @@ source_info: dict[str, SourceInfo] = {
             "Data Collection. https://doi.org/10.25919/5bfe29ff807fb"
         ),
         doi="https://doi.org/10.25919/5bfe29ff807fb",
+        url="https://doi.org/10.25919/5bfe29ff807fb",
+        resource_type="dataset",
     ),
     "Western et al., 2024": SourceInfo(
         licence="CC BY 4.0",  # https://zenodo.org/records/10782689
@@ -178,6 +192,8 @@ source_info: dict[str, SourceInfo] = {
             "Nat. Clim. Chang. 14, 805-807 (2024)."
         ),
         doi="https://doi.org/10.1038/s41558-024-02038-7",
+        url="https://doi.org/10.1038/s41558-024-02038-7",
+        resource_type="publication-article",
     ),
     "Velders et al., 2022": SourceInfo(
         licence="Other (Open)",  # https://zenodo.org/records/6520707
@@ -190,6 +206,8 @@ source_info: dict[str, SourceInfo] = {
             "https://doi.org/10.5194/acp-22-6087-2022, 2022."
         ),
         doi="https://doi.org/10.5194/acp-22-6087-2022",
+        url="https://doi.org/10.5194/acp-22-6087-2022",
+        resource_type="publication-article",
     ),
     "Droste et al., 2020": SourceInfo(
         licence="CC BY 4.0",  # https://zenodo.org/records/3519317
@@ -200,6 +218,8 @@ source_info: dict[str, SourceInfo] = {
             "Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020."
         ),
         doi="https://doi.org/10.5194/acp-20-4787-2020",
+        url="https://doi.org/10.5194/acp-20-4787-2020",
+        resource_type="publication-article",
     ),
     "Adam et al., 2024": SourceInfo(
         # Effectively AGAGE data
@@ -210,6 +230,8 @@ source_info: dict[str, SourceInfo] = {
             "Commun Earth Environ 5, 783 (2024)."
         ),
         doi="https://doi.org/10.1038/s43247-024-01946-y",
+        url="https://doi.org/10.1038/s43247-024-01946-y",
+        resource_type="publication-article",
     ),
     "Ghosh et al., 2023": SourceInfo(
         licence="Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]",
@@ -222,6 +244,8 @@ source_info: dict[str, SourceInfo] = {
             "https://doi.org/10.1029/2022JD038281"
         ),
         doi="https://doi.org/10.15784/601693",
+        url="https://doi.org/10.15784/601693",
+        resource_type="publication-article",
     ),
     "Menking et al., 2025": SourceInfo(
         licence="Author supplied",
@@ -230,7 +254,9 @@ source_info: dict[str, SourceInfo] = {
             "Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in prep.). "
             "Filling gaps and reducing uncertainty in existing Law Dome ice core records."
         ),
-        doi="author-supplied.invalid",
+        doi=None,
+        url="author-supplied.invalid",
+        resource_type="publication-article",
     ),
     "Scripps": SourceInfo(
         licence="CC BY 4.0",
@@ -241,7 +267,9 @@ source_info: dict[str, SourceInfo] = {
             "oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, "
             "Scripps Institution of Oceanography, San Diego, 88 pages, 2001."
         ),
-        doi="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+        doi=None,
+        url="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+        resource_type="publication-article",
     ),
 }
 
@@ -252,7 +280,9 @@ class DependencyInfoSource:
     source: str
     licence: str
     reference: str
-    doi: str
+    url: str
+    resource_type: str
+    doi: str | None = None
 
 
 @define
@@ -382,7 +412,9 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
                 source=dependency,
                 licence=source_info[dependency].licence,
                 reference=source_info[dependency].reference,
+                url=source_info[dependency].url,
                 doi=source_info[dependency].doi,
+                resource_type=source_info[dependency].resource_type,
             )
             dependency_info_l.append(di)
 
