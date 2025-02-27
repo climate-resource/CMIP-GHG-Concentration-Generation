@@ -125,13 +125,23 @@ for gas, gdf in pdf.groupby("gas"):
 # Only use the InvEF inversion and the global-mean values in further processing (for now?).
 
 # %%
-clean_incl_gm
-
-# %%
-out = clean_incl_gm[
+out_start_year = clean_incl_gm[
     (clean_incl_gm["hemisphere_id"] == "global-mean") & (clean_incl_gm["inversion_method"] == "InvEF")
 ]
+out_start_year
+
+# %%
+helper = out_start_year.set_index(out_start_year.columns.difference(["value"]).tolist()).unstack("year")
+out = (
+    ((helper + helper.shift(periods=-1, axis="columns")) / 2.0)
+    .dropna(axis="columns")
+    .stack("year", future_stack=True)
+    .reset_index()
+)
 out
+
+# %% [markdown]
+# Trudinger et al. values are start of year, but we want mid-year.
 
 # %% [markdown]
 # ## Save
