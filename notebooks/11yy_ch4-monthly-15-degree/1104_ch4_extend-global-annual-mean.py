@@ -273,9 +273,9 @@ join_year
 
 # %%
 smooth_law_dome_harmonised = (
-    local.harmonisation.get_harmonised_timeseries(
+    local.harmonisation.get_harmonised_timeseries(  # type: ignore
         ints=smooth_law_dome.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
-        harm_units=conc_unit,
+        harm_units=conc_unit,  # type: ignore
         harm_value=float(
             obs_network_full_field.sel(lat=law_dome_lat, method="nearest")
             .pint.to(conc_unit)
@@ -307,7 +307,7 @@ ax.plot(
     alpha=0.4,
 )
 ax.legend()
-ax.set_xlim([1970, 2030])
+ax.set_xlim((1970, 2030))
 
 # %%
 law_dome_da = xr.DataArray(
@@ -505,7 +505,7 @@ allyears_global_annual_mean
 
 # %%
 fig, ax = plt.subplots()
-allyears_global_annual_mean.sel(year=range(join_year - 50, 2023)).plot(ax=ax)
+allyears_global_annual_mean.sel(year=range(join_year - 50, 2023)).plot(ax=ax)  # type: ignore
 ax.axvline(join_year, linestyle="--", color="gray")
 ax.grid()
 

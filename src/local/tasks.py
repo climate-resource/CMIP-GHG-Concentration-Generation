@@ -139,8 +139,10 @@ def copy_readme_h(  # noqa: PLR0913
         `config_file_raw` is an absolute path. It should always be a relative
         path to ensure portability.
     """
-    if get_pydoit_nb_run_command is None:
-        get_pydoit_nb_run_command = get_pydoit_nb_run_command_default
+    if get_pydoit_nb_run_command is not None:
+        raise ValueError(get_pydoit_nb_run_command)
+
+    get_pydoit_nb_run_command_use = get_pydoit_nb_run_command_default
 
     if config_file_raw.is_absolute():
         msg = f"`config_file_raw` must be a relative path, received: {config_file_raw}"
@@ -170,7 +172,7 @@ in this file.
 If you are looking to re-run the analysis, then you should run the below
 
 ```sh
-{get_pydoit_nb_run_command(config_file_raw, raw_run_instruction)}
+{get_pydoit_nb_run_command_use(config_file_raw, raw_run_instruction)}
 ```
 
 The reason for this is that you want to use the configuration with relative
