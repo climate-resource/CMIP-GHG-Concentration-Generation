@@ -129,9 +129,8 @@ source_info: dict[str, SourceInfo] = {
     },
     "WMO 2022 ozone assessment Ch. 7": SourceInfo(
         licence="Underlying data all openly licensed, so assuming the same, but not 100% clear",
-        # TODO: see if we can get WMO to provide bibtex
         reference=(
-            "Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini, R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. "  # noqa: E501
+            "Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H. "
             "(2022). "
             "Chapter 7: Scenarios and Information for Policymakers. "
             "In World Meteorological Organization (WMO), "
@@ -236,8 +235,7 @@ source_info: dict[str, SourceInfo] = {
     "Ghosh et al., 2023": SourceInfo(
         licence="Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]",
         reference=(
-            "Ghosh, S., Toyoda, S., Buizert, C., Etheridge, D. M., "
-            "Langenfelds, R. L., Yoshida, N., et al. (2023). "
+            "Ghosh, S., Toyoda, S., Buizert, C., ..., Yoshida, N., et al. (2023). "
             "Concentration and isotopic composition of atmospheric N2O "
             "over the last century. "
             "Journal of Geophysical Research: Atmospheres, 128, e2022JD038281. "
@@ -250,8 +248,7 @@ source_info: dict[str, SourceInfo] = {
     "Menking et al., 2025": SourceInfo(
         licence="Author supplied",
         reference=(
-            "Menking, J. A., Etheridge, D., Langenfelds, R., Trudinger, C., "
-            "Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in prep.). "
+            "Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.). "
             "Filling gaps and reducing uncertainty in existing Law Dome ice core records."
         ),
         doi=None,
@@ -261,14 +258,25 @@ source_info: dict[str, SourceInfo] = {
     "Scripps": SourceInfo(
         licence="CC BY 4.0",
         reference=(
-            "C. D. Keeling, S. C. Piper, R. B. Bacastow, "
-            "M. Wahlen, T. P. Whorf, M. Heimann, and H. A. Meijer, "
+            "C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, "
             "Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  "
             "oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, "
             "Scripps Institution of Oceanography, San Diego, 88 pages, 2001."
         ),
         doi=None,
         url="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+        resource_type="publication-article",
+    ),
+    "Trudinger et al., 2016": SourceInfo(
+        licence="CC BY 3.0",
+        reference=(
+            "Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O'Doherty, S., and Battle, M.: "
+            "Atmospheric abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 "
+            "since 1800 inferred from ice core, firn, air archive and in situ measurements, "
+            "Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016, 2016."
+        ),
+        doi="https://doi.org/10.5194/acp-16-11733-2016",
+        url="https://doi.org/10.5194/acp-16-11733-2016",
         resource_type="publication-article",
     ),
 }
@@ -373,6 +381,9 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
             elif "Scripps" in input_data_node and "download" in input_data_node:
                 dependency = "Scripps"
 
+            elif "Trudinger" in input_data_node and "download" in input_data_node:
+                dependency = "Trudinger et al., 2016"
+
             elif "process" in input_data_node:
                 if any(
                     v in input_data_node
@@ -387,6 +398,7 @@ def extract_dependencies(dot_files: dict[str, Path]) -> DependencyInfo:  # noqa:
                         "Western",
                         "Droste",
                         "Scripps",
+                        "Trudinger",
                     )
                 ):
                     # Sources which have a download step then a process step

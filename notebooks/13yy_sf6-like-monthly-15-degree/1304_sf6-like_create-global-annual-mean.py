@@ -78,7 +78,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c2f6"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -190,8 +190,8 @@ obs_network_years
 
 # %% editable=true slideshow={"slide_type": ""}
 if global_mean_supplement_files:
-    if global_mean_data["year"].max() == np.max(out_years):
-        # Use this global-mean for the entire timeseries
+    if global_mean_data["year"].max() >= np.max(out_years):
+        # Use this global-mean up until our latest year
         tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
         unit = global_mean_data["unit"].unique()
         if len(unit) != 1:

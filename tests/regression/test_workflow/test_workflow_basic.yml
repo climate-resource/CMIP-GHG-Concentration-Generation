@@ -31,18 +31,23 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+  references: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+    S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+    CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and in
+    situ measurements, Atmos. Chem. Phys., 16, 11733–11754, https://doi.org/10.5194/acp-16-11733-2016,
+    2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2015)
+    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -81,18 +86,23 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+  references: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+    S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+    CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and in
+    situ measurements, Atmos. Chem. Phys., 16, 11733–11754, https://doi.org/10.5194/acp-16-11733-2016,
+    2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2015)
+    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -131,18 +141,23 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+  references: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+    S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+    CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and in
+    situ measurements, Atmos. Chem. Phys., 16, 11733–11754, https://doi.org/10.5194/acp-16-11733-2016,
+    2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2015)
+    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -559,18 +574,23 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+  references: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+    S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+    CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and in
+    situ measurements, Atmos. Chem. Phys., 16, 11733–11754, https://doi.org/10.5194/acp-16-11733-2016,
+    2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2015)
+    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -609,18 +629,23 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
+  references: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+    S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+    CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and in
+    situ measurements, Atmos. Chem. Phys., 16, 11733–11754, https://doi.org/10.5194/acp-16-11733-2016,
+    2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
     Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- Meinshausen et al.,
-    GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2015)
+    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+  references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
