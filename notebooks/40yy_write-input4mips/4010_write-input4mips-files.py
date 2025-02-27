@@ -79,7 +79,7 @@ step: str = "write_input4mips"
 # %% [markdown]
 # ## Parameters
 
-# %% editable=true  tags=["parameters"]
+# %% editable=true tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
 step_config_id: str = "ch3ccl3"  # config ID to select for this branch
 
@@ -273,14 +273,14 @@ gas_deps.append(
 gas_deps.append(
     {
         "gas": config_step.gas,
-        "source": "Nicholls et al., in-prep (2015)",
+        "source": "Nicholls et al., in-prep (2025)",
         "licence": "Paper, NA",
         "reference": (
             "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
             "Greenhouse gas concentrations for climate modelling (CMIP7), "
             "in-prep, 2025."
         ),
-        "url": "https://doi.org/10.5194/gmd-10-2057-2017",
+        "url": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
     }
 )
 gas_deps
