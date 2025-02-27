@@ -168,7 +168,13 @@ allyears_latitudinal_gradient
 
 # %%
 if global_mean_supplement_files:
-    max_year = min(2023, global_annual_mean_obs_network["year"].max())
+    max_year = min(
+        2023,
+        max(
+            global_annual_mean_obs_network["year"].max(),
+            global_mean_data["year"].max(),
+        ),
+    )
 else:
     max_year = global_annual_mean_obs_network["year"].max()
 
