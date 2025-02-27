@@ -31,26 +31,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -90,26 +89,25 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -149,26 +147,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -208,26 +205,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -267,26 +263,25 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -326,26 +321,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -408,11 +402,11 @@
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
     NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
     --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -477,11 +471,11 @@
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
     NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
     --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -546,11 +540,11 @@
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
     NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
     --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -592,24 +586,24 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf,
-    M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
-    terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
-    Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
-    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
-    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
-    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
-    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
-    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
-    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
-    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references: 'C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+    of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from 1978
+    to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+    of Oceanography, San Diego, 88 pages, 2001. --- Nicholls, Z., Meinshausen, M.,
+    Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg
+    --- Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.).
+    Filling gaps and reducing uncertainty in existing Law Dome ice core records. ---
+    Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse
+    gas concentrations for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116,
+    https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
   references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+  references_short_names: Scripps --- Nicholls et al., in-prep (2025) --- NOAA surface
     flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
+    --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -648,24 +642,24 @@
   nominal_resolution: 2500 km
   product: derived
   realm: atmos
-  references: 'C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf,
-    M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
-    terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
-    Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
-    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
-    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
-    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
-    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
-    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
-    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
-    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references: 'C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+    of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from 1978
+    to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+    of Oceanography, San Diego, 88 pages, 2001. --- Nicholls, Z., Meinshausen, M.,
+    Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg
+    --- Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.).
+    Filling gaps and reducing uncertainty in existing Law Dome ice core records. ---
+    Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse
+    gas concentrations for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116,
+    https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
   references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+  references_short_names: Scripps --- Nicholls et al., in-prep (2025) --- NOAA surface
     flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
+    --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -704,24 +698,24 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf,
-    M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
-    terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
-    Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
-    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
-    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
-    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
-    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
-    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
-    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
-    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references: 'C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+    of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from 1978
+    to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+    of Oceanography, San Diego, 88 pages, 2001. --- Nicholls, Z., Meinshausen, M.,
+    Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg
+    --- Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.).
+    Filling gaps and reducing uncertainty in existing Law Dome ice core records. ---
+    Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse
+    gas concentrations for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116,
+    https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
   references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+  references_short_names: Scripps --- Nicholls et al., in-prep (2025) --- NOAA surface
     flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
+    --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -773,10 +767,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -830,10 +824,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -887,10 +881,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -944,10 +938,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -1001,10 +995,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -1058,10 +1052,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -1104,23 +1098,23 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
-    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
-    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
-    et al., Earth Syst. Sci. Data 2018'
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., ..., Spencer,
+    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
+    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
+    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
+    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Menking
     et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
     --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1161,23 +1155,23 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
-    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
-    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
-    et al., Earth Syst. Sci. Data 2018'
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., ..., Spencer,
+    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
+    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
+    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
+    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Menking
     et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
     --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1218,23 +1212,23 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
-    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
-    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
-    et al., Earth Syst. Sci. Data 2018'
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., ..., Spencer,
+    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
+    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
+    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
+    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Menking
     et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
     --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1282,11 +1276,11 @@
     Sci. Data 2018'
   references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Meinshausen
     et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1334,11 +1328,11 @@
     Sci. Data 2018'
   references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Meinshausen
     et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1386,11 +1380,11 @@
     Sci. Data 2018'
   references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Meinshausen
     et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1429,26 +1423,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -1488,26 +1481,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -1547,26 +1539,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -1606,26 +1597,25 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'Daniel, J. S., Reimann, S., Ashford, P., Fleming, E. L., Hossaini,
-    R., Lickley, M. J., Schofield, R., Walter-Terrinoni, H. (2022). Chapter 7: Scenarios
-    and Information for Policymakers. In World Meteorological Organization (WMO),
-    Scientific Assessment of Ozone Depletion: 2022, GAW Report No. 278(pp. 509); WMO:
-    Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking,
-    A., ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep,
-    2025. --- https://gml.noaa.gov/hats/ --- Meinshausen, M., Vogel, E., ..., Wang,
-    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
-    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+  references: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni, H.
+    (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+    Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+    No. 278(pp. 509); WMO: Geneva, 2022. --- Nicholls, Z., Meinshausen, M., Lewis,
+    J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/ --- Meinshausen,
+    M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations
+    for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
     2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
     Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
   references_short_names: WMO 2022 ozone assessment Ch. 7 --- Nicholls et al., in-prep
-    (2015) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
+    (2025) --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa
     --- AGAGE gc-ms --- AGAGE gc-md
   references_urls: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
@@ -1688,11 +1678,11 @@
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
     NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
     --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -1757,11 +1747,11 @@
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA surface flask ---
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
     NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
     --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
     --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
@@ -1803,24 +1793,24 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf,
-    M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
-    terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
-    Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
-    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
-    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
-    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
-    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
-    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
-    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
-    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references: 'C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+    of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from 1978
+    to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+    of Oceanography, San Diego, 88 pages, 2001. --- Nicholls, Z., Meinshausen, M.,
+    Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg
+    --- Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.).
+    Filling gaps and reducing uncertainty in existing Law Dome ice core records. ---
+    Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse
+    gas concentrations for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116,
+    https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
   references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+  references_short_names: Scripps --- Nicholls et al., in-prep (2025) --- NOAA surface
     flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
+    --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1859,24 +1849,24 @@
   nominal_resolution: 10000 km
   product: derived
   realm: atmos
-  references: 'C. D. Keeling, S. C. Piper, R. B. Bacastow, M. Wahlen, T. P. Whorf,
-    M. Heimann, and H. A. Meijer, Exchanges of atmospheric CO2 and 13CO2 with the
-    terrestrial biosphere and  oceans from 1978 to 2000. I. Global aspects, SIO Reference
-    Series, No. 01-06, Scripps Institution of Oceanography, San Diego, 88 pages, 2001.
-    --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...:
-    Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025. ---
-    https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Menking, J. A., Etheridge,
-    D., Langenfelds, R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and
-    Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing Law Dome
-    ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss,
-    R.: Historical greenhouse gas concentrations for climate modelling (CMIP6), Geosci.
-    Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
+  references: 'C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+    of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from 1978
+    to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+    of Oceanography, San Diego, 88 pages, 2001. --- Nicholls, Z., Meinshausen, M.,
+    Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas concentrations for climate
+    modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg
+    --- Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in prep.).
+    Filling gaps and reducing uncertainty in existing Law Dome ice core records. ---
+    Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse
+    gas concentrations for climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116,
+    https://doi.org/10.5194/gmd-10-2057-2017, 2017.'
   references_dois: No DOI --- No DOI --- No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-  references_short_names: Scripps --- Nicholls et al., in-prep (2015) --- NOAA surface
+  references_short_names: Scripps --- Nicholls et al., in-prep (2025) --- NOAA surface
     flask --- NOAA in-situ --- Menking et al., 2025 --- Meinshausen et al., GMD (2017)
   references_urls: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/ ---
-    https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation ---
+    https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- author-supplied.invalid
+    --- https://doi.org/10.5194/gmd-10-2057-2017
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -1928,10 +1918,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -1985,10 +1975,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -2042,10 +2032,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -2099,10 +2089,10 @@
   references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
     --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2015)
+  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
     --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
     gc-ms
-  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://doi.org/10.5194/gmd-10-2057-2017
+  references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
     --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
     https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
@@ -2145,23 +2135,23 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
-    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
-    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
-    et al., Earth Syst. Sci. Data 2018'
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., ..., Spencer,
+    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
+    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
+    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
+    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Menking
     et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
     --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -2202,23 +2192,23 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., Langenfelds,
-    R., Trudinger, C., Guerrette, E., Alison, C., Spencer, D., and Caldow, C. (in
-    prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core records.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn
-    et al., Earth Syst. Sci. Data 2018'
+    --- https://gml.noaa.gov/hats/ --- Menking, J. A., Etheridge, D., ..., Spencer,
+    D., and Caldow, C. (in prep.). Filling gaps and reducing uncertainty in existing
+    Law Dome ice core records. --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J.,
+    and Weiss, R.: Historical greenhouse gas concentrations for climate modelling
+    (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst.
+    Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
   references_dois: No DOI --- No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
     --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Menking
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Menking
     et al., 2025 --- Meinshausen et al., GMD (2017) --- AGAGE gc-md --- AGAGE GAGE
     --- AGAGE ALE
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- author-supplied.invalid --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -2266,11 +2256,11 @@
     Sci. Data 2018'
   references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Meinshausen
     et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -2318,11 +2308,11 @@
     Sci. Data 2018'
   references_dois: No DOI --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
     --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2015) --- NOAA HATS --- Meinshausen
+  references_short_names: Nicholls et al., in-prep (2025) --- NOAA HATS --- Meinshausen
     et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-md
-  references_urls: https://doi.org/10.5194/gmd-10-2057-2017 --- https://gml.noaa.gov/hats/
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+  references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
+    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
+    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP

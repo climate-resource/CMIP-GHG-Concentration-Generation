@@ -312,7 +312,7 @@ PRE_INDUSTRIAL_VALUES_DEFAULT = {
     "c3f8": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1890, source="M17"),
     "cc4f8": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1960, source="M17"),
     "ccl4": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1900, source="M17"),
-    "cf4": SF6LikePreIndustrialConfig(value=Q(34.05, "ppt"), year=1910, source="M17"),
+    "cf4": SF6LikePreIndustrialConfig(value=Q(34.05, "ppt"), year=1890, source="M17"),
     "cfc11": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1950, source="M17"),
     "cfc113": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1930, source="M17"),
     "cfc114": SF6LikePreIndustrialConfig(value=Q(0.0, "ppt"), year=1940, source="M17"),

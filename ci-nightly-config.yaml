@@ -753,6 +753,14 @@ retrieve_and_process_scripps_data:
       known_hash: 0b75a1e45bbc4157037adab240cc4560e1bb149da256b9424ff94c7dacb9084a
       url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/merged_in_situ_and_flask/monthly/monthly_merge_co2_ptb.csv
   step_config_id: only
+retrieve_and_process_trudinger_et_al_2016_data:
+- download_complete_file: data/raw/trudinger-et-al-2016/download.complete
+  processed_data_file: data/interim/trudinger-et-al-2016/trudinger_et_al_2016.csv
+  raw_dir: data/raw/trudinger-et-al-2016
+  step_config_id: only
+  supplement:
+    known_hash: 48b7dfdf8310fb0aca0d49de129d5c4a7d6edd064ad8bfa8d2360f41edfb799b
+    url: https://acp.copernicus.org/articles/16/11733/2016/acp-16-11733-2016-supplement.zip
 retrieve_and_process_velders_et_al_2022_data:
 - download_complete_file: data/raw/velders-et-al-2022/download.complete
   processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv

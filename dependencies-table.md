@@ -8,6 +8,7 @@
 **AGAGE gc-md** - 9: ccl4, cfc11, cfc113, cfc12, ch3ccl3, ch4, chcl3, n2o, sf6
 **Droste et al., 2020** - 5: c4f10, c5f12, c6f14, c7f16, cc4f8
 **Western et al., 2024** - 3: hcfc141b, hcfc142b, hcfc22
+**Trudinger et al., 2016** - 3: c2f6, c3f8, cf4
 **NOAA surface flask** - 2: ch4, co2
 **NOAA in-situ** - 2: ch4, co2
 **Menking et al., 2025** - 2: co2, n2o
@@ -28,15 +29,15 @@
 **cfc11**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
 **hfc134a**: AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, Velders et al., 2022
 **sf6**: AGAGE gc-md, AGAGE gc-ms-medusa, NOAA HATS
-**c2f6**: AGAGE gc-ms-medusa, NOAA HATS
-**c3f8**: AGAGE gc-ms, AGAGE gc-ms-medusa
+**c2f6**: AGAGE gc-ms-medusa, NOAA HATS, Trudinger et al., 2016
+**c3f8**: AGAGE gc-ms, AGAGE gc-ms-medusa, Trudinger et al., 2016
 **c4f10**: Droste et al., 2020
 **c5f12**: Droste et al., 2020
 **c6f14**: Droste et al., 2020
 **c7f16**: Droste et al., 2020
 **cc4f8**: Droste et al., 2020
 **ccl4**: AGAGE gc-md, AGAGE gc-ms, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
-**cf4**: AGAGE gc-ms-medusa, NOAA HATS
+**cf4**: AGAGE gc-ms-medusa, NOAA HATS, Trudinger et al., 2016
 **cfc113**: AGAGE gc-md, AGAGE gc-ms-medusa, NOAA HATS, WMO 2022 ozone assessment Ch. 7
 **cfc114**: AGAGE gc-ms, AGAGE gc-ms-medusa, WMO 2022 ozone assessment Ch. 7
 **cfc115**: AGAGE gc-ms, AGAGE gc-ms-medusa, WMO 2022 ozone assessment Ch. 7

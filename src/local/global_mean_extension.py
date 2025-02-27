@@ -94,4 +94,17 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
             ).processed_data_file
         ]
 
+    if gas in [
+        "cf4",
+        "c2f6",
+        "c3f8",
+    ]:
+        return [
+            get_config_for_step_id(
+                config=config,
+                step="retrieve_and_process_trudinger_et_al_2016_data",
+                step_config_id="only",
+            ).processed_data_file
+        ]
+
     return []
