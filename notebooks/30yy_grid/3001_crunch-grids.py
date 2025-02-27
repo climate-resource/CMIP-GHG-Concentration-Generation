@@ -68,7 +68,7 @@ step: str = "crunch_grids"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "n2o"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -120,16 +120,24 @@ global_annual_mean_monthly.name = config_step.gas
 global_annual_mean_monthly
 
 # %%
-seasonality_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file
-).pint.quantify()
+seasonality_monthly: xr.DataArray = (
+    xr.load_dataarray(  # type: ignore
+        config_gridding_pieces_step.seasonality_allyears_fifteen_degree_monthly_file
+    )
+    .pint.quantify()
+    .sel(year=global_annual_mean_monthly.year)
+)
 seasonality_monthly.name = "seasonality"
 seasonality_monthly
 
 # %%
-lat_grad_fifteen_degree_monthly: xr.DataArray = xr.load_dataarray(  # type: ignore
-    config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
-).pint.quantify()
+lat_grad_fifteen_degree_monthly: xr.DataArray = (
+    xr.load_dataarray(  # type: ignore
+        config_gridding_pieces_step.latitudinal_gradient_fifteen_degree_allyears_monthly_file
+    )
+    .pint.quantify()
+    .sel(year=global_annual_mean_monthly.year)
+)
 lat_grad_fifteen_degree_monthly.name = "latitudinal_gradient"
 lat_grad_fifteen_degree_monthly
 

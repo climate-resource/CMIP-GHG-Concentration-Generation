@@ -280,7 +280,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: ch4_surface-flask
 - download_complete_file: data/raw/noaa/hfc152a_hats.complete
   download_urls:
-  - known_hash: 87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764
+  - known_hash: 42aaa82a52fec1caa71656704357e0a3e64334c4fe3b6ac368abfeabaf6912bd
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
   gas: hfc152a
   interim_files:

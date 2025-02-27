@@ -77,7 +77,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc23"  # config ID to select for this branch
+step_config_id: str = "hfc152a"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -503,7 +503,7 @@ allyears_global_annual_mean
 
 # %%
 check = allyears_full_field - allyears_global_annual_mean
-xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
+xr.testing.assert_allclose(check, allyears_latitudinal_gradient.sel(year=check.year))
 
 # %% editable=true slideshow={"slide_type": ""}
 allyears_latitudinal_gradient_renamed = allyears_latitudinal_gradient.copy()

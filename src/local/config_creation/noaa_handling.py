@@ -231,31 +231,31 @@ DOWNLOAD_URLS = {
     ("ch2cl2", "hats"): [
         URLSource(
             url=get_hats_url("ch2cl2"),
-            known_hash="7a26146524e47421a718a7a432f043340ef254aa741d10ec1541a535bc501372",
+            known_hash="113ffef7b90c89ee9892cd1f3f441b6cb5a5d4c6330b21ad373eec38c0547816",
         )
     ],
     ("ch3br", "hats"): [
         URLSource(
             url=get_hats_url("ch3br"),
-            known_hash="6df26f410a34ab5255501a89a21944cf0b87379c06181e5b5f2cb02265ff4d4f",
+            known_hash="b4632358ecd69680cfd06ec248fe1e80fcfb3156626c73edc3d3c345ee1985e5",
         )
     ],
     ("ch3ccl3", "hats"): [
         URLSource(
             url=get_hats_url("ch3ccl3"),
-            known_hash="4ee2d9db3f7e7a122ac1d0d2b428b64fff63a2a118ad6c707aded36a0082008d",
+            known_hash="6f5abb521a1bdfe2be264699270346a4f9b243db2cfba3d0b7af01d7bfc78ed3",
         )
     ],
     ("ch3cl", "hats"): [
         URLSource(
             url=get_hats_url("ch3cl"),
-            known_hash="53f025bb646cba4828a461b4e7d5972a478bc67b4e527488101c8b38f5af0197",
+            known_hash="4c3bb2fc85cba33849b617727fd70d40611946338373c32dbda0ec515a2c2ac3",
         )
     ],
     ("halon1211", "hats"): [
         URLSource(
             url=get_hats_url("halon1211"),
-            known_hash="6eeff05658ca067d73f59981bdc069d56a09ab297e59c49d784c0328bc991e5a",
+            known_hash="b54b6f59477def77af961d1f212a2e41048e38199b4fa2a0b32c6ff9d31398e4",
         )
     ],
     ("halon1301", "hats"): [
@@ -267,25 +267,25 @@ DOWNLOAD_URLS = {
     ("halon2402", "hats"): [
         URLSource(
             url=get_hats_url("halon2402"),
-            known_hash="fbecc158b8aec169226c0dabca24ade879f3a813ea7716004d0d81c8e5e2ce52",
+            known_hash="b94a7856bdcfaba8486992258b66187aeeb208389ded31bd8da006a185e5a4d7",
         )
     ],
     ("hcfc141b", "hats"): [
         URLSource(
             url=get_hats_url("hcfc141b"),
-            known_hash="73030ef0c782c67a9a9cd636e4f4eb2408c06158d38c798135a39896e87a055d",
+            known_hash="2a00218b2fb334f0fdd0941936a3142eaec7a578e1afc0a09021e1167dc7bb47",
         )
     ],
     ("hcfc142b", "hats"): [
         URLSource(
             url=get_hats_url("hcfc142b"),
-            known_hash="b80a7097bee0078de564dcddf9ba292b6db8474022cc10d4d3f934179c237549",
+            known_hash="bed61eb655cd316c8b1a5b23a9d9fe97f997077e1f1b40026531575fb28c4ebb",
         )
     ],
     ("hcfc22", "hats"): [
         URLSource(
             url=get_hats_url("hcfc22"),
-            known_hash="9a21406480796ed9f4f8b8d37cf37465bbfd25712bc2bfc78c7863c4d2c57cc0",
+            known_hash="1fc30f86323ca722865994ddc66d0e24e2dd581775e2f59267d4b1c57f7a9664",
         )
     ],
     ("hfc125", "hats"): [
@@ -297,7 +297,7 @@ DOWNLOAD_URLS = {
     ("hfc134a", "hats"): [
         URLSource(
             url=get_hats_url("hfc134a"),
-            known_hash="e5a346ecbaf3a96b84a95a13a7339d34528f1d333054a5077aeb78f0cc10a7ec",
+            known_hash="c8a9630b82aa9a936324ae10d1e79ed8f06aa382ce6d49d40aabbcecbb1249aa",
         )
     ],
     ("hfc143a", "hats"): [
@@ -309,13 +309,13 @@ DOWNLOAD_URLS = {
     ("hfc152a", "hats"): [
         URLSource(
             url=get_hats_url("hfc152a"),
-            known_hash="87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764",
+            known_hash="42aaa82a52fec1caa71656704357e0a3e64334c4fe3b6ac368abfeabaf6912bd",
         )
     ],
     ("hfc227ea", "hats"): [
         URLSource(
             url=get_hats_url("hfc227ea"),
-            known_hash="69cc53b7223cfb17dfd3217ab954232de64c4518c0f61e04897e36f4c77f2d82",
+            known_hash="cacda0e8941dcc456604f03da8a113d41763ab9c7c9f3f001a654d6b6d5be361",
         )
     ],
     ("hfc236fa", "hats"): [
@@ -333,7 +333,7 @@ DOWNLOAD_URLS = {
     ("hfc365mfc", "hats"): [
         URLSource(
             url=get_hats_url("hfc365mfc"),
-            known_hash="e59690c02ad32cbc775584076ffb86b1e1a4228179f83de535aba11435ef827c",
+            known_hash="d8b98bc0420d8f93cab46b198cd40c716969d45251d0e20cc3c9574100a0429e",
         )
     ],
     ("nf3", "hats"): [
