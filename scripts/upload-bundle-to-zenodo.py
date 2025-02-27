@@ -101,23 +101,23 @@ def create_zenodo_bundle(zenodo_bundle_path: Path, original_bundle_path: Path) -
         "*.yaml",
     )
 
+    data_ignores = [
+        "DS_Store",
+        "complete",
+        "checklist",
+        "primap",  # Backed by DOI
+        "epica",  # Backed by DOI
+        "law_dome",  # Backed by DOI
+        "neem",  # Backed by DOI
+        "natural_earth",
+    ]
+
     directories_to_copy = (
         ("src", 0, ["egg", "DS_Store"]),
         ("notebooks", 1, ["ipynb_checkpoints", "DS_Store"]),
-        (
-            "data",
-            2,
-            [
-                "DS_Store",
-                "complete",
-                "checklist",
-                "primap",  # Backed by DOI
-                "epica",  # Backed by DOI
-                "law_dome",  # Backed by DOI
-                "neem",  # Backed by DOI
-                "natural_earth",
-            ],
-        ),
+        (Path("data/raw"), 1, data_ignores),
+        (Path("data/interim"), 0, data_ignores),
+        (Path("data/processed"), 0, data_ignores),
     )
 
     zenodo_bundle_path.mkdir(exist_ok=True, parents=True)
@@ -241,6 +241,17 @@ def main(  # noqa: PLR0913
         zenodo_interactor=zenodo_interactor,
         draft_deposition_id=draft_deposition_id,
         metadata=zenodo_metadata_incl_refs,
+    )
+
+    print(
+        "\n".join(
+            [
+                "Next steps:",
+                "",
+                "- update affiliations (can't have multiple from zenodo.json)",
+                "- update grants (can't upload from zenodo.json)",
+            ]
+        )
     )
 
 

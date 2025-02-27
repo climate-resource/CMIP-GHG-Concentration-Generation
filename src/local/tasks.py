@@ -7,11 +7,10 @@ from __future__ import annotations
 import shutil
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
 
 from pydoit_nb.tasks_copy_source import (
-    copy_readme_default,
     gen_copy_source_into_output_tasks,
+    get_pydoit_nb_run_command_default,
 )
 from pydoit_nb.typing import DoitTaskSpec
 
@@ -94,11 +93,16 @@ def copy_tree_no_output(in_path: Path, out_path: Path) -> None:
     )
 
 
-def copy_readme_h(in_path: Path, out_path: Path, run_id: str, config_file_raw: Path, **kwargs: Any) -> None:
+def copy_readme_h(  # noqa: PLR0913
+    in_path: Path,
+    out_path: Path,
+    run_id: str,
+    config_file_raw: Path,
+    raw_run_instruction: str = "pixi run doit run --verbosity=2",
+    get_pydoit_nb_run_command: None = None,
+) -> None:
     """
-    Copy README
-
-    We have to define this function because `partial` doesn't play nice with parallel running
+    Copy README into the output bundle
 
     Parameters
     ----------
@@ -122,18 +126,68 @@ def copy_readme_h(in_path: Path, out_path: Path, run_id: str, config_file_raw: P
         These are included to check that the instructions for running in the
         bundle are (likely) correct.
 
-    **kwargs
-        Passed to `copy_readme_default`
+    get_pydoit_nb_run_command
+        Should always be `None`, we always use the default here
+
+    Raises
+    ------
+    AssertionError
+        The run instructions in the README aren't as expected hence the code
+        injection likely won't work as expected.
+
+    ValueError
+        `config_file_raw` is an absolute path. It should always be a relative
+        path to ensure portability.
     """
-    # Ah, parallelism
-    copy_readme_default(
-        in_path=in_path,
-        out_path=out_path,
-        run_id=run_id,
-        config_file_raw=config_file_raw,
-        raw_run_instruction="pixi run doit run --verbosity=2",
-        **kwargs,
-    )
+    if get_pydoit_nb_run_command is not None:
+        raise ValueError(get_pydoit_nb_run_command)
+
+    get_pydoit_nb_run_command_use = get_pydoit_nb_run_command_default
+
+    if config_file_raw.is_absolute():
+        msg = f"`config_file_raw` must be a relative path, received: {config_file_raw}"
+        raise ValueError(msg)
+
+    with open(in_path) as fh:
+        raw = fh.read()
+
+    if raw_run_instruction not in raw:
+        msg = (
+            "Could not find expected run instructions in README. "
+            "The injected run instructions probably won't be correct. "
+            f"Expected run instruction: {raw_run_instruction}"
+        )
+        raise AssertionError(msg)
+
+    footer = f"""
+## Pydoit info
+
+This README was created from the raw {in_path.name} file as part of the {run_id!r} run with
+[pydoit](https://pydoit.org/contents.html). The bundle should contain
+everything required to reproduce the outputs. The environment can be
+made with [pixi](https://pixi.sh/latest/) using the `pixi.lock` file
+and the `pyproject.toml` file. Please disregard messages about the `Makefile`
+in this file.
+
+If you are looking to re-run the analysis, then you should run the below
+
+```sh
+{get_pydoit_nb_run_command_use(config_file_raw, raw_run_instruction)}
+```
+
+The reason for this is that you want to use the configuration with relative
+paths. The configuration file that is included in this output bundle contains
+absolute paths for reproducibility and traceability reasons. However, such
+absolute paths are not portable so you need to use the configuration file
+above, which is the raw configuration file as it was was used in the original
+run.
+
+If you have any issues running the analysis, please make an issue in our code
+repository or reach out via email.
+"""
+    with open(out_path, "w") as fh:
+        fh.write(raw)
+        fh.write(footer)
 
 
 def gen_all_tasks(

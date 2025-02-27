@@ -2,7 +2,7 @@
   "metadata": {
     "title": "CMIP GHG Forcing",
     "version": "to-be-replaced",
-    "description": "Coupled Model Intercomparison Project (CMIP) greenhouse gas (GHG) forcing files.",
+    "description": "Coupled Model Intercomparison Project (CMIP) greenhouse gas (GHG) forcing files.<br><br>This is the first version ready for CMIP7 production use.<br>The files are (or soon will be) available directly from <a href='https://aims2.llnl.gov/search?project=input4MIPs&versionType=all&activeFacets=%7B%22institution_id%22%3A%22CR%22%7D' target='_blank'>ESGF</a> (make sure to select the version(s) of interest to you as this search will show all versions), this record is simply used to provide a DOI and reproducibility.<br><br>For a list of the changes made over time, see <a href='https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/blob/main/CHANGELOG.md' target='_blank'>the CHANGELOG</a>.<br><br>For an overview of the delivery status of all CMIP7 forcing datasets, see <a href='https://input4mips-cvs.readthedocs.io/en/latest/database-views/input4MIPs_delivery-summary.html' target='_blank'>input4MIPs CVs' delivery summary</a>.<br>For more detail on each CMIP7 dataset, start from <a href='https://input4mips-cvs.readthedocs.io/en/latest/dataset-overviews/' target='_blank'>input4MIPs CVs' dataset overviews</a>.",
     "access_right": "open",
     "creators": [
       {

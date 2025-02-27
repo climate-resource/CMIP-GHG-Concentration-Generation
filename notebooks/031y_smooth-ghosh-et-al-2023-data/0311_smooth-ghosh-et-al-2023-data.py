@@ -26,11 +26,12 @@
 # %%
 from pathlib import Path
 
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import pint
-import scipy.interpolate
+import scipy.interpolate  # type: ignore
 from openscm_units import unit_registry
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -87,7 +88,7 @@ if len(gas_name) > 1:
 gas_name = gas_name[0]
 
 x_raw = Q(gas_df["year"].values, "yr")
-y_raw = Q(gas_df["value"].values, gas_unit)
+y_raw = Q(gas_df["value"].values, gas_unit)  # type: ignore
 
 # %%
 plt.scatter(x_raw.m, y_raw.m)
@@ -114,6 +115,8 @@ y_smoothed
 
 # %%
 fig, axes = plt.subplots(ncols=3, sharey=True, figsize=(16, 4))
+if isinstance(axes, matplotlib.axes.Axes):
+    raise TypeError(type(axes))
 
 for ax, xlim in zip(axes, ((0, 2025), (1750, 2025), (1950, 2025))):
     ax.scatter(

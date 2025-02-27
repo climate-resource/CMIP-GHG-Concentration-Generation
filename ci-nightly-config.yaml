@@ -677,7 +677,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: cfc12_hats
 - download_complete_file: data/raw/noaa/hfc134a_hats.complete
   download_urls:
-  - known_hash: e5a346ecbaf3a96b84a95a13a7339d34528f1d333054a5077aeb78f0cc10a7ec
+  - known_hash: c8a9630b82aa9a936324ae10d1e79ed8f06aa382ce6d49d40aabbcecbb1249aa
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hfc134a_GCMS_flask.txt
   gas: hfc134a
   interim_files:
@@ -687,7 +687,7 @@ retrieve_and_extract_noaa_data:
   step_config_id: hfc134a_hats
 - download_complete_file: data/raw/noaa/hfc152a_hats.complete
   download_urls:
-  - known_hash: 87101275e29241665bf53b45d4123abcc3e486a7e7d2ad879dc36744f61c4764
+  - known_hash: 42aaa82a52fec1caa71656704357e0a3e64334c4fe3b6ac368abfeabaf6912bd
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
   gas: hfc152a
   interim_files:

@@ -22,10 +22,12 @@ The key characteristics of the outputs are:
 
 ## Status
 
-Status: Work in progress.
+Status: Stable.
 
-We are now producing iterations of the greenhouse gas concentrations.
-See the issues for the updates that are being made
+We have now produced greenhouse gas concentrations for the CMIP7 AR7 fast track.
+Even though forcings research is going,
+this repository is now considered stable.
+See the issues for envisaged updates
 and `changelog` for the updates that have been made.
 
 ## Installation

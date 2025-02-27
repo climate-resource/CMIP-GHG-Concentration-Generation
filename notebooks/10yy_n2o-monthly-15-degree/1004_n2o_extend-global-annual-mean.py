@@ -36,7 +36,7 @@ import openscm_units
 import pandas as pd
 import pint
 import pint_xarray
-import scipy.interpolate
+import scipy.interpolate  # type: ignore
 import xarray as xr
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -255,7 +255,7 @@ join_year
 
 # %%
 menking_et_al_harmonised = (
-    local.harmonisation.get_harmonised_timeseries(
+    local.harmonisation.get_harmonised_timeseries(  # type: ignore
         ints=menking_et_al_full.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
         harm_units=conc_unit,
         harm_value=float(global_annual_mean_obs_network.pint.to(conc_unit).sel(year=join_year).data.m),
@@ -283,7 +283,7 @@ ax.plot(
     label="Menking et al., harmonised",
 )
 ax.legend()
-ax.set_xlim([1850, 2030])
+ax.set_xlim((1850, 2030))
 
 # %%
 menking_da = xr.DataArray(
@@ -357,13 +357,13 @@ xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,  # type: ignore
     0.0,
     atol=1e-10,
 )
 
 # %%
-allyears_global_annual_mean.plot()
+allyears_global_annual_mean.plot()  # type: ignore
 
 # %% [markdown]
 # ## Save

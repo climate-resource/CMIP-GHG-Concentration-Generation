@@ -260,7 +260,7 @@ tmp["value"] = 0.0
 harmonise_helper = pd.concat([tmp, mauna_loa_law_dome_merged_to_use])
 
 mauna_loa_harmonised = (
-    local.harmonisation.get_harmonised_timeseries(
+    local.harmonisation.get_harmonised_timeseries(  # type: ignore
         ints=harmonise_helper.set_index(["year", "unit", "gas"])["value"].unstack("year"),
         harm_units=conc_unit,
         harm_value=float(
@@ -295,7 +295,7 @@ ax.plot(
     alpha=0.4,
 )
 ax.legend()
-ax.set_xlim([1920, 2030])
+ax.set_xlim((1920, 2030))
 
 # %%
 ml_ld_da = xr.DataArray(
@@ -329,7 +329,7 @@ join_year_menking
 
 # %%
 menking_et_al_harmonised = (
-    local.harmonisation.get_harmonised_timeseries(
+    local.harmonisation.get_harmonised_timeseries(  # type: ignore
         ints=menking_et_al.set_index(["year", "unit", "gas", "source"])["value"].unstack("year"),
         harm_units=conc_unit,
         harm_value=float(
@@ -365,8 +365,8 @@ ax.plot(
     alpha=0.4,
 )
 ax.legend()
-ax.set_xlim([1830, 2030])
-# ax.set_xlim([join_year - 20, join_year + 20])
+ax.set_xlim((1830, 2030))
+# ax.set_xlim((join_year - 20, join_year + 20))
 
 # %%
 menking_et_al_da = xr.DataArray(
@@ -441,7 +441,7 @@ else:
 # %%
 tmp = mostyears_full_field.copy()
 tmp.name = "mostyears_global_annual_mean"
-mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)
+mostyears_global_annual_mean = local.xarray_space.calculate_global_mean_from_lon_mean(tmp)  # type: ignore
 mostyears_global_annual_mean
 
 # %% [markdown]
@@ -459,7 +459,7 @@ back_extend_years
 
 # %%
 if back_extend_years.size > 0:
-    tmp = mostyears_global_annual_mean.sel(year=[mostyears_global_annual_mean["year"][0]])
+    tmp = mostyears_global_annual_mean.sel(year=[mostyears_global_annual_mean["year"][0]])  # type: ignore
     back_extended_global_annual_mean = (
         mostyears_global_annual_mean.pint.dequantify()
         .interp(year=back_extend_years, kwargs={"fill_value": tmp.data[0].m})
@@ -506,7 +506,7 @@ xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,  # type: ignore
     0.0,
     atol=1e-10,
 )
