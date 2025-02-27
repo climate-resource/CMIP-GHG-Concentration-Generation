@@ -110,7 +110,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/c2f6/c2f6_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/c2f6/c2f6_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -135,7 +135,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/c3f8/c3f8_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/c3f8/c3f8_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -160,7 +160,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ccl4/ccl4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ccl4/ccl4_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -185,7 +185,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cf4/cf4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cf4/cf4_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 34.05
     - ppt
@@ -210,7 +210,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc11/cfc11_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc11/cfc11_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -235,7 +235,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc113/cfc113_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc113/cfc113_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -260,7 +260,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc114/cfc114_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc114/cfc114_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -285,7 +285,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc115/cfc115_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc115/cfc115_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -310,7 +310,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc12/cfc12_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc12/cfc12_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -335,9 +335,9 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch2cl2/ch2cl2_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch2cl2/ch2cl2_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
-    - 8.0
+    - 6.9
     - ppt
     year: 1940
   processed_all_data_with_bins_file: data/interim/ch2cl2/ch2cl2_observational-network_all-data-with-bin-information.csv
@@ -360,9 +360,9 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch3br/ch3br_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch3br/ch3br_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
-    - 5.5
+    - 5.3
     - ppt
     year: 1925
   processed_all_data_with_bins_file: data/interim/ch3br/ch3br_observational-network_all-data-with-bin-information.csv
@@ -385,7 +385,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch3ccl3/ch3ccl3_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch3ccl3/ch3ccl3_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -410,9 +410,9 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch3cl/ch3cl_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch3cl/ch3cl_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
-    - 460.0
+    - 457.0
     - ppt
     year: 1940
   processed_all_data_with_bins_file: data/interim/ch3cl/ch3cl_observational-network_all-data-with-bin-information.csv
@@ -435,7 +435,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/chcl3/chcl3_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/chcl3/chcl3_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 6.0
     - ppt
@@ -460,7 +460,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/halon1211/halon1211_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/halon1211/halon1211_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -485,7 +485,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/halon1301/halon1301_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/halon1301/halon1301_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -510,7 +510,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/halon2402/halon2402_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/halon2402/halon2402_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -535,7 +535,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hcfc141b/hcfc141b_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hcfc141b/hcfc141b_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -560,7 +560,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hcfc142b/hcfc142b_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hcfc142b/hcfc142b_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -585,7 +585,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hcfc22/hcfc22_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hcfc22/hcfc22_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -635,7 +635,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc134a/hfc134a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc134a/hfc134a_observational-network_seasonality.nc
   pre_industrial:
-    source: Making interpolation behave with Velders et al., 2022 data
+    source: Velders et al., 2022 (with adjustments to support interpolation)
     value:
     - 0.0
     - ppt
@@ -735,7 +735,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc23/hfc23_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc23/hfc23_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -885,7 +885,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/nf3/nf3_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/nf3/nf3_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -910,7 +910,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/sf6/sf6_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/sf6/sf6_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -935,7 +935,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/so2f2/so2f2_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/so2f2/so2f2_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -3452,7 +3452,7 @@ retrieve_and_process_law_dome_data:
   raw_dir: data/raw/law_dome
   step_config_id: only
 retrieve_and_process_menking_et_al_2025_data:
-- expected_hash: bf832acdf24460e88312bda558200c60
+- expected_hash: 20df9337cddb739dc805e53847a19424
   processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
   raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
   step_config_id: only

@@ -165,20 +165,6 @@ if menking_et_al["year"].min() > 1:
 else:
     menking_et_al_full = menking_et_al
 
-if not (menking_et_al_full["year"] == 1850).any():  # noqa: PLR2004
-    print("Hacking in 1850 value")
-    hacked_value = np.mean(
-        [
-            menking_et_al_full[menking_et_al_full["year"] == 1849]["value"].iloc[0],  # noqa: PLR2004
-            menking_et_al_full[menking_et_al_full["year"] == 1851]["value"].iloc[0],  # noqa: PLR2004
-        ]
-    )
-    tmp = menking_et_al_full.iloc[:1, :].copy()
-    tmp["year"] = 1850
-    tmp["value"] = hacked_value
-
-    menking_et_al_full = pd.concat([menking_et_al_full, tmp]).sort_values("year").reset_index(drop=True)
-
 menking_et_al_full
 
 # %% [markdown]
