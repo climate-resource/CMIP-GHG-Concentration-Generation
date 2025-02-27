@@ -65,7 +65,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/sf6/sf6_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/sf6/sf6_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -90,7 +90,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc11/cfc11_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc11/cfc11_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -115,7 +115,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/cfc12/cfc12_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/cfc12/cfc12_observational-network_seasonality.nc
   pre_industrial:
-    source: Guessing from reading M2017
+    source: M17
     value:
     - 0.0
     - ppt
@@ -140,7 +140,7 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/hfc134a/hfc134a_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/hfc134a/hfc134a_observational-network_seasonality.nc
   pre_industrial:
-    source: Making interpolation behave with Velders et al., 2022 data
+    source: Velders et al., 2022 (with adjustments to support interpolation)
     value:
     - 0.0
     - ppt
@@ -727,7 +727,7 @@ retrieve_and_process_law_dome_data:
   raw_dir: data/raw/law_dome
   step_config_id: only
 retrieve_and_process_menking_et_al_2025_data:
-- expected_hash: bf832acdf24460e88312bda558200c60
+- expected_hash: 20df9337cddb739dc805e53847a19424
   processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
   raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
   step_config_id: only
