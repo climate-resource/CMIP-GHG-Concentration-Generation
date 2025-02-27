@@ -51,6 +51,9 @@ from local.config_creation.neem_handling import RETRIEVE_AND_PROCESS_NEEM_STEPS
 from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
 from local.config_creation.scripps_handling import RETRIEVE_AND_PROCESS_SCRIPPS_DATA
+from local.config_creation.trudinger_et_al_2016_handling import (
+    RETRIEVE_AND_PROCESS_TRUDINGER_ET_AL_2016_DATA_STEPS,
+)
 from local.config_creation.velders_et_al_2022_handling import (
     RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS,
 )
@@ -301,6 +304,7 @@ def create_dev_config() -> Config:
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
         retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
+        retrieve_and_process_trudinger_et_al_2016_data=RETRIEVE_AND_PROCESS_TRUDINGER_ET_AL_2016_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -380,6 +384,7 @@ def create_ci_config() -> Config:
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
         retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
+        retrieve_and_process_trudinger_et_al_2016_data=RETRIEVE_AND_PROCESS_TRUDINGER_ET_AL_2016_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
@@ -501,6 +506,7 @@ def create_ci_nightly_config() -> Config:
         retrieve_and_process_adam_et_al_2024_data=RETRIEVE_AND_PROCESS_ADAM_ET_AL_2024_DATA_STEPS,
         retrieve_and_process_ghosh_et_al_2023_data=RETRIEVE_AND_PROCESS_GHOSH_ET_AL_2023_DATA_STEPS,
         retrieve_and_process_menking_et_al_2025_data=RETRIEVE_AND_PROCESS_MENKING_ET_AL_2025_DATA_STEPS,
+        retrieve_and_process_trudinger_et_al_2016_data=RETRIEVE_AND_PROCESS_TRUDINGER_ET_AL_2016_DATA_STEPS,
         plot_input_data_overviews=[PlotInputDataOverviewsConfig(step_config_id="only")],
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,

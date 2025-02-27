@@ -46,6 +46,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 import local.binned_data_interpolation
 import local.binning
 import local.global_mean_extension
+import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -77,7 +78,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a"  # config ID to select for this branch
+step_config_id: str = "c2f6"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -167,7 +168,7 @@ allyears_latitudinal_gradient
 
 # %%
 if global_mean_supplement_files:
-    max_year = 2023
+    max_year = min(2023, global_annual_mean_obs_network["year"].max())
 else:
     max_year = global_annual_mean_obs_network["year"].max()
 
@@ -189,15 +190,68 @@ obs_network_years
 
 # %% editable=true slideshow={"slide_type": ""}
 if global_mean_supplement_files:
-    tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
-    unit = global_mean_data["unit"].unique()
-    if len(unit) != 1:
-        raise AssertionError
-    unit = unit[0]
+    if global_mean_data["year"].max() == np.max(out_years):
+        # Use this global-mean for the entire timeseries
+        tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
+        unit = global_mean_data["unit"].unique()
+        if len(unit) != 1:
+            raise AssertionError
+        unit = unit[0]
 
-    global_annual_mean_composite = xr.DataArray(
-        tmp["value"], dims=("year",), coords={"year": tmp["year"]}, attrs={"units": unit}
-    ).pint.quantify()
+        global_annual_mean_composite = xr.DataArray(
+            tmp["value"], dims=("year",), coords={"year": tmp["year"]}, attrs={"units": unit}
+        ).pint.quantify()
+
+    else:
+        # Use observations where we have them,
+        # then join with the global-mean supplement.
+        if config_step.gas not in ["cf4", "c2f6", "c3f8"]:
+            msg = "Check this carefully before using"
+            raise AssertionError(msg)
+
+        tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
+        unit = global_mean_data["unit"].unique()
+        if len(unit) != 1:
+            raise AssertionError
+        unit = unit[0]
+
+        harm_year = float(global_annual_mean_obs_network.year.min())
+        harm_value = float(global_annual_mean_obs_network.pint.to(unit).sel(year=harm_year).data.m)
+
+        harmonised = local.harmonisation.get_harmonised_timeseries(
+            ints=tmp.set_index(["gas", "year", "unit"])["value"].unstack("year"),
+            harm_value=harm_value,
+            harm_units=unit,
+            harm_year=harm_year,
+            n_transition_years=100,
+        )
+        if harmonised.isnull().any().any():
+            raise AssertionError
+
+        harmonised = harmonised.stack("year").to_frame("value").reset_index()
+
+        fig, ax = plt.subplots()
+
+        global_annual_mean_obs_network.plot(ax=ax, label="Obs network")
+        ax.plot(
+            tmp["year"],
+            tmp["value"],
+            label="raw",
+        )
+        ax.plot(
+            harmonised["year"],
+            harmonised["value"],
+            label="harmonised",
+        )
+
+        ax.legend()
+
+        global_annual_mean_composite = xr.DataArray(
+            np.hstack([harmonised["value"], global_annual_mean_obs_network.pint.to(unit).data.m]),
+            dims=("year",),
+            coords={"year": np.hstack([harmonised["year"], global_annual_mean_obs_network.year])},
+            attrs={"units": unit},
+        ).pint.quantify()
 
 else:
     global_annual_mean_composite = global_annual_mean_obs_network.copy()
@@ -247,7 +301,7 @@ global_annual_mean_composite = xr.concat([pre_ind_part, global_annual_mean_compo
 global_annual_mean_composite
 
 # %% editable=true slideshow={"slide_type": ""}
-SHOW_AFTER_YEAR = 1950
+SHOW_AFTER_YEAR = min(1950, pre_ind_year - 20)
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
     global_annual_mean_composite.plot.scatter(ax=axes[0], alpha=1.0, color="tab:orange", marker="x")
@@ -272,7 +326,7 @@ with axes_vertical_split() as axes:
 # %% editable=true slideshow={"slide_type": ""}
 out_years_still_missing = np.setdiff1d(out_years, global_annual_mean_composite.year)
 if out_years_still_missing.size > 1 and np.diff(out_years_still_missing).max() > 1:
-    msg = "More than one gap"
+    msg = f"More than one gap {out_years_still_missing}"
     raise AssertionError(msg)
 
 print(f"Filling in from {out_years_still_missing[0]} to {out_years_still_missing[-1]}")
@@ -437,7 +491,7 @@ global_annual_mean_composite.loc[{"year": out_years_still_missing}] = (
 global_annual_mean_composite
 
 # %% editable=true slideshow={"slide_type": ""}
-SHOW_AFTER_YEAR = 1950
+SHOW_AFTER_YEAR = min(1950, pre_ind_year - 20)
 with axes_vertical_split() as axes:
     global_annual_mean_composite.plot.line(ax=axes[0])
     global_annual_mean_composite.plot.scatter(ax=axes[0], alpha=1.0, color="tab:orange", marker="x")
