@@ -54,7 +54,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c2f6_hats"  # config ID to select for this branch
+step_config_id: str = "so2f2_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -216,9 +216,9 @@ else:
         # Note: when splitting out,
         # there seems to be no special info for these gases:
         # just use general refs
-        or (config_step.gas in ["c2f6"])
+        or (config_step.gas in ["c2f6", "so2f2"])
     ):
-        raise AssertionError
+        raise AssertionError(data_raw)
 
     # TODO: split this out to cover all the cases given in
     # https://gml.noaa.gov/aftp/data/hats/hfcs/ReadMe.txt

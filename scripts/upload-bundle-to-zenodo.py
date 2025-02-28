@@ -146,7 +146,6 @@ def upload_to_zenodo(
     metadata: dict[str, Any],
 ) -> None:
     zenodo_interactor.update_metadata(deposition_id=draft_deposition_id, metadata=metadata)
-    explode
 
     zenodo_interactor.remove_all_files(deposition_id=draft_deposition_id)
 
@@ -240,8 +239,7 @@ def main(  # noqa: PLR0913
         metadata=zenodo_metadata,
     )
 
-    # TODO: turn back on
-    # create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
+    create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
 
     upload_to_zenodo(
         zenodo_bundle_path,
