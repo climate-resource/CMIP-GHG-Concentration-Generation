@@ -399,6 +399,126 @@ retrieve_and_process_menking_et_al_2025_data:
 - expected_hash: 20df9337cddb739dc805e53847a19424
   processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
   raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
+  second_order_deps:
+    co2:
+    - doi: https://doi.org/10.25919/5bfe29ff807fb
+      licence: CC BY 4.0
+      reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+        (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO.
+        Data Collection. https://doi.org/10.25919/5bfe29ff807fb'
+      resource_type: dataset
+      short_name: Law Dome ice core
+      url: https://doi.org/10.25919/5bfe29ff807fb
+    - doi: https://doi.org/10.1038/ngeo2422
+      licence: Supplied by Menking et al. author
+      reference: Bauska, T., Joos, F., Mix, A. et al. Links between atmospheric carbon
+        dioxide, the land carbon reservoir and climate over the past millennium. Nature
+        Geosci 8, 383-387 (2015). https://doi.org/10.1038/ngeo2422
+      resource_type: publication-article
+      short_name: Bauska et al., 2015
+      url: https://doi.org/10.1038/ngeo2422
+    - doi: https://doi.org/10.1038/s41467-024-45894-9
+      licence: Supplied by Menking et al. author
+      reference: King, A.C.F., Bauska, T.K., Brook, E.J. et al. Reconciling ice core
+        CO2 and land-use change following New World-Old World contact. Nat Commun
+        15, 1735 (2024). https://doi.org/10.1038/s41467-024-45894-9
+      resource_type: publication-article
+      short_name: King et al., 2024
+      url: https://doi.org/10.1038/s41467-024-45894-9
+    - doi: https://doi.org/10.1029/2012GL053018
+      licence: Supplied by Menking et al. author
+      reference: Ahn, J., E. J. Brook, A. Schmittner, and K. Kreutz (2012), Abrupt
+        change in atmospheric CO2 during the last ice age, Geophys. Res. Lett., 39,
+        L18711, doi:10.1029/2012GL053018.
+      resource_type: publication-article
+      short_name: Ahn et al., 2012
+      url: https://doi.org/10.1029/2012GL053018
+    n2o:
+    - doi: https://doi.org/10.25919/5bfe29ff807fb
+      licence: CC BY 4.0
+      reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+        (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO.
+        Data Collection. https://doi.org/10.25919/5bfe29ff807fb'
+      resource_type: dataset
+      short_name: Law Dome ice core
+      url: https://doi.org/10.25919/5bfe29ff807fb
+    - doi: https://doi.org/10.15784/601693
+      licence: Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]
+      reference: 'Ghosh, S., Toyoda, S., Buizert, C., ..., Yoshida, N., et al. (2023).
+        Concentration and isotopic composition of atmospheric N2O over the last century.
+        Journal of Geophysical Research: Atmospheres, 128, e2022JD038281. https://doi.org/10.1029/2022JD038281'
+      resource_type: publication-article
+      short_name: Ghosh et al., 2023
+      url: https://doi.org/10.15784/601693
+    - doi: https://doi.org/10.1016/j.quascirev.2009.03.011
+      licence: Supplied by Menking et al. author
+      reference: Schilt A, Baumgartner M, Blunier T, et al. Glacial-interglacial and
+        millennial-scale variations in the atmospheric nitrous oxide concentration
+        during the last 800,000 years. Quaternary Science Reviews. 2010;29(1):182-192.
+        doi:10.1016/j.quascirev.2009.03.011
+      resource_type: publication-article
+      short_name: Schilt et al., 2010
+      url: https://doi.org/10.1016/j.quascirev.2009.03.011
+    - doi: https://doi.org/10.1029/2023EA002840
+      licence: Supplied by Menking et al. author
+      reference: Azharuddin, S., Ahn, J., Ryu, Y., Brook, E., & Salehnia, N. (2024).
+        Millennial-scale changes in atmospheric nitrous oxide during the Holocene.
+        Earth and Space Science, 11, e2023EA002840. https://doi.org/10.1029/2023EA002840
+      resource_type: publication-article
+      short_name: Azharuddin et al., 2024
+      url: https://doi.org/10.1029/2023EA002840
+    - doi: https://doi.org/10.1029/2018JD029008
+      licence: Supplied by Menking et al. author
+      reference: "Prokopiou, M., Sapart, C. J., Rosen, J., ..., & R\xF6ckmann, T.\
+        \ (2018). Changes in the isotopic signature of atmospheric nitrous oxide and\
+        \ its global average source during the last three millennia. Journal of Geophysical\
+        \ Research: Atmospheres, 123, 10,757-10,773. https://doi.org/10.1029/2018JD029008"
+      resource_type: publication-article
+      short_name: Prokopiou et al., 2018
+      url: https://doi.org/10.1029/2018JD029008
+    - doi: https://doi.org/10.1029/2020GB006568
+      licence: Supplied by Menking et al. author
+      reference: Ryu, Y., Ahn, J., Yang, J.-W., Brook, E. J., Timmermann, A., Blunier,
+        T., et al. (2020). Atmospheric nitrous oxide variations on centennial time
+        scales during the past two millennia. Global Biogeochemical Cycles, 34, e2020GB006568.
+        https://doi.org/10.1029/2020GB006568
+      resource_type: publication-article
+      short_name: Ryu et al., 2020
+      url: https://doi.org/10.1029/2020GB006568
+    - doi: https://doi.org/10.1029/2006JD007208
+      licence: Supplied by Menking et al. author
+      reference: "Ishijima, K., S. Sugawara, K. Kawamura, G. Hashida, ..., and T.\
+        \ Nakazawa (2007), Temporal variations of the atmospheric nitrous oxide concentration\
+        \ and its \u03B415N and \u03B418O for the latter half of the 20th century\
+        \ reconstructed from firn air analyses, J. Geophys. Res., 112, D03305, doi:10.1029/2006JD007208."
+      resource_type: publication-article
+      short_name: Ishijima et al., 2007
+      url: https://doi.org/10.1029/2006JD007208
+    - doi: https://doi.org/10.1038/ngeo1421
+      licence: Supplied by Menking et al. author
+      reference: Park, S., Croteau, P., Boering, K. et al. Trends and seasonal cycles
+        in the isotopic composition of nitrous oxide since 1940. Nature Geosci 5,
+        261-265 (2012). https://doi.org/10.1038/ngeo1421
+      resource_type: publication-article
+      short_name: Park et al., 2012
+      url: https://doi.org/10.1038/ngeo1421
+    - doi: https://doi.org/10.5194/acp-6-493-2006
+      licence: Supplied by Menking et al. author
+      reference: "Bernard, S., R\xF6ckmann, T., Kaiser, J., Barnola, J.-M., ..., and\
+        \ Chappellaz, J.: Constraints on N2O budget changes since pre-industrial time\
+        \ from new firn air and ice core isotope measurements, Atmos. Chem. Phys.,\
+        \ 6, 493-503, https://doi.org/10.5194/acp-6-493-2006, 2006."
+      resource_type: publication-article
+      short_name: Bernard et al., 2006
+      url: https://doi.org/10.5194/acp-6-493-2006
+    - doi: https://doi.org/10.5194/acp-3-315-2003
+      licence: Supplied by Menking et al. author
+      reference: 'Roeckmann, T., Kaiser, J., and Brenninkmeijer, C. A. M.: The isotopic
+        fingerprint of the pre-industrial and the anthropogenic N2O source, Atmos.
+        Chem. Phys., 3, 315-323, https://doi.org/10.5194/acp-3-315-2003, 2003.'
+      resource_type: publication-article
+      short_name: Roeckmann et al., 2006
+      url: https://doi.org/10.5194/acp-3-315-2003
   source_info:
     doi: null
     licence: Author supplied

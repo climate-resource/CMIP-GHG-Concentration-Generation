@@ -112,3 +112,10 @@ local.dependencies.save_source_info_to_db(
     db=config.dependency_db,
     source_info=config_step.source_info,
 )
+
+# %%
+for sod in config_step.second_order_deps.values():
+    local.dependencies.save_source_info_to_db(
+        db=config.dependency_db,
+        source_info=sod,
+    )

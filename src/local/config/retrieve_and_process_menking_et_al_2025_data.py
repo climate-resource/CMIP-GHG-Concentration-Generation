@@ -39,3 +39,10 @@ class RetrieveExtractMenkingEtal2025Data:
 
     source_info: SourceInfo
     """Source information"""
+
+    second_order_deps: dict[str, tuple[SourceInfo, ...]]
+    """
+    Second-order dependency source information
+
+    Keys are gases, values are second-order dependencies.
+    """

@@ -167,6 +167,13 @@ local.dependencies.save_dependency_into_db(
     dependency_short_name=config_retrieve_and_process_menking_et_al_2025_data.source_info.short_name,
 )
 
+for dep in config_retrieve_and_process_menking_et_al_2025_data.second_order_deps[config_step.gas]:
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=dep.short_name,
+    )
+
 # %% [markdown]
 # ### Define some important constants
 

@@ -17,6 +17,18 @@ from local.dependencies import SourceInfo
 from local.noise_addition import NoiseAdderPercentageXNoise
 
 SOURCE_INFO_SHORT_NAME = "Law Dome ice core"
+SOURCE_INFO = SourceInfo(
+    short_name=SOURCE_INFO_SHORT_NAME,
+    licence="CC BY 4.0",
+    reference=(
+        "Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): "
+        "Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. "
+        "Data Collection. https://doi.org/10.25919/5bfe29ff807fb"
+    ),
+    doi="https://doi.org/10.25919/5bfe29ff807fb",
+    url="https://doi.org/10.25919/5bfe29ff807fb",
+    resource_type="dataset",
+)
 
 RETRIEVE_AND_PROCESS_LAW_DOME_STEPS = [
     RetrieveProcessLawDomeConfig(
@@ -27,18 +39,7 @@ RETRIEVE_AND_PROCESS_LAW_DOME_STEPS = [
         files_md5_sum={
             Path("data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx"): "f7dd24e36565b2e213b20f90c88c990e"
         },
-        source_info=SourceInfo(
-            short_name=SOURCE_INFO_SHORT_NAME,
-            licence="CC BY 4.0",
-            reference=(
-                "Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew (2019): "
-                "Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. "
-                "Data Collection. https://doi.org/10.25919/5bfe29ff807fb"
-            ),
-            doi="https://doi.org/10.25919/5bfe29ff807fb",
-            url="https://doi.org/10.25919/5bfe29ff807fb",
-            resource_type="dataset",
-        ),
+        source_info=SOURCE_INFO,
     )
 ]
 
