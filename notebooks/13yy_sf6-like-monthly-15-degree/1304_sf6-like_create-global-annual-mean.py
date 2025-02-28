@@ -128,12 +128,12 @@ def axes_vertical_split(
 global_mean_supplement_config = local.global_mean_extension.get_global_mean_supplement_config(
     gas=config_step.gas, config=config
 )
-global_mean_supplement_files = [global_mean_supplement_config.processed_data_file]
 
 # %% editable=true slideshow={"slide_type": ""}
-if not global_mean_supplement_files:
+if not global_mean_supplement_config:
     pass
-elif len(global_mean_supplement_files) == 1:
+elif len(global_mean_supplement_config) == 1:
+    global_mean_supplement_files = [global_mean_supplement_config.processed_data_file]
     global_mean_data = pd.read_csv(global_mean_supplement_files[0])
     global_mean_data = global_mean_data[global_mean_data["gas"] == config_step.gas]
 
@@ -174,7 +174,7 @@ allyears_latitudinal_gradient
 # ### Define some important constants
 
 # %%
-if global_mean_supplement_files:
+if global_mean_supplement_config:
     max_year = min(
         2023,
         max(
@@ -202,7 +202,7 @@ obs_network_years
 # ## Initialise
 
 # %% editable=true slideshow={"slide_type": ""}
-if global_mean_supplement_files:
+if global_mean_supplement_config:
     if global_mean_data["year"].max() >= np.max(out_years):
         # Use this global-mean up until our latest year
         tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
