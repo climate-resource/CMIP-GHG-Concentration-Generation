@@ -132,6 +132,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch4_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch4_gc-md_monthly_source-short-names.txt
   step_config_id: ch4_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms-medusa_monthly.complete
@@ -163,6 +167,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/c3f8_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: c3f8_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms_monthly.complete
@@ -174,6 +182,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/c3f8_gc-ms_monthly_source-short-names.txt
   step_config_id: c3f8_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms-medusa_monthly.complete
@@ -205,6 +217,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc152a_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc152a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms_monthly.complete
@@ -224,6 +240,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc152a_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc152a_gc-ms_monthly
   time_frequency: monthly
 retrieve_and_extract_ale_data:

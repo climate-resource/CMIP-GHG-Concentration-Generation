@@ -10,6 +10,11 @@ from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_and_extract_agage import RetrieveExtractAGAGEDataConfig
 
+README = URLSource(
+    url="https://agage2.eas.gatech.edu/data_archive/agage/readme",
+    known_hash="e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2",
+)
+
 AGAGE_GAS_MAPPING = {
     "c2f6": "pfc-116",
     "c3f8": "pfc-218",
@@ -2149,8 +2154,11 @@ def create_agage_handling_config(
                 instrument=instrument,
                 time_frequency=frequency,
                 raw_dir=raw_dir,
+                readme=README,
                 download_complete_file=raw_dir / f"{gas}_{instrument}_{frequency}.complete",
                 processed_monthly_data_with_loc_file=interim_dir / f"{gas}_{instrument}_{frequency}.csv",
+                source_info_short_names_file=interim_dir
+                / f"{gas}_{instrument}_{frequency}_source-short-names.txt",
                 # generate_hashes=False,
                 generate_hashes=True,
                 download_urls=DOWNLOAD_URLS[(gas, instrument, frequency)],

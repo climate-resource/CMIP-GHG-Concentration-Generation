@@ -273,6 +273,12 @@ dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
 db_connection.close()
 
 # %%
+sources
+
+# %%
+dependencies
+
+# %%
 gas_dependencies_short_names = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
 
 gas_dependencies_short_names

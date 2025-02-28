@@ -115,8 +115,9 @@ if historical_emissions.empty:
 historical_emissions
 
 # %%
-with open(config_historical_emissions.source_info_short_names_file) as fh:
-    hist_emms_short_names = [v.strip() for v in fh.read().split(";")]
+hist_emms_short_names = local.dependencies.load_source_info_short_names(
+    config_historical_emissions.source_info_short_names_file
+)
 
 for sn in hist_emms_short_names:
     local.dependencies.save_dependency_into_db(

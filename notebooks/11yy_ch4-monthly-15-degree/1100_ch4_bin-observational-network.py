@@ -79,7 +79,6 @@ config_process_gage_data = get_config_for_step_id(
     config=config, step="retrieve_and_extract_gage_data", step_config_id="monthly"
 )
 
-
 # %% [markdown]
 # ## Action
 
@@ -88,17 +87,22 @@ config_process_gage_data = get_config_for_step_id(
 
 # %%
 all_data_l = []
-for f, dep_short_name in [
+for f, dep_short_names in [
     # (config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file, None),
     # (config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file, None),
-    # (config_process_agage_data_gc_md.processed_monthly_data_with_loc_file, None),
+    (
+        config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_agage_data_gc_md.source_info_short_names_file
+        ),
+    ),
     (
         config_process_ale_data.processed_monthly_data_with_loc_file,
-        config_process_ale_data.source_info.short_name,
+        [config_process_ale_data.source_info.short_name],
     ),
     (
         config_process_gage_data.processed_monthly_data_with_loc_file,
-        config_process_gage_data.source_info.short_name,
+        [config_process_gage_data.source_info.short_name],
     ),
 ]:
     try:
@@ -107,14 +111,14 @@ for f, dep_short_name in [
         msg = f"Error reading {f}"
         raise ValueError(msg) from exc
 
-    local.dependencies.save_dependency_into_db(
-        db=config.dependency_db,
-        gas=config_step.gas,
-        dependency_short_name=dep_short_name,
-    )
+    for dsn in dep_short_names:
+        local.dependencies.save_dependency_into_db(
+            db=config.dependency_db,
+            gas=config_step.gas,
+            dependency_short_name=dsn,
+        )
 
 all_data = pd.concat(all_data_l)
-# TODO: add check of gas names to processed data checker
 all_data["gas"] = all_data["gas"].str.lower()
 all_data = all_data[all_data["gas"] == config_step.gas]
 all_data

@@ -200,3 +200,39 @@ def save_dependency_into_db(
             raise ValueError(msg)
 
     db_connection.close()
+
+
+def save_source_info_short_names(short_names: list[str], out_path: Path) -> None:
+    """
+    Load source info short names from a basic text file
+
+    Parameters
+    ----------
+    short_names
+        Short names to save
+
+    out_path
+        File in which to save the short names
+    """
+    with open(out_path, "w") as fh:
+        fh.write(";".join(short_names))
+
+
+def load_source_info_short_names(inf: Path) -> list[str]:
+    """
+    Load source info short names from a basic text file
+
+    Parameters
+    ----------
+    inf
+        File from which to load the short names
+
+    Returns
+    -------
+    :
+        Loaded short names
+    """
+    with open(inf) as fh:
+        res = [v.strip() for v in fh.read().split(";")]
+
+    return res

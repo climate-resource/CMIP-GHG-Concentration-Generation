@@ -142,5 +142,6 @@ for si in (
     source_info_short_names.append(si.short_name)
 
 # %%
-with open(config_step.source_info_short_names_file, "w") as fh:
-    fh.write(";".join(source_info_short_names))
+local.dependencies.save_source_info_short_names(
+    short_names=source_info_short_names, out_path=config_step.source_info_short_names_file
+)
