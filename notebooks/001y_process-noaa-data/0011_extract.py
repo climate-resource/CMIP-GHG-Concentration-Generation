@@ -54,7 +54,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc134a_hats"  # config ID to select for this branch
+step_config_id: str = "c2f6_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -213,6 +213,10 @@ else:
         or config_step.gas.startswith("halon")
         or config_step.gas.startswith("hcfc")
         or (config_step.gas in ["ccl4", "cfc113", "ch2cl2", "ch3br", "ch3ccl3", "ch3cl"])
+        # Note: when splitting out,
+        # there seems to be no special info for these gases:
+        # just use general refs
+        or (config_step.gas in ["c2f6"])
     ):
         raise AssertionError
 
