@@ -63,6 +63,7 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ## Action
 
 # %%
+config_step.complete_historical_emissions_file.parent.mkdir(exist_ok=True, parents=True)
 rcmip_emissions_fname = pooch.retrieve(
     url="https://rcmip-protocols-au.s3-ap-southeast-2.amazonaws.com/v5.1.0/rcmip-emissions-annual-means-v5-1-0.csv",
     known_hash="md5:4044106f55ca65b094670e7577eaf9b3",
@@ -124,7 +125,7 @@ source_info_short_names = []
 for si in (
     local.dependencies.SourceInfo(
         short_name="Nicholls et al., 2020",
-        licence="CC BY 4.0",  # https://zenodo.org/records/3519317
+        licence="CC BY 4.0",
         reference=(
             "Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: "
             "Reduced Complexity Model Intercomparison Project Phase 1: "

@@ -229,82 +229,64 @@ metadata_minimum_common = dict(
 metadata_minimum_common
 
 # %%
+source_info_common = (
+    local.dependencies.SourceInfo(
+        short_name="Meinshausen et al., 2017",
+        licence="Paper, NA",
+        reference=(
+            "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
+            "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
+            "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
+        ),
+        doi="https://doi.org/10.5194/gmd-10-2057-2017",
+        url="https://doi.org/10.5194/gmd-10-2057-2017",
+        resource_type="publication-article",
+    ),
+    local.dependencies.SourceInfo(
+        short_name="Nicholls et al., in-prep. (2025)",
+        licence="Paper, NA",
+        reference=(
+            "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
+            "Greenhouse gas concentrations for climate modelling (CMIP7), "
+            "in-prep, 2025."
+        ),
+        url="https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
+        resource_type="publication-article",
+    ),
+)
+for si in source_info_common:
+    local.dependencies.save_source_info_to_db(
+        db=config.dependency_db,
+        source_info=si,
+    )
+
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=si.short_name,
+    )
+
+# %%
 db_connection = sqlite3.connect(config.dependency_db)
 sources = pd.read_sql("SELECT * FROM source", con=db_connection)
 dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
 db_connection.close()
 
 # %%
-dependencies_gas = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
-if not dependencies_gas:
+gas_dependencies_short_names = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
+if not gas_dependencies_short_names:
     raise AssertionError
 
-dependencies_gas
+gas_dependencies_short_names
 
 # %%
-gas_deps = sources[sources["short_name"].isin(dependencies_gas)].to_dict("records")
+if len(gas_dependencies_short_names) <= len(source_info_common):
+    msg = f"Missing dependencies, only have: {gas_dependencies_short_names}"
+    raise AssertionError(msg)
 
-gas_deps.extend(
-    (
-        # TODO: insert this everywhere sooner
-        # and make sure it comes through Zenodo records.
-        {
-            "short_name": "Meinshausen et al., 2017",
-            "licence": "Paper, NA",
-            "reference": (
-                "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
-                "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
-                "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
-            ),
-            "resource_type": "publication-article",
-            "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
-            "url": "https://doi.org/10.5194/gmd-10-2057-2017",
-        },
-        {
-            "short_name": "Nicholls et al., in-prep. (2025)",
-            "licence": "Paper, NA",
-            "reference": (
-                "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
-                "Greenhouse gas concentrations for climate modelling (CMIP7), "
-                "in-prep, 2025."
-            ),
-            "url": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-        },
-    )
-)
+# %%
+gas_deps = sources[sources["short_name"].isin(gas_dependencies_short_names)].to_dict("records")
 gas_deps
-
-# %%
-# # TODO: replace this with generation of references throughout the workflow,
-# # rather than from static file
-# run_id = config_step.input4mips_out_dir.parents[2].name
-# data_dir = config_step.input4mips_out_dir.parents[1]
-
-# with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
-#     all_gas_deps = json.load(fh)
-
-# try:
-#     gas_deps = all_gas_deps[config_step.gas]
-# except KeyError:
-#     # No deps yet, assume it came from SSP2-4.5
-#     gas_deps = [
-#         # TODO: move this earlier
-#         {
-#             "gas": config_step.gas,
-#             "source": "Meinshausen et al., GMD (2020)",
-#             "licence": "Paper, NA",
-#             "reference": (
-#                 "Meinshausen, M., Nicholls, Z. R. J., ..., Vollmer, M. K., and Wang, R. H. J.: "
-#                 "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
-#                 "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
-#             ),
-#             "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
-#             "url": "https://doi.org/10.5194/gmd-13-3571-2020",
-#         }
-#     ]
-
-
-# gas_deps
 
 # %%
 # Order deps by reverse alphabetical order for now,
