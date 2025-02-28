@@ -9,11 +9,12 @@ from pathlib import Path
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config.base import Config
+from local.dependencies import load_source_info_short_names
 
 
 def get_obs_network_binning_input_files(  # noqa: PLR0911
-    gas: str, config: Config
-) -> list[Path]:
+    gas: str, config: Config, task_creation: bool = False
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network
 
@@ -25,21 +26,25 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
     config
         Configuration instance to use for this retrieval
 
+    task_creation
+        Are we calling this function as part of config creation?
+
     Returns
     -------
+    :
         Input files to use for binning the observational network
     """
     if gas in ("sf6",):
-        return get_input_files_sf6_like(gas=gas, config=config)
+        return get_input_files_sf6_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("cfc11", "cfc12", "ch3ccl3", "ccl4"):
-        return get_input_files_cfc11_like(gas=gas, config=config)
+        return get_input_files_cfc11_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("cfc113",):
-        return get_input_files_cfc113_like(gas=gas, config=config)
+        return get_input_files_cfc113_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("cfc115", "cfc114", "hfc245fa", "c3f8", "cc4f8"):
-        return get_input_files_cfc115_like(gas=gas, config=config)
+        return get_input_files_cfc115_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in (
         "hfc134a",
@@ -60,21 +65,31 @@ def get_obs_network_binning_input_files(  # noqa: PLR0911
         "hfc365mfc",
         "so2f2",
     ):
-        return get_input_files_hfc134a_like(gas=gas, config=config)
+        return get_input_files_hfc134a_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("chcl3",):
-        return get_input_files_chcl3_like(gas=gas, config=config)
+        return get_input_files_chcl3_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("halon2402", "nf3", "c2f6", "cf4"):
-        return get_input_files_halon2402_like(gas=gas, config=config)
+        return get_input_files_halon2402_like(gas=gas, config=config, task_creation=task_creation)
 
     if gas in ("hfc23", "hfc4310mee"):
-        return get_input_files_hfc23_like(gas=gas, config=config)
+        return get_input_files_hfc23_like(gas=gas, config=config, task_creation=task_creation)
 
     raise NotImplementedError(gas)
 
 
-def get_input_files_sf6_like(gas: str, config: Config) -> list[Path]:
+def load_source_info_short_names_safe(fp: Path, task_creation: bool) -> list[str] | None:
+    """
+    Load source info short names, being safe with config creation
+    """
+    if task_creation:
+        return None
+
+    return load_source_info_short_names(fp)
+
+
+def get_input_files_sf6_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like SF6
     """
@@ -100,13 +115,31 @@ def get_input_files_sf6_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_noaa_hats_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_md_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_cfc11_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_cfc11_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-11
     """
@@ -131,14 +164,39 @@ def get_input_files_cfc11_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_noaa_hats_data.source_info_short_names_file, task_creation=task_creation
+            ),
+        ),
+        (
+            config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_md_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_cfc113_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_cfc113_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-113
     """
@@ -158,13 +216,33 @@ def get_input_files_cfc113_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_noaa_hats_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_md_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_hfc134a_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_hfc134a_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like HFC-134a
     """
@@ -184,13 +262,33 @@ def get_input_files_hfc134a_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_noaa_hats_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_cfc115_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_cfc115_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-114
     """
@@ -205,12 +303,24 @@ def get_input_files_cfc115_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_chcl3_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_chcl3_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-11
     """
@@ -230,13 +340,33 @@ def get_input_files_chcl3_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_agage_gc_md_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_md_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_halon2402_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_halon2402_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like halon-2404
     """
@@ -251,12 +381,24 @@ def get_input_files_halon2402_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_noaa_hats_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]
 
 
-def get_input_files_hfc23_like(gas: str, config: Config) -> list[Path]:
+def get_input_files_hfc23_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
     """
     Get the input files to use for binning the observational network for gases we handle like HFC-23
     """
@@ -266,5 +408,11 @@ def get_input_files_hfc23_like(gas: str, config: Config) -> list[Path]:
         step_config_id=f"{gas}_gc-ms-medusa_monthly",
     )
     return [
-        config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+        (
+            config_process_agage_gc_ms_medusa_data.processed_monthly_data_with_loc_file,
+            load_source_info_short_names_safe(
+                config_process_agage_gc_ms_medusa_data.source_info_short_names_file,
+                task_creation=task_creation,
+            ),
+        ),
     ]

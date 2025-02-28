@@ -78,7 +78,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a"  # config ID to select for this branch
+step_config_id: str = "cfc12"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -125,10 +125,10 @@ def axes_vertical_split(
 # ### Load data
 
 # %% editable=true slideshow={"slide_type": ""}
-global_mean_supplement_files = local.global_mean_extension.get_global_mean_supplement_files(
+global_mean_supplement_config = local.global_mean_extension.get_global_mean_supplement_config(
     gas=config_step.gas, config=config
 )
-global_mean_supplement_files
+global_mean_supplement_files = [global_mean_supplement_config.processed_data_file]
 
 # %% editable=true slideshow={"slide_type": ""}
 if not global_mean_supplement_files:
@@ -136,6 +136,13 @@ if not global_mean_supplement_files:
 elif len(global_mean_supplement_files) == 1:
     global_mean_data = pd.read_csv(global_mean_supplement_files[0])
     global_mean_data = global_mean_data[global_mean_data["gas"] == config_step.gas]
+
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=global_mean_supplement_config.source_info.short_name,
+    )
+
     print(global_mean_data)
 else:
     raise NotImplementedError(global_mean_supplement_files)
