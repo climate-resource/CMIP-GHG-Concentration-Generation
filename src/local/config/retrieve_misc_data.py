@@ -9,6 +9,8 @@ from pathlib import Path
 from attrs import frozen
 from pydoit_nb.config_tools import URLSource
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveMiscDataConfig:
@@ -73,3 +75,6 @@ class HadCRUT5Config:
 
     download_url: URLSource
     """URL from which to download data"""
+
+    source_info: SourceInfo
+    """Source information"""

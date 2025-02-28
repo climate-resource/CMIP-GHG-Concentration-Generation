@@ -129,6 +129,13 @@ hadcrut_temperatures = (
 hadcrut_temperatures
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_retrieve_misc.hadcrut5.source_info.short_name,
+)
+
+# %%
 seasonality_change_eofs_obs_network = xr.load_dataset(
     config_step.observational_network_seasonality_change_eofs_file
 ).pint.quantify()

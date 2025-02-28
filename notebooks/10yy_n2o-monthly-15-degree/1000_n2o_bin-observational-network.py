@@ -124,7 +124,6 @@ for f, dep_short_names in [
         )
 
 all_data = pd.concat(all_data_l)
-# TODO: add check of gas names to processed data checker
 all_data["gas"] = all_data["gas"].str.lower()
 all_data = all_data[all_data["gas"] == config_step.gas]
 all_data

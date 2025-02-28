@@ -14,6 +14,7 @@ from local.config.retrieve_misc_data import (
     PRIMAPConfig,
     RetrieveMiscDataConfig,
 )
+from local.dependencies import SourceInfo
 
 RETRIEVE_MISC_DATA_STEPS = [
     RetrieveMiscDataConfig(
@@ -41,6 +42,20 @@ RETRIEVE_MISC_DATA_STEPS = [
                 # Use the analysis time series, rather than non-infilled
                 url="https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc",
                 known_hash="98d9fa3bbbb4b36ed5eb8b11fcbc308e7b96c83f8ac21902e52d238246f790d8",
+            ),
+            source_info=SourceInfo(
+                short_name="HadCRUT5",
+                licence="Open Government License v3",  # https://www.metoffice.gov.uk/hadobs/hadcrut5/
+                reference=(
+                    "Morice, C. P., Kennedy, J. J., Rayner, N. A., Winn, J. P., Hogan, E., ..., et al. "
+                    "(2021). An updated assessment of near-surface temperature change from 1850: "
+                    "the HadCRUT5 data set. Journal of Geophysical Research: Atmospheres, "
+                    "126, e2019JD032361. "
+                    "https://doi.org/10.1029/2019JD032361"
+                ),
+                doi="https://doi.org/10.1029/2019JD032361",
+                url="https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/download.html",
+                resource_type="dataset",
             ),
         ),
     )

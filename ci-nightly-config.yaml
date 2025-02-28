@@ -890,6 +890,16 @@ retrieve_and_process_scripps_data:
     known_hash: 1d9a64819477180f48426e3b23b221b59801d13dfde594b23ee12784a470b340
     url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
   merged_ice_core_data_processed_data_file: data/interim/mauna_loa/merged_ice_core.csv
+  merged_ice_core_data_source_info:
+    doi: null
+    licence: CC BY 4.0
+    reference: C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+      of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from
+      1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+      of Oceanography, San Diego, 88 pages, 2001.
+    resource_type: publication-article
+    short_name: Scripps - Law Dome merged CO2 record
+    url: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
   processed_data_with_loc_file: data/interim/mauna_loa/stations_with_loc.csv
   raw_dir: data/raw/mauna_loa
   station_data:
@@ -935,6 +945,16 @@ retrieve_misc_data:
       known_hash: 98d9fa3bbbb4b36ed5eb8b11fcbc308e7b96c83f8ac21902e52d238246f790d8
       url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
     raw_dir: data/raw/hadcrut5
+    source_info:
+      doi: https://doi.org/10.1029/2019JD032361
+      licence: Open Government License v3
+      reference: 'Morice, C. P., Kennedy, J. J., Rayner, N. A., Winn, J. P., Hogan,
+        E., ..., et al. (2021). An updated assessment of near-surface temperature
+        change from 1850: the HadCRUT5 data set. Journal of Geophysical Research:
+        Atmospheres, 126, e2019JD032361. https://doi.org/10.1029/2019JD032361'
+      resource_type: dataset
+      short_name: HadCRUT5
+      url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/download.html
   natural_earth:
     countries_shape_file_name: ne_110m_admin_0_countries.shx
     download_urls:

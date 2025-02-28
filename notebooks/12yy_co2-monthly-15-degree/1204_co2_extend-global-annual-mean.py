@@ -145,6 +145,13 @@ mauna_loa_merged = pd.read_csv(
 mauna_loa_merged
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_retrieve_and_process_scripps_data.merged_ice_core_data_source_info.short_name,
+)
+
+# %%
 menking_et_al = pd.read_csv(config_retrieve_and_process_menking_et_al_2025_data.processed_data_file)
 menking_et_al = menking_et_al[menking_et_al["gas"] == config_step.gas]
 menking_et_al["source"] = "menking_et_al_2025"
@@ -152,6 +159,13 @@ if menking_et_al["year"].min() > 1:
     raise AssertionError
 
 menking_et_al
+
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_retrieve_and_process_menking_et_al_2025_data.source_info.short_name,
+)
 
 # %% [markdown]
 # ### Define some important constants

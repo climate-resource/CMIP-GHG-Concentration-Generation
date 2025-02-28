@@ -31,6 +31,7 @@ import pooch
 from pydoit_nb.checklist import generate_directory_checklist
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %%
@@ -86,3 +87,9 @@ if "1961-1990 climatology" in comment:
 else:
     msg = "Unexpected reference period"
     raise AssertionError(msg)
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.hadcrut5.source_info,
+)
