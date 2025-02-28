@@ -35,6 +35,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.dependencies
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -97,43 +98,11 @@ droste = droste[droste["gas"] == config_step.gas]
 droste
 
 # %%
-import sqlite3
-
-# %%
-# db_connection = sqlite3.connect(config.dependency_db)
-db_connection = sqlite3.connect("../../tmp.db")
-
-with db_connection as db_cursor:
-    dep_table_check = db_cursor.execute("""
-        SELECT name FROM sqlite_master
-        WHERE type='table'
-        AND name='dependencies';
-    """).fetchall()
-
-    if not dep_table_check:
-        # Create the table
-        db_cursor.execute("""
-            CREATE TABLE dependencies(
-                gas VARCHAR(255) NOT NULL,
-                short_name VARCHAR(255),
-                UNIQUE (gas, short_name),
-                FOREIGN KEY (short_name) REFERENCES source(short_name)
-            );
-        """)
-
-# %%
-config_step.gas
-
-# %%
-with db_connection as db_cursor:
-    db_cursor.execute("INSERT INTO dependencies VALUES(?, ?)", (config_step.gas, "Droste et al., 2020"))
-
-# %%
-import pandas as pd
-pd.read_sql("SELECT * FROM dependencies", con=db_connection)
-
-# %%
-db_connection.close()
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_droste.source_info.short_name,
+)
 
 # %%
 historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
@@ -144,6 +113,17 @@ if historical_emissions.empty:
     msg = "No data found for gas, check your config"
     raise AssertionError(msg)
 historical_emissions
+
+# %%
+with open(config_historical_emissions.source_info_short_names_file) as fh:
+    hist_emms_short_names = [v.strip() for v in fh.read().split(";")]
+
+for sn in hist_emms_short_names:
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=sn,
+    )
 
 # %% [markdown]
 # ### Calculate latitudinal gradient

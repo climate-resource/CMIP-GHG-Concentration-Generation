@@ -31,13 +31,14 @@
 # %%
 import datetime
 import itertools
-import json
+import sqlite3
 from functools import partial
 from pathlib import Path
 
 import cf_xarray.units
 import cftime
 import numpy as np
+import pandas as pd
 import pint_xarray
 import tqdm.autonotebook as tqdman
 import xarray as xr
@@ -228,11 +229,7 @@ metadata_minimum_common = dict(
 metadata_minimum_common
 
 # %%
-import pandas as pd
-import sqlite3
-
-# %%
-db_connection = sqlite3.connect("../../tmp.db")
+db_connection = sqlite3.connect(config.dependency_db)
 sources = pd.read_sql("SELECT * FROM source", con=db_connection)
 dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
 db_connection.close()
@@ -241,7 +238,7 @@ db_connection.close()
 dependencies_gas = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
 if not dependencies_gas:
     raise AssertionError
-    
+
 dependencies_gas
 
 # %%
@@ -252,7 +249,7 @@ gas_deps.extend(
         # TODO: insert this everywhere sooner
         # and make sure it comes through Zenodo records.
         {
-            "short_name": "Meinshausen et al., GMD (2017)",
+            "short_name": "Meinshausen et al., 2017",
             "licence": "Paper, NA",
             "reference": (
                 "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
@@ -264,7 +261,7 @@ gas_deps.extend(
             "url": "https://doi.org/10.5194/gmd-10-2057-2017",
         },
         {
-            "short_name": "Nicholls et al., in-prep (2025)",
+            "short_name": "Nicholls et al., in-prep. (2025)",
             "licence": "Paper, NA",
             "reference": (
                 "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
@@ -272,7 +269,7 @@ gas_deps.extend(
                 "in-prep, 2025."
             ),
             "url": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-        } 
+        },
     )
 )
 gas_deps

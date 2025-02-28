@@ -28,6 +28,7 @@ import pandas as pd
 import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -124,73 +125,7 @@ clean.to_csv(config_step.processed_data_file, index=False)
 config_step.processed_data_file
 
 # %%
-import sqlite3
-
-# %%
-# db_connection = sqlite3.connect(config.dependency_db)
-db_connection = sqlite3.connect("../../tmp.db")
-
-with db_connection as db_cursor:
-    source_table_check = db_cursor.execute("""
-        SELECT name FROM sqlite_master
-        WHERE type='table'
-        AND name='source';
-    """).fetchall()
-
-    if not source_table_check:
-        # Create the table
-        db_cursor.execute("""
-            CREATE TABLE source(
-                short_name VARCHAR(255) NOT NULL PRIMARY KEY,
-                licence VARCHAR(255) NOT NULL,
-                reference VARCHAR(4095) NOT NULL,
-                resource_type VARCHAR(255) NOT NULL,
-                url VARCHAR(255) NOT NULL,
-                doi VARCHAR(255) NULL
-            );
-        """)
-
-
-# %%
-from attrs import asdict, define
-
-
-# %%
-@define
-class SourceInfo:
-    short_name: str
-    licence: str
-    reference: str
-    resource_type: str
-    url: str
-    doi: str | None = None
-
-
-# %%
-source_info = SourceInfo(
-    short_name="Droste et al., 2020",
-    licence="CC BY 4.0",  # https://zenodo.org/records/3519317
-    reference=(
-        "Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.: "
-        "Trends and emissions of six perfluorocarbons "
-        "in the Northern Hemisphere and Southern Hemisphere, "
-        "Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020, 2020."
-    ),
-    doi="https://doi.org/10.5194/acp-20-4787-2020",
-    url="https://doi.org/10.5194/acp-20-4787-2020",
-    resource_type="publication-article",
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
 )
-source_info
-
-# %%
-source_info_for_db = (asdict(source_info),)
-
-# %%
-with db_connection as db_cursor:
-    db_cursor.executemany("INSERT INTO source VALUES(:short_name, :licence, :reference, :resource_type, :url, :doi)", source_info_for_db)
-
-# %%
-pd.read_sql("SELECT * FROM source", con=db_connection)
-
-# %%
-db_connection.close()

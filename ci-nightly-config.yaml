@@ -178,7 +178,8 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   year_drop_observational_data_before_and_including: null
 ci: true
 compile_historical_emissions:
-- complete_historical_emissions_file: data/processed/historical_emissions
+- complete_historical_emissions_file: data/processed/historical_emissions/historical_emissions.csv
+  source_info_short_names_file: data/processed/historical_emissions/source_short_names.txt
   step_config_id: only
 crunch_equivalent_species: []
 crunch_grids:
@@ -238,6 +239,7 @@ crunch_grids:
   hemispheric_mean_annual_mean_file: data/interim/hfc152a/hfc152a_hemispheric-mean_annual-mean.nc
   hemispheric_mean_monthly_file: data/interim/hfc152a/hfc152a_hemispheric-mean_monthly.nc
   step_config_id: hfc152a
+dependency_db: data/processed/dependencies.db
 doi: ci-hence-no-valid-doi
 name: CI nightly
 plot_input_data_overviews:
@@ -703,6 +705,16 @@ retrieve_and_process_droste_et_al_2020_data:
 - download_complete_file: data/raw/droste-et-al-2020/download.complete
   processed_data_file: data/interim/droste-et-al-2020/droste_et_al_2020.csv
   raw_dir: data/raw/droste-et-al-2020
+  source_info:
+    doi: https://doi.org/10.5194/acp-20-4787-2020
+    licence: CC BY 4.0
+    reference: 'Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.:
+      Trends and emissions of six perfluorocarbons in the Northern Hemisphere and
+      Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020,
+      2020.'
+    resource_type: publication-article
+    short_name: Droste et al., 2020
+    url: https://doi.org/10.5194/acp-20-4787-2020
   step_config_id: only
   zenodo_record:
     known_hash: f71fda6b8848f627b7736870241bfa075d941bcd458fff6105287e951aed6c21
