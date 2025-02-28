@@ -62,9 +62,6 @@ else
             pixi run doit --verbosity=2 \
             "${PWD}/output-bundles/${RUN_ID}/data/processed/esgf-ready/${GAS}_input4MIPs_esgf-ready.complete"
 
-        # Upload to zenodo
-        pixi run python scripts/upload-bundle-to-zenodo.py "output-bundles/${RUN_ID}"
-
     fi
 
 fi

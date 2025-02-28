@@ -54,7 +54,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "cfc12_hats"  # config ID to select for this branch
+step_config_id: str = "hfc134a_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -167,9 +167,6 @@ else:
     line_after_citation_startswith = "----"
 
 # %%
-print(readme_raw)
-
-# %%
 in_citation = False
 position = 0
 readme_raw_split = readme_raw.splitlines()
@@ -195,11 +192,6 @@ while position < len(readme_raw_split):
     position += 1
 
 # %%
-full_ref = " ".join(v.strip() for v in citation_lines_l)
-doi = full_ref.split(" ")[-1]
-if "doi" not in doi:
-    raise AssertionError
-
 url_l = [v.url for v in config_step.download_urls]
 if len(url_l) > 1:
     raise AssertionError
@@ -207,6 +199,32 @@ if len(url_l) > 1:
 url = url_l[0]
 
 # %%
+full_ref = " ".join(v.strip() for v in citation_lines_l)
+
+if full_ref:
+    doi = full_ref.split(" ")[-1]
+    if "doi" not in doi:
+        raise AssertionError
+
+
+else:
+    if not (
+        config_step.gas.startswith("hfc")
+        or config_step.gas.startswith("halon")
+        or config_step.gas.startswith("hcfc")
+        or (config_step.gas in ["ccl4", "cfc113", "ch2cl2", "ch3br", "ch3ccl3", "ch3cl"])
+    ):
+        raise AssertionError
+
+    # TODO: split this out to cover all the cases given in
+    # https://gml.noaa.gov/aftp/data/hats/hfcs/ReadMe.txt
+    full_ref = (
+        "S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke, and L. T. Lock, "
+        "Present and Future Trends in the Atmospheric Burden of Ozone-Depleting Halogens, "
+        "Nature, 398, 690-694, 1999."
+    )
+    doi = "https://doi.org/10.1038/19499"
+
 source_info = local.dependencies.SourceInfo(
     short_name=f"NOAA {config_step.step_config_id.replace('_', ' ')}",
     licence=licence,
@@ -215,6 +233,7 @@ source_info = local.dependencies.SourceInfo(
     doi=doi,
     resource_type="dataset",
 )
+
 source_info
 
 # %%
