@@ -856,6 +856,15 @@ retrieve_and_process_menking_et_al_2025_data:
 - expected_hash: 20df9337cddb739dc805e53847a19424
   processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
   raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
+  source_info:
+    doi: null
+    licence: Author supplied
+    reference: Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in
+      prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core
+      records.
+    resource_type: publication-article
+    short_name: Menking et al., 2025 (in-prep.)
+    url: author-supplied.invalid
   step_config_id: only
 retrieve_and_process_neem_data:
 - download_url:

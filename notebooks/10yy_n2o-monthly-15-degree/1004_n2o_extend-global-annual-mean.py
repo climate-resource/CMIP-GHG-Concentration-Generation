@@ -141,6 +141,13 @@ menking_et_al = menking_et_al[menking_et_al["gas"] == config_step.gas]
 menking_et_al["source"] = "menking_et_al_2025"
 menking_et_al
 
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_retrieve_and_process_menking_et_al_2025_data.source_info.short_name,
+)
+
 # %% [markdown]
 # Extend Meking data back to year 1.
 

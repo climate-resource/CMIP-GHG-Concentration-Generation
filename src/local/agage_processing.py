@@ -5,6 +5,7 @@ Helpers for handling AGAGE data and metadata
 from __future__ import annotations
 
 import re
+import string
 
 from local.dependencies import SourceInfo
 
@@ -223,7 +224,15 @@ def extract_agage_source_info(raw_readme: str, gas: str) -> tuple[SourceInfo, ..
                 line = readme_raw_split[position]
 
             try:
-                source_info_l.append(get_source_info(ref_l))
+                si = get_source_info(ref_l)
+
+                if si.short_name != "AGAGE":
+                    matches = [v for v in source_info_l if v.short_name.startswith(si.short_name)]
+                    if matches:
+                        si.short_name = f"{si.short_name} {string.ascii_lowercase[len(matches)]}"
+
+                source_info_l.append(si)
+
             except:
                 print("\n".join(ref_l))
                 raise

@@ -54,7 +54,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch4_surface-flask"  # config ID to select for this branch
+step_config_id: str = "n2o_hats"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -135,18 +135,39 @@ elif config_step.source == "hats":
 config_step.interim_files
 
 # %%
-with zipfile.ZipFile(zf) as zipf:
-    readme = [item for item in zipf.filelist if item.filename.endswith("html") and "README" in item.filename]
-    if len(readme) > 1:
+if config_step.source == "hats":
+    with open(zf) as fh:
+        data_raw = fh.read()
+
+    licence = "Reciprocity, see https://gml.noaa.gov/hats/hats_datause.html"
+
+    readme_raw = "\n".join([v.replace("#  ", "") for v in data_raw.splitlines() if v.startswith("#")])
+
+    citation_start_line = "Citation:"
+    citation_increment = 1
+    line_after_citation_startswith = "For contact"
+
+else:
+    with zipfile.ZipFile(zf) as zipf:
+        readme = [
+            item for item in zipf.filelist if item.filename.endswith("html") and "README" in item.filename
+        ]
+        if len(readme) > 1:
+            raise AssertionError
+
+        readme_raw = zipf.read(readme[0]).decode()
+
+    if "CC0 1.0 Universal" not in readme_raw:
         raise AssertionError
 
-    readme_raw = zipf.read(readme[0]).decode()
+    licence = "CC0 1.0 Universal"
+
+    citation_start_line = "Please reference these data as"
+    citation_increment = 1
+    line_after_citation_startswith = "----"
 
 # %%
-if "CC0 1.0 Universal" not in readme_raw:
-    raise AssertionError
-
-licence = "CC0 1.0 Universal"
+print(readme_raw)
 
 # %%
 in_citation = False
@@ -157,14 +178,14 @@ citation_lines_l = []
 while position < len(readme_raw_split):
     line = readme_raw_split[position]
 
-    if line == "Please reference these data as":
+    if line == citation_start_line:
         in_citation = True
-        position += 2
+        position += 1 + citation_increment
         continue
 
     if in_citation:
         if not line:
-            if not readme_raw_split[position + 1].startswith("----"):
+            if not readme_raw_split[position + 1].startswith(line_after_citation_startswith):
                 raise AssertionError
 
             in_citation = False

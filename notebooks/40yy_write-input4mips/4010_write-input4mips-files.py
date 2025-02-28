@@ -243,7 +243,7 @@ source_info_common = (
         resource_type="publication-article",
     ),
     local.dependencies.SourceInfo(
-        short_name="Nicholls et al., in-prep. (2025)",
+        short_name="Nicholls et al., 2025 (in-prep)",
         licence="Paper, NA",
         reference=(
             "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "

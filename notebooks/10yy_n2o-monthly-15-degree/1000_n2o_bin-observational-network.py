@@ -88,17 +88,40 @@ config_process_gage_data = get_config_for_step_id(
 
 # %%
 all_data_l = []
-for f in [
-    config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
-    config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
-    config_process_ale_data.processed_monthly_data_with_loc_file,
-    config_process_gage_data.processed_monthly_data_with_loc_file,
+for f, dep_short_names in [
+    (
+        config_process_noaa_hats_data.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_noaa_hats_data.source_info_short_names_file,
+        ),
+    ),
+    (
+        config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_agage_data_gc_md.source_info_short_names_file
+        ),
+    ),
+    (
+        config_process_ale_data.processed_monthly_data_with_loc_file,
+        [config_process_ale_data.source_info.short_name],
+    ),
+    (
+        config_process_gage_data.processed_monthly_data_with_loc_file,
+        [config_process_gage_data.source_info.short_name],
+    ),
 ]:
     try:
         all_data_l.append(local.raw_data_processing.read_and_check_binning_columns(f))
     except Exception as exc:
         msg = f"Error reading {f}"
         raise ValueError(msg) from exc
+
+    for dsn in dep_short_names:
+        local.dependencies.save_dependency_into_db(
+            db=config.dependency_db,
+            gas=config_step.gas,
+            dependency_short_name=dsn,
+        )
 
 all_data = pd.concat(all_data_l)
 # TODO: add check of gas names to processed data checker
