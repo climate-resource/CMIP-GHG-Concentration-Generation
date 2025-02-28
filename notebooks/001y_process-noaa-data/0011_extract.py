@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.3
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -21,12 +21,16 @@
 # ## Imports
 
 # %%
+import json
+import zipfile
 from pathlib import Path
 
 import openscm_units
 import pint
+from attrs import asdict
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 from local.noaa_processing import (
     read_noaa_flask_zip,
@@ -50,7 +54,7 @@ step: str = "retrieve_and_extract_noaa_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "co2_in-situ"  # config ID to select for this branch
+step_config_id: str = "ch4_surface-flask"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -129,3 +133,69 @@ elif config_step.source == "hats":
 
 # %% editable=true slideshow={"slide_type": ""}
 config_step.interim_files
+
+# %%
+with zipfile.ZipFile(zf) as zipf:
+    readme = [item for item in zipf.filelist if item.filename.endswith("html") and "README" in item.filename]
+    if len(readme) > 1:
+        raise AssertionError
+
+    readme_raw = zipf.read(readme[0]).decode()
+
+# %%
+if "CC0 1.0 Universal" not in readme_raw:
+    raise AssertionError
+
+licence = "CC0 1.0 Universal"
+
+# %%
+in_citation = False
+position = 0
+readme_raw_split = readme_raw.splitlines()
+citation_lines_l = []
+
+while position < len(readme_raw_split):
+    line = readme_raw_split[position]
+
+    if line == "Please reference these data as":
+        in_citation = True
+        position += 2
+        continue
+
+    if in_citation:
+        if not line:
+            if not readme_raw_split[position + 1].startswith("----"):
+                raise AssertionError
+
+            in_citation = False
+        else:
+            citation_lines_l.append(line)
+
+    position += 1
+
+# %%
+full_ref = " ".join(v.strip() for v in citation_lines_l)
+doi = full_ref.split(" ")[-1]
+if "doi" not in doi:
+    raise AssertionError
+
+url_l = [v.url for v in config_step.download_urls]
+if len(url_l) > 1:
+    raise AssertionError
+
+url = url_l[0]
+
+# %%
+source_info = local.dependencies.SourceInfo(
+    short_name=f"NOAA {config_step.step_config_id.replace('_', ' ')}",
+    licence=licence,
+    reference=full_ref,
+    url=url,
+    doi=doi,
+    resource_type="dataset",
+)
+source_info
+
+# %%
+with open(config_step.interim_files["source_info"], "w") as fh:
+    json.dump(asdict(source_info), fh)

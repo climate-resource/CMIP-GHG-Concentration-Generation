@@ -105,14 +105,17 @@ plot_input_data_overviews:
 process_noaa_hats_data:
 - gas: hfc152a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc152a_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc152a_hats_source-short-names.txt
   step_config_id: hfc152a
 process_noaa_in_situ_data:
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_in-situ.csv
+  source_info_short_names_file: data/interim/noaa/ch4_in-situ_source-short-names.txt
   step_config_id: ch4
 process_noaa_surface_flask_data:
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
+  source_info_short_names_file: data/interim/noaa/ch4_surface-flask_source-short-names.txt
   step_config_id: ch4
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
@@ -304,6 +307,7 @@ retrieve_and_extract_noaa_data:
   gas: ch4
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch4_in-situ_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch4_in-situ.json
   raw_dir: data/raw/noaa
   source: in-situ
   step_config_id: ch4_in-situ
@@ -315,6 +319,7 @@ retrieve_and_extract_noaa_data:
   interim_files:
     events_data: data/interim/noaa/events_ch4_surface-flask_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_ch4_surface-flask_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch4_surface-flask.json
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: ch4_surface-flask
@@ -325,6 +330,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc152a
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc152a_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc152a_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc152a_hats

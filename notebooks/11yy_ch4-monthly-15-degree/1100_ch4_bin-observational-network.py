@@ -88,8 +88,18 @@ config_process_gage_data = get_config_for_step_id(
 # %%
 all_data_l = []
 for f, dep_short_names in [
-    # (config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file, None),
-    # (config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file, None),
+    (
+        config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_noaa_surface_flask_data.source_info_short_names_file
+        ),
+    ),
+    (
+        config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_noaa_in_situ_data.source_info_short_names_file
+        ),
+    ),
     (
         config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
         local.dependencies.load_source_info_short_names(

@@ -21,6 +21,7 @@
 # ## Imports
 
 # %%
+import json
 from pathlib import Path
 
 import geopandas as gpd
@@ -68,6 +69,15 @@ config_retrieve_noaa = get_config_for_step_id(
 
 # %% [markdown]
 # ## Action
+
+# %%
+config_retrieve_noaa.interim_files["monthly_data"]
+
+# %%
+with open(config_retrieve_noaa.interim_files["source_info"]) as fh:
+    source_info = local.dependencies.SourceInfo(**json.load(fh))
+
+source_info
 
 # %% editable=true slideshow={"slide_type": ""}
 df_months = pd.read_csv(config_retrieve_noaa.interim_files["monthly_data"])
@@ -248,3 +258,14 @@ local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 assert set(out["gas"]) == {config_step.gas}
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=source_info,
+)
+
+# %%
+local.dependencies.save_source_info_short_names(
+    short_names=[source_info.short_name], out_path=config_step.source_info_short_names_file
+)

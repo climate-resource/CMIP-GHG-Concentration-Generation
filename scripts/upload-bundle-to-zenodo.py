@@ -146,6 +146,7 @@ def upload_to_zenodo(
     metadata: dict[str, Any],
 ) -> None:
     zenodo_interactor.update_metadata(deposition_id=draft_deposition_id, metadata=metadata)
+    explode
 
     zenodo_interactor.remove_all_files(deposition_id=draft_deposition_id)
 
