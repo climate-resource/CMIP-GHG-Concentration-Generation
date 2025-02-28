@@ -81,7 +81,7 @@ step: str = "write_input4mips"
 
 # %% editable=true tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch3ccl3"  # config ID to select for this branch
+step_config_id: str = "c4f10"  # config ID to select for this branch
 
 # %% [markdown] editable=true
 # ## Load config
@@ -228,67 +228,91 @@ metadata_minimum_common = dict(
 metadata_minimum_common
 
 # %%
-# TODO: replace this with generation of references throughout the workflow,
-# rather than from static file
-run_id = config_step.input4mips_out_dir.parents[2].name
-data_dir = config_step.input4mips_out_dir.parents[1]
+import pandas as pd
+import sqlite3
 
-with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
-    all_gas_deps = json.load(fh)
+# %%
+db_connection = sqlite3.connect("../../tmp.db")
+sources = pd.read_sql("SELECT * FROM source", con=db_connection)
+dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
+db_connection.close()
 
-try:
-    gas_deps = all_gas_deps[config_step.gas]
-except KeyError:
-    # No deps yet, assume it came from SSP2-4.5
-    gas_deps = [
+# %%
+dependencies_gas = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
+if not dependencies_gas:
+    raise AssertionError
+    
+dependencies_gas
+
+# %%
+gas_deps = sources[sources["short_name"].isin(dependencies_gas)].to_dict("records")
+
+gas_deps.extend(
+    (
+        # TODO: insert this everywhere sooner
+        # and make sure it comes through Zenodo records.
         {
-            "gas": config_step.gas,
-            "source": "Meinshausen et al., GMD (2020)",
+            "short_name": "Meinshausen et al., GMD (2017)",
             "licence": "Paper, NA",
             "reference": (
-                "Meinshausen, M., Nicholls, Z. R. J., ..., Vollmer, M. K., and Wang, R. H. J.: "
-                "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
-                "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
+                "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
+                "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
+                "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
             ),
+            "resource_type": "publication-article",
             "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
-            "url": "https://doi.org/10.5194/gmd-13-3571-2020",
-        }
-    ]
-
-gas_deps.append(
-    {
-        "gas": config_step.gas,
-        "source": "Meinshausen et al., GMD (2017)",
-        "licence": "Paper, NA",
-        "reference": (
-            "Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: "
-            "Historical greenhouse gas concentrations for climate modelling (CMIP6), "
-            "Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017."
-        ),
-        "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
-        "url": "https://doi.org/10.5194/gmd-10-2057-2017",
-    }
-)
-
-gas_deps.append(
-    {
-        "gas": config_step.gas,
-        "source": "Nicholls et al., in-prep (2025)",
-        "licence": "Paper, NA",
-        "reference": (
-            "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
-            "Greenhouse gas concentrations for climate modelling (CMIP7), "
-            "in-prep, 2025."
-        ),
-        "url": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
-    }
+            "url": "https://doi.org/10.5194/gmd-10-2057-2017",
+        },
+        {
+            "short_name": "Nicholls et al., in-prep (2025)",
+            "licence": "Paper, NA",
+            "reference": (
+                "Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: "
+                "Greenhouse gas concentrations for climate modelling (CMIP7), "
+                "in-prep, 2025."
+            ),
+            "url": "https://github.com/climate-resource/CMIP-GHG-Concentration-Generation",
+        } 
+    )
 )
 gas_deps
 
 # %%
+# # TODO: replace this with generation of references throughout the workflow,
+# # rather than from static file
+# run_id = config_step.input4mips_out_dir.parents[2].name
+# data_dir = config_step.input4mips_out_dir.parents[1]
+
+# with open(data_dir / "raw" / "dependencies-by-gas.json") as fh:
+#     all_gas_deps = json.load(fh)
+
+# try:
+#     gas_deps = all_gas_deps[config_step.gas]
+# except KeyError:
+#     # No deps yet, assume it came from SSP2-4.5
+#     gas_deps = [
+#         # TODO: move this earlier
+#         {
+#             "gas": config_step.gas,
+#             "source": "Meinshausen et al., GMD (2020)",
+#             "licence": "Paper, NA",
+#             "reference": (
+#                 "Meinshausen, M., Nicholls, Z. R. J., ..., Vollmer, M. K., and Wang, R. H. J.: "
+#                 "The shared socio-economic pathway (SSP) greenhouse gas concentrations and their extensions to 2500, "
+#                 "Geosci. Model Dev., 13, 3571-3605, https://doi.org/10.5194/gmd-13-3571-2020, 2020."
+#             ),
+#             "doi": "https://doi.org/10.5194/gmd-10-2057-2017",
+#             "url": "https://doi.org/10.5194/gmd-13-3571-2020",
+#         }
+#     ]
+
+
+# gas_deps
+
+# %%
 # Order deps by reverse alphabetical order for now,
 # can sort out order of priority when solving #62.
-gas_deps = sorted(gas_deps, key=lambda v: v["source"])[::-1]
+gas_deps = sorted(gas_deps, key=lambda v: v["short_name"])[::-1]
 gas_deps
 
 # %%
@@ -321,7 +345,7 @@ comment = (
 # %%
 non_input4mips_metadata_common = {
     "references": " --- ".join([v["reference"] for v in gas_deps]),
-    "references_short_names": " --- ".join([v["source"] for v in gas_deps]),
+    "references_short_names": " --- ".join([v["short_name"] for v in gas_deps]),
     "references_dois": " --- ".join(
         [v["doi"] if ("doi" in v and v["doi"] is not None) else "No DOI" for v in gas_deps]
     ),

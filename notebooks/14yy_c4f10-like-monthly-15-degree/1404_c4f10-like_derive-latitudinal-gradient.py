@@ -97,6 +97,45 @@ droste = droste[droste["gas"] == config_step.gas]
 droste
 
 # %%
+import sqlite3
+
+# %%
+# db_connection = sqlite3.connect(config.dependency_db)
+db_connection = sqlite3.connect("../../tmp.db")
+
+with db_connection as db_cursor:
+    dep_table_check = db_cursor.execute("""
+        SELECT name FROM sqlite_master
+        WHERE type='table'
+        AND name='dependencies';
+    """).fetchall()
+
+    if not dep_table_check:
+        # Create the table
+        db_cursor.execute("""
+            CREATE TABLE dependencies(
+                gas VARCHAR(255) NOT NULL,
+                short_name VARCHAR(255),
+                UNIQUE (gas, short_name),
+                FOREIGN KEY (short_name) REFERENCES source(short_name)
+            );
+        """)
+
+# %%
+config_step.gas
+
+# %%
+with db_connection as db_cursor:
+    db_cursor.execute("INSERT INTO dependencies VALUES(?, ?)", (config_step.gas, "Droste et al., 2020"))
+
+# %%
+import pandas as pd
+pd.read_sql("SELECT * FROM dependencies", con=db_connection)
+
+# %%
+db_connection.close()
+
+# %%
 historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
 historical_emissions = historical_emissions[
     historical_emissions["variable"] == f"Emissions|{config_step.gas}"

@@ -205,6 +205,7 @@ def main(  # noqa: PLR0913
     dependencies_table_file: Annotated[
         Path, typer.Option(help="Path from which to read the dependencies table")
     ] = "dependencies-table.csv",
+    # TODO: move path above to use the dependencies db
 ) -> None:
     load_dotenv()
 
