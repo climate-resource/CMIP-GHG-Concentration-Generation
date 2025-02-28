@@ -240,7 +240,8 @@ def main(  # noqa: PLR0913
         metadata=zenodo_metadata,
     )
 
-    create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
+    # TODO: turn back on
+    # create_zenodo_bundle(zenodo_bundle_path=zenodo_bundle_path, original_bundle_path=bundle_path)
 
     upload_to_zenodo(
         zenodo_bundle_path,

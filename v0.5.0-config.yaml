@@ -3817,6 +3817,17 @@ retrieve_and_process_epica_data:
     url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
   processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
   raw_dir: data/raw/epica
+  source_info:
+    doi: https://doi.pangaea.de/10.1594/PANGAEA.552232
+    licence: CC BY 3.0
+    reference: 'EPICA Community Members (2006): Methane of ice core EDML [dataset].
+      PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante,
+      Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling
+      of glacial climate variability in Greenland and Antarctica. Nature, 444, 195-198,
+      https://doi.org/10.1038/nature05301'
+    resource_type: dataset
+    short_name: EPICA
+    url: https://doi.pangaea.de/10.1594/PANGAEA.552232
   step_config_id: only
 retrieve_and_process_ghosh_et_al_2023_data:
 - expected_hash: 19dedb2f95732247c8a298ea0e38e8f2
@@ -3829,6 +3840,15 @@ retrieve_and_process_law_dome_data:
     data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
   processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
   raw_dir: data/raw/law_dome
+  source_info:
+    doi: https://doi.org/10.25919/5bfe29ff807fb
+    licence: CC BY 4.0
+    reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+      (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
+      Collection. https://doi.org/10.25919/5bfe29ff807fb'
+    resource_type: dataset
+    short_name: Law Dome ice core
+    url: https://doi.org/10.25919/5bfe29ff807fb
   step_config_id: only
 retrieve_and_process_menking_et_al_2025_data:
 - expected_hash: 20df9337cddb739dc805e53847a19424
@@ -3841,6 +3861,18 @@ retrieve_and_process_neem_data:
     url: https://doi.pangaea.de/10.1594/PANGAEA.899039?format=textfile
   processed_data_with_loc_file: data/interim/neem/neem_with_location.csv
   raw_dir: data/raw/neem
+  source_info:
+    doi: https://doi.pangaea.de/10.1594/PANGAEA.899039
+    licence: CC BY 4.0
+    reference: "Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1\
+      \ ice core from North Greenland, 1800 years continuous record: 5 year median,\
+      \ v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement\
+      \ to: Rhodes, Rachael H; Fa\xEFn, Xavier; ...; Brook, Edward J (2013): Continuous\
+      \ methane measurements from a late Holocene Greenland ice core: Atmospheric\
+      \ and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034"
+    resource_type: dataset
+    short_name: NEEM
+    url: https://doi.pangaea.de/10.1594/PANGAEA.899039
   step_config_id: only
 retrieve_and_process_scripps_data:
 - merged_ice_core_data:
@@ -3928,6 +3960,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_co2_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_co2_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: co2
 - gas: ch4
   n_draws: 250
@@ -3949,6 +3982,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_ch4_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_ch4_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: ch4
 - gas: n2o
   n_draws: 250
@@ -3970,6 +4004,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: n2o
 version: 0.5.0
 write_input4mips:

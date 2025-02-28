@@ -77,6 +77,7 @@ def save_source_info_to_db(
     source_info
         Source information
     """
+    db.parent.mkdir(exist_ok=True, parents=True)
     db_connection = sqlite3.connect(db)
     db_connection.row_factory = sqlite3.Row
 
@@ -168,6 +169,7 @@ def save_dependency_into_db(
     dependency_short_name
         Short name of the source on which the gas depends
     """
+    db.parent.mkdir(exist_ok=True, parents=True)
     db_connection = sqlite3.connect(db)
     db_connection.row_factory = sqlite3.Row
 

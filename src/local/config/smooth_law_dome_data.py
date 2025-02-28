@@ -33,6 +33,9 @@ class SmoothLawDomeDataConfig:
     gas: str
     """Gas being smoothed"""
 
+    source_info_short_name: str
+    """Short-name of the source of the data"""
+
     noise_adder: NoiseAdderPercentageXNoise
     """Noise adder to use during the smoothing"""
 

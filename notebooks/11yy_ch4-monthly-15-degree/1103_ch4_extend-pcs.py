@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.7
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -153,10 +153,24 @@ smooth_law_dome["source"] = "law_dome"
 smooth_law_dome
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_smooth_law_dome_data.source_info_short_name,
+)
+
+# %%
 neem_data = pd.read_csv(config_process_neem.processed_data_with_loc_file)
 neem_data["year"] = neem_data["year"].round(0)
 neem_data["source"] = "neem"
 neem_data.sort_values("year")
+
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_process_neem.source_info.short_name,
+)
 
 # %% [markdown]
 # ### Define some important constants
@@ -323,6 +337,15 @@ iter_df = (
     .set_index("source", append=True)
 )
 # iter_df
+
+# %% [markdown]
+# Note: we could harmonise here before doing the optimisation.
+# I'm not sure what the right answer is,
+# but I think you can equally argue that you should figure out
+# the PC from the raw data,
+# then harmonise the global-mean later
+# so that the gradient isn't affected by harmonisation,
+# only the centre.
 
 # %%
 optimised = []
