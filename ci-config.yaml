@@ -337,6 +337,15 @@ retrieve_and_extract_noaa_data:
 retrieve_and_process_adam_et_al_2024_data:
 - processed_data_file: data/interim/adam-et-al-2024/adam_et_al_2024.csv
   raw_data_file: data/raw/adam-et-al-2024/HFC-23_Global_annual_mole_fraction.csv
+  source_info:
+    doi: https://doi.org/10.1038/s43247-024-01946-y
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: "Adam, B., Western, L.M., M\xFChle, J. et al. Emissions of HFC-23 do\
+      \ not reflect commitments made under the Kigali Amendment. Commun Earth Environ\
+      \ 5, 783 (2024)."
+    resource_type: publication-article
+    short_name: Adam et al., 2024
+    url: https://doi.org/10.1038/s43247-024-01946-y
   step_config_id: only
 retrieve_and_process_droste_et_al_2020_data:
 - download_complete_file: data/raw/droste-et-al-2020/download.complete
@@ -577,6 +586,17 @@ retrieve_and_process_trudinger_et_al_2016_data:
 - download_complete_file: data/raw/trudinger-et-al-2016/download.complete
   processed_data_file: data/interim/trudinger-et-al-2016/trudinger_et_al_2016.csv
   raw_dir: data/raw/trudinger-et-al-2016
+  source_info:
+    doi: https://doi.org/10.5194/acp-16-11733-2016
+    licence: CC BY 3.0
+    reference: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+      S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+      CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and
+      in situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
+      2016.'
+    resource_type: publication-article
+    short_name: Trudinger et al., 2016
+    url: https://doi.org/10.5194/acp-16-11733-2016
   step_config_id: only
   supplement:
     known_hash: 48b7dfdf8310fb0aca0d49de129d5c4a7d6edd064ad8bfa8d2360f41edfb799b
@@ -586,6 +606,16 @@ retrieve_and_process_velders_et_al_2022_data:
   processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
   raw_data_file_tmp: data/raw/velders-et-al-2022/KGL2021_constrProdEmis_ObsAgage_2500_OECD-SSP5.dat
   raw_dir: data/raw/velders-et-al-2022
+  source_info:
+    doi: https://doi.org/10.5194/acp-22-6087-2022
+    licence: Other (Open)
+    reference: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
+      Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
+      based on recent trends in observed abundances and current policies, Atmos. Chem.
+      Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022.'
+    resource_type: publication-article
+    short_name: Velders et al., 2022
+    url: https://doi.org/10.5194/acp-22-6087-2022
   step_config_id: only
   zenodo_record:
     known_hash: 74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd
@@ -594,6 +624,15 @@ retrieve_and_process_western_et_al_2024_data:
 - download_complete_file: data/raw/western-et-al-2024/download.complete
   processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
   raw_dir: data/raw/western-et-al-2024
+  source_info:
+    doi: https://doi.org/10.1038/s41558-024-02038-7
+    licence: CC BY 4.0
+    reference: Western, L.M., Daniel, J.S., Vollmer, M.K. et al. A decrease in radiative
+      forcing and equivalent effective chlorine from hydrochlorofluorocarbons. Nat.
+      Clim. Chang. 14, 805-807 (2024).
+    resource_type: publication-article
+    short_name: Western et al., 2024
+    url: https://doi.org/10.1038/s41558-024-02038-7
   step_config_id: only
   zenodo_record:
     known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7

@@ -8,6 +8,8 @@ from pathlib import Path
 
 from attrs import frozen
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveExtractAdamEtal2024Data:
@@ -32,3 +34,6 @@ class RetrieveExtractAdamEtal2024Data:
 
     processed_data_file: Path
     """File in which to save the processed data"""
+
+    source_info: SourceInfo
+    """Source information"""

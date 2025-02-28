@@ -146,6 +146,34 @@ cmip6_concs_hist = xr.decode_cf(cmip6_concs_hist, use_cftime=True)
 cmip6_concs_hist
 
 # %%
+m2020 = local.dependencies.SourceInfo(
+    short_name="Meinshausen et al., 2020",
+    licence="CC BY 4.0",
+    reference=(
+        "Meinshausen, M., Nicholls, Z. R. J., Lewis, J., ..., and Wang, R. H. J.: "
+        "The shared socio-economic pathway (SSP) greenhouse gas concentrations "
+        "and their extensions to 2500, Geosci. Model Dev., 13, 3571-3605, "
+        "https://doi.org/10.5194/gmd-13-3571-2020, 2020."
+    ),
+    doi="https://doi.org/10.5194/gmd-13-3571-2020",
+    url="https://doi.org/10.5194/gmd-13-3571-2020",
+    resource_type="publication-article",
+)
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=m2020,
+)
+
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=m2020.short_name,
+)
+
+# %%
 cmip6_concs_ssp245 = xr.open_dataset(cmip6_concs_ssp245_fname, use_cftime=True)
 cmip6_concs_ssp245 = cmip6_concs_ssp245.sel(time=cmip6_concs_ssp245["time"].dt.year.isin(range(2015, 2024)))
 cmip6_concs_ssp245

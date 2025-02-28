@@ -11,6 +11,7 @@ from pydoit_nb.config_tools import URLSource
 from local.config.retrieve_and_process_velders_et_al_2022_data import (
     RetrieveExtractVeldersEtal2022Data,
 )
+from local.dependencies import SourceInfo
 
 RAW_DIR = Path("data/raw/velders-et-al-2022")
 
@@ -25,5 +26,20 @@ RETRIEVE_AND_PROCESS_VELDERS_ET_AL_2022_DATA_STEPS = [
         raw_dir=RAW_DIR,
         download_complete_file=RAW_DIR / "download.complete",
         processed_data_file=Path("data/interim/velders-et-al-2022/velders_et_al_2022.csv"),
+        source_info=SourceInfo(
+            short_name="Velders et al., 2022",
+            licence="Other (Open)",  # https://zenodo.org/records/6520707
+            reference=(
+                "Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.: "
+                "Projections of hydrofluorocarbon (HFC) emissions "
+                "and the resulting global warming based on recent trends in observed abundances "
+                "and current policies, "
+                "Atmos. Chem. Phys., 22, 6087-6101, "
+                "https://doi.org/10.5194/acp-22-6087-2022, 2022."
+            ),
+            doi="https://doi.org/10.5194/acp-22-6087-2022",
+            url="https://doi.org/10.5194/acp-22-6087-2022",
+            resource_type="publication-article",
+        ),
     )
 ]
