@@ -82,7 +82,7 @@ step: str = "write_input4mips"
 
 # %% editable=true tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c4f10"  # config ID to select for this branch
+step_config_id: str = "ch4"  # config ID to select for this branch
 
 # %% [markdown] editable=true
 # ## Load config
@@ -274,8 +274,6 @@ db_connection.close()
 
 # %%
 gas_dependencies_short_names = dependencies[dependencies["gas"] == config_step.gas]["short_name"].tolist()
-if not gas_dependencies_short_names:
-    raise AssertionError
 
 gas_dependencies_short_names
 
@@ -283,6 +281,12 @@ gas_dependencies_short_names
 if len(gas_dependencies_short_names) <= len(source_info_common):
     msg = f"Missing dependencies, only have: {gas_dependencies_short_names}"
     raise AssertionError(msg)
+
+# %%
+short_names_checker = sources["short_name"].tolist()
+missing_short_names = [v for v in gas_dependencies_short_names if v not in short_names_checker]
+if missing_short_names:
+    raise AssertionError(missing_short_names)
 
 # %%
 gas_deps = sources[sources["short_name"].isin(gas_dependencies_short_names)].to_dict("records")

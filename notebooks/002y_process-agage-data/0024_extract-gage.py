@@ -33,6 +33,7 @@ import pint
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 import local.raw_data_processing
 from local.config import load_config_from_file
 from local.regexp_helpers import re_search_and_retrieve_group
@@ -225,3 +226,9 @@ local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 config_step.processed_monthly_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
+)

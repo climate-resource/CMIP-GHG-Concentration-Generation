@@ -3082,6 +3082,15 @@ retrieve_and_extract_ale_data:
     url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/SMO-ale.mon
   processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   raw_dir: data/raw/agage/ale
+  source_info:
+    doi: null
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: Prinn et al., A history of chemically and radiatively important gases
+      in air deduced from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792,
+      2000.
+    resource_type: dataset
+    short_name: AGAGE ALE
+    url: https://agage2.eas.gatech.edu/data_archive/ale/readme.ale
   step_config_id: monthly
 retrieve_and_extract_gage_data:
 - download_complete_file: data/raw/agage/gage/gage_monthly.complete
@@ -3098,6 +3107,15 @@ retrieve_and_extract_gage_data:
     url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/SMO-gage.mon
   processed_monthly_data_with_loc_file: data/interim/agage/gage/monthly.csv
   raw_dir: data/raw/agage/gage
+  source_info:
+    doi: null
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: Prinn et al., A history of chemically and radiatively important gases
+      in air deduced from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792,
+      2000.
+    resource_type: dataset
+    short_name: AGAGE GAGE
+    url: https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
   step_config_id: monthly
 retrieve_and_extract_noaa_data:
 - download_complete_file: data/raw/noaa/co2_in-situ.complete

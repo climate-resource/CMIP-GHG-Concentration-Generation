@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -30,6 +30,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.dependencies
 import local.raw_data_processing
 from local.config import load_config_from_file
 
@@ -87,18 +88,30 @@ config_process_gage_data = get_config_for_step_id(
 
 # %%
 all_data_l = []
-for f in [
-    config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
-    config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
-    config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
-    config_process_ale_data.processed_monthly_data_with_loc_file,
-    config_process_gage_data.processed_monthly_data_with_loc_file,
+for f, dep_short_name in [
+    # (config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file, None),
+    # (config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file, None),
+    # (config_process_agage_data_gc_md.processed_monthly_data_with_loc_file, None),
+    (
+        config_process_ale_data.processed_monthly_data_with_loc_file,
+        config_process_ale_data.source_info.short_name,
+    ),
+    (
+        config_process_gage_data.processed_monthly_data_with_loc_file,
+        config_process_gage_data.source_info.short_name,
+    ),
 ]:
     try:
         all_data_l.append(local.raw_data_processing.read_and_check_binning_columns(f))
     except Exception as exc:
         msg = f"Error reading {f}"
         raise ValueError(msg) from exc
+
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=dep_short_name,
+    )
 
 all_data = pd.concat(all_data_l)
 # TODO: add check of gas names to processed data checker

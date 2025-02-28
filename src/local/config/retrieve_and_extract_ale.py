@@ -9,6 +9,8 @@ from pathlib import Path
 from attrs import frozen
 from pydoit_nb.config_tools import URLSource
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveExtractALEDataConfig:
@@ -41,3 +43,6 @@ class RetrieveExtractALEDataConfig:
     """
     Path in which to write the processed monthly data including location information
     """
+
+    source_info: SourceInfo
+    """Source information"""

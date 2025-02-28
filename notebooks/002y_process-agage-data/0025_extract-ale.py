@@ -225,3 +225,9 @@ local.raw_data_processing.check_processed_data_columns_for_spatial_binning(out)
 config_step.processed_monthly_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
+)

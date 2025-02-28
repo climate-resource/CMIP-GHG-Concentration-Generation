@@ -142,7 +142,7 @@ def ensure_dependency_table_exists(db_cursor: sqlite3.Connection) -> None:
         db_cursor.execute("""
             CREATE TABLE dependencies(
                 gas VARCHAR(255) NOT NULL,
-                short_name VARCHAR(255),
+                short_name VARCHAR(255) NOT NULL,
                 UNIQUE (gas, short_name),
                 FOREIGN KEY (short_name) REFERENCES source(short_name)
             );

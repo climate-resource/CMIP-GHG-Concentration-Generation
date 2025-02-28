@@ -9,6 +9,7 @@ from pathlib import Path
 from pydoit_nb.config_tools import URLSource
 
 from local.config.retrieve_and_extract_ale import RetrieveExtractALEDataConfig
+from local.dependencies import SourceInfo
 
 RETRIEVE_AND_EXTRACT_ALE_STEPS = [
     RetrieveExtractALEDataConfig(
@@ -38,5 +39,16 @@ RETRIEVE_AND_EXTRACT_ALE_STEPS = [
                 url="https://agage2.eas.gatech.edu/data_archive/ale/monthly/SMO-ale.mon",
             ),
         ],
+        source_info=SourceInfo(
+            short_name="AGAGE ALE",
+            licence="Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy",
+            reference=(
+                "Prinn et al., A history of chemically and radiatively important "
+                "gases in air deduced from ALE/GAGE/AGAGE, J. Geophys. Res., 105, "
+                "No. D14, p17,751-17,792, 2000."
+            ),
+            url="https://agage2.eas.gatech.edu/data_archive/ale/readme.ale",
+            resource_type="dataset",
+        ),
     )
 ]
