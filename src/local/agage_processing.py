@@ -124,6 +124,7 @@ def extract_agage_source_info(raw_readme: str, gas: str) -> tuple[SourceInfo, ..
     if gas in [
         "c2f6",
         "c3f8",
+        "cc4f8",
         "ccl4",
         "cf4",
         "cfc11",
@@ -172,7 +173,7 @@ def extract_agage_source_info(raw_readme: str, gas: str) -> tuple[SourceInfo, ..
     if "halon" in gas:
         gas_block_indicators.append("Halons")
 
-    if gas in ["ch2cl2", "chcl3"]:
+    if gas in ["ch2cl2", "chcl3", "ch3cl", "ch3br"]:
         gas_block_indicators.append("VSLS")
 
     if gas in ["cf4", "c2f6", "c3f8", "nf3"]:
@@ -240,7 +241,8 @@ def extract_agage_source_info(raw_readme: str, gas: str) -> tuple[SourceInfo, ..
         position += 1
 
     if not found_gas_block:
-        raise AssertionError
+        msg = f"{raw_readme}\n{gas}"
+        raise AssertionError(msg)
 
     res = tuple(source_info_l)
 

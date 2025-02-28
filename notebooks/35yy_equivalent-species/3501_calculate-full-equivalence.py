@@ -21,10 +21,12 @@
 # ## Imports
 
 # %%
+import sqlite3
 from pathlib import Path
 
 import cf_xarray.units
 import numpy as np
+import pandas as pd
 import pint
 import pint_xarray
 import xarray as xr
@@ -152,6 +154,24 @@ RADIATIVE_EFFICIENCIES: dict[str, pint.UnitRegistry.Quantity] = {
     "c7f16": Q(0.503, "W / m^2 / ppb"),
     "c8f18": Q(0.558, "W / m^2 / ppb"),
 }
+
+# %%
+config_step.gas
+
+# %%
+db_connection = sqlite3.connect(config.dependency_db)
+dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
+db_connection.close()
+
+# %%
+for gas_dep in config_grid_crunching_included_gases:
+    gas_deps_short_names = dependencies[dependencies["gas"] == gas_dep.gas]["short_name"].unique().tolist()
+    for gas_deps_short_name in gas_deps_short_names:
+        local.dependencies.save_dependency_into_db(
+            db=config.dependency_db,
+            gas=config_step.gas,
+            dependency_short_name=gas_deps_short_name,
+        )
 
 # %%
 equivalents = {}

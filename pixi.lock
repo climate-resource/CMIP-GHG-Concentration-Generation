@@ -17736,9 +17736,9 @@ packages:
   timestamp: 1718911793488
 - kind: pypi
   name: local
-  version: 0.3.0
+  version: 1.0.0
   path: .
-  sha256: b7a2ef880ba37c3970a58de808b64bc8b5133e5a87eb5c13d8686bb6e89c8dad
+  sha256: 3fb2ca76d8aff248eb7cb17bb4a590d7889bf31a620a96394989b239e51660d6
   requires_dist:
   - primap2>=0.11.1
   - openscm-units>=0.6.1
