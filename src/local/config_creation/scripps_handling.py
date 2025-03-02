@@ -1,5 +1,5 @@
 """
-Droste et al. (2020) data handling config creation
+Scripps data handling config creation
 """
 
 from __future__ import annotations
@@ -12,6 +12,7 @@ from local.config.retrieve_and_process_scripps_data import (
     RetrieveProcessScrippsConfig,
     ScrippsSource,
 )
+from local.dependencies import SourceInfo
 
 RETRIEVE_AND_PROCESS_SCRIPPS_DATA = [
     RetrieveProcessScrippsConfig(
@@ -22,6 +23,19 @@ RETRIEVE_AND_PROCESS_SCRIPPS_DATA = [
             known_hash="1d9a64819477180f48426e3b23b221b59801d13dfde594b23ee12784a470b340",
         ),
         merged_ice_core_data_processed_data_file=Path("data/interim/mauna_loa/merged_ice_core.csv"),
+        merged_ice_core_data_source_info=SourceInfo(
+            short_name="Scripps - Law Dome merged CO2 record",
+            licence="CC BY 4.0",
+            reference=(
+                "C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, "
+                "Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  "
+                "oceans from 1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, "
+                "Scripps Institution of Oceanography, San Diego, 88 pages, 2001."
+            ),
+            doi=None,
+            url="https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html",
+            resource_type="publication-article",
+        ),
         station_data=[
             ScrippsSource(
                 # TODO: rest of these (?)

@@ -9,6 +9,8 @@ from pathlib import Path
 from attrs import frozen
 from pydoit_nb.config_tools import URLSource
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveProcessEPICAConfig:
@@ -33,3 +35,6 @@ class RetrieveProcessEPICAConfig:
 
     processed_data_with_loc_file: Path
     """File in which to save the processed data, including location information"""
+
+    source_info: SourceInfo
+    """Source information"""

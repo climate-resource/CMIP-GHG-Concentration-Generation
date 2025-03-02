@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -33,6 +33,7 @@ import pooch
 import scmdata
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %%
@@ -62,6 +63,7 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ## Action
 
 # %%
+config_step.complete_historical_emissions_file.parent.mkdir(exist_ok=True, parents=True)
 rcmip_emissions_fname = pooch.retrieve(
     url="https://rcmip-protocols-au.s3-ap-southeast-2.amazonaws.com/v5.1.0/rcmip-emissions-annual-means-v5-1-0.csv",
     known_hash="md5:4044106f55ca65b094670e7577eaf9b3",
@@ -117,3 +119,29 @@ sorted(out["variable"].unique())
 config_step.complete_historical_emissions_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.complete_historical_emissions_file, index=False)
 config_step.complete_historical_emissions_file
+
+# %%
+source_info_short_names = []
+for si in (
+    local.dependencies.SourceInfo(
+        short_name="Nicholls et al., 2020",
+        licence="CC BY 4.0",
+        reference=(
+            "Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: "
+            "Reduced Complexity Model Intercomparison Project Phase 1: "
+            "introduction and evaluation of global-mean temperature response, "
+            "Geosci. Model Dev., 13, 5175-5190, "
+            "https://doi.org/10.5194/gmd-13-5175-2020, 2020."
+        ),
+        doi="https://doi.org/10.5194/gmd-13-5175-2020",
+        url="https://doi.org/10.5194/gmd-13-5175-2020",
+        resource_type="publication-article",
+    ),
+):
+    local.dependencies.save_source_info_to_db(db=config.dependency_db, source_info=si)
+    source_info_short_names.append(si.short_name)
+
+# %%
+local.dependencies.save_source_info_short_names(
+    short_names=source_info_short_names, out_path=config_step.source_info_short_names_file
+)

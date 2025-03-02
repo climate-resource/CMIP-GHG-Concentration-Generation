@@ -28,6 +28,7 @@ import pandas as pd
 import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -122,3 +123,9 @@ clean
 config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
 clean.to_csv(config_step.processed_data_file, index=False)
 config_step.processed_data_file
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
+)

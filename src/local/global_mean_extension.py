@@ -4,16 +4,16 @@ Global-mean extension handling
 
 from __future__ import annotations
 
-from pathlib import Path
+from typing import Any
 
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config.base import Config
 
 
-def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
+def get_global_mean_supplement_config(gas: str, config: Config) -> Any:
     """
-    Get global-mean supplement files for a given gas
+    Get global-mean supplement config for a given gas
 
     Parameters
     ----------
@@ -26,7 +26,7 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
     Returns
     -------
     :
-        Global-mean supplement files
+        Global-mean supplement config, if one is used for this gas
     """
     if gas in [
         "cfc11",
@@ -42,26 +42,22 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
         "ch3br",
         "ch3cl",
     ]:
-        return [
-            get_config_for_step_id(
-                config=config,
-                step="retrieve_and_process_wmo_2022_ozone_assessment_ch7_data",
-                step_config_id="only",
-            ).processed_data_file
-        ]
+        return get_config_for_step_id(
+            config=config,
+            step="retrieve_and_process_wmo_2022_ozone_assessment_ch7_data",
+            step_config_id="only",
+        )
 
     if gas in [
         "hcfc141b",
         "hcfc142b",
         "hcfc22",
     ]:
-        return [
-            get_config_for_step_id(
-                config=config,
-                step="retrieve_and_process_western_et_al_2024_data",
-                step_config_id="only",
-            ).processed_data_file
-        ]
+        return get_config_for_step_id(
+            config=config,
+            step="retrieve_and_process_western_et_al_2024_data",
+            step_config_id="only",
+        )
 
     if gas in [
         "hfc32",
@@ -75,36 +71,30 @@ def get_global_mean_supplement_files(gas: str, config: Config) -> list[Path]:
         "hfc365mfc",
         "hfc4310mee",
     ]:
-        return [
-            get_config_for_step_id(
-                config=config,
-                step="retrieve_and_process_velders_et_al_2022_data",
-                step_config_id="only",
-            ).processed_data_file
-        ]
+        return get_config_for_step_id(
+            config=config,
+            step="retrieve_and_process_velders_et_al_2022_data",
+            step_config_id="only",
+        )
 
     if gas in [
         "hfc23",
     ]:
-        return [
-            get_config_for_step_id(
-                config=config,
-                step="retrieve_and_process_adam_et_al_2024_data",
-                step_config_id="only",
-            ).processed_data_file
-        ]
+        return get_config_for_step_id(
+            config=config,
+            step="retrieve_and_process_adam_et_al_2024_data",
+            step_config_id="only",
+        )
 
     if gas in [
         "cf4",
         "c2f6",
         "c3f8",
     ]:
-        return [
-            get_config_for_step_id(
-                config=config,
-                step="retrieve_and_process_trudinger_et_al_2016_data",
-                step_config_id="only",
-            ).processed_data_file
-        ]
+        return get_config_for_step_id(
+            config=config,
+            step="retrieve_and_process_trudinger_et_al_2016_data",
+            step_config_id="only",
+        )
 
-    return []
+    return None

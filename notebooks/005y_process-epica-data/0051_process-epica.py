@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -28,6 +28,7 @@ import pandas as pd
 import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %%
@@ -99,3 +100,9 @@ read_df
 config_step.processed_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 read_df.to_csv(config_step.processed_data_with_loc_file, index=False)
 config_step.processed_data_with_loc_file
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
+)

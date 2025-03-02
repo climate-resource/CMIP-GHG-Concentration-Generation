@@ -37,17 +37,56 @@
     situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
     2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2025)
-    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+    --- Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie,
+    Z.: Reduced Complexity Model Intercomparison Project Phase 1: introduction and
+    evaluation of global-mean temperature response, Geosci. Model Dev., 13, 5175-5190,
+    https://doi.org/10.5194/gmd-13-5175-2020, 2020. --- Meinshausen, M., Vogel, E.,
+    ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for
+    climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Trudinger, C. M., P. J. Fraser, ..., S. O''Doherty, and M. Battle, Atmospheric
+    abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 since 1800
+    inferred from ice core, firn, air archive and in situ measurements, Atmos. Chem.
+    Phys., 16(18), 11733-11754, 10.5194/acp-16-11733-2016, 2016. --- Say, D., A. J.
+    Manning, ..., R. G. Prinn, and S. O''Doherty, Global trends and European emissions
+    of tetrafluoromethane (CF4), hexafluoroethane (C2F6) and octafluoropropane (C3F8),
+    Atmos. Chem. Phys., 21(3), 2149-2164, 10.5194/acp-21-2149-2021, 2021. --- Rigby,
+    M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds, Recent and future
+    trends in synthetic greenhouse gas radiative forcing, Geophys. Res. Lett., 41(7),
+    2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss, R. F., Weiss,
+    R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively important
+    atmospheric gases from the Advanced Global Atmospheric Gases Experiment (AGAGE),
+    Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Mühle, J., C. M. Trudinger, ..., R. G. Prinn, and R. F. Weiss, Perfluorocyclobutane
+    (PFC-318, c-C4F8) in the global atmosphere, Atmos. Chem. Phys., 19(15), 10335-10359,
+    10.5194/acp-19-10335-2019, 2019. --- Mühle, J., A. L. Ganesan, ..., R. G. Prinn,
+    and R. F. Weiss, Perfluorocarbons in the global atmosphere: tetrafluoromethane,
+    hexafluoroethane, and octafluoropropane, Atmos. Chem. Phys., 10(11), 5145-5164,
+    10.5194/acp-10-5145-2010, 2010. --- Arnold, T., A. J. Manning, ..., S. Park, and
+    S. O''Doherty, Inverse modelling of CF4 and NF3 emissions in East Asia, Atmos.
+    Chem. Phys., 18(18), 13305-13320, 10.5194/acp-18-13305-2018, 2018. --- Arnold,
+    T., C. M. Harth, ..., D. Baggenstos, and R. F. Weiss, Nitrogen trifluoride global
+    emissions estimated from updated atmospheric measurements, Proc. Natl. Acad. Sci.,
+    110(6), 2029-2034, 10.1073/pnas.1212346110, 2013. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-16-11733-2016
+    --- https://doi.org/10.5194/acp-21-2149-2021 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/acp-19-10335-2019
+    --- https://doi.org/10.5194/acp-10-5145-2010 --- https://doi.org/10.5194/acp-18-13305-2018
+    --- https://doi.org/10.1073/pnas.1212346110 --- No DOI
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- Meinshausen et al., 2017 --- AGAGE Trudinger et
+    al. 2016 --- AGAGE Say et al. 2021 --- AGAGE Rigby et al. 2014 --- AGAGE Prinn
+    et al. 2018 --- AGAGE Mühle et al. 2019 --- AGAGE Mühle et al. 2010 --- AGAGE
+    Arnold et al. 2018 --- AGAGE Arnold et al. 2013 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/acp-21-2149-2021
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/acp-19-10335-2019 --- https://doi.org/10.5194/acp-10-5145-2010
+    --- https://doi.org/10.5194/acp-18-13305-2018 --- https://doi.org/10.1073/pnas.1212346110
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -92,17 +131,56 @@
     situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
     2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2025)
-    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+    --- Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie,
+    Z.: Reduced Complexity Model Intercomparison Project Phase 1: introduction and
+    evaluation of global-mean temperature response, Geosci. Model Dev., 13, 5175-5190,
+    https://doi.org/10.5194/gmd-13-5175-2020, 2020. --- Meinshausen, M., Vogel, E.,
+    ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for
+    climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Trudinger, C. M., P. J. Fraser, ..., S. O''Doherty, and M. Battle, Atmospheric
+    abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 since 1800
+    inferred from ice core, firn, air archive and in situ measurements, Atmos. Chem.
+    Phys., 16(18), 11733-11754, 10.5194/acp-16-11733-2016, 2016. --- Say, D., A. J.
+    Manning, ..., R. G. Prinn, and S. O''Doherty, Global trends and European emissions
+    of tetrafluoromethane (CF4), hexafluoroethane (C2F6) and octafluoropropane (C3F8),
+    Atmos. Chem. Phys., 21(3), 2149-2164, 10.5194/acp-21-2149-2021, 2021. --- Rigby,
+    M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds, Recent and future
+    trends in synthetic greenhouse gas radiative forcing, Geophys. Res. Lett., 41(7),
+    2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss, R. F., Weiss,
+    R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively important
+    atmospheric gases from the Advanced Global Atmospheric Gases Experiment (AGAGE),
+    Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Mühle, J., C. M. Trudinger, ..., R. G. Prinn, and R. F. Weiss, Perfluorocyclobutane
+    (PFC-318, c-C4F8) in the global atmosphere, Atmos. Chem. Phys., 19(15), 10335-10359,
+    10.5194/acp-19-10335-2019, 2019. --- Mühle, J., A. L. Ganesan, ..., R. G. Prinn,
+    and R. F. Weiss, Perfluorocarbons in the global atmosphere: tetrafluoromethane,
+    hexafluoroethane, and octafluoropropane, Atmos. Chem. Phys., 10(11), 5145-5164,
+    10.5194/acp-10-5145-2010, 2010. --- Arnold, T., A. J. Manning, ..., S. Park, and
+    S. O''Doherty, Inverse modelling of CF4 and NF3 emissions in East Asia, Atmos.
+    Chem. Phys., 18(18), 13305-13320, 10.5194/acp-18-13305-2018, 2018. --- Arnold,
+    T., C. M. Harth, ..., D. Baggenstos, and R. F. Weiss, Nitrogen trifluoride global
+    emissions estimated from updated atmospheric measurements, Proc. Natl. Acad. Sci.,
+    110(6), 2029-2034, 10.1073/pnas.1212346110, 2013. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-16-11733-2016
+    --- https://doi.org/10.5194/acp-21-2149-2021 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/acp-19-10335-2019
+    --- https://doi.org/10.5194/acp-10-5145-2010 --- https://doi.org/10.5194/acp-18-13305-2018
+    --- https://doi.org/10.1073/pnas.1212346110 --- No DOI
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- Meinshausen et al., 2017 --- AGAGE Trudinger et
+    al. 2016 --- AGAGE Say et al. 2021 --- AGAGE Rigby et al. 2014 --- AGAGE Prinn
+    et al. 2018 --- AGAGE Mühle et al. 2019 --- AGAGE Mühle et al. 2010 --- AGAGE
+    Arnold et al. 2018 --- AGAGE Arnold et al. 2013 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/acp-21-2149-2021
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/acp-19-10335-2019 --- https://doi.org/10.5194/acp-10-5145-2010
+    --- https://doi.org/10.5194/acp-18-13305-2018 --- https://doi.org/10.1073/pnas.1212346110
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -147,17 +225,56 @@
     situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
     2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2025)
-    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+    --- Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie,
+    Z.: Reduced Complexity Model Intercomparison Project Phase 1: introduction and
+    evaluation of global-mean temperature response, Geosci. Model Dev., 13, 5175-5190,
+    https://doi.org/10.5194/gmd-13-5175-2020, 2020. --- Meinshausen, M., Vogel, E.,
+    ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for
+    climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Trudinger, C. M., P. J. Fraser, ..., S. O''Doherty, and M. Battle, Atmospheric
+    abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 since 1800
+    inferred from ice core, firn, air archive and in situ measurements, Atmos. Chem.
+    Phys., 16(18), 11733-11754, 10.5194/acp-16-11733-2016, 2016. --- Say, D., A. J.
+    Manning, ..., R. G. Prinn, and S. O''Doherty, Global trends and European emissions
+    of tetrafluoromethane (CF4), hexafluoroethane (C2F6) and octafluoropropane (C3F8),
+    Atmos. Chem. Phys., 21(3), 2149-2164, 10.5194/acp-21-2149-2021, 2021. --- Rigby,
+    M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds, Recent and future
+    trends in synthetic greenhouse gas radiative forcing, Geophys. Res. Lett., 41(7),
+    2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss, R. F., Weiss,
+    R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively important
+    atmospheric gases from the Advanced Global Atmospheric Gases Experiment (AGAGE),
+    Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Mühle, J., C. M. Trudinger, ..., R. G. Prinn, and R. F. Weiss, Perfluorocyclobutane
+    (PFC-318, c-C4F8) in the global atmosphere, Atmos. Chem. Phys., 19(15), 10335-10359,
+    10.5194/acp-19-10335-2019, 2019. --- Mühle, J., A. L. Ganesan, ..., R. G. Prinn,
+    and R. F. Weiss, Perfluorocarbons in the global atmosphere: tetrafluoromethane,
+    hexafluoroethane, and octafluoropropane, Atmos. Chem. Phys., 10(11), 5145-5164,
+    10.5194/acp-10-5145-2010, 2010. --- Arnold, T., A. J. Manning, ..., S. Park, and
+    S. O''Doherty, Inverse modelling of CF4 and NF3 emissions in East Asia, Atmos.
+    Chem. Phys., 18(18), 13305-13320, 10.5194/acp-18-13305-2018, 2018. --- Arnold,
+    T., C. M. Harth, ..., D. Baggenstos, and R. F. Weiss, Nitrogen trifluoride global
+    emissions estimated from updated atmospheric measurements, Proc. Natl. Acad. Sci.,
+    110(6), 2029-2034, 10.1073/pnas.1212346110, 2013. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-16-11733-2016
+    --- https://doi.org/10.5194/acp-21-2149-2021 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/acp-19-10335-2019
+    --- https://doi.org/10.5194/acp-10-5145-2010 --- https://doi.org/10.5194/acp-18-13305-2018
+    --- https://doi.org/10.1073/pnas.1212346110 --- No DOI
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- Meinshausen et al., 2017 --- AGAGE Trudinger et
+    al. 2016 --- AGAGE Say et al. 2021 --- AGAGE Rigby et al. 2014 --- AGAGE Prinn
+    et al. 2018 --- AGAGE Mühle et al. 2019 --- AGAGE Mühle et al. 2010 --- AGAGE
+    Arnold et al. 2018 --- AGAGE Arnold et al. 2013 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/acp-21-2149-2021
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/acp-19-10335-2019 --- https://doi.org/10.5194/acp-10-5145-2010
+    --- https://doi.org/10.5194/acp-18-13305-2018 --- https://doi.org/10.1073/pnas.1212346110
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -198,12 +315,20 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
-    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
-    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
-    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
-    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
-    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Lan, X., J.W. Mund, A.M. Crotwell, K.W. Thoning, E. Moglia, M. Madronich,
+    K. Baugh, G. Petron, M.J. Crotwell, D. Neff, S. Wolter, T. Mefford and S. DeVogel
+    (2024), Atmospheric Methane Dry Air Mole Fractions from the NOAA GML Carbon Cycle
+    Cooperative Global Air Sampling Network, 1983-2023, Version: 2024-07-30, https://doi.org/10.15138/VNCZ-M766
+    --- K.W. Thoning, X. Lan, A.M. Crotwell, and J.W. Mund (2024), Atmospheric methane
+    from quasi-continuous measurements at Barrow, Alaska and Mauna Loa, Hawaii, 1986-present.
+    Version: 2024-08-15, National Oceanic and Atmospheric Administration (NOAA), Global
+    Monitoring Laboratory (GML), Boulder, Colorado, USA https://doi.org/10.15138/ve0c-be70
+    --- Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core
+    from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset].
+    PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael
+    H; Faïn, Xavier; ...; Brook, Edward J (2013): Continuous methane measurements
+    from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth
+    and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
@@ -213,20 +338,37 @@
     https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
     Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
     variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
-    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
-    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
-    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- Rigby, M., S. A. Montzka, S. A. Montzka, ..., A. McCulloch, and S. Park, Role
+    of atmospheric oxidation in recent methane growth, Proc. Natl. Acad. Sci., 10.1073/pnas.1616426114,
+    2017. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., J. Mühle, and L. W. Porter,
+    Renewed growth of atmospheric methane, Geophys. Res. Lett., 35, L22805, 10.1029/2008GL036037,
+    2008. --- Prinn, R. G., Weiss, R. F., Weiss, R. F., ..., Young, D., and Zhou,
+    L.: History of chemically and radiatively important atmospheric gases from the
+    Advanced Global Atmospheric Gases Experiment (AGAGE), Earth Syst. Sci. Data, 10,
+    985-1018, https://doi.org/10.5194/essd-10-985-2018, 2018. --- Prinn et al., A
+    history of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: No DOI --- https://doi.org/10.15138/VNCZ-M766 --- https://doi.org/10.15138/ve0c-be70
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- No DOI --- No DOI --- No DOI
+  references_short_names: Nicholls et al., 2025 (in-prep) --- NOAA ch4 surface-flask
+    --- NOAA ch4 in-situ --- NEEM --- Meinshausen et al., 2017 --- Law Dome ice core
+    --- EPICA --- AGAGE Rigby et al. 2017 --- AGAGE Rigby et al. 2008 --- AGAGE Prinn
+    et al. 2018 --- AGAGE GAGE --- AGAGE ALE --- AGAGE
   references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
+    --- https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
+    --- https://agage2.eas.gatech.edu/data_archive/ale/readme.ale --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -267,12 +409,20 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
-    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
-    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
-    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
-    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
-    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Lan, X., J.W. Mund, A.M. Crotwell, K.W. Thoning, E. Moglia, M. Madronich,
+    K. Baugh, G. Petron, M.J. Crotwell, D. Neff, S. Wolter, T. Mefford and S. DeVogel
+    (2024), Atmospheric Methane Dry Air Mole Fractions from the NOAA GML Carbon Cycle
+    Cooperative Global Air Sampling Network, 1983-2023, Version: 2024-07-30, https://doi.org/10.15138/VNCZ-M766
+    --- K.W. Thoning, X. Lan, A.M. Crotwell, and J.W. Mund (2024), Atmospheric methane
+    from quasi-continuous measurements at Barrow, Alaska and Mauna Loa, Hawaii, 1986-present.
+    Version: 2024-08-15, National Oceanic and Atmospheric Administration (NOAA), Global
+    Monitoring Laboratory (GML), Boulder, Colorado, USA https://doi.org/10.15138/ve0c-be70
+    --- Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core
+    from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset].
+    PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael
+    H; Faïn, Xavier; ...; Brook, Edward J (2013): Continuous methane measurements
+    from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth
+    and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
@@ -282,20 +432,37 @@
     https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
     Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
     variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
-    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
-    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
-    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- Rigby, M., S. A. Montzka, S. A. Montzka, ..., A. McCulloch, and S. Park, Role
+    of atmospheric oxidation in recent methane growth, Proc. Natl. Acad. Sci., 10.1073/pnas.1616426114,
+    2017. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., J. Mühle, and L. W. Porter,
+    Renewed growth of atmospheric methane, Geophys. Res. Lett., 35, L22805, 10.1029/2008GL036037,
+    2008. --- Prinn, R. G., Weiss, R. F., Weiss, R. F., ..., Young, D., and Zhou,
+    L.: History of chemically and radiatively important atmospheric gases from the
+    Advanced Global Atmospheric Gases Experiment (AGAGE), Earth Syst. Sci. Data, 10,
+    985-1018, https://doi.org/10.5194/essd-10-985-2018, 2018. --- Prinn et al., A
+    history of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: No DOI --- https://doi.org/10.15138/VNCZ-M766 --- https://doi.org/10.15138/ve0c-be70
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- No DOI --- No DOI --- No DOI
+  references_short_names: Nicholls et al., 2025 (in-prep) --- NOAA ch4 surface-flask
+    --- NOAA ch4 in-situ --- NEEM --- Meinshausen et al., 2017 --- Law Dome ice core
+    --- EPICA --- AGAGE Rigby et al. 2017 --- AGAGE Rigby et al. 2008 --- AGAGE Prinn
+    et al. 2018 --- AGAGE GAGE --- AGAGE ALE --- AGAGE
   references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
+    --- https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
+    --- https://agage2.eas.gatech.edu/data_archive/ale/readme.ale --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -336,12 +503,20 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
-    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
-    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
-    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
-    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
-    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Lan, X., J.W. Mund, A.M. Crotwell, K.W. Thoning, E. Moglia, M. Madronich,
+    K. Baugh, G. Petron, M.J. Crotwell, D. Neff, S. Wolter, T. Mefford and S. DeVogel
+    (2024), Atmospheric Methane Dry Air Mole Fractions from the NOAA GML Carbon Cycle
+    Cooperative Global Air Sampling Network, 1983-2023, Version: 2024-07-30, https://doi.org/10.15138/VNCZ-M766
+    --- K.W. Thoning, X. Lan, A.M. Crotwell, and J.W. Mund (2024), Atmospheric methane
+    from quasi-continuous measurements at Barrow, Alaska and Mauna Loa, Hawaii, 1986-present.
+    Version: 2024-08-15, National Oceanic and Atmospheric Administration (NOAA), Global
+    Monitoring Laboratory (GML), Boulder, Colorado, USA https://doi.org/10.15138/ve0c-be70
+    --- Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core
+    from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset].
+    PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael
+    H; Faïn, Xavier; ...; Brook, Edward J (2013): Continuous methane measurements
+    from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth
+    and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
@@ -351,20 +526,37 @@
     https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
     Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
     variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
-    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
-    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
-    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- Rigby, M., S. A. Montzka, S. A. Montzka, ..., A. McCulloch, and S. Park, Role
+    of atmospheric oxidation in recent methane growth, Proc. Natl. Acad. Sci., 10.1073/pnas.1616426114,
+    2017. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., J. Mühle, and L. W. Porter,
+    Renewed growth of atmospheric methane, Geophys. Res. Lett., 35, L22805, 10.1029/2008GL036037,
+    2008. --- Prinn, R. G., Weiss, R. F., Weiss, R. F., ..., Young, D., and Zhou,
+    L.: History of chemically and radiatively important atmospheric gases from the
+    Advanced Global Atmospheric Gases Experiment (AGAGE), Earth Syst. Sci. Data, 10,
+    985-1018, https://doi.org/10.5194/essd-10-985-2018, 2018. --- Prinn et al., A
+    history of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: No DOI --- https://doi.org/10.15138/VNCZ-M766 --- https://doi.org/10.15138/ve0c-be70
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- No DOI --- No DOI --- No DOI
+  references_short_names: Nicholls et al., 2025 (in-prep) --- NOAA ch4 surface-flask
+    --- NOAA ch4 in-situ --- NEEM --- Meinshausen et al., 2017 --- Law Dome ice core
+    --- EPICA --- AGAGE Rigby et al. 2017 --- AGAGE Rigby et al. 2008 --- AGAGE Prinn
+    et al. 2018 --- AGAGE GAGE --- AGAGE ALE --- AGAGE
   references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
+    --- https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
+    --- https://agage2.eas.gatech.edu/data_archive/ale/readme.ale --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -408,20 +600,47 @@
     based on recent trends in observed abundances and current policies, Atmos. Chem.
     Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
     Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
-    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
-    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
-    gc-ms
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- Nicholls, Z.
+    R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: Reduced Complexity
+    Model Intercomparison Project Phase 1: introduction and evaluation of global-mean
+    temperature response, Geosci. Model Dev., 13, 5175-5190, https://doi.org/10.5194/gmd-13-5175-2020,
+    2020. --- S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke,
+    and L. T. Lock, Present and Future Trends in the Atmospheric Burden of Ozone-Depleting
+    Halogens, Nature, 398, 690-694, 1999. --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Simmonds, P. G., M. Rigby, ..., R. H. J. Wang, and R. G. Prinn, Changing
+    trends and emissions of hydrochlorofluorocarbons (HCFCs) and their hydrofluorocarbon
+    (HFCs) replacements, Atmos. Chem. Phys., 17(7), 4641-4655, 10.5194/acp-17-4641-2017,
+    2017. --- Simmonds, P. G., M. Rigby, M. Rigby, ..., D. Ivy, and R. G. Prinn, Global
+    and regional emissions estimates of 1,1-difluoroethane (HFC-152a, CH3CHF2) from
+    in situ and air archive observations, Atmos. Chem. Phys., 16(1), 365-382, 10.5194/acp-16-365-2016,
+    2016. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds,
+    Recent and future trends in synthetic greenhouse gas radiative forcing, Geophys.
+    Res. Lett., 41(7), 2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss,
+    R. F., Weiss, R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively
+    important atmospheric gases from the Advanced Global Atmospheric Gases Experiment
+    (AGAGE), Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Lunt, M. F., M. Rigby, M. Rigby, ..., D. Young, and P. G. Simmonds,
+    Reconciling reported and unreported HFC emissions with atmospheric observations,
+    Proc. Natl. Acad. Sci., 112(19), 5927-5931, 10.1073/pnas.1420247112, 2015. ---
+    Prinn et al., A history of chemically and radiatively important gases in air deduced
+    from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.1038/19499 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-17-4641-2017 --- https://doi.org/10.5194/acp-16-365-2016
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.1073/pnas.1420247112 --- No DOI
+  references_short_names: Velders et al., 2022 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- NOAA hfc152a hats --- Meinshausen et al., 2017 ---
+    AGAGE Simmonds et al. 2017 --- AGAGE Simmonds et al. 2016 --- AGAGE Rigby et al.
+    2014 --- AGAGE Prinn et al. 2018 --- AGAGE Lunt et al. 2015 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-17-4641-2017
+    --- https://doi.org/10.5194/acp-16-365-2016 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.1073/pnas.1420247112
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -465,20 +684,47 @@
     based on recent trends in observed abundances and current policies, Atmos. Chem.
     Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
     Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
-    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
-    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
-    gc-ms
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- Nicholls, Z.
+    R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: Reduced Complexity
+    Model Intercomparison Project Phase 1: introduction and evaluation of global-mean
+    temperature response, Geosci. Model Dev., 13, 5175-5190, https://doi.org/10.5194/gmd-13-5175-2020,
+    2020. --- S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke,
+    and L. T. Lock, Present and Future Trends in the Atmospheric Burden of Ozone-Depleting
+    Halogens, Nature, 398, 690-694, 1999. --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Simmonds, P. G., M. Rigby, ..., R. H. J. Wang, and R. G. Prinn, Changing
+    trends and emissions of hydrochlorofluorocarbons (HCFCs) and their hydrofluorocarbon
+    (HFCs) replacements, Atmos. Chem. Phys., 17(7), 4641-4655, 10.5194/acp-17-4641-2017,
+    2017. --- Simmonds, P. G., M. Rigby, M. Rigby, ..., D. Ivy, and R. G. Prinn, Global
+    and regional emissions estimates of 1,1-difluoroethane (HFC-152a, CH3CHF2) from
+    in situ and air archive observations, Atmos. Chem. Phys., 16(1), 365-382, 10.5194/acp-16-365-2016,
+    2016. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds,
+    Recent and future trends in synthetic greenhouse gas radiative forcing, Geophys.
+    Res. Lett., 41(7), 2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss,
+    R. F., Weiss, R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively
+    important atmospheric gases from the Advanced Global Atmospheric Gases Experiment
+    (AGAGE), Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Lunt, M. F., M. Rigby, M. Rigby, ..., D. Young, and P. G. Simmonds,
+    Reconciling reported and unreported HFC emissions with atmospheric observations,
+    Proc. Natl. Acad. Sci., 112(19), 5927-5931, 10.1073/pnas.1420247112, 2015. ---
+    Prinn et al., A history of chemically and radiatively important gases in air deduced
+    from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.1038/19499 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-17-4641-2017 --- https://doi.org/10.5194/acp-16-365-2016
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.1073/pnas.1420247112 --- No DOI
+  references_short_names: Velders et al., 2022 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- NOAA hfc152a hats --- Meinshausen et al., 2017 ---
+    AGAGE Simmonds et al. 2017 --- AGAGE Simmonds et al. 2016 --- AGAGE Rigby et al.
+    2014 --- AGAGE Prinn et al. 2018 --- AGAGE Lunt et al. 2015 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-17-4641-2017
+    --- https://doi.org/10.5194/acp-16-365-2016 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.1073/pnas.1420247112
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -522,20 +768,47 @@
     based on recent trends in observed abundances and current policies, Atmos. Chem.
     Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
     Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
-    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
-    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
-    gc-ms
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- Nicholls, Z.
+    R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: Reduced Complexity
+    Model Intercomparison Project Phase 1: introduction and evaluation of global-mean
+    temperature response, Geosci. Model Dev., 13, 5175-5190, https://doi.org/10.5194/gmd-13-5175-2020,
+    2020. --- S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke,
+    and L. T. Lock, Present and Future Trends in the Atmospheric Burden of Ozone-Depleting
+    Halogens, Nature, 398, 690-694, 1999. --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Simmonds, P. G., M. Rigby, ..., R. H. J. Wang, and R. G. Prinn, Changing
+    trends and emissions of hydrochlorofluorocarbons (HCFCs) and their hydrofluorocarbon
+    (HFCs) replacements, Atmos. Chem. Phys., 17(7), 4641-4655, 10.5194/acp-17-4641-2017,
+    2017. --- Simmonds, P. G., M. Rigby, M. Rigby, ..., D. Ivy, and R. G. Prinn, Global
+    and regional emissions estimates of 1,1-difluoroethane (HFC-152a, CH3CHF2) from
+    in situ and air archive observations, Atmos. Chem. Phys., 16(1), 365-382, 10.5194/acp-16-365-2016,
+    2016. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds,
+    Recent and future trends in synthetic greenhouse gas radiative forcing, Geophys.
+    Res. Lett., 41(7), 2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss,
+    R. F., Weiss, R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively
+    important atmospheric gases from the Advanced Global Atmospheric Gases Experiment
+    (AGAGE), Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Lunt, M. F., M. Rigby, M. Rigby, ..., D. Young, and P. G. Simmonds,
+    Reconciling reported and unreported HFC emissions with atmospheric observations,
+    Proc. Natl. Acad. Sci., 112(19), 5927-5931, 10.1073/pnas.1420247112, 2015. ---
+    Prinn et al., A history of chemically and radiatively important gases in air deduced
+    from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.1038/19499 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-17-4641-2017 --- https://doi.org/10.5194/acp-16-365-2016
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.1073/pnas.1420247112 --- No DOI
+  references_short_names: Velders et al., 2022 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- NOAA hfc152a hats --- Meinshausen et al., 2017 ---
+    AGAGE Simmonds et al. 2017 --- AGAGE Simmonds et al. 2016 --- AGAGE Rigby et al.
+    2014 --- AGAGE Prinn et al. 2018 --- AGAGE Lunt et al. 2015 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-17-4641-2017
+    --- https://doi.org/10.5194/acp-16-365-2016 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.1073/pnas.1420247112
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -580,17 +853,56 @@
     situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
     2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2025)
-    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+    --- Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie,
+    Z.: Reduced Complexity Model Intercomparison Project Phase 1: introduction and
+    evaluation of global-mean temperature response, Geosci. Model Dev., 13, 5175-5190,
+    https://doi.org/10.5194/gmd-13-5175-2020, 2020. --- Meinshausen, M., Vogel, E.,
+    ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for
+    climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Trudinger, C. M., P. J. Fraser, ..., S. O''Doherty, and M. Battle, Atmospheric
+    abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 since 1800
+    inferred from ice core, firn, air archive and in situ measurements, Atmos. Chem.
+    Phys., 16(18), 11733-11754, 10.5194/acp-16-11733-2016, 2016. --- Say, D., A. J.
+    Manning, ..., R. G. Prinn, and S. O''Doherty, Global trends and European emissions
+    of tetrafluoromethane (CF4), hexafluoroethane (C2F6) and octafluoropropane (C3F8),
+    Atmos. Chem. Phys., 21(3), 2149-2164, 10.5194/acp-21-2149-2021, 2021. --- Rigby,
+    M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds, Recent and future
+    trends in synthetic greenhouse gas radiative forcing, Geophys. Res. Lett., 41(7),
+    2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss, R. F., Weiss,
+    R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively important
+    atmospheric gases from the Advanced Global Atmospheric Gases Experiment (AGAGE),
+    Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Mühle, J., C. M. Trudinger, ..., R. G. Prinn, and R. F. Weiss, Perfluorocyclobutane
+    (PFC-318, c-C4F8) in the global atmosphere, Atmos. Chem. Phys., 19(15), 10335-10359,
+    10.5194/acp-19-10335-2019, 2019. --- Mühle, J., A. L. Ganesan, ..., R. G. Prinn,
+    and R. F. Weiss, Perfluorocarbons in the global atmosphere: tetrafluoromethane,
+    hexafluoroethane, and octafluoropropane, Atmos. Chem. Phys., 10(11), 5145-5164,
+    10.5194/acp-10-5145-2010, 2010. --- Arnold, T., A. J. Manning, ..., S. Park, and
+    S. O''Doherty, Inverse modelling of CF4 and NF3 emissions in East Asia, Atmos.
+    Chem. Phys., 18(18), 13305-13320, 10.5194/acp-18-13305-2018, 2018. --- Arnold,
+    T., C. M. Harth, ..., D. Baggenstos, and R. F. Weiss, Nitrogen trifluoride global
+    emissions estimated from updated atmospheric measurements, Proc. Natl. Acad. Sci.,
+    110(6), 2029-2034, 10.1073/pnas.1212346110, 2013. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-16-11733-2016
+    --- https://doi.org/10.5194/acp-21-2149-2021 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/acp-19-10335-2019
+    --- https://doi.org/10.5194/acp-10-5145-2010 --- https://doi.org/10.5194/acp-18-13305-2018
+    --- https://doi.org/10.1073/pnas.1212346110 --- No DOI
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- Meinshausen et al., 2017 --- AGAGE Trudinger et
+    al. 2016 --- AGAGE Say et al. 2021 --- AGAGE Rigby et al. 2014 --- AGAGE Prinn
+    et al. 2018 --- AGAGE Mühle et al. 2019 --- AGAGE Mühle et al. 2010 --- AGAGE
+    Arnold et al. 2018 --- AGAGE Arnold et al. 2013 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/acp-21-2149-2021
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/acp-19-10335-2019 --- https://doi.org/10.5194/acp-10-5145-2010
+    --- https://doi.org/10.5194/acp-18-13305-2018 --- https://doi.org/10.1073/pnas.1212346110
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -635,17 +947,56 @@
     situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
     2016. --- Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-10-2057-2017
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Trudinger et al., 2016 --- Nicholls et al., in-prep (2025)
-    --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE gc-ms
+    --- Nicholls, Z. R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie,
+    Z.: Reduced Complexity Model Intercomparison Project Phase 1: introduction and
+    evaluation of global-mean temperature response, Geosci. Model Dev., 13, 5175-5190,
+    https://doi.org/10.5194/gmd-13-5175-2020, 2020. --- Meinshausen, M., Vogel, E.,
+    ..., Wang, R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for
+    climate modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Trudinger, C. M., P. J. Fraser, ..., S. O''Doherty, and M. Battle, Atmospheric
+    abundance and global emissions of perfluorocarbons CF4, C2F6 and C3F8 since 1800
+    inferred from ice core, firn, air archive and in situ measurements, Atmos. Chem.
+    Phys., 16(18), 11733-11754, 10.5194/acp-16-11733-2016, 2016. --- Say, D., A. J.
+    Manning, ..., R. G. Prinn, and S. O''Doherty, Global trends and European emissions
+    of tetrafluoromethane (CF4), hexafluoroethane (C2F6) and octafluoropropane (C3F8),
+    Atmos. Chem. Phys., 21(3), 2149-2164, 10.5194/acp-21-2149-2021, 2021. --- Rigby,
+    M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds, Recent and future
+    trends in synthetic greenhouse gas radiative forcing, Geophys. Res. Lett., 41(7),
+    2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss, R. F., Weiss,
+    R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively important
+    atmospheric gases from the Advanced Global Atmospheric Gases Experiment (AGAGE),
+    Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Mühle, J., C. M. Trudinger, ..., R. G. Prinn, and R. F. Weiss, Perfluorocyclobutane
+    (PFC-318, c-C4F8) in the global atmosphere, Atmos. Chem. Phys., 19(15), 10335-10359,
+    10.5194/acp-19-10335-2019, 2019. --- Mühle, J., A. L. Ganesan, ..., R. G. Prinn,
+    and R. F. Weiss, Perfluorocarbons in the global atmosphere: tetrafluoromethane,
+    hexafluoroethane, and octafluoropropane, Atmos. Chem. Phys., 10(11), 5145-5164,
+    10.5194/acp-10-5145-2010, 2010. --- Arnold, T., A. J. Manning, ..., S. Park, and
+    S. O''Doherty, Inverse modelling of CF4 and NF3 emissions in East Asia, Atmos.
+    Chem. Phys., 18(18), 13305-13320, 10.5194/acp-18-13305-2018, 2018. --- Arnold,
+    T., C. M. Harth, ..., D. Baggenstos, and R. F. Weiss, Nitrogen trifluoride global
+    emissions estimated from updated atmospheric measurements, Proc. Natl. Acad. Sci.,
+    110(6), 2029-2034, 10.1073/pnas.1212346110, 2013. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-16-11733-2016 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-16-11733-2016
+    --- https://doi.org/10.5194/acp-21-2149-2021 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/acp-19-10335-2019
+    --- https://doi.org/10.5194/acp-10-5145-2010 --- https://doi.org/10.5194/acp-18-13305-2018
+    --- https://doi.org/10.1073/pnas.1212346110 --- No DOI
+  references_short_names: Trudinger et al., 2016 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- Meinshausen et al., 2017 --- AGAGE Trudinger et
+    al. 2016 --- AGAGE Say et al. 2021 --- AGAGE Rigby et al. 2014 --- AGAGE Prinn
+    et al. 2018 --- AGAGE Mühle et al. 2019 --- AGAGE Mühle et al. 2010 --- AGAGE
+    Arnold et al. 2018 --- AGAGE Arnold et al. 2013 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-16-11733-2016 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-16-11733-2016 --- https://doi.org/10.5194/acp-21-2149-2021
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/acp-19-10335-2019 --- https://doi.org/10.5194/acp-10-5145-2010
+    --- https://doi.org/10.5194/acp-18-13305-2018 --- https://doi.org/10.1073/pnas.1212346110
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -686,12 +1037,20 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
-    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
-    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
-    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
-    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
-    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Lan, X., J.W. Mund, A.M. Crotwell, K.W. Thoning, E. Moglia, M. Madronich,
+    K. Baugh, G. Petron, M.J. Crotwell, D. Neff, S. Wolter, T. Mefford and S. DeVogel
+    (2024), Atmospheric Methane Dry Air Mole Fractions from the NOAA GML Carbon Cycle
+    Cooperative Global Air Sampling Network, 1983-2023, Version: 2024-07-30, https://doi.org/10.15138/VNCZ-M766
+    --- K.W. Thoning, X. Lan, A.M. Crotwell, and J.W. Mund (2024), Atmospheric methane
+    from quasi-continuous measurements at Barrow, Alaska and Mauna Loa, Hawaii, 1986-present.
+    Version: 2024-08-15, National Oceanic and Atmospheric Administration (NOAA), Global
+    Monitoring Laboratory (GML), Boulder, Colorado, USA https://doi.org/10.15138/ve0c-be70
+    --- Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core
+    from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset].
+    PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael
+    H; Faïn, Xavier; ...; Brook, Edward J (2013): Continuous methane measurements
+    from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth
+    and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
@@ -701,20 +1060,37 @@
     https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
     Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
     variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
-    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
-    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
-    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- Rigby, M., S. A. Montzka, S. A. Montzka, ..., A. McCulloch, and S. Park, Role
+    of atmospheric oxidation in recent methane growth, Proc. Natl. Acad. Sci., 10.1073/pnas.1616426114,
+    2017. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., J. Mühle, and L. W. Porter,
+    Renewed growth of atmospheric methane, Geophys. Res. Lett., 35, L22805, 10.1029/2008GL036037,
+    2008. --- Prinn, R. G., Weiss, R. F., Weiss, R. F., ..., Young, D., and Zhou,
+    L.: History of chemically and radiatively important atmospheric gases from the
+    Advanced Global Atmospheric Gases Experiment (AGAGE), Earth Syst. Sci. Data, 10,
+    985-1018, https://doi.org/10.5194/essd-10-985-2018, 2018. --- Prinn et al., A
+    history of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: No DOI --- https://doi.org/10.15138/VNCZ-M766 --- https://doi.org/10.15138/ve0c-be70
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- No DOI --- No DOI --- No DOI
+  references_short_names: Nicholls et al., 2025 (in-prep) --- NOAA ch4 surface-flask
+    --- NOAA ch4 in-situ --- NEEM --- Meinshausen et al., 2017 --- Law Dome ice core
+    --- EPICA --- AGAGE Rigby et al. 2017 --- AGAGE Rigby et al. 2008 --- AGAGE Prinn
+    et al. 2018 --- AGAGE GAGE --- AGAGE ALE --- AGAGE
   references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
+    --- https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
+    --- https://agage2.eas.gatech.edu/data_archive/ale/readme.ale --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -755,12 +1131,20 @@
   realm: atmos
   references: 'Nicholls, Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A.,
     ...: Greenhouse gas concentrations for climate modelling (CMIP7), in-prep, 2025.
-    --- https://gml.noaa.gov/ccgg --- https://gml.noaa.gov/ccgg --- Rhodes, Rachael
-    H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland,
-    1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
-    In supplement to: Rhodes, Rachael H; Faïn, Xavier; ...; Brook, Edward J (2013):
-    Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric
-    and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+    --- Lan, X., J.W. Mund, A.M. Crotwell, K.W. Thoning, E. Moglia, M. Madronich,
+    K. Baugh, G. Petron, M.J. Crotwell, D. Neff, S. Wolter, T. Mefford and S. DeVogel
+    (2024), Atmospheric Methane Dry Air Mole Fractions from the NOAA GML Carbon Cycle
+    Cooperative Global Air Sampling Network, 1983-2023, Version: 2024-07-30, https://doi.org/10.15138/VNCZ-M766
+    --- K.W. Thoning, X. Lan, A.M. Crotwell, and J.W. Mund (2024), Atmospheric methane
+    from quasi-continuous measurements at Barrow, Alaska and Mauna Loa, Hawaii, 1986-present.
+    Version: 2024-08-15, National Oceanic and Atmospheric Administration (NOAA), Global
+    Monitoring Laboratory (GML), Boulder, Colorado, USA https://doi.org/10.15138/ve0c-be70
+    --- Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core
+    from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset].
+    PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement to: Rhodes, Rachael
+    H; Faïn, Xavier; ...; Brook, Edward J (2013): Continuous methane measurements
+    from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth
+    and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
     --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
     greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
     10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Rubino, Mauro;
@@ -770,20 +1154,37 @@
     https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante, Carlo; Barnola,
     Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling of glacial climate
     variability in Greenland and Antarctica. Nature, 444, 195-198, https://doi.org/10.1038/nature05301
-    --- Prinn et al., Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci.
-    Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: No DOI --- No DOI --- No DOI --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Nicholls et al., in-prep (2025) --- NOAA surface flask ---
-    NOAA in-situ --- NEEM --- Meinshausen et al., GMD (2017) --- Law Dome --- EPICA
-    --- AGAGE gc-md --- AGAGE GAGE --- AGAGE ALE
+    --- Rigby, M., S. A. Montzka, S. A. Montzka, ..., A. McCulloch, and S. Park, Role
+    of atmospheric oxidation in recent methane growth, Proc. Natl. Acad. Sci., 10.1073/pnas.1616426114,
+    2017. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., J. Mühle, and L. W. Porter,
+    Renewed growth of atmospheric methane, Geophys. Res. Lett., 35, L22805, 10.1029/2008GL036037,
+    2008. --- Prinn, R. G., Weiss, R. F., Weiss, R. F., ..., Young, D., and Zhou,
+    L.: History of chemically and radiatively important atmospheric gases from the
+    Advanced Global Atmospheric Gases Experiment (AGAGE), Earth Syst. Sci. Data, 10,
+    985-1018, https://doi.org/10.5194/essd-10-985-2018, 2018. --- Prinn et al., A
+    history of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000. --- Prinn et al., A history
+    of chemically and radiatively important gases in air deduced from ALE/GAGE/AGAGE,
+    J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: No DOI --- https://doi.org/10.15138/VNCZ-M766 --- https://doi.org/10.15138/ve0c-be70
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- No DOI --- No DOI --- No DOI
+  references_short_names: Nicholls et al., 2025 (in-prep) --- NOAA ch4 surface-flask
+    --- NOAA ch4 in-situ --- NEEM --- Meinshausen et al., 2017 --- Law Dome ice core
+    --- EPICA --- AGAGE Rigby et al. 2017 --- AGAGE Rigby et al. 2008 --- AGAGE Prinn
+    et al. 2018 --- AGAGE GAGE --- AGAGE ALE --- AGAGE
   references_urls: https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://gml.noaa.gov/hats/ --- https://doi.pangaea.de/10.1594/PANGAEA.899039
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.25919/5bfe29ff807fb
-    --- https://doi.pangaea.de/10.1594/PANGAEA.552232 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
+    --- https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
+    --- https://doi.pangaea.de/10.1594/PANGAEA.899039 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.25919/5bfe29ff807fb --- https://doi.pangaea.de/10.1594/PANGAEA.552232
+    --- https://doi.org/10.1073/pnas.1616426114 --- https://doi.org/10.1029/2008GL036037
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
+    --- https://agage2.eas.gatech.edu/data_archive/ale/readme.ale --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -827,20 +1228,47 @@
     based on recent trends in observed abundances and current policies, Atmos. Chem.
     Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
     Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
-    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
-    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
-    gc-ms
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- Nicholls, Z.
+    R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: Reduced Complexity
+    Model Intercomparison Project Phase 1: introduction and evaluation of global-mean
+    temperature response, Geosci. Model Dev., 13, 5175-5190, https://doi.org/10.5194/gmd-13-5175-2020,
+    2020. --- S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke,
+    and L. T. Lock, Present and Future Trends in the Atmospheric Burden of Ozone-Depleting
+    Halogens, Nature, 398, 690-694, 1999. --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Simmonds, P. G., M. Rigby, ..., R. H. J. Wang, and R. G. Prinn, Changing
+    trends and emissions of hydrochlorofluorocarbons (HCFCs) and their hydrofluorocarbon
+    (HFCs) replacements, Atmos. Chem. Phys., 17(7), 4641-4655, 10.5194/acp-17-4641-2017,
+    2017. --- Simmonds, P. G., M. Rigby, M. Rigby, ..., D. Ivy, and R. G. Prinn, Global
+    and regional emissions estimates of 1,1-difluoroethane (HFC-152a, CH3CHF2) from
+    in situ and air archive observations, Atmos. Chem. Phys., 16(1), 365-382, 10.5194/acp-16-365-2016,
+    2016. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds,
+    Recent and future trends in synthetic greenhouse gas radiative forcing, Geophys.
+    Res. Lett., 41(7), 2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss,
+    R. F., Weiss, R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively
+    important atmospheric gases from the Advanced Global Atmospheric Gases Experiment
+    (AGAGE), Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Lunt, M. F., M. Rigby, M. Rigby, ..., D. Young, and P. G. Simmonds,
+    Reconciling reported and unreported HFC emissions with atmospheric observations,
+    Proc. Natl. Acad. Sci., 112(19), 5927-5931, 10.1073/pnas.1420247112, 2015. ---
+    Prinn et al., A history of chemically and radiatively important gases in air deduced
+    from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.1038/19499 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-17-4641-2017 --- https://doi.org/10.5194/acp-16-365-2016
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.1073/pnas.1420247112 --- No DOI
+  references_short_names: Velders et al., 2022 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- NOAA hfc152a hats --- Meinshausen et al., 2017 ---
+    AGAGE Simmonds et al. 2017 --- AGAGE Simmonds et al. 2016 --- AGAGE Rigby et al.
+    2014 --- AGAGE Prinn et al. 2018 --- AGAGE Lunt et al. 2015 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-17-4641-2017
+    --- https://doi.org/10.5194/acp-16-365-2016 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.1073/pnas.1420247112
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP
@@ -884,20 +1312,47 @@
     based on recent trends in observed abundances and current policies, Atmos. Chem.
     Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022. --- Nicholls,
     Z., Meinshausen, M., Lewis, J., Pflueger, M., Menking, A., ...: Greenhouse gas
-    concentrations for climate modelling (CMIP7), in-prep, 2025. --- https://gml.noaa.gov/hats/
-    --- Meinshausen, M., Vogel, E., ..., Wang, R. H. J., and Weiss, R.: Historical
-    greenhouse gas concentrations for climate modelling (CMIP6), Geosci. Model Dev.,
-    10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017, 2017. --- Prinn et al.,
-    Earth Syst. Sci. Data 2018 --- Prinn et al., Earth Syst. Sci. Data 2018'
-  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- No DOI
-    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/essd-10-985-2018
-    --- https://doi.org/10.5194/essd-10-985-2018
-  references_short_names: Velders et al., 2022 --- Nicholls et al., in-prep (2025)
-    --- NOAA HATS --- Meinshausen et al., GMD (2017) --- AGAGE gc-ms-medusa --- AGAGE
-    gc-ms
+    concentrations for climate modelling (CMIP7), in-prep, 2025. --- Nicholls, Z.
+    R. J., Meinshausen, M., Lewis, J., ..., Tsutsui, J., and Xie, Z.: Reduced Complexity
+    Model Intercomparison Project Phase 1: introduction and evaluation of global-mean
+    temperature response, Geosci. Model Dev., 13, 5175-5190, https://doi.org/10.5194/gmd-13-5175-2020,
+    2020. --- S. A. Montzka, J. H. Butler, J. W. Elkins, T. M. Thompson, A. D. Clarke,
+    and L. T. Lock, Present and Future Trends in the Atmospheric Burden of Ozone-Depleting
+    Halogens, Nature, 398, 690-694, 1999. --- Meinshausen, M., Vogel, E., ..., Wang,
+    R. H. J., and Weiss, R.: Historical greenhouse gas concentrations for climate
+    modelling (CMIP6), Geosci. Model Dev., 10, 2057-2116, https://doi.org/10.5194/gmd-10-2057-2017,
+    2017. --- Simmonds, P. G., M. Rigby, ..., R. H. J. Wang, and R. G. Prinn, Changing
+    trends and emissions of hydrochlorofluorocarbons (HCFCs) and their hydrofluorocarbon
+    (HFCs) replacements, Atmos. Chem. Phys., 17(7), 4641-4655, 10.5194/acp-17-4641-2017,
+    2017. --- Simmonds, P. G., M. Rigby, M. Rigby, ..., D. Ivy, and R. G. Prinn, Global
+    and regional emissions estimates of 1,1-difluoroethane (HFC-152a, CH3CHF2) from
+    in situ and air archive observations, Atmos. Chem. Phys., 16(1), 365-382, 10.5194/acp-16-365-2016,
+    2016. --- Rigby, M., R. G. Prinn, R. G. Prinn, ..., D. Young, and P. G. Simmonds,
+    Recent and future trends in synthetic greenhouse gas radiative forcing, Geophys.
+    Res. Lett., 41(7), 2623-2630, 10.1002/2013gl059099, 2014. --- Prinn, R. G., Weiss,
+    R. F., Weiss, R. F., ..., Young, D., and Zhou, L.: History of chemically and radiatively
+    important atmospheric gases from the Advanced Global Atmospheric Gases Experiment
+    (AGAGE), Earth Syst. Sci. Data, 10, 985-1018, https://doi.org/10.5194/essd-10-985-2018,
+    2018. --- Lunt, M. F., M. Rigby, M. Rigby, ..., D. Young, and P. G. Simmonds,
+    Reconciling reported and unreported HFC emissions with atmospheric observations,
+    Proc. Natl. Acad. Sci., 112(19), 5927-5931, 10.1073/pnas.1420247112, 2015. ---
+    Prinn et al., A history of chemically and radiatively important gases in air deduced
+    from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792, 2000.'
+  references_dois: https://doi.org/10.5194/acp-22-6087-2022 --- No DOI --- https://doi.org/10.5194/gmd-13-5175-2020
+    --- https://doi.org/10.1038/19499 --- https://doi.org/10.5194/gmd-10-2057-2017
+    --- https://doi.org/10.5194/acp-17-4641-2017 --- https://doi.org/10.5194/acp-16-365-2016
+    --- https://doi.org/10.1002/2013gl059099 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.1073/pnas.1420247112 --- No DOI
+  references_short_names: Velders et al., 2022 --- Nicholls et al., 2025 (in-prep)
+    --- Nicholls et al., 2020 --- NOAA hfc152a hats --- Meinshausen et al., 2017 ---
+    AGAGE Simmonds et al. 2017 --- AGAGE Simmonds et al. 2016 --- AGAGE Rigby et al.
+    2014 --- AGAGE Prinn et al. 2018 --- AGAGE Lunt et al. 2015 --- AGAGE
   references_urls: https://doi.org/10.5194/acp-22-6087-2022 --- https://github.com/climate-resource/CMIP-GHG-Concentration-Generation
-    --- https://gml.noaa.gov/hats/ --- https://doi.org/10.5194/gmd-10-2057-2017 ---
-    https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.5194/essd-10-985-2018
+    --- https://doi.org/10.5194/gmd-13-5175-2020 --- https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
+    --- https://doi.org/10.5194/gmd-10-2057-2017 --- https://doi.org/10.5194/acp-17-4641-2017
+    --- https://doi.org/10.5194/acp-16-365-2016 --- https://doi.org/10.1002/2013gl059099
+    --- https://doi.org/10.5194/essd-10-985-2018 --- https://doi.org/10.1073/pnas.1420247112
+    --- https://agage2.eas.gatech.edu/data_archive/agage/readme
   source_id: CR-CMIP-testing
   source_version: testing
   target_mip: CMIP

@@ -423,6 +423,7 @@ def create_noaa_data_source_handling_pieces(gas: str, network: str) -> NOAAHandl
     interim_dir = Path("data/interim/noaa")
     interim_files = dict(
         monthly_data=interim_dir / f"monthly_{gas}_{network}_raw-consolidated.csv",
+        source_info=interim_dir / f"source-info_{gas}_{network}.json",
     )
     if network == "surface-flask":
         interim_files["events_data"] = interim_dir / f"events_{gas}_{network}_raw-consolidated.csv"
@@ -441,6 +442,7 @@ def create_noaa_data_source_handling_pieces(gas: str, network: str) -> NOAAHandl
         step_config_id=gas,
         gas=gas,
         processed_monthly_data_with_loc_file=interim_dir / f"monthly_{gas}_{network}.csv",
+        source_info_short_names_file=interim_dir / f"{gas}_{network}_source-short-names.txt",
     )
     if network == "surface-flask":
         out["process_noaa_surface_flask_data"] = ProcessNOAASurfaceFlaskDataConfig(  # type: ignore

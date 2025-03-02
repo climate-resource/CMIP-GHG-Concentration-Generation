@@ -150,15 +150,36 @@ smooth_law_dome["source"] = "law_dome"
 smooth_law_dome
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_smooth_law_dome_data.source_info_short_name,
+)
+
+# %%
 neem_data = pd.read_csv(config_process_neem.processed_data_with_loc_file)
 neem_data["year"] = neem_data["year"].round(0)
 neem_data["source"] = "neem"
 neem_data.sort_values("year")
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_process_neem.source_info.short_name,
+)
+
+# %%
 epica_data = pd.read_csv(config_process_epica.processed_data_with_loc_file)
 epica_data["source"] = "epica"
 epica_data.sort_values("year")
+
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_process_epica.source_info.short_name,
+)
 
 # %% [markdown]
 # ### Define some important constants

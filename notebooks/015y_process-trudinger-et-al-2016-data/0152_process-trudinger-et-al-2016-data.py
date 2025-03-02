@@ -29,6 +29,7 @@ import pandas as pd
 import pint
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.dependencies
 from local.config import load_config_from_file
 
 # %% editable=true slideshow={"slide_type": ""}
@@ -73,14 +74,14 @@ for sheet in ["InvE2", "InvEF"]:
     )
     tmp = raw.iloc[:, conc_start:]
 
-    columns_new = tmp.iloc[:2, 1:].T
-    columns_new.columns = ["gas", "hemisphere_id"]
-    columns_new = pd.MultiIndex.from_frame(columns_new)
+    columns_new_start = tmp.iloc[:2, 1:].T
+    columns_new_start.columns = ["gas", "hemisphere_id"]  # type: ignore
+    columns_new = pd.MultiIndex.from_frame(columns_new_start)
 
     long = tmp.iloc[2:, :]
     # long.columns = long.iloc[0, :]
     long = long.iloc[1:, :]
-    long.columns = ["year", *long.columns[1:]]
+    long.columns = ["year", *long.columns[1:]]  # type: ignore
     long = long.set_index("year")
     long.columns = columns_new
 
@@ -90,7 +91,7 @@ for sheet in ["InvE2", "InvEF"]:
 
     unit = units[0].replace("(", "").replace(")", "")
 
-    sheet_out = long.stack(["gas", "hemisphere_id"], future_stack=True).to_frame("value").reset_index()
+    sheet_out = long.stack(["gas", "hemisphere_id"], future_stack=True).to_frame("value").reset_index()  # type: ignore
     sheet_out["unit"] = unit
     sheet_out["inversion_method"] = sheet
     sheet_out["gas"] = sheet_out["gas"].str.lower()
@@ -133,7 +134,10 @@ out_start_year
 # %%
 helper = out_start_year.set_index(out_start_year.columns.difference(["value"]).tolist()).unstack("year")
 out = (
-    ((helper + helper.shift(periods=-1, axis="columns")) / 2.0)
+    (
+        (helper + helper.shift(periods=-1, axis="columns"))  # type: ignore
+        / 2.0
+    )
     .dropna(axis="columns")
     .stack("year", future_stack=True)
     .reset_index()
@@ -150,3 +154,9 @@ out
 config_step.processed_data_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_data_file, index=False)
 config_step.processed_data_file
+
+# %%
+local.dependencies.save_source_info_to_db(
+    db=config.dependency_db,
+    source_info=config_step.source_info,
+)

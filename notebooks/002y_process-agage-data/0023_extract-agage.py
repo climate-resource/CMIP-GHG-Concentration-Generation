@@ -30,9 +30,11 @@ import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
 import pint
+import pooch
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
+import local.agage_processing
 import local.raw_data_processing
 from local.config import load_config_from_file
 from local.config_creation.agage_handling import (
@@ -55,7 +57,7 @@ step: str = "retrieve_and_extract_agage_data"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "c2f6_gc-ms-medusa_monthly"  # config ID to select for this branch
+step_config_id: str = "n2o_gc-md_monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -340,3 +342,38 @@ assert set(out["gas"]) == {config_step.gas}
 config_step.processed_monthly_data_with_loc_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out
+
+# %%
+readme_path = pooch.retrieve(
+    url=config_step.readme.url,
+    known_hash=config_step.readme.known_hash,
+    fname="AGAGE_README.txt",
+    path=config_step.raw_dir,
+    progressbar=True,
+)
+
+# %%
+if isinstance(readme_path, list):
+    raise TypeError(readme_path)
+
+with open(readme_path, encoding="iso-8859-1") as fh:
+    readme_raw = fh.read()
+
+source_infos_gas = local.agage_processing.extract_agage_source_info(readme_raw, gas=config_step.gas)
+source_infos_gas
+
+# %%
+source_info_short_names = []
+for si in source_infos_gas:
+    local.dependencies.save_source_info_to_db(
+        db=config.dependency_db,
+        source_info=si,
+    )
+    source_info_short_names.append(si.short_name)
+
+source_info_short_names
+
+# %%
+local.dependencies.save_source_info_short_names(
+    short_names=source_info_short_names, out_path=config_step.source_info_short_names_file
+)

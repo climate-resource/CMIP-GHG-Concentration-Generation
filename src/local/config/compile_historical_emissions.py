@@ -24,3 +24,6 @@ class CompileHistoricalEmissionsConfig:
 
     complete_historical_emissions_file: Path
     """Path in which to save the complete historical emissions"""
+
+    source_info_short_names_file: Path
+    """Path in which to save the short names of all sources used to compile the historical emissions"""

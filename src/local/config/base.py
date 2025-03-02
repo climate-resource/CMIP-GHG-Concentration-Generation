@@ -98,6 +98,13 @@ class Config:
     as part of our CI workflow.
     """
 
+    dependency_db: Path
+    """
+    Path to the database of dependencies
+
+    This is built up throughout the workflow.
+    """
+
     retrieve_misc_data: list[RetrieveMiscDataConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )

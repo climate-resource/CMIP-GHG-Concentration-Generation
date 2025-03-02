@@ -948,7 +948,8 @@ calculate_sf6_like_monthly_fifteen_degree_pieces:
   year_drop_observational_data_before_and_including: 2007
 ci: false
 compile_historical_emissions:
-- complete_historical_emissions_file: data/processed/historical_emissions
+- complete_historical_emissions_file: data/processed/historical_emissions/historical_emissions.csv
+  source_info_short_names_file: data/processed/historical_emissions/source_short_names.txt
   step_config_id: only
 crunch_equivalent_species:
 - equivalent_component_gases:
@@ -1356,6 +1357,7 @@ crunch_grids:
   hemispheric_mean_annual_mean_file: data/interim/so2f2/so2f2_hemispheric-mean_annual-mean.nc
   hemispheric_mean_monthly_file: data/interim/so2f2/so2f2_hemispheric-mean_monthly.nc
   step_config_id: so2f2
+dependency_db: data/processed/dependencies.db
 doi: dev-run-hence-no-valid-doi
 name: dev
 plot_input_data_overviews:
@@ -1363,101 +1365,133 @@ plot_input_data_overviews:
 process_noaa_hats_data:
 - gas: n2o
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_n2o_hats.csv
+  source_info_short_names_file: data/interim/noaa/n2o_hats_source-short-names.txt
   step_config_id: n2o
 - gas: c2f6
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_c2f6_hats.csv
+  source_info_short_names_file: data/interim/noaa/c2f6_hats_source-short-names.txt
   step_config_id: c2f6
 - gas: ccl4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ccl4_hats.csv
+  source_info_short_names_file: data/interim/noaa/ccl4_hats_source-short-names.txt
   step_config_id: ccl4
 - gas: cf4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_cf4_hats.csv
+  source_info_short_names_file: data/interim/noaa/cf4_hats_source-short-names.txt
   step_config_id: cf4
 - gas: cfc11
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_cfc11_hats.csv
+  source_info_short_names_file: data/interim/noaa/cfc11_hats_source-short-names.txt
   step_config_id: cfc11
 - gas: cfc113
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_cfc113_hats.csv
+  source_info_short_names_file: data/interim/noaa/cfc113_hats_source-short-names.txt
   step_config_id: cfc113
 - gas: cfc12
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_cfc12_hats.csv
+  source_info_short_names_file: data/interim/noaa/cfc12_hats_source-short-names.txt
   step_config_id: cfc12
 - gas: ch2cl2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch2cl2_hats.csv
+  source_info_short_names_file: data/interim/noaa/ch2cl2_hats_source-short-names.txt
   step_config_id: ch2cl2
 - gas: ch3br
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch3br_hats.csv
+  source_info_short_names_file: data/interim/noaa/ch3br_hats_source-short-names.txt
   step_config_id: ch3br
 - gas: ch3ccl3
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch3ccl3_hats.csv
+  source_info_short_names_file: data/interim/noaa/ch3ccl3_hats_source-short-names.txt
   step_config_id: ch3ccl3
 - gas: ch3cl
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch3cl_hats.csv
+  source_info_short_names_file: data/interim/noaa/ch3cl_hats_source-short-names.txt
   step_config_id: ch3cl
 - gas: halon1211
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_halon1211_hats.csv
+  source_info_short_names_file: data/interim/noaa/halon1211_hats_source-short-names.txt
   step_config_id: halon1211
 - gas: halon1301
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_halon1301_hats.csv
+  source_info_short_names_file: data/interim/noaa/halon1301_hats_source-short-names.txt
   step_config_id: halon1301
 - gas: halon2402
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_halon2402_hats.csv
+  source_info_short_names_file: data/interim/noaa/halon2402_hats_source-short-names.txt
   step_config_id: halon2402
 - gas: hcfc141b
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hcfc141b_hats.csv
+  source_info_short_names_file: data/interim/noaa/hcfc141b_hats_source-short-names.txt
   step_config_id: hcfc141b
 - gas: hcfc142b
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hcfc142b_hats.csv
+  source_info_short_names_file: data/interim/noaa/hcfc142b_hats_source-short-names.txt
   step_config_id: hcfc142b
 - gas: hcfc22
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hcfc22_hats.csv
+  source_info_short_names_file: data/interim/noaa/hcfc22_hats_source-short-names.txt
   step_config_id: hcfc22
 - gas: hfc125
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc125_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc125_hats_source-short-names.txt
   step_config_id: hfc125
 - gas: hfc134a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc134a_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc134a_hats_source-short-names.txt
   step_config_id: hfc134a
 - gas: hfc143a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc143a_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc143a_hats_source-short-names.txt
   step_config_id: hfc143a
 - gas: hfc152a
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc152a_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc152a_hats_source-short-names.txt
   step_config_id: hfc152a
 - gas: hfc227ea
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc227ea_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc227ea_hats_source-short-names.txt
   step_config_id: hfc227ea
 - gas: hfc236fa
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc236fa_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc236fa_hats_source-short-names.txt
   step_config_id: hfc236fa
 - gas: hfc32
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc32_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc32_hats_source-short-names.txt
   step_config_id: hfc32
 - gas: hfc365mfc
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_hfc365mfc_hats.csv
+  source_info_short_names_file: data/interim/noaa/hfc365mfc_hats_source-short-names.txt
   step_config_id: hfc365mfc
 - gas: nf3
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_nf3_hats.csv
+  source_info_short_names_file: data/interim/noaa/nf3_hats_source-short-names.txt
   step_config_id: nf3
 - gas: sf6
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_sf6_hats.csv
+  source_info_short_names_file: data/interim/noaa/sf6_hats_source-short-names.txt
   step_config_id: sf6
 - gas: so2f2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_so2f2_hats.csv
+  source_info_short_names_file: data/interim/noaa/so2f2_hats_source-short-names.txt
   step_config_id: so2f2
 process_noaa_in_situ_data:
 - gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+  source_info_short_names_file: data/interim/noaa/co2_in-situ_source-short-names.txt
   step_config_id: co2
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_in-situ.csv
+  source_info_short_names_file: data/interim/noaa/ch4_in-situ_source-short-names.txt
   step_config_id: ch4
 process_noaa_surface_flask_data:
 - gas: co2
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_surface-flask.csv
+  source_info_short_names_file: data/interim/noaa/co2_surface-flask_source-short-names.txt
   step_config_id: co2
 - gas: ch4
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
+  source_info_short_names_file: data/interim/noaa/ch4_surface-flask_source-short-names.txt
   step_config_id: ch4
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
@@ -1477,6 +1511,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch4_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch4_gc-md_monthly_source-short-names.txt
   step_config_id: ch4_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/n2o_gc-md_monthly.complete
@@ -1496,6 +1534,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/n2o_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/n2o_gc-md_monthly_source-short-names.txt
   step_config_id: n2o_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/sf6_gc-md_monthly.complete
@@ -1507,6 +1549,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/sf6_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/sf6_gc-md_monthly_source-short-names.txt
   step_config_id: sf6_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/sf6_gc-ms-medusa_monthly.complete
@@ -1538,6 +1584,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/sf6_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/sf6_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: sf6_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c2f6_gc-ms-medusa_monthly.complete
@@ -1569,6 +1619,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c2f6_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/c2f6_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: c2f6_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms-medusa_monthly.complete
@@ -1600,6 +1654,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/c3f8_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: c3f8_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms_monthly.complete
@@ -1611,6 +1669,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/c3f8_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/c3f8_gc-ms_monthly_source-short-names.txt
   step_config_id: c3f8_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms-medusa_monthly.complete
@@ -1642,6 +1704,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cc4f8_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cc4f8_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cc4f8_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms_monthly.complete
@@ -1653,6 +1719,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cc4f8_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cc4f8_gc-ms_monthly_source-short-names.txt
   step_config_id: cc4f8_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
@@ -1672,6 +1742,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ccl4_gc-md_monthly_source-short-names.txt
   step_config_id: ccl4_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms-medusa_monthly.complete
@@ -1689,6 +1763,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ccl4_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: ccl4_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms_monthly.complete
@@ -1700,6 +1778,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ccl4_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ccl4_gc-ms_monthly_source-short-names.txt
   step_config_id: ccl4_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cf4_gc-ms-medusa_monthly.complete
@@ -1729,6 +1811,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cf4_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cf4_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cf4_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-md_monthly.complete
@@ -1748,6 +1834,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc11_gc-md_monthly_source-short-names.txt
   step_config_id: cfc11_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms-medusa_monthly.complete
@@ -1771,6 +1861,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc11_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cfc11_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms_monthly.complete
@@ -1782,6 +1876,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc11_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc11_gc-ms_monthly_source-short-names.txt
   step_config_id: cfc11_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-md_monthly.complete
@@ -1801,6 +1899,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc113_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc113_gc-md_monthly_source-short-names.txt
   step_config_id: cfc113_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-ms-medusa_monthly.complete
@@ -1832,6 +1934,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc113_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc113_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cfc113_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms_monthly.complete
@@ -1843,6 +1949,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc114_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc114_gc-ms_monthly_source-short-names.txt
   step_config_id: cfc114_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms-medusa_monthly.complete
@@ -1874,6 +1984,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc114_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc114_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cfc114_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms_monthly.complete
@@ -1885,6 +1999,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc115_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc115_gc-ms_monthly_source-short-names.txt
   step_config_id: cfc115_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms-medusa_monthly.complete
@@ -1916,6 +2034,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc115_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc115_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cfc115_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-md_monthly.complete
@@ -1935,6 +2057,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc12_gc-md_monthly_source-short-names.txt
   step_config_id: cfc12_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms-medusa_monthly.complete
@@ -1956,6 +2082,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc12_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: cfc12_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms_monthly.complete
@@ -1967,6 +2097,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/cfc12_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/cfc12_gc-ms_monthly_source-short-names.txt
   step_config_id: cfc12_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms-medusa_monthly.complete
@@ -1998,6 +2132,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch2cl2_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch2cl2_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: ch2cl2_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms_monthly.complete
@@ -2017,6 +2155,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch2cl2_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch2cl2_gc-ms_monthly_source-short-names.txt
   step_config_id: ch2cl2_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms-medusa_monthly.complete
@@ -2048,6 +2190,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3br_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3br_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: ch3br_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms_monthly.complete
@@ -2067,6 +2213,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3br_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3br_gc-ms_monthly_source-short-names.txt
   step_config_id: ch3br_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-md_monthly.complete
@@ -2086,6 +2236,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3ccl3_gc-md_monthly_source-short-names.txt
   step_config_id: ch3ccl3_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms-medusa_monthly.complete
@@ -2117,6 +2271,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3ccl3_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: ch3ccl3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms_monthly.complete
@@ -2132,6 +2290,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3ccl3_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3ccl3_gc-ms_monthly_source-short-names.txt
   step_config_id: ch3ccl3_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms-medusa_monthly.complete
@@ -2163,6 +2325,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3cl_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3cl_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: ch3cl_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms_monthly.complete
@@ -2182,6 +2348,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/ch3cl_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/ch3cl_gc-ms_monthly_source-short-names.txt
   step_config_id: ch3cl_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-md_monthly.complete
@@ -2201,6 +2371,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-md
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-md_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/chcl3_gc-md_monthly_source-short-names.txt
   step_config_id: chcl3_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms-medusa_monthly.complete
@@ -2232,6 +2406,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/chcl3_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: chcl3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms_monthly.complete
@@ -2251,6 +2429,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/chcl3_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/chcl3_gc-ms_monthly_source-short-names.txt
   step_config_id: chcl3_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms-medusa_monthly.complete
@@ -2282,6 +2464,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1211_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/halon1211_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: halon1211_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms_monthly.complete
@@ -2301,6 +2487,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1211_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/halon1211_gc-ms_monthly_source-short-names.txt
   step_config_id: halon1211_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms-medusa_monthly.complete
@@ -2332,6 +2522,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1301_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/halon1301_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: halon1301_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms_monthly.complete
@@ -2351,6 +2545,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon1301_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/halon1301_gc-ms_monthly_source-short-names.txt
   step_config_id: halon1301_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon2402_gc-ms-medusa_monthly.complete
@@ -2382,6 +2580,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/halon2402_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/halon2402_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: halon2402_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms_monthly.complete
@@ -2401,6 +2603,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc141b_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc141b_gc-ms_monthly_source-short-names.txt
   step_config_id: hcfc141b_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms-medusa_monthly.complete
@@ -2432,6 +2638,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc141b_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc141b_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hcfc141b_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms_monthly.complete
@@ -2449,6 +2659,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc142b_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc142b_gc-ms_monthly_source-short-names.txt
   step_config_id: hcfc142b_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms-medusa_monthly.complete
@@ -2480,6 +2694,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc142b_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc142b_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hcfc142b_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms_monthly.complete
@@ -2497,6 +2715,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc22_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc22_gc-ms_monthly_source-short-names.txt
   step_config_id: hcfc22_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms-medusa_monthly.complete
@@ -2528,6 +2750,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hcfc22_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hcfc22_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hcfc22_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms-medusa_monthly.complete
@@ -2559,6 +2785,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc125_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc125_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc125_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms_monthly.complete
@@ -2578,6 +2808,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc125_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc125_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc125_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms-medusa_monthly.complete
@@ -2609,6 +2843,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc134a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc134a_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc134a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms_monthly.complete
@@ -2628,6 +2866,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc134a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc134a_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc134a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms-medusa_monthly.complete
@@ -2659,6 +2901,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc143a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc143a_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc143a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms_monthly.complete
@@ -2670,6 +2916,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc143a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc143a_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc143a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms-medusa_monthly.complete
@@ -2701,6 +2951,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc152a_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc152a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms_monthly.complete
@@ -2720,6 +2974,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc152a_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc152a_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc152a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms-medusa_monthly.complete
@@ -2749,6 +3007,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc227ea_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc227ea_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc227ea_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms_monthly.complete
@@ -2762,6 +3024,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc227ea_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc227ea_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc227ea_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc23_gc-ms-medusa_monthly.complete
@@ -2793,6 +3059,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc23_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc23_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc23_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms-medusa_monthly.complete
@@ -2822,6 +3092,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc236fa_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc236fa_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc236fa_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms_monthly.complete
@@ -2833,6 +3107,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc236fa_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc236fa_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc236fa_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms-medusa_monthly.complete
@@ -2862,6 +3140,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc245fa_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc245fa_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc245fa_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms_monthly.complete
@@ -2875,6 +3157,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc245fa_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc245fa_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc245fa_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms-medusa_monthly.complete
@@ -2906,6 +3192,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc32_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc32_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc32_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms_monthly.complete
@@ -2917,6 +3207,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc32_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc32_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc32_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms-medusa_monthly.complete
@@ -2946,6 +3240,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc365mfc_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc365mfc_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc365mfc_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms_monthly.complete
@@ -2965,6 +3263,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc365mfc_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc365mfc_gc-ms_monthly_source-short-names.txt
   step_config_id: hfc365mfc_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc4310mee_gc-ms-medusa_monthly.complete
@@ -2994,6 +3296,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/hfc4310mee_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/hfc4310mee_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: hfc4310mee_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/nf3_gc-ms-medusa_monthly.complete
@@ -3021,6 +3327,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/nf3_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/nf3_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: nf3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms-medusa_monthly.complete
@@ -3052,6 +3362,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms-medusa
   processed_monthly_data_with_loc_file: data/interim/agage/agage/so2f2_gc-ms-medusa_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/so2f2_gc-ms-medusa_monthly_source-short-names.txt
   step_config_id: so2f2_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms_monthly.complete
@@ -3063,6 +3377,10 @@ retrieve_and_extract_agage_data:
   instrument: gc-ms
   processed_monthly_data_with_loc_file: data/interim/agage/agage/so2f2_gc-ms_monthly.csv
   raw_dir: data/raw/agage/agage
+  readme:
+    known_hash: e720e83fce548dec2d53bca1e89c993386be52902d319588480e1994866305b2
+    url: https://agage2.eas.gatech.edu/data_archive/agage/readme
+  source_info_short_names_file: data/interim/agage/agage/so2f2_gc-ms_monthly_source-short-names.txt
   step_config_id: so2f2_gc-ms_monthly
   time_frequency: monthly
 retrieve_and_extract_ale_data:
@@ -3080,6 +3398,15 @@ retrieve_and_extract_ale_data:
     url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/SMO-ale.mon
   processed_monthly_data_with_loc_file: data/interim/agage/ale/monthly.csv
   raw_dir: data/raw/agage/ale
+  source_info:
+    doi: null
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: Prinn et al., A history of chemically and radiatively important gases
+      in air deduced from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792,
+      2000.
+    resource_type: dataset
+    short_name: AGAGE ALE
+    url: https://agage2.eas.gatech.edu/data_archive/ale/readme.ale
   step_config_id: monthly
 retrieve_and_extract_gage_data:
 - download_complete_file: data/raw/agage/gage/gage_monthly.complete
@@ -3096,6 +3423,15 @@ retrieve_and_extract_gage_data:
     url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/SMO-gage.mon
   processed_monthly_data_with_loc_file: data/interim/agage/gage/monthly.csv
   raw_dir: data/raw/agage/gage
+  source_info:
+    doi: null
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: Prinn et al., A history of chemically and radiatively important gases
+      in air deduced from ALE/GAGE/AGAGE, J. Geophys. Res., 105, No. D14, p17,751-17,792,
+      2000.
+    resource_type: dataset
+    short_name: AGAGE GAGE
+    url: https://agage2.eas.gatech.edu/data_archive/gage/readme.gage
   step_config_id: monthly
 retrieve_and_extract_noaa_data:
 - download_complete_file: data/raw/noaa/co2_in-situ.complete
@@ -3105,6 +3441,7 @@ retrieve_and_extract_noaa_data:
   gas: co2
   interim_files:
     monthly_data: data/interim/noaa/monthly_co2_in-situ_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_co2_in-situ.json
   raw_dir: data/raw/noaa
   source: in-situ
   step_config_id: co2_in-situ
@@ -3116,6 +3453,7 @@ retrieve_and_extract_noaa_data:
   interim_files:
     events_data: data/interim/noaa/events_co2_surface-flask_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_co2_surface-flask_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_co2_surface-flask.json
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: co2_surface-flask
@@ -3126,6 +3464,7 @@ retrieve_and_extract_noaa_data:
   gas: ch4
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch4_in-situ_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch4_in-situ.json
   raw_dir: data/raw/noaa
   source: in-situ
   step_config_id: ch4_in-situ
@@ -3137,6 +3476,7 @@ retrieve_and_extract_noaa_data:
   interim_files:
     events_data: data/interim/noaa/events_ch4_surface-flask_raw-consolidated.csv
     monthly_data: data/interim/noaa/monthly_ch4_surface-flask_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch4_surface-flask.json
   raw_dir: data/raw/noaa
   source: surface-flask
   step_config_id: ch4_surface-flask
@@ -3147,6 +3487,7 @@ retrieve_and_extract_noaa_data:
   gas: n2o
   interim_files:
     monthly_data: data/interim/noaa/monthly_n2o_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_n2o_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: n2o_hats
@@ -3157,6 +3498,7 @@ retrieve_and_extract_noaa_data:
   gas: c2f6
   interim_files:
     monthly_data: data/interim/noaa/monthly_c2f6_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_c2f6_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: c2f6_hats
@@ -3167,6 +3509,7 @@ retrieve_and_extract_noaa_data:
   gas: ccl4
   interim_files:
     monthly_data: data/interim/noaa/monthly_ccl4_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ccl4_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ccl4_hats
@@ -3177,6 +3520,7 @@ retrieve_and_extract_noaa_data:
   gas: cf4
   interim_files:
     monthly_data: data/interim/noaa/monthly_cf4_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_cf4_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: cf4_hats
@@ -3187,6 +3531,7 @@ retrieve_and_extract_noaa_data:
   gas: cfc11
   interim_files:
     monthly_data: data/interim/noaa/monthly_cfc11_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_cfc11_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: cfc11_hats
@@ -3197,6 +3542,7 @@ retrieve_and_extract_noaa_data:
   gas: cfc113
   interim_files:
     monthly_data: data/interim/noaa/monthly_cfc113_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_cfc113_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: cfc113_hats
@@ -3207,6 +3553,7 @@ retrieve_and_extract_noaa_data:
   gas: cfc12
   interim_files:
     monthly_data: data/interim/noaa/monthly_cfc12_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_cfc12_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: cfc12_hats
@@ -3217,6 +3564,7 @@ retrieve_and_extract_noaa_data:
   gas: ch2cl2
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch2cl2_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch2cl2_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ch2cl2_hats
@@ -3227,6 +3575,7 @@ retrieve_and_extract_noaa_data:
   gas: ch3br
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch3br_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch3br_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ch3br_hats
@@ -3237,6 +3586,7 @@ retrieve_and_extract_noaa_data:
   gas: ch3ccl3
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch3ccl3_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch3ccl3_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ch3ccl3_hats
@@ -3247,6 +3597,7 @@ retrieve_and_extract_noaa_data:
   gas: ch3cl
   interim_files:
     monthly_data: data/interim/noaa/monthly_ch3cl_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_ch3cl_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: ch3cl_hats
@@ -3257,6 +3608,7 @@ retrieve_and_extract_noaa_data:
   gas: halon1211
   interim_files:
     monthly_data: data/interim/noaa/monthly_halon1211_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_halon1211_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: halon1211_hats
@@ -3267,6 +3619,7 @@ retrieve_and_extract_noaa_data:
   gas: halon1301
   interim_files:
     monthly_data: data/interim/noaa/monthly_halon1301_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_halon1301_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: halon1301_hats
@@ -3277,6 +3630,7 @@ retrieve_and_extract_noaa_data:
   gas: halon2402
   interim_files:
     monthly_data: data/interim/noaa/monthly_halon2402_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_halon2402_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: halon2402_hats
@@ -3287,6 +3641,7 @@ retrieve_and_extract_noaa_data:
   gas: hcfc141b
   interim_files:
     monthly_data: data/interim/noaa/monthly_hcfc141b_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hcfc141b_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hcfc141b_hats
@@ -3297,6 +3652,7 @@ retrieve_and_extract_noaa_data:
   gas: hcfc142b
   interim_files:
     monthly_data: data/interim/noaa/monthly_hcfc142b_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hcfc142b_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hcfc142b_hats
@@ -3307,6 +3663,7 @@ retrieve_and_extract_noaa_data:
   gas: hcfc22
   interim_files:
     monthly_data: data/interim/noaa/monthly_hcfc22_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hcfc22_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hcfc22_hats
@@ -3317,6 +3674,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc125
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc125_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc125_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc125_hats
@@ -3327,6 +3685,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc134a
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc134a_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc134a_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc134a_hats
@@ -3337,6 +3696,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc143a
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc143a_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc143a_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc143a_hats
@@ -3347,6 +3707,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc152a
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc152a_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc152a_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc152a_hats
@@ -3357,6 +3718,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc227ea
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc227ea_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc227ea_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc227ea_hats
@@ -3367,6 +3729,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc236fa
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc236fa_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc236fa_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc236fa_hats
@@ -3377,6 +3740,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc32
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc32_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc32_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc32_hats
@@ -3387,6 +3751,7 @@ retrieve_and_extract_noaa_data:
   gas: hfc365mfc
   interim_files:
     monthly_data: data/interim/noaa/monthly_hfc365mfc_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_hfc365mfc_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: hfc365mfc_hats
@@ -3397,6 +3762,7 @@ retrieve_and_extract_noaa_data:
   gas: nf3
   interim_files:
     monthly_data: data/interim/noaa/monthly_nf3_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_nf3_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: nf3_hats
@@ -3407,6 +3773,7 @@ retrieve_and_extract_noaa_data:
   gas: sf6
   interim_files:
     monthly_data: data/interim/noaa/monthly_sf6_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_sf6_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: sf6_hats
@@ -3417,17 +3784,37 @@ retrieve_and_extract_noaa_data:
   gas: so2f2
   interim_files:
     monthly_data: data/interim/noaa/monthly_so2f2_hats_raw-consolidated.csv
+    source_info: data/interim/noaa/source-info_so2f2_hats.json
   raw_dir: data/raw/noaa
   source: hats
   step_config_id: so2f2_hats
 retrieve_and_process_adam_et_al_2024_data:
 - processed_data_file: data/interim/adam-et-al-2024/adam_et_al_2024.csv
   raw_data_file: data/raw/adam-et-al-2024/HFC-23_Global_annual_mole_fraction.csv
+  source_info:
+    doi: https://doi.org/10.1038/s43247-024-01946-y
+    licence: Free for scientific use, offer co-authorship. See https://www-air.larc.nasa.gov/missions/agage/data/policy
+    reference: "Adam, B., Western, L.M., M\xFChle, J. et al. Emissions of HFC-23 do\
+      \ not reflect commitments made under the Kigali Amendment. Commun Earth Environ\
+      \ 5, 783 (2024)."
+    resource_type: publication-article
+    short_name: Adam et al., 2024
+    url: https://doi.org/10.1038/s43247-024-01946-y
   step_config_id: only
 retrieve_and_process_droste_et_al_2020_data:
 - download_complete_file: data/raw/droste-et-al-2020/download.complete
   processed_data_file: data/interim/droste-et-al-2020/droste_et_al_2020.csv
   raw_dir: data/raw/droste-et-al-2020
+  source_info:
+    doi: https://doi.org/10.5194/acp-20-4787-2020
+    licence: CC BY 4.0
+    reference: 'Droste, E. S., Adcock, K. E., ..., Sturges, W. T., and Laube, J. C.:
+      Trends and emissions of six perfluorocarbons in the Northern Hemisphere and
+      Southern Hemisphere, Atmos. Chem. Phys., 20, 4787-4807, https://doi.org/10.5194/acp-20-4787-2020,
+      2020.'
+    resource_type: publication-article
+    short_name: Droste et al., 2020
+    url: https://doi.org/10.5194/acp-20-4787-2020
   step_config_id: only
   zenodo_record:
     known_hash: f71fda6b8848f627b7736870241bfa075d941bcd458fff6105287e951aed6c21
@@ -3438,6 +3825,17 @@ retrieve_and_process_epica_data:
     url: https://doi.pangaea.de/10.1594/PANGAEA.552232?format=textfile
   processed_data_with_loc_file: data/interim/epica/epica_with_location.csv
   raw_dir: data/raw/epica
+  source_info:
+    doi: https://doi.pangaea.de/10.1594/PANGAEA.552232
+    licence: CC BY 3.0
+    reference: 'EPICA Community Members (2006): Methane of ice core EDML [dataset].
+      PANGAEA, https://doi.org/10.1594/PANGAEA.552232, In supplement to: Barbante,
+      Carlo; Barnola, Jean-Marc; ... Wolff, Eric William (2006): One-to-one coupling
+      of glacial climate variability in Greenland and Antarctica. Nature, 444, 195-198,
+      https://doi.org/10.1038/nature05301'
+    resource_type: dataset
+    short_name: EPICA
+    url: https://doi.pangaea.de/10.1594/PANGAEA.552232
   step_config_id: only
 retrieve_and_process_ghosh_et_al_2023_data:
 - expected_hash: 19dedb2f95732247c8a298ea0e38e8f2
@@ -3450,11 +3848,149 @@ retrieve_and_process_law_dome_data:
     data/raw/law_dome/data/Law_Dome_GHG_2000years.xlsx: f7dd24e36565b2e213b20f90c88c990e
   processed_data_with_loc_file: data/interim/law_dome/law_dome_with_location.csv
   raw_dir: data/raw/law_dome
+  source_info:
+    doi: https://doi.org/10.25919/5bfe29ff807fb
+    licence: CC BY 4.0
+    reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+      (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO. Data
+      Collection. https://doi.org/10.25919/5bfe29ff807fb'
+    resource_type: dataset
+    short_name: Law Dome ice core
+    url: https://doi.org/10.25919/5bfe29ff807fb
   step_config_id: only
 retrieve_and_process_menking_et_al_2025_data:
 - expected_hash: 20df9337cddb739dc805e53847a19424
   processed_data_file: data/interim/menking-et-al-2025/menking_et_al_2025.csv
   raw_data_file: data/raw/menking-et-al-2025/spline-fits-for-ZN_CMIP7.xlsx
+  second_order_deps:
+    co2:
+    - doi: https://doi.org/10.25919/5bfe29ff807fb
+      licence: CC BY 4.0
+      reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+        (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO.
+        Data Collection. https://doi.org/10.25919/5bfe29ff807fb'
+      resource_type: dataset
+      short_name: Law Dome ice core
+      url: https://doi.org/10.25919/5bfe29ff807fb
+    - doi: https://doi.org/10.1038/ngeo2422
+      licence: Supplied by Menking et al. author
+      reference: Bauska, T., Joos, F., Mix, A. et al. Links between atmospheric carbon
+        dioxide, the land carbon reservoir and climate over the past millennium. Nature
+        Geosci 8, 383-387 (2015). https://doi.org/10.1038/ngeo2422
+      resource_type: publication-article
+      short_name: Bauska et al., 2015
+      url: https://doi.org/10.1038/ngeo2422
+    - doi: https://doi.org/10.1038/s41467-024-45894-9
+      licence: Supplied by Menking et al. author
+      reference: King, A.C.F., Bauska, T.K., Brook, E.J. et al. Reconciling ice core
+        CO2 and land-use change following New World-Old World contact. Nat Commun
+        15, 1735 (2024). https://doi.org/10.1038/s41467-024-45894-9
+      resource_type: publication-article
+      short_name: King et al., 2024
+      url: https://doi.org/10.1038/s41467-024-45894-9
+    - doi: https://doi.org/10.1029/2012GL053018
+      licence: Supplied by Menking et al. author
+      reference: Ahn, J., E. J. Brook, A. Schmittner, and K. Kreutz (2012), Abrupt
+        change in atmospheric CO2 during the last ice age, Geophys. Res. Lett., 39,
+        L18711, doi:10.1029/2012GL053018.
+      resource_type: publication-article
+      short_name: Ahn et al., 2012
+      url: https://doi.org/10.1029/2012GL053018
+    n2o:
+    - doi: https://doi.org/10.25919/5bfe29ff807fb
+      licence: CC BY 4.0
+      reference: 'Rubino, Mauro; Etheridge, David; ... Van Ommen, Tas; & Smith, Andrew
+        (2019): Law Dome Ice Core 2000-Year CO2, CH4, N2O and d13C-CO2. v3. CSIRO.
+        Data Collection. https://doi.org/10.25919/5bfe29ff807fb'
+      resource_type: dataset
+      short_name: Law Dome ice core
+      url: https://doi.org/10.25919/5bfe29ff807fb
+    - doi: https://doi.org/10.15784/601693
+      licence: Creative Commons Attribution Only v4.0 Generic [CC BY 4.0]
+      reference: 'Ghosh, S., Toyoda, S., Buizert, C., ..., Yoshida, N., et al. (2023).
+        Concentration and isotopic composition of atmospheric N2O over the last century.
+        Journal of Geophysical Research: Atmospheres, 128, e2022JD038281. https://doi.org/10.1029/2022JD038281'
+      resource_type: publication-article
+      short_name: Ghosh et al., 2023
+      url: https://doi.org/10.15784/601693
+    - doi: https://doi.org/10.1016/j.quascirev.2009.03.011
+      licence: Supplied by Menking et al. author
+      reference: Schilt A, Baumgartner M, Blunier T, et al. Glacial-interglacial and
+        millennial-scale variations in the atmospheric nitrous oxide concentration
+        during the last 800,000 years. Quaternary Science Reviews. 2010;29(1):182-192.
+        doi:10.1016/j.quascirev.2009.03.011
+      resource_type: publication-article
+      short_name: Schilt et al., 2010
+      url: https://doi.org/10.1016/j.quascirev.2009.03.011
+    - doi: https://doi.org/10.1029/2023EA002840
+      licence: Supplied by Menking et al. author
+      reference: Azharuddin, S., Ahn, J., Ryu, Y., Brook, E., & Salehnia, N. (2024).
+        Millennial-scale changes in atmospheric nitrous oxide during the Holocene.
+        Earth and Space Science, 11, e2023EA002840. https://doi.org/10.1029/2023EA002840
+      resource_type: publication-article
+      short_name: Azharuddin et al., 2024
+      url: https://doi.org/10.1029/2023EA002840
+    - doi: https://doi.org/10.1029/2018JD029008
+      licence: Supplied by Menking et al. author
+      reference: "Prokopiou, M., Sapart, C. J., Rosen, J., ..., & R\xF6ckmann, T.\
+        \ (2018). Changes in the isotopic signature of atmospheric nitrous oxide and\
+        \ its global average source during the last three millennia. Journal of Geophysical\
+        \ Research: Atmospheres, 123, 10,757-10,773. https://doi.org/10.1029/2018JD029008"
+      resource_type: publication-article
+      short_name: Prokopiou et al., 2018
+      url: https://doi.org/10.1029/2018JD029008
+    - doi: https://doi.org/10.1029/2020GB006568
+      licence: Supplied by Menking et al. author
+      reference: Ryu, Y., Ahn, J., Yang, J.-W., Brook, E. J., Timmermann, A., Blunier,
+        T., et al. (2020). Atmospheric nitrous oxide variations on centennial time
+        scales during the past two millennia. Global Biogeochemical Cycles, 34, e2020GB006568.
+        https://doi.org/10.1029/2020GB006568
+      resource_type: publication-article
+      short_name: Ryu et al., 2020
+      url: https://doi.org/10.1029/2020GB006568
+    - doi: https://doi.org/10.1029/2006JD007208
+      licence: Supplied by Menking et al. author
+      reference: "Ishijima, K., S. Sugawara, K. Kawamura, G. Hashida, ..., and T.\
+        \ Nakazawa (2007), Temporal variations of the atmospheric nitrous oxide concentration\
+        \ and its \u03B415N and \u03B418O for the latter half of the 20th century\
+        \ reconstructed from firn air analyses, J. Geophys. Res., 112, D03305, doi:10.1029/2006JD007208."
+      resource_type: publication-article
+      short_name: Ishijima et al., 2007
+      url: https://doi.org/10.1029/2006JD007208
+    - doi: https://doi.org/10.1038/ngeo1421
+      licence: Supplied by Menking et al. author
+      reference: Park, S., Croteau, P., Boering, K. et al. Trends and seasonal cycles
+        in the isotopic composition of nitrous oxide since 1940. Nature Geosci 5,
+        261-265 (2012). https://doi.org/10.1038/ngeo1421
+      resource_type: publication-article
+      short_name: Park et al., 2012
+      url: https://doi.org/10.1038/ngeo1421
+    - doi: https://doi.org/10.5194/acp-6-493-2006
+      licence: Supplied by Menking et al. author
+      reference: "Bernard, S., R\xF6ckmann, T., Kaiser, J., Barnola, J.-M., ..., and\
+        \ Chappellaz, J.: Constraints on N2O budget changes since pre-industrial time\
+        \ from new firn air and ice core isotope measurements, Atmos. Chem. Phys.,\
+        \ 6, 493-503, https://doi.org/10.5194/acp-6-493-2006, 2006."
+      resource_type: publication-article
+      short_name: Bernard et al., 2006
+      url: https://doi.org/10.5194/acp-6-493-2006
+    - doi: https://doi.org/10.5194/acp-3-315-2003
+      licence: Supplied by Menking et al. author
+      reference: 'Roeckmann, T., Kaiser, J., and Brenninkmeijer, C. A. M.: The isotopic
+        fingerprint of the pre-industrial and the anthropogenic N2O source, Atmos.
+        Chem. Phys., 3, 315-323, https://doi.org/10.5194/acp-3-315-2003, 2003.'
+      resource_type: publication-article
+      short_name: Roeckmann et al., 2006
+      url: https://doi.org/10.5194/acp-3-315-2003
+  source_info:
+    doi: null
+    licence: Author supplied
+    reference: Menking, J. A., Etheridge, D., ..., Spencer, D., and Caldow, C. (in
+      prep.). Filling gaps and reducing uncertainty in existing Law Dome ice core
+      records.
+    resource_type: publication-article
+    short_name: Menking et al., 2025 (in-prep.)
+    url: author-supplied.invalid
   step_config_id: only
 retrieve_and_process_neem_data:
 - download_url:
@@ -3462,12 +3998,34 @@ retrieve_and_process_neem_data:
     url: https://doi.pangaea.de/10.1594/PANGAEA.899039?format=textfile
   processed_data_with_loc_file: data/interim/neem/neem_with_location.csv
   raw_dir: data/raw/neem
+  source_info:
+    doi: https://doi.pangaea.de/10.1594/PANGAEA.899039
+    licence: CC BY 4.0
+    reference: "Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1\
+      \ ice core from North Greenland, 1800 years continuous record: 5 year median,\
+      \ v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039, In supplement\
+      \ to: Rhodes, Rachael H; Fa\xEFn, Xavier; ...; Brook, Edward J (2013): Continuous\
+      \ methane measurements from a late Holocene Greenland ice core: Atmospheric\
+      \ and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034"
+    resource_type: dataset
+    short_name: NEEM
+    url: https://doi.pangaea.de/10.1594/PANGAEA.899039
   step_config_id: only
 retrieve_and_process_scripps_data:
 - merged_ice_core_data:
     known_hash: 1d9a64819477180f48426e3b23b221b59801d13dfde594b23ee12784a470b340
     url: https://scrippsco2.ucsd.edu/assets/data/atmospheric/merged_ice_core_mlo_spo/spline_merged_ice_core_yearly.csv
   merged_ice_core_data_processed_data_file: data/interim/mauna_loa/merged_ice_core.csv
+  merged_ice_core_data_source_info:
+    doi: null
+    licence: CC BY 4.0
+    reference: C. D. Keeling, S. C. Piper, ..., M. Heimann, and H. A. Meijer, Exchanges
+      of atmospheric CO2 and 13CO2 with the terrestrial biosphere and  oceans from
+      1978 to 2000. I. Global aspects, SIO Reference Series, No. 01-06, Scripps Institution
+      of Oceanography, San Diego, 88 pages, 2001.
+    resource_type: publication-article
+    short_name: Scripps - Law Dome merged CO2 record
+    url: https://scrippsco2.ucsd.edu/data/atmospheric_co2/icecore_merged_products.html
   processed_data_with_loc_file: data/interim/mauna_loa/stations_with_loc.csv
   raw_dir: data/raw/mauna_loa
   station_data:
@@ -3482,6 +4040,17 @@ retrieve_and_process_trudinger_et_al_2016_data:
 - download_complete_file: data/raw/trudinger-et-al-2016/download.complete
   processed_data_file: data/interim/trudinger-et-al-2016/trudinger_et_al_2016.csv
   raw_dir: data/raw/trudinger-et-al-2016
+  source_info:
+    doi: https://doi.org/10.5194/acp-16-11733-2016
+    licence: CC BY 3.0
+    reference: 'Trudinger, C. M., Fraser, P. J., Etheridge, D. M., ..., O''Doherty,
+      S., and Battle, M.: Atmospheric abundance and global emissions of perfluorocarbons
+      CF4, C2F6 and C3F8 since 1800 inferred from ice core, firn, air archive and
+      in situ measurements, Atmos. Chem. Phys., 16, 11733-11754, https://doi.org/10.5194/acp-16-11733-2016,
+      2016.'
+    resource_type: publication-article
+    short_name: Trudinger et al., 2016
+    url: https://doi.org/10.5194/acp-16-11733-2016
   step_config_id: only
   supplement:
     known_hash: 48b7dfdf8310fb0aca0d49de129d5c4a7d6edd064ad8bfa8d2360f41edfb799b
@@ -3491,6 +4060,16 @@ retrieve_and_process_velders_et_al_2022_data:
   processed_data_file: data/interim/velders-et-al-2022/velders_et_al_2022.csv
   raw_data_file_tmp: data/raw/velders-et-al-2022/KGL2021_constrProdEmis_ObsAgage_2500_OECD-SSP5.dat
   raw_dir: data/raw/velders-et-al-2022
+  source_info:
+    doi: https://doi.org/10.5194/acp-22-6087-2022
+    licence: Other (Open)
+    reference: 'Velders, G. J. M., Daniel, J. S., ... Weiss, R. F., and Young, D.:
+      Projections of hydrofluorocarbon (HFC) emissions and the resulting global warming
+      based on recent trends in observed abundances and current policies, Atmos. Chem.
+      Phys., 22, 6087-6101, https://doi.org/10.5194/acp-22-6087-2022, 2022.'
+    resource_type: publication-article
+    short_name: Velders et al., 2022
+    url: https://doi.org/10.5194/acp-22-6087-2022
   step_config_id: only
   zenodo_record:
     known_hash: 74fe066fac06b742ba4fec6ad3af52a595f81a2a1c69d53a8eaf9ca846b3a7cd
@@ -3499,6 +4078,15 @@ retrieve_and_process_western_et_al_2024_data:
 - download_complete_file: data/raw/western-et-al-2024/download.complete
   processed_data_file: data/interim/western-et-al-2024/western_et_al_2024.csv
   raw_dir: data/raw/western-et-al-2024
+  source_info:
+    doi: https://doi.org/10.1038/s41558-024-02038-7
+    licence: CC BY 4.0
+    reference: Western, L.M., Daniel, J.S., Vollmer, M.K. et al. A decrease in radiative
+      forcing and equivalent effective chlorine from hydrochlorofluorocarbons. Nat.
+      Clim. Chang. 14, 805-807 (2024).
+    resource_type: publication-article
+    short_name: Western et al., 2024
+    url: https://doi.org/10.1038/s41558-024-02038-7
   step_config_id: only
   zenodo_record:
     known_hash: 10ffeebdcfd362186ce64abb1dc1710e3ebf4d6b41bf18faf2bb7ff45a82b2f7
@@ -3506,6 +4094,17 @@ retrieve_and_process_western_et_al_2024_data:
 retrieve_and_process_wmo_2022_ozone_assessment_ch7_data:
 - processed_data_file: data/interim/wmo-2022-ozone-assessment-ch7/wmo_2022_ozone_assessment_ch7.csv
   raw_data: data/raw/wmo-2022-ozone-assessment-ch7/wmo2022_Ch7_mixingratios.xlsx
+  source_info:
+    doi: null
+    licence: Underlying data all openly licensed, so assuming the same, but not 100%
+      clear
+    reference: 'Daniel, J. S., Reimann, S., ..., Schofield, R., Walter-Terrinoni,
+      H. (2022). Chapter 7: Scenarios and Information for Policymakers. In World Meteorological
+      Organization (WMO), Scientific Assessment of Ozone Depletion: 2022, GAW Report
+      No. 278(pp. 509); WMO: Geneva, 2022.'
+    resource_type: publication-book
+    short_name: WMO 2022 Ozone Assessment Ch. 7
+    url: https://ozone.unep.org/sites/default/files/2023-02/Scientific-Assessment-of-Ozone-Depletion-2022.pdf
   step_config_id: only
 retrieve_misc_data:
 - hadcrut5:
@@ -3513,6 +4112,16 @@ retrieve_misc_data:
       known_hash: 98d9fa3bbbb4b36ed5eb8b11fcbc308e7b96c83f8ac21902e52d238246f790d8
       url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/analysis/diagnostics/HadCRUT.5.0.2.0.analysis.summary_series.global.annual.nc
     raw_dir: data/raw/hadcrut5
+    source_info:
+      doi: https://doi.org/10.1029/2019JD032361
+      licence: Open Government License v3
+      reference: 'Morice, C. P., Kennedy, J. J., Rayner, N. A., Winn, J. P., Hogan,
+        E., ..., et al. (2021). An updated assessment of near-surface temperature
+        change from 1850: the HadCRUT5 data set. Journal of Geophysical Research:
+        Atmospheres, 126, e2019JD032361. https://doi.org/10.1029/2019JD032361'
+      resource_type: dataset
+      short_name: HadCRUT5
+      url: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/HadCRUT.5.0.2.0/download.html
   natural_earth:
     countries_shape_file_name: ne_110m_admin_0_countries.shx
     download_urls:
@@ -3549,6 +4158,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_co2_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_co2_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: co2
 - gas: ch4
   n_draws: 250
@@ -3570,6 +4180,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_ch4_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_ch4_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: ch4
 - gas: n2o
   n_draws: 250
@@ -3591,6 +4202,7 @@ smooth_law_dome_data:
     - yr
   smoothed_draws_file: data/interim/law_dome/law-dome_n2o_smoothed_all-draws.csv
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
+  source_info_short_name: Law Dome ice core
   step_config_id: n2o
 version: 0.3.0-dev
 write_input4mips:

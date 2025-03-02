@@ -35,6 +35,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.dependencies
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -97,6 +98,13 @@ droste = droste[droste["gas"] == config_step.gas]
 droste
 
 # %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_droste.source_info.short_name,
+)
+
+# %%
 historical_emissions = pd.read_csv(config_historical_emissions.complete_historical_emissions_file)
 historical_emissions = historical_emissions[
     historical_emissions["variable"] == f"Emissions|{config_step.gas}"
@@ -105,6 +113,18 @@ if historical_emissions.empty:
     msg = "No data found for gas, check your config"
     raise AssertionError(msg)
 historical_emissions
+
+# %%
+hist_emms_short_names = local.dependencies.load_source_info_short_names(
+    config_historical_emissions.source_info_short_names_file
+)
+
+for sn in hist_emms_short_names:
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=sn,
+    )
 
 # %% [markdown]
 # ### Calculate latitudinal gradient

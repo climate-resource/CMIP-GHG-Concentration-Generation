@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -63,8 +63,7 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 for url_source in config_step.download_urls:
     pooch.retrieve(
         url=url_source.url,
-        # known_hash=url_source.known_hash,
-        known_hash=None,
+        known_hash=url_source.known_hash,
         fname=url_source.url.split("/")[-1],
         path=config_step.raw_dir,
         progressbar=True,

@@ -9,6 +9,8 @@ from pathlib import Path
 from attrs import frozen
 from pydoit_nb.config_tools import URLSource
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveExtractDrosteEtal2020Data:
@@ -43,3 +45,6 @@ class RetrieveExtractDrosteEtal2020Data:
 
     processed_data_file: Path
     """File in which to save the processed data"""
+
+    source_info: SourceInfo
+    """Source information"""

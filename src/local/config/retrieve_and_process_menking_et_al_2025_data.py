@@ -8,6 +8,8 @@ from pathlib import Path
 
 from attrs import frozen
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveExtractMenkingEtal2025Data:
@@ -34,3 +36,13 @@ class RetrieveExtractMenkingEtal2025Data:
 
     processed_data_file: Path
     """File in which to save the processed data"""
+
+    source_info: SourceInfo
+    """Source information"""
+
+    second_order_deps: dict[str, tuple[SourceInfo, ...]]
+    """
+    Second-order dependency source information
+
+    Keys are gases, values are second-order dependencies.
+    """

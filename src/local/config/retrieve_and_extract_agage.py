@@ -38,6 +38,9 @@ class RetrieveExtractAGAGEDataConfig:
     raw_dir: Path
     """Directory in which to save the raw data"""
 
+    readme: URLSource
+    """Source from which to get the README"""
+
     download_complete_file: Path
     """
     Path in which to write the time at which the download was completed
@@ -49,6 +52,9 @@ class RetrieveExtractAGAGEDataConfig:
     """
     Path in which to write the processed monthly data including location information
     """
+
+    source_info_short_names_file: Path
+    """Path in which to save the source info short names for this retrieval"""
 
     generate_hashes: bool
     """

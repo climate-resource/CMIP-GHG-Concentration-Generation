@@ -86,7 +86,6 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 config_historical_emissions = get_config_for_step_id(
     config=config, step="compile_historical_emissions", step_config_id="only"
 )
-config_retrieve_misc = get_config_for_step_id(config=config, step="retrieve_misc_data", step_config_id="only")
 
 
 # %% [markdown]
@@ -136,6 +135,18 @@ if historical_emissions.empty:
     msg = "No data found for gas, check your config"
     raise AssertionError(msg)
 historical_emissions
+
+# %%
+hist_emms_short_names = local.dependencies.load_source_info_short_names(
+    config_historical_emissions.source_info_short_names_file
+)
+
+for sn in hist_emms_short_names:
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=sn,
+    )
 
 # %% [markdown]
 # ### Define some important constants

@@ -8,6 +8,7 @@ import copy
 import json
 import os
 import shutil
+import sqlite3
 import sys
 import tarfile
 from pathlib import Path
@@ -204,7 +205,7 @@ def main(  # noqa: PLR0913
     ] = "reserved-zenodo-doi.txt",
     dependencies_table_file: Annotated[
         Path, typer.Option(help="Path from which to read the dependencies table")
-    ] = "dependencies-table.csv",
+    ] = Path("data/processed/dependencies.db"),
 ) -> None:
     load_dotenv()
 
@@ -226,10 +227,15 @@ def main(  # noqa: PLR0913
     # # Helpful if you need to work out how identifiers look in Zenodo JSON
     # tmp = zenodo_interactor.get_metadata("14892947")
     # tmp["metadata"]["related_identifiers"]
-    dependencies_table = pd.read_csv(dependencies_table_file)
+    db_connection = sqlite3.connect(bundle_path / dependencies_table_file)
+    sources = pd.read_sql("SELECT * FROM source", con=db_connection)
+    dependencies = pd.read_sql("SELECT * FROM dependencies", con=db_connection)
+    db_connection.close()
+
+    sources_used = sources[sources["short_name"].isin(dependencies["short_name"])]
 
     zenodo_metadata_incl_refs = add_dependencies_to_metadata(
-        dependencies_table=dependencies_table,
+        dependencies_table=sources_used,
         metadata=zenodo_metadata,
     )
 

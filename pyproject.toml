@@ -15,7 +15,7 @@ dependencies = [
     "python-dotenv>=1.0.1",
 ]
 name = "local"
-version = "0.3.0"
+version = "1.0.0"
 description = "Local code to support running the notebooks"
 readme = "README.md"
 

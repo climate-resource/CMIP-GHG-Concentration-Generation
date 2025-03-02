@@ -141,6 +141,20 @@ menking_et_al = menking_et_al[menking_et_al["gas"] == config_step.gas]
 menking_et_al["source"] = "menking_et_al_2025"
 menking_et_al
 
+# %%
+local.dependencies.save_dependency_into_db(
+    db=config.dependency_db,
+    gas=config_step.gas,
+    dependency_short_name=config_retrieve_and_process_menking_et_al_2025_data.source_info.short_name,
+)
+
+for dep in config_retrieve_and_process_menking_et_al_2025_data.second_order_deps[config_step.gas]:
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=dep.short_name,
+    )
+
 # %% [markdown]
 # Extend Meking data back to year 1.
 
@@ -343,7 +357,7 @@ xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,  # type: ignore
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
     0.0,
     atol=1e-10,
 )

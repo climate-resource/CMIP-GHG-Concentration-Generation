@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.1
+#       jupytext_version: 1.16.4
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -76,9 +76,19 @@ config_process_noaa_in_situ_data = get_config_for_step_id(
 
 # %%
 all_data_l = []
-for f in [
-    config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
-    config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
+for f, dep_short_names in [
+    (
+        config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_noaa_surface_flask_data.source_info_short_names_file
+        ),
+    ),
+    (
+        config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
+        local.dependencies.load_source_info_short_names(
+            config_process_noaa_in_situ_data.source_info_short_names_file
+        ),
+    ),
 ]:
     try:
         all_data_l.append(local.raw_data_processing.read_and_check_binning_columns(f))
@@ -86,8 +96,14 @@ for f in [
         msg = f"Error reading {f}"
         raise ValueError(msg) from exc
 
+    for dsn in dep_short_names:
+        local.dependencies.save_dependency_into_db(
+            db=config.dependency_db,
+            gas=config_step.gas,
+            dependency_short_name=dsn,
+        )
+
 all_data = pd.concat(all_data_l)
-# TODO: add check of gas names to processed data checker
 all_data["gas"] = all_data["gas"].str.lower()
 all_data = all_data[all_data["gas"] == config_step.gas]
 all_data

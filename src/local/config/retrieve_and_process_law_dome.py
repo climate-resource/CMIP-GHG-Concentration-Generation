@@ -8,6 +8,8 @@ from pathlib import Path
 
 from attrs import frozen
 
+from local.dependencies import SourceInfo
+
 
 @frozen
 class RetrieveProcessLawDomeConfig:
@@ -37,3 +39,6 @@ class RetrieveProcessLawDomeConfig:
 
     processed_data_with_loc_file: Path
     """File in which to save the processed data, including location information"""
+
+    source_info: SourceInfo
+    """Source information"""

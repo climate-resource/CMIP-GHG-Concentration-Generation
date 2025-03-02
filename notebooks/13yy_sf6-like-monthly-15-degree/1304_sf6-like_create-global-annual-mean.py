@@ -78,7 +78,7 @@ step: str = "calculate_sf6_like_monthly_fifteen_degree_pieces"
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "hfc152a"  # config ID to select for this branch
+step_config_id: str = "cfc12"  # config ID to select for this branch
 
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
@@ -125,20 +125,23 @@ def axes_vertical_split(
 # ### Load data
 
 # %% editable=true slideshow={"slide_type": ""}
-global_mean_supplement_files = local.global_mean_extension.get_global_mean_supplement_files(
+global_mean_supplement_config = local.global_mean_extension.get_global_mean_supplement_config(
     gas=config_step.gas, config=config
 )
-global_mean_supplement_files
 
 # %% editable=true slideshow={"slide_type": ""}
-if not global_mean_supplement_files:
-    pass
-elif len(global_mean_supplement_files) == 1:
-    global_mean_data = pd.read_csv(global_mean_supplement_files[0])
+if global_mean_supplement_config:
+    global_mean_supplement_file = [global_mean_supplement_config.processed_data_file]
+    global_mean_data = pd.read_csv(global_mean_supplement_file[0])
     global_mean_data = global_mean_data[global_mean_data["gas"] == config_step.gas]
+
+    local.dependencies.save_dependency_into_db(
+        db=config.dependency_db,
+        gas=config_step.gas,
+        dependency_short_name=global_mean_supplement_config.source_info.short_name,
+    )
+
     print(global_mean_data)
-else:
-    raise NotImplementedError(global_mean_supplement_files)
 
 # %% editable=true slideshow={"slide_type": ""}
 global_annual_mean_obs_network = xr.load_dataarray(  # type: ignore
@@ -167,7 +170,7 @@ allyears_latitudinal_gradient
 # ### Define some important constants
 
 # %%
-if global_mean_supplement_files:
+if global_mean_supplement_config:
     max_year = min(
         2023,
         max(
@@ -195,7 +198,7 @@ obs_network_years
 # ## Initialise
 
 # %% editable=true slideshow={"slide_type": ""}
-if global_mean_supplement_files:
+if global_mean_supplement_config:
     if global_mean_data["year"].max() >= np.max(out_years):
         # Use this global-mean up until our latest year
         tmp = global_mean_data[global_mean_data["year"].isin(out_years)]
@@ -221,20 +224,20 @@ if global_mean_supplement_files:
             raise AssertionError
         unit = unit[0]
 
-        harm_year = float(global_annual_mean_obs_network.year.min())
+        harm_year = int(global_annual_mean_obs_network.year.min())
         harm_value = float(global_annual_mean_obs_network.pint.to(unit).sel(year=harm_year).data.m)
 
         harmonised = local.harmonisation.get_harmonised_timeseries(
             ints=tmp.set_index(["gas", "year", "unit"])["value"].unstack("year"),
             harm_value=harm_value,
-            harm_units=unit,
+            harm_units=str(unit),
             harm_year=harm_year,
             n_transition_years=100,
         )
         if harmonised.isnull().any().any():
             raise AssertionError
 
-        harmonised = harmonised.stack("year").to_frame("value").reset_index()
+        harmonised = harmonised.stack("year").to_frame("value").reset_index()  # type: ignore
 
         fig, ax = plt.subplots()
 
