@@ -18,7 +18,7 @@ def get_key_info() -> str:
     return "\n".join(
         [
             "CMIP greenhouse gas concentration generation",
-            f"Version: {__version__} (translation: prototype)",
+            f"Version: {__version__} (translation: stable and used for CMIP7)",
             "See the main repository for license, docs etc.",
         ]
     )
