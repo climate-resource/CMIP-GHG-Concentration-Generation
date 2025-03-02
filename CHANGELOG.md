@@ -21,6 +21,61 @@ from the examples given in that link.
 
 <!-- towncrier release notes start -->
 
+## CMIP GHG Concentration Generation 1.0.0 (2025-03-02)
+
+### ⚠️ Breaking Changes
+
+- Switched to more conventional names for the output files.
+
+  The affected gases are:
+
+  - c2f6: previously pfc116
+  - c3f8: previously pfc218
+  - c4f10: previously pfc3110
+  - c5f12: previously pfc4112
+  - c6f14: previously pfc5114
+  - c7f16: previously pfc6116
+  - c8f18: previously pfc7118
+  - cc4f8: previously pfc318
+  - ch3ccl3: previously hcc140a
+
+  ([#90](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/90))
+
+### 🆕 Features
+
+- Added hfc23 data from [Adam et al., 2024](https://doi.org/10.1038/s43247-024-01946-y) ([#84](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/84))
+- Added much more detailed reference tracking to the output files. ([#93](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/93))
+
+### 🎉 Improvements
+
+- Switch to using data from Menking et al., 2025 (in prep.) for N2O ice cores. ([#85](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/85))
+- Added upload to Zenodo and fixed up the metadata included in the output files to use the Zenodo DOI. ([#86](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/86))
+- Update to the latest version of the AGAGE data ([#87](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/87))
+- Harmonise ice core and flask data when crunching CH4 data. ([#88](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/88))
+- Use Scripps data and updated ice core when crunching CO2 data. Harmonise both before use. ([#89](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/89))
+- - Added funding information to the output files.
+  - Upgraded to the latest AGAGE data.
+  - Upgraded to the latest NOAA HATS data.
+  - Added more detail in the `zenodo.json` description.
+
+  ([#90](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/90))
+- Use Trudinger et al. (2016) for historical values of CF4, C2F6 and C3F8 ([#92](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/92))
+
+### 🐛 Bug Fixes
+
+- Updated the expected hash for HadCRUT5 ([#83](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/83))
+- Fixed up the instructions in the output bundle's README. ([#90](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/90))
+- - Include Menking et al. (2025, in-prep) data that isn't missing an 1850 value
+  - Cleaned up pre-industrial values of multiple gases
+
+  ([#91](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/91))
+- Fixed incorrect reference to publication in preparation. ([#92](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/92))
+
+### 🔧 Trivial/Internal Changes
+
+- [#86](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/86), [#90](https://github.com/climate-resource/CMIP-GHG-Concentration-Generation/pulls/90)
+
+
 ## CMIP GHG Concentration Generation 0.3.0 (2024-12-05)
 
 This version of the software was used to produce v0.4.0 of the GHG concentrations.
