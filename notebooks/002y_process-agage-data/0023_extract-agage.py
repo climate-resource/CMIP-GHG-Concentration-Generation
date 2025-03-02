@@ -353,6 +353,9 @@ readme_path = pooch.retrieve(
 )
 
 # %%
+if isinstance(readme_path, list):
+    raise TypeError(readme_path)
+
 with open(readme_path, encoding="iso-8859-1") as fh:
     readme_raw = fh.read()
 

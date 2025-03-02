@@ -79,6 +79,9 @@ for f, dep_short_names in obs_network_input_files:
         msg = f"Error reading {f}"
         raise ValueError(msg) from exc
 
+    if dep_short_names is None:
+        raise TypeError(dep_short_names)
+
     for dsn in dep_short_names:
         local.dependencies.save_dependency_into_db(
             db=config.dependency_db,

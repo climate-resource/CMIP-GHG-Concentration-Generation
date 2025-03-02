@@ -179,7 +179,7 @@ def extract_agage_source_info(raw_readme: str, gas: str) -> tuple[SourceInfo, ..
     if gas in ["cf4", "c2f6", "c3f8", "nf3"]:
         gas_block_indicators.append("PFCs (CF4, C2F6, C3F8), and NF3")
 
-    source_info_l = []
+    source_info_l: list[SourceInfo] = []
 
     indent = "   "
     general_ref_start = "(i) General reference"

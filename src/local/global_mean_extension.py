@@ -4,12 +4,14 @@ Global-mean extension handling
 
 from __future__ import annotations
 
+from typing import Any
+
 from pydoit_nb.config_handling import get_config_for_step_id
 
 from local.config.base import Config
 
 
-def get_global_mean_supplement_config(gas: str, config: Config) -> object | None:
+def get_global_mean_supplement_config(gas: str, config: Config) -> Any:
     """
     Get global-mean supplement config for a given gas
 

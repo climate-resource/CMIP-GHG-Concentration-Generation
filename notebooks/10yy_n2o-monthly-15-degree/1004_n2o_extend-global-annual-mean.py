@@ -357,7 +357,7 @@ xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
 np.testing.assert_allclose(
-    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,  # type: ignore
+    local.xarray_space.calculate_global_mean_from_lon_mean(tmp).data.to("ppb").m,
     0.0,
     atol=1e-10,
 )

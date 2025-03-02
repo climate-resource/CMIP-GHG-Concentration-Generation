@@ -89,7 +89,9 @@ def load_source_info_short_names_safe(fp: Path, task_creation: bool) -> list[str
     return load_source_info_short_names(fp)
 
 
-def get_input_files_sf6_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
+def get_input_files_sf6_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like SF6
     """
@@ -139,7 +141,9 @@ def get_input_files_sf6_like(gas: str, config: Config, task_creation: bool) -> l
     ]
 
 
-def get_input_files_cfc11_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
+def get_input_files_cfc11_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-11
     """
@@ -196,7 +200,7 @@ def get_input_files_cfc11_like(gas: str, config: Config, task_creation: bool) ->
 
 def get_input_files_cfc113_like(
     gas: str, config: Config, task_creation: bool
-) -> list[Path, list[str] | None]:
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-113
     """
@@ -242,7 +246,7 @@ def get_input_files_cfc113_like(
 
 def get_input_files_hfc134a_like(
     gas: str, config: Config, task_creation: bool
-) -> list[Path, list[str] | None]:
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like HFC-134a
     """
@@ -288,7 +292,7 @@ def get_input_files_hfc134a_like(
 
 def get_input_files_cfc115_like(
     gas: str, config: Config, task_creation: bool
-) -> list[Path, list[str] | None]:
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-114
     """
@@ -320,7 +324,9 @@ def get_input_files_cfc115_like(
     ]
 
 
-def get_input_files_chcl3_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
+def get_input_files_chcl3_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like CFC-11
     """
@@ -366,7 +372,7 @@ def get_input_files_chcl3_like(gas: str, config: Config, task_creation: bool) ->
 
 def get_input_files_halon2402_like(
     gas: str, config: Config, task_creation: bool
-) -> list[Path, list[str] | None]:
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like halon-2404
     """
@@ -398,7 +404,9 @@ def get_input_files_halon2402_like(
     ]
 
 
-def get_input_files_hfc23_like(gas: str, config: Config, task_creation: bool) -> list[Path, list[str] | None]:
+def get_input_files_hfc23_like(
+    gas: str, config: Config, task_creation: bool
+) -> list[tuple[Path, list[str] | None]]:
     """
     Get the input files to use for binning the observational network for gases we handle like HFC-23
     """

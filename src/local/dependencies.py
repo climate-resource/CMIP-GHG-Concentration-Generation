@@ -84,7 +84,7 @@ def save_source_info_to_db(
     if isinstance(source_info, SourceInfo):
         source_info_for_db = (asdict(source_info),)
     else:
-        source_info_for_db = (asdict(v) for v in source_info)
+        source_info_for_db = tuple(asdict(v) for v in source_info)  # type: ignore # mypy being stupid
 
     with db_connection as db_cursor:
         ensure_source_table_exists(db_cursor)

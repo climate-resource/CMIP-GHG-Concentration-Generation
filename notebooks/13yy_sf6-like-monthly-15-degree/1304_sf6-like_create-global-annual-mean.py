@@ -224,20 +224,20 @@ if global_mean_supplement_config:
             raise AssertionError
         unit = unit[0]
 
-        harm_year = float(global_annual_mean_obs_network.year.min())
+        harm_year = int(global_annual_mean_obs_network.year.min())
         harm_value = float(global_annual_mean_obs_network.pint.to(unit).sel(year=harm_year).data.m)
 
         harmonised = local.harmonisation.get_harmonised_timeseries(
             ints=tmp.set_index(["gas", "year", "unit"])["value"].unstack("year"),
             harm_value=harm_value,
-            harm_units=unit,
+            harm_units=str(unit),
             harm_year=harm_year,
             n_transition_years=100,
         )
         if harmonised.isnull().any().any():
             raise AssertionError
 
-        harmonised = harmonised.stack("year").to_frame("value").reset_index()
+        harmonised = harmonised.stack("year").to_frame("value").reset_index()  # type: ignore
 
         fig, ax = plt.subplots()
 
