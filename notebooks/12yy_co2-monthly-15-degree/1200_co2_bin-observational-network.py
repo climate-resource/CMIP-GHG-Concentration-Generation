@@ -67,6 +67,17 @@ config_process_noaa_in_situ_data = get_config_for_step_id(
     step_config_id=config_step.gas,
 )
 
+# %% editable=true slideshow={"slide_type": ""}
+# HERE: something like this? or access data directly
+config_process_scaled_sat_data = get_config_for_step_id(
+    config=config,
+    step="process_scaled_sat_data",
+    step_config_id=config_step.gas,
+)
+
+
+# %%
+config_process_scaled_sat_data
 
 # %% [markdown]
 # ## Action
@@ -75,6 +86,66 @@ config_process_noaa_in_situ_data = get_config_for_step_id(
 # ### Load data
 
 # %%
+import xarray as xr
+
+sat_data = xr.open_dataset(config_process_scaled_sat_data.scaled_data_path)
+# sat_data
+
+# %%
+sat_data["xco2"] = sat_data["xco2"] * 1e6
+sat_data["xco2"].mean()
+
+# %%
+
+df = sat_data["xco2"].to_dataframe(name="value").reset_index()
+
+# Extract year and month
+df["year"] = df["time"].dt.year
+df["month"] = df["time"].dt.month
+
+# Rename coordinates
+df = df.rename(columns={"lat": "latitude", "lon": "longitude"})
+
+# Create station/site_code strings
+coord_string = "[" + df["longitude"].round(6).astype(str) + ", " + df["latitude"].round(6).astype(str) + "]"
+
+df["station"] = coord_string
+df["site_code"] = coord_string
+df["site_code_filename"] = coord_string
+
+# Add constant columns
+df["gas"] = "co2"
+df["reporting_id"] = "MonthlyData"
+df["unit"] = "ppm"
+df["surf_or_ship"] = "satellite"
+df["source"] = "satellite"
+df["network"] = "OBS4MIPs"
+df["measurement_method"] = "satellite"
+
+# Reorder columns
+df = df[
+    [
+        "gas",
+        "reporting_id",
+        "year",
+        "month",
+        "latitude",
+        "longitude",
+        "value",
+        "unit",
+        "site_code_filename",
+        "site_code",
+        "surf_or_ship",
+        "source",
+        "network",
+        "station",
+        "measurement_method",
+    ]
+]
+df = df.dropna(subset=["value"])
+df
+
+# %% editable=true slideshow={"slide_type": ""}
 all_data_l = []
 for f, dep_short_names in [
     (
@@ -106,7 +177,11 @@ for f, dep_short_names in [
 all_data = pd.concat(all_data_l)
 all_data["gas"] = all_data["gas"].str.lower()
 all_data = all_data[all_data["gas"] == config_step.gas]
-all_data
+# all_data
+
+# %%
+all_data_with_sat = pd.concat([all_data, df])
+all_data_with_sat
 
 # %% [markdown]
 # ## Bin and average data
@@ -122,7 +197,7 @@ all_data
 
 
 # %%
-all_data_with_bins = local.binning.add_lat_lon_bin_columns(all_data)
+all_data_with_bins = local.binning.add_lat_lon_bin_columns(all_data_with_sat)
 all_data_with_bins
 
 # %%

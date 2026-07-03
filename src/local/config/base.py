@@ -15,6 +15,8 @@ from pydoit_nb.config_helpers import (
     assert_step_config_ids_are_unique,
 )
 
+from local.config.process_scaled_sat_data import ProcessScaledSatDataConfig
+
 from .calculate_c4f10_like_monthly_fifteen_degree_pieces import (
     CalculateC4F10LikeMonthlyFifteenDegreePieces,
 )
@@ -124,6 +126,12 @@ class Config:
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
     )
     """Configurations to use for processing NOAA in-situ data"""
+
+    process_scaled_sat_data: list[ProcessScaledSatDataConfig] = field(
+        validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]
+    )
+
+    """Configurations to use for scaled satellite data"""
 
     process_noaa_hats_data: list[ProcessNOAAHATSDataConfig] = field(
         validator=[make_attrs_validator_compatible_single_input(assert_step_config_ids_are_unique)]

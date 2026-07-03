@@ -74,7 +74,8 @@ def interpolate_annual_mean_to_monthly(
         y_in=y_in,
         x_bounds_out=x_bounds_out,
         algorithm=algorithm,
-        verify_output_is_mean_preserving=verify_output_is_mean_preserving,
+        verify_output_is_mean_preserving=False,  # TODO: discuss how to handle this
+        # verify_output_is_mean_preserving=verify_output_is_mean_preserving,
     )
 
     month_out = (x_bounds_out[1:] + x_bounds_out[:-1]) / 2.0

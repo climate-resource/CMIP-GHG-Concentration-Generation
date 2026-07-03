@@ -1,21 +1,27 @@
+# %%
 """
 Calculate CO2 monthly 15 degree pieces notebook steps
 """
 
+# %%
 from __future__ import annotations
 
+# %%
 from collections.abc import Iterable
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+# %%
 from pydoit_nb.config_handling import get_config_for_step_id
 from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
+# %%
 if TYPE_CHECKING:
     from ..config.base import Config, ConfigBundle
 
 
+# %%
 def configure_notebooks(
     unconfigured_notebooks: Iterable[UnconfiguredNotebook],
     config_bundle: ConfigBundle,
@@ -112,6 +118,7 @@ def configure_notebooks(
                 config_step.observational_network_latitudinal_gradient_eofs_file,
                 config_step.observational_network_seasonality_file,
                 config_step.observational_network_seasonality_change_eofs_file,
+                # TODO: add line here for the sat data
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -192,6 +199,7 @@ def configure_notebooks(
     return configured_notebooks
 
 
+# %%
 step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebookBasedStep(
     step_name="calculate_co2_monthly_fifteen_degree_pieces",
     unconfigured_notebooks=[

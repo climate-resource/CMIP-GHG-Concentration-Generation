@@ -1493,6 +1493,10 @@ process_noaa_surface_flask_data:
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
   source_info_short_names_file: data/interim/noaa/ch4_surface-flask_source-short-names.txt
   step_config_id: ch4
+process_scaled_sat_data:
+- gas: co2
+  scaled_data_path: /home/anna_lanteri/data/scaled/co2_OBS4MIPs_to_all_gb_flask_linear_fit.nc
+  step_config_id: co2
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
   download_url_zenodo:

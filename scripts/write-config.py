@@ -50,6 +50,7 @@ from local.config_creation.monthly_fifteen_degree_pieces import (
 from local.config_creation.neem_handling import RETRIEVE_AND_PROCESS_NEEM_STEPS
 from local.config_creation.noaa_handling import create_noaa_handling_config
 from local.config_creation.retrieve_misc_data import RETRIEVE_MISC_DATA_STEPS
+from local.config_creation.scaled_sat_handling import create_scaled_sat_handling_config
 from local.config_creation.scripps_handling import RETRIEVE_AND_PROCESS_SCRIPPS_DATA
 from local.config_creation.trudinger_et_al_2016_handling import (
     RETRIEVE_AND_PROCESS_TRUDINGER_ET_AL_2016_DATA_STEPS,
@@ -153,6 +154,9 @@ def create_dev_config() -> Config:
 
     start_year = 1
     end_year = 2022
+
+    # TODO: when this works, add to ci, nightly ci configs
+    scaled_sat_handling_steps = create_scaled_sat_handling_config(data_sources=(("co2", "scaled-sat"),))
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
@@ -291,6 +295,7 @@ def create_dev_config() -> Config:
         dependency_db=Path("data/processed/dependencies.db"),
         retrieve_misc_data=RETRIEVE_MISC_DATA_STEPS,
         **noaa_handling_steps,
+        **scaled_sat_handling_steps,
         retrieve_and_extract_agage_data=retrieve_and_extract_agage_data,
         retrieve_and_extract_gage_data=RETRIEVE_AND_EXTRACT_GAGE_STEPS,
         retrieve_and_extract_ale_data=RETRIEVE_AND_EXTRACT_ALE_STEPS,
