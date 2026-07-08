@@ -65,7 +65,11 @@ def configure_notebooks(
         step="process_noaa_in_situ_data",
         step_config_id=config_step.gas,
     )
-
+    config_process_scaled_sat_data = get_config_for_step_id(
+        config=config,
+        step="process_scaled_sat_data",
+        step_config_id=config_step.gas,
+    )
     # config_smooth_law_dome_data = get_config_for_step_id(
     #     config=config, step="smooth_law_dome_data", step_config_id=config_step.gas
     # )
@@ -98,6 +102,19 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
+                Path("12yy_co2-monthly-15-degree") / "1200_5_co2_bin_satellite_data"
+            ],
+            configuration=(),
+            dependencies=(
+                config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+                config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
+            ),
+            targets=(config_process_scaled_sat_data.interim_data_path,),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
                 Path("12yy_co2-monthly-15-degree") / "1201_co2_interpolate-observational-network"
             ],
             configuration=(),
@@ -118,7 +135,6 @@ def configure_notebooks(
                 config_step.observational_network_latitudinal_gradient_eofs_file,
                 config_step.observational_network_seasonality_file,
                 config_step.observational_network_seasonality_change_eofs_file,
-                # TODO: add line here for the sat data
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -208,6 +224,12 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
             raw_notebook_ext=".py",
             summary="CO2 pieces - Bin observational data",
             doc="Bin the observational data for CO2.",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("12yy_co2-monthly-15-degree") / "1200_5_co2_bin_satellite_data",
+            raw_notebook_ext=".py",
+            summary="CO2 pieces - Bin and format scaled satellite data",
+            doc="Bin and format scaled satellite data for CO2.",
         ),
         UnconfiguredNotebook(
             notebook_path=Path("12yy_co2-monthly-15-degree") / "1201_co2_interpolate-observational-network",

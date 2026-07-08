@@ -26,3 +26,7 @@ class ProcessScaledSatDataConfig:
     """Gas for which we are processing data"""
 
     scaled_data_path: Path
+    """Path for the scaled satellite data"""
+
+    interim_data_path: Path
+    """Path to save the interim data at"""

@@ -59,8 +59,11 @@ def create_scaled_sat_data_source_handling_pieces(gas: str, network: str) -> Sca
     """
     out = {}
     scaled_data_path = Path(f"/home/anna_lanteri/data/scaled/{gas}_OBS4MIPs_to_all_gb_flask_linear_fit.nc")
+    interim_data_path = Path(f"data/interim/scaled_sat/monthly_{gas}_scaled_sat.csv")
 
-    process_step_attrs = dict(step_config_id=gas, gas=gas, scaled_data_path=scaled_data_path)
+    process_step_attrs = dict(
+        step_config_id=gas, gas=gas, scaled_data_path=scaled_data_path, interim_data_path=interim_data_path
+    )
     print("Network: " + network)
 
     if network == "scaled-sat":

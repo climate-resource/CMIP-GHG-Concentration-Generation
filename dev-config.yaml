@@ -1495,6 +1495,7 @@ process_noaa_surface_flask_data:
   step_config_id: ch4
 process_scaled_sat_data:
 - gas: co2
+  interim_data_path: data/interim/scaled_sat/monthly_co2_scaled_sat.csv
   scaled_data_path: /home/anna_lanteri/data/scaled/co2_OBS4MIPs_to_all_gb_flask_linear_fit.nc
   step_config_id: co2
 retrieve_and_extract_agage_data:

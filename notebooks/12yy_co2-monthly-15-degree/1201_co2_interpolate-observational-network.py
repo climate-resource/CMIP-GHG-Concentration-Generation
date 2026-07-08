@@ -56,10 +56,14 @@ step_config_id: str = "only"  # config ID to select for this branch
 # %% [markdown] editable=true slideshow={"slide_type": ""}
 # ## Load config
 
-# %% editable=true slideshow={"slide_type": ""}
+# %%
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
-
+config_process_scaled_sat_data = get_config_for_step_id(
+    config=config,
+    step="process_scaled_sat_data",
+    step_config_id=config_step.gas,
+)
 
 # %% [markdown]
 # ## Action
@@ -68,8 +72,10 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ### Load data
 
 # %%
-bin_averages = pd.read_csv(config_step.processed_bin_averages_file)
-bin_averages
+bin_averages_ground = pd.read_csv(config_step.processed_bin_averages_file)
+bin_averages_sat = pd.read_csv(config_process_scaled_sat_data.interim_data_path)
+
+bin_averages = pd.concat([bin_averages_ground, bin_averages_sat])
 
 # %% [markdown]
 # ## Interpolate
@@ -139,3 +145,5 @@ out
 config_step.observational_network_interpolated_file.parent.mkdir(exist_ok=True, parents=True)
 out.to_netcdf(config_step.observational_network_interpolated_file)
 out
+
+# %%
