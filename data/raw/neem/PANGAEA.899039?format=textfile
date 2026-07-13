@@ -1,0 +1,295 @@
+/* DATA DESCRIPTION:
+Citation:	Rhodes, Rachael H; Brook, Edward J (2019): Methane in NEEM-2011-S1 ice core from North Greenland, 1800 years continuous record: 5 year median, v2 [dataset]. PANGAEA, https://doi.org/10.1594/PANGAEA.899039,
+	In supplement to: Rhodes, Rachael H; Faïn, Xavier; Stowasser, Christopher; Blunier, Thomas; Chappellaz, Jérôme A; McConnell, Joseph R; Romanini, Daniele; Mitchell, Logan E; Brook, Edward J (2013): Continuous methane measurements from a late Holocene Greenland ice core: Atmospheric and in-situ signals. Earth and Planetary Science Letters, 368, 9-19, https://doi.org/10.1016/j.epsl.2013.02.034
+Abstract:	Description and Notes
+	Description: Methane concentration from the Greenland NEEM-2011-S1 Ice Core from 71 to 408m depth (~270-1961 CE).
+	Methane concentrations analysed online by laser spectrometer (SARA, Spectroscopy by Amplified Resonant Absorption, developed at Laboratoire Interdisciplinaire de Physique, Grenoble, France) on gas extracted from an ice core processed using a continuous melter system (Desert Research Institute). Methane data have a 5 second integration time (raw data acquisition rate 0.6 Hz). Analytical precision, from Allan Variance test, is 0.9 ppb (2 sigma). Long-term reproducibility is 2.6% (2 sigma). Gaps in the record are due to problems during online analysis. Online analysis conducted August-September 2011.
+	Note: Lat-Long provided is for main NEEM borehole. The NEEM-2011-S1 core was drilled 200 m distance away in 2011 to 410 m depth.
+	Methane concentrations are reported on NOAA2004 scale (instrument calibrated on dry synthetic air standards).
+	A correction factor of 1.079 has been applied to all data to correct for methane dissolution in melted ice core sample prior to gas extraction. Correction factor calculated using empirical data (concentrations not aligned/tied to existing discrete methane measurements).
+	Additional methods description provided in:
+	* Stowasser, C., Buizert, C., Gkinis, V., Chappellaz, J., Schupbach, S., Bigler, M., Fain, X., Sperlich, P., Baumgartner, M., Schilt, A., Blunier, T., 2012. Continuous measurements of methane mixing ratios from ice cores. Atmos. Meas. Tech. 5, 999-1013.
+	* Morville, J., Kassi, S., Chenevier, M., Romanini, D., 2005. Fast, low-noise, mode bymode, cavity-enhanced absorption spectroscopy by diode-laser self-locking. Appl. Phys. B Lasers Opt. 80, 1027-01038.
+	* NEEM (North Greenland Eemian Ice Drilling) project information http://neem.dk/
+Keyword(s):	atmospheric composition; biogeochemical cycles; Greenland; Holocene; Ice core; Methane
+Further details:	Buizert, Christo; Martinerie, Patricia; Petrenko, Vasilii V; Severinghaus, Jeffrey P; Trudinger, Cathy M; Witrant, Emmanuel; Rosen, Julia L; Orsi, Anais J; Rubino, Mauro; Etheridge, David; Steele, L P; Hogan, Chad M; Laube, J C; Sturges, William T; Levchenko, Oleg V; Smith, Abigail M; Levin, Ingeborg; Conway, Thomas J; Dlugokencky, Edward J; Lang, Patricia M; Kawamura, K; Jenk, Theo M; White, James W C; Sowers, Todd A; Schwander, Jakob; Blunier, Thomas (2012): Gas transport in firn: multiple-tracer characterisation and model intercomparison for NEEM, Northern Greenland. Atmospheric Chemistry and Physics, 12(9), 4259-4277, https://doi.org/10.5194/acp-12-4259-2012
+	Buizert, Christo; Martinerie, Patricia; Petrenko, Vasilii V; Severinghaus, Jeffrey P; Trudinger, Cathy M; Witrant, Emmanuel; Rosen, Julia L; Orsi, Anais J; Rubino, Mauro; Etheridge, David; Steele, L P; Hogan, Chad M; Laube, J C; Sturges, William T; Levchenko, Oleg V; Smith, Abigail M; Levin, Ingeborg; Conway, Thomas J; Dlugokencky, Edward J; Lang, Patricia M; Kawamura, K; Jenk, Theo M; White, James W C; Sowers, Todd A; Schwander, Jakob; Blunier, Thomas (2014): Corrigendum to ''Gas transport in firn: multiple-tracer characterisation and model intercomparison for NEEM, Northern Greenland'' published in Atmos. Chem. Phys., 12, 4259–-4277, 2012. Atmospheric Chemistry and Physics, 14(7), 3571-3572, https://doi.org/10.5194/acp-14-3571-2014
+	Morville, J; Kassi, S; Chenevier, M; Romanini, Daniele (2005): Fast, low-noise, mode-by-mode, cavity-enhanced absorption spectroscopy by diode-laser self-locking. Applied Physics B-Lasers and Optics, 80(8), 1027-1038, https://doi.org/10.1007/s00340-005-1828-z
+	Rasmussen, Sune Olander; Abbott, Peter M; Blunier, Thomas; Bourne, Mark; Brook, Edward J; Buchardt, Susanne L; Buizert, Christo; Chappellaz, Jérôme A; Clausen, Henrik Brink; Cook, Eliza; Dahl-Jensen, Dorthe; Davies, Siwan M; Guillevic, Myriam; Kipfstuhl, Sepp; Laepple, Thomas; Seierstad, Inger K; Severinghaus, Jeffrey P; Steffensen, Jørgen Peder; Stowasser, Christopher; Svensson, Anders M; Vallelonga, Paul T; Vinther, Bo Møllesøe; Wilhelms, Frank; Winstrup, Mai (2013): A first chronology for the North Greenland Eemian Ice Drilling (NEEM) ice core. Climate of the Past, 9(6), 2713-2730, https://doi.org/10.5194/cp-9-2713-2013
+	Sigl, Michael; Winstrup, Mai; McConnell, Joseph R; Welten, Kees C; Plunkett, Gill; Ludlow, F; Büntgen, Ulf; Caffee, Marc W; Chellman, Nathan J; Dahl-Jensen, Dorthe; Fischer, H; Kipfstuhl, Sepp; Kostick, C; Maselli, Olivia J; Mekhaldi, Florian; Mulvaney, Robert; Muscheler, Raimund; Pasteris, Daniel R; Pilcher, John R; Salzer, Matthew W; Schüpbach, Simon; Steffensen, J P; Vinther, Bo Møllesøe; Woodruff, Thomas E (2015): Timing and climate forcing of volcanic eruptions for the past 2,500 years. Nature, 523(7562), 543-549, https://doi.org/10.1038/nature14565
+	Stowasser, Christopher; Buizert, Christo; Gkinis, Vasileios; Chappellaz, Jérôme A; Schüpbach, Simon; Bigler, Matthias; Faïn, Xavier; Sperlich, Peter; Baumgartner, M; Schilt, Adrian; Blunier, Thomas (2012): Continuous measurements of methane mixing ratios from ice cores. Atmospheric Measurement Techniques, 5(5), 999-1013, https://doi.org/10.5194/amt-5-999-2012
+Project(s):	North Greenland Eemian Ice Drilling (NEEM) (URI: https://neem.dk/)
+Funding:	Agence Nationale de la Recherche (ANR) (URI: http://www.agence-nationale-recherche.fr/en/project-based-funding-to-advance-french-research/), grant/award no. 07-VULN-09-001: North Greenland Eemian Ice Drilling
+Coverage:	LATITUDE: 77.450000 * LONGITUDE: -51.060000
+	MINIMUM DEPTH, ice/snow: 76.00 m * MAXIMUM DEPTH, ice/snow: 408.51 m
+Event(s):	NEEM-2011-S1 (NEEMS1) * LATITUDE: 77.450000 * LONGITUDE: -51.060000 * ELEVATION: 2545.0 m * Penetration: 410 m * LOCATION: Greenland * METHOD/DEVICE: Ice drill (ICEDRILL) * COMMENT: Drilled in 2011, 200 m from the main NEEM borehole
+Comment:	NEEM-2011-S1 CH4 5 yr medians.
+	Median CH4 concentrations for 5 year time slices of 'NEEM-2011-S1 no outliers'
+	This can be utilised as a time series of atmospheric methane concentration because the influence of outliers and other high frequency features (that could not survive firn smoothing processes is removed.
+Parameter(s):	DEPTH, ice/snow [m] (Depth ice/snow) * GEOCODE * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk)
+	Age [a AD/CE] (Age) * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk) * COMMENT: Ice age (yr CE) (Sigl et al. 2015)
+	AGE [ka BP] (Age) * GEOCODE * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk) * METHOD/DEVICE: Age, calculated from a AD * COMMENT: calculated from Ice age (yr CE) (Sigl et al. 2015)
+	Age [a AD/CE] (Age) * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk) * COMMENT: Gas age (yr CE) (constant delta age, Buizert et al. 2012, 2014)
+	Age [a AD/CE] (Age) * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk) * COMMENT: Gas age (yr CE) (variable delta age, Rasmussen et al. 2013)
+	Methane [ppbv] (CH4) * PI: Rhodes, Rachael H (https://orcid.org/0000-0001-7511-1969, rhr34@cam.ac.uk) * METHOD/DEVICE: see abstract * COMMENT: 5 yr medians
+License:	Creative Commons Attribution 4.0 International (CC-BY-4.0) (URI: https://creativecommons.org/licenses/by/4.0/)
+Size:	1011 data points
+*/
+Depth ice/snow [m]	Age [a AD/CE] (Ice age (yr CE) (Sigl et al. ...)	Age [ka BP] (calculated from Ice age (yr C...)	Age [a AD/CE] (Gas age (yr CE) (constant del...)	Age [a AD/CE] (Gas age (yr CE) (variable del...)	CH4 [ppbv] (5 yr medians, see abstract)
+76.00	1759.8	0.1902	1947.8	1947.8	1237.20
+77.22	1754.9	0.1951	1942.9	1942.8	1175.45
+78.42	1750.6	0.1994	1938.6	1938.6	1150.30
+79.65	1745.0	0.2050	1933.0	1933.2	1125.60
+80.73	1739.9	0.2101	1927.9	1928.5	1112.60
+81.85	1734.8	0.2152	1922.8	1923.6	1082.00
+82.82	1730.2	0.2198	1918.2	1919.3	1062.00
+84.12	1724.9	0.2251	1912.9	1914.3	1042.80
+85.19	1719.7	0.2303	1907.7	1909.4	1009.40
+86.27	1714.8	0.2352	1902.8	1904.6	982.30
+87.32	1709.8	0.2402	1897.8	1899.9	967.05
+88.32	1704.8	0.2452	1892.8	1895.2	945.10
+90.42	1695.9	0.2541	1883.9	1886.8	910.00
+91.41	1691.4	0.2586	1879.4	1882.3	897.50
+92.53	1685.9	0.2641	1873.9	1876.9	890.00
+100.19	1651.3	0.2987	1839.3	1841.8	835.10
+101.72	1644.7	0.3053	1832.7	1835.1	829.20
+102.81	1639.6	0.3104	1827.6	1829.9	824.80
+103.97	1634.9	0.3151	1822.9	1825.0	819.40
+105.06	1629.7	0.3203	1817.7	1819.8	810.10
+106.06	1624.8	0.3252	1812.8	1814.9	801.40
+107.16	1619.7	0.3303	1807.7	1809.9	794.50
+108.29	1614.7	0.3353	1802.7	1804.7	789.10
+109.37	1609.9	0.3401	1797.9	1799.9	786.50
+110.48	1604.9	0.3451	1792.9	1794.7	782.50
+111.69	1599.7	0.3503	1787.7	1789.3	782.55
+112.82	1594.6	0.3554	1782.6	1783.8	783.30
+113.91	1589.5	0.3605	1777.5	1778.4	776.60
+115.04	1584.9	0.3651	1772.9	1773.6	776.00
+116.30	1578.8	0.3712	1766.8	1767.2	769.75
+117.45	1573.9	0.3761	1761.9	1762.2	767.10
+118.49	1569.2	0.3808	1757.2	1757.3	760.10
+119.53	1564.0	0.3860	1752.0	1751.9	761.90
+120.68	1559.1	0.3909	1747.1	1746.9	753.50
+122.14	1551.8	0.3982	1739.8	1739.5	756.25
+123.14	1547.3	0.4027	1735.3	1734.9	747.30
+124.23	1542.3	0.4077	1730.3	1729.7	744.40
+125.28	1537.3	0.4127	1725.3	1724.6	741.90
+126.41	1532.1	0.4179	1720.1	1719.4	739.60
+127.54	1526.9	0.4231	1714.9	1714.2	737.50
+128.50	1522.1	0.4279	1710.1	1709.5	733.60
+129.54	1517.1	0.4329	1705.1	1704.6	730.10
+137.32	1479.4	0.4706	1667.4	1668.9	742.00
+138.60	1473.4	0.4766	1661.4	1663.1	741.20
+139.20	1470.2	0.4798	1658.2	1660.1	740.20
+140.23	1465.3	0.4847	1653.3	1655.0	736.40
+141.29	1460.2	0.4898	1648.2	1649.6	731.70
+142.69	1454.8	0.4952	1642.8	1643.9	739.30
+143.73	1450.6	0.4994	1638.6	1639.4	735.00
+144.82	1445.4	0.5046	1633.4	1633.8	735.70
+145.87	1440.1	0.5099	1628.1	1628.4	736.60
+147.02	1435.2	0.5148	1623.2	1623.2	739.20
+151.82	1413.5	0.5365	1601.5	1600.9	736.05
+152.56	1409.4	0.5406	1597.4	1597.0	729.20
+153.58	1404.2	0.5458	1592.2	1591.7	729.10
+154.69	1399.1	0.5509	1587.1	1586.7	730.30
+155.91	1393.9	0.5561	1581.9	1581.5	729.60
+156.80	1389.0	0.5610	1577.0	1576.6	729.80
+157.83	1384.2	0.5658	1572.2	1571.6	733.70
+158.89	1378.9	0.5711	1566.9	1566.3	737.90
+159.99	1374.2	0.5758	1562.2	1561.5	744.80
+161.03	1369.2	0.5808	1557.2	1556.5	759.90
+162.02	1364.1	0.5859	1552.1	1551.3	762.20
+163.01	1359.1	0.5909	1547.1	1546.3	768.25
+163.78	1355.1	0.5949	1543.1	1542.3	767.90
+165.08	1349.1	0.6009	1537.1	1536.4	772.20
+166.12	1344.0	0.6060	1532.0	1531.4	769.60
+167.10	1339.0	0.6110	1527.0	1526.4	763.90
+168.21	1333.9	0.6161	1521.9	1521.5	762.80
+169.19	1328.9	0.6211	1516.9	1516.7	760.80
+170.21	1324.2	0.6258	1512.2	1512.3	759.60
+171.54	1317.0	0.6330	1505.0	1505.5	753.40
+172.44	1312.6	0.6374	1500.6	1501.4	748.35
+173.65	1306.4	0.6436	1494.4	1495.6	752.50
+174.48	1302.2	0.6478	1490.2	1491.6	739.45
+175.44	1297.3	0.6527	1485.3	1486.8	739.60
+176.61	1291.6	0.6584	1479.6	1481.1	735.50
+177.60	1287.3	0.6627	1475.3	1476.6	729.00
+179.42	1278.5	0.6715	1466.5	1467.7	727.15
+180.01	1275.7	0.6743	1463.7	1464.9	727.20
+181.12	1270.9	0.6791	1458.9	1460.3	727.70
+182.04	1266.1	0.6839	1454.1	1455.6	726.70
+182.99	1260.9	0.6891	1448.9	1450.4	725.60
+184.02	1255.9	0.6941	1443.9	1445.5	727.70
+185.34	1249.6	0.7004	1437.6	1439.4	725.20
+186.10	1246.0	0.7040	1434.0	1435.8	720.80
+187.31	1240.3	0.7097	1428.3	1430.0	728.90
+188.47	1235.2	0.7148	1423.2	1424.6	725.10
+189.65	1230.2	0.7198	1418.2	1419.2	723.30
+190.78	1225.2	0.7248	1413.2	1413.5	719.40
+192.15	1219.2	0.7308	1407.2	1406.7	721.30
+193.52	1213.0	0.7370	1401.0	1400.1	726.10
+194.86	1206.8	0.7432	1394.8	1393.8	730.20
+195.60	1202.3	0.7477	1390.3	1389.5	730.40
+196.61	1197.3	0.7527	1385.3	1384.7	732.20
+197.60	1192.2	0.7578	1380.2	1379.5	734.70
+198.71	1187.1	0.7629	1375.1	1374.3	733.50
+199.76	1182.3	0.7677	1370.3	1369.5	733.50
+201.37	1173.9	0.7761	1361.9	1361.1	730.15
+202.15	1169.0	0.7810	1357.0	1356.3	724.00
+203.45	1163.4	0.7866	1351.4	1350.7	728.90
+204.27	1159.0	0.7910	1347.0	1346.4	729.20
+205.22	1154.0	0.7960	1342.0	1341.0	724.10
+206.26	1148.6	0.8014	1336.6	1335.4	726.90
+207.26	1144.5	0.8055	1332.5	1331.1	728.90
+208.48	1139.0	0.8110	1327.0	1325.3	730.30
+209.46	1134.0	0.8160	1322.0	1320.0	736.00
+210.86	1127.4	0.8226	1315.4	1313.2	741.80
+211.84	1123.2	0.8268	1311.2	1308.9	741.30
+213.29	1116.2	0.8338	1304.2	1302.1	736.60
+214.22	1111.8	0.8382	1299.8	1298.0	735.30
+215.22	1106.5	0.8435	1294.5	1293.1	731.50
+216.36	1101.4	0.8486	1289.4	1288.2	730.40
+217.39	1096.8	0.8532	1284.8	1283.6	726.00
+219.26	1086.9	0.8631	1274.9	1273.7	734.60
+220.09	1082.7	0.8673	1270.7	1269.4	729.20
+221.01	1077.3	0.8727	1265.3	1263.8	727.30
+222.05	1072.5	0.8775	1260.5	1258.9	727.00
+223.03	1067.5	0.8825	1255.5	1253.9	725.20
+224.01	1062.3	0.8877	1250.3	1248.4	725.30
+224.95	1057.4	0.8926	1245.4	1243.4	726.70
+225.96	1052.5	0.8975	1240.5	1238.5	723.40
+231.97	1021.5	0.9285	1209.5	1208.9	739.30
+232.90	1017.0	0.9330	1205.0	1204.6	735.10
+234.38	1009.5	0.9405	1197.5	1197.0	741.00
+235.14	1006.1	0.9439	1194.1	1193.5	738.80
+236.19	1001.1	0.9489	1189.1	1188.3	743.30
+237.20	995.9	0.9541	1183.9	1182.9	743.80
+238.30	991.1	0.9589	1179.1	1177.9	742.40
+239.51	985.0	0.9650	1173.0	1171.7	741.50
+240.41	980.8	0.9692	1168.8	1167.4	749.90
+241.36	975.7	0.9743	1163.7	1162.2	747.45
+242.50	970.2	0.9798	1158.2	1156.4	749.40
+243.50	965.7	0.9843	1153.7	1151.8	748.40
+244.49	960.7	0.9893	1148.7	1146.4	744.55
+245.53	955.7	0.9943	1143.7	1141.2	743.60
+246.54	950.6	0.9994	1138.6	1135.9	739.60
+247.46	945.4	1.0046	1133.4	1130.5	736.35
+271.42	824.6	1.1254	1012.6	1007.0	725.50
+272.29	821.0	1.1290	1009.0	1003.6	725.90
+273.04	816.5	1.1335	1004.5	999.4	721.75
+273.93	811.2	1.1388	999.2	994.5	713.95
+274.78	806.5	1.1435	994.5	990.1	716.30
+276.02	801.2	1.1488	989.2	985.1	714.50
+276.97	796.5	1.1535	984.5	980.6	717.60
+278.02	791.0	1.1590	979.0	975.0	710.70
+279.02	785.9	1.1641	973.9	969.9	713.20
+281.36	775.1	1.1749	963.1	958.9	708.45
+281.93	772.0	1.1780	960.0	955.7	709.10
+283.12	766.8	1.1832	954.8	950.3	706.40
+284.04	762.1	1.1879	950.1	945.7	704.90
+285.12	756.7	1.1933	944.7	940.4	700.50
+288.25	740.8	1.2092	928.8	925.1	697.10
+289.11	736.9	1.2131	924.9	921.2	699.20
+290.13	731.9	1.2181	919.9	916.3	703.50
+290.93	727.4	1.2226	915.4	911.9	715.30
+291.97	721.5	1.2285	909.5	906.0	702.80
+293.49	713.5	1.2365	901.5	898.4	710.75
+294.07	710.6	1.2394	898.6	895.5	693.80
+294.97	705.5	1.2445	893.5	890.4	693.00
+296.19	698.1	1.2519	886.1	882.9	696.95
+296.97	694.4	1.2556	882.4	879.2	697.30
+298.05	689.6	1.2604	877.6	874.4	701.50
+298.91	684.5	1.2655	872.5	869.2	700.00
+299.82	679.8	1.2702	867.8	864.4	698.90
+300.85	674.4	1.2756	862.4	858.9	697.70
+301.79	669.4	1.2806	857.4	853.8	693.90
+302.63	664.6	1.2854	852.6	848.9	685.30
+303.66	659.3	1.2907	847.3	843.5	686.00
+305.38	650.5	1.2995	838.5	834.7	690.20
+306.18	646.1	1.3039	834.1	830.3	696.70
+307.28	641.1	1.3089	829.1	825.2	689.20
+309.16	631.1	1.3189	819.1	815.3	689.20
+309.97	626.4	1.3236	814.4	810.7	689.60
+310.91	621.4	1.3286	809.4	806.0	684.50
+311.91	616.3	1.3337	804.3	801.0	672.50
+312.96	611.2	1.3388	799.2	795.8	674.80
+313.98	606.5	1.3435	794.5	791.0	674.50
+315.06	601.6	1.3484	789.6	786.0	673.10
+316.29	595.1	1.3549	783.1	779.4	673.60
+317.22	590.6	1.3594	778.6	774.9	675.00
+318.15	585.7	1.3643	773.7	770.2	680.60
+319.01	580.5	1.3695	768.5	765.3	684.10
+320.01	575.6	1.3744	763.6	760.7	679.90
+320.87	570.3	1.3797	758.3	755.5	687.85
+322.55	561.1	1.3889	749.1	746.5	700.10
+327.62	534.0	1.4160	722.0	719.8	708.70
+328.10	530.7	1.4193	718.7	716.5	691.70
+329.08	525.4	1.4246	713.4	711.3	688.85
+330.38	518.4	1.4316	706.4	704.9	694.40
+331.59	512.0	1.4380	700.0	699.0	695.10
+332.87	504.7	1.4453	692.7	691.9	689.70
+333.49	501.3	1.4487	689.3	688.6	683.30
+334.53	496.3	1.4537	684.3	683.7	683.05
+335.56	490.5	1.4595	678.5	678.3	679.20
+336.50	485.8	1.4642	673.8	673.8	683.45
+337.66	478.5	1.4715	666.5	666.7	686.35
+338.24	475.6	1.4744	663.6	663.8	687.20
+339.58	469.0	1.4810	657.0	657.2	691.30
+340.97	462.5	1.4875	650.5	650.5	686.70
+341.81	457.5	1.4925	645.5	645.4	683.80
+343.67	447.7	1.5023	635.7	635.7	679.65
+344.17	444.7	1.5053	632.7	632.7	679.40
+345.01	440.1	1.5099	628.1	628.2	680.70
+346.12	434.3	1.5157	622.3	622.5	683.00
+347.60	427.6	1.5224	615.6	615.9	684.20
+348.79	420.9	1.5291	608.9	609.1	684.10
+349.85	415.5	1.5345	603.5	603.7	685.90
+350.62	411.3	1.5387	599.3	599.5	691.80
+351.61	406.3	1.5437	594.3	594.4	695.00
+352.94	398.8	1.5512	586.8	586.7	691.50
+353.98	393.3	1.5567	581.3	581.1	691.20
+354.83	389.1	1.5609	577.1	576.8	698.05
+355.75	384.0	1.5660	572.0	571.3	698.35
+357.11	376.9	1.5731	564.9	564.0	693.30
+357.98	373.2	1.5768	561.2	560.1	683.50
+358.99	368.3	1.5817	556.3	555.0	683.40
+359.93	363.0	1.5870	551.0	549.7	682.85
+360.81	358.2	1.5918	546.2	544.9	678.75
+361.64	352.9	1.5971	540.9	539.6	676.95
+363.08	344.7	1.6053	532.7	531.2	675.45
+363.85	340.8	1.6092	528.8	527.2	669.10
+374.64	280.9	1.6691	468.9	465.8	678.40
+375.48	275.8	1.6742	463.8	460.7	679.20
+376.19	272.0	1.6780	460.0	457.0	680.80
+377.02	267.0	1.6830	455.0	452.4	681.60
+377.81	262.3	1.6877	450.3	447.8	688.30
+378.73	257.0	1.6930	445.0	442.9	691.90
+379.63	251.6	1.6984	439.6	437.7	689.20
+380.68	245.4	1.7046	433.4	431.9	687.80
+381.52	240.5	1.7095	428.5	427.1	681.40
+382.65	234.3	1.7157	422.3	420.9	677.80
+383.37	230.6	1.7194	418.6	417.1	682.40
+384.33	225.5	1.7245	413.5	411.8	681.20
+386.05	217.3	1.7327	405.3	403.1	671.50
+386.69	213.2	1.7368	401.2	398.8	674.70
+388.31	205.0	1.7450	393.0	390.5	676.10
+388.78	202.3	1.7477	390.3	387.7	676.60
+389.66	196.9	1.7531	384.9	382.2	680.55
+390.62	192.4	1.7576	380.4	377.6	682.70
+391.56	187.4	1.7626	375.4		679.45
+392.62	182.2	1.7678	370.2		687.90
+393.61	176.7	1.7733	364.7		689.20
+395.94	164.1	1.7859	352.1		693.30
+396.66	159.9	1.7901	347.9		696.90
+397.58	155.3	1.7947	343.3		694.50
+398.57	149.9	1.8001	337.9		693.70
+399.60	144.9	1.8051	332.9		693.40
+400.56	139.8	1.8102	327.8		693.60
+401.47	134.7	1.8153	322.7		694.90
+402.41	130.0	1.8200	318.0		689.50
+403.38	124.9	1.8251	312.9		690.90
+404.73	117.3	1.8327	305.3		699.30
+405.35	114.3	1.8357	302.3		694.90
+406.38	109.1	1.8409	297.1		705.10
+407.54	103.9	1.8461	291.9		702.60
+408.51	99.0	1.8510	287.0		712.30
