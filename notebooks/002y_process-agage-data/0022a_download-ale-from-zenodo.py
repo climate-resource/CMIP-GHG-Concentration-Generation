@@ -13,30 +13,25 @@
 # ---
 
 # %% [markdown]
-# # AGAGE - download from Zenodo
+# # ALE - download from Zenodo
 #
-# Download AGAGE data from https://zenodo.org/records/14892947
+# Download ALE data from https://zenodo.org/records/14892947
 
 # %% [markdown]
 # ## Imports
 
 # %%
-import tempfile
-import urllib.request
 from pathlib import Path
+
 import shutil
 import tqdm.auto
 import openscm_units
 import pint
 import pooch
-from attrs import evolve
-from bs4 import BeautifulSoup
 from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
-from pydoit_nb.config_tools import URLSource
 
 from local.config import load_config_from_file
-from local.config_creation.agage_handling import AGAGE_GAS_MAPPING
 
 # %%
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
@@ -45,14 +40,14 @@ pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
 # ## Define branch this notebook belongs to
 
 # %%
-step: str = "retrieve_and_extract_agage_data"
+step: str = "retrieve_and_extract_ale_data"
 
 # %% [markdown]
 # ## Parameters
 
 # %% editable=true slideshow={"slide_type": ""} tags=["parameters"]
 config_file: str = "../../dev-config-absolute.yaml"  # config file
-step_config_id: str = "ch4_gc-md_monthly"  # config ID to select for this branch
+step_config_id: str = "monthly"  # config ID to select for this branch
 
 # %% [markdown]
 # ## Load config
@@ -62,7 +57,7 @@ config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
 
 # %% [markdown]
-# ### Download
+# ## Action
 
 # %%
 url_source = config_step.download_url_zenodo
@@ -81,7 +76,7 @@ extracted_files[:3]
 # ## Put extracted files in the right place
 
 # %%
-to_move = [f for f in extracted_files if "data/raw/agage/agage" in f and f.endswith("mon.txt")]
+to_move = [f for f in extracted_files if "data/raw/agage/ale" in f and f.endswith("mon")]
 config_step.raw_dir.mkdir(exist_ok=True, parents=True)
 for f in tqdm.auto.tqdm(to_move):
     shutil.copy2(f, config_step.raw_dir / Path(f).name)

@@ -436,6 +436,10 @@ def create_noaa_data_source_handling_pieces(gas: str, network: str) -> NOAAHandl
         download_complete_file=raw_dir / f"{gas}_{network}.complete",
         interim_files=interim_files,
         download_urls=DOWNLOAD_URLS[(gas, network)],
+        download_url_zenodo=URLSource(
+            known_hash="md5:a7af8abec8b68f89552b12debecbacaf",
+            url="https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1",
+        ),
     )
 
     process_step_attrs = dict(

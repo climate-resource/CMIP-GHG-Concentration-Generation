@@ -50,3 +50,6 @@ class RetrieveExtractNOAADataConfig:
     This is a very flexible container so you can basically put whatever in here that
     doesn't fit with the wider pattern.
     """
+
+    download_url_zenodo: URLSource | None = None
+    """URL from which to download the data if using our zenodo archive"""

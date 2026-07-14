@@ -51,7 +51,10 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0022_download-ale"],
+            # unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0022_download-ale"],
+            unconfigured_notebook=uc_nbs_dict[
+                Path("002y_process-agage-data") / "0022a_download-ale-from-zenodo"
+            ],
             configuration=(
                 config_step.download_urls,
                 config_step.raw_dir,
@@ -78,10 +81,13 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
     step_name="retrieve_and_extract_ale_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("002y_process-agage-data") / "0022_download-ale",
+            # notebook_path=Path("002y_process-agage-data") / "0022_download-ale",
+            notebook_path=Path("002y_process-agage-data") / "0022a_download-ale-from-zenodo",
             raw_notebook_ext=".py",
-            summary="process ALE data - download",
-            doc="Download ALE data",
+            # summary="process ALE data - download",
+            # doc="Download ALE data",
+            summary="process ALE data - download from zenodo",
+            doc="Download ALE data from zenodo",
         ),
         UnconfiguredNotebook(
             notebook_path=Path("002y_process-agage-data") / "0025_extract-ale",

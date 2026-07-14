@@ -3598,6 +3598,9 @@ retrieve_and_extract_agage_data:
   time_frequency: monthly
 retrieve_and_extract_ale_data:
 - download_complete_file: data/raw/agage/ale/ale_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 38872b27c595bfb8a1509155bd713d2f519dab5c12b51e43f9256f8fa20ca040
     url: https://agage2.eas.gatech.edu/data_archive/ale/monthly/ADR-ale.mon
@@ -3651,6 +3654,9 @@ retrieve_and_extract_gage_data:
   step_config_id: monthly
 retrieve_and_extract_noaa_data:
 - download_complete_file: data/raw/noaa/co2_in-situ.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 3653b8b66e504da98edf256af23f827a0bf8e5e9a1422d979b38e65ad61499ae
     url: https://gml.noaa.gov/aftp/data/greenhouse_gases/co2/in-situ/surface/co2_surface-insitu_ccgg_text.zip
@@ -3662,6 +3668,9 @@ retrieve_and_extract_noaa_data:
   source: in-situ
   step_config_id: co2_in-situ
 - download_complete_file: data/raw/noaa/co2_surface-flask.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 7e53e3aa7f43ec8300a080d9ae06dd64aa3cee526092e80e3a3d4989600f52ec
     url: https://gml.noaa.gov/aftp/data/trace_gases/co2/flask/surface/co2_surface-flask_ccgg_text.zip
@@ -3674,6 +3683,9 @@ retrieve_and_extract_noaa_data:
   source: surface-flask
   step_config_id: co2_surface-flask
 - download_complete_file: data/raw/noaa/ch4_in-situ.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 9eb2e865f79e6ca2fc5cd0963a52c90e0a8fd2f346b5d28d5e9989bd519d60cc
     url: https://gml.noaa.gov/aftp/data/greenhouse_gases/ch4/in-situ/surface/ch4_surface-insitu_ccgg_text.zip
@@ -3685,6 +3697,9 @@ retrieve_and_extract_noaa_data:
   source: in-situ
   step_config_id: ch4_in-situ
 - download_complete_file: data/raw/noaa/ch4_surface-flask.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: ea5fc01c59a67d1349ef2fdffd21ceb14ff0fb0d8518f1517d3972cac71df0e5
     url: https://gml.noaa.gov/aftp/data/trace_gases/ch4/flask/surface/ch4_surface-flask_ccgg_text.zip
@@ -3697,6 +3712,9 @@ retrieve_and_extract_noaa_data:
   source: surface-flask
   step_config_id: ch4_surface-flask
 - download_complete_file: data/raw/noaa/n2o_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: d05fb01d87185d5020ca35a30ae40cc9c70fcc7d1e9d0640e43f09df9e568f1a
     url: https://gml.noaa.gov/aftp/data/hats/n2o/combined/GML_global_N2O.txt
@@ -3708,6 +3726,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: n2o_hats
 - download_complete_file: data/raw/noaa/c2f6_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 648cc1699f3ef50a92ed8207bca8b1f3e14298d9653f598536dc80a9bbebf20c
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/PFC-116_PR1_MS_flask.txt
@@ -3719,6 +3740,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: c2f6_hats
 - download_complete_file: data/raw/noaa/ccl4_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 412139fa494c9cf43f6989403c37603168d57a2d0a7936a0cbc94f1599164310
     url: https://gml.noaa.gov/aftp/data/hats/solvents/CCl4/combined/HATS_global_CCl4.txt
@@ -3730,6 +3754,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: ccl4_hats
 - download_complete_file: data/raw/noaa/cf4_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 66955d644782c4148a7c367a6f02b96b92f060db7e5d0eb659bdfb6a3b8d1e35
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/CF4_PR1_MS_flask.txt
@@ -3741,6 +3768,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: cf4_hats
 - download_complete_file: data/raw/noaa/cfc11_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 24412046f661bfe5b2463141ada01c114c353b19db01d8e452ec538f9596fcec
     url: https://gml.noaa.gov/aftp/data/hats/cfcs/cfc11/combined/HATS_global_F11.txt
@@ -3752,6 +3782,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: cfc11_hats
 - download_complete_file: data/raw/noaa/cfc113_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: e2b8369b85286203fcc61ae1cfddb5efb426013055a6b9163fe8db97ca619972
     url: https://gml.noaa.gov/aftp/data/hats/cfcs/cfc113/combined/HATS_global_F113.txt
@@ -3763,6 +3796,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: cfc113_hats
 - download_complete_file: data/raw/noaa/cfc12_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: f3fe61be2b5f307da795568931d84399a34ecdde795d64ce1eeb8720df97bd89
     url: https://gml.noaa.gov/aftp/data/hats/cfcs/cfc12/combined/HATS_global_F12.txt
@@ -3774,6 +3810,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: cfc12_hats
 - download_complete_file: data/raw/noaa/ch2cl2_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 113ffef7b90c89ee9892cd1f3f441b6cb5a5d4c6330b21ad373eec38c0547816
     url: https://gml.noaa.gov/aftp/data/hats/solvents/CH2Cl2/flasks/ch2cl2_GCMS_flask.txt
@@ -3785,6 +3824,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: ch2cl2_hats
 - download_complete_file: data/raw/noaa/ch3br_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: b4632358ecd69680cfd06ec248fe1e80fcfb3156626c73edc3d3c345ee1985e5
     url: https://gml.noaa.gov/aftp/data/hats/methylhalides/ch3br/flasks/CH3BR_GCMS_flask.txt
@@ -3796,6 +3838,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: ch3br_hats
 - download_complete_file: data/raw/noaa/ch3ccl3_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 6f5abb521a1bdfe2be264699270346a4f9b243db2cfba3d0b7af01d7bfc78ed3
     url: https://gml.noaa.gov/aftp/data/hats/solvents/CH3CCl3/flasks/GCMS/CH3CCL3_GCMS_flask.txt
@@ -3807,6 +3852,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: ch3ccl3_hats
 - download_complete_file: data/raw/noaa/ch3cl_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 4c3bb2fc85cba33849b617727fd70d40611946338373c32dbda0ec515a2c2ac3
     url: https://gml.noaa.gov/aftp/data/hats/methylhalides/ch3cl/flasks/CH3Cl_GCMS_flask.txt
@@ -3818,6 +3866,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: ch3cl_hats
 - download_complete_file: data/raw/noaa/halon1211_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: b54b6f59477def77af961d1f212a2e41048e38199b4fa2a0b32c6ff9d31398e4
     url: https://gml.noaa.gov/aftp/data/hats/halons/flasks/HAL1211_GCMS_flask.txt
@@ -3829,6 +3880,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: halon1211_hats
 - download_complete_file: data/raw/noaa/halon1301_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 92f70bff3d4009c0a6567df0de7ffb340d92ec1a6843c6d1483419f232f43669
     url: https://gml.noaa.gov/aftp/data/hats/halons/flasks/H-1301_M2&PR1_MS_flask.txt
@@ -3840,6 +3894,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: halon1301_hats
 - download_complete_file: data/raw/noaa/halon2402_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: b94a7856bdcfaba8486992258b66187aeeb208389ded31bd8da006a185e5a4d7
     url: https://gml.noaa.gov/aftp/data/hats/halons/flasks/Hal2402_GCMS_flask.txt
@@ -3851,6 +3908,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: halon2402_hats
 - download_complete_file: data/raw/noaa/hcfc141b_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 2a00218b2fb334f0fdd0941936a3142eaec7a578e1afc0a09021e1167dc7bb47
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc141b/HCFC141B_GCMS_flask.txt
@@ -3862,6 +3922,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hcfc141b_hats
 - download_complete_file: data/raw/noaa/hcfc142b_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: bed61eb655cd316c8b1a5b23a9d9fe97f997077e1f1b40026531575fb28c4ebb
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc142b/flasks/HCFC142B_GCMS_flask.txt
@@ -3873,6 +3936,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hcfc142b_hats
 - download_complete_file: data/raw/noaa/hcfc22_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 1fc30f86323ca722865994ddc66d0e24e2dd581775e2f59267d4b1c57f7a9664
     url: https://gml.noaa.gov/aftp/data/hats/hcfcs/hcfc22/flasks/HCFC22_GCMS_flask.txt
@@ -3884,6 +3950,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hcfc22_hats
 - download_complete_file: data/raw/noaa/hfc125_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: d7ed3b857c8c7b483e1f26f4616ea049775f29956a652033ce75bb326b8424c9
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-125_M2&PR1_MS_flask.txt
@@ -3895,6 +3964,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc125_hats
 - download_complete_file: data/raw/noaa/hfc134a_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: c8a9630b82aa9a936324ae10d1e79ed8f06aa382ce6d49d40aabbcecbb1249aa
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hfc134a_GCMS_flask.txt
@@ -3906,6 +3978,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc134a_hats
 - download_complete_file: data/raw/noaa/hfc143a_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 302f50d03b52b4e694ce44c8d7ddf7a7ae771e9f97cd649d4518578c55fe0580
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-143a_M2&PR1_MS_flask.txt
@@ -3917,6 +3992,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc143a_hats
 - download_complete_file: data/raw/noaa/hfc152a_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 42aaa82a52fec1caa71656704357e0a3e64334c4fe3b6ac368abfeabaf6912bd
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/hf152a_GCMS_flask.txt
@@ -3928,6 +4006,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc152a_hats
 - download_complete_file: data/raw/noaa/hfc227ea_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: cacda0e8941dcc456604f03da8a113d41763ab9c7c9f3f001a654d6b6d5be361
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-227ea_GCMS_flask.txt
@@ -3939,6 +4020,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc227ea_hats
 - download_complete_file: data/raw/noaa/hfc236fa_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 93676d83d0ee49b0c3f8e7a372260839846f47e82e24a981d806d2c4d0211060
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/HFC-236fa_PR1_MS_flask.txt
@@ -3950,6 +4034,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc236fa_hats
 - download_complete_file: data/raw/noaa/hfc32_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: dd3ec22a6c7d4c999b5fc9a5118efddcb4d5426527cebbe38d7d0cd076edefdb
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-32_M2&PR1_MS_flask.txt
@@ -3961,6 +4048,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc32_hats
 - download_complete_file: data/raw/noaa/hfc365mfc_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: d8b98bc0420d8f93cab46b198cd40c716969d45251d0e20cc3c9574100a0429e
     url: https://gml.noaa.gov/aftp/data/hats/hfcs/HFC-365mfc_GCMS_flask.txt
@@ -3972,6 +4062,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: hfc365mfc_hats
 - download_complete_file: data/raw/noaa/nf3_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 55ad14efde473ff7c9529451cc2b9e4263ccf1c27fea20a1039b82e5da0ab309
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/NF3_PR1_MS_flask.txt
@@ -3983,6 +4076,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: nf3_hats
 - download_complete_file: data/raw/noaa/sf6_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 822543e2558e9e22e943478d37dffe0c758091c35d1ff9bf2b2697507dd3b39d
     url: https://gml.noaa.gov/aftp/data/hats/sf6/combined/GML_global_SF6.txt
@@ -3994,6 +4090,9 @@ retrieve_and_extract_noaa_data:
   source: hats
   step_config_id: sf6_hats
 - download_complete_file: data/raw/noaa/so2f2_hats.complete
+  download_url_zenodo:
+    known_hash: md5:a7af8abec8b68f89552b12debecbacaf
+    url: https://zenodo.org/records/14892947/files/data--raw--noaa.tar.gz?download=1
   download_urls:
   - known_hash: 1566e131da350ccad74bad652bf071c544c97787f9f9db0c3ee5f099e80275c8
     url: https://gml.noaa.gov/aftp/data/hats/PERSEUS/SO2F2_PR1_MS_flask.txt
