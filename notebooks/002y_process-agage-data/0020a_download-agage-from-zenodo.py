@@ -21,22 +21,17 @@
 # ## Imports
 
 # %%
-import tempfile
-import urllib.request
-from pathlib import Path
 import shutil
-import tqdm.auto
+from pathlib import Path
+
 import openscm_units
 import pint
 import pooch
-from attrs import evolve
-from bs4 import BeautifulSoup
+import tqdm.auto
 from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
-from pydoit_nb.config_tools import URLSource
 
 from local.config import load_config_from_file
-from local.config_creation.agage_handling import AGAGE_GAS_MAPPING
 
 # %%
 pint.set_application_registry(openscm_units.unit_registry)  # type: ignore
@@ -70,10 +65,7 @@ url_source
 
 # %%
 extracted_files = pooch.retrieve(
-    url=url_source.url,
-    known_hash=url_source.known_hash,
-    progressbar=True,
-    processor=pooch.Untar()
+    url=url_source.url, known_hash=url_source.known_hash, progressbar=True, processor=pooch.Untar()
 )
 extracted_files[:3]
 
@@ -81,7 +73,9 @@ extracted_files[:3]
 # ## Put extracted files in the right place
 
 # %%
-to_move = [f for f in extracted_files if "data/raw/agage/agage" in f and f.endswith("mon.txt")]
+to_move = [
+    f for f in extracted_files if "data/raw/agage/agage" in f and (f.endswith("mon.txt") or "README" in f)
+]
 config_step.raw_dir.mkdir(exist_ok=True, parents=True)
 for f in tqdm.auto.tqdm(to_move):
     shutil.copy2(f, config_step.raw_dir / Path(f).name)

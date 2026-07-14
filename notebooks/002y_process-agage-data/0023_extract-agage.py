@@ -30,7 +30,6 @@ import matplotlib.pyplot as plt
 import openscm_units
 import pandas as pd
 import pint
-import pooch
 import tqdm.autonotebook as tqdman
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -344,13 +343,14 @@ out.to_csv(config_step.processed_monthly_data_with_loc_file, index=False)
 out
 
 # %%
-readme_path = pooch.retrieve(
-    url=config_step.readme.url,
-    known_hash=config_step.readme.known_hash,
-    fname="AGAGE_README.txt",
-    path=config_step.raw_dir,
-    progressbar=True,
-)
+readme_path = config_step.raw_dir / "AGAGE_README.txt"
+# readme_path = pooch.retrieve(
+#     url=config_step.readme.url,
+#     known_hash=config_step.readme.known_hash,
+#     fname="AGAGE_README.txt",
+#     path=config_step.raw_dir,
+#     progressbar=True,
+# )
 
 # %%
 if isinstance(readme_path, list):
