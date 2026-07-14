@@ -81,23 +81,20 @@ extracted_files = pooch.retrieve(
         members=[
             str(
                 Path("output-bundles/v1.0.0/data/raw/noaa")
-                / config_step.download_urls[0].url.split("/")[-1]
+                / v.url.split("/")[-1]
             )
+            for v in config_step.download_urls
         ]
     ),
 )
 
 extracted_files
 
+# %% [markdown]
+# ## Put extracted files in the right place
+
 # %%
-for url_source in config_step.download_urls:
-    pooch.retrieve(
-        url=url_source.url,
-        known_hash=url_source.known_hash,
-        fname=url_source.url.split("/")[-1],
-        path=config_step.raw_dir,
-        progressbar=True,
-    )
+raise NotImplementedError
 
 # %%
 write_complete_file(config_step.download_complete_file)
