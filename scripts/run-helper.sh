@@ -36,7 +36,7 @@ if [ "$RUN_ID" == "dev-test-run" ]; then
         # Run for individual gas
         DOIT_CONFIGURATION_FILE=$doit_config_file DOIT_RUN_ID="dev-test-run" \
             DOIT_DB_BACKEND="json" DOIT_DB_FILE="doit-db-dev.json" \
-            pixi run doit --verbosity=2 -n 1 \
+            pixi run doit --verbosity=2 -n 4 \
             "${PWD}/output-bundles/${RUN_ID}/data/processed/esgf-ready/${GAS}_input4MIPs_esgf-ready.complete"
 
     fi
