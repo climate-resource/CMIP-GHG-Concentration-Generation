@@ -21,13 +21,13 @@
 # ## Imports
 
 # %%
+import shutil
 from pathlib import Path
 
-import shutil
-import tqdm.auto
 import openscm_units
 import pint
 import pooch
+import tqdm.auto
 from pydoit_nb.complete import write_complete_file
 from pydoit_nb.config_handling import get_config_for_step_id
 
@@ -64,25 +64,13 @@ url_source = config_step.download_url_zenodo
 url_source
 
 # %%
-config_step.download_urls[0].url.split("/")[-1]
-
-# %%
-url_source.url
-
-# %%
-config_step.download_urls[0].url.split("/")[-1]
-
-# %%
 extracted_files = pooch.retrieve(
     url=url_source.url,
     known_hash=url_source.known_hash,
     progressbar=True,
     processor=pooch.Untar(
         members=[
-            str(
-                Path("output-bundles/v1.0.0/data/raw/noaa")
-                / v.url.split("/")[-1]
-            )
+            str(Path("output-bundles/v1.0.0/data/raw/noaa") / v.url.split("/")[-1])
             for v in config_step.download_urls
         ]
     ),
@@ -94,7 +82,9 @@ extracted_files
 # ## Put extracted files in the right place
 
 # %%
-raise NotImplementedError
+config_step.raw_dir.mkdir(exist_ok=True, parents=True)
+for f in tqdm.auto.tqdm(extracted_files):
+    shutil.copy2(f, config_step.raw_dir / Path(f).name)
 
 # %%
 write_complete_file(config_step.download_complete_file)
