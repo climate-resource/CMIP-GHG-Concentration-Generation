@@ -50,5 +50,9 @@ RETRIEVE_AND_EXTRACT_GAGE_STEPS = [
             url="https://agage2.eas.gatech.edu/data_archive/gage/readme.gage",
             resource_type="dataset",
         ),
+        download_url_zenodo=URLSource(
+            known_hash="md5:1baade2d547716118651fe1d7017f0da",
+            url="https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1",
+        ),
     )
 ]

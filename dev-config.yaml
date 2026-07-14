@@ -1495,6 +1495,9 @@ process_noaa_surface_flask_data:
   step_config_id: ch4
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: ebf644f139515d43eec6c92a495324b7bf42c3ad3e938b98f2c5891d7c37829d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ch4_mon.txt
@@ -1518,6 +1521,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch4_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/n2o_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 370c44806f798d97cb0ef34264188956ec3df017b15114d35d9424977ffad648
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_n2o_mon.txt
@@ -1541,6 +1547,9 @@ retrieve_and_extract_agage_data:
   step_config_id: n2o_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/sf6_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 94ba333a69bb3c505643b15e7f3e99944fbbb150a803ec3171fdcdebbe9a4f42
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/capegrim-sf6-ecd/ascii/AGAGE-GCECD_CGO_sf6_mon.txt
@@ -1556,6 +1565,9 @@ retrieve_and_extract_agage_data:
   step_config_id: sf6_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/sf6_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: ac2c7917d5469981cd20dd2e8bc6dd061f875efcb8be8d1b6bc03db1c5ab8046
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_sf6_mon.txt
@@ -1591,6 +1603,9 @@ retrieve_and_extract_agage_data:
   step_config_id: sf6_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c2f6_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 51f1322892d549b3273d57189fee27b96ac5990aa44bc17a3caf1919ea197155
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_pfc-116_mon.txt
@@ -1626,6 +1641,9 @@ retrieve_and_extract_agage_data:
   step_config_id: c2f6_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 3fb88173ca12cc2b9b35ce4d18dcc6c26e26104c7639ea9df8ef27834313af79
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_pfc-218_mon.txt
@@ -1661,6 +1679,9 @@ retrieve_and_extract_agage_data:
   step_config_id: c3f8_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/c3f8_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 91a7588fcbd0b30f7912fbd960fd2cf230cff9b2365f3a36a8ac12f76e611b94
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-218_mon.txt
@@ -1676,6 +1697,9 @@ retrieve_and_extract_agage_data:
   step_config_id: c3f8_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 38e0d35c001a12b433f25b2f54fa67a822780efe6da1d3e67749054eaa25df12
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_pfc-318_mon.txt
@@ -1711,6 +1735,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cc4f8_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cc4f8_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 76321b4124b65f68c75b23cc6d4f5aef25c733e5e894aff3801949dda14c8015
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_pfc-318_mon.txt
@@ -1726,6 +1753,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cc4f8_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 6e49c7797a849b8f516b82f9450d9f4a20504c38e77d9d1cb1e1262186f20185
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ccl4_mon.txt
@@ -1749,6 +1779,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ccl4_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 934624ae29f513477c35067a976d5bfa9b526a82401d142659f4e47267497eb2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_ccl4_mon.txt
@@ -1770,6 +1803,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ccl4_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ccl4_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 82f6e905dfe5857ac92ba77ee8931db317975896da07545654988c057efae56e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_ccl4_mon.txt
@@ -1785,6 +1821,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ccl4_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cf4_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 70baa3db6a9d5352537e4908596c90c665df34f5e5184f2036e1cea25b802f5a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cf4_mon.txt
@@ -1818,6 +1857,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cf4_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 5fb79bdcfe56410145a0055e2f7cf18f3bcc7874eb4005872cce56f09ee0ec91
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-11_mon.txt
@@ -1841,6 +1883,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc11_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 2c89c68e7c68f8ee0346556ca77d496602a36592371feaaa275471ecbac7c60e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-11_mon.txt
@@ -1868,6 +1913,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc11_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc11_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 905af16f2299a6d47c6794093b86459f20e845c7468eaedfd14c2bc381a7a98e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-11_mon.txt
@@ -1883,6 +1931,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc11_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 52662de647f08e8fbd507aac56cdda41c6c5d273573ffde473f17d9a2b969bf9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-113_mon.txt
@@ -1906,6 +1957,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc113_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc113_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 18533a4e298bf43a1d05e38f60f77d9c9420688b5de93251a1db33c2e1a1d531
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-113_mon.txt
@@ -1941,6 +1995,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc113_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 44ab47f122a417b164ae5ed2c2a9e3300e2f90c9ffd0ad3c2d66dc89b29a1bdb
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-114_mon.txt
@@ -1956,6 +2013,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc114_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc114_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: c24662c73f442f29fd8c3de7b88ff5f1e65dfdba3478409716835d4aa2c741a2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-114_mon.txt
@@ -1991,6 +2051,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc114_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 605d0fcb54fdba91aa2f1e1c55442ac914dc1e73b5cfe98787791f5d4f943200
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-115_mon.txt
@@ -2006,6 +2069,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc115_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc115_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: fbfbc3c0abc19214cbe8b002faa198de2bb903bac15e17803b0715b51e3c199f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_cfc-115_mon.txt
@@ -2041,6 +2107,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc115_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: ae762e6aa6c18900b2b94751d8e6cef653befbcfced2f5e1109f5d3fd9218c7d
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_cfc-12_mon.txt
@@ -2064,6 +2133,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc12_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 33635d8a82e5cde6055fa06b4bcc4b1144e58ce862231d69bec3e07ecd37229f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/gosan/ascii/AGAGE-GCMS-Medusa_GSN_cfc-12_mon.txt
@@ -2089,6 +2161,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc12_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/cfc12_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 6cbce54d6325a15da19bc7b3675d7040b1bc750ae5403ac17076176d3584bcbc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_cfc-12_mon.txt
@@ -2104,6 +2179,9 @@ retrieve_and_extract_agage_data:
   step_config_id: cfc12_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: afc6c72e61be719c91f1601cfa3748c0152219b4d21ca64a275e107cbcf72fe5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch2cl2_mon.txt
@@ -2139,6 +2217,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch2cl2_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch2cl2_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 719b72175499060e27f773334979ba0a7165eb8e268e8ef3f9f7fb6f4f4e0c33
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch2cl2_mon.txt
@@ -2162,6 +2243,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch2cl2_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 01c9d8021efc0bd9aab8fc765f13ed821e00a1019f9f28bc984deaaf5f778727
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3br_mon.txt
@@ -2197,6 +2281,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3br_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3br_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: c6919655cdab816b169b0fa81f235bba9769e4a21d0c8809b541a676669079c7
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch3br_mon.txt
@@ -2220,6 +2307,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3br_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 1002b442da5a28e23e26d26c8ec10750c68c7e95361f677999028cc49f504e32
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_ch3ccl3_mon.txt
@@ -2243,6 +2333,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3ccl3_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 51674db2c7da2f0060448831843bb1514e6b836065064c9d1c5d8199db08de44
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3ccl3_mon.txt
@@ -2278,6 +2371,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3ccl3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3ccl3_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: c79891ad2248aee8d534131d7260c02023dd76164b695b8781de3179cec8fb04
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_ch3ccl3_mon.txt
@@ -2297,6 +2393,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3ccl3_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 9aca2f7cbf614a019dce90f120c5ad81b082415860ab1aea01d66c1e243c31b8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_ch3cl_mon.txt
@@ -2332,6 +2431,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3cl_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/ch3cl_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 912250dc7cc525cf2a8202bc7c77caa2075468df8eead49455822c3db7441c9e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_ch3cl_mon.txt
@@ -2355,6 +2457,9 @@ retrieve_and_extract_agage_data:
   step_config_id: ch3cl_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-md_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: e89bd4001767ee477d8711b66ae89ad546ec41a13b5a5ca9cd0138c152881881
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/barbados/ascii/AGAGE-GCMD_RPB_chcl3_mon.txt
@@ -2378,6 +2483,9 @@ retrieve_and_extract_agage_data:
   step_config_id: chcl3_gc-md_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 9aae900c98c53d57fa3dd15205c88dbad377004b4f068b1698263551acfa2f8f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_chcl3_mon.txt
@@ -2413,6 +2521,9 @@ retrieve_and_extract_agage_data:
   step_config_id: chcl3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/chcl3_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 4bc19232a8777a33f2467e82b607397c73f692669a86b40010ecf6cef028cc1e
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_chcl3_mon.txt
@@ -2436,6 +2547,9 @@ retrieve_and_extract_agage_data:
   step_config_id: chcl3_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: b3fc90b20ca4e299c6d1d8d076462d0879d7816b43d08be058ffdb9772098782
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-1211_mon.txt
@@ -2471,6 +2585,9 @@ retrieve_and_extract_agage_data:
   step_config_id: halon1211_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1211_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: a7e1e2b1f3d57dfe648c50f76607cfa5c1b0e5773cf16c991673c85c23f32037
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_h-1211_mon.txt
@@ -2494,6 +2611,9 @@ retrieve_and_extract_agage_data:
   step_config_id: halon1211_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: f16b1fb320b1568c2aa4bd0d1ae48172265aaa03f86585cdf05511883a4918ec
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-1301_mon.txt
@@ -2529,6 +2649,9 @@ retrieve_and_extract_agage_data:
   step_config_id: halon1301_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon1301_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 79afbd8bd15f055613508b8a902f3e43948f4d16c2c2879a107393234ae549a9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_h-1301_mon.txt
@@ -2552,6 +2675,9 @@ retrieve_and_extract_agage_data:
   step_config_id: halon1301_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/halon2402_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 256d702100448b3003efd3cd913ab7ef4a35aad44fb27e21e96ee6bd7cb6c7b9
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_h-2402_mon.txt
@@ -2587,6 +2713,9 @@ retrieve_and_extract_agage_data:
   step_config_id: halon2402_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 0cd36d654b5f7d00e794329079c57a2aa6535473f25e5b4dbc329f341483c719
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-141b_mon.txt
@@ -2610,6 +2739,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc141b_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc141b_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 3da31bbf1abac5a88fbb9fe8c04e94739efd577ed5fdde65c63d7f477359d066
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-141b_mon.txt
@@ -2645,6 +2777,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc141b_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 0940dfc5ec1be7cc16df101aa2fb6282c7e7ff1a84b9d30d3f8142471d361f9c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-142b_mon.txt
@@ -2666,6 +2801,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc142b_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc142b_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 529c821ef3c3fff26f6a59141469d8b5bf592ce80c3ec9ba18671eee6a5d3db2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-142b_mon.txt
@@ -2701,6 +2839,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc142b_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 67ba0349480dc6f0843591de2d694ddfa275f1f86a203d90b30d6d58e7e160c1
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hcfc-22_mon.txt
@@ -2722,6 +2863,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc22_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hcfc22_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 595a121b1f3d454b21a96a5deb36e9a092a4b96649b856b05ee17c94593bf377
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hcfc-22_mon.txt
@@ -2757,6 +2901,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hcfc22_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 03aea5d6dc21ddd8cfebbf12cb56f4468632945198a51667245ca32df7606e60
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-125_mon.txt
@@ -2792,6 +2939,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc125_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc125_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 24661da55f9f5a74fda7bddbe2f704e4ba1857cbeaf044daf08b096bb4306407
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-125_mon.txt
@@ -2815,6 +2965,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc125_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 93920abbacee2a4a37ca7db4cad2d9405cb86aa374e32badd8f31bd3a6542dd2
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-134a_mon.txt
@@ -2850,6 +3003,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc134a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc134a_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 73a31aed2ad528398aa2dfdbb33fefb485f516b7c6af370f1bcaed62501efffc
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-134a_mon.txt
@@ -2873,6 +3029,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc134a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 0681cf64eadf9a542ad7d6d3a4b56c1ac94bd9e2293c827e5b5b8070c50663ff
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-143a_mon.txt
@@ -2908,6 +3067,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc143a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc143a_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: a86f2db21723b932de9753955c4bbaab0b95b519f75b1ea3153ab74d073a28b5
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-143a_mon.txt
@@ -2923,6 +3085,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc143a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: b3fb3d9225616412fd9fd0eea1e344eb4eeabab08724a84e999f3649b917d793
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-152a_mon.txt
@@ -2958,6 +3123,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc152a_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc152a_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: cdbaeb5ed361ec22addce2c0b606654435d43153f463e1bc0c7107b1bb63bc72
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-152a_mon.txt
@@ -2981,6 +3149,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc152a_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: eab0bd8ddb7cf259bb5678e84d410a22396e0664cf6e400dd2732563a97d819a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-227ea_mon.txt
@@ -3014,6 +3185,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc227ea_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc227ea_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 7dcc96438de5bcef6c4e56fd2462567dbc423d807b9f5bdc4021ffe0d360b77a
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-227ea_mon.txt
@@ -3031,6 +3205,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc227ea_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc23_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: be8f6349201ef3dc4924df3cf29f4d75ba30dcf1318084f30fbf5d14c2a17e7f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-23_mon.txt
@@ -3066,6 +3243,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc23_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 9737da6710bdf0703e7fd6fed3ee377929045c64924766dad872158f239cde4f
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-236fa_mon.txt
@@ -3099,6 +3279,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc236fa_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc236fa_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 6002502f135cb8f6bb1d655ab44a3cb550385765a214c5fc367fd230df9b9b76
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-236fa_mon.txt
@@ -3114,6 +3297,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc236fa_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: b8464af3bb0aef9c6bfead9c6835707f923f9c0dfe4a2d46e049bbadc93f1c67
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-245fa_mon.txt
@@ -3147,6 +3333,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc245fa_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc245fa_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 02f0af60f923d8ad7b6e71c2c8932c80a72266274747ca8ed32ecb4956cb0370
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/jungfraujoch/ascii/AGAGE-GCMS-ADS_JFJ_hfc-245fa_mon.txt
@@ -3164,6 +3353,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc245fa_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 52405f5c457809d0055b1e3fa46f8cf576cb95aa7696e928bd3681f89f2565e8
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-32_mon.txt
@@ -3199,6 +3391,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc32_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc32_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 3431accb67817a53eb8e115078685c976f5667cccca0a0215954f3e0e32d0027
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_hfc-32_mon.txt
@@ -3214,6 +3409,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc32_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 4a1159966af827928c202017c300c4004f4f6d74851f8798641b2583828951fa
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-365mfc_mon.txt
@@ -3247,6 +3445,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc365mfc_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc365mfc_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 631073a4988572f03b9b5dfb32eb356f3b69d25da78865ce88910b00ba927450
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/capegrim/ascii/AGAGE-GCMS-ADS_CGO_hfc-365mfc_mon.txt
@@ -3270,6 +3471,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc365mfc_gc-ms_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/hfc4310mee_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 5ea5be7902aae7e2098ce855e610481d2a51034c4f134aba99c8350b023c665c
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_hfc-4310mee_mon.txt
@@ -3303,6 +3507,9 @@ retrieve_and_extract_agage_data:
   step_config_id: hfc4310mee_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/nf3_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 3f8e58df3cdc035ada3cc4aa683bb8564c4d510eddd8f30f642f4150cd8f046b
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_nf3_mon.txt
@@ -3334,6 +3541,9 @@ retrieve_and_extract_agage_data:
   step_config_id: nf3_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms-medusa_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: e172a85edf8e31b43e2f3cfb916d6c3b260f1bfb4c4615d9cca50b4374d099d6
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms-medusa/monthly_mean/barbados/ascii/AGAGE-GCMS-Medusa_RPB_so2f2_mon.txt
@@ -3369,6 +3579,9 @@ retrieve_and_extract_agage_data:
   step_config_id: so2f2_gc-ms-medusa_monthly
   time_frequency: monthly
 - download_complete_file: data/raw/agage/agage/so2f2_gc-ms_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 8a6c5eb21702b37bb2e3e38b1775c2556ff94010f21302c9d64ec5dfe5ad6740
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-ms/monthly_mean/mtecimone/ascii/AGAGE-GCMS-MteCimone_CMN_so2f2_mon.txt
@@ -3410,6 +3623,9 @@ retrieve_and_extract_ale_data:
   step_config_id: monthly
 retrieve_and_extract_gage_data:
 - download_complete_file: data/raw/agage/gage/gage_monthly.complete
+  download_url_zenodo:
+    known_hash: md5:1baade2d547716118651fe1d7017f0da
+    url: https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1
   download_urls:
   - known_hash: 3955484431eb728cfcbb42df2364939870f2b444367c9dab0c875052b6ff40ff
     url: https://agage2.eas.gatech.edu/data_archive/gage/monthly/CGO-gage.mon
@@ -4204,7 +4420,7 @@ smooth_law_dome_data:
   smoothed_median_file: data/interim/law_dome/law-dome_n2o_smoothed_median.csv
   source_info_short_name: Law Dome ice core
   step_config_id: n2o
-version: 0.3.0-dev
+version: 1.0.0-dev
 write_input4mips:
 - complete_file: data/processed/esgf-ready/co2_input4MIPs_esgf-ready.complete
   complete_file_check_data: data/processed/esgf-ready/co2_input4MIPs_check-data.complete

@@ -51,7 +51,10 @@ def configure_notebooks(
 
     configured_notebooks = [
         ConfiguredNotebook(
-            unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0020_download-agage"],
+            # unconfigured_notebook=uc_nbs_dict[Path("002y_process-agage-data") / "0020_download-agage"],
+            unconfigured_notebook=uc_nbs_dict[
+                Path("002y_process-agage-data") / "0020a_download-agage-from-zenodo"
+            ],
             configuration=(
                 config_step.gas,
                 config_step.instrument,
@@ -86,10 +89,13 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
     step_name="retrieve_and_extract_agage_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            notebook_path=Path("002y_process-agage-data") / "0020_download-agage",
+            # notebook_path=Path("002y_process-agage-data") / "0020_download-agage",
+            notebook_path=Path("002y_process-agage-data") / "0020a_download-agage-from-zenodo",
             raw_notebook_ext=".py",
-            summary="process AGAGE data - download",
-            doc="Download AGAGE data",
+            # summary="process AGAGE data - download",
+            # doc="Download AGAGE data",
+            summary="process AGAGE data - download from zenodo",
+            doc="Download AGAGE data from zenodo",
         ),
         UnconfiguredNotebook(
             notebook_path=Path("002y_process-agage-data") / "0023_extract-agage",
