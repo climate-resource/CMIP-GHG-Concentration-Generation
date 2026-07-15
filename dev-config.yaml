@@ -1511,7 +1511,11 @@ retrieve_and_extract_agage_data:
   - known_hash: ada10ff56a300d73b1d6b299333049eb7db19e09506b2dbe1584f0d30d602b78
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_ch4_mon.txt
   - known_hash: 6139cbef7f255b51f77510328069db1e61cdedef7d79e95a80354f36acb24064
-    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch4_mon.txt
+    url: https://agage2.eas.gatech.edu/data_archivprocess_noaa_in_situ_data:
+- gas: co2
+  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
+  source_info_short_names_file: data/interim/noaa/co2_in-situ_source-short-names.txt
+  step_config_id: co2e/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch4_mon.txt
   - known_hash: e6a8b24c7ee7aa43d4e0297e3a6ec6a532dbaa5c40c0dccee0e0fa569e3d34df
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch4_mon.txt
   gas: ch4
