@@ -34,9 +34,13 @@ repos:
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
+        exclude: ^data/raw/
       - id: fix-byte-order-marker
+        exclude: ^data/raw/
       - id: mixed-line-ending
+        exclude: ^data/raw/
       - id: trailing-whitespace
+        exclude: ^data/raw/
   - repo: local
     hooks:
       # Prevent committing .rej files from copier
