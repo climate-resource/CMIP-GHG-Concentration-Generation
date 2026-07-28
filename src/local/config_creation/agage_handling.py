@@ -2162,6 +2162,10 @@ def create_agage_handling_config(
                 # generate_hashes=False,
                 generate_hashes=True,
                 download_urls=DOWNLOAD_URLS[(gas, instrument, frequency)],
+                download_url_zenodo=URLSource(
+                    known_hash="md5:1baade2d547716118651fe1d7017f0da",
+                    url="https://zenodo.org/records/14892947/files/data--raw--agage.tar.gz?download=1",
+                ),
             )
         )
 

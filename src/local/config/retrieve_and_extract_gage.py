@@ -46,3 +46,6 @@ class RetrieveExtractGAGEDataConfig:
 
     source_info: SourceInfo
     """Source information"""
+
+    download_url_zenodo: URLSource | None = None
+    """URL from which to download the data if using our zenodo archive"""

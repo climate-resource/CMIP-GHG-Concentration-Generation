@@ -34,9 +34,13 @@ repos:
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
+        exclude: ^data/raw/
       - id: fix-byte-order-marker
+        exclude: ^data/raw/
       - id: mixed-line-ending
+        exclude: ^data/raw/
       - id: trailing-whitespace
+        exclude: ^data/raw/
   - repo: local
     hooks:
       # Prevent committing .rej files from copier
@@ -53,7 +57,7 @@ repos:
       - id: ruff-format
   # additional to the above, apply black to doctests in source code
   - repo: https://github.com/keewis/blackdoc
-    rev: v0.3.8
+    rev: v0.4.6
     hooks:
       - id: blackdoc
   - repo: local

@@ -63,3 +63,6 @@ class RetrieveExtractAGAGEDataConfig:
     If yes, these will be printed in the executed notebook.
     For production runs, this should be set to False.
     """
+
+    download_url_zenodo: URLSource | None = None
+    """URL from which to download the data if using our zenodo archive"""
