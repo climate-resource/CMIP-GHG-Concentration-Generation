@@ -79,11 +79,8 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
     step_name="retrieve_and_extract_noaa_data",
     unconfigured_notebooks=[
         UnconfiguredNotebook(
-            # notebook_path=Path("001y_process-noaa-data") / "0010_download",
             notebook_path=Path("001y_process-noaa-data") / "0010a_download-from-zenodo",
             raw_notebook_ext=".py",
-            # summary="process NOAA data - download",
-            # doc="Download NOAA data",
             summary="process NOAA data - download from zenodo",
             doc="Download NOAA data from zenodo",
         ),

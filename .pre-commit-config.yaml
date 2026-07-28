@@ -53,7 +53,7 @@ repos:
       - id: ruff-format
   # additional to the above, apply black to doctests in source code
   - repo: https://github.com/keewis/blackdoc
-    rev: v0.3.8
+    rev: v0.4.6
     hooks:
       - id: blackdoc
   - repo: local
