@@ -5,6 +5,7 @@ calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
+  include_satellite_data: false
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch4/ch4_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
@@ -117,6 +118,7 @@ process_noaa_surface_flask_data:
   processed_monthly_data_with_loc_file: data/interim/noaa/monthly_ch4_surface-flask.csv
   source_info_short_names_file: data/interim/noaa/ch4_surface-flask_source-short-names.txt
   step_config_id: ch4
+process_scaled_sat_data: []
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
   download_url_zenodo:
@@ -745,6 +747,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1750
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/c3f8_input4MIPs_esgf-ready.complete
@@ -754,6 +757,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1750
   step_config_id: c3f8
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
@@ -763,5 +767,6 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1750
   step_config_id: hfc152a

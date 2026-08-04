@@ -461,6 +461,13 @@ allyears_full_field.plot(hue="lat")
 #     gradient we calculated earlier.
 
 # %%
+# Including satellite data shifts the EOFs fitted to the observational-network
+# period, which then feed into the reconstruction for every year (including
+# years long before satellite coverage), so allow a bit more slack in the
+# independent NEEM cross-check in that case.
+neem_rtol = 2e-3 if config_step.include_satellite_data else 1e-3
+
+# %%
 if not config.ci:
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=neem_lat, method="nearest")
@@ -468,7 +475,7 @@ if not config.ci:
         .data.to(conc_unit)
         .m,
         neem_data["value"],
-        rtol=1e-3,
+        rtol=neem_rtol,
     )
     np.testing.assert_allclose(
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
@@ -487,7 +494,7 @@ else:
         .data.to(conc_unit)
         .m,
         neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
-        rtol=1e-3,
+        rtol=neem_rtol,
     )
     law_dome_compare_years = smooth_law_dome_harmonised["year"].values[
         np.isin(smooth_law_dome_harmonised["year"].values, out_years)  # type: ignore

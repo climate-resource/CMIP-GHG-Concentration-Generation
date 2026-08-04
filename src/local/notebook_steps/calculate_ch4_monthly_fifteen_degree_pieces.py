@@ -84,6 +84,12 @@ def configure_notebooks(
         config=config, step="retrieve_misc_data", step_config_id="only"
     )
 
+    config_process_scaled_sat_data = get_config_for_step_id(
+        config=config,
+        step="process_scaled_sat_data",
+        step_config_id=config_step.gas,
+    )
+
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
@@ -103,10 +109,29 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
+                Path("11yy_ch4-monthly-15-degree") / "1100a_ch4_bin_satellite_data"
+            ],
+            configuration=(),
+            dependencies=(
+                config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
+                config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
+                config_process_agage_data_gc_md.processed_monthly_data_with_loc_file,
+                config_process_ale_data.processed_monthly_data_with_loc_file,
+                config_process_gage_data.processed_monthly_data_with_loc_file,
+            ),
+            targets=(config_process_scaled_sat_data.interim_data_path,),
+            config_file=config_bundle.config_hydrated_path,
+            step_config_id=step_config_id,
+        ),
+        ConfiguredNotebook(
+            unconfigured_notebook=uc_nbs_dict[
                 Path("11yy_ch4-monthly-15-degree") / "1101_ch4_interpolate-observational-network"
             ],
             configuration=(),
-            dependencies=(config_step.processed_bin_averages_file,),
+            dependencies=(
+                config_step.processed_bin_averages_file,
+                config_process_scaled_sat_data.interim_data_path,
+            ),
             targets=(config_step.observational_network_interpolated_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -190,6 +215,12 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
             raw_notebook_ext=".py",
             summary="CH4 pieces - Bin observational data",
             doc="Bin the observational data for CH4.",
+        ),
+        UnconfiguredNotebook(
+            notebook_path=Path("11yy_ch4-monthly-15-degree") / "1100a_ch4_bin_satellite_data",
+            raw_notebook_ext=".py",
+            summary="CH4 pieces - Bin and format scaled satellite data",
+            doc="Bin and format scaled satellite data for CH4.",
         ),
         UnconfiguredNotebook(
             notebook_path=Path("11yy_ch4-monthly-15-degree") / "1101_ch4_interpolate-observational-network",

@@ -72,6 +72,8 @@ config_process_scaled_sat_data = get_config_for_step_id(
 # ### Load data
 
 # %%
+# `bin_averages_sat` is empty if satellite data isn't switched on for this gas
+# (see `1200a_co2_bin_satellite_data`).
 bin_averages_ground = pd.read_csv(config_step.processed_bin_averages_file)
 bin_averages_sat = pd.read_csv(config_process_scaled_sat_data.interim_data_path)
 

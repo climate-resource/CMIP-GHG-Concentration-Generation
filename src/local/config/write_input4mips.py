@@ -57,3 +57,10 @@ class WriteInput4MIPsConfig:
 
     complete_file: Path
     """Path in which to save the timestamp of the time at which this step was completed"""
+
+    output_filename_suffix: str | None = None
+    """
+    Suffix to append to the output file name(s), before the ``.nc`` extension
+
+    If ``None``, no suffix is added.
+    """

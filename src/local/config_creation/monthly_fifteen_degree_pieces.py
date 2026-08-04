@@ -46,6 +46,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     gases_long_poleward_extension: tuple[str, ...] = (),
     gases_drop_obs_data_years_before_inclusive: dict[str, int] | None = None,
     gases_drop_obs_data_years_after_inclusive: dict[str, int] | None = None,
+    gases_with_satellite_data: tuple[str, ...] = (),
 ) -> dict[
     str,
     list[PieceCalculationOption],
@@ -68,6 +69,11 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     gases_drop_obs_data_years_after_inclusive
         Years after which to drop observational data (inclusive) for gases.
         If a gas is not in the list, no drop year will be applied.
+
+    gases_with_satellite_data
+        Gases for which scaled satellite data should be included
+        on top of the ground-based observational network.
+        Only ``"co2"`` and ``"ch4"`` are supported.
 
     Returns
     -------
@@ -92,12 +98,16 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     for gas in gases:
         if gas == "co2":
             out["calculate_co2_monthly_fifteen_degree_pieces"].append(
-                get_co2_monthly_fifteen_degree_pieces_config()
+                get_co2_monthly_fifteen_degree_pieces_config(
+                    include_satellite_data=gas in gases_with_satellite_data
+                )
             )
 
         elif gas == "ch4":
             out["calculate_ch4_monthly_fifteen_degree_pieces"].append(
-                get_ch4_monthly_fifteen_degree_pieces_config()
+                get_ch4_monthly_fifteen_degree_pieces_config(
+                    include_satellite_data=gas in gases_with_satellite_data
+                )
             )
 
         elif gas == "n2o":
@@ -202,9 +212,16 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
     return out
 
 
-def get_ch4_monthly_fifteen_degree_pieces_config() -> CalculateCH4MonthlyFifteenDegreePieces:
+def get_ch4_monthly_fifteen_degree_pieces_config(
+    include_satellite_data: bool = False,
+) -> CalculateCH4MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CH4
+
+    Parameters
+    ----------
+    include_satellite_data
+        Whether to include scaled satellite data on top of the ground-based observational network.
 
     Returns
     -------
@@ -215,6 +232,7 @@ def get_ch4_monthly_fifteen_degree_pieces_config() -> CalculateCH4MonthlyFifteen
     return CalculateCH4MonthlyFifteenDegreePieces(
         step_config_id="only",
         gas="ch4",
+        include_satellite_data=include_satellite_data,
         processed_bin_averages_file=interim_dir / "ch4_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "ch4_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
@@ -268,9 +286,16 @@ def get_n2o_monthly_fifteen_degree_pieces_config() -> CalculateN2OMonthlyFifteen
     )
 
 
-def get_co2_monthly_fifteen_degree_pieces_config() -> CalculateCO2MonthlyFifteenDegreePieces:
+def get_co2_monthly_fifteen_degree_pieces_config(
+    include_satellite_data: bool = False,
+) -> CalculateCO2MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CO2
+
+    Parameters
+    ----------
+    include_satellite_data
+        Whether to include scaled satellite data on top of the ground-based observational network.
 
     Returns
     -------
@@ -281,6 +306,7 @@ def get_co2_monthly_fifteen_degree_pieces_config() -> CalculateCO2MonthlyFifteen
     return CalculateCO2MonthlyFifteenDegreePieces(
         step_config_id="only",
         gas="co2",
+        include_satellite_data=include_satellite_data,
         processed_bin_averages_file=interim_dir / "co2_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "co2_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir

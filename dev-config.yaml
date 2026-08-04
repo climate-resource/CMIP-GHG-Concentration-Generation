@@ -50,6 +50,7 @@ calculate_ch4_monthly_fifteen_degree_pieces:
 - gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
+  include_satellite_data: false
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch4/ch4_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
@@ -65,6 +66,7 @@ calculate_co2_monthly_fifteen_degree_pieces:
 - gas: co2
   global_annual_mean_allyears_file: data/interim/co2/co2_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/co2/co2_global-annual-mean_allyears-monthly.nc
+  include_satellite_data: false
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/co2/co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
@@ -1496,8 +1498,12 @@ process_noaa_surface_flask_data:
 process_scaled_sat_data:
 - gas: co2
   interim_data_path: data/interim/scaled_sat/monthly_co2_scaled_sat.csv
-  scaled_data_path: /home/anna_lanteri/data/scaled/co2_OBS4MIPs_to_all_gb_flask_linear_fit.nc
+  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCO2-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_LINEAR_FIT.nc
   step_config_id: co2
+- gas: ch4
+  interim_data_path: data/interim/scaled_sat/monthly_ch4_scaled_sat.csv
+  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCH4-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_LINEAR_FIT.nc
+  step_config_id: ch4
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
   download_url_zenodo:
@@ -1511,11 +1517,7 @@ retrieve_and_extract_agage_data:
   - known_hash: ada10ff56a300d73b1d6b299333049eb7db19e09506b2dbe1584f0d30d602b78
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/macehead/ascii/AGAGE-GCMD_MHD_ch4_mon.txt
   - known_hash: 6139cbef7f255b51f77510328069db1e61cdedef7d79e95a80354f36acb24064
-    url: https://agage2.eas.gatech.edu/data_archivprocess_noaa_in_situ_data:
-- gas: co2
-  processed_monthly_data_with_loc_file: data/interim/noaa/monthly_co2_in-situ.csv
-  source_info_short_names_file: data/interim/noaa/co2_in-situ_source-short-names.txt
-  step_config_id: co2e/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch4_mon.txt
+    url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/samoa/ascii/AGAGE-GCMD_SMO_ch4_mon.txt
   - known_hash: e6a8b24c7ee7aa43d4e0297e3a6ec6a532dbaa5c40c0dccee0e0fa569e3d34df
     url: https://agage2.eas.gatech.edu/data_archive/agage/gc-md/monthly_mean/trinidad/ascii/AGAGE-GCMD_THD_ch4_mon.txt
   gas: ch4
@@ -4537,6 +4539,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: co2
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
@@ -4546,6 +4549,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete
@@ -4555,6 +4559,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: n2o
 - complete_file: data/processed/esgf-ready/c2f6_input4MIPs_esgf-ready.complete
@@ -4564,6 +4569,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c2f6
 - complete_file: data/processed/esgf-ready/c3f8_input4MIPs_esgf-ready.complete
@@ -4573,6 +4579,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c3f8
 - complete_file: data/processed/esgf-ready/c4f10_input4MIPs_esgf-ready.complete
@@ -4582,6 +4589,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c4f10
 - complete_file: data/processed/esgf-ready/c5f12_input4MIPs_esgf-ready.complete
@@ -4591,6 +4599,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c5f12
 - complete_file: data/processed/esgf-ready/c6f14_input4MIPs_esgf-ready.complete
@@ -4600,6 +4609,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c6f14
 - complete_file: data/processed/esgf-ready/c7f16_input4MIPs_esgf-ready.complete
@@ -4609,6 +4619,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c7f16
 - complete_file: data/processed/esgf-ready/c8f18_input4MIPs_esgf-ready.complete
@@ -4618,6 +4629,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: c8f18
 - complete_file: data/processed/esgf-ready/cc4f8_input4MIPs_esgf-ready.complete
@@ -4627,6 +4639,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cc4f8
 - complete_file: data/processed/esgf-ready/ccl4_input4MIPs_esgf-ready.complete
@@ -4636,6 +4649,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ccl4
 - complete_file: data/processed/esgf-ready/cf4_input4MIPs_esgf-ready.complete
@@ -4645,6 +4659,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cf4
 - complete_file: data/processed/esgf-ready/cfc11_input4MIPs_esgf-ready.complete
@@ -4654,6 +4669,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc11
 - complete_file: data/processed/esgf-ready/cfc113_input4MIPs_esgf-ready.complete
@@ -4663,6 +4679,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc113
 - complete_file: data/processed/esgf-ready/cfc114_input4MIPs_esgf-ready.complete
@@ -4672,6 +4689,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc114
 - complete_file: data/processed/esgf-ready/cfc115_input4MIPs_esgf-ready.complete
@@ -4681,6 +4699,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc115
 - complete_file: data/processed/esgf-ready/cfc12_input4MIPs_esgf-ready.complete
@@ -4690,6 +4709,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc12
 - complete_file: data/processed/esgf-ready/ch2cl2_input4MIPs_esgf-ready.complete
@@ -4699,6 +4719,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ch2cl2
 - complete_file: data/processed/esgf-ready/ch3br_input4MIPs_esgf-ready.complete
@@ -4708,6 +4729,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ch3br
 - complete_file: data/processed/esgf-ready/ch3ccl3_input4MIPs_esgf-ready.complete
@@ -4717,6 +4739,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ch3ccl3
 - complete_file: data/processed/esgf-ready/ch3cl_input4MIPs_esgf-ready.complete
@@ -4726,6 +4749,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: ch3cl
 - complete_file: data/processed/esgf-ready/chcl3_input4MIPs_esgf-ready.complete
@@ -4735,6 +4759,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: chcl3
 - complete_file: data/processed/esgf-ready/halon1211_input4MIPs_esgf-ready.complete
@@ -4744,6 +4769,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: halon1211
 - complete_file: data/processed/esgf-ready/halon1301_input4MIPs_esgf-ready.complete
@@ -4753,6 +4779,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: halon1301
 - complete_file: data/processed/esgf-ready/halon2402_input4MIPs_esgf-ready.complete
@@ -4762,6 +4789,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: halon2402
 - complete_file: data/processed/esgf-ready/hcfc141b_input4MIPs_esgf-ready.complete
@@ -4771,6 +4799,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hcfc141b
 - complete_file: data/processed/esgf-ready/hcfc142b_input4MIPs_esgf-ready.complete
@@ -4780,6 +4809,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hcfc142b
 - complete_file: data/processed/esgf-ready/hcfc22_input4MIPs_esgf-ready.complete
@@ -4789,6 +4819,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hcfc22
 - complete_file: data/processed/esgf-ready/hfc125_input4MIPs_esgf-ready.complete
@@ -4798,6 +4829,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc125
 - complete_file: data/processed/esgf-ready/hfc134a_input4MIPs_esgf-ready.complete
@@ -4807,6 +4839,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc134a
 - complete_file: data/processed/esgf-ready/hfc143a_input4MIPs_esgf-ready.complete
@@ -4816,6 +4849,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc143a
 - complete_file: data/processed/esgf-ready/hfc152a_input4MIPs_esgf-ready.complete
@@ -4825,6 +4859,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc152a
 - complete_file: data/processed/esgf-ready/hfc227ea_input4MIPs_esgf-ready.complete
@@ -4834,6 +4869,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc227ea
 - complete_file: data/processed/esgf-ready/hfc23_input4MIPs_esgf-ready.complete
@@ -4843,6 +4879,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc23
 - complete_file: data/processed/esgf-ready/hfc236fa_input4MIPs_esgf-ready.complete
@@ -4852,6 +4889,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc236fa
 - complete_file: data/processed/esgf-ready/hfc245fa_input4MIPs_esgf-ready.complete
@@ -4861,6 +4899,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc245fa
 - complete_file: data/processed/esgf-ready/hfc32_input4MIPs_esgf-ready.complete
@@ -4870,6 +4909,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc32
 - complete_file: data/processed/esgf-ready/hfc365mfc_input4MIPs_esgf-ready.complete
@@ -4879,6 +4919,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc365mfc
 - complete_file: data/processed/esgf-ready/hfc4310mee_input4MIPs_esgf-ready.complete
@@ -4888,6 +4929,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc4310mee
 - complete_file: data/processed/esgf-ready/nf3_input4MIPs_esgf-ready.complete
@@ -4897,6 +4939,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: nf3
 - complete_file: data/processed/esgf-ready/sf6_input4MIPs_esgf-ready.complete
@@ -4906,6 +4949,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: sf6
 - complete_file: data/processed/esgf-ready/so2f2_input4MIPs_esgf-ready.complete
@@ -4915,6 +4959,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: so2f2
 - complete_file: data/processed/esgf-ready/cfc11eq_input4MIPs_esgf-ready.complete
@@ -4924,6 +4969,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc11eq
 - complete_file: data/processed/esgf-ready/cfc12eq_input4MIPs_esgf-ready.complete
@@ -4933,6 +4979,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: cfc12eq
 - complete_file: data/processed/esgf-ready/hfc134aeq_input4MIPs_esgf-ready.complete
@@ -4942,5 +4989,6 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
+  output_filename_suffix: null
   start_year: 1
   step_config_id: hfc134aeq

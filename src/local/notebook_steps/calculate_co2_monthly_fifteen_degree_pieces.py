@@ -102,7 +102,7 @@ def configure_notebooks(
         ),
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
-                Path("12yy_co2-monthly-15-degree") / "1200_5_co2_bin_satellite_data"
+                Path("12yy_co2-monthly-15-degree") / "1200a_co2_bin_satellite_data"
             ],
             configuration=(),
             dependencies=(
@@ -118,7 +118,10 @@ def configure_notebooks(
                 Path("12yy_co2-monthly-15-degree") / "1201_co2_interpolate-observational-network"
             ],
             configuration=(),
-            dependencies=(config_step.processed_bin_averages_file,),
+            dependencies=(
+                config_step.processed_bin_averages_file,
+                config_process_scaled_sat_data.interim_data_path,
+            ),
             targets=(config_step.observational_network_interpolated_file,),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -226,7 +229,7 @@ step: UnconfiguredNotebookBasedStep[Config, ConfigBundle] = UnconfiguredNotebook
             doc="Bin the observational data for CO2.",
         ),
         UnconfiguredNotebook(
-            notebook_path=Path("12yy_co2-monthly-15-degree") / "1200_5_co2_bin_satellite_data",
+            notebook_path=Path("12yy_co2-monthly-15-degree") / "1200a_co2_bin_satellite_data",
             raw_notebook_ext=".py",
             summary="CO2 pieces - Bin and format scaled satellite data",
             doc="Bin and format scaled satellite data for CO2.",

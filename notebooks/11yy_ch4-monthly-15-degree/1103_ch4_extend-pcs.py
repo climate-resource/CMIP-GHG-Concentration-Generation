@@ -561,7 +561,7 @@ allyears_pc0
 # ### Join the PCs back together
 
 # %%
-allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
+allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "  ").pint.dequantify().pint.quantify()
 allyears_pcs
 
 # %% [markdown]

@@ -568,6 +568,14 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
 
         print("Writing")
         written = input4mips_ds.write(root_data_dir=config_step.input4mips_out_dir)
+
+        if config_step.output_filename_suffix is not None:
+            written_with_suffix = written.with_name(
+                f"{written.stem}_{config_step.output_filename_suffix}{written.suffix}"
+            )
+            written.rename(written_with_suffix)
+            written = written_with_suffix
+
         print(f"Wrote: {written.relative_to(config_step.input4mips_out_dir)}")
 
     print("")

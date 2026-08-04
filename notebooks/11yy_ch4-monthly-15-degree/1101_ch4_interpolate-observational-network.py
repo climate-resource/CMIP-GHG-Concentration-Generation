@@ -59,6 +59,11 @@ step_config_id: str = "only"  # config ID to select for this branch
 # %% editable=true slideshow={"slide_type": ""}
 config = load_config_from_file(Path(config_file))
 config_step = get_config_for_step_id(config=config, step=step, step_config_id=step_config_id)
+config_process_scaled_sat_data = get_config_for_step_id(
+    config=config,
+    step="process_scaled_sat_data",
+    step_config_id=config_step.gas,
+)
 
 
 # %% [markdown]
@@ -68,7 +73,12 @@ config_step = get_config_for_step_id(config=config, step=step, step_config_id=st
 # ### Load data
 
 # %%
-bin_averages = pd.read_csv(config_step.processed_bin_averages_file)
+# `bin_averages_sat` is empty if satellite data isn't switched on for this gas
+# (see `1100a_ch4_bin_satellite_data`).
+bin_averages_ground = pd.read_csv(config_step.processed_bin_averages_file)
+bin_averages_sat = pd.read_csv(config_process_scaled_sat_data.interim_data_path)
+
+bin_averages = pd.concat([bin_averages_ground, bin_averages_sat])
 bin_averages
 
 # %% [markdown]

@@ -6,6 +6,7 @@ Write our configuration files
 # ruff: noqa: E402
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import openscm_units
@@ -65,6 +66,45 @@ from local.config_creation.wmo_2022_ozone_assessment_ch7_handling import (
     RETRIEVE_AND_PROCESS_WMO_2022_OZONE_ASSESSMENT_CH7_DATA_STEPS,
 )
 from local.config_creation.write_input4mips import create_write_input4mips_config
+
+GASES_WITH_SATELLITE_DATA_SUPPORT = ("co2", "ch4")
+"""Gases for which we have a scaled satellite data pipeline"""
+
+
+def get_satellite_gases_and_fit_from_env() -> tuple[tuple[str, ...], str]:
+    """
+    Work out which gases should include satellite data, and which fit to use
+
+    Controlled by the ``SAT_GAS``, ``SAT_FIT`` and ``GAS`` environment variables,
+    e.g. as set by ``scripts/run-helper.sh``:
+
+    - ``SAT_GAS="True"`` turns satellite data on for the gas selected by ``GAS``
+      (or for all gases in :const:`GASES_WITH_SATELLITE_DATA_SUPPORT` if ``GAS="all"``).
+      If unset (or not ``"True"``), no gas gets satellite data.
+    - ``SAT_FIT`` selects which fit to use, e.g. ``"LINEAR_FIT"``, ``"ML_FIT"``.
+      Defaults to ``"LINEAR_FIT"``.
+
+    Returns
+    -------
+        Gases for which to include satellite data, and the fit to use for them
+    """
+    sat_fit = os.environ.get("SAT_FIT", "LINEAR_FIT")
+
+    if os.environ.get("SAT_GAS", "False").lower() != "true":
+        return (), sat_fit
+
+    run_gas = os.environ.get("GAS", "all")
+    if run_gas == "all":
+        return GASES_WITH_SATELLITE_DATA_SUPPORT, sat_fit
+
+    if run_gas not in GASES_WITH_SATELLITE_DATA_SUPPORT:
+        msg = (
+            f"SAT_GAS=True is only supported for GAS in {GASES_WITH_SATELLITE_DATA_SUPPORT} "
+            f"or GAS=all, received GAS={run_gas!r}"
+        )
+        raise ValueError(msg)
+
+    return (run_gas,), sat_fit
 
 
 def create_dev_config() -> Config:
@@ -155,8 +195,20 @@ def create_dev_config() -> Config:
     start_year = 1
     end_year = 2022
 
-    # TODO: when this works, add to ci, nightly ci configs
-    scaled_sat_handling_steps = create_scaled_sat_handling_config(data_sources=(("co2", "scaled-sat"),))
+    gases_with_satellite_data, satellite_fit = get_satellite_gases_and_fit_from_env()
+
+    # A `process_scaled_sat_data` entry is required for every gas in `gases_to_write`
+    # that supports satellite data, regardless of whether satellite data is actually
+    # switched on for that gas (`include_satellite_data`, below) -
+    # the notebook step that binned satellite data always runs,
+    # it just writes an empty file if satellite data isn't switched on.
+    scaled_sat_handling_steps = create_scaled_sat_handling_config(
+        data_sources=tuple(
+            (gas, "scaled-sat", satellite_fit)
+            for gas in GASES_WITH_SATELLITE_DATA_SUPPORT
+            if gas in gases_to_write
+        )
+    )
 
     noaa_handling_steps = create_noaa_handling_config(
         data_sources=(
@@ -284,6 +336,7 @@ def create_dev_config() -> Config:
         gases_long_poleward_extension=gases_long_poleward_extension,
         gases_drop_obs_data_years_before_inclusive=gases_drop_obs_data_years_before_inclusive,
         gases_drop_obs_data_years_after_inclusive=gases_drop_obs_data_years_after_inclusive,
+        gases_with_satellite_data=gases_with_satellite_data,
     )
 
     return Config(
@@ -325,6 +378,8 @@ def create_dev_config() -> Config:
             end_year=end_year,
             input4mips_cvs_source_id="CR-CMIP-testing",
             input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
+            gases_with_satellite_data=gases_with_satellite_data,
+            satellite_fit=satellite_fit,
         ),
     )
 
@@ -363,6 +418,8 @@ def create_ci_config() -> Config:
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(gases=("ch4",), n_draws=10)
 
+    scaled_sat_handling_steps = create_scaled_sat_handling_config(data_sources=())
+
     monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
         gases=gases_to_write,
         gases_long_poleward_extension=gases_long_poleward_extension,
@@ -396,6 +453,7 @@ def create_ci_config() -> Config:
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         smooth_ghosh_et_al_2023_data=SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
+        **scaled_sat_handling_steps,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         crunch_equivalent_species=[],
@@ -486,6 +544,8 @@ def create_ci_nightly_config() -> Config:
 
     smooth_law_dome_data = create_smooth_law_dome_data_config(gases=("co2", "ch4", "n2o"), n_draws=10)
 
+    scaled_sat_handling_steps = create_scaled_sat_handling_config(data_sources=())
+
     monthly_fifteen_degree_pieces_configs = create_monthly_fifteen_degree_pieces_configs(
         gases=gases_to_write,
         gases_long_poleward_extension=gases_long_poleward_extension,
@@ -519,6 +579,7 @@ def create_ci_nightly_config() -> Config:
         compile_historical_emissions=COMPILE_HISTORICAL_EMISSIONS_STEPS,
         smooth_law_dome_data=smooth_law_dome_data,
         smooth_ghosh_et_al_2023_data=SMOOTH_GHOSH_ET_AL_2023_DATA_STEPS,
+        **scaled_sat_handling_steps,
         **monthly_fifteen_degree_pieces_configs,
         crunch_grids=create_crunch_grids_config(gases=gases_to_write),
         # TODO: test this in CI

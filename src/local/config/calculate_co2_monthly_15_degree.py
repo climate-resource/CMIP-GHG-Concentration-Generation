@@ -25,6 +25,9 @@ class CalculateCO2MonthlyFifteenDegreePieces:
     gas: str
     """Gas to which this config applies (a bit redundant, but handy to be explicit)"""
 
+    include_satellite_data: bool
+    """Whether to include scaled satellite data on top of the ground-based observational network"""
+
     processed_bin_averages_file: Path
     """Path in which to save the spatial bin averages from the observational networks"""
 
