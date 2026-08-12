@@ -98,6 +98,26 @@ report.neem_tolerance_check_table(diagnostics_root_path, suffixes, labels)
         else ""
     )
 
+    seasonality_description = (
+        """# CO2's seasonality diagnostics track how the *shape* of the seasonal cycle
+# changes over time, not just the cycle itself: each year's monthly anomaly
+# (month value minus a smoothed annual mean, per latitude) is compared
+# against the multi-year-average seasonal cycle, and the year-to-year
+# deviations from that average are decomposed via SVD across `lat x month`
+# into EOFs (spatial-monthly patterns) and PCs (per-year weights) - see
+# `local.seasonality.calculate_seasonality_change_eofs_pcs`. The plot below
+# shows PC0 (extended back to 1850 in `1205`) and EOF0 by latitude - EOF1
+# onwards are computed and saved (see the explained variance ratio panel)
+# but not plotted here."""
+        if is_co2
+        else """# CH4's seasonality diagnostic is a single fixed climatological cycle, not a
+# year-varying decomposition: monthly anomalies (month minus a smoothed
+# annual mean, per latitude) are averaged across all years, then divided by
+# the global annual mean to express them as a fraction - see
+# `local.seasonality.calculate_seasonality`. The plot below shows this
+# relative seasonality directly, at five representative latitudes."""
+    )
+
     co2_seasonality_extend_section = (
         """
 # %% [markdown]
@@ -208,9 +228,19 @@ report.plot_lat_gradient_eofs(diagnostics_root_path, gas, suffixes, labels, colo
 report.plot_lat_gradient_pcs_obs_network(diagnostics_root_path, gas, suffixes, labels, colors)
 
 # %% [markdown]
+# Combining the PC and EOF values: how much does the *product* change, not
+# just each side individually? Shown as a Hovmoeller (year x latitude) plot
+# of the reconstructed field from the leading two modes.
+
+# %%
+report.plot_lat_gradient_reconstruction(diagnostics_root_path, gas, suffixes, labels, colors)
+
+# %% [markdown]
 # ## 3. Seasonality (observational-network period)
 #
 # **Derived in:** `{obs_network_nb}`
+#
+{seasonality_description}
 
 # %%
 report.plot_seasonality(diagnostics_root_path, gas, suffixes, labels, colors)

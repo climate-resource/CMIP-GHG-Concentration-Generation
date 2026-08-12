@@ -24,6 +24,14 @@ data
 # Notebooks (save in .py format for easier tracking, let jupytext do the rest)
 *.ipynb
 
+# Auto-generated per-fit satellite diagnostics notebooks - regenerate with
+# scripts/generate_satellite_diagnostics_notebooks.py, see the README's
+# "Satellite diagnostics notebooks" section
+notebooks/diagnostics/CO2/compare_co2_*.py
+notebooks/diagnostics/CH4/compare_ch4_*.py
+notebooks/diagnostics/CO2/check_co2_*.py
+notebooks/diagnostics/CH4/check_ch4_*.py
+
 # Databases
 *.db
 *.db.*

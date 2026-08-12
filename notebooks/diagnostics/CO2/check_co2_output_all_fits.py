@@ -91,14 +91,21 @@ baseline_da = report.load_concatenated_gridded(baseline_chunks, gas)
 # in this folder look at).
 #
 # The no-satellite-data output, for reference: a Hovmöller-style view (time
-# on the x-axis, latitude on the y-axis) of the full record.
+# on the x-axis, latitude on the y-axis), shown over the full record and
+# zoomed in from 1850 and from 2000.
 
 # %%
 if baseline_da is not None:
-    fig, ax = plt.subplots(figsize=(10, 3))
-    baseline_da.plot(ax=ax, x="time", y="lat")
-    ax.set_title(f"{gas.upper()} - no satellite data")
-    plt.show()
+    for time_slice, zoom_label in [
+        (None, "full record"),
+        (slice("1850", None), "from 1850"),
+        (slice("2000", None), "from 2000"),
+    ]:
+        da = baseline_da if time_slice is None else baseline_da.sel(time=time_slice)
+        fig, ax = plt.subplots(figsize=(10, 3))
+        da.plot(ax=ax, x="time", y="lat")
+        ax.set_title(f"{gas.upper()} - no satellite data ({zoom_label})")
+        plt.show()
 else:
     print("No baseline (no-satellite) output found in this version folder yet.")
 
@@ -107,11 +114,11 @@ else:
 #
 # **Derived in:** `40yy_write-input4mips`.
 #
-# `<fit> minus baseline`, full record. Satellite data only covers
-# 2003-2023, so a real effect should be concentrated there (plus a much
-# smaller amount bleeding backwards through the historical-extension
-# harmonisation steps) - a fit with a diff pattern that *doesn't* look like
-# that is worth a closer look.
+# `<fit> minus baseline`. Satellite data only covers 2003-2023, so a real
+# effect should be concentrated there (plus a much smaller amount bleeding
+# backwards through the historical-extension harmonisation steps) - a fit
+# with a diff pattern that *doesn't* look like that is worth a closer look.
+# Left column: full record. Right column: zoomed in from 2000.
 
 
 # %%
@@ -123,9 +130,15 @@ if baseline_da is not None:
             diffs[fit] = report.gridded_diff_from_baseline(baseline_da, fit_da)
 
 for fit, diff in diffs.items():
-    fig, ax = plt.subplots(figsize=(10, 2.5))
-    diff.plot(ax=ax, x="time", y="lat", cmap="RdBu_r")
-    ax.set_title(fit)
+    fig, axes = plt.subplots(1, 2, figsize=(18, 2.5))
+
+    diff.plot(ax=axes[0], x="time", y="lat", cmap="RdBu_r")
+    axes[0].set_title(f"{fit}, full record")
+
+    diff.sel(time=slice("2000", None)).plot(ax=axes[1], x="time", y="lat", cmap="RdBu_r")
+    axes[1].set_title(f"{fit}, from 2000")
+
+    plt.tight_layout()
     plt.show()
 
 # %% [markdown]
@@ -139,15 +152,15 @@ for fit, diff in diffs.items():
 
 # %%
 if diffs:
-    fig, ax = plt.subplots(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     for fit, diff in diffs.items():
         diff.mean("time").plot(ax=ax, label=fit)
 
     ax.axhline(0, color="k", linewidth=0.7)
     ax.set_title(f"{gas.upper()} - time-mean diff from baseline, by latitude")
-    ax.legend(fontsize=7, ncol=2, loc="center left", bbox_to_anchor=(1.0, 0.5))
-    plt.tight_layout()
+    ax.legend(fontsize=7, ncol=4, loc="upper center", bbox_to_anchor=(0.5, -0.15))
+    fig.subplots_adjust(bottom=0.28)
     plt.show()
 
 # %% [markdown]

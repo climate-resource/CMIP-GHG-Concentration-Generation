@@ -255,48 +255,178 @@ def plot_lat_gradient_eofs(
     """
     Plot the leading latitudinal-gradient EOF spatial patterns and explained variance
 
-    (observational-network period, from `1202`/`1102`). A EOF pattern that
-    visibly changes shape (not just scale) between configurations means
-    satellite data is picking up a genuinely different spatial structure,
-    not just adding noise.
+    (observational-network period, from `1202`/`1102`).
+
+    First, a standalone plot of the explained variance ratio, comparing the
+    two satellite configurations.
+
+    Then a 2x2 grid of the EOF0/EOF1 spatial patterns. Top row: EOF0 and
+    EOF1, each comparing the two satellite configurations (same EOF index,
+    across configurations) - a EOF pattern that visibly changes shape (not
+    just scale) between configurations means satellite data is picking up a
+    genuinely different spatial structure, not just adding noise.
+
+    Bottom row: the same EOF0/EOF1 patterns regrouped the other way - one
+    panel per configuration, with EOF0 and EOF1 overlaid on the same axes -
+    to compare their shape and relative magnitude directly *within* a single
+    configuration.
     """
-    fig, axes = plt.subplots(ncols=3, figsize=(15, 4))
+    datasets = {
+        suffix: ds
+        for suffix in suffixes
+        if (ds := load_nc_diagnostics(root, gas, "obs-network", suffix)) is not None
+    }
+    if not datasets:
+        print(f"No {gas.upper()} obs-network diagnostics found.")
+        return
+
+    fig_var, ax_var = plt.subplots(figsize=(6, 4))
+    fig_var.suptitle(
+        f"{gas.upper()} - latitudinal gradient EOF explained variance ratio (observational network)"
+    )
+    for suffix, ds in datasets.items():
+        n_show = min(6, ds.sizes["lat_gradient_eof"])
+        ax_var.plot(
+            range(n_show),
+            ds["lat_gradient_explained_variance_ratio"].isel(lat_gradient_eof=slice(0, n_show)),
+            "o-",
+            color=colors[suffix],
+            label=labels[suffix],
+        )
+    ax_var.set_xlabel("EOF index")
+    ax_var.set_ylabel("Fraction of variance")
+    ax_var.legend()
+    plt.tight_layout()
+    plt.show()
+
+    fig, axes = plt.subplots(2, 2, figsize=(10, 8))
     fig.suptitle(f"{gas.upper()} - latitudinal gradient EOFs (observational network)")
 
-    for suffix in suffixes:
-        ds = load_nc_diagnostics(root, gas, "obs-network", suffix)
-        if ds is None:
-            continue
+    for suffix, ds in datasets.items():
         color = colors[suffix]
         label = labels[suffix]
 
         for eof in range(min(2, ds.sizes["lat_gradient_eof"])):
-            axes[eof].plot(
+            axes[0, eof].plot(
                 ds["lat_gradient_eofs_full"].sel(lat_gradient_eof=eof),
                 ds["lat"],
                 color=color,
                 label=label if eof == 0 else None,
             )
-            axes[eof].set_title(f"EOF {eof}")
-            axes[eof].set_xlabel(f"{gas.upper()} anomaly")
-            axes[eof].set_ylabel("Latitude")
+            axes[0, eof].set_title(f"EOF {eof}")
+            axes[0, eof].set_xlabel(f"{gas.upper()} anomaly")
+            axes[0, eof].set_ylabel("Latitude")
 
-        n_show = min(6, ds.sizes["lat_gradient_eof"])
-        axes[2].plot(
-            range(n_show),
-            ds["lat_gradient_explained_variance_ratio"].isel(lat_gradient_eof=slice(0, n_show)),
-            "o-",
-            color=color,
-            label=label,
-        )
-        axes[2].set_title("Explained variance ratio")
-        axes[2].set_xlabel("EOF index")
-        axes[2].set_ylabel("Fraction of variance")
+    eof_colors = ("tab:green", "tab:purple")
+    for col, suffix in enumerate(suffixes):
+        ax = axes[1, col]
+        ds = datasets.get(suffix)
+        if ds is None:
+            ax.axis("off")
+            continue
 
-    axes[0].legend()
-    axes[2].legend()
+        for eof in range(min(2, ds.sizes["lat_gradient_eof"])):
+            ax.plot(
+                ds["lat_gradient_eofs_full"].sel(lat_gradient_eof=eof),
+                ds["lat"],
+                color=eof_colors[eof],
+                label=f"EOF {eof}",
+            )
+        ax.set_title(f"EOF0 vs EOF1, {labels[suffix]}")
+        ax.set_xlabel(f"{gas.upper()} anomaly")
+        ax.set_ylabel("Latitude")
+        ax.legend(fontsize=8)
+
+    axes[0, 0].legend()
     plt.tight_layout()
     plt.show()
+
+
+def _plot_reconstruction_hovmoller(
+    reconstructions: dict[str, xr.DataArray],
+    suffixes: tuple[str, str],
+    labels: dict[str, str],
+    title: str,
+) -> None:
+    """
+    Shared Hovmoeller (year x latitude) plotting logic for a PC x EOF reconstruction
+
+    One panel per configuration on a shared colour scale, plus a difference
+    panel (satellite minus no-satellite) on its own diverging scale, which is
+    where the combined effect of adding satellite data is actually visible -
+    a small shift in a PC and a small shift in the matching EOF can still add
+    up to a large shift in the reconstructed field once multiplied together
+    (or partially cancel out), which judging the PCs and EOFs separately
+    wouldn't show.
+    """
+    vmax = max(float(np.abs(recon).max()) for recon in reconstructions.values())
+
+    show_diff = len(reconstructions) == 2
+    n_panels = len(reconstructions) + (1 if show_diff else 0)
+    fig, axes = plt.subplots(1, n_panels, figsize=(6 * n_panels, 5), sharey=True)
+    axes = np.atleast_1d(axes)
+    fig.suptitle(title)
+
+    for ax, suffix in zip(axes, suffixes):
+        recon = reconstructions.get(suffix)
+        if recon is None:
+            ax.axis("off")
+            continue
+        recon.plot(x="year", y="lat", ax=ax, cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+        ax.set_title(labels[suffix])
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Latitude")
+
+    if show_diff:
+        suffix_nosat, suffix_sat = suffixes
+        diff = reconstructions[suffix_sat] - reconstructions[suffix_nosat]
+        diff_vmax = float(np.abs(diff).max())
+        ax = axes[-1]
+        diff.plot(x="year", y="lat", ax=ax, cmap="RdBu_r", vmin=-diff_vmax, vmax=diff_vmax)
+        ax.set_title(f"{labels[suffix_sat]} minus {labels[suffix_nosat]}")
+        ax.set_xlabel("Year")
+        ax.set_ylabel("")
+
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_lat_gradient_reconstruction(
+    root: Path,
+    gas: str,
+    suffixes: tuple[str, str],
+    labels: dict[str, str],
+    colors: dict[str, str],
+) -> None:
+    """
+    Hovmoeller (year x latitude) view of the PC/EOF product
+
+    (observational-network period, from `1202`/`1102`): reconstruction(year,
+    lat) = sum_k PC_k(year) * EOF_k(lat) over the leading two modes (k=0,1).
+    See `_plot_reconstruction_hovmoller` for what the plot itself shows.
+    """
+    datasets = {
+        suffix: ds
+        for suffix in suffixes
+        if (ds := load_nc_diagnostics(root, gas, "obs-network", suffix)) is not None
+    }
+    if not datasets:
+        print(f"No {gas.upper()} obs-network diagnostics found.")
+        return
+
+    reconstructions = {}
+    for suffix, ds in datasets.items():
+        n_modes = min(2, ds.sizes["lat_gradient_eof"])
+        pcs = ds["lat_gradient_pcs_full"].isel(lat_gradient_eof=slice(0, n_modes))
+        eofs = ds["lat_gradient_eofs_full"].isel(lat_gradient_eof=slice(0, n_modes))
+        reconstructions[suffix] = (pcs * eofs).sum("lat_gradient_eof")
+
+    _plot_reconstruction_hovmoller(
+        reconstructions,
+        suffixes,
+        labels,
+        f"{gas.upper()} - latitudinal gradient reconstruction: PC0*EOF0 + PC1*EOF1 (observational network)",
+    )
 
 
 def plot_lat_gradient_pcs_obs_network(
@@ -309,29 +439,58 @@ def plot_lat_gradient_pcs_obs_network(
     """
     Plot PC0/PC1 over the observational-network years (from `1202`/`1102`)
 
-    A shift here in the satellite-covered years is the direct effect of
-    adding satellite data; a shift in *earlier* years too would be a sign
-    something unexpected is going on. The dashed vertical line marks the
-    first year satellite data covers.
+    Top row: PC0 and PC1, each comparing the two satellite configurations
+    (same PC, across configurations) - a shift here in the satellite-covered
+    years is the direct effect of adding satellite data; a shift in
+    *earlier* years too would be a sign something unexpected is going on.
+
+    Bottom row: the same PCs regrouped the other way - one panel per
+    configuration, with PC0 and PC1 overlaid on the same axes - to compare
+    their relative magnitude and timing directly *within* a single
+    configuration. The dashed vertical line marks the first year satellite
+    data covers.
     """
-    fig, axes = plt.subplots(ncols=2, figsize=(12, 4), sharex=True)
+    datasets = {
+        suffix: ds
+        for suffix in suffixes
+        if (ds := load_nc_diagnostics(root, gas, "obs-network", suffix)) is not None
+    }
+    if not datasets:
+        print(f"No {gas.upper()} obs-network diagnostics found.")
+        return
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8), sharex=True)
     fig.suptitle(f"{gas.upper()} - latitudinal gradient PCs (observational network)")
 
-    for suffix in suffixes:
-        ds = load_nc_diagnostics(root, gas, "obs-network", suffix)
-        if ds is None:
-            continue
+    for suffix, ds in datasets.items():
         color = colors[suffix]
         label = labels[suffix]
 
         for eof in range(min(2, ds.sizes["lat_gradient_eof"])):
-            ds["lat_gradient_pcs_full"].sel(lat_gradient_eof=eof).plot(ax=axes[eof], color=color, label=label)
-            axes[eof].set_title(f"PC{eof}")
+            ds["lat_gradient_pcs_full"].sel(lat_gradient_eof=eof).plot(
+                ax=axes[0, eof], color=color, label=label
+            )
+            axes[0, eof].set_title(f"PC{eof}")
+
+    eof_colors = ("tab:green", "tab:purple")
+    for col, suffix in enumerate(suffixes):
+        ax = axes[1, col]
+        ds = datasets.get(suffix)
+        if ds is None:
+            ax.axis("off")
+            continue
+
+        for eof in range(min(2, ds.sizes["lat_gradient_eof"])):
+            ds["lat_gradient_pcs_full"].sel(lat_gradient_eof=eof).plot(
+                ax=ax, color=eof_colors[eof], label=f"PC{eof}"
+            )
+        ax.set_title(f"PC0 vs PC1, {labels[suffix]}")
+        ax.legend(fontsize=8)
 
     start_year = get_satellite_period_start_year(root, gas, suffixes)
-    for ax in axes:
-        _add_satellite_start_line(ax, start_year)
-    axes[0].legend()
+    for ax in list(axes[0]) + list(axes[1]):
+        _add_satellite_start_line(ax, start_year, show_legend=False)
+    axes[0, 0].legend()
     plt.tight_layout()
     plt.show()
 
@@ -365,15 +524,20 @@ def _plot_seasonality_change_eof_co2(
     root: Path, suffixes: tuple[str, str], labels: dict[str, str], colors: dict[str, str]
 ) -> None:
     """
-    Left column: PC0, from 1850 onwards (from `1205` - shown from 1850, not
-    year 1, since the composite regression's own reference period starts
-    there and the driver is assumed constant before it, so nothing earlier
-    is informative). Right column: EOF0 by month (from `1202`). Both broken
-    down the same way, one row per latitude, for direct row-by-row
-    comparison - even though PC0 itself doesn't vary by latitude (it's the
-    same panel repeated down the column), only the EOFs do. Bottom row:
-    explained variance ratio, spanning the full width, drawn larger since
-    it's a single summary rather than one of a per-latitude set.
+    Top row: PC0 from 1850 onwards (from `1205` - shown from 1850, not year
+    1, since the composite regression's own reference period starts there
+    and the driver is assumed constant before it, so nothing earlier is
+    informative), and PC0 satellite minus no-satellite over the same range -
+    the direct effect of adding satellite data on PC0, isolated from its
+    (much larger) absolute drift.
+
+    Middle rows: EOF0 by month (from `1202`), one row per latitude - column 1
+    the southern latitudes (-82.5 to -7.5), column 2 the northern latitudes
+    (82.5 to 7.5), both columns ordered pole to equator, so each row pairs a
+    latitude with its mirror image (e.g. -82.5 next to 82.5).
+
+    Bottom row: explained variance ratio, spanning the full width, drawn
+    larger since it's a single summary rather than one of a per-latitude set.
     """
     datasets = {
         suffix: ds
@@ -392,63 +556,73 @@ def _plot_seasonality_change_eof_co2(
 
     lats = next(iter(datasets.values()))["lat"].values
     n_lats = len(lats)
+    n_lat_rows = n_lats // 2
 
-    fig = plt.figure(figsize=(11, 2.3 * n_lats + 2))
+    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 1) + 2))
     gs = fig.add_gridspec(
-        n_lats + 1,
+        n_lat_rows + 2,
         2,
-        height_ratios=[1] * n_lats + [2.5],
+        height_ratios=[1.3] + [1] * n_lat_rows + [2.5],
         hspace=1.1,
         wspace=0.3,
-        top=0.95,
+        top=0.96,
         bottom=0.02,
         left=0.08,
         right=0.97,
     )
 
     start_year = get_satellite_period_start_year(root, "co2", suffixes)
+    suffix_nosat, suffix_sat = suffixes
 
-    ax_pc0_first = None
+    # Top row: PC0 trend and PC0 diff, both from 1850.
+    ax_pc0 = fig.add_subplot(gs[0, 0])
+    for suffix, ds in pc_datasets.items():
+        ds["principal-components"].sel(eof=0, year=slice(1850, None)).plot(
+            ax=ax_pc0, color=colors[suffix], label=labels[suffix]
+        )
+    if not pc_datasets:
+        ax_pc0.text(0.5, 0.5, "No 1205 diagnostics found", ha="center", va="center", fontsize=8)
+    ax_pc0.set_title("PC0, from 1850")
+    ax_pc0.set_xlabel("Year")
+    ax_pc0.set_ylabel("")
+    _add_satellite_start_line(ax_pc0, start_year, show_legend=True)
+    ax_pc0.legend(fontsize=8)
+
+    ax_pc0_diff = fig.add_subplot(gs[0, 1])
+    if suffix_nosat in pc_datasets and suffix_sat in pc_datasets:
+        pc0_nosat = pc_datasets[suffix_nosat]["principal-components"].sel(eof=0, year=slice(1850, None))
+        pc0_sat = pc_datasets[suffix_sat]["principal-components"].sel(eof=0, year=slice(1850, None))
+        (pc0_sat - pc0_nosat).plot(ax=ax_pc0_diff, color="tab:red")
+    else:
+        ax_pc0_diff.text(0.5, 0.5, "Need both configurations", ha="center", va="center", fontsize=8)
+    ax_pc0_diff.axhline(0, color="k", linestyle=":", linewidth=1)
+    ax_pc0_diff.set_title("PC0 diff (sat - nosat), from 1850")
+    ax_pc0_diff.set_xlabel("Year")
+    ax_pc0_diff.set_ylabel("")
+    _add_satellite_start_line(ax_pc0_diff, start_year, show_legend=False)
+
+    # Middle rows: EOF0 by month - column 1 southern latitudes, column 2 northern latitudes.
     ax_eof_first = None
-    for i, lat in enumerate(lats):
-        # Left column: PC0, all years - repeated every row (it doesn't vary
-        # by latitude, unlike the EOFs), so each row can be compared directly.
-        ax_pc0 = fig.add_subplot(gs[i, 0], sharex=ax_pc0_first)
-        ax_pc0_first = ax_pc0_first or ax_pc0
-        for suffix, ds in pc_datasets.items():
-            ds["principal-components"].sel(eof=0, year=slice(1850, None)).plot(
-                ax=ax_pc0, color=colors[suffix], label=labels[suffix]
-            )
-        if not pc_datasets:
-            ax_pc0.text(0.5, 0.5, "No 1205 diagnostics found", ha="center", va="center", fontsize=8)
-        ax_pc0.set_title(f"PC0, lat={lat}", fontsize=9)
-        ax_pc0.set_xlabel("")
-        ax_pc0.set_ylabel("")
-        _add_satellite_start_line(ax_pc0, start_year, show_legend=(i == 0))
-        if i == 0:
-            ax_pc0.legend(fontsize=7)  # re-draw at the smaller fontsize used elsewhere in this figure
-        if i == n_lats - 1:
-            ax_pc0.set_xlabel("Year")
+    for i in range(n_lat_rows):
+        for col, lat in enumerate((lats[i], lats[n_lats - 1 - i])):
+            ax_eof = fig.add_subplot(gs[i + 1, col], sharex=ax_eof_first)
+            ax_eof_first = ax_eof_first or ax_eof
 
-        # Right column: EOF0 by month, one row per latitude.
-        ax_eof = fig.add_subplot(gs[i, 1], sharex=ax_eof_first)
-        ax_eof_first = ax_eof_first or ax_eof
-
-        for suffix, ds in datasets.items():
-            ds["seasonality_change_eofs_full"].sel(seasonality_change_eof=0).sel(
-                lat=lat, method="nearest"
-            ).plot(ax=ax_eof, color=colors[suffix], label=labels[suffix])
-        ax_eof.axhline(0, color="k", linestyle=":", linewidth=1)
-        ax_eof.set_title(f"EOF0, lat={lat}", fontsize=9)
-        ax_eof.set_xlabel("")
-        ax_eof.set_ylabel("ppm", fontsize=8)
-        if i == 0:
-            ax_eof.legend(fontsize=7)
-        if i == n_lats - 1:
-            ax_eof.set_xlabel("Month")
+            for suffix, ds in datasets.items():
+                ds["seasonality_change_eofs_full"].sel(seasonality_change_eof=0).sel(
+                    lat=lat, method="nearest"
+                ).plot(ax=ax_eof, color=colors[suffix], label=labels[suffix])
+            ax_eof.axhline(0, color="k", linestyle=":", linewidth=1)
+            ax_eof.set_title(f"EOF0, lat={lat}", fontsize=9)
+            ax_eof.set_xlabel("")
+            ax_eof.set_ylabel("ppm", fontsize=8)
+            if i == 0 and col == 0:
+                ax_eof.legend(fontsize=7)
+            if i == n_lat_rows - 1:
+                ax_eof.set_xlabel("Month")
 
     # Bottom row: explained variance ratio, spanning both columns, bigger.
-    ax_var = fig.add_subplot(gs[n_lats, :])
+    ax_var = fig.add_subplot(gs[n_lat_rows + 1, :])
     n_show = min(6, next(iter(datasets.values())).sizes["seasonality_change_eof"])
     for suffix, ds in datasets.items():
         ax_var.plot(
@@ -464,7 +638,7 @@ def _plot_seasonality_change_eof_co2(
     ax_var.set_xlabel("EOF index")
     ax_var.legend(fontsize=10)
 
-    fig.suptitle("CO2 - seasonality-change: PC0, EOF0 by latitude, and explained variance ratio")
+    fig.suptitle("CO2 - seasonality-change: PC0 trend & diff, EOF0 by latitude, and explained variance ratio")
     plt.show()
 
 
@@ -573,19 +747,28 @@ def plot_lat_gradient_extend_pcs(
 ) -> None:
     """
     PC0/PC1 extended to all years (from `1203`/`1103`), plus EOF0/EOF1
-    underneath, each shown twice - once over the full record and once
-    zoomed in from 1850 onwards.
+    underneath.
 
     Extended using a regression against PRIMAP fossil emissions (both gases),
     plus - CH4 only - a joint optimisation against the NEEM and Law Dome ice
     cores for the gap closest to the observational network.
 
-    EOF0/EOF1 only vary by latitude, not year - this extension step doesn't
-    recompute them, it just carries the observational-network fit's spatial
-    patterns forward unchanged - so the EOF row is identical between the two
-    zoom levels; it's repeated anyway to keep a direct visual pairing with
-    the PC0/PC1 row alongside it in each block. The dashed vertical line
-    marks the first year satellite data covers.
+    Row 1: PC0/PC1, full record, comparing satellite configurations. Row 2:
+    EOF0/EOF1, comparing configurations - this extension step doesn't
+    recompute the EOFs, it just carries the observational-network fit's
+    spatial patterns forward unchanged, so unlike the PCs there's no year
+    axis to zoom into here. Row 3: PC0/PC1 again, zoomed in from 1850.
+
+    Rows 4-5: the same EOF0/EOF1 and PC0/PC1 (zoomed from 1850) values
+    regrouped the other way - one panel per configuration, with both modes
+    overlaid on the same axes - to compare their shape/magnitude directly
+    *within* a single configuration. The dashed vertical line marks the
+    first year satellite data covers.
+
+    Below, a second figure: a Hovmoeller (year x latitude) view of the
+    reconstructed field over the full extended record - see
+    `_plot_reconstruction_hovmoller` (also used for the observational-network
+    period only, in section 2).
     """
     datasets = {
         suffix: ds
@@ -596,7 +779,7 @@ def plot_lat_gradient_extend_pcs(
         print(f"No {gas.upper()} lat-gradient-extend diagnostics found.")
         return
 
-    fig, axes = plt.subplots(4, 2, figsize=(12, 14))
+    fig, axes = plt.subplots(5, 2, figsize=(12, 17))
     fig.suptitle(f"{gas.upper()} - latitudinal gradient PCs (extended) and EOFs")
 
     start_year = get_satellite_period_start_year(root, gas, suffixes)
@@ -617,18 +800,54 @@ def plot_lat_gradient_extend_pcs(
             ax = axes[row, eof]
             for suffix, ds in datasets.items():
                 ax.plot(ds["eofs"].sel(eof=eof), ds["lat"], color=colors[suffix], label=labels[suffix])
-            ax.set_title(f"EOF{eof} (static - doesn't vary by year)")
+            ax.set_title(f"EOF{eof}")
             ax.set_xlabel(f"{gas.upper()} anomaly")
             ax.set_ylabel("Latitude")
 
     plot_pc_row(0, None, "full record")
     plot_eof_row(1)
     plot_pc_row(2, (1850, None), "from 1850")
-    plot_eof_row(3)
+
+    eof_colors = ("tab:green", "tab:purple")
+    for col, suffix in enumerate(suffixes):
+        ds = datasets.get(suffix)
+
+        ax_eof = axes[3, col]
+        if ds is None:
+            ax_eof.axis("off")
+        else:
+            for eof in range(2):
+                ax_eof.plot(ds["eofs"].sel(eof=eof), ds["lat"], color=eof_colors[eof], label=f"EOF {eof}")
+            ax_eof.set_title(f"EOF0 vs EOF1, {labels[suffix]}")
+            ax_eof.set_xlabel(f"{gas.upper()} anomaly")
+            ax_eof.set_ylabel("Latitude")
+            ax_eof.legend(fontsize=8)
+
+        ax_pc = axes[4, col]
+        if ds is None:
+            ax_pc.axis("off")
+        else:
+            for eof in range(2):
+                ds["principal-components"].sel(eof=eof, year=slice(1850, None)).plot(
+                    ax=ax_pc, color=eof_colors[eof], label=f"PC {eof}"
+                )
+            ax_pc.set_title(f"PC0 vs PC1, {labels[suffix]}, from 1850")
+            _add_satellite_start_line(ax_pc, start_year, show_legend=False)
+            ax_pc.legend(fontsize=8)
 
     axes[0, 0].legend(fontsize=8)
     plt.tight_layout()
     plt.show()
+
+    reconstructions = {
+        suffix: (ds["principal-components"] * ds["eofs"]).sum("eof") for suffix, ds in datasets.items()
+    }
+    _plot_reconstruction_hovmoller(
+        reconstructions,
+        suffixes,
+        labels,
+        f"{gas.upper()} - latitudinal gradient reconstruction (extended): PC0*EOF0 + PC1*EOF1",
+    )
 
 
 def regression_table(root: Path, gas: str, suffixes: tuple[str, str], labels: dict[str, str]) -> pd.DataFrame:
@@ -794,14 +1013,18 @@ def plot_co2_seasonality_extend(
     """
     CO2-only: seasonality-change PC0 and EOF0, extended to all years (from `1205`). No CH4 equivalent.
 
-    Left column: PC0, shown twice - full record, and zoomed in from 1850
-    onwards (the composite regression's own reference period starts there -
-    see `CO2SeasonalityChangeRegression` - and the driver is assumed
-    constant before it, so nothing earlier is informative). Right column:
-    EOF0 by month, one line per latitude - doesn't vary by year, so it's the
-    same panel in both rows, kept for direct visual pairing with PC0
-    alongside it. The dashed vertical line marks the first year satellite
-    data covers.
+    Top row: PC0, full record and zoomed in from 1850 (the composite
+    regression's own reference period starts there - see
+    `CO2SeasonalityChangeRegression` - and the driver is assumed constant
+    before it, so nothing earlier is informative).
+
+    Rows below: EOF0 by month, one row per latitude - column 1 the southern
+    latitudes (-82.5 to -7.5), column 2 the northern latitudes (82.5 to
+    7.5), both columns ordered pole to equator, so each row pairs a latitude
+    with its mirror image - same split as `_plot_seasonality_change_eof_co2`
+    (section 3). Doesn't vary by year, unlike PC0 above.
+
+    The dashed vertical line marks the first year satellite data covers.
     """
     datasets = {
         suffix: ds
@@ -812,29 +1035,61 @@ def plot_co2_seasonality_extend(
         print("No CO2 seasonality-change (1205) diagnostics found.")
         return
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-    fig.suptitle("CO2 - seasonality-change PC0 and EOF0")
+    lats = next(iter(datasets.values()))["lat"].values
+    n_lats = len(lats)
+    n_lat_rows = n_lats // 2
+
+    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 1)))
+    gs = fig.add_gridspec(
+        n_lat_rows + 1,
+        2,
+        height_ratios=[1.3] + [1] * n_lat_rows,
+        hspace=1.1,
+        wspace=0.3,
+        top=0.95,
+        bottom=0.03,
+        left=0.08,
+        right=0.97,
+    )
+    fig.suptitle("CO2 - seasonality-change PC0 and EOF0 (extended)")
 
     start_year = get_satellite_period_start_year(root, "co2", suffixes)
 
-    for row, (year_slice, zoom_label) in enumerate([(None, "full record"), ((1850, None), "from 1850")]):
-        ax_pc, ax_eof = axes[row, 0], axes[row, 1]
-
+    # Top row: PC0, full record and zoomed in from 1850.
+    for col, (year_slice, zoom_label) in enumerate([(None, "full record"), ((1850, None), "from 1850")]):
+        ax_pc = fig.add_subplot(gs[0, col])
         for suffix, ds in datasets.items():
             da = ds["principal-components"].sel(eof=0)
             if year_slice is not None:
                 da = da.sel(year=slice(*year_slice))
             da.plot(ax=ax_pc, color=colors[suffix], label=labels[suffix])
         ax_pc.set_title(f"PC0, {zoom_label}")
-        _add_satellite_start_line(ax_pc, start_year, show_legend=(row == 0))
+        ax_pc.set_xlabel("Year")
+        ax_pc.set_ylabel("")
+        _add_satellite_start_line(ax_pc, start_year, show_legend=(col == 0))
+        if col == 0:
+            ax_pc.legend(fontsize=8)
 
-        for suffix, ds in datasets.items():
-            ds["eofs"].sel(eof=0).plot.line(
-                ax=ax_eof, hue="lat", add_legend=False, color=colors[suffix], alpha=0.6
-            )
-        ax_eof.set_title(f"EOF0 by month, one line per latitude ({zoom_label}, static)")
+    # Rows below: EOF0 by month - column 1 southern latitudes, column 2 northern latitudes (mirrored).
+    ax_eof_first = None
+    for i in range(n_lat_rows):
+        for col, lat in enumerate((lats[i], lats[n_lats - 1 - i])):
+            ax_eof = fig.add_subplot(gs[i + 1, col], sharex=ax_eof_first)
+            ax_eof_first = ax_eof_first or ax_eof
 
-    plt.tight_layout()
+            for suffix, ds in datasets.items():
+                ds["eofs"].sel(eof=0).sel(lat=lat, method="nearest").plot(
+                    ax=ax_eof, color=colors[suffix], label=labels[suffix]
+                )
+            ax_eof.axhline(0, color="k", linestyle=":", linewidth=1)
+            ax_eof.set_title(f"EOF0, lat={lat}", fontsize=9)
+            ax_eof.set_xlabel("")
+            ax_eof.set_ylabel("ppm", fontsize=8)
+            if i == 0 and col == 0:
+                ax_eof.legend(fontsize=7)
+            if i == n_lat_rows - 1:
+                ax_eof.set_xlabel("Month")
+
     plt.show()
 
 
