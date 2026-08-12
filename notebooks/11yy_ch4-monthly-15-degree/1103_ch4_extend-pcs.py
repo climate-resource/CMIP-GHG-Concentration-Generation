@@ -46,6 +46,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 import local.binned_data_interpolation
 import local.binning
 import local.config
+import local.diagnostics
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -349,6 +350,13 @@ iter_df = (
 
 # %%
 optimised = []
+# Diagnostics: the actual residual left behind by the joint NEEM/Law Dome
+# optimisation, per year - i.e. how well can a single (global-mean, PC0) pair
+# simultaneously match both ice cores? Satellite data shifts the EOFs this
+# optimisation uses (see the `neem_rtol` discussion in
+# `1104_ch4_extend-global-annual-mean`), so this is where that effect first
+# shows up.
+optimisation_residuals = []
 x0 = (1100, -70)
 eofs = lat_grad_eofs_obs_network["eofs"]
 for year, ydf in tqdman.tqdm(iter_df.groupby("year")):
@@ -386,6 +394,7 @@ for year, ydf in tqdman.tqdm(iter_df.groupby("year")):
     )
 
     optimised.append([year, min_res.x[0], min_res.x[1]])
+    optimisation_residuals.append([year, min_res.fun])
 
     x0 = min_res.x
     # if year > 300:
@@ -491,6 +500,7 @@ m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(c, y.units)
 
 latitudinal_gradient_pc0_ch4_fossil_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
+pc0_emissions_regression_r2 = local.diagnostics.linear_regression_r2(x.m, y.m, m.m, c.m)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -561,7 +571,7 @@ allyears_pc0
 # ### Join the PCs back together
 
 # %%
-allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "  ").pint.dequantify().pint.quantify()
+allyears_pcs = xr.concat([allyears_pc0, allyears_pc1], "eof").pint.dequantify().pint.quantify()
 allyears_pcs
 
 # %% [markdown]
@@ -599,3 +609,58 @@ with open(config_step.latitudinal_gradient_pc0_ch4_fossil_emissions_regression_f
     fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_ch4_fossil_emissions_regression))
 
 latitudinal_gradient_pc0_ch4_fossil_emissions_regression
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the all-years extended PCs/EOFs, the fit quality (R^2) of the
+# PC0-vs-PRIMAP-emissions regression, and - CH4-specific - the residual left
+# behind by the joint NEEM/Law Dome optimisation for each optimised year
+# (`min_res.fun`, normally discarded once the optimiser converges).
+
+# %%
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+
+optimisation_residuals_ar = np.array(optimisation_residuals)
+optimisation_residuals_da = xr.DataArray(
+    name="neem_law_dome_optimisation_residual",
+    data=optimisation_residuals_ar[:, 1],
+    dims=["year"],
+    coords=dict(year=optimisation_residuals_ar[:, 0]),
+    attrs=dict(
+        description=(
+            "Area-weighted RMS difference between the optimised (global-mean, PC0) "
+            "field and the NEEM/Law Dome pair, per optimised year"
+        ),
+        units=conc_unit,
+    ),
+)
+
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "lat-gradient-extend", diagnostics_suffix)
+        + ".nc"
+    ),
+    xr.merge([out.pint.dequantify(), optimisation_residuals_da]),
+)
+
+local.diagnostics.save_yaml_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "lat-gradient-extend", diagnostics_suffix)
+        + ".yaml"
+    ),
+    include_satellite_data=config_step.include_satellite_data,
+    satellite_fit=config_step.satellite_fit,
+    pc0_emissions_regression_m=float(m.m),
+    pc0_emissions_regression_c=float(c.m),
+    pc0_emissions_regression_r2=float(pc0_emissions_regression_r2),
+    pc0_emissions_regression_n_years=int(x.m.size),
+    n_years_filled_with_regression=int(years_to_fill_with_regression.size),
+    n_years_optimised_against_ice_cores=int(optimisation_residuals_ar.shape[0]),
+    optimisation_residual_mean=float(optimisation_residuals_ar[:, 1].mean()),
+    optimisation_residual_max=float(optimisation_residuals_ar[:, 1].max()),
+)

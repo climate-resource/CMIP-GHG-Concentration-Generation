@@ -47,10 +47,11 @@ calculate_c8f18_like_monthly_fifteen_degree_pieces:
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/c8f18/c8f18_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: c8f18
 calculate_ch4_monthly_fifteen_degree_pieces:
-- gas: ch4
+- diagnostics_dir: data/diagnostics/ch4
+  gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
-  include_satellite_data: false
+  include_satellite_data: true
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch4/ch4_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/ch4/ch4_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
@@ -60,13 +61,15 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
+  satellite_fit: NONLINEAR_LAT_STD_WEIGHT_FIT
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: only
 calculate_co2_monthly_fifteen_degree_pieces:
-- gas: co2
+- diagnostics_dir: data/diagnostics/co2
+  gas: co2
   global_annual_mean_allyears_file: data/interim/co2/co2_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/co2/co2_global-annual-mean_allyears-monthly.nc
-  include_satellite_data: false
+  include_satellite_data: true
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-lat-gradient-eofs-pcs.nc
   latitudinal_gradient_fifteen_degree_allyears_monthly_file: data/interim/co2/co2_latitudinal-gradient_fifteen-degree_allyears-monthly.nc
@@ -77,6 +80,7 @@ calculate_co2_monthly_fifteen_degree_pieces:
   observational_network_seasonality_change_eofs_file: data/interim/co2/co2_observational-network_seasonality-change-eofs.nc
   observational_network_seasonality_file: data/interim/co2/co2_observational-network_seasonality.nc
   processed_bin_averages_file: data/interim/co2/co2_observational-network_bin-averages.csv
+  satellite_fit: NONLINEAR_LAT_STD_WEIGHT_FIT
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/co2/co2_seasonality_fifteen-degree_allyears-monthly.nc
   seasonality_change_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-seasonality-change-eofs-pcs.nc
   seasonality_change_n_eofs_to_use: 1
@@ -1498,11 +1502,11 @@ process_noaa_surface_flask_data:
 process_scaled_sat_data:
 - gas: co2
   interim_data_path: data/interim/scaled_sat/monthly_co2_scaled_sat.csv
-  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCO2-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_LINEAR_FIT.nc
+  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCO2-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_NONLINEAR_LAT_STD_WEIGHT_FIT.nc
   step_config_id: co2
 - gas: ch4
   interim_data_path: data/interim/scaled_sat/monthly_ch4_scaled_sat.csv
-  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCH4-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_LINEAR_FIT.nc
+  scaled_data_path: data/raw/scaled_sat/200301_202312-C3S-L3_XCH4-GHG_PRODUCTS-MERGED-MERGED-OBS4MIPS-MERGED-v4.6_NONLINEAR_LAT_STD_WEIGHT_FIT.nc
   step_config_id: ch4
 retrieve_and_extract_agage_data:
 - download_complete_file: data/raw/agage/agage/ch4_gc-md_monthly.complete
@@ -4539,7 +4543,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
-  output_filename_suffix: null
+  output_filename_suffix: SAT_NONLINEAR_LAT_STD_WEIGHT_FIT
   start_year: 1
   step_config_id: co2
 - complete_file: data/processed/esgf-ready/ch4_input4MIPs_esgf-ready.complete
@@ -4549,7 +4553,7 @@ write_input4mips:
   input4mips_cvs_cv_source: https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/
   input4mips_cvs_source_id: CR-CMIP-testing
   input4mips_out_dir: data/processed/esgf-ready
-  output_filename_suffix: null
+  output_filename_suffix: SAT_NONLINEAR_LAT_STD_WEIGHT_FIT
   start_year: 1
   step_config_id: ch4
 - complete_file: data/processed/esgf-ready/n2o_input4MIPs_esgf-ready.complete

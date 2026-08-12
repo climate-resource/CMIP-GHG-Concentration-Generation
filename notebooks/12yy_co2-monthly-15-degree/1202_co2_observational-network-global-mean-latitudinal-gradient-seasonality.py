@@ -35,6 +35,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.diagnostics
 import local.latitudinal_gradient
 import local.raw_data_processing
 import local.seasonality
@@ -287,6 +288,67 @@ for year in seasonality_change_from_eofs["year"]:
 
         # break
     # break
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the *full* (untruncated) EOFs/PCs for the latitudinal gradient and the
+# seasonality change, plus how much variance each one explains, and the
+# observational-network global-mean. These are the pieces satellite data
+# affects most directly (it only feeds into the observational-network period),
+# so this is where its effect first becomes visible.
+#
+# We save the full EOF/PC set (not just `lat_gradient_n_eofs_to_use` /
+# `seasonality_change_n_eofs_to_use`, which is what's actually used downstream),
+# since satellite data could change how much variance the first few EOFs capture.
+
+# %%
+lat_gradient_explained_variance = local.diagnostics.explained_variance_ratio(
+    lat_gradient_full_eofs_pcs["principal-components"]
+)
+seasonality_change_explained_variance = local.diagnostics.explained_variance_ratio(
+    seasonality_change_full_eofs_pcs["principal-components"]
+)
+
+diagnostics_ds = xr.merge(
+    [
+        lat_gradient_full_eofs_pcs["eofs"]
+        .rename({"eof": "lat_gradient_eof"})
+        .rename("lat_gradient_eofs_full")
+        .pint.dequantify(),
+        lat_gradient_full_eofs_pcs["principal-components"]
+        .rename({"eof": "lat_gradient_eof"})
+        .rename("lat_gradient_pcs_full")
+        .pint.dequantify(),
+        lat_gradient_explained_variance.rename({"eof": "lat_gradient_eof"}).rename(
+            "lat_gradient_explained_variance_ratio"
+        ),
+        seasonality_change_full_eofs_pcs["eofs"]
+        .unstack("lat-month")
+        .rename({"eof": "seasonality_change_eof"})
+        .rename("seasonality_change_eofs_full")
+        .pint.dequantify(),
+        seasonality_change_full_eofs_pcs["principal-components"]
+        .rename({"eof": "seasonality_change_eof"})
+        .rename("seasonality_change_pcs_full")
+        .pint.dequantify(),
+        seasonality_change_explained_variance.rename({"eof": "seasonality_change_eof"}).rename(
+            "seasonality_change_explained_variance_ratio"
+        ),
+        global_annual_mean.rename("global_annual_mean_obs_network").pint.dequantify(),
+    ],
+    combine_attrs="drop_conflicts",
+)
+
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (local.diagnostics.diagnostics_file_stem(config_step.gas, "obs-network", diagnostics_suffix) + ".nc"),
+    diagnostics_ds,
+)
+diagnostics_ds
 
 # %% [markdown]
 # ### Save

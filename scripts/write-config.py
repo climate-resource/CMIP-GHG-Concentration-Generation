@@ -337,6 +337,7 @@ def create_dev_config() -> Config:
         gases_drop_obs_data_years_before_inclusive=gases_drop_obs_data_years_before_inclusive,
         gases_drop_obs_data_years_after_inclusive=gases_drop_obs_data_years_after_inclusive,
         gases_with_satellite_data=gases_with_satellite_data,
+        satellite_fit=satellite_fit,
     )
 
     return Config(

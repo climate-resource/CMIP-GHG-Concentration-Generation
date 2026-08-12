@@ -40,6 +40,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 import local.binned_data_interpolation
 import local.binning
 import local.config
+import local.diagnostics
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
 import local.raw_data_processing
@@ -238,6 +239,7 @@ m = QuantityOSCM(m, (y / x).units)
 c = QuantityOSCM(c, y.units)
 
 latitudinal_gradient_pc0_co2_fossil_emissions_regression = local.regressors.LinearRegressionResult(m=m, c=c)
+pc0_emissions_regression_r2 = local.diagnostics.linear_regression_r2(x.m, y.m, m.m, c.m)
 
 fig, ax = plt.subplots()
 ax.scatter(x.m, y.m, label="raw data")
@@ -383,3 +385,40 @@ with open(config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_f
     fh.write(local.config.converter_yaml.dumps(latitudinal_gradient_pc0_co2_fossil_emissions_regression))
 
 latitudinal_gradient_pc0_co2_fossil_emissions_regression
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the all-years extended PCs/EOFs (a copy of what we just saved above, but
+# under a satellite-fit-aware name so it survives a later run with a different
+# satellite configuration), plus the fit quality (R^2) of the PC0-vs-PRIMAP-emissions
+# regression that determines the whole pre-observational-network extension.
+
+# %%
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "lat-gradient-extend", diagnostics_suffix)
+        + ".nc"
+    ),
+    out.pint.dequantify(),
+)
+
+local.diagnostics.save_yaml_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "lat-gradient-extend", diagnostics_suffix)
+        + ".yaml"
+    ),
+    include_satellite_data=config_step.include_satellite_data,
+    satellite_fit=config_step.satellite_fit,
+    pc0_emissions_regression_m=float(m.m),
+    pc0_emissions_regression_c=float(c.m),
+    pc0_emissions_regression_r2=float(pc0_emissions_regression_r2),
+    pc0_emissions_regression_n_years=int(x.m.size),
+    n_years_filled_with_regression=int(years_to_fill_with_regression.size),
+)

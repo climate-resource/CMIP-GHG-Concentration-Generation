@@ -2,7 +2,8 @@ base_seed: 20241109
 calculate_c4f10_like_monthly_fifteen_degree_pieces: []
 calculate_c8f18_like_monthly_fifteen_degree_pieces: []
 calculate_ch4_monthly_fifteen_degree_pieces:
-- gas: ch4
+- diagnostics_dir: data/diagnostics/ch4
+  gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
   include_satellite_data: false
@@ -15,10 +16,12 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   observational_network_latitudinal_gradient_eofs_file: data/interim/ch4/ch4_observational-network_latitudinal-gradient-eofs.nc
   observational_network_seasonality_file: data/interim/ch4/ch4_observational-network_seasonality.nc
   processed_bin_averages_file: data/interim/ch4/ch4_observational-network_bin-averages.csv
+  satellite_fit: null
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: only
 calculate_co2_monthly_fifteen_degree_pieces:
-- gas: co2
+- diagnostics_dir: data/diagnostics/co2
+  gas: co2
   global_annual_mean_allyears_file: data/interim/co2/co2_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/co2/co2_global-annual-mean_allyears-monthly.nc
   include_satellite_data: false
@@ -32,6 +35,7 @@ calculate_co2_monthly_fifteen_degree_pieces:
   observational_network_seasonality_change_eofs_file: data/interim/co2/co2_observational-network_seasonality-change-eofs.nc
   observational_network_seasonality_file: data/interim/co2/co2_observational-network_seasonality.nc
   processed_bin_averages_file: data/interim/co2/co2_observational-network_bin-averages.csv
+  satellite_fit: null
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/co2/co2_seasonality_fifteen-degree_allyears-monthly.nc
   seasonality_change_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-seasonality-change-eofs-pcs.nc
   seasonality_change_n_eofs_to_use: 1

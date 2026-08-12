@@ -42,6 +42,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.diagnostics
 import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
@@ -469,58 +470,92 @@ neem_rtol = 2e-3 if config_step.include_satellite_data else 1e-3
 
 # %%
 if not config.ci:
-    np.testing.assert_allclose(
+    neem_actual = (
         allyears_full_field.sel(lat=neem_lat, method="nearest")
         .sel(year=neem_data["year"].values)
         .data.to(conc_unit)
-        .m,
-        neem_data["value"],
-        rtol=neem_rtol,
+        .m
     )
-    np.testing.assert_allclose(
+    neem_expected = neem_data["value"]
+
+    law_dome_actual = (
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
         .sel(year=smooth_law_dome_harmonised["year"].values)
         .data.to(conc_unit)
-        .m,
-        smooth_law_dome_harmonised["value"],
+        .m
     )
+    law_dome_expected = smooth_law_dome_harmonised["value"]
+
+    np.testing.assert_allclose(neem_actual, neem_expected, rtol=neem_rtol)
+    np.testing.assert_allclose(law_dome_actual, law_dome_expected)
 else:
     neem_compare_years = neem_data["year"].values[
         np.isin(neem_data["year"].values, out_years)  # type: ignore
     ]
-    np.testing.assert_allclose(
+    neem_actual = (
         allyears_full_field.sel(lat=neem_lat, method="nearest")
         .sel(year=neem_compare_years)
         .data.to(conc_unit)
-        .m,
-        neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"],
-        rtol=neem_rtol,
+        .m
     )
+    neem_expected = neem_data[np.isin(neem_data["year"], neem_compare_years)]["value"]
+
     law_dome_compare_years = smooth_law_dome_harmonised["year"].values[
         np.isin(smooth_law_dome_harmonised["year"].values, out_years)  # type: ignore
     ]
-    np.testing.assert_allclose(
+    law_dome_actual = (
         allyears_full_field.sel(lat=law_dome_lat, method="nearest")
         .sel(year=law_dome_compare_years)
         .data.to(conc_unit)
-        .m,
-        smooth_law_dome_harmonised[np.isin(smooth_law_dome_harmonised["year"], law_dome_compare_years)][
-            "value"
-        ],
+        .m
     )
+    law_dome_expected = smooth_law_dome_harmonised[
+        np.isin(smooth_law_dome_harmonised["year"], law_dome_compare_years)
+    ]["value"]
+
+    np.testing.assert_allclose(neem_actual, neem_expected, rtol=neem_rtol)
+    np.testing.assert_allclose(law_dome_actual, law_dome_expected)
+
+# Diagnostics: capture the actual residuals behind the checks above,
+# not just whether they passed the tolerance.
+neem_check = local.diagnostics.record_check(
+    "neem",
+    neem_actual,
+    neem_expected,
+    rtol=neem_rtol,
+    description="Reconstructed full field vs NEEM ice core, at NEEM's latitude/years",
+)
+law_dome_check = local.diagnostics.record_check(
+    "law_dome",
+    law_dome_actual,
+    law_dome_expected,
+    description="Reconstructed full field vs smoothed Law Dome, at Law Dome's latitude/years",
+)
 
 if years_use_epica.size > 0:
-    np.testing.assert_allclose(
+    epica_actual = (
         allyears_full_field.sel(lat=epica_lat, method="nearest")
         .sel(year=epica_da["year"].values)
         .data.to(conc_unit)
-        .m,
-        epica_da.data.m,
+        .m
+    )
+    epica_expected = epica_da.data.m
+
+    np.testing.assert_allclose(epica_actual, epica_expected)
+    epica_check = local.diagnostics.record_check(
+        "epica",
+        epica_actual,
+        epica_expected,
+        description="Reconstructed full field vs interpolated EPICA, at EPICA's latitude/years",
     )
 
 elif not config.ci:
     msg = "Should be using EPICA"
     raise AssertionError(msg)
+else:
+    epica_check = None
+
+neem_check, law_dome_check, epica_check
 
 # %%
 allyears_full_field
@@ -538,12 +573,40 @@ ax.axvline(join_year, linestyle="--", color="gray")
 ax.grid()
 
 # %% [markdown]
+# #### Harmonisation seam size
+#
+# How big a jump does the global-, annual-mean take right at the Law Dome
+# join, compared to a typical year-on-year step elsewhere? A simple,
+# self-contained proxy for how much satellite data (which only affects the
+# observational-network period, i.e. the right-hand side of this join)
+# disturbs the values it gets stitched onto.
+
+# %%
+typical_step = float(np.abs(np.diff(allyears_global_annual_mean.pint.to(conc_unit).data.m)).mean())
+
+law_dome_seam_jump = float(
+    (allyears_global_annual_mean.sel(year=join_year) - allyears_global_annual_mean.sel(year=join_year - 1))
+    .pint.to(conc_unit)
+    .data.m
+)
+
+# %% [markdown]
 # The residual between our full field and our annual, global-mean
 # should just be the latitudinal gradient we started with.
 
 # %%
 check = allyears_full_field - allyears_global_annual_mean
 xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
+
+field_decomposition_check = local.diagnostics.record_check(
+    "field_decomposition",
+    check.pint.dequantify().values.ravel(),
+    allyears_latitudinal_gradient.pint.dequantify().values.ravel(),
+    description=(
+        "allyears_full_field minus allyears_global_annual_mean should equal allyears_latitudinal_gradient"
+    ),
+)
+field_decomposition_check
 
 # %%
 tmp = allyears_latitudinal_gradient.copy()
@@ -561,3 +624,43 @@ np.testing.assert_allclose(
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
 allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the all-years extended global-, annual-mean itself (no EOF exists here -
+# it's a scalar-per-year timeseries), the actual residuals behind the NEEM,
+# Law Dome, EPICA and field-decomposition checks above (not just whether they
+# passed), and how big a jump the Law Dome harmonisation seam introduces.
+
+# %%
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "global-mean-extend", diagnostics_suffix)
+        + ".nc"
+    ),
+    allyears_global_annual_mean.rename("global_annual_mean_allyears").pint.dequantify().to_dataset(),
+)
+
+local.diagnostics.save_yaml_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "global-mean-extend", diagnostics_suffix)
+        + ".yaml"
+    ),
+    include_satellite_data=config_step.include_satellite_data,
+    satellite_fit=config_step.satellite_fit,
+    neem_rtol_used=neem_rtol,
+    neem_check=neem_check,
+    law_dome_check=law_dome_check,
+    epica_check=epica_check,
+    field_decomposition_check=field_decomposition_check,
+    law_dome_join_year=int(join_year),
+    law_dome_seam_jump=law_dome_seam_jump,
+    typical_year_on_year_step=typical_step,
+)

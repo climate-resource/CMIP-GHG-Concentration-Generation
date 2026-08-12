@@ -32,6 +32,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.diagnostics
 import local.latitudinal_gradient
 import local.raw_data_processing
 import local.seasonality
@@ -207,6 +208,53 @@ seasonality.plot.line(hue="lat")
 
 # %%
 relative_seasonality.plot.line(hue="lat")
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the *full* (untruncated) latitudinal-gradient EOFs/PCs, how much variance
+# each one explains, the observational-network global-mean, and the relative
+# seasonality field itself (CH4 has no seasonality-change EOFs to save,
+# unlike CO2 - see `1202_co2_...`). These are the pieces satellite data affects
+# most directly (it only feeds into the observational-network period).
+#
+# We save the full EOF/PC set (not just `lat_gradient_n_eofs_to_use`, which is
+# what's actually used downstream), since satellite data could change how much
+# variance the first few EOFs capture.
+
+# %%
+lat_gradient_explained_variance = local.diagnostics.explained_variance_ratio(
+    full_eofs_pcs["principal-components"]
+)
+
+diagnostics_ds = xr.merge(
+    [
+        full_eofs_pcs["eofs"]
+        .rename({"eof": "lat_gradient_eof"})
+        .rename("lat_gradient_eofs_full")
+        .pint.dequantify(),
+        full_eofs_pcs["principal-components"]
+        .rename({"eof": "lat_gradient_eof"})
+        .rename("lat_gradient_pcs_full")
+        .pint.dequantify(),
+        lat_gradient_explained_variance.rename({"eof": "lat_gradient_eof"}).rename(
+            "lat_gradient_explained_variance_ratio"
+        ),
+        global_annual_mean.rename("global_annual_mean_obs_network").pint.dequantify(),
+        relative_seasonality.rename("relative_seasonality_obs_network").pint.dequantify(),
+    ],
+    combine_attrs="drop_conflicts",
+)
+
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (local.diagnostics.diagnostics_file_stem(config_step.gas, "obs-network", diagnostics_suffix) + ".nc"),
+    diagnostics_ds,
+)
+diagnostics_ds
 
 # %% [markdown]
 # ### Save

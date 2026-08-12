@@ -17,6 +17,9 @@ from pydoit_nb.notebook import ConfiguredNotebook, UnconfiguredNotebook
 from pydoit_nb.notebook_step import UnconfiguredNotebookBasedStep
 
 # %%
+from ..diagnostics import diagnostics_file_stem, get_satellite_suffix
+
+# %%
 if TYPE_CHECKING:
     from ..config.base import Config, ConfigBundle
 
@@ -86,6 +89,13 @@ def configure_notebooks(
         config=config, step="retrieve_misc_data", step_config_id="only"
     )
 
+    diagnostics_suffix = get_satellite_suffix(config_step.include_satellite_data, config_step.satellite_fit)
+
+    def diagnostics_path(piece: str, ext: str) -> Path:
+        return config_step.diagnostics_dir / (
+            diagnostics_file_stem(config_step.gas, piece, diagnostics_suffix) + ext
+        )
+
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
@@ -104,7 +114,13 @@ def configure_notebooks(
             unconfigured_notebook=uc_nbs_dict[
                 Path("12yy_co2-monthly-15-degree") / "1200a_co2_bin_satellite_data"
             ],
-            configuration=(),
+            # `include_satellite_data`/`satellite_fit` aren't reflected in any of this
+            # notebook's file `dependencies` below (they only change *which* raw
+            # satellite file gets read, not the NOAA files listed), so without this,
+            # doit has no way to tell that toggling satellite data on/off (or
+            # switching fits) should trigger a re-run - it would otherwise keep
+            # reusing whatever was produced by the previous run under this RUN_ID.
+            configuration=(config_step.include_satellite_data, config_step.satellite_fit),
             dependencies=(
                 config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
                 config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
@@ -122,7 +138,10 @@ def configure_notebooks(
                 config_step.processed_bin_averages_file,
                 config_process_scaled_sat_data.interim_data_path,
             ),
-            targets=(config_step.observational_network_interpolated_file,),
+            targets=(
+                config_step.observational_network_interpolated_file,
+                diagnostics_path("interpolation", ".yaml"),
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -138,6 +157,7 @@ def configure_notebooks(
                 config_step.observational_network_latitudinal_gradient_eofs_file,
                 config_step.observational_network_seasonality_file,
                 config_step.observational_network_seasonality_change_eofs_file,
+                diagnostics_path("obs-network", ".nc"),
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -156,6 +176,8 @@ def configure_notebooks(
             targets=(
                 config_step.latitudinal_gradient_allyears_pcs_eofs_file,
                 config_step.latitudinal_gradient_pc0_co2_fossil_emissions_regression_file,
+                diagnostics_path("lat-gradient-extend", ".nc"),
+                diagnostics_path("lat-gradient-extend", ".yaml"),
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
@@ -172,7 +194,11 @@ def configure_notebooks(
                 config_retrieve_and_process_scripps_data.merged_ice_core_data_processed_data_file,
                 config_retrieve_and_process_menking_et_al_2025_data.processed_data_file,
             ),
-            targets=(config_step.global_annual_mean_allyears_file,),
+            targets=(
+                config_step.global_annual_mean_allyears_file,
+                diagnostics_path("global-mean-extend", ".nc"),
+                diagnostics_path("global-mean-extend", ".yaml"),
+            ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),
@@ -190,6 +216,8 @@ def configure_notebooks(
             targets=(
                 config_step.seasonality_change_allyears_pcs_eofs_file,
                 config_step.seasonality_change_temperature_co2_conc_regression_file,
+                diagnostics_path("seasonality-extend", ".nc"),
+                diagnostics_path("seasonality-extend", ".yaml"),
             ),
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,

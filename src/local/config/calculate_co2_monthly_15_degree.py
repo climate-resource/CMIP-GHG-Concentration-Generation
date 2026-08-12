@@ -95,3 +95,14 @@ class CalculateCO2MonthlyFifteenDegreePieces:
     """
     Path for the latitudinal gradient on a 15 degree grid, interpolated to monthly steps for all years
     """
+
+    satellite_fit: str | None
+    """
+    Fit used for the satellite data (e.g. ``"LINEAR_FIT"``), if ``include_satellite_data`` is ``True``
+
+    Only used to label diagnostics files so that runs with different fits
+    (or no satellite data at all) don't overwrite each other's diagnostics.
+    """
+
+    diagnostics_dir: Path
+    """Directory in which to save diagnostics that let different runs be compared"""

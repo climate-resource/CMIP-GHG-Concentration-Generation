@@ -41,6 +41,7 @@ from pydoit_nb.config_handling import get_config_for_step_id
 
 import local.binned_data_interpolation
 import local.binning
+import local.diagnostics
 import local.harmonisation
 import local.latitudinal_gradient
 import local.mean_preserving_interpolation
@@ -438,26 +439,39 @@ mostyears_full_field.plot(hue="lat")
 
 # %%
 if not config.ci:
-    np.testing.assert_allclose(
+    menking_check_actual = (
         mostyears_full_field.sel(lat=menking_et_al_lat, method="nearest")
         .sel(year=menking_et_al_harmonised["year"].values)
         .data.to(conc_unit)
-        .m,
-        menking_et_al_harmonised["value"],
+        .m
     )
+    menking_check_expected = menking_et_al_harmonised["value"]
+
 else:
     menking_et_al_compare_years = menking_et_al_harmonised["year"].values[
         np.isin(menking_et_al_harmonised["year"].values, out_years)  # type: ignore
     ]
-    np.testing.assert_allclose(
+    menking_check_actual = (
         mostyears_full_field.sel(lat=menking_et_al_lat, method="nearest")
         .sel(year=menking_et_al_compare_years)
         .data.to(conc_unit)
-        .m,
-        menking_et_al_harmonised[np.isin(menking_et_al_harmonised["year"], menking_et_al_compare_years)][
-            "value"
-        ],
+        .m
     )
+    menking_check_expected = menking_et_al_harmonised[
+        np.isin(menking_et_al_harmonised["year"], menking_et_al_compare_years)
+    ]["value"]
+
+np.testing.assert_allclose(menking_check_actual, menking_check_expected)
+
+# Diagnostics: capture the actual residual behind the check above,
+# not just whether it passed the tolerance.
+menking_check = local.diagnostics.record_check(
+    "menking_et_al_2025",
+    menking_check_actual,
+    menking_check_expected,
+    description="Reconstructed full field vs Menking et al., 2025 at Menking's latitude/years",
+)
+menking_check
 
 # %%
 tmp = mostyears_full_field.copy()
@@ -505,6 +519,33 @@ else:
 
 allyears_global_annual_mean
 
+# %% [markdown]
+# #### Harmonisation seam size
+#
+# How big a jump does the global-, annual-mean take right at each harmonisation
+# join, compared to a typical year-on-year step elsewhere? This is a simple,
+# self-contained proxy for how much satellite data (which only affects the
+# observational-network period, i.e. the right-hand side of the Mauna Loa join)
+# disturbs the values it gets stitched onto.
+
+# %%
+typical_step = float(np.abs(np.diff(allyears_global_annual_mean.pint.to(conc_unit).data.m)).mean())
+
+mauna_loa_seam_jump = float(
+    (allyears_global_annual_mean.sel(year=join_year) - allyears_global_annual_mean.sel(year=join_year - 1))
+    .pint.to(conc_unit)
+    .data.m
+)
+
+menking_seam_jump = float(
+    (
+        allyears_global_annual_mean.sel(year=join_year_menking)
+        - allyears_global_annual_mean.sel(year=join_year_menking - 1)
+    )
+    .pint.to(conc_unit)
+    .data.m
+)
+
 # %%
 fig, ax = plt.subplots()
 
@@ -523,6 +564,16 @@ ax.legend()
 check = allyears_full_field - allyears_global_annual_mean
 xr.testing.assert_allclose(check, allyears_latitudinal_gradient)
 
+field_decomposition_check = local.diagnostics.record_check(
+    "field_decomposition",
+    check.pint.dequantify().values.ravel(),
+    allyears_latitudinal_gradient.pint.dequantify().values.ravel(),
+    description=(
+        "allyears_full_field minus allyears_global_annual_mean should equal allyears_latitudinal_gradient"
+    ),
+)
+field_decomposition_check
+
 # %%
 tmp = allyears_latitudinal_gradient.copy()
 tmp.name = "tmp"
@@ -539,3 +590,43 @@ np.testing.assert_allclose(
 config_step.global_annual_mean_allyears_file.parent.mkdir(exist_ok=True, parents=True)
 allyears_global_annual_mean.pint.dequantify().to_netcdf(config_step.global_annual_mean_allyears_file)
 allyears_global_annual_mean
+
+# %% [markdown]
+# ### Diagnostics
+#
+# Save the all-years extended global-, annual-mean itself (there's no EOF to
+# save here - it's a scalar-per-year timeseries, not a spatial field), the
+# actual residuals behind the Menking et al. and field-decomposition checks
+# above (not just whether they passed), and how big a jump the harmonisation
+# seams introduce.
+
+# %%
+diagnostics_suffix = local.diagnostics.get_satellite_suffix(
+    config_step.include_satellite_data, config_step.satellite_fit
+)
+
+local.diagnostics.save_nc_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "global-mean-extend", diagnostics_suffix)
+        + ".nc"
+    ),
+    allyears_global_annual_mean.rename("global_annual_mean_allyears").pint.dequantify().to_dataset(),
+)
+
+local.diagnostics.save_yaml_diagnostics(
+    config_step.diagnostics_dir
+    / (
+        local.diagnostics.diagnostics_file_stem(config_step.gas, "global-mean-extend", diagnostics_suffix)
+        + ".yaml"
+    ),
+    include_satellite_data=config_step.include_satellite_data,
+    satellite_fit=config_step.satellite_fit,
+    menking_check=menking_check,
+    field_decomposition_check=field_decomposition_check,
+    mauna_loa_join_year=int(join_year),
+    mauna_loa_seam_jump=mauna_loa_seam_jump,
+    menking_join_year=int(join_year_menking),
+    menking_seam_jump=menking_seam_jump,
+    typical_year_on_year_step=typical_step,
+)
