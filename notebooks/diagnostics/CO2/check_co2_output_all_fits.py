@@ -61,6 +61,11 @@ esgf_ready_dir = report.get_esgf_ready_gas_dir(Path(output_bundles_root), run_id
 esgf_ready_dir
 
 # %%
+# The single most-recently-created version folder, shown for reference only -
+# discovery below searches *all* version folders, not just this one (see the
+# note in `local.diagnostics_reporting.discover_gridded_files` for why: the
+# baseline and different fits can legitimately live in different dated
+# folders, since a new version is only cut when a dataset's content changes).
 version_dir = report.find_version_dir(esgf_ready_dir, version)
 version_dir
 
@@ -68,16 +73,18 @@ version_dir
 # %% [markdown]
 # ## Discover available fits
 #
-# Looks for `{gas}_input4MIPs_..._SAT_<FIT>.nc` files in the chosen version
-# folder and infers `<FIT>` (and the time-range chunk boundaries) from the
+# Looks for `{gas}_input4MIPs_..._SAT_<FIT>.nc` files across *all* version
+# folders and infers `<FIT>` (and the time-range chunk boundaries) from the
 # filename - nothing here is hardcoded, so this picks up new fits (and any
-# change in how files get chunked) automatically. Discovery/loading logic
-# lives in `local.diagnostics_reporting` so it stays in sync with the
-# "Final gridded output diff" section of the `compare_co2_<FIT>.py`
-# notebooks in this folder, which reuses the exact same functions.
+# change in how files get chunked) automatically. For the baseline and each
+# fit separately, whichever version folder holding it is most recent wins.
+# Discovery/loading logic lives in `local.diagnostics_reporting` so it stays
+# in sync with the "Final gridded output diff" section of the
+# `compare_co2_<FIT>.py` notebooks in this folder, which reuses the exact
+# same functions.
 
 # %%
-baseline_chunks, fit_chunks = report.discover_gridded_files(version_dir, gas)
+baseline_chunks, fit_chunks = report.discover_gridded_files(esgf_ready_dir, gas, version)
 print(f"Baseline (no satellite) chunks: {[p.name for p in baseline_chunks]}")
 print(f"Found {len(fit_chunks)} fit(s): {sorted(fit_chunks)}")
 

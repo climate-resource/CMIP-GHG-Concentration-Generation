@@ -1136,24 +1136,25 @@ def get_esgf_ready_gas_dir(output_bundles_root: Path, run_id: str, gas: str) -> 
     )
 
 
+def find_version_dirs(esgf_ready_gas_dir: Path) -> list[Path]:
+    """All version folders under a gas's `gnz` directory, oldest to newest"""
+    if not esgf_ready_gas_dir.exists():
+        return []
+    return sorted((p for p in esgf_ready_gas_dir.glob("v*") if p.is_dir()), key=lambda p: p.name)
+
+
 def find_version_dir(esgf_ready_gas_dir: Path, version: str | None = None) -> Path | None:
     """Find the version folder to use: `version` if given and it exists, else the most recently created `v*` folder"""
     if version is not None:
         version_dir = esgf_ready_gas_dir / version
         return version_dir if version_dir.exists() else None
 
-    if not esgf_ready_gas_dir.exists():
-        return None
-
-    version_dirs = sorted((p for p in esgf_ready_gas_dir.glob("v*") if p.is_dir()), key=lambda p: p.name)
+    version_dirs = find_version_dirs(esgf_ready_gas_dir)
     return version_dirs[-1] if version_dirs else None
 
 
-def discover_gridded_files(version_dir: Path | None, gas: str) -> tuple[list[Path], dict[str, list[Path]]]:
-    """Find the no-satellite baseline chunks and the per-fit chunks in a version folder"""
-    if version_dir is None or not version_dir.exists():
-        return [], {}
-
+def _discover_gridded_files_single(version_dir: Path, gas: str) -> tuple[list[Path], dict[str, list[Path]]]:
+    """Find the no-satellite baseline chunks and the per-fit chunks in a single version folder"""
     prefix = f"{gas}_input4MIPs_GHGConcentrations_CMIP_CR-CMIP-testing_gnz_"
     fit_re = re.compile(rf"^{re.escape(prefix)}{_GRIDDED_FILENAME_DATE_RANGE_RE}_SAT_(?P<fit>.+)\.nc$")
     baseline_re = re.compile(rf"^{re.escape(prefix)}{_GRIDDED_FILENAME_DATE_RANGE_RE}\.nc$")
@@ -1174,6 +1175,44 @@ def discover_gridded_files(version_dir: Path | None, gas: str) -> tuple[list[Pat
         chunks.sort(key=lambda p: p.name)
 
     return baseline_chunks, dict(fit_chunks)
+
+
+def discover_gridded_files(
+    esgf_ready_gas_dir: Path, gas: str, version: str | None = None
+) -> tuple[list[Path], dict[str, list[Path]]]:
+    """
+    Find the no-satellite baseline chunks and the per-fit chunks for a gas
+
+    If `version` is given, only look in that one version folder. Otherwise,
+    search *all* version folders and take, for the baseline and for each fit
+    separately, whichever version is most recent among the folders that
+    actually contain it.
+
+    This matters because the ESGF writer only cuts a new dated version
+    folder when a dataset's content actually changes - the no-satellite
+    baseline can go weeks without changing while individual fits get
+    (re-)run on different days, so the baseline and different fits
+    routinely end up living in different dated folders. Picking a single
+    "latest" folder and assuming everything relevant is in it silently
+    drops data that's still current, just filed under an earlier date -
+    this merges across folders instead, per baseline/fit, so nothing
+    current gets missed.
+    """
+    if version is not None:
+        version_dir = esgf_ready_gas_dir / version
+        if not version_dir.exists():
+            return [], {}
+        return _discover_gridded_files_single(version_dir, gas)
+
+    baseline_chunks: list[Path] = []
+    fit_chunks: dict[str, list[Path]] = {}
+    for version_dir in find_version_dirs(esgf_ready_gas_dir):  # oldest to newest, later ones win
+        vd_baseline, vd_fit_chunks = _discover_gridded_files_single(version_dir, gas)
+        if vd_baseline:
+            baseline_chunks = vd_baseline
+        fit_chunks.update(vd_fit_chunks)
+
+    return baseline_chunks, fit_chunks
 
 
 def load_concatenated_gridded(chunk_paths: list[Path], gas: str) -> xr.DataArray | None:
@@ -1209,8 +1248,7 @@ def plot_gridded_diff_for_fit(
     nothing if it hasn't.
     """
     esgf_ready_gas_dir = get_esgf_ready_gas_dir(output_bundles_root, run_id, gas)
-    version_dir = find_version_dir(esgf_ready_gas_dir, version)
-    baseline_chunks, fit_chunks = discover_gridded_files(version_dir, gas)
+    baseline_chunks, fit_chunks = discover_gridded_files(esgf_ready_gas_dir, gas, version)
 
     if not baseline_chunks or fit not in fit_chunks:
         print(
