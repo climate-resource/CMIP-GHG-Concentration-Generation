@@ -87,3 +87,12 @@ class CalculateCH4MonthlyFifteenDegreePieces:
 
     diagnostics_dir: Path
     """Directory in which to save diagnostics that let different runs be compared"""
+
+    year_drop_observational_data_before_and_including: int | None = None
+    """
+    Year (inclusive) before which to drop observational-network data
+
+    Applied to the ground-based observational network only - ice-core/firn
+    data used to extend the record back in time is unaffected. If ``None``,
+    no data is dropped.
+    """

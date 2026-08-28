@@ -150,7 +150,11 @@ def configure_notebooks(
                 Path("12yy_co2-monthly-15-degree")
                 / "1202_co2_observational-network-global-mean-latitudinal-gradient-seasonality"
             ],
-            configuration=(),
+            # `year_drop_observational_data_before_and_including` isn't reflected in
+            # this notebook's file `dependencies` below (only the interpolated file
+            # is), so without this, doit can't tell that changing the cutoff year
+            # should trigger a re-run.
+            configuration=(config_step.year_drop_observational_data_before_and_including,),
             dependencies=(config_step.observational_network_interpolated_file,),
             targets=(
                 config_step.observational_network_global_annual_mean_file,

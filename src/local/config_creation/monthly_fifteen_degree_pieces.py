@@ -106,6 +106,9 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
                 get_co2_monthly_fifteen_degree_pieces_config(
                     include_satellite_data=gas in gases_with_satellite_data,
                     satellite_fit=satellite_fit if gas in gases_with_satellite_data else None,
+                    year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
+                        gas
+                    ),
                 )
             )
 
@@ -114,6 +117,9 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
                 get_ch4_monthly_fifteen_degree_pieces_config(
                     include_satellite_data=gas in gases_with_satellite_data,
                     satellite_fit=satellite_fit if gas in gases_with_satellite_data else None,
+                    year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
+                        gas
+                    ),
                 )
             )
 
@@ -222,6 +228,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
 def get_ch4_monthly_fifteen_degree_pieces_config(
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
+    year_drop_observational_data_before_and_including: int | None = None,
 ) -> CalculateCH4MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CH4
@@ -235,6 +242,10 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
         Fit used for the satellite data (e.g. ``"LINEAR_FIT"``), if ``include_satellite_data`` is ``True``.
         Only used to label diagnostics files.
 
+    year_drop_observational_data_before_and_including
+        Year (inclusive) before which to drop ground-based observational-network data.
+        Ice-core/firn data used to extend the record back in time is unaffected.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for CH4
@@ -247,6 +258,7 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
         include_satellite_data=include_satellite_data,
         satellite_fit=satellite_fit,
         diagnostics_dir=Path("data/diagnostics/ch4"),
+        year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
         processed_bin_averages_file=interim_dir / "ch4_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "ch4_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
@@ -303,6 +315,7 @@ def get_n2o_monthly_fifteen_degree_pieces_config() -> CalculateN2OMonthlyFifteen
 def get_co2_monthly_fifteen_degree_pieces_config(
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
+    year_drop_observational_data_before_and_including: int | None = None,
 ) -> CalculateCO2MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CO2
@@ -316,6 +329,10 @@ def get_co2_monthly_fifteen_degree_pieces_config(
         Fit used for the satellite data (e.g. ``"LINEAR_FIT"``), if ``include_satellite_data`` is ``True``.
         Only used to label diagnostics files.
 
+    year_drop_observational_data_before_and_including
+        Year (inclusive) before which to drop ground-based observational-network data.
+        Ice-core/firn data used to extend the record back in time is unaffected.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for CO2
@@ -328,6 +345,7 @@ def get_co2_monthly_fifteen_degree_pieces_config(
         include_satellite_data=include_satellite_data,
         satellite_fit=satellite_fit,
         diagnostics_dir=Path("data/diagnostics/co2"),
+        year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
         processed_bin_averages_file=interim_dir / "co2_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "co2_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir

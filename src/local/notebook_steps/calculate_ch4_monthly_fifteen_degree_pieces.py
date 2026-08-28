@@ -158,7 +158,11 @@ def configure_notebooks(
             unconfigured_notebook=uc_nbs_dict[
                 Path("11yy_ch4-monthly-15-degree") / "1102_ch4_global-mean-latitudinal-gradient-seasonality"
             ],
-            configuration=(),
+            # `year_drop_observational_data_before_and_including` isn't reflected in
+            # this notebook's file `dependencies` below (only the interpolated file
+            # is), so without this, doit can't tell that changing the cutoff year
+            # should trigger a re-run.
+            configuration=(config_step.year_drop_observational_data_before_and_including,),
             dependencies=(config_step.observational_network_interpolated_file,),
             targets=(
                 config_step.observational_network_global_annual_mean_file,

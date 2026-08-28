@@ -82,6 +82,15 @@ interpolated_spatial: xr.DataArray = xr.load_dataarray(  # type: ignore
 ).pint.quantify()
 interpolated_spatial
 
+# %%
+if config_step.year_drop_observational_data_before_and_including is not None:
+    interpolated_spatial = interpolated_spatial.sel(
+        time=interpolated_spatial["time"].dt.year
+        > config_step.year_drop_observational_data_before_and_including
+    )
+
+interpolated_spatial
+
 # %% [markdown]
 # ### Drop out any years that have nan
 #

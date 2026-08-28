@@ -1246,6 +1246,8 @@ def plot_gridded_diff_for_fit(
     scoped to just this one fit. Needs the `40yy_write-input4mips` step to
     have actually been run for this fit; prints an explanation and does
     nothing if it hasn't.
+
+    Shown twice: full record, then zoomed in from 1850.
     """
     esgf_ready_gas_dir = get_esgf_ready_gas_dir(output_bundles_root, run_id, gas)
     baseline_chunks, fit_chunks = discover_gridded_files(esgf_ready_gas_dir, gas, version)
@@ -1264,5 +1266,11 @@ def plot_gridded_diff_for_fit(
     fig, ax = plt.subplots(figsize=(10, 3))
     diff.plot(ax=ax, x="time", y="lat", cmap="RdBu_r")
     ax.set_title(f"{gas.upper()} {fit} - final gridded output minus no-satellite baseline")
+    plt.tight_layout()
+    plt.show()
+
+    fig, ax = plt.subplots(figsize=(10, 3))
+    diff.sel(time=slice("1850", None)).plot(ax=ax, x="time", y="lat", cmap="RdBu_r")
+    ax.set_title(f"{gas.upper()} {fit} - final gridded output minus no-satellite baseline, from 1850")
     plt.tight_layout()
     plt.show()
