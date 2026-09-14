@@ -96,17 +96,28 @@ def configure_notebooks(
             diagnostics_file_stem(config_step.gas, piece, diagnostics_suffix) + ext
         )
 
+    bin_observational_network_targets = (config_step.processed_bin_averages_file,)
+    if config_step.held_out_test_data_file is not None:
+        bin_observational_network_targets = (
+            *bin_observational_network_targets,
+            config_step.held_out_test_data_file,
+        )
+
     configured_notebooks = [
         ConfiguredNotebook(
             unconfigured_notebook=uc_nbs_dict[
                 Path("12yy_co2-monthly-15-degree") / "1200_co2_bin-observational-network"
             ],
-            configuration=(),
+            # `test_split_fraction`/`test_split_seed` aren't reflected in any of
+            # this notebook's file `dependencies` below, so without this, doit
+            # has no way to tell that changing the split (or turning it on/off)
+            # should trigger a re-run.
+            configuration=(config_step.test_split_fraction, config_step.test_split_seed),
             dependencies=(
                 config_process_noaa_surface_flask_data.processed_monthly_data_with_loc_file,
                 config_process_noaa_in_situ_data.processed_monthly_data_with_loc_file,
             ),
-            targets=(config_step.processed_bin_averages_file,),
+            targets=bin_observational_network_targets,
             config_file=config_bundle.config_hydrated_path,
             step_config_id=step_config_id,
         ),

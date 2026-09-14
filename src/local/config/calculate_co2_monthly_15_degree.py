@@ -116,6 +116,29 @@ class CalculateCO2MonthlyFifteenDegreePieces:
     no data is dropped.
     """
 
+    test_split_fraction: float | None = None
+    """
+    Fraction of ground-based observational-network rows to randomly hold out as a test set
+
+    Applied at the row level (one row is one station-month observation),
+    before binning, so the held-out rows never influence the pipeline's
+    output. If ``None``, no split is performed and all data is used.
+    """
+
+    test_split_seed: int | None = None
+    """
+    Seed used for the random train/test split, for reproducibility
+
+    Only used if ``test_split_fraction`` is set.
+    """
+
+    held_out_test_data_file: Path | None = None
+    """
+    Path in which to save the held-out test rows from the train/test split
+
+    Only written if ``test_split_fraction`` is set.
+    """
+
     weight_satellite_data: bool = False
     """
     Whether to weight satellite data by its retrieval uncertainty when combining it with ground-based data

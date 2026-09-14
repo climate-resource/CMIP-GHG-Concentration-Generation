@@ -6,6 +6,7 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   gas: ch4
   global_annual_mean_allyears_file: data/interim/ch4/ch4_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/ch4/ch4_global-annual-mean_allyears-monthly.nc
+  held_out_test_data_file: null
   include_satellite_data: false
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/ch4/ch4_allyears-lat-gradient-eofs-pcs.nc
@@ -19,6 +20,8 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   satellite_fit: null
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: only
+  test_split_fraction: null
+  test_split_seed: null
   weight_satellite_data: false
   year_drop_observational_data_before_and_including: null
 calculate_co2_monthly_fifteen_degree_pieces:
@@ -26,6 +29,7 @@ calculate_co2_monthly_fifteen_degree_pieces:
   gas: co2
   global_annual_mean_allyears_file: data/interim/co2/co2_global-annual-mean_allyears.nc
   global_annual_mean_allyears_monthly_file: data/interim/co2/co2_global-annual-mean_allyears-monthly.nc
+  held_out_test_data_file: null
   include_satellite_data: false
   lat_gradient_n_eofs_to_use: 2
   latitudinal_gradient_allyears_pcs_eofs_file: data/interim/co2/co2_allyears-lat-gradient-eofs-pcs.nc
@@ -43,6 +47,8 @@ calculate_co2_monthly_fifteen_degree_pieces:
   seasonality_change_n_eofs_to_use: 1
   seasonality_change_temperature_co2_conc_regression_file: data/interim/co2/co2_seasonality-change_temp-conc-regression.yaml
   step_config_id: only
+  test_split_fraction: null
+  test_split_seed: null
   weight_satellite_data: false
   year_drop_observational_data_before_and_including: null
 calculate_n2o_monthly_fifteen_degree_pieces:

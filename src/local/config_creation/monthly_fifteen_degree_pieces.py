@@ -50,6 +50,8 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
     satellite_fit: str | None = None,
     gases_satellite_fit: dict[str, str] | None = None,
     gases_weight_satellite_data: tuple[str, ...] = (),
+    gases_test_split_fraction: dict[str, float] | None = None,
+    gases_test_split_seed: dict[str, int] | None = None,
 ) -> dict[
     str,
     list[PieceCalculationOption],
@@ -95,6 +97,15 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
         ``gases_with_satellite_data``. Only ``"co2"`` and ``"ch4"`` are
         supported.
 
+    gases_test_split_fraction
+        Fraction of ground-based observational-network rows to randomly hold
+        out as a test set, for gases undergoing a train/test split evaluation.
+        If a gas is not in the dict, no split is applied.
+
+    gases_test_split_seed
+        Seed to use for the random train/test split, for gases in
+        ``gases_test_split_fraction``.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for each gas
@@ -108,6 +119,12 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
 
     if gases_satellite_fit is None:
         gases_satellite_fit = {}
+
+    if gases_test_split_fraction is None:
+        gases_test_split_fraction = {}
+
+    if gases_test_split_seed is None:
+        gases_test_split_seed = {}
 
     out: dict[str, list[PieceCalculationOption]] = {
         "calculate_co2_monthly_fifteen_degree_pieces": [],
@@ -130,6 +147,8 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
                     year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
                         gas
                     ),
+                    test_split_fraction=gases_test_split_fraction.get(gas),
+                    test_split_seed=gases_test_split_seed.get(gas),
                 )
             )
 
@@ -144,6 +163,8 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
                     year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
                         gas
                     ),
+                    test_split_fraction=gases_test_split_fraction.get(gas),
+                    test_split_seed=gases_test_split_seed.get(gas),
                 )
             )
 
@@ -249,11 +270,13 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
     return out
 
 
-def get_ch4_monthly_fifteen_degree_pieces_config(
+def get_ch4_monthly_fifteen_degree_pieces_config(  # noqa: PLR0913
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
     weight_satellite_data: bool = False,
     year_drop_observational_data_before_and_including: int | None = None,
+    test_split_fraction: float | None = None,
+    test_split_seed: int | None = None,
 ) -> CalculateCH4MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CH4
@@ -275,11 +298,24 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
         Year (inclusive) before which to drop ground-based observational-network data.
         Ice-core/firn data used to extend the record back in time is unaffected.
 
+    test_split_fraction
+        Fraction of ground-based observational-network rows to randomly hold out as a test set.
+        If ``None``, no split is performed.
+
+    test_split_seed
+        Seed to use for the random train/test split. Only used if ``test_split_fraction`` is set.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for CH4
     """
     interim_dir = Path("data/interim/ch4")
+
+    held_out_test_data_file = (
+        interim_dir / "ch4_observational-network_test-holdout.csv"
+        if test_split_fraction is not None
+        else None
+    )
 
     return CalculateCH4MonthlyFifteenDegreePieces(
         step_config_id="only",
@@ -289,6 +325,9 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
         weight_satellite_data=weight_satellite_data,
         diagnostics_dir=Path("data/diagnostics/ch4"),
         year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+        test_split_fraction=test_split_fraction,
+        test_split_seed=test_split_seed,
+        held_out_test_data_file=held_out_test_data_file,
         processed_bin_averages_file=interim_dir / "ch4_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "ch4_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
@@ -342,11 +381,13 @@ def get_n2o_monthly_fifteen_degree_pieces_config() -> CalculateN2OMonthlyFifteen
     )
 
 
-def get_co2_monthly_fifteen_degree_pieces_config(
+def get_co2_monthly_fifteen_degree_pieces_config(  # noqa: PLR0913
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
     weight_satellite_data: bool = False,
     year_drop_observational_data_before_and_including: int | None = None,
+    test_split_fraction: float | None = None,
+    test_split_seed: int | None = None,
 ) -> CalculateCO2MonthlyFifteenDegreePieces:
     """
     Get the configuration for calculating the monthly, 15 degree pieces for CO2
@@ -368,11 +409,24 @@ def get_co2_monthly_fifteen_degree_pieces_config(
         Year (inclusive) before which to drop ground-based observational-network data.
         Ice-core/firn data used to extend the record back in time is unaffected.
 
+    test_split_fraction
+        Fraction of ground-based observational-network rows to randomly hold out as a test set.
+        If ``None``, no split is performed.
+
+    test_split_seed
+        Seed to use for the random train/test split. Only used if ``test_split_fraction`` is set.
+
     Returns
     -------
         Configuration for calculating the monthly, 15 degree pieces for CO2
     """
     interim_dir = Path("data/interim/co2")
+
+    held_out_test_data_file = (
+        interim_dir / "co2_observational-network_test-holdout.csv"
+        if test_split_fraction is not None
+        else None
+    )
 
     return CalculateCO2MonthlyFifteenDegreePieces(
         step_config_id="only",
@@ -382,6 +436,9 @@ def get_co2_monthly_fifteen_degree_pieces_config(
         weight_satellite_data=weight_satellite_data,
         diagnostics_dir=Path("data/diagnostics/co2"),
         year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
+        test_split_fraction=test_split_fraction,
+        test_split_seed=test_split_seed,
+        held_out_test_data_file=held_out_test_data_file,
         processed_bin_averages_file=interim_dir / "co2_observational-network_bin-averages.csv",
         observational_network_interpolated_file=interim_dir / "co2_observational-network_interpolated.nc",
         observational_network_global_annual_mean_file=interim_dir
