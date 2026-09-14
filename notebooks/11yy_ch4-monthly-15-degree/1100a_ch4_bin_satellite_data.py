@@ -23,6 +23,7 @@
 # %%
 from pathlib import Path
 
+import numpy as np
 import openscm_units
 import pandas as pd
 import pint
@@ -78,7 +79,23 @@ if config_step.include_satellite_data:
 
     sat_data["xch4"] = sat_data["xch4"] * 1e9
 
-    sat_df = sat_data["xch4"].to_dataframe(name="value").reset_index()
+    if config_step.weight_satellite_data:
+        stderr_rchi2_col = "xch4_scaled_stderr_rchi2"
+        sat_data[stderr_rchi2_col] = sat_data[stderr_rchi2_col] * 1e9
+
+        sat_df = sat_data[["xch4", stderr_rchi2_col]].to_dataframe().reset_index()
+        sat_df = sat_df.rename(columns={"xch4": "value"})
+
+        # Inverse-variance weight from the satellite retrieval's rchi2-calibrated
+        # standard error. Ground-network stations are not weighted (each gets an
+        # implicit weight of one) - see notebooks/diagnostics/CO2/uncertainty_co2.py
+        # for why that isn't extended to ground-network uncertainty columns too
+        # (they're not directly comparable across sources, and aren't plumbed
+        # through to this point in the pipeline in the first place).
+        sat_df["weight"] = 1.0 / (sat_df[stderr_rchi2_col] ** 2)
+        sat_df = sat_df.drop(columns=[stderr_rchi2_col])
+    else:
+        sat_df = sat_data["xch4"].to_dataframe(name="value").reset_index()
 
     # Extract year and month
     sat_df["year"] = sat_df["time"].dt.year
@@ -106,29 +123,35 @@ if config_step.include_satellite_data:
     sat_df["measurement_method"] = "satellite"
 
     # Reorder columns
-    sat_df = sat_df[
-        [
-            "gas",
-            "reporting_id",
-            "year",
-            "month",
-            "latitude",
-            "longitude",
-            "value",
-            "unit",
-            "site_code_filename",
-            "site_code",
-            "surf_or_ship",
-            "source",
-            "network",
-            "station",
-            "measurement_method",
-        ]
+    column_order = [
+        "gas",
+        "reporting_id",
+        "year",
+        "month",
+        "latitude",
+        "longitude",
+        "value",
+        "unit",
+        "site_code_filename",
+        "site_code",
+        "surf_or_ship",
+        "source",
+        "network",
+        "station",
+        "measurement_method",
     ]
-    sat_df = sat_df.dropna(subset=["value"])
+    if config_step.weight_satellite_data:
+        column_order = [*column_order, "weight"]
+    sat_df = sat_df[column_order]
+    dropna_subset = ["value", "weight"] if config_step.weight_satellite_data else ["value"]
+    sat_df = sat_df.dropna(subset=dropna_subset)
+    if config_step.weight_satellite_data:
+        sat_df = sat_df[np.isfinite(sat_df["weight"])]
 
     sat_df_with_bins = local.binning.add_lat_lon_bin_columns(sat_df)
-    bin_averages = local.binning.calculate_bin_averages(sat_df_with_bins)
+    bin_averages = local.binning.calculate_bin_averages(
+        sat_df_with_bins, weight_column="weight" if config_step.weight_satellite_data else None
+    )
 
     assert set(bin_averages["gas"]) == {config_step.gas}
 

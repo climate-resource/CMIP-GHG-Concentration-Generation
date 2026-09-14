@@ -115,3 +115,14 @@ class CalculateCO2MonthlyFifteenDegreePieces:
     data used to extend the record back in time is unaffected. If ``None``,
     no data is dropped.
     """
+
+    weight_satellite_data: bool = False
+    """
+    Whether to weight satellite data by its retrieval uncertainty when combining it with ground-based data
+
+    Only used if ``include_satellite_data`` is ``True``. Ground-based
+    stations keep an equal weight of one each; satellite bins are
+    weighted by the inverse variance of ``xco2_scaled_stderr_rchi2``.
+    If ``False``, ground and satellite data are combined exactly as
+    before (an unweighted concatenation).
+    """

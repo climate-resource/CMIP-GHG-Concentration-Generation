@@ -19,6 +19,8 @@ calculate_ch4_monthly_fifteen_degree_pieces:
   satellite_fit: null
   seasonality_allyears_fifteen_degree_monthly_file: data/interim/ch4/ch4_seasonality_fifteen-degree_allyears-monthly.nc
   step_config_id: only
+  weight_satellite_data: false
+  year_drop_observational_data_before_and_including: null
 calculate_co2_monthly_fifteen_degree_pieces:
 - diagnostics_dir: data/diagnostics/co2
   gas: co2
@@ -41,6 +43,8 @@ calculate_co2_monthly_fifteen_degree_pieces:
   seasonality_change_n_eofs_to_use: 1
   seasonality_change_temperature_co2_conc_regression_file: data/interim/co2/co2_seasonality-change_temp-conc-regression.yaml
   step_config_id: only
+  weight_satellite_data: false
+  year_drop_observational_data_before_and_including: null
 calculate_n2o_monthly_fifteen_degree_pieces:
 - gas: n2o
   global_annual_mean_allyears_file: data/interim/n2o/n2o_global-annual-mean_allyears.nc

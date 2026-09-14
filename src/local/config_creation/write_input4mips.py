@@ -16,7 +16,7 @@ def create_write_input4mips_config(  # noqa: PLR0913
     input4mips_cvs_source_id: str,
     input4mips_cvs_cv_source: str,
     gases_with_satellite_data: tuple[str, ...] = (),
-    satellite_fit: str | None = None,
+    gases_satellite_fit: dict[str, str] | None = None,
 ) -> list[WriteInput4MIPsConfig]:
     """
     Create configuration for writing input4MIPs data
@@ -41,18 +41,21 @@ def create_write_input4mips_config(  # noqa: PLR0913
     gases_with_satellite_data
         Gases for which satellite data was included on top of the ground-based
         observational network. Their output file name(s) get an
-        ``_SAT_{satellite_fit}`` suffix so they can be told apart from a run
+        ``_SAT_{fit}`` suffix so they can be told apart from a run
         without satellite data.
 
-    satellite_fit
-        Fit used for the satellite data in ``gases_with_satellite_data``
-        (e.g. ``"LINEAR_FIT"``). Only used for gases in ``gases_with_satellite_data``.
+    gases_satellite_fit
+        Fit used for the satellite data, per gas in ``gases_with_satellite_data``
+        (e.g. ``{"co2": "LINEAR_FIT"}``). Only used for gases in ``gases_with_satellite_data``.
 
     Returns
     -------
         Created configuration
     """
     input4mips_out_dir = Path("data/processed/esgf-ready")
+
+    if gases_satellite_fit is None:
+        gases_satellite_fit = {}
 
     return [
         WriteInput4MIPsConfig(
@@ -65,7 +68,9 @@ def create_write_input4mips_config(  # noqa: PLR0913
             end_year=end_year,
             input4mips_cvs_source_id=input4mips_cvs_source_id,
             input4mips_cvs_cv_source=input4mips_cvs_cv_source,
-            output_filename_suffix=f"SAT_{satellite_fit}" if gas in gases_with_satellite_data else None,
+            output_filename_suffix=f"SAT_{gases_satellite_fit[gas]}"
+            if gas in gases_with_satellite_data
+            else None,
         )
         for gas in gases
     ]

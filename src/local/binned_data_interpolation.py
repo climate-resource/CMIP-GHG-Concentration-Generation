@@ -13,7 +13,7 @@ import pandas as pd
 import xarray as xr
 from scipy.interpolate import griddata  # type: ignore
 
-from local.binning import LAT_BIN_CENTRES, LON_BIN_CENTRES
+from local.binning import BINNING_COLUMNS, LAT_BIN_CENTRES, LON_BIN_CENTRES, VALUE_COLUMN
 
 SPATIAL_BIN_COLUMNS: tuple[str, str] = ("lon_bin", "lat_bin")
 """
@@ -49,10 +49,72 @@ def check_data_columns_for_binned_data_interpolation(indf: pd.DataFrame) -> None
     AssertionError
         Required columns are missing
     """
-    missing = set(indf.columns).difference({"gas", "lat_bin", "lon_bin", "month", "unit", "value", "year"})
+    missing = set(indf.columns).difference(
+        {"gas", "lat_bin", "lon_bin", "month", "unit", "value", "year", "weight"}
+    )
     if missing:
         msg = f"Missing required columns: {missing=}"
         raise AssertionError(msg)
+
+
+def combine_weighted_ground_and_satellite_bin_averages(
+    bin_averages_ground: pd.DataFrame,
+    bin_averages_sat: pd.DataFrame,
+    weight_column: str = "weight",
+) -> pd.DataFrame:
+    """
+    Combine ground-network and satellite bin averages using inverse-variance weighting
+
+    Ground-network rows are treated as having a flat weight of one each
+    (they're already an equally-weighted average across stations - see
+    :func:`local.binning.calculate_bin_averages`); satellite rows carry
+    their own combined weight, as produced by
+    :func:`local.binning.calculate_bin_averages` when called with
+    ``weight_column`` set. Where both sources have a row for the same
+    ``(gas, unit, year, month, lat_bin, lon_bin)`` bin, this takes a
+    weighted mean of the two instead of leaving both as separate points
+    (which is what a plain ``pd.concat`` of the two inputs would do,
+    handing spatial interpolation two coincident, un-reconciled points
+    for the same bin).
+
+    Parameters
+    ----------
+    bin_averages_ground
+        Ground-network bin averages, as produced by
+        :func:`local.binning.calculate_bin_averages` (no ``weight_column``).
+
+    bin_averages_sat
+        Satellite bin averages, as produced by
+        :func:`local.binning.calculate_bin_averages` called with
+        ``weight_column`` set to the same name as ``weight_column`` here.
+
+    weight_column
+        Name of the combined-weight column in ``bin_averages_sat``.
+
+    Returns
+    -------
+        Combined bin averages, with (at most) one row per
+        ``(gas, unit, year, month, lat_bin, lon_bin)`` bin.
+    """
+    ground = bin_averages_ground.copy()
+    ground[weight_column] = 1.0
+
+    combined = pd.concat([ground, bin_averages_sat])
+
+    def _weighted_bin_average(group: pd.DataFrame) -> pd.Series[float]:
+        return cast(
+            "pd.Series[float]",
+            pd.Series(
+                {
+                    VALUE_COLUMN: np.average(group[VALUE_COLUMN], weights=group[weight_column]),
+                    weight_column: group[weight_column].sum(),
+                }
+            ),
+        )
+
+    out = combined.groupby(BINNING_COLUMNS)[[VALUE_COLUMN, weight_column]].apply(_weighted_bin_average)
+
+    return out.reset_index()
 
 
 def get_round_the_world_grid(inv: npt.NDArray[np.float64], is_lon: bool = False) -> npt.NDArray[np.float64]:

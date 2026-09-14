@@ -79,7 +79,17 @@ config_process_scaled_sat_data = get_config_for_step_id(
 bin_averages_ground = pd.read_csv(config_step.processed_bin_averages_file)
 bin_averages_sat = pd.read_csv(config_process_scaled_sat_data.interim_data_path)
 
-bin_averages = pd.concat([bin_averages_ground, bin_averages_sat])
+if config_step.weight_satellite_data:
+    # Ground stations get an implicit weight of one each; satellite bins carry
+    # their own inverse-variance weight (see `1200a_co2_bin_satellite_data`).
+    # Where both sources have a value for the same bin/month, this takes a
+    # weighted mean of the two instead of leaving both as separate,
+    # un-reconciled points for `griddata` below.
+    bin_averages = local.binned_data_interpolation.combine_weighted_ground_and_satellite_bin_averages(
+        bin_averages_ground, bin_averages_sat
+    )
+else:
+    bin_averages = pd.concat([bin_averages_ground, bin_averages_sat])
 
 # %% [markdown]
 # ## Interpolate

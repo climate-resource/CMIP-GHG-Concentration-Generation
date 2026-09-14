@@ -187,7 +187,9 @@ def verbose_groupby_mean(inseries: pd.Series[float], groupby: list[str]) -> pd.S
     return out
 
 
-def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFrame:
+def calculate_bin_averages(
+    station_monthly_averages: pd.DataFrame, weight_column: str | None = None
+) -> pd.DataFrame:
     """
     Calculate the average value in each bin
 
@@ -196,6 +198,20 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
     station_monthly_averages
         :obj:`pd.DataFrame` containing monthly averages for each station
         (in each bin).
+
+    weight_column
+        If given, the name of a column in ``station_monthly_averages``
+        containing a per-row weight. The final average across stations
+        within a bin (see below) is then a weighted average using this
+        column, rather than treating every station equally, and the
+        output gains a column with the same name containing each bin's
+        combined weight (the sum of the input weights - i.e. inverse-
+        variance combination, if ``weight_column`` holds per-row inverse
+        variances), for use by later steps that combine this data with
+        other, differently-weighted sources.
+
+        If ``None`` (the default), every station receives an equal
+        weight, matching the pipeline's original behaviour.
 
     Returns
     -------
@@ -207,6 +223,8 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
         raise AssertionError(msg)
 
     keep_cols = [*EQUALLY_WEIGHTED_GROUP_COLS, VALUE_COLUMN]
+    if weight_column is not None:
+        keep_cols = [*keep_cols, weight_column]
     ignore_columns = [c for c in station_monthly_averages.columns if c not in keep_cols]
     if ignore_columns:
         print(f"Will ignore columns: {ignore_columns}")
@@ -219,7 +237,9 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
 
     # Reset the index so we can see that this mean is actually doing something
     station_monthly_averages = station_monthly_averages.reset_index()
-    all_cols_except_value = [c for c in station_monthly_averages.columns if c != VALUE_COLUMN]
+    all_cols_except_value = [
+        c for c in station_monthly_averages.columns if c not in (VALUE_COLUMN, weight_column)
+    ]
     equal_weight_monthly_averages = verbose_groupby_mean(
         (station_monthly_averages.set_index(all_cols_except_value)[VALUE_COLUMN]),
         EQUALLY_WEIGHTED_GROUP_COLS,
@@ -238,6 +258,42 @@ def calculate_bin_averages(station_monthly_averages: pd.DataFrame) -> pd.DataFra
         )
         raise AssertionError(msg)
 
-    bin_averages = verbose_groupby_mean(equal_weight_monthly_averages, BINNING_COLUMNS)
+    if weight_column is None:
+        bin_averages = verbose_groupby_mean(equal_weight_monthly_averages, BINNING_COLUMNS)
 
-    return bin_averages.reset_index()
+        return bin_averages.reset_index()
+
+    # Weighted path: collapse each station's weight the same way as its
+    # value above (almost always a no-op, since a station contributes at
+    # most one row per bin/month already), then take a weighted mean of
+    # the value across stations within each bin, using each bin's summed
+    # weight (standard inverse-variance combination) as its own combined
+    # weight for downstream use.
+    equal_weight_monthly_weights = verbose_groupby_mean(
+        (station_monthly_averages.set_index(all_cols_except_value)[weight_column]),
+        EQUALLY_WEIGHTED_GROUP_COLS,
+    )
+    per_station = pd.DataFrame(
+        {
+            VALUE_COLUMN: equal_weight_monthly_averages,
+            weight_column: equal_weight_monthly_weights,
+        }
+    ).reset_index()
+
+    def _weighted_bin_average(group: pd.DataFrame) -> pd.Series[float]:
+        return cast(
+            "pd.Series[float]",
+            pd.Series(
+                {
+                    VALUE_COLUMN: np.average(group[VALUE_COLUMN], weights=group[weight_column]),
+                    weight_column: group[weight_column].sum(),
+                }
+            ),
+        )
+
+    print(f"Took weighted mean over {sorted(set(EQUALLY_WEIGHTED_GROUP_COLS) - set(BINNING_COLUMNS))}")
+    weighted_bin_averages = per_station.groupby(BINNING_COLUMNS)[[VALUE_COLUMN, weight_column]].apply(
+        _weighted_bin_average
+    )
+
+    return weighted_bin_averages.reset_index()

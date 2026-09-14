@@ -41,13 +41,15 @@ PieceCalculationOption = (
 )
 
 
-def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
+def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912, PLR0913
     gases: tuple[str, ...],
     gases_long_poleward_extension: tuple[str, ...] = (),
     gases_drop_obs_data_years_before_inclusive: dict[str, int] | None = None,
     gases_drop_obs_data_years_after_inclusive: dict[str, int] | None = None,
     gases_with_satellite_data: tuple[str, ...] = (),
     satellite_fit: str | None = None,
+    gases_satellite_fit: dict[str, str] | None = None,
+    gases_weight_satellite_data: tuple[str, ...] = (),
 ) -> dict[
     str,
     list[PieceCalculationOption],
@@ -77,8 +79,21 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
         Only ``"co2"`` and ``"ch4"`` are supported.
 
     satellite_fit
-        Fit used for the satellite data for gases in ``gases_with_satellite_data``
-        (e.g. ``"LINEAR_FIT"``). Only used to label diagnostics files.
+        Default fit used for the satellite data for gases in ``gases_with_satellite_data``
+        (e.g. ``"LINEAR_FIT"``), for gases not given a specific override in
+        ``gases_satellite_fit``. Only used to label diagnostics files.
+
+    gases_satellite_fit
+        Per-gas override of the fit to use, for gases in ``gases_with_satellite_data``
+        that shouldn't use the shared ``satellite_fit`` default (e.g. because a
+        different fit variant is the established choice for that gas).
+
+    gases_weight_satellite_data
+        Gases for which satellite data should be weighted by its retrieval
+        uncertainty when combined with ground-based data (rather than an
+        unweighted concatenation). Must be a subset of
+        ``gases_with_satellite_data``. Only ``"co2"`` and ``"ch4"`` are
+        supported.
 
     Returns
     -------
@@ -90,6 +105,9 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
 
     if gases_drop_obs_data_years_after_inclusive is None:
         gases_drop_obs_data_years_after_inclusive = {}
+
+    if gases_satellite_fit is None:
+        gases_satellite_fit = {}
 
     out: dict[str, list[PieceCalculationOption]] = {
         "calculate_co2_monthly_fifteen_degree_pieces": [],
@@ -105,7 +123,10 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             out["calculate_co2_monthly_fifteen_degree_pieces"].append(
                 get_co2_monthly_fifteen_degree_pieces_config(
                     include_satellite_data=gas in gases_with_satellite_data,
-                    satellite_fit=satellite_fit if gas in gases_with_satellite_data else None,
+                    satellite_fit=gases_satellite_fit.get(gas, satellite_fit)
+                    if gas in gases_with_satellite_data
+                    else None,
+                    weight_satellite_data=gas in gases_weight_satellite_data,
                     year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
                         gas
                     ),
@@ -116,7 +137,10 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
             out["calculate_ch4_monthly_fifteen_degree_pieces"].append(
                 get_ch4_monthly_fifteen_degree_pieces_config(
                     include_satellite_data=gas in gases_with_satellite_data,
-                    satellite_fit=satellite_fit if gas in gases_with_satellite_data else None,
+                    satellite_fit=gases_satellite_fit.get(gas, satellite_fit)
+                    if gas in gases_with_satellite_data
+                    else None,
+                    weight_satellite_data=gas in gases_weight_satellite_data,
                     year_drop_observational_data_before_and_including=gases_drop_obs_data_years_before_inclusive.get(
                         gas
                     ),
@@ -228,6 +252,7 @@ def create_monthly_fifteen_degree_pieces_configs(  # noqa: PLR0912
 def get_ch4_monthly_fifteen_degree_pieces_config(
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
+    weight_satellite_data: bool = False,
     year_drop_observational_data_before_and_including: int | None = None,
 ) -> CalculateCH4MonthlyFifteenDegreePieces:
     """
@@ -241,6 +266,10 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
     satellite_fit
         Fit used for the satellite data (e.g. ``"LINEAR_FIT"``), if ``include_satellite_data`` is ``True``.
         Only used to label diagnostics files.
+
+    weight_satellite_data
+        Whether to weight satellite data by its retrieval uncertainty when combining it with
+        ground-based data. Only used if ``include_satellite_data`` is ``True``.
 
     year_drop_observational_data_before_and_including
         Year (inclusive) before which to drop ground-based observational-network data.
@@ -257,6 +286,7 @@ def get_ch4_monthly_fifteen_degree_pieces_config(
         gas="ch4",
         include_satellite_data=include_satellite_data,
         satellite_fit=satellite_fit,
+        weight_satellite_data=weight_satellite_data,
         diagnostics_dir=Path("data/diagnostics/ch4"),
         year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
         processed_bin_averages_file=interim_dir / "ch4_observational-network_bin-averages.csv",
@@ -315,6 +345,7 @@ def get_n2o_monthly_fifteen_degree_pieces_config() -> CalculateN2OMonthlyFifteen
 def get_co2_monthly_fifteen_degree_pieces_config(
     include_satellite_data: bool = False,
     satellite_fit: str | None = None,
+    weight_satellite_data: bool = False,
     year_drop_observational_data_before_and_including: int | None = None,
 ) -> CalculateCO2MonthlyFifteenDegreePieces:
     """
@@ -328,6 +359,10 @@ def get_co2_monthly_fifteen_degree_pieces_config(
     satellite_fit
         Fit used for the satellite data (e.g. ``"LINEAR_FIT"``), if ``include_satellite_data`` is ``True``.
         Only used to label diagnostics files.
+
+    weight_satellite_data
+        Whether to weight satellite data by its retrieval uncertainty when combining it with
+        ground-based data. Only used if ``include_satellite_data`` is ``True``.
 
     year_drop_observational_data_before_and_including
         Year (inclusive) before which to drop ground-based observational-network data.
@@ -344,6 +379,7 @@ def get_co2_monthly_fifteen_degree_pieces_config(
         gas="co2",
         include_satellite_data=include_satellite_data,
         satellite_fit=satellite_fit,
+        weight_satellite_data=weight_satellite_data,
         diagnostics_dir=Path("data/diagnostics/co2"),
         year_drop_observational_data_before_and_including=year_drop_observational_data_before_and_including,
         processed_bin_averages_file=interim_dir / "co2_observational-network_bin-averages.csv",

@@ -70,41 +70,71 @@ from local.config_creation.write_input4mips import create_write_input4mips_confi
 GASES_WITH_SATELLITE_DATA_SUPPORT = ("co2", "ch4")
 """Gases for which we have a scaled satellite data pipeline"""
 
+DEFAULT_SATELLITE_FIT_BY_GAS = {
+    "co2": "LINEAR_SEASONAL_LAT_STD_WEIGHT_FIT",
+    "ch4": "NONLINEAR_LAT_STD_WEIGHT_FIT",
+}
+"""
+Default fit to use for each gas, absent an explicit ``SAT_FIT`` override
 
-def get_satellite_gases_and_fit_from_env() -> tuple[tuple[str, ...], str]:
+These match the fit each gas' own
+``notebooks/diagnostics/{GAS}/check_{gas}_output_all_fits.py`` already treats
+as its established "target"/best fit among the candidates compared there.
+"""
+
+
+def get_satellite_gases_and_fit_from_env() -> tuple[tuple[str, ...], dict[str, str], tuple[str, ...]]:
     """
-    Work out which gases should include satellite data, and which fit to use
+    Work out which gases should include satellite data, and which fit and weighting to use
 
-    Controlled by the ``SAT_GAS``, ``SAT_FIT`` and ``GAS`` environment variables,
-    e.g. as set by ``scripts/run-helper.sh``:
+    Controlled by the ``SAT_GAS``, ``SAT_FIT``, ``SAT_WEIGHT`` and ``GAS``
+    environment variables, e.g. as set by ``scripts/run-helper.sh``:
 
     - ``SAT_GAS="True"`` turns satellite data on for the gas selected by ``GAS``
       (or for all gases in :const:`GASES_WITH_SATELLITE_DATA_SUPPORT` if ``GAS="all"``).
       If unset (or not ``"True"``), no gas gets satellite data.
-    - ``SAT_FIT`` selects which fit to use, e.g. ``"LINEAR_FIT"``, ``"ML_FIT"``.
-      Defaults to ``"LINEAR_FIT"``.
+    - ``SAT_FIT`` selects which fit to use for every satellite-enabled gas,
+      overriding each gas' default in :const:`DEFAULT_SATELLITE_FIT_BY_GAS`
+      (e.g. ``"LINEAR_FIT"``, ``"ML_FIT"``). If unset, each gas uses its own
+      entry in :const:`DEFAULT_SATELLITE_FIT_BY_GAS`.
+    - ``SAT_WEIGHT="True"`` weights satellite data by its retrieval uncertainty
+      when combining it with ground-based data, for every gas that has
+      satellite data switched on. If unset (or not ``"True"``), satellite data
+      is combined unweighted, matching the pipeline's original behaviour.
 
     Returns
     -------
-        Gases for which to include satellite data, and the fit to use for them
+        Gases for which to include satellite data, the fit to use for each of
+        them, and the subset of those gases for which satellite data should
+        be weighted
     """
-    sat_fit = os.environ.get("SAT_FIT", "LINEAR_FIT")
+    sat_fit_override = os.environ.get("SAT_FIT")
 
     if os.environ.get("SAT_GAS", "False").lower() != "true":
-        return (), sat_fit
+        return (), {}, ()
 
     run_gas = os.environ.get("GAS", "all")
+    gases_with_satellite_data: tuple[str, ...]
     if run_gas == "all":
-        return GASES_WITH_SATELLITE_DATA_SUPPORT, sat_fit
-
-    if run_gas not in GASES_WITH_SATELLITE_DATA_SUPPORT:
+        gases_with_satellite_data = GASES_WITH_SATELLITE_DATA_SUPPORT
+    elif run_gas not in GASES_WITH_SATELLITE_DATA_SUPPORT:
         msg = (
             f"SAT_GAS=True is only supported for GAS in {GASES_WITH_SATELLITE_DATA_SUPPORT} "
             f"or GAS=all, received GAS={run_gas!r}"
         )
         raise ValueError(msg)
+    else:
+        gases_with_satellite_data = (run_gas,)
 
-    return (run_gas,), sat_fit
+    gases_satellite_fit = {
+        gas: sat_fit_override or DEFAULT_SATELLITE_FIT_BY_GAS[gas] for gas in gases_with_satellite_data
+    }
+
+    gases_weight_satellite_data = (
+        gases_with_satellite_data if os.environ.get("SAT_WEIGHT", "False").lower() == "true" else ()
+    )
+
+    return gases_with_satellite_data, gases_satellite_fit, gases_weight_satellite_data
 
 
 def create_dev_config() -> Config:
@@ -195,7 +225,9 @@ def create_dev_config() -> Config:
     start_year = 1
     end_year = 2022
 
-    gases_with_satellite_data, satellite_fit = get_satellite_gases_and_fit_from_env()
+    gases_with_satellite_data, gases_satellite_fit, gases_weight_satellite_data = (
+        get_satellite_gases_and_fit_from_env()
+    )
 
     # A `process_scaled_sat_data` entry is required for every gas in `gases_to_write`
     # that supports satellite data, regardless of whether satellite data is actually
@@ -204,7 +236,7 @@ def create_dev_config() -> Config:
     # it just writes an empty file if satellite data isn't switched on.
     scaled_sat_handling_steps = create_scaled_sat_handling_config(
         data_sources=tuple(
-            (gas, "scaled-sat", satellite_fit)
+            (gas, "scaled-sat", gases_satellite_fit.get(gas, DEFAULT_SATELLITE_FIT_BY_GAS[gas]))
             for gas in GASES_WITH_SATELLITE_DATA_SUPPORT
             if gas in gases_to_write
         )
@@ -337,7 +369,8 @@ def create_dev_config() -> Config:
         gases_drop_obs_data_years_before_inclusive=gases_drop_obs_data_years_before_inclusive,
         gases_drop_obs_data_years_after_inclusive=gases_drop_obs_data_years_after_inclusive,
         gases_with_satellite_data=gases_with_satellite_data,
-        satellite_fit=satellite_fit,
+        gases_satellite_fit=gases_satellite_fit,
+        gases_weight_satellite_data=gases_weight_satellite_data,
     )
 
     return Config(
@@ -380,7 +413,7 @@ def create_dev_config() -> Config:
             input4mips_cvs_source_id="CR-CMIP-testing",
             input4mips_cvs_cv_source="https://raw.githubusercontent.com/znichollscr/input4MIPs_CVs/refs/heads/cr-cmip-testing/CVs/",
             gases_with_satellite_data=gases_with_satellite_data,
-            satellite_fit=satellite_fit,
+            gases_satellite_fit=gases_satellite_fit,
         ),
     )
 
