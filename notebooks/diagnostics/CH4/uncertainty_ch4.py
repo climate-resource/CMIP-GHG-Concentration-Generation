@@ -44,7 +44,7 @@ output_bundles_root: str = "../../../output-bundles"
 # xch4_stderr is identical across every fit - it's a property of the raw
 # satellite retrieval, not something the bias-correction fit touches - so
 # any available fit's file works here.
-satellite_fit_file: str = "LINEAR_FIT"
+satellite_fit_file: str = "LINEAR_STD_WEIGHT_FIT"
 
 # %%
 data_root = Path(output_bundles_root) / run_id / "data"

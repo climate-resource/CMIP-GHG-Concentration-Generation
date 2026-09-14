@@ -117,6 +117,36 @@ else:
     print("No baseline (no-satellite) output found in this version folder yet.")
 
 # %% [markdown]
+# ## Final output with satellite data (`NONLINEAR_LAT_STD_WEIGHT_FIT`)
+#
+# **Derived in:** `40yy_write-input4mips`.
+#
+# The final gridded output using satellite data with the
+# `nonlinear_lat_std_weight` fit, shown the same way as the baseline above: a
+# Hovmöller-style view (time on the x-axis, latitude on the y-axis), over the
+# full record and zoomed in from 1850 and from 2000.
+
+# %%
+target_fit = "NONLINEAR_LAT_STD_WEIGHT_FIT"
+target_fit_da = (
+    report.load_concatenated_gridded(fit_chunks[target_fit], gas) if target_fit in fit_chunks else None
+)
+
+if target_fit_da is not None:
+    for time_slice, zoom_label in [
+        (None, "full record"),
+        (slice("1850", None), "from 1850"),
+        (slice("2000", None), "from 2000"),
+    ]:
+        da = target_fit_da if time_slice is None else target_fit_da.sel(time=time_slice)
+        fig, ax = plt.subplots(figsize=(10, 3))
+        da.plot(ax=ax, x="time", y="lat")
+        ax.set_title(f"{gas.upper()} - {target_fit} ({zoom_label})")
+        plt.show()
+else:
+    print(f"No {target_fit} output found in this version folder yet.")
+
+# %% [markdown]
 # ## Per-fit diffs over time
 #
 # **Derived in:** `40yy_write-input4mips`.

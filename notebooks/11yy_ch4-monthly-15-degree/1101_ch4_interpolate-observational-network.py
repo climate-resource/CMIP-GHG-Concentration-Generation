@@ -280,8 +280,60 @@ local.diagnostics.save_yaml_diagnostics(
 )
 
 # %%
+# Diagnostics: actual (non-interpolated) mean bin value by calendar month,
+# restricted to the satellite period - the direct, bin-level seasonal cycle
+# behind the coverage-fraction maps above. NaN where a bin has no real
+# (ground or satellite) observation in that month at all, across every year
+# of the satellite period.
+satellite_period_bin_averages = bin_averages[
+    bin_averages["year"].between(satellite_period_start_year, satellite_period_end_year)
+]
+bin_monthly_climatology_satellite_period = np.full((n_lat_bins, n_lon_bins, 12), np.nan)
+for (lat_bin, lon_bin, month), mean_value in (
+    satellite_period_bin_averages.groupby(["lat_bin", "lon_bin", "month"])["value"].mean().items()
+):
+    i = lat_bin_index[lat_bin]
+    j = lon_bin_index[lon_bin]
+    bin_monthly_climatology_satellite_period[i, j, month - 1] = mean_value
+
+
+# %%
+# Diagnostics: how many satellite-period months each bin has a real
+# ground-network vs. satellite-derived value in, counted separately - the
+# "how much data backs this bin's seasonal cycle above" behind
+# `bin_monthly_climatology_satellite_period`. (`bin_averages_ground`/
+# `bin_averages_sat` are already monthly bin averages - see "Load data"
+# above - so this counts populated bin-months, not raw station readings.)
+def _bin_month_counts_satellite_period(df: pd.DataFrame) -> np.ndarray:
+    counts = np.zeros((n_lat_bins, n_lon_bins))
+    period_df = df[df["year"].between(satellite_period_start_year, satellite_period_end_year)]
+    for (lat_bin, lon_bin), n in period_df.groupby(["lat_bin", "lon_bin"]).size().items():
+        counts[lat_bin_index[lat_bin], lon_bin_index[lon_bin]] = n
+    return counts
+
+
+bin_n_ground_months_satellite_period = _bin_month_counts_satellite_period(bin_averages_ground)
+bin_n_satellite_months_satellite_period = _bin_month_counts_satellite_period(bin_averages_sat)
+
+# %%
+# Diagnostics: the same bin-level seasonal cycle as
+# `bin_monthly_climatology_satellite_period`, but *after* spatial
+# interpolation (`out`) rather than before - `out` has no gaps (`griddata`
+# guesses every bin for every month it covers), so this has no NaNs, unlike
+# the pre-interpolation version above.
+interpolated_satellite_period = out.sel(
+    time=(out["time"].dt.year >= satellite_period_start_year)
+    & (out["time"].dt.year <= satellite_period_end_year)
+)
+bin_monthly_climatology_satellite_period_interpolated = (
+    interpolated_satellite_period.groupby("time.month").mean("time").transpose("lat", "lon", "month").values
+)
+
+# %%
 # Save the per-bin "fraction of months populated" maps, so you can see *where*
-# (not just how much) satellite data fills in gaps left by the ground network.
+# (not just how much) satellite data fills in gaps left by the ground network,
+# plus the actual bin-level seasonal cycle (before and after interpolation)
+# and ground/satellite month counts behind that coverage.
 spatial_coverage_ds = xr.Dataset(
     {
         "bin_fraction_months_populated_full_record": (
@@ -292,8 +344,26 @@ spatial_coverage_ds = xr.Dataset(
             ("lat", "lon"),
             bin_populated_count_satellite_period / n_months_total_satellite_period,
         ),
+        "bin_monthly_climatology_satellite_period": (
+            ("lat", "lon", "month"),
+            bin_monthly_climatology_satellite_period,
+        ),
+        "bin_monthly_climatology_satellite_period_interpolated": (
+            ("lat", "lon", "month"),
+            bin_monthly_climatology_satellite_period_interpolated,
+        ),
+        "bin_n_ground_months_satellite_period": (("lat", "lon"), bin_n_ground_months_satellite_period),
+        "bin_n_satellite_months_satellite_period": (("lat", "lon"), bin_n_satellite_months_satellite_period),
     },
-    coords={"lat": local.binning.LAT_BIN_CENTRES, "lon": local.binning.LON_BIN_CENTRES},
+    coords={
+        "lat": local.binning.LAT_BIN_CENTRES,
+        "lon": local.binning.LON_BIN_CENTRES,
+        "month": np.arange(1, 13),
+    },
+    attrs={
+        "bin_monthly_climatology_satellite_period_unit": str(bin_averages["unit"].iloc[0]),
+        "bin_monthly_climatology_satellite_period_interpolated_unit": out.attrs["units"],
+    },
 )
 local.diagnostics.save_nc_diagnostics(
     config_step.diagnostics_dir

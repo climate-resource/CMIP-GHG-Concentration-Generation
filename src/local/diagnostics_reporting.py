@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any
 
 import cartopy.crs as ccrs
+import cftime
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -106,6 +107,44 @@ def _add_satellite_start_line(ax: plt.Axes, start_year: int | None, show_legend:
         ax.legend(fontsize=8)
 
 
+GOSAT_START_YEAR = 2009
+"""
+Year GOSAT data was added into the merged satellite product
+
+(SCIAMACHY is the satellite data - it's already covered by the 2003 start)
+"""
+
+
+def _add_reference_period_lines(ax: plt.Axes, start_year: int | None, show_legend: bool = True) -> None:
+    """
+    Add dashed vertical lines marking satellite data start and the GOSAT addition, and (re-)draw the legend
+
+    Used on the "zoomed in" (from 1850/from 2000) panels, where both events
+    are close enough to the visible range to matter - unlike
+    `_add_satellite_start_line`, which is also used on full-record panels
+    where marking GOSAT separately would just clutter the axis.
+    """
+    if start_year is not None:
+        ax.axvline(
+            start_year,
+            color="grey",
+            linestyle="--",
+            linewidth=1,
+            alpha=0.8,
+            label="satellite data starts (2003, SCIAMACHY)" if show_legend else None,
+        )
+    ax.axvline(
+        GOSAT_START_YEAR,
+        color="black",
+        linestyle="--",
+        linewidth=1,
+        alpha=0.8,
+        label="GOSAT added (2009)" if show_legend else None,
+    )
+    if show_legend:
+        ax.legend(fontsize=8)
+
+
 def coverage_table(root: Path, gas: str, suffixes: tuple[str, str], labels: dict[str, str]) -> pd.DataFrame:
     """
     Input spatial-coverage diagnostics table (from `1201`/`1101`)
@@ -163,10 +202,20 @@ def coverage_table(root: Path, gas: str, suffixes: tuple[str, str], labels: dict
             }
         )
 
-    df = pd.DataFrame(rows)
-    if df.empty:
-        return df
-    return df.set_index(["gas", "scope", "satellite_config"]).sort_index()
+    coverage_df = pd.DataFrame(rows)
+    if coverage_df.empty:
+        return coverage_df
+    return coverage_df.set_index(["gas", "scope", "satellite_config"]).sort_index()
+
+
+def _load_bin_coverage_maps(root: Path, gas: str, suffixes: tuple[str, str]) -> dict[str, xr.DataArray]:
+    """Load `bin_fraction_months_populated_satellite_period` (from `1201`/`1101`), per suffix that has it"""
+    maps = {}
+    for suffix in suffixes:
+        ds = load_nc_diagnostics(root, gas, "interpolation", suffix)
+        if ds is not None and "bin_fraction_months_populated_satellite_period" in ds:
+            maps[suffix] = ds["bin_fraction_months_populated_satellite_period"]
+    return maps
 
 
 def plot_spatial_bin_coverage(
@@ -191,11 +240,7 @@ def plot_spatial_bin_coverage(
     """
     baseline, other = suffixes
 
-    maps = {}
-    for suffix in suffixes:
-        ds = load_nc_diagnostics(root, gas, "interpolation", suffix)
-        if ds is not None and "bin_fraction_months_populated_satellite_period" in ds:
-            maps[suffix] = ds["bin_fraction_months_populated_satellite_period"]
+    maps = _load_bin_coverage_maps(root, gas, suffixes)
 
     if not maps:
         print("No spatial coverage diagnostics found.")
@@ -243,6 +288,294 @@ def plot_spatial_bin_coverage(
         f"means all months between {period_str} have an observation in that bin, a value of 0 "
         "means no months have an observation in that bin."
     )
+
+
+def select_bins_by_satellite_fill(
+    root: Path, gas: str, suffixes: tuple[str, str], threshold: float = 0.8
+) -> tuple[xr.DataArray, xr.DataArray] | None:
+    """
+    Split the grid's 15x60 degree bins into two groups from the satellite-period coverage map (`1201`/`1101`)
+
+    `filled_by_satellite`: bins where switching satellite data on raises
+    `bin_fraction_months_populated_satellite_period` by more than
+    `threshold` - i.e. satellite data is doing real work there, turning a
+    mostly-unobserved bin into a mostly-observed one.
+
+    `already_covered_without_satellite`: bins that were already above
+    `threshold` on the ground network alone (`baseline`) - these can't have
+    moved much regardless of satellite data, so any seasonal difference seen
+    in them isn't attributable to satellite coverage filling gaps.
+
+    The two groups are not necessarily disjoint in principle, but in
+    practice rarely overlap: a bin already above `threshold` has little room
+    left to also satisfy the `> threshold` diff condition.
+
+    Returns `None` (rather than a partial result) if either configuration's
+    coverage map is missing.
+    """
+    baseline, other = suffixes
+    maps = _load_bin_coverage_maps(root, gas, suffixes)
+    if not set(suffixes).issubset(maps):
+        return None
+
+    diff = maps[other] - maps[baseline]
+    filled_by_satellite = diff > threshold
+    already_covered_without_satellite = maps[baseline] > threshold
+    return filled_by_satellite, already_covered_without_satellite
+
+
+def plot_bin_selection_map(mask: xr.DataArray, title: str) -> list[tuple[float, float]]:
+    """
+    Plot which 15x60 degree bins a boolean mask (from `select_bins_by_satellite_fill`) selects
+
+    Coastlines are shown for geographic orientation only - our grid is far
+    coarser than the coastline detail suggests.
+
+    Returns
+    -------
+        `(lat, lon)` bin-centre coordinates of every selected bin, for
+        feeding into `plot_bin_seasonality`.
+    """
+    fig, ax = plt.subplots(figsize=(6, 4), subplot_kw={"projection": ccrs.PlateCarree()})
+    mask.astype(int).plot(
+        ax=ax,
+        x="lon",
+        y="lat",
+        vmin=0,
+        vmax=1,
+        cmap="viridis",
+        add_colorbar=False,
+        transform=ccrs.PlateCarree(),
+    )
+    ax.coastlines()
+    ax.set_title(title)
+    plt.tight_layout()
+    plt.show()
+
+    stacked = mask.stack(bin=("lat", "lon"))
+    selected = stacked[stacked.to_numpy()]
+    bin_coords = [
+        (float(lat), float(lon)) for lat, lon in zip(selected["lat"].values, selected["lon"].values)
+    ]
+    print(f"{len(bin_coords)} bin(s) selected: {bin_coords}")
+    return bin_coords
+
+
+def plot_bin_seasonality(  # noqa: PLR0913
+    root: Path,
+    gas: str,
+    suffixes: tuple[str, str],
+    labels: dict[str, str],
+    colors: dict[str, str],
+    bin_coords: list[tuple[float, float]],
+    group_title: str,
+) -> None:
+    """
+    Plot the actual (non-interpolated) per-bin seasonal cycle, satellite period only (from `1201`/`1101`)
+
+    One subplot per `(lat, lon)` bin in `bin_coords` (e.g. from
+    `plot_bin_selection_map`), each showing `bin_monthly_climatology_satellite_period`
+    - the mean of the real ground/satellite observations in that bin by
+    calendar month, restricted to the satellite-period years - for every
+    configuration in `suffixes` that has it. Unlike `plot_seasonality`
+    (section 3, EOF-based), this is resolved by both latitude *and*
+    longitude and reflects actual data rather than a fitted climatological
+    pattern, so it's the direct, bin-level view behind the coverage-fraction
+    maps in `plot_spatial_bin_coverage`.
+
+    Each subplot also gets a small text box (below the legend, not part of
+    it) showing how many satellite-period months that configuration's own
+    `bin_n_ground_months_satellite_period`/`bin_n_satellite_months_satellite_period`
+    had a real ground ("g")/satellite ("s") value in *that* bin - a per-bin
+    confidence indicator for how much data the curve is actually built
+    from. Own box per subplot, since this differs bin to bin.
+    """
+    if not bin_coords:
+        print(f"No bins selected for {group_title!r} - nothing to plot.")
+        return
+
+    datasets = {
+        suffix: ds
+        for suffix in suffixes
+        if (ds := load_nc_diagnostics(root, gas, "interpolation", suffix)) is not None
+        and "bin_monthly_climatology_satellite_period" in ds
+    }
+    if not datasets:
+        print(f"No bin-level seasonality diagnostics found for {gas.upper()}.")
+        return
+
+    unit = next(iter(datasets.values())).attrs.get("bin_monthly_climatology_satellite_period_unit", "")
+
+    n_bins = len(bin_coords)
+    n_cols = min(4, n_bins)
+    n_rows = -(-n_bins // n_cols)  # ceil division
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(4 * n_cols, 3.5 * n_rows), sharey=True, squeeze=False)
+    axes_flat = axes.flatten()
+
+    for ax, (lat, lon) in zip(axes_flat, bin_coords):
+        count_lines = []
+        for suffix, ds in datasets.items():
+            da = ds["bin_monthly_climatology_satellite_period"].sel(lat=lat, lon=lon, method="nearest")
+            ax.plot(da["month"], da, marker="o", color=colors[suffix], label=labels[suffix])
+
+            has_counts = "bin_n_ground_months_satellite_period" in ds
+            has_counts = has_counts and "bin_n_satellite_months_satellite_period" in ds
+            if has_counts:
+                n_ground = int(
+                    ds["bin_n_ground_months_satellite_period"].sel(lat=lat, lon=lon, method="nearest")
+                )
+                n_satellite = int(
+                    ds["bin_n_satellite_months_satellite_period"].sel(lat=lat, lon=lon, method="nearest")
+                )
+                count_lines.append(f"{labels[suffix]}: g: {n_ground}, s: {n_satellite}")
+        ax.set_title(f"lat={lat}, lon={lon}", fontsize=9)
+        ax.set_xlabel("Month")
+        ax.legend(fontsize=8)
+        if count_lines:
+            ax.text(
+                0.02,
+                0.02,
+                "\n".join(count_lines),
+                transform=ax.transAxes,
+                fontsize=7,
+                va="bottom",
+                ha="left",
+                bbox={"boxstyle": "round", "facecolor": "white", "alpha": 0.8, "edgecolor": "grey"},
+            )
+
+    for ax in axes_flat[n_bins:]:
+        ax.set_visible(False)
+
+    axes_flat[0].set_ylabel(f"{gas.upper()} [{unit}]" if unit else gas.upper())
+    fig.suptitle(f"{gas.upper()} - {group_title} (n={n_bins} bins), satellite-period monthly means")
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_interpolated_bin_seasonality(  # noqa: PLR0913
+    root: Path,
+    gas: str,
+    suffixes: tuple[str, str],
+    labels: dict[str, str],
+    colors: dict[str, str],
+    bin_coords: list[tuple[float, float]],
+    group_title: str,
+) -> None:
+    """
+    Plot the *post*-interpolation per-bin seasonal cycle, satellite period only (from `1201`/`1101`)
+
+    Same layout as `plot_bin_seasonality`, but from
+    `bin_monthly_climatology_satellite_period_interpolated` - computed
+    after `local.binned_data_interpolation.interpolate` (`griddata`) has
+    filled every bin for every month it covers, rather than straight from
+    the raw ground/satellite observations. So, unlike `plot_bin_seasonality`,
+    there are no `NaN` gaps and no ground/satellite observation-count boxes
+    - those only describe the raw data behind the curve, not `griddata`'s
+    guesses at bins/months that had none.
+    """
+    if not bin_coords:
+        print(f"No bins selected for {group_title!r} - nothing to plot.")
+        return
+
+    datasets = {
+        suffix: ds
+        for suffix in suffixes
+        if (ds := load_nc_diagnostics(root, gas, "interpolation", suffix)) is not None
+        and "bin_monthly_climatology_satellite_period_interpolated" in ds
+    }
+    if not datasets:
+        print(f"No post-interpolation bin-level seasonality diagnostics found for {gas.upper()}.")
+        return
+
+    unit = next(iter(datasets.values())).attrs.get(
+        "bin_monthly_climatology_satellite_period_interpolated_unit", ""
+    )
+
+    n_bins = len(bin_coords)
+    n_cols = min(4, n_bins)
+    n_rows = -(-n_bins // n_cols)  # ceil division
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(4 * n_cols, 3.5 * n_rows), sharey=True, squeeze=False)
+    axes_flat = axes.flatten()
+
+    for ax, (lat, lon) in zip(axes_flat, bin_coords):
+        for suffix, ds in datasets.items():
+            da = ds["bin_monthly_climatology_satellite_period_interpolated"].sel(
+                lat=lat, lon=lon, method="nearest"
+            )
+            ax.plot(da["month"], da, marker="o", color=colors[suffix], label=labels[suffix])
+        ax.set_title(f"lat={lat}, lon={lon}", fontsize=9)
+        ax.set_xlabel("Month")
+        ax.legend(fontsize=8)
+
+    for ax in axes_flat[n_bins:]:
+        ax.set_visible(False)
+
+    axes_flat[0].set_ylabel(f"{gas.upper()} [{unit}]" if unit else gas.upper())
+    fig.suptitle(
+        f"{gas.upper()} - {group_title} (n={n_bins} bins), "
+        "satellite-period monthly means, after interpolation"
+    )
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_global_vs_bin_group_seasonality(  # noqa: PLR0913
+    root: Path,
+    gas: str,
+    suffix: str,
+    label: str,
+    bin_coords: list[tuple[float, float]],
+    group_title: str,
+) -> None:
+    """
+    Compare the global-mean seasonal cycle against a selected bin group's (from `1201`/`1101`)
+
+    Both curves come from the same configuration's (typically the
+    satellite-data one, via `suffix`) `bin_monthly_climatology_satellite_period`
+    - a cos(latitude)-weighted mean across every grid bin for "global", and
+    the same weighted mean restricted to `bin_coords` (e.g. the bins
+    satellite data fills in, from `plot_bin_selection_map`) for the group.
+    Unlike `plot_bin_seasonality` (one bin at a time, comparing
+    configurations), this compares spatial scope *within* a single
+    configuration: does the newly-filled-in region's seasonal cycle look
+    like a scaled-down version of the global one, or genuinely different in
+    shape/timing?
+    """
+    ds = load_nc_diagnostics(root, gas, "interpolation", suffix)
+    if ds is None or "bin_monthly_climatology_satellite_period" not in ds:
+        print(f"No bin-level seasonality diagnostics found for {gas.upper()}/{suffix}.")
+        return
+    if not bin_coords:
+        print(f"No bins selected for {group_title!r} - nothing to plot.")
+        return
+
+    da = ds["bin_monthly_climatology_satellite_period"]
+    unit = ds.attrs.get("bin_monthly_climatology_satellite_period_unit", "")
+
+    global_weights = np.cos(np.deg2rad(da["lat"]))
+    global_seasonality = da.weighted(global_weights).mean(dim=("lat", "lon"), skipna=True)
+
+    lat_idx = xr.DataArray([c[0] for c in bin_coords], dims="bin")
+    lon_idx = xr.DataArray([c[1] for c in bin_coords], dims="bin")
+    selected = da.sel(lat=lat_idx, lon=lon_idx)
+    group_weights = np.cos(np.deg2rad(selected["lat"]))
+    group_seasonality = selected.weighted(group_weights).mean(dim="bin", skipna=True)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.plot(
+        global_seasonality["month"],
+        global_seasonality,
+        marker="o",
+        color="tab:blue",
+        label="Global (all bins)",
+    )
+    ax.plot(group_seasonality["month"], group_seasonality, marker="o", color="tab:orange", label=group_title)
+    ax.set_xlabel("Month")
+    ax.set_ylabel(f"{gas.upper()} [{unit}]" if unit else gas.upper())
+    ax.legend()
+    ax.set_title(f"{gas.upper()} - global vs. {group_title} seasonality ({label})")
+    plt.tight_layout()
+    plt.show()
 
 
 def plot_lat_gradient_eofs(
@@ -359,9 +692,11 @@ def _plot_reconstruction_hovmoller(
     (or partially cancel out), which judging the PCs and EOFs separately
     wouldn't show.
     """
+    n_configs_for_diff = 2
+
     vmax = max(float(np.abs(recon).max()) for recon in reconstructions.values())
 
-    show_diff = len(reconstructions) == 2
+    show_diff = len(reconstructions) == n_configs_for_diff
     n_panels = len(reconstructions) + (1 if show_diff else 0)
     fig, axes = plt.subplots(1, n_panels, figsize=(6 * n_panels, 5), sharey=True)
     axes = np.atleast_1d(axes)
@@ -520,16 +855,19 @@ def plot_seasonality(
         raise NotImplementedError(gas)
 
 
-def _plot_seasonality_change_eof_co2(
+def _plot_seasonality_change_eof_co2(  # noqa: PLR0915
     root: Path, suffixes: tuple[str, str], labels: dict[str, str], colors: dict[str, str]
 ) -> None:
     """
-    Top row: PC0 from 1850 onwards (from `1205` - shown from 1850, not year
-    1, since the composite regression's own reference period starts there
-    and the driver is assumed constant before it, so nothing earlier is
-    informative), and PC0 satellite minus no-satellite over the same range -
-    the direct effect of adding satellite data on PC0, isolated from its
-    (much larger) absolute drift.
+    Top two rows: PC0 trend and PC0 diff (satellite minus no-satellite), zoomed from 1850 then from 2000
+
+    From `1205`, shown from 1850, not year 1, since the composite
+    regression's own reference period starts there and the driver is
+    assumed constant before it, so nothing earlier is informative; the
+    2000 row zooms further into the satellite-relevant window. The diff
+    isolates the direct effect of adding satellite data on PC0 from its
+    (much larger) absolute drift. Dashed lines mark when satellite data
+    starts (2003) and when GOSAT was added (2009).
 
     Middle rows: EOF0 by month (from `1202`), one row per latitude - column 1
     the southern latitudes (-82.5 to -7.5), column 2 the northern latitudes
@@ -554,15 +892,15 @@ def _plot_seasonality_change_eof_co2(
         if (ds := load_nc_diagnostics(root, "co2", "seasonality-extend", suffix)) is not None
     }
 
-    lats = next(iter(datasets.values()))["lat"].values
+    lats = next(iter(datasets.values()))["lat"].to_numpy()
     n_lats = len(lats)
     n_lat_rows = n_lats // 2
 
-    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 1) + 2))
+    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 2) + 2))
     gs = fig.add_gridspec(
-        n_lat_rows + 2,
+        n_lat_rows + 3,
         2,
-        height_ratios=[1.3] + [1] * n_lat_rows + [2.5],
+        height_ratios=[1.3, 1.3] + [1] * n_lat_rows + [2.5],
         hspace=1.1,
         wspace=0.3,
         top=0.96,
@@ -574,38 +912,40 @@ def _plot_seasonality_change_eof_co2(
     start_year = get_satellite_period_start_year(root, "co2", suffixes)
     suffix_nosat, suffix_sat = suffixes
 
-    # Top row: PC0 trend and PC0 diff, both from 1850.
-    ax_pc0 = fig.add_subplot(gs[0, 0])
-    for suffix, ds in pc_datasets.items():
-        ds["principal-components"].sel(eof=0, year=slice(1850, None)).plot(
-            ax=ax_pc0, color=colors[suffix], label=labels[suffix]
-        )
-    if not pc_datasets:
-        ax_pc0.text(0.5, 0.5, "No 1205 diagnostics found", ha="center", va="center", fontsize=8)
-    ax_pc0.set_title("PC0, from 1850")
-    ax_pc0.set_xlabel("Year")
-    ax_pc0.set_ylabel("")
-    _add_satellite_start_line(ax_pc0, start_year, show_legend=True)
-    ax_pc0.legend(fontsize=8)
+    # Top two rows: PC0 trend and PC0 diff, zoomed from 1850 then from 2000.
+    for row, (zoom_start, zoom_label) in enumerate(((1850, "from 1850"), (2000, "from 2000"))):
+        ax_pc0 = fig.add_subplot(gs[row, 0])
+        for suffix, ds in pc_datasets.items():
+            ds["principal-components"].sel(eof=0, year=slice(zoom_start, None)).plot(
+                ax=ax_pc0, color=colors[suffix], label=labels[suffix]
+            )
+        if not pc_datasets:
+            ax_pc0.text(0.5, 0.5, "No 1205 diagnostics found", ha="center", va="center", fontsize=8)
+        ax_pc0.set_title(f"PC0, {zoom_label}")
+        ax_pc0.set_xlabel("Year")
+        ax_pc0.set_ylabel("")
+        _add_reference_period_lines(ax_pc0, start_year, show_legend=True)
 
-    ax_pc0_diff = fig.add_subplot(gs[0, 1])
-    if suffix_nosat in pc_datasets and suffix_sat in pc_datasets:
-        pc0_nosat = pc_datasets[suffix_nosat]["principal-components"].sel(eof=0, year=slice(1850, None))
-        pc0_sat = pc_datasets[suffix_sat]["principal-components"].sel(eof=0, year=slice(1850, None))
-        (pc0_sat - pc0_nosat).plot(ax=ax_pc0_diff, color="tab:red")
-    else:
-        ax_pc0_diff.text(0.5, 0.5, "Need both configurations", ha="center", va="center", fontsize=8)
-    ax_pc0_diff.axhline(0, color="k", linestyle=":", linewidth=1)
-    ax_pc0_diff.set_title("PC0 diff (sat - nosat), from 1850")
-    ax_pc0_diff.set_xlabel("Year")
-    ax_pc0_diff.set_ylabel("")
-    _add_satellite_start_line(ax_pc0_diff, start_year, show_legend=False)
+        ax_pc0_diff = fig.add_subplot(gs[row, 1])
+        if suffix_nosat in pc_datasets and suffix_sat in pc_datasets:
+            pc0_nosat = pc_datasets[suffix_nosat]["principal-components"].sel(
+                eof=0, year=slice(zoom_start, None)
+            )
+            pc0_sat = pc_datasets[suffix_sat]["principal-components"].sel(eof=0, year=slice(zoom_start, None))
+            (pc0_sat - pc0_nosat).plot(ax=ax_pc0_diff, color="tab:red")
+        else:
+            ax_pc0_diff.text(0.5, 0.5, "Need both configurations", ha="center", va="center", fontsize=8)
+        ax_pc0_diff.axhline(0, color="k", linestyle=":", linewidth=1)
+        ax_pc0_diff.set_title(f"PC0 diff (sat - nosat), {zoom_label}")
+        ax_pc0_diff.set_xlabel("Year")
+        ax_pc0_diff.set_ylabel("")
+        _add_reference_period_lines(ax_pc0_diff, start_year, show_legend=False)
 
     # Middle rows: EOF0 by month - column 1 southern latitudes, column 2 northern latitudes.
     ax_eof_first = None
     for i in range(n_lat_rows):
         for col, lat in enumerate((lats[i], lats[n_lats - 1 - i])):
-            ax_eof = fig.add_subplot(gs[i + 1, col], sharex=ax_eof_first)
+            ax_eof = fig.add_subplot(gs[i + 2, col], sharex=ax_eof_first)
             ax_eof_first = ax_eof_first or ax_eof
 
             for suffix, ds in datasets.items():
@@ -622,7 +962,7 @@ def _plot_seasonality_change_eof_co2(
                 ax_eof.set_xlabel("Month")
 
     # Bottom row: explained variance ratio, spanning both columns, bigger.
-    ax_var = fig.add_subplot(gs[n_lat_rows + 1, :])
+    ax_var = fig.add_subplot(gs[n_lat_rows + 2, :])
     n_show = min(6, next(iter(datasets.values())).sizes["seasonality_change_eof"])
     for suffix, ds in datasets.items():
         ax_var.plot(
@@ -674,7 +1014,7 @@ def _plot_relative_seasonality_ch4(
     plt.show()
 
 
-def _diff_plot(
+def _diff_plot(  # noqa: PLR0913
     series: dict[str, xr.DataArray],
     suffixes: tuple[str, str],
     labels: dict[str, str],
@@ -738,7 +1078,7 @@ def plot_global_mean_obs_network(
     )
 
 
-def plot_lat_gradient_extend_pcs(
+def plot_lat_gradient_extend_pcs(  # noqa: PLR0915
     root: Path,
     gas: str,
     suffixes: tuple[str, str],
@@ -746,8 +1086,7 @@ def plot_lat_gradient_extend_pcs(
     colors: dict[str, str],
 ) -> None:
     """
-    PC0/PC1 extended to all years (from `1203`/`1103`), plus EOF0/EOF1
-    underneath.
+    PC0/PC1 extended to all years (from `1203`/`1103`), plus EOF0/EOF1 underneath
 
     Extended using a regression against PRIMAP fossil emissions (both gases),
     plus - CH4 only - a joint optimisation against the NEEM and Law Dome ice
@@ -757,13 +1096,14 @@ def plot_lat_gradient_extend_pcs(
     EOF0/EOF1, comparing configurations - this extension step doesn't
     recompute the EOFs, it just carries the observational-network fit's
     spatial patterns forward unchanged, so unlike the PCs there's no year
-    axis to zoom into here. Row 3: PC0/PC1 again, zoomed in from 1850.
+    axis to zoom into here. Rows 3-4: PC0/PC1 again, zoomed in from 1850,
+    then from 2000.
 
-    Rows 4-5: the same EOF0/EOF1 and PC0/PC1 (zoomed from 1850) values
-    regrouped the other way - one panel per configuration, with both modes
-    overlaid on the same axes - to compare their shape/magnitude directly
-    *within* a single configuration. The dashed vertical line marks the
-    first year satellite data covers.
+    Rows 5-6: the same EOF0/EOF1 and PC0/PC1 (zoomed from 1850, then from
+    2000) values regrouped the other way - one panel per configuration, with
+    both modes overlaid on the same axes - to compare their shape/magnitude
+    directly *within* a single configuration. Dashed lines mark when
+    satellite data starts (2003) and when GOSAT was added (2009).
 
     Below, a second figure: a Hovmoeller (year x latitude) view of the
     reconstructed field over the full extended record - see
@@ -779,12 +1119,14 @@ def plot_lat_gradient_extend_pcs(
         print(f"No {gas.upper()} lat-gradient-extend diagnostics found.")
         return
 
-    fig, axes = plt.subplots(5, 2, figsize=(12, 17))
+    fig, axes = plt.subplots(7, 2, figsize=(12, 23.8))
     fig.suptitle(f"{gas.upper()} - latitudinal gradient PCs (extended) and EOFs")
 
     start_year = get_satellite_period_start_year(root, gas, suffixes)
 
-    def plot_pc_row(row: int, year_slice: tuple[int, None] | None, zoom_label: str) -> None:
+    def plot_pc_row(
+        row: int, year_slice: tuple[int, None] | None, zoom_label: str, show_legend: bool = False
+    ) -> None:
         for eof in range(2):
             ax = axes[row, eof]
             for suffix, ds in datasets.items():
@@ -793,7 +1135,10 @@ def plot_lat_gradient_extend_pcs(
                     da = da.sel(year=slice(*year_slice))
                 da.plot(ax=ax, color=colors[suffix], label=labels[suffix])
             ax.set_title(f"PC{eof}, {zoom_label}")
-            _add_satellite_start_line(ax, start_year, show_legend=(row == 0 and eof == 0))
+            if year_slice is not None:
+                _add_reference_period_lines(ax, start_year, show_legend=(show_legend and eof == 0))
+            else:
+                _add_satellite_start_line(ax, start_year, show_legend=(show_legend and eof == 0))
 
     def plot_eof_row(row: int) -> None:
         for eof in range(2):
@@ -804,15 +1149,16 @@ def plot_lat_gradient_extend_pcs(
             ax.set_xlabel(f"{gas.upper()} anomaly")
             ax.set_ylabel("Latitude")
 
-    plot_pc_row(0, None, "full record")
+    plot_pc_row(0, None, "full record", show_legend=True)
     plot_eof_row(1)
     plot_pc_row(2, (1850, None), "from 1850")
+    plot_pc_row(3, (2000, None), "from 2000")
 
     eof_colors = ("tab:green", "tab:purple")
     for col, suffix in enumerate(suffixes):
         ds = datasets.get(suffix)
 
-        ax_eof = axes[3, col]
+        ax_eof = axes[4, col]
         if ds is None:
             ax_eof.axis("off")
         else:
@@ -823,19 +1169,19 @@ def plot_lat_gradient_extend_pcs(
             ax_eof.set_ylabel("Latitude")
             ax_eof.legend(fontsize=8)
 
-        ax_pc = axes[4, col]
-        if ds is None:
-            ax_pc.axis("off")
-        else:
+        for row, zoom_start, zoom_label in ((5, 1850, "from 1850"), (6, 2000, "from 2000")):
+            ax_pc = axes[row, col]
+            if ds is None:
+                ax_pc.axis("off")
+                continue
             for eof in range(2):
-                ds["principal-components"].sel(eof=eof, year=slice(1850, None)).plot(
+                ds["principal-components"].sel(eof=eof, year=slice(zoom_start, None)).plot(
                     ax=ax_pc, color=eof_colors[eof], label=f"PC {eof}"
                 )
-            ax_pc.set_title(f"PC0 vs PC1, {labels[suffix]}, from 1850")
-            _add_satellite_start_line(ax_pc, start_year, show_legend=False)
+            ax_pc.set_title(f"PC0 vs PC1, {labels[suffix]}, {zoom_label}")
+            _add_reference_period_lines(ax_pc, start_year, show_legend=False)
             ax_pc.legend(fontsize=8)
 
-    axes[0, 0].legend(fontsize=8)
     plt.tight_layout()
     plt.show()
 
@@ -1007,7 +1353,7 @@ def seam_table(root: Path, gas: str, suffixes: tuple[str, str], labels: dict[str
     return pd.DataFrame(rows).set_index(["gas", "satellite_config"])
 
 
-def plot_co2_seasonality_extend(
+def plot_co2_seasonality_extend(  # noqa: PLR0912
     root: Path, suffixes: tuple[str, str], labels: dict[str, str], colors: dict[str, str]
 ) -> None:
     """
@@ -1016,15 +1362,16 @@ def plot_co2_seasonality_extend(
     Top row: PC0, full record and zoomed in from 1850 (the composite
     regression's own reference period starts there - see
     `CO2SeasonalityChangeRegression` - and the driver is assumed constant
-    before it, so nothing earlier is informative).
+    before it, so nothing earlier is informative). Second row: PC0 zoomed in
+    further, from 2000, spanning the full width. Dashed lines on both zoomed
+    panels mark when satellite data starts (2003) and when GOSAT was
+    added (2009).
 
     Rows below: EOF0 by month, one row per latitude - column 1 the southern
     latitudes (-82.5 to -7.5), column 2 the northern latitudes (82.5 to
     7.5), both columns ordered pole to equator, so each row pairs a latitude
     with its mirror image - same split as `_plot_seasonality_change_eof_co2`
     (section 3). Doesn't vary by year, unlike PC0 above.
-
-    The dashed vertical line marks the first year satellite data covers.
     """
     datasets = {
         suffix: ds
@@ -1035,15 +1382,15 @@ def plot_co2_seasonality_extend(
         print("No CO2 seasonality-change (1205) diagnostics found.")
         return
 
-    lats = next(iter(datasets.values()))["lat"].values
+    lats = next(iter(datasets.values()))["lat"].to_numpy()
     n_lats = len(lats)
     n_lat_rows = n_lats // 2
 
-    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 1)))
+    fig = plt.figure(figsize=(12, 2.3 * (n_lat_rows + 2)))
     gs = fig.add_gridspec(
-        n_lat_rows + 1,
+        n_lat_rows + 2,
         2,
-        height_ratios=[1.3] + [1] * n_lat_rows,
+        height_ratios=[1.3, 1.3] + [1] * n_lat_rows,
         hspace=1.1,
         wspace=0.3,
         top=0.95,
@@ -1066,15 +1413,29 @@ def plot_co2_seasonality_extend(
         ax_pc.set_title(f"PC0, {zoom_label}")
         ax_pc.set_xlabel("Year")
         ax_pc.set_ylabel("")
-        _add_satellite_start_line(ax_pc, start_year, show_legend=(col == 0))
+        if year_slice is not None:
+            _add_reference_period_lines(ax_pc, start_year, show_legend=(col == 0))
+        else:
+            _add_satellite_start_line(ax_pc, start_year, show_legend=(col == 0))
         if col == 0:
             ax_pc.legend(fontsize=8)
+
+    # Second row: PC0 zoomed in further, from 2000, spanning the full width.
+    ax_pc_2000 = fig.add_subplot(gs[1, :])
+    for suffix, ds in datasets.items():
+        ds["principal-components"].sel(eof=0, year=slice(2000, None)).plot(
+            ax=ax_pc_2000, color=colors[suffix], label=labels[suffix]
+        )
+    ax_pc_2000.set_title("PC0, from 2000")
+    ax_pc_2000.set_xlabel("Year")
+    ax_pc_2000.set_ylabel("")
+    _add_reference_period_lines(ax_pc_2000, start_year, show_legend=True)
 
     # Rows below: EOF0 by month - column 1 southern latitudes, column 2 northern latitudes (mirrored).
     ax_eof_first = None
     for i in range(n_lat_rows):
         for col, lat in enumerate((lats[i], lats[n_lats - 1 - i])):
-            ax_eof = fig.add_subplot(gs[i + 1, col], sharex=ax_eof_first)
+            ax_eof = fig.add_subplot(gs[i + 2, col], sharex=ax_eof_first)
             ax_eof_first = ax_eof_first or ax_eof
 
             for suffix, ds in datasets.items():
@@ -1144,7 +1505,7 @@ def find_version_dirs(esgf_ready_gas_dir: Path) -> list[Path]:
 
 
 def find_version_dir(esgf_ready_gas_dir: Path, version: str | None = None) -> Path | None:
-    """Find the version folder to use: `version` if given and it exists, else the most recently created `v*` folder"""
+    """Find the version folder: `version` if given and it exists, else the newest `v*` folder"""
     if version is not None:
         version_dir = esgf_ready_gas_dir / version
         return version_dir if version_dir.exists() else None
@@ -1247,7 +1608,11 @@ def plot_gridded_diff_for_fit(
     have actually been run for this fit; prints an explanation and does
     nothing if it hasn't.
 
-    Shown twice: full record, then zoomed in from 1850.
+    Shown four times: full record, zoomed in from 1850, zoomed in further
+    from 2000, then restricted to the satellite period itself (2003
+    onwards) - the only years satellite data can possibly have affected.
+    The zoomed panels mark satellite data start (2003, dashed) and the
+    GOSAT addition (2009, dashed).
     """
     esgf_ready_gas_dir = get_esgf_ready_gas_dir(output_bundles_root, run_id, gas)
     baseline_chunks, fit_chunks = discover_gridded_files(esgf_ready_gas_dir, gas, version)
@@ -1262,15 +1627,44 @@ def plot_gridded_diff_for_fit(
     baseline_da = load_concatenated_gridded(baseline_chunks, gas)
     fit_da = load_concatenated_gridded(fit_chunks[fit], gas)
     diff = gridded_diff_from_baseline(baseline_da, fit_da)
+    unit = "ppm" if gas == "co2" else "ppb"
+    cbar_kwargs = {"label": f"{gas.upper()} diff [{unit}]"}
 
     fig, ax = plt.subplots(figsize=(10, 3))
-    diff.plot(ax=ax, x="time", y="lat", cmap="RdBu_r")
+    diff.plot(ax=ax, x="time", y="lat", cmap="RdBu_r", cbar_kwargs=cbar_kwargs)
     ax.set_title(f"{gas.upper()} {fit} - final gridded output minus no-satellite baseline")
     plt.tight_layout()
     plt.show()
 
-    fig, ax = plt.subplots(figsize=(10, 3))
-    diff.sel(time=slice("1850", None)).plot(ax=ax, x="time", y="lat", cmap="RdBu_r")
-    ax.set_title(f"{gas.upper()} {fit} - final gridded output minus no-satellite baseline, from 1850")
-    plt.tight_layout()
-    plt.show()
+    satellite_period_start_year = 2003
+    satellite_start = cftime.datetime(satellite_period_start_year, 1, 1)
+    gosat_start = cftime.datetime(GOSAT_START_YEAR, 1, 1)
+    for zoom_start, zoom_label in (
+        (1850, "from 1850"),
+        (2000, "from 2000"),
+        (satellite_period_start_year, "satellite period, from 2003"),
+    ):
+        fig, ax = plt.subplots(figsize=(10, 3))
+        diff.sel(time=slice(str(zoom_start), None)).plot(
+            ax=ax, x="time", y="lat", cmap="RdBu_r", cbar_kwargs=cbar_kwargs
+        )
+        ax.set_title(f"{gas.upper()} {fit} - final gridded output minus no-satellite baseline, {zoom_label}")
+        ax.axvline(
+            satellite_start,
+            color="grey",
+            linestyle="--",
+            linewidth=1,
+            alpha=0.8,
+            label="satellite data starts (2003)",
+        )
+        ax.axvline(
+            gosat_start,
+            color="black",
+            linestyle="--",
+            linewidth=1,
+            alpha=0.8,
+            label="GOSAT added (2009)",
+        )
+        ax.legend(fontsize=8)
+        plt.tight_layout()
+        plt.show()
