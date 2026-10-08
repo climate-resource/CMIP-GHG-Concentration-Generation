@@ -64,3 +64,27 @@ class WriteInput4MIPsConfig:
 
     If ``None``, no suffix is added.
     """
+
+    comment: str | None = None
+    """
+    Value for the ``comment`` attribute of the output file(s)
+
+    If ``None``, the default comment defined in the write notebook is used.
+    """
+
+    extra_metadata: dict[str, str] | None = None
+    """
+    Extra global attributes to add to the output file(s)
+
+    These are added on top of the metadata the notebook already writes
+    (they override it in the case of clashes).
+    If ``None``, no extra attributes are added.
+    """
+
+    activity_id: str | None = None
+    """
+    Activity ID to write into the output file(s)
+
+    Must be an entry in the CVs' activity ID file.
+    If ``None``, the default (``input4MIPs``) is used.
+    """

@@ -319,7 +319,7 @@ funding_info = (
 )
 
 # %%
-comment = (
+comment = config_step.comment or (
     "Data compiled by Climate Resource, based on science by many others "
     "(see 'references*' attributes). "
     "For funding information, see the 'funding*' attributes."
@@ -336,6 +336,7 @@ non_input4mips_metadata_common = {
     "funding": " ".join([v["long_text"] for v in funding_info]),
     "funding_short_names": " --- ".join([v["name"] for v in funding_info]),
     "funding_urls": " --- ".join([v["url"] for v in funding_info]),
+    **(config_step.extra_metadata or {}),
 }
 non_input4mips_metadata_common
 
@@ -548,6 +549,7 @@ for dat_resolution, grid_label, nominal_resolution, yearly_time_bounds in tqdman
             cvs=cvs,
             dataset_category="GHGConcentrations",
             realm="atmos",
+            **({"activity_id": config_step.activity_id} if config_step.activity_id else {}),
         )
 
         metadata_evolved = evolve(
